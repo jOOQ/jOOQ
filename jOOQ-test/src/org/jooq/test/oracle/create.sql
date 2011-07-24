@@ -688,6 +688,11 @@ CREATE OR REPLACE PACKAGE library_types AS
 END library_types;
 /
 
+CREATE OR REPLACE PACKAGE library_767_package_test AS
+    FUNCTION library_767_package_test RETURN NUMBER;
+END library_767_package_test;
+/
+
 CREATE TYPE t_address_type AS TABLE OF u_address_type
 /
 

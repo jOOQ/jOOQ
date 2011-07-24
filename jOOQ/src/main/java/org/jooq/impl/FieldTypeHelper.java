@@ -724,92 +724,85 @@ public final class FieldTypeHelper {
     }
 
     public static Class<?> getClass(int sqlType, int precision, int scale) {
-        if (sqlType == Types.BLOB) {
-            return byte[].class;
-        }
-        else if (sqlType == Types.BOOLEAN) {
-            return Boolean.class;
-        }
-        else if (sqlType == Types.BIGINT) {
-            return BigInteger.class;
-        }
-        else if (sqlType == Types.DECIMAL) {
-            return BigDecimal.class;
-        }
-        else if (sqlType == Types.REAL) {
-            return BigDecimal.class;
-        }
-        else if (sqlType == Types.NUMERIC) {
+        switch (sqlType) {
+            case Types.BLOB:
+            case Types.BINARY:
+            case Types.LONGVARBINARY:
+            case Types.VARBINARY:
+                return byte[].class;
 
-            // Integer numbers
-            if (scale == 0 && precision != 0) {
+            case Types.BOOLEAN:
+            case Types.BIT:
+                return Boolean.class;
 
-                // if (precision == 1) {
-                //     Booleans could have precision == 1, but that's a tough guess
-                // }
-                if (precision < BYTE_PRECISION) {
-                    return Byte.class;
-                }
-                if (precision < SHORT_PRECISION) {
-                    return Short.class;
-                }
-                if (precision < INTEGER_PRECISION) {
-                    return Integer.class;
-                }
-                if (precision < LONG_PRECISION) {
-                    return Long.class;
+            case Types.TINYINT:
+                return Byte.class;
+
+            case Types.SMALLINT:
+                return Short.class;
+
+            case Types.INTEGER:
+                return Integer.class;
+
+            case Types.BIGINT:
+                return Long.class;
+
+            case Types.REAL:
+                return Float.class;
+
+            case Types.DOUBLE:
+            case Types.FLOAT:
+                return Double.class;
+
+            case Types.DECIMAL:
+            case Types.NUMERIC: {
+
+                // Integer numbers
+                if (scale == 0 && precision != 0) {
+                    if (precision < BYTE_PRECISION) {
+                        return Byte.class;
+                    }
+                    if (precision < SHORT_PRECISION) {
+                        return Short.class;
+                    }
+                    if (precision < INTEGER_PRECISION) {
+                        return Integer.class;
+                    }
+                    if (precision < LONG_PRECISION) {
+                        return Long.class;
+                    }
+
+                    // Default integer number
+                    return BigInteger.class;
                 }
 
-                // Default integer number
-                return BigInteger.class;
+                // Real numbers should not be represented as float or double
+                else {
+                    return BigDecimal.class;
+                }
             }
 
-            // Real numbers should not be represented as float or double
-            else {
-                return BigDecimal.class;
-            }
-        }
-        else if (sqlType == Types.DECIMAL) {
-            return BigDecimal.class;
-        }
-        else if (sqlType == Types.TINYINT) {
-            return Byte.class;
-        }
-        else if (sqlType == Types.CLOB) {
-            return String.class;
-        }
-        else if (sqlType == Types.DATE) {
-            return Date.class;
-        }
-        else if (sqlType == Types.DOUBLE) {
-            return Double.class;
-        }
-        else if (sqlType == Types.FLOAT) {
-            return Float.class;
-        }
-        else if (sqlType == Types.INTEGER) {
-            return Integer.class;
-        }
-        else if (sqlType == Types.SMALLINT) {
-            return Short.class;
-        }
-        else if (sqlType == Types.CHAR) {
-            return String.class;
-        }
-        else if (sqlType == Types.VARCHAR) {
-            return String.class;
-        }
-        else if (sqlType == Types.LONGVARCHAR) {
-            return String.class;
-        }
-        else if (sqlType == Types.TIME) {
-            return Time.class;
-        }
-        else if (sqlType == Types.TIMESTAMP) {
-            return Timestamp.class;
-        }
-        else {
-            return Object.class;
+            case Types.CLOB:
+            case Types.CHAR:
+            case Types.LONGNVARCHAR:
+            case Types.LONGVARCHAR:
+            case Types.NCHAR:
+            case Types.NCLOB:
+            case Types.NVARCHAR:
+            case Types.VARCHAR:
+                return String.class;
+
+            case Types.DATE:
+                return Date.class;
+
+            case Types.TIME:
+                return Time.class;
+
+            case Types.TIMESTAMP:
+                return Timestamp.class;
+
+            default:
+                return Object.class;
         }
     }
 

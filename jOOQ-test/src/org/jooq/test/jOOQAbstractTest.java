@@ -1023,6 +1023,7 @@ public abstract class jOOQAbstractTest<
                 assertEquals(SQLDataType.REAL, field.getDataType());
             }
             else if ("FLOAT".equalsIgnoreCase(field.getName())
+                    && getDialect() != SQLDialect.MYSQL
                     && getDialect() != SQLDialect.SYBASE) {
 
                 assertEquals(Double.class, field.getType());

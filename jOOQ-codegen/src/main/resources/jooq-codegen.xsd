@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.jooq.org/xsd/jooq-codegen" xmlns:tns="http://www.jooq.org/xsd/jooq-codegen" elementFormDefault="qualified">
+	<element name="jooq-config">
+		<complexType>
+			<sequence>
+				<element name="jdbc">
+					<complexType>
+						<sequence>
+							<element name="driver" type="string"/>
+							<element name="url" type="string"/>
+							<element name="schema" type="string"/>
+							<element name="user" type="string"/>
+							<element name="password" type="string"/>
+						</sequence>
+					</complexType>
+				</element>
+				
+				<element name="generator">
+					<complexType>
+						<sequence>
+							<element name="class" type="string" default="org.jooq.util.DefaultGenerator"/>
+							<element name="generate-relations" type="boolean" default="false"/>
+							<element name="generate-deprecated" type="boolean" default="true"/>
+							<element name="target-package" type="string" default="org.jooq.generated"/>
+							<element name="target-directory" type="string" default="jooq-generated"/>
+
+							<element name="database">
+								<complexType>
+									<sequence>
+										<element name="class" type="string"/>
+										<element name="includes" default=".*"/>
+										<element name="excludes" default=""/>
+									</sequence>
+								</complexType>
+							</element>
+							
+							<element name="master-data-tables" minOccurs="0">
+								<complexType>
+									<sequence>
+										<element name="master-data-table" minOccurs="0" maxOccurs="unbounded">
+											<complexType>
+												<sequence>
+													<element name="literal-column" type="string"/>
+													<element name="description-column" type="string" minOccurs="0"/>
+												</sequence>
+											</complexType>
+										</element>
+									</sequence>
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

@@ -1191,12 +1191,11 @@ public class DefaultGenerator implements Generator {
 
             for (PackageDefinition pkg : database.getPackages()) {
                 try {
+                    // [#767] This is not the correct package name!
                     File targetPackagePackageDir = new File(targetPackagesPackageDir, strategy.getJavaClassName(pkg).toLowerCase());
                     log.info("Generating package", targetPackagePackageDir.getCanonicalPath());
 
                     for (ProcedureDefinition procedure : pkg.getProcedures()) {
-                        targetPackagePackageDir.mkdirs();
-
                         try {
                             printProcedure(database, schema, procedure);
                         } catch (Exception e) {
@@ -1205,8 +1204,6 @@ public class DefaultGenerator implements Generator {
                     }
 
                     for (FunctionDefinition function : pkg.getFunctions()) {
-                        targetPackagePackageDir.mkdirs();
-
                         try {
                             printFunction(database, schema, function);
                         } catch (Exception e) {

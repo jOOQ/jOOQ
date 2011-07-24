@@ -1,0 +1,1113 @@
+jOOQ Release notes
+------------------
+For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
+
+Version 1.6.2
+=================================================================
+
+This release mainly introduces three new projects.
+
+Project CURSOR where jOOQ finally supports various RDBMS's TABLE,
+CURSOR, and REF CURSOR data types. This is especially useful when
+those types are returned from stored procedures and functions. 
+Cursors are simply mapped to jOOQ Result<Record> types and can 
+thus be used like regular table results
+
+Project EXPORT aims at exporting data from the database in 
+various serialisable formats, such as XML, CSV, HTML, Text, JSON.
+This project will be continued in the future, to also 
+deserialise from (some of) these data streams. This will allow 
+for easy transport of jOOQ Result<?> types over the net.
+
+Project CODEGEN has finally been started. Many improvements 
+suggested by jOOQ users will be implemented in the next releases.
+In this release, important fixes have been made to prevent 
+compilation errors in generated artefacts.
+
+Features and improvements
+-------------------------
+#61  - EXPORT: Add Result.formatXML()
+#166 - CURSOR: Add support for ResultSet type returned from
+       Oracle stored procedures / functions
+#411 - Allow for fetching Map<String, Object> (instead of Record)
+       and List<Map<String, Object>> (instead of Result)
+#549 - Add Factory.function() for plain SQL functions
+#611 - Simulate RPAD and LPAD in SQL Server, Sybase
+#627 - Add support for Postgres FOR UPDATE OF [table-name] clause
+#628 - Add support for REPEAT (SQL Server: REPLICATE) function
+#637 - Nicely format time in StopWatch logging output
+#640 - Simulate Postgres FOR UPDATE OF [table-name] clause in
+       other dialects
+#649 - CURSOR: Add Cursor.fetch(int) .fetchOne() 
+       .fetchResult(int) .fetchResult()
+#653 - Add support for MySQL encryption and compression functions
+#660 - Clarify Javadoc of UpdatableRecord to explain its
+       behaviour when changing the main unique key
+#669 - EXPORT: Add Result.formatHTML()
+#672 - Add convenience method UpdatableRecord.copy() in order to
+       reset primary key values for a subsequent INSERT
+#675 - EXPORT: Add Result.formatCSV()
+#683 - Implement ResultImpl.equals() and .hashCode()
+#684 - Implement AbstractStore.equals() and .hashCode()
+#685 - Add Store.size() to indicate the maximum index of the 
+       Store
+#687 - EXPORT: Add result.formatJSON()
+#689 - Create separate builds: jooq-core.zip and 
+       jooq-with-dependencies.zip
+#690 - CURSOR: Add support for ResultSet type returned from H2
+       stored functions
+#695 - CURSOR: Add support for ResultSet type returned from
+       Postgres stored functions
+#697 - Add Factory.fetch(String) for executing plain SQL queries
+       that return results
+#701 - Add ResultQuery.fetchArray() and .fetchOneArray to return
+       Object[][] and Object[]
+#704 - Always add top and bottom line in Result.format()
+#705 - Right-align numeric values in Result.format()
+#716 - Add SUBSTRING function Field.substring(Field, Field)
+       taking fields as arguments
+#719 - Document risk of SQL injection in plain SQL and literal
+       factory methods
+#726 - Add LENGTH function as a synonym for CHAR_LENGTH
+
+API changes (backwards-compatible)
+----------------------------------
+#698 - Inconsistent API with Factory.fetch(Table<R> [,Condition])
+       Let method return Result<R> instead of List<R>
+#699 - Let Result<R extends Record> extend List<R>
+
+API changes (previous API now deprecated)
+-----------------------------------------
+#656 - Decrease verbosity of plain SQL methods. They will just be
+       called Factory.field() .condition() .table() .query()
+
+Test cases
+----------
+#643 - Add integration test for code generation of invalid and
+       incomplete types in Oracle
+#654 - Add integration tests for master data tables with PK types
+       other than NUMBER/INT
+#655 - Add missing integration tests for TRIM function
+
+Bug fixes
+---------
+#450 - Improve plain SQL integrity checks for bind variables
+#610 - CODEGEN: Compilation error in generated source code for
+       databases with table named 'system'
+#646 - An empty Java package is generated for an empty PL/SQL
+       package. This is unnecessary
+#651 - CODEGEN: Avoid importing datatypes in generated source
+       code to prevent collisions
+#657 - NullPointerException when creating a Factory with a null
+       SchemaMapping
+#658 - Master data table code generation is broken for tables
+       with more or less than 3 columns
+#662 - Add support for the missing Postgres data type "bpchar"
+#663 - Add support for the missing Sybase data type "int"
+#664 - Ingres INTEGER data types are not correctly generated
+#665 - HSQLDB Datatype CLOB and BLOB are not supported, when
+       selecting from plain SQL tables
+#666 - The evil bug: Ingres TRIM function only executes RTRIM
+#673 - UpdatableRecord.store() doesn't work if called after
+       .delete()
+#702 - Add support for the missing SQLite data type "NULL"
+#706 - CURSOR: Ensure that Query.execute() runs in a single
+       transaction when Postgres refcursor is involved in the
+       query (this fixes a Postgres JDBC driver flaw)
+#724 - NullPointerException when passing a single literal null
+       bind value to plain SQL methods without casting to Object
+#729 - DB2, Derby, Ingres, Oracle cannot bind null values in
+       plain SQL
+
+Version 1.6.1
+=================================================================
+
+In this release, the PORTABILITY project has been implemented.
+Finally, the SQLDialect has been removed from most generated
+artefacts (Schema, Table, Field, Sequence, etc). Also, the
+constructing Factory is not referenced by its created QueryParts
+anymore, unless this is really necessary (Query objects, UDT's, 
+ARRAY types). This leads to higher compatibility between schemata
+of different databases, e.g. if users want to use an HSQLDB 
+development and Oracle productive database.
+
+Unfortunately, this means that the way stored procedures are
+called had to be changed. This is an API break that could not be
+avoided. The pre-1.6.1 StoredObject.execute(Connection) method
+is deprecated and will be removed in the future. It has been
+replaced by StoredObject.execute(Configuration)
+
+In addition to this project, many more window functions are now
+supported, as well as the Oracle-specific CONNECT BY clause for
+recursive queries.
+
+Features
+--------
+#351 - Add support for Oracle ROWID data type
+#452 - PORTABILITY: Create a super-set of RDBMS data types
+#453 - PORTABILITY: Don't create dialect-specific QueryParts
+#455 - Add support for the Oracle CONNECT BY clause
+#587 - Add optional OFFSET clause to form LIMIT .. OFFSET
+       constructs
+#589 - Add extended FOR UDPATE [OF ...] [{WAIT n | NOWAIT | SKIP
+       LOCKED }] support
+#591 - Add support for LEAD() OVER() and LAG() OVER() window
+       functions
+#592 - Add support for the CUME_DIST() OVER() window function
+#601 - Add Factory.literal() convenience methods
+#602 - Add Factory.val() methods to decrease .constant()
+       verbosity
+#604 - Add support for RESPECT NULLS clause in some window
+       functions
+#605 - Add Factory.use(String) for non-generated schemata
+#613 - Add PI function
+#616 - Add Factory.two() literal convenience method
+#630 - Add support for Oracle CONNECT BY pseudo-columns LEVEL,
+       CONNECT_BY_ISCYCLE, CONNECT_BY_ISLEAF
+
+API changes
+-----------
+#299 - PORTABILITY: Create a dialect-independent meta-model
+#588 - Add OVER() keyword to FIRST_VALUE() and LAST_VALUE() API
+
+Test cases
+----------
+#368 - Add integration test for use with schema mapping
+#586 - Upgrade H2 to 1.3.155
+#607 - Add integration tests for CRUD / SP's / UDT's / ARRAY's
+       with SchemaMapping
+#612 - Add integration tests for LPAD and RPAD functions
+#624 - Add integration test for code generation of invalid/
+       incomplete views in Oracle
+#631 - PORTABILITY: Add integration tests for using Oracle-
+       generated schema against an HSQLDB database
+#638 - Add missing integration test for DECIMAL data type
+
+Bugfixes
+--------
+#176 - Stored procedures / functions in EQUIVALENT schemata
+       cannot be called
+#493 - Bind variable mismatch when constructing bad SQL
+#594 - Confusing Javadoc in SELECT DSL API
+#603 - Fix DB2 'IGNORE NULLS' clause
+#619 - SUBSTRING() function is broken in DB2, Ingres, SQL Server
+#623 - SQL syntax error for some MERGE queries in SQL Server and
+       Sybase
+#633 - SchemaMapping is not applied to sequences
+#634 - Sequences are not escaped in generated SQL
+
+Version 1.6.0
+=================================================================
+
+Apart from supporting various additional standard and non-
+standard JOIN constructs, there is now also full support for the
+SQL standard MERGE statement and MySQL's ON DUPLICATE KEY variant
+thereof. A great number of API enhancements have been added, 
+which improve the usability of jOOQ. The Ingres database is now
+also supported.
+
+Features
+--------
+#301 - Add support for Oracle execution hints
+#409 - Add support for NATURAL JOIN syntax, where RDBMS allows it
+#415 - Make fluent API's underlying SelectQuery objects publicly
+       available
+#429 - Add Ingres support
+#475 - Document class-level generic types <R> and <T> in Javadoc
+#486 - Add support for SQL MERGE clause
+#494 - Allow for omitting schema name in generated SQL
+#496 - Automatically update IDENTITY values in UpdatableRecord,
+       after storing them
+#520 - Add support for JOIN ... USING syntax
+#524 - Upgrade HSQLDB to 2.2
+#533 - Add ORDER BY [Map] or BY [List] functionality
+#534 - Add Result.isEmpty()
+#535 - Call upon ConfigurationRegistry.provideFor() before 
+       throwing a DetachedException
+#536 - Simulate CASE [value] WHEN [value] THEN [result] END 
+       syntax in Derby
+#538 - Add some logging to ConfigurationProvider
+#539 - Add possibility to negate numeric values with Field.neg()
+#541 - Add support for MySQL ON DUPLICATE KEY clause
+#542 - Allow for Collection arguments in INSERT's DSL API
+#543 - Allow for creating FUNCTION() OVER() without PARTITION BY
+       or ORDER BY clause
+#546 - Add Factory.use(Schema)
+#548 - Add new internal type FieldMap
+#550 - Simulate ON DUPLICATE KEY INSERT clause in dialects other
+       than MySQL
+#551 - Add TableMapping, similar to SchemaMapping for mapping 
+       tables
+#553 - Add Factory.plainSQLQuery
+#554 - Add Factory.plainSQLField with a DataType parameter
+#555 - Add UpdateXXX.set(Map) convenience methods to DSL API
+#557 - Enhance INSERT DSL API to allow for adding VALUES clause
+       with InsertXXX.set() syntax
+#570 - Add support for the RAND() function
+#567 - Add support for Ingres Sequences
+#572 - Add support for the ATAN2() function
+#573 - Add possibility for additional select() clauses for 
+       convenience
+#575 - Add support for the FULL OUTER JOIN syntax, where RDBMS
+       supports it
+#576 - Add support for the CROSS JOIN syntax, where RDBMS 
+       supports it
+#581 - Enhance API and allow Collection<? extends Field<?>>
+       instead of Collection<Field<?>>
+
+API changes
+-----------
+#397 - Purge deprecated API
+
+Bugfixes
+--------
+#481 - Handle case where an empty record is stored
+#522 - Misleading Javadoc in generated stored procedures and
+       function constructors
+#532 - Restore Postgres INFORMATION_SCHEMA
+#537 - Prevent null from being added to QueryPartList
+#540 - Error when TRACE logging Limit
+#544 - Aliased elements are not bound correctly when rendered
+       with toSQLReference()
+#559 - Loosen type safety on overloaded methods to prevent
+       compilation errors with javac/Netbeans
+#560 - HSQLDB DataType REAL is configured incorrectly
+#565 - Add integration tests for current_user() function
+#569 - ORA-01427 when generating foreign key relations
+#571 - Field.trim() not correctly implemented for SQL Server
+#583 - Accelerate integration tests: Reset schema only if
+       necessary
+
+Version 1.5.9
+=================================================================
+
+This version ships with lots of new functionality. Finally, the
+DSL-style API has been extended to CRUD operations (INSERT, 
+UPDATE, DELETE)! Also, support for the TRUNCATE TABLE statement
+has been added.
+
+The most important new features include the support for SQL:2003
+standard window functions, which are available in most major
+RDBMS. Additionally, basic function support has been widely
+extended.
+
+Features
+--------
+#148 - Added support for window functions
+#204 - Add support for multi-record INSERT's
+#416 - Added support for retrieval of IDENTITY values
+#433 - Use bind variables for LIMIT and OFFSET
+#441 - Added foreign key relationship meta information to the
+       generated source code
+#446 - Beautify ResultImpl.toString() method
+#461 - Automatically cast CONCAT parameters to Field<String> if
+       necessary
+#463 - Added support for trigonometric functions
+#471 - Added support for the sign function
+#472 - Added support for GREATEST/LEAST functions
+#474 - Added support for "hyperbolic" functions SINH, COSH, TANH,
+       and COTH
+#482 - Added DSL API for INSERT statements
+#483 - Added DSL API for UPDATE statements
+#484 - Added DSL API for DELETE statements
+#485 - Added "Registry" for client code to provide Configurations
+       to jOOQ Attachables
+#490 - Added support for the TRUNCATE TABLE statement
+#495 - Generate source code for IDENTITY columns
+#501 - Added support for boolean conversion to Result, Record,
+       and Store
+#503 - Allow for schema navigation via generated artefacts
+#518 - Let stored procedures reference owner package 
+       if applicable
+#525 - Added NULLS {FIRST | LAST} clause to ORDER BY constructs
+#528 - Added Factory.getDataType() convenience method
+#530 - Added Factory.zero() and Factory.one() convenience methods
+       
+API changes (jooq)
+------------------
+#527 - Weakened type-safety on Field.nvl2()
+#529 - Deprecated Factory.select(Object...), added .selectOne()
+       and .selectZero() instead
+
+API changes (jooq-meta)
+-----------------------
+#30  - Add ParameterDefinition for stored procedures, instead of
+       reusing ColumnDefinition
+#499 - Add reference to TableDefinition in ColumnDefinition
+#500 - Add AttributeDefinition for UDTDefinition, instead of
+       reusing ColumnDefinition
+
+Bug fixes
+---------
+#369 - Adapt H2 relations generation to H2's correction of
+       information_schema.cross_references
+#435 - Added integration tests for NESTED SELECTs holding LIMIT
+       clauses
+#460 - Syntax error when using a field with a reserved name
+#462 - Fixed Javadoc broken links
+#473 - Don't cast when cast is unnecessary
+#479 - INSERT statement should not set all fields for a table
+#497 - Derby referential code generation is broken, for named
+       foreign keys
+#498 - Oracle package content is generated in arbitrary order
+#502 - Syntax error when creating an empty IN condition
+#526 - Corrected Javadoc in Field.coalesce()
+
+Version 1.5.8
+=================================================================
+
+Finally, jOOQ now supports two important new RDBMS:
+SQL Server and Sybase!
+
+Apart from this great enhancement, there is now also full support
+for the non-SQL standard LIMIT clause, even in dialects where the
+LIMIT clause is not supported natively (especially Oracle, but
+also DB2, SQL Server and Sybase, which have limitations). jOOQ
+simulates LIMITs by rendering nested selects filtering on ROWNUM
+(Oracle) or on ROW_NUMBER() (DB2, SQL Server and Sybase).
+
+Other interesting additions are an increasing support for native
+mathematical functions. More function support will be added in
+future versions.
+
+Features
+--------
+#16  - Added support for SQL Server
+#21  - Uniform implementation of the LIMIT clause. Implemented
+       LIMIT clause simulation through analytic functions, where
+       LIMIT is not supported natively
+#97  - Added support for Sybase
+#418 - Measure time of various steps in source code generation
+#420 - Added support for proprietary SQL extensions "FOR UPDATE"
+       and "FOR SHARE"
+#431 - Added additional statistics to generation log files
+#432 - Unified the various "standard" ANSI INFORMATION_SCHEMA
+       implementations in the jooq-meta artefact
+#436 - Added support for the modulo function
+#438 - Added floor and ceil functions
+#439 - Added support for mathematical functions (logarithms,
+       exponentials, sqrt)
+#447 - Enhanced Field.add() and Field.subtract() to work for date
+       time fields, also
+
+
+API changes
+-----------
+#428 - Created new Maven artefact jooq-meta to cleanly separate
+       database meta-data navigation from code generation
+#458 - Decreased DSL verbosity for arithmetic operations and for
+       ordering
+
+Bug fixes
+---------
+#417 - Restored warning when unknown column type is encountered
+       in source code generation
+#419 - Corrected misleading Select.fetchOne(...) Javadoc
+#421 - Optimised AbstractRecord's memory consumption
+#448 - Corrected some Javadoc @see links
+#449 - Changed Field.concatenate() to accept Field<?> parameters
+       to avoid generic varargs warnings
+
+Version 1.5.7
+=================================================================
+
+This is the first release built with support of Maven thanks to
+the help of some jOOQ users!
+
+The main new features in this release are the improved support
+for serialisation/deserialisation of jOOQ objects through use of
+the newly introduced "Attachable" interface.
+
+If using log4j or the newly supported slf4j logging framework
+in debug/trace mode, there is the possibility to log query
+building/execution time statistics.
+
+Apart from these new features, fixes were mainly done in the
+fields of type casting, HSQLDB 2.1 upgrade support, stored
+procedures with OUT, IN/OUT parameters. Please upgrade, if you
+are using any of those features.
+
+If you extend jOOQ as a base implementation for source code
+generation, be aware of the fact, that the jOOQ-codegen is
+currently undergoing major changes. Expect the code generation
+API to stabilise again in one of the next releases. 
+
+Features
+--------
+#104 - Added maven dependency
+#248 - Integrate UDT types with ARRAYs
+#295 - Allow for attaching/detaching UpdatableRecords to/from
+       Configurations
+#359 - Added statistics measurement to Query execution for debug
+       log level
+#362 - Added deprecation configuration flag
+#364 - Document unknown type in generated source code
+#373 - Improve exception handling in code generation
+#378 - Added support for Oracle stored functions with OUT
+       parameters
+#382 - Added Factory.attach() methods to re-attach deserialised
+       Attachables
+#394 - Add logging support for SLF4J
+#398 - Allow to provide a DataType in Factory.constant()
+#399 - Provide access to TypeUtils.convert() methods via DataType
+#404 - Added trace logging for measuring the speed of various
+       query execution steps
+
+API changes
+-----------
+#358 - Enhanced DSL API to allow for HAVING clauses without
+       GROUP BY clauses
+#367 - Make Store, Result, QueryPart "Attachable"
+#374 - Introduce strategy pattern to code generation for future
+       support for advanced naming schemes
+#375 - Decouple Database from Generator
+#381 - Made DataType Serializable
+#384 - Deprecated singleton QueryParts
+#388 - Unify "internal" API using an Adapter pattern
+
+Bug fixes
+---------
+#187 - Protect generated Record navigation methods against name
+       clashes
+#266 - Added more thorough integration tests for dialect-specific
+       casting (including some fixes related to varchar types)
+#360 - Added more integration tests for the DISTINCT clause
+#361 - Add more checks in testInsertUpdateDelete()
+#366 - Warn only once per ColumnDefinition, if a data type is
+       unknown
+#377 - NullPointerException when generating invalid stored 
+       function
+#380 - Added integration tests to check for proper 
+       serialisability
+#386 - Fixed incompatibilities with HSQLDB 2.1.0
+#387 - Fixed unnecessary imports in some Oracle generated
+       Records
+#389 - Fixed javac compiler warning in AbstractStoredObject
+#391 - Cannot properly call stored procedures when IN/OUT
+       parameter is bound to NULL
+#392 - Procedures with several OUT parameters may not register
+       OUT parameters correctly
+#410 - Passing null VARRAY values to Oracle stored procedures
+       causes issues
+#412 - limit(int) sets default offset incorrectly in some
+       dialects
+
+Version 1.5.6
+=================================================================
+
+This release consists mainly of code generation bug fixes and
+minor API improvements and enhancements.
+
+The most important improvement is ticket #90, by which lazy
+fetching and iteration over data is now supported. jOOQ lets you
+keep a reference to a Cursor that has an open JDBC ResultSet, to
+fetch data from on-the-fly.
+
+A few major code generation bugs were reported where the
+generated code may cause ambiguity due to an inconsistent API.
+This means that you will have to re-generate your schema after
+upgrading to version 1.5.6. Some of your code may not compile
+anymore, after this upgrade.
+
+Features
+--------
+#90  - Added possibility for lazy fetching of data
+#208 - Added convenience methods for direct invocation of
+       sequences' currval() and nextval() attributes
+#212 - Created one factory per dialect for better separation of
+       dialect-specific support
+#213 - Generate a factory for each schema
+#251 - Opened up base implementations for Field<?> and Condition
+       to allow for custom implementations by client code
+#274 - Integrate H2 ARRAY types with stored procedures
+#292 - Documented usage of log4j and java.util.logging
+#306 - Added support for the NULLIF function
+#319 - Added Field.between(Field<T>, Field<T>) method 
+#320 - Added trace logging for variable binding and SQL
+       generation methods
+#323 - Added Field.in(Field<?>...) method
+#325 - Include release version number in delivered .jar files
+#328 - Improved configuration setup documentation page
+#333 - Let Result implement Serializable
+#334 - Added fetchMap() convenience methods
+#335 - Added more functions and aggregate functions examples to
+       documentation
+#338 - Visually improve code generation logging
+#339 - Removed skipping of unreferenced UDT's, ENUM's and ARRAY's
+#342 - Improved generated referential code by using fetch() and
+       fetchOne() API
+#356 - Let UpdatableRecord.store() and delete() return an int
+       to indicate whether the record was actually modified
+
+API changes
+-----------
+#233 - Allow for joining TableLike instead of Table
+#337 - Added generic type <R extends TableRecord<R>> to
+       InsertSelectQuery
+#341 - Fixed API flaw where SelectOnConditionStep.and() methods
+       and similar ones returned SelectConditionStep, instead of
+       SelectOnConditionStep
+
+Bugfixes
+--------
+#69  - Corrected referential code generation for foreign keys
+       that reference non-primary unique keys
+#85  - Corrected referential code generation for multi-field
+       foreign keys
+#121 - Covered more Factory.executeXXX() methods with integration
+       tests
+#318 - Fixed NullPointerException when executing SELECT * from
+       aliased tables
+#321 - BetweenCondition does not bind left hand side Field
+       correctly
+#322 - InCondition does not bind left hand side Field correctly
+#326 - Avoid method overloading where binding <T> to Object
+       may lead to compile-time ambiguities (with javac)
+#343 - Add more foreign key navigation method integration tests
+#347 - Add explicit integration tests for schema artefacts
+       excluded from code generation
+#350 - Disambiguate navigation methods if several foreign keys
+       reference the same entity
+#352 - Disambiguate navigation methods if a table ending on S
+       references itself
+#353 - Added integration test for compilation of generated
+       artefacts with javac (as opposed to the Eclipse compiler)
+#355 - Error when storing an UpdatableRecord that has no changed
+       values
+
+Version 1.5.5.2
+=================================================================
+
+A critical bug was reported from the 1.5 release stream where
+stored functions did not render their parameters in correct order
+
+Features
+--------
+#302 - Map Oracle's NUMBER data type to java.lang.Number in
+       stored procedures, stored functions
+
+Bugfixes
+--------
+#317 - StoredFunctionImpl.asField() renders parameters in wrong
+       order
+
+Version 1.5.5.1
+=================================================================
+
+In version 1.5.5, there was a fatal bug breaking Derby source
+code generation. Only the Derby dialect is affected. Please
+update immediately, if you are using jOOQ's Derby integration
+
+Bugfixes
+--------
+#315 - Generated master data records are not sorted by PK
+#316 - Derby code generation fatally broken
+
+Version 1.5.5
+=================================================================
+
+This version is released early as there are some important
+bugfixes. Additional improvemetns include:
+
+- Improved DSL related to conditions in HAVING and JOIN clauses
+- Support for Oracle-style functions, such as NVL, NVL2, COALESCE
+  DECODE, etc
+
+Features
+--------
+#304 - Add support for Oracle NVL function
+#305 - Add support for COALESCE function
+#308 - Add support for Oracle NVL2 function
+#311 - Add support for Oracle DECODE function
+
+API changes
+-----------
+#223 - Enhance DSL to accept and(), or() and similar methods in
+       JOIN steps
+#224 - Enhance DSL to accept and(), or() and similar methods in
+       HAVING steps
+
+Bugfixes
+--------
+#297 - Fixed Factory.concatenate() function
+#298 - Added integration tests for nested selects in HAVING
+       clause
+#300 - Added integration tests for nested selects in JOIN clause
+#303 - Javadoc correction
+#307 - Accelerated integration tests
+#309 - Fixed JDBC variable binding issue related to Conditions 
+       where the lhs is a function (e.g. stored function) and the 
+       rhs is a constant
+#310 - Fixed issue where fetchOne() methods throw
+       NullPointerException if no result record is available
+#312 - Fixed issue where Field.equal(...) methods rendered
+       unexpected SQL when rhs null is cast to a type
+#313 - Fixed Derby cast type for VARCHAR
+#304 - Let the DerbyDataType default for java.lang.String be
+       VARCHAR, not LONG VARCHAR
+
+Version 1.5.4
+=================================================================
+
+Feature #243 required a minor API change in the base classes of
+generated source code. This means you have to re-generate all
+your jOOQ artifacts in order to migrate to 1.5.4. The artifacts
+themselves should be regenerated in a compatible way, such that
+your client code should not be affected. If this is not the case,
+please report a ticket here:
+
+  https://sourceforge.net/apps/trac/jooq/newticket
+
+Apart from the Derby RDMBS and some new data type support, there
+have been many new convenience methods added all over the API.
+For instance, if type-safety is not really a requirement, there
+are lots of possibilities to use plain SQL directly in the DSL.
+In that case, data can be accessed from Record, Results, not only
+through Field<?>, but also through field names or indexes.
+
+Check out the updated documentation (soon) here:
+
+  https://sourceforge.net/apps/trac/jooq/wiki/Examples
+
+- Support for the Derby RDBMS
+- Support for casting. This allows for even greater flexibility
+  in cases where jOOQ cannot 100% ensure type-safety
+- Support for ARRAY types. Oracle, Postgres, HSQLDB and H2 ARRAY
+  types are now supported natively as regular <T> bindings in
+  jOOQ's Field<T>
+- Support for dialect-specific data types. CHAR, VARCHAR, CLOB
+  are no longer treated equally as java.lang.String. Their
+  type heritage is also generated
+- More sequence support
+- Lots and lots of bug fixes
+
+Features
+--------
+#95  - Support for the Derby RDMBS
+#163 - Add support for JDBC type ARRAY (with Postgres)
+#209 - Add support for DB2 sequences
+#210 - Add support for H2 sequences
+#211 - Add support for HSQLDB sequences
+#215 - Support for SQL casting using <T> as cast type
+#246 - Support for SQL casting using dialect-specific data types
+#254 - Add HSQLDB support for ARRAY types
+#256 - Add Oracle support for VARRAY types
+#257 - Integrate ARRAY types with stored procedures
+#261 - Add a global type mapping to the generated Schema object
+#267 - Add DataTypeDefinition for further abstraction of data
+       types in code generation
+#269 - Add H2 support for ARRAY types
+#290 - If log4j is not on the classpath, use java.util.logging
+       instead, as fallback
+
+API Changes
+-----------
+#156 - Allow for results to be accessed by index, not by field
+#218 - Corrected bad method signature:
+       Record.getValueAsLong(Field<?>, Integer)
+#219 - Extended Result and Select API's to be more similar to 
+       that of Record
+#232 - Add more convenience plain SQL support to the API
+#235 - Add convenience methods to Record, Result and Select for
+       access of data via field name
+#243 - Refactor DataType implementations in order to allow for
+       the use of generics
+#259 - Add field type to database meta data (ColumnDefinition)
+#260 - Add field type to database meta data (Field<?>)
+#262 - Add default behaviour for Record.getValue(Field<?>)
+#276 - Add Javadoc as a ZIP file to the jOOQ distribution
+
+Bugfixes
+--------
+#125 - Add more plain SQL integration tests
+#191 - Add more integration tests for nested unions
+#205 - Implemented workaround for handling Postgres stored
+       functions with UDT OUT parameters
+#214 - Fixed NPE when generating a stored function with an
+       unknown parameter type
+#216 - Fixed some cases where binding of BigInteger is not done
+       correctly
+#220 - Syntax error when using select statement in a CASE clause
+#221 - Corrected integration tests for combined update and
+       select statements
+#222 - Added integration test for INSERT statements having
+       nested SELECT statements for their fields
+#225 - Correctly cast array types in Postgres
+#230 - Potential misuse of Blob and Clob in H2's JDBC types
+#239 - Factory.fetchAny() is not implemented for SQLite
+#244 - Fixed peculiar MySQL casting support where cast types do
+       not match any data types
+#245 - Fixed NPE when reading null dates in SQLite
+#249 - Added ARRAY type integration tests
+#255 - Stored procedure bind variables get mixed up when any
+       argument is null
+#263 - Correctly handle Postgres function overloading
+#264 - Ambiguous funciton calls when calling overloaded functions
+       with null parameter
+#281 - Handle compilation errors when generating stored
+       procedures with > 254 parameters
+#283 - Fixed compilation errors in generated source code for
+       Oracle's UDT table type
+#284 - Fixed compilation errors in generated source code for
+       Oracle procedures in packages, when they have no 
+       parameters
+#285 - Fixed compilation errors in generated source code for
+       Oracle tables with the same name in different schemata
+#286 - Fixed name collisions in generated objects with the
+       java.lang.* package
+#288 - Prevent the creation of UNION queries with bad syntax
+       in MySQL
+#289 - Correctly alias fields within UNION queries for some
+       dialects, which then only require the "AS" keyword
+#291 - Cannot create an aliased field called "year" in Postgres
+
+Version 1.5.3
+=================================================================
+
+- Lots of stored procedure support was implemented
+- Support for sequences was added
+- The final decision to postpone support for DB2 UDT's was made
+- Some code generation bugfixes
+
+Features
+--------
+#36  - Added stored procedure / stored function support for HSQLDB
+#140 - Added support for Oracle sequences
+#147 - Added support for H2 stored functions
+#162 - Correctly integrate UDTs with stored procedures
+#170 - Added support for Postgres stored functions
+#186 - Added support for more Oracle PL/SQL simple data types
+#193 - Simulate support for H2 "stored procedures"
+#195 - Simulate support for Postgres "stored procedures"
+#206 - Added support for Postgres sequences
+
+API changes
+-----------
+#180 - Improved DSL for constant values
+#181 - Allow for referencing Field<?> in function argument list
+#189 - Renamed convenience methods in org.jooq.Record
+#207 - Add fetchOne(Field) method to org.jooq.Select API
+
+Bugfixes
+--------
+#182 - Protected generated Record classes against clashes with inherited methods
+#183 - Fixed NullPointerException, when generating master data tables with
+       NULL fields
+#184 - Fixed IllegalArgumentException, when a data type is present in the
+       schema, but unavailable in code generation logic
+#185 - Code generation should not fail when single elements cannot be generated
+#188 - Improved integration tests for stored procedures / functions / packages
+#196 - Increase RDMBS version compatibility by avoiding "SELECT *" in code
+       generation logic
+#199 - Added integration tests for stored procedures in RDBMS that do not
+       support OUT parameters
+#201 - Fixed issue in DB2 where stored procedures without parameters were not
+       generated.
+#202 - Added integration tests for stored procedures / functions without
+       parameters
+
+Version 1.5.2
+=================================================================
+
+- Improved support for stored procedures, also in packages
+- A minor API change was inevitable to implement #173. The API change only
+  concerns the INTERNAL API. Deprecation marks are added and deprecated items
+  will be removed in 1.6.0
+- Experimental SQLite database support
+- Some important bug fixes
+
+Features
+--------
+#25  - Added support for Oracle packages
+#114 - Added support for Oracle UDTs
+#145 - Added support for the SQLite database
+#150 - Generate static convenience methods for stored procedures / functions
+#151 - Generate static convenience methods for stored function fields
+#152 - Generate meaningful serialVersionUID in generated classes
+#173 - Added support for EQUIVALENT schemata
+
+API changes
+-----------
+#159 - Added convenience method List<T> getValues(Field) to Result
+#165 - Added convenience methods for creating EXISTS clauses
+#169 - Improved DSL for WHERE clauses
+
+Bugfixes
+--------
+#68  - Prevent issues originating from overloaded stored procedure names,
+       generating identical Java class names
+#153 - Fixed issue with generated code for DB2 stored functions
+#154 - Fixed issue with generated code for DB2 stored functions
+#155 - Fixed issues with database NULL not being mapped correctly to Java NULL
+       when selecting values that have a primitive type (int, long, etc)
+#158 - Potential ClassCastException when using Field<BigInteger>
+#171 - Corrected issue related to selection of default schema in DB2
+#177 - Fixed issue related to generated code for tables or UDTs without columns
+
+
+Version 1.5.1
+=================================================================
+
+- H2 database support thanks to Espen Stromsnes
+- Improved stored procedure support
+
+Features
+--------
+#96  - Added H2 database support
+#101 - Added stored procedure / stored function support for Oracle
+#138 - Added stored procedure support for DB2
+#146 - Added support for DB2 functions
+
+API changes
+-----------
+#143 - Added convenience methods to Record
+
+Bugfixes
+--------
+#84  - Implemented referential code generation for foreign keys that do not 
+       match their primary keys' types
+#141 - Encoding problem in generated master data classes
+
+Version 1.5.0
+=================================================================
+
+- A big one. Major API changes / improvements
+- Added lots of convenience methods
+- UDT support
+- Enum support
+- DB2 support thanks to Espen Stromsnes
+- "Light" dependency to log4j added. jOOQ will still run without it
+
+Features
+--------
+#1   - Create support for UDTs (so far only for PostgreSQL)
+#15  - Added DB2 support
+#60  - Added support for nested selects in INSERT and UPDATE
+       statements
+#83  - Added log4j logging to code generation and runtime
+#87  - Add support for arithmetic expressions
+#105 - Added support for ENUM data types, where applicable
+       (MySQL and PostgreSQL so far)
+#110 - Added execute and fetch convenience methods
+#111 - Added missing "select distinct" support
+#122 - Annotate generated classes with javax.annotation.Generated
+#123 - Generate user enum fields from data values (master data)
+#124 - Added PlainSQLTable
+#127 - Added not() operator to Condition
+#135 - Added convenience methods andNot() and orNot() in 
+       Condition
+
+API changes
+-----------
+#89  - Removed support for DataSource. jOOQ is not a transaction
+       manager
+#92  - Added SortField type to be used for sorting
+#99  - Provide better access to functions (No more FunctionFactory)
+#116 - Merge Manager functionality into Factory
+#118 - Improve API of org.jooq.Field
+#119 - Improve subquery condition API
+#132 - Reduced much of the select query API
+#134 - Better separation of SelectQuery and SimpleSelectQuery
+
+Bugfixes
+--------
+#109 - Error when executing select * if generated schema does not
+       match actual schema
+#115 - Fix various "null" pseudo field issues
+#126 - Error when selecting a single field from a union nested
+       select
+#129 - Fixed performance issue in Oracle code generation for
+       very large databases
+
+
+Version 1.4.4
+=================================================================
+
+Unreleased version, fixes included in 1.5.0
+
+Bugfixes
+--------
+
+#133 - JoinCondition does not take comparison operator
+
+Version 1.4.3
+=================================================================
+
+Some more bugfixes
+
+Bugfixes
+--------
+
+#71 - Generated code does not compile, when foreign key and 
+      primary key have a data type mismatch
+#73 - In Oracle generated code, multi-field foreign keys may 
+      generated bad relations code
+#82 - Conversion of literals to camelcase fails if numbers are
+      involved
+
+Version 1.4.2
+=================================================================
+
+Various bugfixes and minor improvements
+
+Features
+--------
+#66 - Add support for CASE or DECODE expression
+
+API changes
+-----------
+#77 - Functions should not extend FieldImpl, but a new 
+      AbstractField
+#78 - QueryPart pollutes declared method space of its 
+      implementations. Hide it by indirection
+
+Bugfixes
+--------
+#64 - Code generation fails when foreign key references a unique 
+      key that is not the primary key. Code generation for these
+      cases is omitted
+#67 - When loading properties files, a leading / seems to be 
+      mandatory. This is preventing users from correctly setting
+      up jOOQ the first time
+#70 - Add support for Oracle datatype TIMESTAMP(6)
+#72 - Name clashes in generated Tables
+#75 - Constant does not bind its values.
+#76 - Constant should not render strings all the time
+#79 - Constants are not properly escaped
+#80 - Position function does not bind any variables
+#81 - Add cast function to Constants in HSQL
+
+Version 1.4.1
+=================================================================
+
+Oracle patch release
+
+Features
+--------
+#63 - Generate referential functionality for Oracle
+
+Version 1.4.0
+=================================================================
+
+Support for PostGreSQL was added.
+Added lots of OR-mapping functionality.
+There is a general API change due to various new features.
+
+Features
+--------
+#14 - Add PostGreSQL support
+#40 - Resolve foreign keys. Allow for navigation between objects.
+#42 - Add PlainSQLField
+#45 - Add "dirty" flag to Record's values. This allows for
+      updating only relevant data.
+#47 - Complete implementation for UPDATE, INSERT, DELETE 
+      statements. Added some missing functionality.
+#48 - Add more support for Date, Time, Timestamp fields.
+#51 - Add a org.jooq.impl.Manager class that provides common 
+      utility methods for CRUD operations
+
+API changes
+-----------
+#10 - Add second generic type <R extends Record>. This is a
+      prerequisite for many OR-mapping features
+#18 - Use org.jooq.Record in InsertQuery and UpdateQuery
+#46 - Create UpdatableRecords as a prerequisite for JPA and true 
+      OR-mapping. These records support store() and delete()
+      methods
+#52 - Add default constructor in generated Records.
+#53 - Add refresh functionality to UpdatableRecords. See also #46
+#54 - Add a state to the factory class
+#56 - Reduce API, remove unnecessary Condition subinterfaces
+#57 - Reduce API, remove unnecessary QueryPart interfaces
+
+Bugfixes
+--------
+#49 - NullPointerException when generating relations on schema 
+      subset
+#58 - Count function renders bad SQL in various dialects
+#59 - Exception when selecting unaliased functions in queries
+
+Version 1.3.0
+=================================================================
+
+Support for HSQLDB was added.
+There is a major API change due to #44.
+
+Features
+--------
+#29 - Generate primary keys and foreign keys in Oracle code 
+      generation
+#34 - Add support for HSQLDB
+#39 - Generate primary keys and foreign keys in HSQLDB code 
+      generation
+#41 - Add documentation to QueryFactory and Functions
+
+API changes
+-----------
+#23 - Add support for more advanced joins
+#32 - Merge SelectQuery and ResultProviderQuery interfaces
+#44 - Let Query methods return "this"
+
+Bugfixes
+--------
+#35 - Add unit tests for HSQLDB support
+#37 - Syntax error in combined select queries!
+      The usage of combined queries in MySQL may still be a bit
+      awkward. Keep an eye out for further fixes
+#43 - Join with aliased tables doesn't work
+
+Version 1.2.0
+=================================================================
+
+The added Oracle support is now unit tested and more stable.
+The Oracle NUMBER data type is mapped more precisely to Java
+types.
+
+Features
+--------
+#12 - Model primary keys and foreign keys in generated code
+#22 - Improve mapping of Oracle NUMBER data type
+#26 - Add Plain SQL QueryParts
+#27 - Add support for HAVING clause
+
+Bugfixes
+--------
+#24 - Add Unit tests for oracle database (and fixed bugs)
+#31 - Pull up addOrderBy() methods from SelectQuery to
+      ResultProviderQuery
+
+Version 1.1.0
+=================================================================
+
+The main new feature is the Oracle support. Wait for 
+Version 1.1.1 for that support to be stabilised, as there are no
+Oracle unit tests running against an Oracle database yet.
+
+Features
+--------
+
+# 2 - Add support for inner / nested selects
+# 3 - Add more function support
+# 4 - Implement filtering functionality for code generation
+# 6 - Add Oracle Support
+# 9 - Create true POJO's (implementing org.jooq.Record) with 
+      getters and setters
+#17 - Make org.jooq.impl.Parameter independent of Field
+
+Bugfixes
+--------
+
+#11 - Code generation does not remove files
+
+Version 1.0.1
+=================================================================
+
+Features
+--------
+
+#5 - Prevent code regeneration, if no changes were made
+#7 - Implement ant task for code generation
+
+Version 1.0.0
+=================================================================
+Initial Release

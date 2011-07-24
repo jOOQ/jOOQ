@@ -10,7 +10,7 @@
 
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-codegen</artifactId>
-	<version>1.6.3-SNAPSHOT</version>
+	<version>1.6.3</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ Codegen</name>
@@ -140,14 +140,14 @@
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq-meta</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

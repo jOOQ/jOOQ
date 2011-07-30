@@ -89,13 +89,13 @@ public interface BindContext extends Context<BindContext> {
     BindContext bind(QueryPart[] parts) throws SQLException;
 
     /**
-     * Bind several values. This will also increment the internal counter.
-     */
-    BindContext bind(Object... values) throws SQLException;
-
-    /**
      * Bind a value using a specific type. This will also increment the internal
      * counter.
      */
-    BindContext bind(Object value, Class<?> type) throws SQLException;
+    BindContext bindValue(Object value, Class<?> type) throws SQLException;
+
+    /**
+     * Bind several values. This will also increment the internal counter.
+     */
+    BindContext bindValues(Object... values) throws SQLException;
 }

@@ -46,6 +46,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -128,7 +129,8 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     @Override
     @Deprecated
     public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        RenderContext context = new DefaultRenderContext(configuration, inlineParameters, false, false);
+        RenderContext context = new DefaultRenderContext(configuration);
+        context.inline(inlineParameters);
         toSQL(context);
         return context.render();
     }
@@ -142,38 +144,54 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     @Override
     @Deprecated
     public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        RenderContext context = new DefaultRenderContext(configuration, inlineParameters, true, true);
+        RenderContext context = new DefaultRenderContext(configuration);
+        context.inline(inlineParameters);
+        context.declareFields(true);
+        context.declareTables(true);
         toSQL(context);
         return context.render();
     }
 
     @Override
+    @Deprecated
     public final int bind(Configuration configuration, PreparedStatement stmt) throws SQLException {
         return bind(configuration, stmt, 1);
     }
 
     @Override
+    @Deprecated
     public final int bind(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
         return bindReference(configuration, stmt, 1);
     }
 
     @Override
+    @Deprecated
     public final int bindReference(Configuration configuration, PreparedStatement stmt) throws SQLException {
         return bindReference(configuration, stmt, 1);
     }
 
     @Override
+    @Deprecated
+    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
+        BindContext context = new DefaultBindContext(configuration, stmt);
+        bind(context);
+        return context.peekIndex();
+    }
+
+    @Override
+    @Deprecated
     public final int bindDeclaration(Configuration configuration, PreparedStatement stmt) throws SQLException {
         return bindDeclaration(configuration, stmt, 1);
     }
 
-    /**
-     * The default implementation is the same as that of
-     * {@link #bindReference(Configuration, PreparedStatement, int)}. Subclasses may override this method.
-     */
     @Override
-    public int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return bindReference(configuration, stmt, initialIndex);
+    @Deprecated
+    public final int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
+        BindContext context = new DefaultBindContext(configuration, stmt);
+        context.declareFields(true);
+        context.declareTables(true);
+        bind(context);
+        return context.peekIndex();
     }
 
     /**

@@ -36,16 +36,16 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.JoinType;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -88,35 +88,15 @@ class Join extends AbstractQueryPart {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return bind0(configuration, stmt, initialIndex, false);
-    }
-
-    @Override
-    public final int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex)
-        throws SQLException {
-        return bind0(configuration, stmt, initialIndex, true);
-    }
-
-    private final int bind0(Configuration configuration, PreparedStatement stmt, int initialIndex, boolean declaration)
-        throws SQLException {
-
-        int result = initialIndex;
-        if (declaration) {
-            result = internal(getTable()).bindDeclaration(configuration, stmt, result);
-        }
-        else {
-            result = internal(getTable()).bindReference(configuration, stmt, result);
-        }
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(getTable());
 
         if (usingSyntax) {
-            result = internal(using).bindReference(configuration, stmt, result);
+            context.bind((QueryPart) using);
         }
         else {
-            result = internal(getCondition()).bindReference(configuration, stmt, result);
+            context.bind(getCondition());
         }
-
-        return result;
     }
 
     public final Condition getCondition() {

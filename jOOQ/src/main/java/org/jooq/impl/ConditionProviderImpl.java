@@ -36,16 +36,15 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
-import org.jooq.Configuration;
 import org.jooq.Operator;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -120,8 +119,8 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return internal(getWhere()).bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(getWhere());
     }
 
     @Override

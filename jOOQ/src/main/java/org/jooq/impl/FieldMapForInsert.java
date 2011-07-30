@@ -35,13 +35,12 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -94,18 +93,8 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        for (Field<?> field : keySet()) {
-            result = internal(field).bindReference(configuration, stmt, result);
-        }
-
-        for (Field<?> field : values()) {
-            result = internal(field).bindReference(configuration, stmt, result);
-        }
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(keySet()).bind(values());
     }
 
     final void putFields(Collection<? extends Field<?>> fields) {

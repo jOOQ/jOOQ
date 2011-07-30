@@ -36,12 +36,12 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.RenderContext;
 
 
@@ -60,9 +60,7 @@ public class TrueCondition extends AbstractCondition {
     public static final TrueCondition TRUE_CONDITION   = new TrueCondition();
 
     @Override
-    public int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) {
-        return initialIndex;
-    }
+    public final void bind(BindContext context) throws SQLException {}
 
     @Override
     public final void toSQL(RenderContext context) {

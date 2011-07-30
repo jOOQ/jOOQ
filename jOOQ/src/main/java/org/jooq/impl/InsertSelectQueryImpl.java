@@ -35,11 +35,11 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertSelectQuery;
@@ -88,15 +88,9 @@ class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery impl
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-        result = internal(into).bindReference(configuration, stmt, result);
-
-        for (Field<?> field : into.getFields()) {
-            result = internal(field).bindReference(configuration, stmt, result);
-        }
-
-        result = internal(select).bindReference(configuration, stmt, result);
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(into);
+        context.bind(into.getFields());
+        context.bind(select);
     }
 }

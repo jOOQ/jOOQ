@@ -98,7 +98,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 statement = connection.prepareStatement(sql);
                 watch.splitTrace("Statement prepared");
 
-                bindReference(configuration, statement);
+                create(configuration).bind(this, statement);
                 watch.splitTrace("Variables bound");
 
                 result = execute(configuration, statement);

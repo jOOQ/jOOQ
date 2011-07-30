@@ -35,12 +35,12 @@
  */
 package org.jooq.util.postgres;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
@@ -87,8 +87,8 @@ public class PostgresSingleUDTOutParameterProcedure extends AbstractStoredProced
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return getDelegate().bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(getDelegate());
     }
 
     private final StoredFunctionImpl<?> getDelegate() {

@@ -35,12 +35,12 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -116,13 +116,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        for (Select<R> query : queries) {
-            result = internal(query).bindReference(configuration, stmt, result);
-        }
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(queries);
     }
 }

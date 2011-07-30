@@ -37,14 +37,15 @@ package org.jooq;
 
 /**
  * The render context is used for rendering {@link QueryPart}'s to SQL. A new
- * render context is instanciated every time a <code>QueryPart</code> is
- * rendered (or when it renders its component <code>QueryPart</code>'s).
+ * render context is instanciated every time a {@link Query} is rendered.
+ * <code>QueryPart</code>'s will then pass the same context to their components
  * <p>
  * This interface is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
+ * @see BindContext
  */
-public interface RenderContext extends Configuration {
+public interface RenderContext extends Context<RenderContext> {
 
     /**
      * Render the context's underlying SQL statement
@@ -73,14 +74,15 @@ public interface RenderContext extends Configuration {
     RenderContext sql(int sql);
 
     /**
-     * Append some (quoted) literal to the context's contained {@link StringBuilder}
-     */
-    RenderContext literal(String literal);
-
-    /**
      * Recurse rendering
      */
     RenderContext sql(QueryPart part);
+
+    /**
+     * Append some (quoted) literal to the context's contained
+     * {@link StringBuilder}
+     */
+    RenderContext literal(String literal);
 
     /**
      * Whether bind variables should be inlined, rather than rendered as
@@ -92,27 +94,4 @@ public interface RenderContext extends Configuration {
      * Set the new context value for {@link #inline()}
      */
     RenderContext inline(boolean inline);
-
-    /**
-     * Whether the current context is rendering a SQL field declaration (e.g. a
-     * {@link Field} in the <code>SELECT</code> clause of the query).
-     */
-    boolean declareFields();
-
-    /**
-     * Set the new context value for {@link #declareFields()}
-     */
-    RenderContext declareFields(boolean declareFields);
-
-    /**
-     * Whether the current context is rendering a SQL table declaration (e.g. a
-     * {@link Table} in the <code>FROM</code> or <code>JOIN</code> clause of the
-     * query).
-     */
-    boolean declareTables();
-
-    /**
-     * Set the new context value for {@link #declareTables()}
-     */
-    RenderContext declareTables(boolean declareTables);
 }

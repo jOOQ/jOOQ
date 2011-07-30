@@ -36,15 +36,14 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Operator;
 import org.jooq.RenderContext;
 
@@ -100,14 +99,8 @@ class CombinedCondition extends AbstractCondition {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        for (Condition condition : conditions) {
-            result = internal(condition).bindReference(configuration, stmt, result);
-        }
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(conditions);
     }
 
     @Override

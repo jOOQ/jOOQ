@@ -37,13 +37,13 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQLSERVER;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
@@ -51,6 +51,7 @@ import org.jooq.Field;
 import org.jooq.LockProvider;
 import org.jooq.Operator;
 import org.jooq.OrderProvider;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
@@ -141,27 +142,27 @@ implements
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        result = getSelect0().bindDeclaration(configuration, stmt, result);
-        result = getFrom().bindDeclaration(configuration, stmt, result);
-        result = getJoin().bindDeclaration(configuration, stmt, result);
-        result = getWhere().bindReference(configuration, stmt, result);
-        result = getConnectBy().bindReference(configuration, stmt, result);
-        result = getConnectByStartWith().bindReference(configuration, stmt, result);
-        result = getGroupBy().bindReference(configuration, stmt, result);
-        result = getHaving().bindReference(configuration, stmt, result);
-        result = getOrderBy().bindReference(configuration, stmt, result);
+    public final void bind(BindContext context) throws SQLException {
+        context.declareFields(true)
+               .bind((QueryPart) getSelect0())
+               .declareFields(false)
+               .declareTables(true)
+               .bind((QueryPart) getFrom())
+               .bind((QueryPart) getJoin())
+               .declareTables(false)
+               .bind(getWhere())
+               .bind(getConnectBy())
+               .bind(getConnectByStartWith())
+               .bind((QueryPart) getGroupBy())
+               .bind(getHaving())
+               .bind((QueryPart) getOrderBy());
 
         if (getLimit().isApplicable()) {
-            result = getLimit().bindReference(configuration, stmt, result);
+            context.bind(getLimit());
         }
 
-        result = forUpdateOf.bindReference(configuration, stmt, result);
-        result = forUpdateOfTables.bindReference(configuration, stmt, result);
-
-        return result;
+        context.bind((QueryPart) forUpdateOf)
+               .bind((QueryPart) forUpdateOfTables);
     }
 
     @Override

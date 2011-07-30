@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +44,7 @@ import java.util.Map;
 
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertOnDuplicateSetMoreStep;
@@ -91,8 +91,8 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return internal(delegate).bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(delegate);
     }
 
     @Override

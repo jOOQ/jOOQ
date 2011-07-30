@@ -71,7 +71,7 @@ class SQLQuery extends AbstractQuery {
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(bindings);
+        context.bindValues(bindings);
     }
 
     @Override

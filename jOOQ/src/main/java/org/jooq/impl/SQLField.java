@@ -73,7 +73,7 @@ class SQLField<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(bindings);
+        context.bindValues(bindings);
     }
 
     @Override

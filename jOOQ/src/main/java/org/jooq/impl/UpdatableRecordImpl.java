@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
@@ -85,18 +84,6 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
     @Override
     public final UpdatableTable<R> getTable() {
         return (UpdatableTable<R>) super.getTable();
-    }
-
-    @Override
-    @Deprecated
-    public final List<TableField<R, ?>> getPrimaryKey() {
-        return getTable().getPrimaryKey();
-    }
-
-    @Override
-    @Deprecated
-    public final List<TableField<R, ?>> getMainUniqueKey() {
-        return getTable().getMainUniqueKey();
     }
 
     private final UniqueKey<R> getMainKey() {

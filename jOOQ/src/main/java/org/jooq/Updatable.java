@@ -35,7 +35,6 @@
  */
 package org.jooq;
 
-import java.util.List;
 
 /**
  * A common interface for objects (tables, records) that can be updated or
@@ -46,21 +45,4 @@ import java.util.List;
  */
 public interface Updatable<R extends Record> {
 
-    /**
-     * @deprecated - 1.5.7 - Use {@link #getMainUniqueKey()} instead
-     */
-    @Deprecated
-    List<TableField<R, ?>> getPrimaryKey();
-
-    /**
-     * Retrieve this table's main unique key. If there exists a primary key in
-     * the table, the primary key is returned. Otherwise, the most suitable
-     * unique key is returned.
-     *
-     * @return All fields the table's main unique key consists of. This will at
-     *         least contain one {@link TableField}.
-     * @deprecated - 1.5.9 - Use {@link UpdatableTable#getMainKey()} instead
-     */
-    @Deprecated
-    List<TableField<R, ?>> getMainUniqueKey();
 }

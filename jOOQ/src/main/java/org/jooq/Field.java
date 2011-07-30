@@ -245,24 +245,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     <Z> SortField<Z> sort(Map<T, Z> sortMap);
 
-    /**
-     * Create an ascending sort field from this
-     *
-     * @return This field as an ascending sort field
-     * @deprecated - 1.5.8 - Use {@link #asc()} instead
-     */
-    @Deprecated
-    SortField<T> ascending();
-
-    /**
-     * Create a descending sort field from this
-     *
-     * @return This field as a descending sort field
-     * @deprecated - 1.5.8 - Use {@link #desc()} instead
-     */
-    @Deprecated
-    SortField<T> descending();
-
     // ------------------------------------------------------------------------
     // Arithmetic expressions
     // ------------------------------------------------------------------------
@@ -305,29 +287,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Field<T> sub(Field<? extends Number> value);
 
     /**
-     * An arithmetic expression subtracting value from this.
-     * <p>
-     * <ul>
-     * <li>If this is a numeric field, then the value is subtracted
-     * arithmetically</li>
-     * <li>If this is a date time field, then [value] days are subtracted to
-     * this date</li>
-     * </ul>
-     *
-     * @deprecated - 1.5.8 - Use {@link #sub(Number)} instead
-     */
-    @Deprecated
-    Field<T> subtract(Number value);
-
-    /**
-     * An arithmetic expression subtracting value from this
-     *
-     * @deprecated - 1.5.8 - Use {@link #sub(Field)} instead
-     */
-    @Deprecated
-    Field<T> subtract(Field<? extends Number> value);
-
-    /**
      * An arithmetic expression multiplying this with value
      */
     Field<T> mul(Number value);
@@ -338,22 +297,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Field<T> mul(Field<? extends Number> value);
 
     /**
-     * An arithmetic expression multiplying this with value
-     *
-     * @deprecated - 1.5.8 - Use {@link #mul(Number)}
-     */
-    @Deprecated
-    Field<T> multiply(Number value);
-
-    /**
-     * An arithmetic expression multiplying this with value
-     *
-     * @deprecated - 1.5.8 - Use {@link #mul(Field)} instead
-     */
-    @Deprecated
-    Field<T> multiply(Field<? extends Number> value);
-
-    /**
      * An arithmetic expression dividing this by value
      */
     Field<T> div(Number value);
@@ -362,22 +305,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * An arithmetic expression dividing this by value
      */
     Field<T> div(Field<? extends Number> value);
-
-    /**
-     * An arithmetic expression dividing this by value
-     *
-     * @deprecated - 1.5.8 - Use {@link #div(Number)} instead
-     */
-    @Deprecated
-    Field<T> divide(Number value);
-
-    /**
-     * An arithmetic expression dividing this by value
-     *
-     * @deprecated - 1.5.8 - Use {@link #div(Field)} instead
-     */
-    @Deprecated
-    Field<T> divide(Field<? extends Number> value);
 
     /**
      * An arithmetic expression getting the modulo of this divided by value
@@ -831,24 +758,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * depending on the dialect.
      */
     Field<String> concat(String... values);
-
-    /**
-     * Get the concatenate(field[, field, ...]) function
-     * <p>
-     * This translates into any dialect
-     * @deprecated - 1.5.8 - Use {@link #concat(Field...)} instead
-     */
-    @Deprecated
-    Field<String> concatenate(Field<String> field, Field<String>... fields);
-
-    /**
-     * Get the concatenate(value[, value, ...]) function
-     * <p>
-     * This translates into any dialect
-     * @deprecated - 1.5.8 - Use {@link #concat(String...)} instead
-     */
-    @Deprecated
-    Field<String> concatenate(String value, String... values);
 
     /**
      * Get the substring(field, startingPosition) function

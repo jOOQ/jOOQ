@@ -52,13 +52,6 @@ public class FalseCondition extends AbstractCondition {
 
     private static final long          serialVersionUID = -3972466479081463547L;
 
-    /**
-     * @deprecated - Do not use this singleton {@link FalseCondition} anymore,
-     *             as of 1.5.7
-     */
-    @Deprecated
-    public static final FalseCondition FALSE_CONDITION  = new FalseCondition();
-
     @Override
     public void bind(BindContext context) throws SQLException {}
 

@@ -140,17 +140,6 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a factory with no connection configured
-     *
-     * @param dialect The dialect to use with objects created from this factory
-     * @deprecated 1.5.2 use {@link #getStaticFactory(SQLDialect)} instead
-     */
-    @Deprecated
-    Factory(SQLDialect dialect) {
-        this((Connection) null, dialect);
-    }
-
-    /**
      * Create a factory with connection and dialect configured
      *
      * @param connection The connection to use with objects created from this
@@ -2676,7 +2665,7 @@ public class Factory implements Configuration {
 
     static {
         for (SQLDialect dialect : SQLDialect.values()) {
-            Factory.DEFAULT_INSTANCES[dialect.ordinal()] = new Factory(dialect);
+            Factory.DEFAULT_INSTANCES[dialect.ordinal()] = new Factory(null, dialect);
         }
     }
 

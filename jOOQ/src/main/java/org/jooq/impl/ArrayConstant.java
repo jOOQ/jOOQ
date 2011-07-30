@@ -71,9 +71,7 @@ class ArrayConstant<T> extends AbstractField<T> {
     @Override
     public final void toSQL(RenderContext context) {
         if (context.inline()) {
-
-            // TODO [#771] Check if this should be escaped as a literal
-            context.sql(array.getName());
+            context.literal(array.getName());
             context.sql("(");
 
             String separator = "";

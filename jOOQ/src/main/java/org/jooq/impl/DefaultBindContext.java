@@ -305,4 +305,31 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
 
         return this;
     }
+
+    // ------------------------------------------------------------------------
+    // Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("binding   [index ");
+        sb.append(index);
+        sb.append("]\ndeclaring [");
+
+        if (declareFields) {
+            sb.append("fields");
+        }
+        else if (declareTables) {
+            sb.append("tables");
+        }
+        else {
+            sb.append("-");
+        }
+
+        sb.append("]");
+
+        return sb.toString();
+    }
 }

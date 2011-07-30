@@ -83,11 +83,29 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(query);
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.bind(query);
+        }
+        else {
+            context.subquery(true)
+                   .bind(query)
+                   .subquery(false);
+        }
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(query);
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.sql(query);
+        }
+        else {
+            context.subquery(true)
+                   .sql(query)
+                   .subquery(false);
+        }
     }
 }

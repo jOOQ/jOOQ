@@ -188,20 +188,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         sb.append("]");
         sb.append("\ninlining  [");
         sb.append(inline);
-        sb.append("]\ndeclaring [");
-
-        if (declareFields) {
-            sb.append("fields");
-        }
-        else if (declareTables) {
-            sb.append("tables");
-        }
-        else {
-            sb.append("-");
-        }
-
         sb.append("]");
 
+        toString(sb);
         return sb.toString();
     }
 }

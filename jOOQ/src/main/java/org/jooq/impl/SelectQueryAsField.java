@@ -73,12 +73,32 @@ class SelectQueryAsField<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(query);
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.bind(query);
+        }
+        else {
+            context.subquery(true)
+                   .bind(query)
+                   .subquery(false);
+        }
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("(").sql(query).sql(")");
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.sql("(").sql(query).sql(")");
+        }
+        else {
+            context.sql("(")
+                   .subquery(true)
+                   .sql(query)
+                   .subquery(false)
+                   .sql(")");
+        }
     }
 
     @Override

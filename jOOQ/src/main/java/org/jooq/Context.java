@@ -68,4 +68,14 @@ public interface Context<C extends Context<C>> extends Configuration {
      * Set the new context value for {@link #declareTables()}
      */
     C declareTables(boolean declareTables);
+
+    /**
+     * Whether the current context is rendering a sub-query (nested query)
+     */
+    boolean subquery();
+
+    /**
+     * Set the new context value for {@link #subquery()}
+     */
+    C subquery(boolean subquery);
 }

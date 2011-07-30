@@ -415,16 +415,23 @@ implements
             case SQLSERVER: // No break
             case SYBASE: {
 
-                // If we have a limit, it needs to be rendered here
+                // If we have a TOP clause, it needs to be rendered here
                 if (getLimit().isApplicable() && getLimit().getOffset() == 0) {
                     context.sql(getLimit()).sql(" ");
                 }
 
                 // If we don't have a limit, some subqueries still need a "TOP" clause
-                // TODO [#759] Omit this when unnecessary
                 else if (context.getDialect() == SQLSERVER && !getOrderBy().isEmpty()) {
-                    context.sql("top 100 percent ");
+
+                    // [#759] The TOP 100% is only rendered in subqueries
+                    if (context.subquery() || getLimit().isApplicable()) {
+                        context.sql("top 100 percent ");
+                    }
                 }
+            }
+
+            // [#780] Ordered subqueries should be handled for Ingres as well
+            case INGRES: {
             }
         }
 

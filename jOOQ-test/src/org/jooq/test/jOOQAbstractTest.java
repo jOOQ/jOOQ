@@ -3213,6 +3213,33 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testOrderByInSubquery() throws Exception {
+        // TODO: [#780] Fix this for Ingres
+
+        if (getDialect() == SQLDialect.INGRES) {
+            log.info("SKIPPING", "Ordered subqueries");
+            return;
+        }
+
+        // Some RDBMS don't accept ORDER BY clauses in subqueries without
+        // TOP clause (e.g. SQL Server). jOOQ will synthetically add a
+        // TOP 100 PERCENT clause, if necessary
+
+        Select<?> nested =
+        create().select(TBook_ID())
+                .from(TBook())
+                .orderBy(TBook_ID().asc());
+
+        List<Integer> result =
+        create().select(nested.getField(TBook_ID()))
+                .from(nested)
+                .orderBy(nested.getField(TBook_ID()).desc())
+                .fetch(nested.getField(TBook_ID()));
+
+        assertEquals(Arrays.asList(4, 3, 2, 1), result);
+    }
+
+    @Test
     public void testOrderByNulls() throws Exception {
         reset = false;
 

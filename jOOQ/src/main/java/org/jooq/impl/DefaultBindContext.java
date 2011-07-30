@@ -316,20 +316,9 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
 
         sb.append("binding   [index ");
         sb.append(index);
-        sb.append("]\ndeclaring [");
-
-        if (declareFields) {
-            sb.append("fields");
-        }
-        else if (declareTables) {
-            sb.append("tables");
-        }
-        else {
-            sb.append("-");
-        }
-
         sb.append("]");
 
+        toString(sb);
         return sb.toString();
     }
 }

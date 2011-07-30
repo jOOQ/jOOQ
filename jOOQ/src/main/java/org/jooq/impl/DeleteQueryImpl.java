@@ -36,12 +36,12 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
@@ -73,13 +73,8 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        result = internal(getFrom()).bindReference(configuration, stmt, result);
-        result = internal(getWhere()).bindReference(configuration, stmt, result);
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(getFrom()).bind(getWhere());
     }
 
     final Table<R> getFrom() {

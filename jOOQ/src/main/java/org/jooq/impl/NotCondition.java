@@ -35,13 +35,12 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.RenderContext;
 
 class NotCondition extends AbstractCondition {
@@ -65,7 +64,7 @@ class NotCondition extends AbstractCondition {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return internal(condition).bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(condition);
     }
 }

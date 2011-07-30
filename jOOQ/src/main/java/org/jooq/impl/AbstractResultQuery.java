@@ -125,7 +125,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         statement = connection.prepareStatement(sql);
         watch.splitTrace("Statement prepared");
 
-        bindReference(configuration, statement);
+        create(configuration).bind(this, statement);
         watch.splitTrace("Variables bound");
 
         Cursor<R> cursor = executeLazy(configuration, statement);

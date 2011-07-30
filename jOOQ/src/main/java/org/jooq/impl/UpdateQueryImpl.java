@@ -36,13 +36,13 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -94,15 +94,8 @@ class UpdateQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex)
-        throws SQLException {
-        int result = initialIndex;
-
-        result = internal(getInto()).bindReference(configuration, stmt, result);
-        result = internal(updateMap).bindReference(configuration, stmt, result);
-        result = internal(condition).bindReference(configuration, stmt, result);
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(getInto()).bind(updateMap).bind(condition);
     }
 
     @Override

@@ -36,10 +36,9 @@
 package org.jooq.util.oracle;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
@@ -157,10 +156,8 @@ public class OracleFactory extends Factory {
         }
 
         @Override
-        public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex)
-            throws SQLException {
-
-            return internal(field).bindReference(configuration, stmt, initialIndex);
+        public final void bind(BindContext context) throws SQLException {
+            context.bind(field);
         }
     }
 }

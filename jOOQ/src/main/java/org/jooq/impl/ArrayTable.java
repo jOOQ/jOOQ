@@ -35,13 +35,12 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -128,21 +127,18 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex)
-        throws SQLException {
-
-        switch (configuration.getDialect()) {
+    public final void bind(BindContext context) throws SQLException {
+        switch (context.getDialect()) {
             case ORACLE:
             case H2:
             case HSQLDB:
             case POSTGRES:
-                return internal(array).bindReference(configuration, stmt, initialIndex);
+                context.bind(array);
+                break;
 
             default:
-                break;
+                throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + context.getDialect());
         }
-
-        throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.getDialect());
     }
 
     @Override

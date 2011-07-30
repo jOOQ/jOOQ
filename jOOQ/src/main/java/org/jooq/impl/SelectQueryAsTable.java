@@ -36,12 +36,11 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -83,8 +82,8 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return internal(query).bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(query);
     }
 
     @Override

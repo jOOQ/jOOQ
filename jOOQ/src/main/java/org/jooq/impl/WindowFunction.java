@@ -35,16 +35,16 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
@@ -211,14 +211,10 @@ implements
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        result = internal(arguments).bindReference(configuration, stmt, result);
-        result = internal(partitionBy).bindReference(configuration, stmt, result);
-        result = internal(orderBy).bindReference(configuration, stmt, result);
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind((QueryPart) arguments)
+               .bind((QueryPart) partitionBy)
+               .bind((QueryPart) orderBy);
     }
 
     @Override

@@ -35,47 +35,41 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
-
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 
 /**
  * @author Lukas Eder
  */
-class DefaultRenderContext implements RenderContext {
+class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
     /**
      * Generated UID
      */
     private static final long   serialVersionUID = -8358225526567622252L;
 
-    private final Configuration configuration;
     private final StringBuilder sql;
     private boolean             inline;
-    private boolean             declareFields;
-    private boolean             declareTables;
 
     DefaultRenderContext(Configuration configuration) {
-        this.configuration = configuration;
+        super(configuration);
+
         this.sql = new StringBuilder();
     }
 
-    DefaultRenderContext(Configuration configuration, boolean inline, boolean declareFields, boolean declareTables) {
-        this(configuration);
-
-        this.inline = inline;
-        this.declareFields = declareFields;
-        this.declareTables = declareTables;
-    }
-
     DefaultRenderContext(RenderContext context) {
-        this(context, context.inline(), context.declareFields(), context.declareTables());
+        this((Configuration) context);
+
+        inline(context.inline());
+        declareFields(context.declareFields());
+        declareTables(context.declareTables());
     }
+
+    // ------------------------------------------------------------------------
+    // RenderContext API
+    // ------------------------------------------------------------------------
 
     @Override
     public final String render() {
@@ -84,7 +78,7 @@ class DefaultRenderContext implements RenderContext {
 
     @Override
     public final String render(QueryPart part) {
-        return new DefaultRenderContext(this, inline, declareFields, declareTables).sql(part).render();
+        return new DefaultRenderContext(this).sql(part).render();
     }
 
     @Override
@@ -179,47 +173,6 @@ class DefaultRenderContext implements RenderContext {
     public final RenderContext inline(boolean i) {
         this.inline = i;
         return this;
-    }
-
-    @Override
-    public final boolean declareFields() {
-        return declareFields;
-    }
-
-    @Override
-    public final RenderContext declareFields(boolean d) {
-        this.declareFields = d;
-        return this;
-    }
-
-    @Override
-    public final boolean declareTables() {
-        return declareTables;
-    }
-
-    @Override
-    public final RenderContext declareTables(boolean d) {
-        this.declareTables = d;
-        return this;
-    }
-
-    // ------------------------------------------------------------------------
-    // Configuration API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final SQLDialect getDialect() {
-        return configuration.getDialect();
-    }
-
-    @Override
-    public final Connection getConnection() {
-        return configuration.getConnection();
-    }
-
-    @Override
-    public final SchemaMapping getSchemaMapping() {
-        return configuration.getSchemaMapping();
     }
 
     // ------------------------------------------------------------------------

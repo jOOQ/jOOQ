@@ -35,68 +35,81 @@
  */
 package org.jooq.impl;
 
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
+import java.sql.Connection;
 
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.RenderContext;
+import org.jooq.Context;
+import org.jooq.SQLDialect;
+import org.jooq.SchemaMapping;
 
 /**
- * A plain SQL query that returns results
- *
  * @author Lukas Eder
  */
-class SQLResultQuery extends AbstractResultQuery<Record> {
+abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1740879770879469220L;
+    private static final long serialVersionUID = 4796952332163571043L;
 
-    private final String      sql;
-    private final Object[]    bindings;
+    final Configuration       configuration;
+    boolean                   declareFields;
+    boolean                   declareTables;
 
-    public SQLResultQuery(Configuration configuration, String sql, Object[] bindings) {
-        super(configuration);
+    AbstractContext(Configuration configuration) {
+        this.configuration = configuration;
+    }
 
-        this.sql = sql;
-        this.bindings = bindings;
+    AbstractContext(Configuration configuration, boolean declareFields, boolean declareTables) {
+        this.configuration = configuration;
+        this.declareFields = declareFields;
+        this.declareTables = declareTables;
+    }
+
+    // ------------------------------------------------------------------------
+    // Context API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final boolean declareFields() {
+        return declareFields;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final C declareFields(boolean d) {
+        this.declareFields = d;
+        return (C) this;
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        JooqUtil.toSQLReference(context, sql, bindings);
+    public final boolean declareTables() {
+        return declareTables;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final C declareTables(boolean d) {
+        this.declareTables = d;
+        return (C) this;
+    }
+
+    // ------------------------------------------------------------------------
+    // Configuration API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final SQLDialect getDialect() {
+        return configuration.getDialect();
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(bindings);
+    public final Connection getConnection() {
+        return configuration.getConnection();
     }
 
     @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
-    }
-
-    @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) throws SQLException {
-        Configuration configuration = attachable.getConfiguration();
-        return new MetaDataFieldProvider(configuration, meta).getFields();
-    }
-
-    @Override
-    final boolean isSelectingRefCursor() {
-        return false;
+    public final SchemaMapping getSchemaMapping() {
+        return configuration.getSchemaMapping();
     }
 }

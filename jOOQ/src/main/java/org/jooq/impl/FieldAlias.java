@@ -36,12 +36,11 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -71,22 +70,8 @@ class FieldAlias<T> extends AbstractField<T> {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex)
-        throws SQLException {
-        return aliasProvider.bindReference(configuration, stmt, initialIndex);
-    }
-
-    /**
-     * Override default behaviour and call
-     * {@link #bindDeclaration(Configuration, PreparedStatement, int)} on
-     * contained alias provider
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex)
-        throws SQLException {
-        return aliasProvider.bindDeclaration(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(aliasProvider);
     }
 
     @Override

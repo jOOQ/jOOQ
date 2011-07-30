@@ -35,11 +35,11 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
@@ -91,8 +91,8 @@ class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Tr
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return internal(table).bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(table);
     }
 
     @Override

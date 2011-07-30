@@ -35,13 +35,13 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -88,8 +88,8 @@ final class UpdateImpl<R extends TableRecord<R>> extends AbstractQueryPart imple
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return internal(delegate).bindReference(configuration, stmt, initialIndex);
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(delegate);
     }
 
     @Override

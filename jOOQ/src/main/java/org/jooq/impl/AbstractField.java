@@ -41,7 +41,6 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,11 +50,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.BindContext;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -85,7 +84,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     public abstract void toSQL(RenderContext context);
 
     @Override
-    public abstract int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException;
+    public abstract void bind(BindContext context) throws SQLException;
 
     @Override
     public abstract boolean isNullLiteral();

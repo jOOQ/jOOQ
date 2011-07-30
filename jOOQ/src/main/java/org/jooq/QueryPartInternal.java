@@ -164,7 +164,9 @@ public interface QueryPartInternal extends QueryPart {
      * @return The index of the next binding variable
      * @throws SQLException
      * @see #bind(Configuration, PreparedStatement, int)
+     * @deprecated - 1.6.5 [#758] - Use {@link #bind(BindContext)} instead
      */
+    @Deprecated
     int bindReference(Configuration configuration, PreparedStatement stmt) throws SQLException;
 
     /**
@@ -177,7 +179,9 @@ public interface QueryPartInternal extends QueryPart {
      * @param initialIndex The index of the next binding variable
      * @return The index of the next binding variable
      * @throws SQLException
+     * @deprecated - 1.6.5 [#758] - Use {@link #bind(BindContext)} instead
      */
+    @Deprecated
     int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException;
 
     /**
@@ -191,7 +195,9 @@ public interface QueryPartInternal extends QueryPart {
      * @return The index of the next binding variable
      * @throws SQLException
      * @see #bind(Configuration, PreparedStatement, int)
+     * @deprecated - 1.6.5 [#758] - Use {@link #bind(BindContext)} instead
      */
+    @Deprecated
     int bindDeclaration(Configuration configuration, PreparedStatement stmt) throws SQLException;
 
     /**
@@ -204,8 +210,20 @@ public interface QueryPartInternal extends QueryPart {
      * @param initialIndex The index of the next binding variable
      * @return The index of the next binding variable
      * @throws SQLException
+     * @deprecated - 1.6.5 [#758] - Use {@link #bind(BindContext)} instead
      */
+    @Deprecated
     int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException;
+
+    /**
+     * Bind all parameters of this QueryPart to a PreparedStatement
+     * <p>
+     * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     *
+     * @param context The context holding the next bind index and other
+     *            information for variable binding
+     */
+    void bind(BindContext context) throws SQLException;
 
     /**
      * Reproduce the SQL dialect this QueryPart was created with
@@ -219,12 +237,22 @@ public interface QueryPartInternal extends QueryPart {
     /**
      * Check whether this QueryPart is able to declare fields in a
      * <code>SELECT</code> clause.
+     * <p>
+     * This method can be used by any {@link Context} to check how a certain SQL
+     * clause should be rendered.
+     * <p>
+     * This method is for JOOQ INTERNAL USE only. Do not reference directly
      */
     boolean declaresFields();
 
     /**
      * Check whether this QueryPart is able to declare tables in a
      * <code>FROM</code> clause or <code>JOIN</code> clause.
+     * <p>
+     * This method can be used by any {@link Context} to check how a certain SQL
+     * clause should be rendered.
+     * <p>
+     * This method is for JOOQ INTERNAL USE only. Do not reference directly
      */
     boolean declaresTables();
 }

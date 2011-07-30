@@ -35,32 +35,17 @@
  */
 package org.jooq.impl;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.Arrays;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
-import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
-import org.jooq.MasterDataType;
-import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
 
 /**
  * General jooq utilities
@@ -68,8 +53,6 @@ import org.jooq.SQLDialectNotSupportedException;
  * @author Lukas Eder
  */
 final class JooqUtil {
-
-    private static final JooqLogger log = JooqLogger.getLogger(JooqUtil.class);
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
@@ -167,177 +150,6 @@ final class JooqUtil {
         context.sql("(");
         toSQLReference(context, sql, bindings);
         context.sql(")");
-    }
-
-    /**
-     * Bind a value to a variable
-     */
-    @SuppressWarnings("unchecked")
-    static void bind(Configuration configuration, PreparedStatement stmt, int index, Class<?> type, Object value) throws SQLException {
-        SQLDialect dialect = configuration.getDialect();
-
-        if (log.isTraceEnabled()) {
-            if (value != null && value.getClass().isArray() && value.getClass() != byte[].class) {
-                log.trace("Binding variable " + index, Arrays.asList((Object[])value) + " (" + type + ")");
-            }
-            else {
-                log.trace("Binding variable " + index, value + " (" + type + ")");
-            }
-        }
-
-        if (value == null) {
-            int sqlType = FieldTypeHelper.getDataType(dialect, type).getSQLType();
-
-            // Treat Oracle-style ARRAY types specially
-            if (ArrayRecord.class.isAssignableFrom(type)) {
-                String typeName = newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
-                stmt.setNull(index, sqlType, typeName);
-            }
-
-            // All other types can be set to null if the JDBC type is known
-            else if (sqlType != Types.OTHER) {
-                stmt.setNull(index, sqlType);
-            }
-
-            // [#725] For SQL Server, unknown types should be set to null explicitly, too
-            else if (configuration.getDialect() == SQLDialect.SQLSERVER) {
-                stmt.setNull(index, sqlType);
-            }
-
-            // [#729] In the absence of the correct JDBC type, try setObject
-            // [#730] TODO: Handle this case for Sybase
-            else {
-                stmt.setObject(index, null);
-            }
-        }
-        else if (type == Blob.class) {
-            stmt.setBlob(index, (Blob) value);
-        }
-        else if (type == Boolean.class) {
-            stmt.setBoolean(index, (Boolean) value);
-        }
-        else if (type == BigDecimal.class) {
-            stmt.setBigDecimal(index, (BigDecimal) value);
-        }
-        else if (type == BigInteger.class) {
-            stmt.setBigDecimal(index, new BigDecimal((BigInteger) value));
-        }
-        else if (type == Byte.class) {
-            stmt.setByte(index, (Byte) value);
-        }
-        else if (type == byte[].class) {
-            stmt.setBytes(index, (byte[]) value);
-        }
-        else if (type == Clob.class) {
-            stmt.setClob(index, (Clob) value);
-        }
-        else if (type == Date.class) {
-            stmt.setDate(index, (Date) value);
-        }
-        else if (type == Double.class) {
-            stmt.setDouble(index, (Double) value);
-        }
-        else if (type == Float.class) {
-            stmt.setFloat(index, (Float) value);
-        }
-        else if (type == Integer.class) {
-            stmt.setInt(index, (Integer) value);
-        }
-        else if (type == Long.class) {
-            stmt.setLong(index, (Long) value);
-        }
-        else if (type == Short.class) {
-            stmt.setShort(index, (Short) value);
-        }
-        else if (type == String.class) {
-            stmt.setString(index, (String) value);
-        }
-        else if (type == Time.class) {
-            stmt.setTime(index, (Time) value);
-        }
-        else if (type == Timestamp.class) {
-            stmt.setTimestamp(index, (Timestamp) value);
-        }
-
-        // The type byte[] is handled earlier. byte[][] can be handled here
-        else if (type.isArray()) {
-            switch (dialect) {
-                case POSTGRES: {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("{");
-
-                    String separator = "";
-                    for (Object o : (Object[]) value) {
-                        sb.append(separator);
-
-                        // [#753] null must be set as a literal
-                        if (o == null) {
-                            sb.append(o);
-                        }
-                        else {
-                            sb.append("\"");
-                            sb.append(o.toString().replaceAll("\"", "\"\""));
-                            sb.append("\"");
-                        }
-
-                        separator = ", ";
-                    }
-
-                    sb.append("}");
-                    stmt.setString(index, sb.toString());
-                    break;
-                }
-                case HSQLDB:
-                    stmt.setArray(index, new DefaultArray(dialect, (Object[]) value, type));
-                    break;
-                case H2:
-                    stmt.setObject(index, value);
-                    break;
-                default:
-                    throw new SQLDialectNotSupportedException("Cannot bind ARRAY types in dialect " + dialect);
-            }
-        }
-        else if (ArrayRecord.class.isAssignableFrom(type)) {
-            stmt.setArray(index, ((ArrayRecord<?>) value).createArray());
-        }
-        else if (EnumType.class.isAssignableFrom(type)) {
-            stmt.setString(index, ((EnumType) value).getLiteral());
-        }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            Object primaryKey = ((MasterDataType<?>) value).getPrimaryKey();
-            bind(configuration, stmt, index, primaryKey.getClass(), primaryKey);
-        }
-        else {
-            stmt.setObject(index, value);
-        }
-    }
-
-    /**
-     * Bind a value to a variable
-     */
-    static void bind(Configuration configuration, PreparedStatement stmt, int initialIndex, NamedTypeProviderQueryPart<?> field, Object value)
-        throws SQLException {
-        bind(configuration, stmt, initialIndex, field.getType(), value);
-    }
-
-    /**
-     * Bind a value to a variable
-     */
-    static int bind(Configuration configuration, PreparedStatement stmt, int initialIndex, Object... bindings) throws SQLException {
-
-        // [#724] When bindings is null, this is probably due to API-misuse
-        // The user probably meant new Object[] { null }
-        if (bindings == null) {
-            return bind(configuration, stmt, initialIndex, new Object[] { null });
-        }
-        else {
-            for (Object binding : bindings) {
-                Class<?> type = (binding == null) ? Object.class : binding.getClass();
-                bind(configuration, stmt, initialIndex++, type, binding);
-            }
-        }
-
-        return initialIndex;
     }
 
     /**

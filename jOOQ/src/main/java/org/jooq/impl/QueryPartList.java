@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +44,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
@@ -95,27 +94,8 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        for (T queryPart : this) {
-            result = internal(queryPart).bindReference(configuration, stmt, result);
-        }
-
-        return result;
-    }
-
-    @Override
-    public int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex)
-        throws SQLException {
-
-        int result = initialIndex;
-
-        for (T queryPart : this) {
-            result = internal(queryPart).bindDeclaration(configuration, stmt, result);
-        }
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.bind(wrappedList);
     }
 
     /**

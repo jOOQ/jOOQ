@@ -35,13 +35,12 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 
@@ -178,51 +177,52 @@ class Limit extends AbstractQueryPart {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
+    public final void bind(BindContext context) throws SQLException {
+        switch (context.getDialect()) {
 
-        switch (configuration.getDialect()) {
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
             case MYSQL:    // No break
-            case DERBY:
-                result = internal(val(getOffset())).bindReference(configuration, stmt, result);
-                result = internal(val(getNumberOfRows())).bindReference(configuration, stmt, result);
+            case DERBY: {
+                context.bind(create(context).val(getOffset()));
+                context.bind(create(context).val(getNumberOfRows()));
                 break;
+            }
 
             case HSQLDB:   // No break
             case H2:       // No break
             case POSTGRES: // No break
-            case SQLITE:
-                result = internal(val(getNumberOfRows())).bindReference(configuration, stmt, result);
-                result = internal(val(getOffset())).bindReference(configuration, stmt, result);
+            case SQLITE: {
+                context.bind(create(context).val(getNumberOfRows()));
+                context.bind(create(context).val(getOffset()));
                 break;
+            }
 
             // These dialects don't allow bind variables in their TOP clauses
             // -----------------------------------------------------------------
             case DB2:
             case SQLSERVER:
-            case SYBASE:
+            case SYBASE: {
 
                 // TOP clauses without bind variables
                 if (offset == 0) {
                     break;
                 }
 
-                // With simulated OFFSETs, no break
+                // With simulated OFFSETs, no break, fall through
                 else {
                 }
+            }
 
             // Oracle knows no TOP clause, limits are always bound
             // Also, with simulated OFFSETs, the previous dialects fall through
             // -----------------------------------------------------------------
-            case ORACLE:
-                result = internal(val(getLowerRownum())).bindReference(configuration, stmt, result);
-                result = internal(val(getUpperRownum())).bindReference(configuration, stmt, result);
+            case ORACLE: {
+                context.bind(create(context).val(getLowerRownum()));
+                context.bind(create(context).val(getUpperRownum()));
                 break;
+            }
         }
-
-        return result;
     }
 
     /**

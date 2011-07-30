@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +44,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
@@ -75,7 +74,7 @@ implements Map<K, V> {
     public abstract void toSQL(RenderContext context);
 
     @Override
-    public abstract int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException;
+    public abstract void bind(BindContext context) throws SQLException;
 
     @Override
     public final List<Attachable> getAttachables() {

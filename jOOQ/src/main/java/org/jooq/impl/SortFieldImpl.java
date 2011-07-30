@@ -42,6 +42,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 
@@ -89,19 +90,17 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return toSQLReference0(configuration, inlineParameters, false);
+    public final void toSQL(RenderContext context) {
+        toSQLReference0(context, false);
     }
 
-    final String toSQLInAnalyticClause(Configuration configuration, boolean inlineParameters) {
-        return toSQLReference0(configuration, inlineParameters, true);
+    final void toSQLInAnalyticClause(RenderContext context) {
+        toSQLReference0(context, true);
     }
 
-    private final String toSQLReference0(Configuration configuration, boolean inlineParameters, boolean inAnalyticClause) {
-        StringBuilder sb = new StringBuilder();
-
+    private final void toSQLReference0(RenderContext context, boolean inAnalyticClause) {
         if (nullsFirst || nullsLast) {
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
                 case DB2:
@@ -113,16 +112,16 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                 case SQLSERVER:
                 case SYBASE: {
                     if (!inAnalyticClause) {
-                        Field<Integer> zero = create(configuration).field("0", Integer.class);
-                        Field<Integer> one = create(configuration).field("1", Integer.class);
+                        Field<Integer> zero = create(context).zero();
+                        Field<Integer> one = create(context).one();
 
                         Field<Integer> ifNull = nullsFirst ? zero : one;
                         Field<Integer> ifNotNull = nullsFirst ? one : zero;
 
-                        sb.append(internal(field.nvl2(ifNotNull, ifNull)).toSQLReference(configuration, inlineParameters));
-                        sb.append(", ");
+                        context.sql(field.nvl2(ifNotNull, ifNull));
+                        context.sql(", ");
 
-                        toSQLReference(configuration, inlineParameters, inAnalyticClause, sb);
+                        toSQLReference1(context, inAnalyticClause);
                         break;
                     }
                     else {
@@ -132,13 +131,13 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    toSQLReference(configuration, inlineParameters, inAnalyticClause, sb);
+                    toSQLReference1(context, inAnalyticClause);
 
                     if (nullsFirst) {
-                        sb.append(" nulls first");
+                        context.sql(" nulls first");
                     }
                     else {
-                        sb.append(" nulls last");
+                        context.sql(" nulls last");
                     }
 
                     break;
@@ -146,18 +145,16 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
             }
         }
         else {
-            toSQLReference(configuration, inlineParameters, inAnalyticClause, sb);
+            toSQLReference1(context, inAnalyticClause);
         }
-
-        return sb.toString();
     }
 
-    private final void toSQLReference(Configuration configuration, boolean inlineParameters, boolean inAnalyticClause, StringBuilder sb) {
-        switch (configuration.getDialect()) {
+    private final void toSQLReference1(RenderContext context, boolean inAnalyticClause) {
+        switch (context.getDialect()) {
             case SQLSERVER:
             case SYBASE: {
                 if (inAnalyticClause) {
-                    sb.append(JooqUtil.toSQLLiteral(configuration, field.getName()));
+                    context.literal(field.getName());
                     break;
                 }
                 else {
@@ -165,13 +162,13 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                 }
             }
             default: {
-                sb.append(internal(field).toSQLReference(configuration, inlineParameters));
+                context.sql(field);
                 break;
             }
         }
 
-        sb.append(" ");
-        sb.append(order.toSQL());
+        context.sql(" ");
+        context.sql(order.toSQL());
     }
 
     @Override

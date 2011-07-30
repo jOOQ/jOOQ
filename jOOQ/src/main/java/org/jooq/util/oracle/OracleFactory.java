@@ -41,6 +41,7 @@ import java.sql.SQLException;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.impl.CustomField;
@@ -151,13 +152,8 @@ public class OracleFactory extends Factory {
         }
 
         @Override
-        public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("prior ");
-            sb.append(internal(field).toSQLReference(configuration, inlineParameters));
-
-            return sb.toString();
+        public final void toSQL(RenderContext context) {
+            context.sql("prior ").sql(field);
         }
 
         @Override

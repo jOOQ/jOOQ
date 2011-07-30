@@ -45,6 +45,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseConditionStep<T> {
 
@@ -119,24 +120,22 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("case");
+    public final void toSQL(RenderContext context) {
+        context.sql("case");
 
         for (int i = 0; i < conditions.size(); i++) {
-            sb.append(" when ");
-            sb.append(internal(conditions.get(i)).toSQLReference(configuration, inlineParameters));
-            sb.append(" then ");
-            sb.append(internal(results.get(i)).toSQLReference(configuration, inlineParameters));
+            context.sql(" when ")
+                   .sql(conditions.get(i))
+                   .sql(" then ")
+                   .sql(results.get(i));
         }
 
         if (otherwise != null) {
-            sb.append(" else ");
-            sb.append(internal(otherwise).toSQLReference(configuration, inlineParameters));
+            context.sql(" else ")
+                   .sql(otherwise);
         }
 
-        sb.append(" end");
-        return sb.toString();
+        context.sql(" end");
     }
 
     @Override

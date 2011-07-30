@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -65,20 +66,8 @@ class FieldAlias<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return aliasProvider.toSQLReference(configuration, inlineParameters);
-    }
-
-    /**
-     * Override default behaviour and call
-     * {@link #toSQLDeclaration(Configuration, boolean)} on contained alias
-     * provider
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        return aliasProvider.toSQLDeclaration(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(aliasProvider);
     }
 
     @Override
@@ -108,5 +97,10 @@ class FieldAlias<T> extends AbstractField<T> {
     @Override
     public final boolean isNullLiteral() {
         return aliasProvider.getAliasProvider().isNullLiteral();
+    }
+
+    @Override
+    public final boolean declaresFields() {
+        return true;
     }
 }

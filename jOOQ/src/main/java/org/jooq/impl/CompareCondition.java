@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -78,18 +79,18 @@ class CompareCondition<T> extends AbstractCondition {
     }
 
     @Override
-    public String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
+    public final void toSQL(RenderContext context) {
+        context.sql(field1)
+               .sql(" ");
 
-        sb.append(internal(field1).toSQLReference(configuration, inlineParameters));
-        sb.append(" ");
         if (field2.isNullLiteral()) {
             switch (comparator) {
                 case EQUALS:
-                    sb.append("is null");
+                    context.sql("is null");
                     break;
+
                 case NOT_EQUALS:
-                    sb.append("is not null");
+                    context.sql("is not null");
                     break;
 
                 default:
@@ -97,11 +98,9 @@ class CompareCondition<T> extends AbstractCondition {
             }
         }
         else {
-            sb.append(comparator.toSQL());
-            sb.append(" ");
-            sb.append(internal(field2).toSQLReference(configuration, inlineParameters));
+            context.sql(comparator.toSQL())
+                   .sql(" ")
+                   .sql(field2);
         }
-
-        return sb.toString();
     }
 }

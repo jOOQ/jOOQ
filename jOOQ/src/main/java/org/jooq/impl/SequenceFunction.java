@@ -39,6 +39,7 @@ import java.math.BigInteger;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 
 /**
@@ -97,14 +98,14 @@ class SequenceFunction extends AbstractFunction<BigInteger> {
     }
 
     private final String getQualifiedName(Configuration configuration) {
-        StringBuilder sb = new StringBuilder();
+        RenderContext local = create(configuration).renderContext();
 
         if (sequence.schema != null) {
-            sb.append(internal(getMappedSchema(configuration, sequence.schema)).toSQLReference(configuration));
-            sb.append(".");
+            local.sql(getMappedSchema(configuration, sequence.schema));
+            local.sql(".");
         }
 
-        sb.append(JooqUtil.toSQLLiteral(configuration, sequence.name));
-        return sb.toString();
+        local.literal(sequence.name);
+        return local.render();
     }
 }

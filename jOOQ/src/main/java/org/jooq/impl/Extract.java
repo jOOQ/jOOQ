@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 
 /**
@@ -174,16 +175,12 @@ class Extract extends AbstractFunction<Integer> {
         }
 
         @Override
-        public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-            StringBuilder sb = new StringBuilder();
-
-            sb.append("extract(");
-            sb.append(datePart.toSQL());
-            sb.append(" from ");
-            sb.append(internal(field).toSQLReference(configuration, inlineParameters));
-            sb.append(")");
-
-            return sb.toString();
+        public final void toSQL(RenderContext context) {
+            context.sql("extract(")
+                   .sql(datePart.toSQL())
+                   .sql(" from ")
+                   .sql(field)
+                   .sql(")");
         }
 
         @Override

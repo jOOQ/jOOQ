@@ -45,6 +45,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 
 /**
  * A plain SQL query that returns results
@@ -69,8 +70,8 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return JooqUtil.toSQLReference(configuration, sql, bindings, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        JooqUtil.toSQLReference(context, sql, bindings);
     }
 
     @Override

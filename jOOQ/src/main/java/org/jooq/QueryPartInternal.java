@@ -58,7 +58,9 @@ public interface QueryPartInternal extends QueryPart {
      * @param configuration The configuration overriding dialects and schemata
      * @return SQL representation of this QueryPart
      * @see #toSQLReference(Configuration, boolean)
+     * @deprecated - 1.6.4 [#758] - Use {@link #toSQL(RenderContext)} instead
      */
+    @Deprecated
     String toSQLReference(Configuration configuration);
 
     /**
@@ -70,7 +72,9 @@ public interface QueryPartInternal extends QueryPart {
      * @param inlineParameters if set to true, all parameters are inlined, not
      *            replaced by "?"
      * @return SQL representation of this QueryPart
+     * @deprecated - 1.6.4 [#758] - Use {@link #toSQL(RenderContext)} instead
      */
+    @Deprecated
     String toSQLReference(Configuration configuration, boolean inlineParameters);
 
     /**
@@ -83,7 +87,9 @@ public interface QueryPartInternal extends QueryPart {
      * @param configuration The configuration overriding dialects and schemata
      * @return SQL representation of this QueryPart
      * @see #toSQLDeclaration(Configuration, boolean)
+     * @deprecated - 1.6.4 [#758] - Use {@link #toSQL(RenderContext)} instead
      */
+    @Deprecated
     String toSQLDeclaration(Configuration configuration);
 
     /**
@@ -97,8 +103,20 @@ public interface QueryPartInternal extends QueryPart {
      * @param inlineParameters if set to true, all parameters are inlined, not
      *            replaced by "?"
      * @return SQL representation of this QueryPart
+     * @deprecated - 1.6.4 [#758] - Use {@link #toSQL(RenderContext)} instead
      */
+    @Deprecated
     String toSQLDeclaration(Configuration configuration, boolean inlineParameters);
+
+    /**
+     * Render this {@link QueryPart} to a SQL string contained in
+     * <code>context.sql()</code>. The <code>context</code> will contain
+     * additional information about how to render this <code>QueryPart</code>,
+     * e.g. whether this <code>QueryPart</code> should be rendered as a
+     * declaration or reference, whether this <code>QueryPart</code>'s contained
+     * bind variables should be inlined or replaced by <code>'?'</code>, etc.
+     */
+    void toSQL(RenderContext context);
 
     /**
      * Bind all parameters of this QueryPart to a PreparedStatement. This always
@@ -197,4 +215,16 @@ public interface QueryPartInternal extends QueryPart {
      * @return The SQL dialect
      */
     SQLDialect getDialect();
+
+    /**
+     * Check whether this QueryPart is able to declare fields in a
+     * <code>SELECT</code> clause.
+     */
+    boolean declaresFields();
+
+    /**
+     * Check whether this QueryPart is able to declare tables in a
+     * <code>FROM</code> clause or <code>JOIN</code> clause.
+     */
+    boolean declaresTables();
 }

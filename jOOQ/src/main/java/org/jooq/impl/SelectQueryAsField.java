@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -77,14 +78,8 @@ class SelectQueryAsField<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("(");
-        sb.append(internal(query).toSQLReference(configuration, inlineParameters));
-        sb.append(")");
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql("(").sql(query).sql(")");
     }
 
     @Override

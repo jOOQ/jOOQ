@@ -59,6 +59,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Select;
 import org.jooq.SortField;
@@ -81,7 +82,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     // ------------------------------------------------------------------------
 
     @Override
-    public abstract String toSQLReference(Configuration configuration, boolean inlineParameters);
+    public abstract void toSQL(RenderContext context);
 
     @Override
     public abstract int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException;

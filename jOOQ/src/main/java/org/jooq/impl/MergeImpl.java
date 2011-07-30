@@ -53,6 +53,7 @@ import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Operator;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -244,23 +245,24 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
+    public final void toSQL(RenderContext context) {
+        context.sql("merge into ")
+               .declareTables(true)
+               .sql(table)
+               .sql(" using ")
+               .sql(wrapInParentheses(context.render(using)))
+               .declareTables(false);
 
-        sb.append("merge into ");
-        sb.append(internal(table).toSQLDeclaration(configuration, inlineParameters));
-        sb.append(" using ");
-        sb.append(wrapInParentheses(internal(using).toSQLDeclaration(configuration, inlineParameters)));
-
-        switch (configuration.getDialect()) {
+        switch (context.getDialect()) {
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
                     int hash = Math.abs(using.hashCode());
-                    sb.append(" as ");
-                    sb.append("dummy_");
-                    sb.append(hash);
-                    sb.append("(");
+
+                    context.sql(" as ")
+                           .sql("dummy_")
+                           .sql(hash)
+                           .sql("(");
 
                     String separator = "";
                     for (Field<?> field : ((Select<?>) using).getFields()) {
@@ -271,32 +273,29 @@ implements
                             ? "dummy_" + hash + "_" + Math.abs(field.hashCode())
                             : field.getName();
 
-                        sb.append(separator);
-                        sb.append(JooqUtil.toSQLLiteral(configuration, name));
-
+                        context.sql(separator).literal(name);
                         separator = ", ";
                     }
 
-                    sb.append(")");
+                    context.sql(")");
                 }
+
                 break;
             }
         }
 
-        sb.append(" on ");
-        sb.append(wrapInParentheses(internal(on).toSQLReference(configuration, inlineParameters)));
-        sb.append(" when matched then update set ");
-        sb.append(internal(updateMap).toSQLReference(configuration, inlineParameters));
-        sb.append(" when not matched then insert ");
-        sb.append(internal(insertMap).toSQLReference(configuration, inlineParameters));
+        context.sql(" on ")
+               .sql(wrapInParentheses(context.render(on)))
+               .sql(" when matched then update set ")
+               .sql(updateMap)
+               .sql(" when not matched then insert ")
+               .sql(insertMap);
 
-        switch (configuration.getDialect()) {
+        switch (context.getDialect()) {
             case SQLSERVER:
-                sb.append(";");
+                context.sql(";");
                 break;
         }
-
-        return sb.toString();
     }
 
     @Override

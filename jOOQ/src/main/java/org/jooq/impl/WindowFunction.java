@@ -45,6 +45,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.WindowIgnoreNullsStep;
@@ -101,55 +102,52 @@ implements
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getName());
-        sb.append("(");
+    public final void toSQL(RenderContext context) {
+        context.sql(getName());
+        context.sql("(");
 
         if (!arguments.isEmpty()) {
-            sb.append(internal(arguments).toSQLReference(configuration, inlineParameters));
+            context.sql(arguments);
         }
 
         if (ignoreNulls) {
-            if (configuration.getDialect() == SQLDialect.DB2) {
-                sb.append(", 'IGNORE NULLS'");
+            if (context.getDialect() == SQLDialect.DB2) {
+                context.sql(", 'IGNORE NULLS'");
             }
             else {
-                sb.append(" ignore nulls");
+                context.sql(" ignore nulls");
             }
         }
         else if (respectNulls) {
-            if (configuration.getDialect() == SQLDialect.DB2) {
-                sb.append(", 'RESPECT NULLS'");
+            if (context.getDialect() == SQLDialect.DB2) {
+                context.sql(", 'RESPECT NULLS'");
             }
             else {
-                sb.append(" respect nulls");
+                context.sql(" respect nulls");
             }
         }
 
-
-        sb.append(") over (");
+        context.sql(") over (");
         String glue = "";
 
         if (!partitionBy.isEmpty()) {
-            if (partitionByOne && configuration.getDialect() == SQLDialect.SYBASE) {
+            if (partitionByOne && context.getDialect() == SQLDialect.SYBASE) {
                 // Ignore partition clause. Sybase does not support this construct
             }
             else {
-                sb.append(glue);
-                sb.append("partition by ");
-                sb.append(internal(partitionBy).toSQLReference(configuration, inlineParameters));
+                context.sql(glue)
+                       .sql("partition by ")
+                       .sql(partitionBy);
 
                 glue = " ";
             }
         }
 
         if (!orderBy.isEmpty()) {
-            sb.append(glue);
-            sb.append("order by ");
+            context.sql(glue)
+                   .sql("order by ");
 
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // SQL Server and Sybase don't allow for fully qualified fields
                 // in the ORDER BY clause of an analytic expression
@@ -157,14 +155,14 @@ implements
                 case SYBASE: {
                     for (SortField<?> f : orderBy) {
                         SortFieldImpl<?> field = (SortFieldImpl<?>) f;
-                        sb.append(field.toSQLInAnalyticClause(configuration, inlineParameters));
+                        field.toSQLInAnalyticClause(context);
                     }
 
                     break;
                 }
 
                 default: {
-                    sb.append(internal(orderBy).toSQLReference(configuration, inlineParameters));
+                    context.sql(orderBy);
                     break;
                 }
             }
@@ -173,43 +171,42 @@ implements
         }
 
         if (rowsStart != null) {
-            sb.append(glue);
-            sb.append("rows ");
+            context.sql(glue);
+            context.sql("rows ");
 
             if (rowsEnd != null) {
-                sb.append("between ");
-                toSQLRows(sb, rowsStart);
-                sb.append(" and ");
-                toSQLRows(sb, rowsEnd);
+                context.sql("between ");
+                toSQLRows(context, rowsStart);
+                context.sql(" and ");
+                toSQLRows(context, rowsEnd);
             }
             else {
-                toSQLRows(sb, rowsStart);
+                toSQLRows(context, rowsStart);
             }
 
             glue = " ";
         }
 
-        sb.append(")");
-        return sb.toString();
+        context.sql(")");
     }
 
-    private void toSQLRows(StringBuilder sb, Integer rows) {
+    private void toSQLRows(RenderContext context, Integer rows) {
         if (rows == Integer.MIN_VALUE) {
-            sb.append("unbounded preceding");
+            context.sql("unbounded preceding");
         }
         else if (rows == Integer.MAX_VALUE) {
-            sb.append("unbounded following");
+            context.sql("unbounded following");
         }
         else if (rows < 0) {
-            sb.append(-rows);
-            sb.append(" preceding");
+            context.sql(-rows);
+            context.sql(" preceding");
         }
         else if (rows > 0) {
-            sb.append(rows);
-            sb.append(" following");
+            context.sql(rows);
+            context.sql(" following");
         }
         else {
-            sb.append("current row");
+            context.sql("current row");
         }
     }
 

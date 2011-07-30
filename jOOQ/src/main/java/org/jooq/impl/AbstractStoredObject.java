@@ -49,6 +49,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
+import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.StoredObject;
 
@@ -85,21 +86,18 @@ abstract class AbstractStoredObject extends AbstractSchemaProviderQueryPart impl
         return pkg;
     }
 
-    protected final String toSQLQualifiedName(Configuration configuration) {
-        StringBuilder sb = new StringBuilder();
-
-        if (getMappedSchema(configuration, getSchema()) != null) {
-            sb.append(internal(getMappedSchema(configuration, getSchema())).toSQLReference(configuration, false));
-            sb.append(".");
+    protected final void toSQLQualifiedName(RenderContext context) {
+        if (getMappedSchema(context, getSchema()) != null) {
+            context.sql(getMappedSchema(context, getSchema()));
+            context.sql(".");
         }
 
         if (getPackage() != null) {
-            sb.append(internal(getPackage()).toSQLReference(configuration, false));
-            sb.append(".");
+            context.sql(getPackage());
+            context.sql(".");
         }
 
-        sb.append(JooqUtil.toSQLLiteral(configuration, getName()));
-        return sb.toString();
+        context.literal(getName());
     }
 
     @Override

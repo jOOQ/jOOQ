@@ -44,6 +44,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.UDT;
 import org.jooq.UDTField;
@@ -94,10 +95,9 @@ public class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> im
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getName());
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        // TODO [#771] Check if this should be escaped as literal
+        context.sql(getName());
     }
 
     @Override

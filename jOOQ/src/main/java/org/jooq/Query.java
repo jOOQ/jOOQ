@@ -39,6 +39,7 @@ package org.jooq;
 import java.sql.SQLException;
 
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.Factory;
 
 /**
  * Any query
@@ -65,5 +66,24 @@ public interface Query extends QueryPart {
      * @throws DetachedException If the query is not attached
      */
     int execute() throws SQLException, DetachedException;
+
+    /**
+     * Retrieve the SQL code rendered by this query part.
+     * <p>
+     * Unlike the recently deprecated {@link QueryPart#getSQL()} method, this
+     * method can be expected to work, as a query is usually "attached" when
+     * created from a {@link Factory}.
+     * <p>
+     * Use this method, when you want to use jOOQ for object oriented query
+     * creation, but execute the query with some other technology, such as
+     * <ul>
+     * <li>JDBC</li>
+     * <li>Spring Templates</li>
+     * <li>JPA native queries</li>
+     * <li>etc...</li>
+     * </ul>
+     */
+    @Override
+    String getSQL();
 
 }

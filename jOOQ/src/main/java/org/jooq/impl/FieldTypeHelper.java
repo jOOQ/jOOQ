@@ -67,6 +67,7 @@ import org.jooq.FieldProvider;
 import org.jooq.MasterDataType;
 import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
@@ -100,118 +101,121 @@ public final class FieldTypeHelper {
 
     private static final JooqLogger log               = JooqLogger.getLogger(FieldTypeHelper.class);
 
-    public static String toSQL(Configuration configuration, Object value, boolean inlineParameters) {
+    public static void toSQL(RenderContext context, Object value) {
         if (value == null) {
-            return toSQL(configuration, value, inlineParameters, Object.class);
+            toSQL(context, value, Object.class);
         }
         else {
-            return toSQL(configuration, value, inlineParameters, value.getClass());
+            toSQL(context, value, value.getClass());
         }
     }
 
-    public static String toSQL(Configuration configuration, Object value, boolean inlineParameters,
-        NamedTypeProviderQueryPart<?> field) {
-        return toSQL(configuration, value, inlineParameters, field.getType());
+    public static void toSQL(RenderContext context, Object value, NamedTypeProviderQueryPart<?> field) {
+        toSQL(context, value, field.getType());
     }
 
-    public static String toSQL(Configuration configuration, Object value, boolean inlineParameters, Class<?> type) {
-        if (inlineParameters) {
+    public static void toSQL(RenderContext context, Object value, Class<?> type) {
+        if (context.inline()) {
             if (value == null) {
-                return "null";
+                context.sql("null");
             }
             else if (type == Blob.class) {
-                return "[BLOB]";
+                context.sql("[BLOB]");
             }
             else if (type == Boolean.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == BigInteger.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == BigDecimal.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == Byte.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == byte[].class) {
-                return "'" + new String((byte[]) value).replace("'", "''") + "'";
+                context.sql("'")
+                       .sql(new String((byte[]) value).replace("'", "''"))
+                       .sql("'");
             }
             else if (type == Clob.class) {
-                return "[CLOB]";
+                context.sql("[BLOB]");
             }
             else if (type == Date.class) {
-                return "'" + value + "'";
+                context.sql("'").sql(value.toString()).sql("'");
             }
             else if (type == Double.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == Float.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == Integer.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == Long.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == Short.class) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (type == String.class) {
-                return "'" + value.toString().replace("'", "''") + "'";
+                context.sql("'")
+                       .sql(value.toString().replace("'", "''"))
+                       .sql("'");
             }
             else if (type == Time.class) {
-                return "'" + value + "'";
+                context.sql("'").sql(value.toString()).sql("'");
             }
             else if (type == Timestamp.class) {
-                return "'" + value + "'";
+                context.sql("'").sql(value.toString()).sql("'");
             }
             else if (type.isArray()) {
-                return "ARRAY" + Arrays.asList((Object[]) value).toString();
+                context.sql("ARRAY")
+                       .sql(Arrays.asList((Object[]) value).toString());
             }
             else if (ArrayRecord.class.isAssignableFrom(type)) {
-                return value.toString();
+                context.sql(value.toString());
             }
             else if (EnumType.class.isAssignableFrom(type)) {
-                return toSQL(configuration, ((EnumType) value).getLiteral(), inlineParameters);
+                toSQL(context, ((EnumType) value).getLiteral());
             }
             else if (MasterDataType.class.isAssignableFrom(type)) {
-                return toSQL(configuration, ((MasterDataType<?>) value).getPrimaryKey(), inlineParameters);
+                toSQL(context, ((MasterDataType<?>) value).getPrimaryKey());
             }
             else if (UDTRecord.class.isAssignableFrom(type)) {
-                return "[UDT]";
+                context.sql("[UDT]");
             }
             else {
-                // Not supported
+                throw new UnsupportedOperationException("Class " + type + " is not supported");
             }
-
-            throw new UnsupportedOperationException("Class " + type + " is not supported");
         }
 
         // In Postgres, some additional casting must be done in some cases...
         // TODO: Improve this implementation with #215 (cast support)
-        if (configuration.getDialect() == SQLDialect.POSTGRES) {
-
-            // Don't cast this type as an array type. It's a BLOB, bytea
-            if (byte[].class == type) {
-            }
+        else if (context.getDialect() == SQLDialect.POSTGRES) {
 
             // Postgres needs explicit casting for array types
-            else if (type.isArray()) {
-                StringBuilder sb = new StringBuilder();
-                sb.append("?::");
-                sb.append(getDataType(configuration.getDialect(), type).getCastTypeName(configuration));
-
-                return sb.toString();
+            if (type.isArray() && byte[].class != type) {
+                context.sql("?::");
+                context.sql(getDataType(context.getDialect(), type).getCastTypeName(context));
             }
 
+            // TODO [#771] Check if this type literal should be escaped
             else if (EnumType.class.isAssignableFrom(type)) {
-                return "?::" + ((EnumType) value).getName();
+                context.sql("?::");
+                context.sql(((EnumType) value).getName());
+            }
+
+            else {
+                context.sql("?");
             }
         }
 
-        return "?";
+        else {
+            context.sql("?");
+        }
     }
 
     @SuppressWarnings("unchecked")

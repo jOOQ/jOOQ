@@ -46,6 +46,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.JoinType;
+import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.TableLike;
 
@@ -131,27 +132,10 @@ class Join extends AbstractQueryPart {
     }
 
     @Override
-    public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        return toSQL(configuration, inlineParameters, true);
-    }
-
-    @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return toSQL(configuration, inlineParameters, false);
-    }
-
-    private final String toSQL(Configuration configuration, boolean inlineParameters, boolean toSQLDeclaration) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getType().toSQL());
-        sb.append(" ");
-
-        if (toSQLDeclaration) {
-            sb.append(internal(getTable()).toSQLDeclaration(configuration, inlineParameters));
-        }
-        else {
-            sb.append(internal(getTable()).toSQLReference(configuration, inlineParameters));
-        }
+    public final void toSQL(RenderContext context) {
+        context.sql(getType().toSQL());
+        context.sql(" ");
+        context.sql(getTable());
 
         switch (getType()) {
 
@@ -167,20 +151,21 @@ class Join extends AbstractQueryPart {
             // Regular JOINs
             default: {
                 if (usingSyntax) {
-                    sb.append(" using (");
-                    sb.append(using.toSQLNames(configuration));
-                    sb.append(")");
+                    context.sql(" using (");
+                    using.toSQLNames(context);
+                    context.sql(")");
                 }
                 else {
-                    sb.append(" on ");
-                    sb.append(internal(getCondition()).toSQLReference(configuration, inlineParameters));
+                    context.sql(" on ").sql(getCondition());
                 }
 
                 break;
             }
         }
+    }
 
-
-        return sb.toString();
+    @Override
+    public final boolean declaresTables() {
+        return true;
     }
 }

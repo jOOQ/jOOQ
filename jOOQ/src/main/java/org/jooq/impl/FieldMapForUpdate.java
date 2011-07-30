@@ -41,6 +41,7 @@ import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -56,24 +57,21 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
+    public final void toSQL(RenderContext context) {
         if (size() > 0) {
-            StringBuilder sb = new StringBuilder();
-
             String separator = "";
+
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
-                sb.append(separator);
-                sb.append(JooqUtil.toSQLLiteral(configuration, entry.getKey().getName()));
-                sb.append(" = ");
-                sb.append(internal(entry.getValue()).toSQLReference(configuration, inlineParameters));
+                context.sql(separator)
+                       .literal(entry.getKey().getName())
+                       .sql(" = ")
+                       .sql(entry.getValue());
 
                 separator = ", ";
             }
-
-            return sb.toString();
         }
         else {
-            return "[ no fields are updated ]";
+            context.sql("[ no fields are updated ]");
         }
     }
 

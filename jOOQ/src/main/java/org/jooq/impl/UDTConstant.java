@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -68,64 +69,71 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        switch (configuration.getDialect()) {
+    public final void toSQL(RenderContext context) {
+        switch (context.getDialect()) {
+
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE: {
-                if (inlineParameters) {
-                    return toSQLInline(configuration, inlineParameters);
+                if (context.inline()) {
+                    toSQLInline(context);
                 } else {
-                    return "?";
+                    context.sql("?");
                 }
+
+                return;
             }
+
+            // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
+            // have to be inlined
             case POSTGRES: {
-                return toSQLInline(configuration, inlineParameters);
+                toSQLInline(context);
+                return;
             }
+
+            // DB2 supports UDT's but this is only experimental in jOOQ
             case DB2: {
 
                 // The subsequent DB2 logic should be refactored into toSQLInline()
-                StringBuilder sb = new StringBuilder();
-                sb.append(getInlineConstructor(configuration));
-                sb.append("()");
+                context.sql(getInlineConstructor(context));
+                context.sql("()");
 
                 String separator = "..";
                 for (Field<?> field : record.getFields()) {
-                    Field<?> value = create(configuration).val(record.getValue(field));
+                    Field<?> value = create(context).val(record.getValue(field));
 
-                    sb.append(separator);
-                    sb.append(field.getName()).append("(");
-                    sb.append(internal(value).toSQLReference(configuration, inlineParameters));
-                    sb.append(")");
+                    context.sql(separator);
+                    context.sql(field.getName());
+                    context.sql("(");
+                    context.sql(value);
+                    context.sql(")");
                 }
 
-                return sb.toString();
+                return;
             }
         }
 
-        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + configuration.getDialect());
+        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
     }
 
-    private String toSQLInline(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getInlineConstructor(configuration));
-        sb.append("(");
+    private void toSQLInline(RenderContext context) {
+        context.sql(getInlineConstructor(context));
+        context.sql("(");
 
         String separator = "";
         for (Field<?> field : record.getFields()) {
-            Field<?> value = create(configuration).val(record.getValue(field));
+            Field<?> value = create(context).val(record.getValue(field));
 
-            sb.append(separator);
-            sb.append(internal(value).toSQLReference(configuration, inlineParameters));
+            context.sql(separator);
+            context.sql(value);
             separator = ", ";
         }
 
-        sb.append(")");
-        return sb.toString();
+        context.sql(")");
     }
 
-    private String getInlineConstructor(Configuration configuration) {
-        switch (configuration.getDialect()) {
+    private String getInlineConstructor(RenderContext context) {
+        switch (context.getDialect()) {
             case POSTGRES:
                 return "ROW";
 
@@ -133,15 +141,16 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             case DB2: {
                 UDT<?> udt = record.getUDT();
 
-                if (getMappedSchema(configuration, udt.getSchema()) != null) {
-                    return getMappedSchema(configuration, udt.getSchema()) + "." + udt.getName();
+                if (getMappedSchema(context, udt.getSchema()) != null) {
+                    return getMappedSchema(context, udt.getSchema()) + "." + udt.getName();
                 }
                 else {
                     return udt.getName();
                 }
             }
         }
-        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + configuration.getDialect());
+
+        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
     }
 
     @Override

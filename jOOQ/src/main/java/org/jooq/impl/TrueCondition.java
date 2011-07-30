@@ -52,13 +52,6 @@ public class TrueCondition extends AbstractCondition {
 
     private static final long         serialVersionUID = 775364624704563687L;
 
-    /**
-     * @deprecated - Do not use this singleton {@link TrueCondition} anymore,
-     *             as of 1.5.7
-     */
-    @Deprecated
-    public static final TrueCondition TRUE_CONDITION   = new TrueCondition();
-
     @Override
     public final void bind(BindContext context) throws SQLException {}
 

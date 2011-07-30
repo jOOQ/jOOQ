@@ -304,18 +304,14 @@ implements
                .sql(".*, row_number() over (order by ");
 
         if (getOrderBy().isEmpty()) {
-
-            // TODO [#771] Check whether this literal should be escaped
-            context.sql(getSelect().get(0).getName());
+            context.literal(getSelect().get(0).getName());
         }
         else {
             String separator = "";
 
             for (SortField<?> field : getOrderBy()) {
-
-                // TODO [#771] Check whether this literal should be escaped
                 context.sql(separator)
-                       .sql(field.getName())
+                       .literal(field.getName())
                        .sql(" ")
                        .sql(field.getOrder().toSQL());
 

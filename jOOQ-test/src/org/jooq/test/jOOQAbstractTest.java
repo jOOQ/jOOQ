@@ -4434,6 +4434,22 @@ public abstract class jOOQAbstractTest<
         finally {
             register(null);
         }
+
+        // [#775] Test for proper lazy execution after deserialisation
+        try {
+            q = create().selectFrom(TAuthor()).orderBy(TAuthor_LAST_NAME());
+            q = runSerialisation(q);
+
+            register(create());
+            Cursor<A> cursor = q.fetchLazy();
+            register(null);
+
+            assertEquals("Coelho", cursor.fetchOne().getValue(TAuthor_LAST_NAME()));
+            assertEquals("Orwell", cursor.fetchOne().getValue(TAuthor_LAST_NAME()));
+        }
+        finally {
+            register(null);
+        }
     }
 
     @SuppressWarnings("unchecked")

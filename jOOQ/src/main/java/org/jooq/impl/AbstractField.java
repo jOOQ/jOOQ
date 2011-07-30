@@ -193,18 +193,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         }
     }
 
-    @Override
-    @Deprecated
-    public final SortField<T> ascending() {
-        return asc();
-    }
-
-    @Override
-    @Deprecated
-    public final SortField<T> descending() {
-        return desc();
-    }
-
     // ------------------------------------------------------------------------
     // Arithmetic expressions
     // ------------------------------------------------------------------------
@@ -257,18 +245,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    @Deprecated
-    public final Field<T> subtract(Number value) {
-        return sub(value);
-    }
-
-    @Override
-    @Deprecated
-    public final Field<T> subtract(Field<? extends Number> value) {
-        return sub(value);
-    }
-
-    @Override
     public final Field<T> mul(Number value) {
         return mul(val(value));
     }
@@ -283,18 +259,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    @Deprecated
-    public final Field<T> multiply(Number value) {
-        return mul(value);
-    }
-
-    @Override
-    @Deprecated
-    public final Field<T> multiply(Field<? extends Number> value) {
-        return mul(value);
-    }
-
-    @Override
     public final Field<T> div(Number value) {
         return div(val(value));
     }
@@ -302,18 +266,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Field<T> div(Field<? extends Number> value) {
         return new Expression<T>(DIVIDE, this, value);
-    }
-
-    @Override
-    @Deprecated
-    public final Field<T> divide(Number value) {
-        return div(value);
-    }
-
-    @Override
-    @Deprecated
-    public final Field<T> divide(Field<? extends Number> value) {
-        return div(value);
     }
 
     @Override
@@ -731,24 +683,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Field<String> concat(String... values) {
         return concat(create().vals((Object[]) values).toArray(new Field[0]));
-    }
-
-    @Override
-    @Deprecated
-    public final Field<String> concatenate(Field<String> field, Field<String>... fields) {
-        List<Field<?>> list = new ArrayList<Field<?>>();
-        list.add(field);
-        list.addAll(Arrays.asList(fields));
-        return concat(list.toArray(new Field<?>[0]));
-    }
-
-    @Override
-    @Deprecated
-    public final Field<String> concatenate(String value, String... values) {
-        List<String> list = new ArrayList<String>();
-        list.add(value);
-        list.addAll(Arrays.asList(values));
-        return concat(list.toArray(new String[0]));
     }
 
     @Override

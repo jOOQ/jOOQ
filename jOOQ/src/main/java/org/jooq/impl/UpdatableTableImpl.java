@@ -44,7 +44,6 @@ import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
-import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableTable;
 
@@ -85,19 +84,6 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
     public UpdatableTableImpl(String name, Schema schema) {
         super(name, schema);
     }
-
-    @Override
-    @Deprecated
-    public final List<TableField<R, ?>> getPrimaryKey() {
-        return getMainUniqueKey();
-    }
-
-    @Override
-    @Deprecated
-    public final List<TableField<R, ?>> getMainUniqueKey() {
-        return getMainKey().getFields();
-    }
-
 
     /**
      * {@inheritDoc}

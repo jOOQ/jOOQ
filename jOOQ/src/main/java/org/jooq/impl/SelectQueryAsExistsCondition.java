@@ -66,14 +66,32 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(operator.toSQL())
-               .sql(" (")
-               .sql(query)
-               .sql(")");
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.sql(operator.toSQL()).sql(" (").sql(query).sql(")");
+        }
+        else {
+            context.sql(operator.toSQL())
+                   .sql(" (")
+                   .subquery(true)
+                   .sql(query)
+                   .subquery(false)
+                   .sql(")");
+        }
     }
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(query);
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.bind(query);
+        }
+        else {
+            context.subquery(true)
+                   .bind(query)
+                   .subquery(false);
+        }
     }
 }

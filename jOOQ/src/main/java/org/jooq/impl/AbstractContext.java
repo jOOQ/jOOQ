@@ -55,6 +55,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     final Configuration       configuration;
     boolean                   declareFields;
     boolean                   declareTables;
+    boolean                   subquery;
 
     AbstractContext(Configuration configuration) {
         this.configuration = configuration;
@@ -94,6 +95,18 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         return (C) this;
     }
 
+    @Override
+    public final boolean subquery() {
+        return subquery;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final C subquery(boolean s) {
+        this.subquery = s;
+        return (C) this;
+    }
+
     // ------------------------------------------------------------------------
     // Configuration API
     // ------------------------------------------------------------------------
@@ -111,5 +124,23 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final SchemaMapping getSchemaMapping() {
         return configuration.getSchemaMapping();
+    }
+
+    void toString(StringBuilder sb) {
+        sb.append("\ndeclaring [");
+
+        if (declareFields) {
+            sb.append("fields");
+        }
+        else if (declareTables) {
+            sb.append("tables");
+        }
+        else {
+            sb.append("-");
+        }
+
+        sb.append("]\nsubquery  [");
+        sb.append(subquery);
+        sb.append("]");
     }
 }

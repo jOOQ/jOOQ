@@ -69,16 +69,40 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(field)
-               .sql(" ")
-               .sql(operator.toSQL())
-               .sql(" (")
-               .sql(query)
-               .sql(")");
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.sql(field)
+                   .sql(" ")
+                   .sql(operator.toSQL())
+                   .sql(" (")
+                   .sql(query)
+                   .sql(")");
+        }
+        else {
+            context.sql(field)
+                   .sql(" ")
+                   .sql(operator.toSQL())
+                   .sql(" (")
+                   .subquery(true)
+                   .sql(query)
+                   .subquery(false)
+                   .sql(")");
+        }
     }
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(field).bind(query);
+
+        // If this is already a subquery, proceed
+        if (context.subquery()) {
+            context.bind(field).bind(query);
+        }
+        else {
+            context.bind(field)
+                   .subquery(true)
+                   .bind(query)
+                   .subquery(false);
+        }
     }
 }

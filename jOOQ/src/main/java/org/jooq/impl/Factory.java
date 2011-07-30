@@ -274,6 +274,42 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
+     * A synonym for {@link #unnest(List)}
+     *
+     * @see #unnest(List)
+     */
+    public final Table<?> table(List<?> list) {
+        return table(list.toArray());
+    }
+
+    /**
+     * A synonym for {@link #unnest(Object[])}
+     *
+     * @see #unnest(Object[])
+     */
+    public final Table<?> table(Object[] array) {
+        return table(val(array));
+    }
+
+    /**
+     * A synonym for {@link #unnest(ArrayRecord)}
+     *
+     * @see #unnest(ArrayRecord)
+     */
+    public final Table<?> table(ArrayRecord<?> array) {
+        return table(val(array));
+    }
+
+    /**
+     * A synonym for {@link #unnest(Field)}
+     *
+     * @see #unnest(Field)
+     */
+    public final Table<?> table(Field<?> cursor) {
+        return unnest(cursor);
+    }
+
+    /**
      * Create a table from a list of values
      * <p>
      * This is equivalent to the <code>TABLE</code> function for H2, or the
@@ -282,7 +318,7 @@ public class Factory implements Configuration {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      */
-    public final Table<?> table(List<?> list) {
+    public final Table<?> unnest(List<?> list) {
         return table(list.toArray());
     }
 
@@ -295,7 +331,7 @@ public class Factory implements Configuration {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      */
-    public final Table<?> table(Object[] array) {
+    public final Table<?> unnest(Object[] array) {
         return table(val(array));
     }
 
@@ -305,7 +341,7 @@ public class Factory implements Configuration {
      * This wraps the argument array in a <code>TABLE</code> function for
      * Oracle. Currently, only Oracle knows typed arrays
      */
-    public final Table<?> table(ArrayRecord<?> array) {
+    public final Table<?> unnest(ArrayRecord<?> array) {
         return table(val(array));
     }
 
@@ -326,7 +362,7 @@ public class Factory implements Configuration {
      * involved with stored functions can only be of type <code>Object[]</code>.
      * Such arrays are converted into <code>VARCHAR</code> arrays by jOOQ.
      */
-    public final Table<?> table(Field<?> cursor) {
+    public final Table<?> unnest(Field<?> cursor) {
         if (cursor == null) {
             throw new UnsupportedOperationException();
         }

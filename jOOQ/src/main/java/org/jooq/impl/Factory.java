@@ -43,6 +43,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -54,6 +55,7 @@ import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Case;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -247,6 +249,36 @@ public class Factory implements Configuration {
      */
     public final String renderInlined(QueryPart part) {
         return renderContext().inline(true).render(part);
+    }
+
+    /**
+     * Get a new {@link BindContext} for the context of this factory
+     * <p>
+     * This will return an initialised bind context as such:
+     * <ul>
+     * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
+     * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
+     * </ul>
+     * <p>
+     * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
+     */
+    public final BindContext bindContext(PreparedStatement stmt) {
+        return new DefaultBindContext(this, stmt);
+    }
+
+    /**
+     * Get a new {@link BindContext} for the context of this factory
+     * <p>
+     * This will return an initialised bind context as such:
+     * <ul>
+     * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
+     * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
+     * </ul>
+     * <p>
+     * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
+     */
+    public final int bind(QueryPart part, PreparedStatement stmt) throws SQLException {
+        return bindContext(stmt).bind(part).peekIndex();
     }
 
     // -------------------------------------------------------------------------

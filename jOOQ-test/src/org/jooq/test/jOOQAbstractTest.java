@@ -54,7 +54,6 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
@@ -78,6 +77,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.jooq.ArrayRecord;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConfigurationProvider;
@@ -1203,9 +1203,8 @@ public abstract class jOOQAbstractTest<
             }
 
             @Override
-            public int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-                stmt.setInt(initialIndex, 2);
-                return initialIndex + 1;
+            public void bind(BindContext context) throws SQLException {
+                context.statement().setInt(context.nextIndex(), 2);
             }
         };
 
@@ -1226,13 +1225,9 @@ public abstract class jOOQAbstractTest<
             }
 
             @Override
-            public int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-                int result = initialIndex;
-
-                result = internal(IDx2).bindReference(configuration, stmt, result);
-                stmt.setInt(result++, 3);
-
-                return result;
+            public void bind(BindContext context) throws SQLException {
+                context.bind(IDx2);
+                context.statement().setInt(context.nextIndex(), 3);
             }
         };
 
@@ -3627,18 +3622,18 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // Standalone calls
         // ---------------------------------------------------------------------
-//        assertEquals("0", "" + invoke(cFunctions(), "fAuthorExists", create(), null));
-//        assertEquals("1", "" + invoke(cFunctions(), "fAuthorExists", create(), "Paulo"));
-//        assertEquals("0", "" + invoke(cFunctions(), "fAuthorExists", create(), "Shakespeare"));
-//        assertEquals("1", "" + invoke(cFunctions(), "fOne", create()));
-//        assertEquals("1", "" + invoke(cFunctions(), "fNumber", create(), 1));
-//        assertEquals(null, invoke(cFunctions(), "fNumber", create(), null));
-//        assertEquals("1204", "" + invoke(cFunctions(), "f317", create(), 1, 2, 3, 4));
-//        assertEquals("1204", "" + invoke(cFunctions(), "f317", create(), 1, 2, null, 4));
-//        assertEquals("4301", "" + invoke(cFunctions(), "f317", create(), 4, 3, 2, 1));
-//        assertEquals("4301", "" + invoke(cFunctions(), "f317", create(), 4, 3, null, 1));
-//        assertEquals("1101", "" + invoke(cFunctions(), "f317", create(), 1, 1, 1, 1));
-//        assertEquals("1101", "" + invoke(cFunctions(), "f317", create(), 1, 1, null, 1));
+        assertEquals("0", "" + invoke(cFunctions(), "fAuthorExists", create(), null));
+        assertEquals("1", "" + invoke(cFunctions(), "fAuthorExists", create(), "Paulo"));
+        assertEquals("0", "" + invoke(cFunctions(), "fAuthorExists", create(), "Shakespeare"));
+        assertEquals("1", "" + invoke(cFunctions(), "fOne", create()));
+        assertEquals("1", "" + invoke(cFunctions(), "fNumber", create(), 1));
+        assertEquals(null, invoke(cFunctions(), "fNumber", create(), null));
+        assertEquals("1204", "" + invoke(cFunctions(), "f317", create(), 1, 2, 3, 4));
+        assertEquals("1204", "" + invoke(cFunctions(), "f317", create(), 1, 2, null, 4));
+        assertEquals("4301", "" + invoke(cFunctions(), "f317", create(), 4, 3, 2, 1));
+        assertEquals("4301", "" + invoke(cFunctions(), "f317", create(), 4, 3, null, 1));
+        assertEquals("1101", "" + invoke(cFunctions(), "f317", create(), 1, 1, 1, 1));
+        assertEquals("1101", "" + invoke(cFunctions(), "f317", create(), 1, 1, null, 1));
 
         // ---------------------------------------------------------------------
         // Embedded calls

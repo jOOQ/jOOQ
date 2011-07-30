@@ -33,67 +33,69 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
-import org.jooq.BindContext;
-import org.jooq.Configuration;
-import org.jooq.Package;
-import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
-import org.jooq.Schema;
+import java.util.Collection;
 
 /**
- * A default implementation for packages (containers of stored procedures and
- * functions)
+ * The bind context is used for binding {@link QueryPart}'s and their contained
+ * values to a {@link PreparedStatement}'s bind variables. A new bind context is
+ * instanciated every time a {@link Query} is bound. <code>QueryPart</code>'s
+ * will then pass the same context to their components
  * <p>
- * Currently, this is only supported for the {@link SQLDialect#ORACLE} dialect.
+ * This interface is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
+ * @see RenderContext
  */
-public class PackageImpl extends AbstractSchemaProviderQueryPart implements Package {
+public interface BindContext extends Context<BindContext> {
 
     /**
-     * Generated UID
+     * Retrieve the context's underlying {@link PreparedStatement}
      */
-    private static final long serialVersionUID = 7466890004995197675L;
+    PreparedStatement statement();
 
     /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
+     * Get the next bind index. This increments an internal counter. Client code
+     * must assure that calling {@link #nextIndex()} is followed by setting a
+     * bind value to {@link #statement()}
      */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public PackageImpl(SQLDialect dialect, String name, Schema schema) {
-        this(name, schema);
-    }
+    int nextIndex();
 
     /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
+     * Peek the next bind index. This won't increment the internal counter,
+     * unlike {@link #nextIndex()}
      */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public PackageImpl(Configuration configuration, String name, Schema schema) {
-        this(name, schema);
-    }
+    int peekIndex();
 
-    public PackageImpl(String name, Schema schema) {
-        super(name, schema);
-    }
+    /**
+     * Bind values from a {@link QueryPart}. This will also increment the
+     * internal counter.
+     */
+    BindContext bind(QueryPart part) throws SQLException;
 
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.literal(getName());
-    }
+    /**
+     * Bind values from several {@link QueryPart}'s. This will also increment
+     * the internal counter.
+     */
+    BindContext bind(Collection<? extends QueryPart> parts) throws SQLException;
 
-    @Override
-    public final void bind(BindContext context) throws SQLException {}
+    /**
+     * Bind values from several {@link QueryPart}'s. This will also increment
+     * the internal counter.
+     */
+    BindContext bind(QueryPart[] parts) throws SQLException;
 
-    @Override
-    protected List<Attachable> getAttachables0() {
-        return Collections.emptyList();
-    }
+    /**
+     * Bind several values. This will also increment the internal counter.
+     */
+    BindContext bind(Object... values) throws SQLException;
+
+    /**
+     * Bind a value using a specific type. This will also increment the internal
+     * counter.
+     */
+    BindContext bind(Object value, Class<?> type) throws SQLException;
 }

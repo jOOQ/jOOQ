@@ -35,14 +35,13 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.CaseWhenStep;
-import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -116,28 +115,26 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        switch (configuration.getDialect()) {
+    public final void bind(BindContext context) throws SQLException {
+        switch (context.getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
                 for (int i = 0; i < compareValues.size(); i++) {
-                    result = internal(value).bindReference(configuration, stmt, result);
-                    result = internal(compareValues.get(i)).bindReference(configuration, stmt, result);
-                    result = internal(results.get(i)).bindReference(configuration, stmt, result);
+                    context.bind(value);
+                    context.bind(compareValues.get(i));
+                    context.bind(results.get(i));
                 }
 
                 break;
             }
 
             default: {
-                result = internal(value).bindReference(configuration, stmt, result);
+                context.bind(value);
 
                 for (int i = 0; i < compareValues.size(); i++) {
-                    result = internal(compareValues.get(i)).bindReference(configuration, stmt, result);
-                    result = internal(results.get(i)).bindReference(configuration, stmt, result);
+                    context.bind(compareValues.get(i));
+                    context.bind(results.get(i));
                 }
 
                 break;
@@ -145,10 +142,8 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            result = internal(otherwise).bindReference(configuration, stmt, result);
+            context.bind(otherwise);
         }
-
-        return result;
     }
 
     @Override

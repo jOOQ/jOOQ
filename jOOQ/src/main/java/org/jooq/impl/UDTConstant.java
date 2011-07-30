@@ -36,12 +36,11 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
@@ -154,13 +153,14 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
     }
 
     @Override
-    public int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        switch (configuration.getDialect()) {
+    public final void bind(BindContext context) throws SQLException {
+        switch (context.getDialect()) {
 
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE:
-                return JooqUtil.bind(configuration, stmt, initialIndex, record);
+                context.bind(record);
+                break;
 
             // Is the DB2 case correct? Should it be inlined like the Postgres case?
             case DB2:
@@ -168,18 +168,16 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
-                int result = initialIndex;
-
                 for (Field<?> field : record.getFields()) {
-                    Field<?> value = create(configuration).val(record.getValue(field));
-                    result = internal(value).bindReference(configuration, stmt, result);
+                    context.bind(create(context).val(record.getValue(field)));
                 }
 
-                return result;
+                break;
             }
-        }
 
-        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + configuration.getDialect());
+            default:
+                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
+        }
     }
 
     @Override

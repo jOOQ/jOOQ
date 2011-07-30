@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -82,9 +81,7 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return initialIndex;
-    }
+    public final void bind(BindContext context) throws SQLException {}
 
     @Override
     public final void toSQL(RenderContext context) {

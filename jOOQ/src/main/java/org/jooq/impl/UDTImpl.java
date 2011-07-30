@@ -35,13 +35,13 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -134,7 +134,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
+    public final void bind(BindContext context) throws SQLException {
         throw new UnsupportedOperationException("UDTImpl cannot be used as a true QueryPart");
     }
 }

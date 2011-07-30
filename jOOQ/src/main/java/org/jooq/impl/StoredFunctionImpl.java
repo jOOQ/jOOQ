@@ -36,11 +36,11 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -133,16 +133,12 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int index = initialIndex;
-
+    public final void bind(BindContext context) throws SQLException {
         for (Parameter<?> parameter : getParameters()) {
             if (getInValues().get(parameter) != null) {
-                index = internal(getInValues().get(parameter)).bindReference(configuration, stmt, index);
+                context.bind(getInValues().get(parameter));
             }
         }
-
-        return index;
     }
 
     @Override

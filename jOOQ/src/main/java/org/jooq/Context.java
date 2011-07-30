@@ -33,70 +33,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
-
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.Attachable;
-import org.jooq.BindContext;
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.RenderContext;
+package org.jooq;
 
 /**
- * A plain SQL query that returns results
+ * A context type that is used for rendering SQL or for binding
+ * <p>
+ * This interface is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
+ * @see BindContext
+ * @see RenderContext
  */
-class SQLResultQuery extends AbstractResultQuery<Record> {
+public interface Context<C extends Context<C>> extends Configuration {
 
     /**
-     * Generated UID
+     * Whether the current context is rendering a SQL field declaration (e.g. a
+     * {@link Field} in the <code>SELECT</code> clause of the query).
      */
-    private static final long serialVersionUID = 1740879770879469220L;
+    boolean declareFields();
 
-    private final String      sql;
-    private final Object[]    bindings;
+    /**
+     * Set the new context value for {@link #declareFields()}
+     */
+    C declareFields(boolean declareFields);
 
-    public SQLResultQuery(Configuration configuration, String sql, Object[] bindings) {
-        super(configuration);
+    /**
+     * Whether the current context is rendering a SQL table declaration (e.g. a
+     * {@link Table} in the <code>FROM</code> or <code>JOIN</code> clause of the
+     * query).
+     */
+    boolean declareTables();
 
-        this.sql = sql;
-        this.bindings = bindings;
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        JooqUtil.toSQLReference(context, sql, bindings);
-    }
-
-    @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(bindings);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
-    }
-
-    @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) throws SQLException {
-        Configuration configuration = attachable.getConfiguration();
-        return new MetaDataFieldProvider(configuration, meta).getFields();
-    }
-
-    @Override
-    final boolean isSelectingRefCursor() {
-        return false;
-    }
+    /**
+     * Set the new context value for {@link #declareTables()}
+     */
+    C declareTables(boolean declareTables);
 }

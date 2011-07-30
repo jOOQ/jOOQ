@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -299,16 +299,14 @@ implements
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
-        result = internal(table).bindDeclaration(configuration, stmt, result);
-        result = internal(using).bindDeclaration(configuration, stmt, result);
-        result = internal(on).bindReference(configuration, stmt, result);
-        result = internal(updateMap).bindReference(configuration, stmt, result);
-        result = internal(insertMap).bindReference(configuration, stmt, result);
-
-        return result;
+    public final void bind(BindContext context) throws SQLException {
+        context.declareTables(true)
+               .bind(table)
+               .bind(using)
+               .declareTables(false)
+               .bind(on)
+               .bind(updateMap)
+               .bind(insertMap);
     }
 
     @Override

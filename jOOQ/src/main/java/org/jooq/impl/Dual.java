@@ -36,13 +36,12 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -101,9 +100,7 @@ class Dual extends AbstractTable<Record> {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return initialIndex;
-    }
+    public final void bind(BindContext context) throws SQLException {}
 
     @Override
     protected final FieldList getFieldList() {

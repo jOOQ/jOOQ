@@ -36,13 +36,13 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -173,26 +173,25 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    public int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int result = initialIndex;
-
+    public final void bind(BindContext context) throws SQLException {
         if (!onDuplicateKeyUpdate) {
-            result = bindInsert(configuration, stmt, result);
+            bindInsert(context);
         }
 
         // ON DUPLICATE KEY UPDATE clause
         else {
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // MySQL has a nice syntax for this
                 case MYSQL: {
-                    result = bindInsert(configuration, stmt, result);
+                    bindInsert(context);
                     break;
                 }
 
                 // Some dialects can't really handle this clause. Simulation
                 // is done in two steps
                 case H2: {
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -202,27 +201,22 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    result = internal(toMerge()).bindReference(configuration, stmt, result);
+                    context.bind(toMerge());
                     break;
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + configuration.getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
             }
         }
-
-        return result;
     }
 
     private final void toSQLInsert(RenderContext context) {
         context.sql("insert into ").sql(getInto()).sql(" ").sql(insertMaps);
     }
 
-    private int bindInsert(Configuration configuration, PreparedStatement stmt, int result) throws SQLException {
-        result = internal(getInto()).bindReference(configuration, stmt, result);
-        result = internal(insertMaps).bindReference(configuration, stmt, result);
-        result = internal(updateMap).bindReference(configuration, stmt, result);
-        return result;
+    private void bindInsert(BindContext context) throws SQLException {
+        context.bind(getInto()).bind(insertMaps).bind(updateMap);
     }
 
     @SuppressWarnings("unchecked")

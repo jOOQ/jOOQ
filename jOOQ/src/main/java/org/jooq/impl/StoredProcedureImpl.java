@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Collections;
@@ -48,6 +47,7 @@ import java.util.Map;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Package;
@@ -112,7 +112,7 @@ public class StoredProcedureImpl extends AbstractStoredProcedure {
             statement = connection.prepareCall(sql);
             watch.splitTrace("Statement prepared");
 
-            bindReference(configuration, statement);
+            create(configuration).bind(this, statement);
             watch.splitTrace("Variables bound");
 
             registerOutParameters(configuration, statement);
@@ -204,32 +204,27 @@ public class StoredProcedureImpl extends AbstractStoredProcedure {
     }
 
     @Override
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        int index = initialIndex;
-
+    public final void bind(BindContext context) throws SQLException {
         for (Parameter<?> parameter : getParameters()) {
+            int index = context.peekIndex();
             parameterIndexes.put(parameter, index);
 
             if (getInValues().get(parameter) != null) {
-                int newIndex = internal(getInValues().get(parameter)).bindReference(configuration, stmt, index);
+                context.bind(getInValues().get(parameter));
 
                 // [#391] This happens when null literals are used as IN/OUT
                 // parameters. They're not bound as in value, but they need to
                 // be registered as OUT parameter
-                if (newIndex == index && getOutParameters().contains(parameter)) {
-                    newIndex++;
+                if (index == context.peekIndex() && getOutParameters().contains(parameter)) {
+                    context.nextIndex();
                 }
-
-                index = newIndex;
             }
 
-            // Skip one index.
+            // Skip one index for OUT parameters
             else {
-                index++;
+                context.nextIndex();
             }
         }
-
-        return index;
     }
 
     @Override

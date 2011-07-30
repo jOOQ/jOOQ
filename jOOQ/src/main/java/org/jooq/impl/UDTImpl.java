@@ -46,6 +46,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDT;
@@ -128,7 +129,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
+    public final void toSQL(RenderContext context) {
         throw new UnsupportedOperationException("UDTImpl cannot be used as a true QueryPart");
     }
 

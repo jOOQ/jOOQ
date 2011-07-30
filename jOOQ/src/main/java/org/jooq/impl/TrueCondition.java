@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 
 /**
@@ -64,8 +65,8 @@ public class TrueCondition extends AbstractCondition {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return "1 = 1";
+    public final void toSQL(RenderContext context) {
+        context.sql("1 = 1");
     }
 
     @Override

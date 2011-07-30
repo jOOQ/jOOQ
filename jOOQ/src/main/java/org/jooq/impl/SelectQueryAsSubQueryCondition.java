@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -68,17 +69,13 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(internal(field).toSQLReference(configuration, inlineParameters));
-        sb.append(" ");
-        sb.append(operator.toSQL());
-        sb.append(" (");
-        sb.append(internal(query).toSQLReference(configuration, inlineParameters));
-        sb.append(")");
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql(field)
+               .sql(" ")
+               .sql(operator.toSQL())
+               .sql(" (")
+               .sql(query)
+               .sql(")");
     }
 
     @Override

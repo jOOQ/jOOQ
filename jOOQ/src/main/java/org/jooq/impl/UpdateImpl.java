@@ -46,6 +46,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -82,8 +83,8 @@ final class UpdateImpl<R extends TableRecord<R>> extends AbstractQueryPart imple
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(delegate).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(delegate);
     }
 
     @Override

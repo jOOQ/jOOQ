@@ -48,6 +48,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -130,28 +131,28 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
+    public final void toSQL(RenderContext context) {
         if (!onDuplicateKeyUpdate) {
-            toSQLInsert(configuration, inlineParameters, sb);
+            toSQLInsert(context);
         }
 
         // ON DUPLICATE KEY UPDATE clause
         else {
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // MySQL has a nice syntax for this
                 case MYSQL: {
-                    toSQLInsert(configuration, inlineParameters, sb);
-                    sb.append(" on duplicate key update ");
-                    sb.append(internal(updateMap).toSQLReference(configuration, inlineParameters));
+                    toSQLInsert(context);
+                    context.sql(" on duplicate key update ");
+                    context.sql(updateMap);
+
                     break;
                 }
 
                 // Some dialects can't really handle this clause. Simulation
-                // is done in two steps
+                // should be done in two steps
                 case H2: {
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -161,16 +162,14 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    sb.append(internal(toMerge()).toSQLReference(configuration, inlineParameters));
+                    context.sql(toMerge());
                     break;
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + configuration.getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.getDialect());
             }
         }
-
-        return sb.toString();
     }
 
     @Override
@@ -215,11 +214,8 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         return result;
     }
 
-    private final void toSQLInsert(Configuration configuration, boolean inlineParameters, StringBuilder sb) {
-        sb.append("insert into ");
-        sb.append(internal(getInto()).toSQLReference(configuration, inlineParameters));
-        sb.append(" ");
-        sb.append(internal(insertMaps).toSQLReference(configuration, inlineParameters));
+    private final void toSQLInsert(RenderContext context) {
+        context.sql("insert into ").sql(getInto()).sql(" ").sql(insertMaps);
     }
 
     private int bindInsert(Configuration configuration, PreparedStatement stmt, int result) throws SQLException {

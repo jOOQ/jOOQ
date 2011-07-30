@@ -37,8 +37,8 @@ package org.jooq.impl;
 
 import java.util.Collection;
 
-import org.jooq.Configuration;
 import org.jooq.NamedQueryPart;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -59,19 +59,16 @@ class NamedQueryPartList<T extends NamedQueryPart> extends QueryPartList<T> {
     }
 
     /**
-     * Get a list of names of the <code>NamedQueryParts</code> contained in this
-     * list.
+     * Render a list of names of the <code>NamedQueryParts</code> contained in
+     * this list.
      */
-    final String toSQLNames(Configuration configuration) {
-        StringBuilder sb = new StringBuilder();
-
+    final void toSQLNames(RenderContext context) {
         String separator = "";
+
         for (NamedQueryPart part : this) {
-            sb.append(separator);
-            sb.append(JooqUtil.toSQLLiteral(configuration, part.getName()));
+            context.sql(separator).literal(part.getName());
+
             separator = ", ";
         }
-
-        return sb.toString();
     }
 }

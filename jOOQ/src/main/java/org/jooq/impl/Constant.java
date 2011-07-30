@@ -46,6 +46,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -67,15 +68,15 @@ class Constant<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
+    public final void toSQL(RenderContext context) {
 
         // Casting is only done when parameters are NOT inlined
-        if (!inlineParameters) {
+        if (!context.inline()) {
 
             // Generated enums should not be cast...
             // The exception's exception
             if (!(value instanceof EnumType) && !(value instanceof MasterDataType)) {
-                switch (configuration.getDialect()) {
+                switch (context.getDialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
                     case DB2:
@@ -90,13 +91,16 @@ class Constant<T> extends AbstractField<T> {
 
                     // [#632] Sybase needs explicit casting in very rare cases.
                     case SYBASE:
-                        return "cast(? as " + getDataType(configuration).getCastTypeName(configuration) + ")";
+                        context.sql("cast(? as ")
+                               .sql(getDataType(context).getCastTypeName(context))
+                               .sql(")");
+                        return;
                 }
             }
         }
 
         // Most RDBMS can handle constants as typeless literals
-        return FieldTypeHelper.toSQL(configuration, value, inlineParameters, this);
+        FieldTypeHelper.toSQL(context, value, this);
     }
 
     @Override

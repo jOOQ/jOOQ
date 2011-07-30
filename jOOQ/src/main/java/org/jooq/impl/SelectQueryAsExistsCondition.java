@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -65,15 +66,11 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
     }
 
     @Override
-    public String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(operator.toSQL());
-        sb.append(" (");
-        sb.append(internal(query).toSQLReference(configuration, inlineParameters));
-        sb.append(")");
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql(operator.toSQL())
+               .sql(" (")
+               .sql(query)
+               .sql(")");
     }
 
     @Override

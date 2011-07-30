@@ -36,9 +36,9 @@
 
 package org.jooq.impl;
 
-import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -56,13 +56,11 @@ class Count extends Function<Integer> {
     }
 
     @Override
-    protected final String toSQLField(Configuration configuration, NamedQueryPart field, boolean inlineParameters) {
-        String result = super.toSQLField(configuration, field, inlineParameters);
-
+    protected final void toSQLField(RenderContext context, NamedQueryPart field) {
         if (distinct) {
-            result = "distinct " + result;
+            context.sql("distinct ");
         }
 
-        return result;
+        super.toSQLField(context, field);
     }
 }

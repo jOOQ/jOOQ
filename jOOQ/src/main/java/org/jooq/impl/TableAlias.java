@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -72,20 +73,8 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return aliasProvider.toSQLReference(configuration, inlineParameters);
-    }
-
-    /**
-     * Override default behaviour and call
-     * {@link #toSQLDeclaration(Configuration, boolean)} on contained alias
-     * provider
-     * <p>
-     * {@inheritDoc}
-     */
-    @Override
-    public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        return aliasProvider.toSQLDeclaration(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(aliasProvider);
     }
 
     @Override
@@ -110,6 +99,11 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     @Override
     public final Table<R> as(String alias) {
         return aliasProvider.as(alias);
+    }
+
+    @Override
+    public final boolean declaresTables() {
+        return true;
     }
 
     @Override

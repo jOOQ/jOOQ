@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 
 /**
@@ -67,103 +68,113 @@ class Limit extends AbstractQueryPart {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
+    public final void toSQL(RenderContext context) {
+        switch (context.getDialect()) {
 
-        switch (configuration.getDialect()) {
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
-            case MYSQL:
-                if (inlineParameters) {
-                    sb.append("limit ");
-                    sb.append(getOffset());
-                    sb.append(", ");
-                    sb.append(getNumberOfRows());
+            case MYSQL: {
+                if (context.inline()) {
+                    context.sql("limit ")
+                           .sql(getOffset())
+                           .sql(", ")
+                           .sql(getNumberOfRows());
                 }
                 else {
-                    sb.append("limit ?, ?");
+                    context.sql("limit ?, ?");
                 }
+
                 break;
+            }
 
             case H2:       // No break
             case HSQLDB:   // No break
             case POSTGRES: // No break
-            case SQLITE:
-                if (inlineParameters) {
-                    sb.append("limit ");
-                    sb.append(getNumberOfRows());
-                    sb.append(" offset ");
-                    sb.append(getOffset());
+            case SQLITE: {
+                if (context.inline()) {
+                    context.sql("limit ")
+                           .sql(getNumberOfRows())
+                           .sql(" offset ")
+                           .sql(getOffset());
                 }
                 else {
-                    sb.append("limit ? offset ?");
+                    context.sql("limit ? offset ?");
                 }
-                break;
 
-            case DERBY:
-                if (inlineParameters) {
-                    sb.append("offset ");
-                    sb.append(getOffset());
-                    sb.append(" rows fetch next ");
-                    sb.append(getNumberOfRows());
-                    sb.append(" rows only");
+                break;
+            }
+
+            case DERBY: {
+                if (context.inline()) {
+                    context.sql("offset ")
+                           .sql(getOffset())
+                           .sql(" rows fetch next ")
+                           .sql(getNumberOfRows())
+                           .sql(" rows only");
                 }
                 else {
-                    sb.append("offset ? rows fetch next ? rows only");
+                    context.sql("offset ? rows fetch next ? rows only");
                 }
-                break;
 
-            case INGRES:
+                break;
+            }
+
+            case INGRES: {
+
                 // INGRES doesn't allow bind variables in the
                 // OFFSET m FETCH FIRST n ROWS ONLY clause
-                sb.append("offset ");
-                sb.append(getOffset());
-                sb.append(" fetch first ");
-                sb.append(getNumberOfRows());
-                sb.append(" rows only");
+                context.sql("offset ")
+                       .sql(getOffset())
+                       .sql(" fetch first ")
+                       .sql(getNumberOfRows())
+                       .sql(" rows only");
+
                 break;
+            }
 
             // Only "TOP" support provided by the following dialects.
             // "OFFSET" support is simulated in AbstractResultProviderSelectQuery
             // -----------------------------------------------------------------
-            case DB2:
+            case DB2: {
                 if (getOffset() != 0) {
                     throw new SQLDialectNotSupportedException("DB2 does not support offsets in FETCH FIRST ROWS ONLY clause");
                 }
 
                 // DB2 doesn't allow bind variables in the
                 // FETCH FIRST n ROWS ONLY clause
-                sb.append("fetch first ");
-                sb.append(getNumberOfRows());
-                sb.append(" rows only");
+                context.sql("fetch first ")
+                       .sql(getNumberOfRows())
+                       .sql(" rows only");
+
                 break;
+            }
 
             case SQLSERVER:
-            case SYBASE:
+            case SYBASE: {
                 if (getOffset() != 0) {
                     throw new SQLDialectNotSupportedException("Offsets in TOP clause not supported");
                 }
 
                 // SQL Server and Sybase don't allow bind variables in the TOP n clause
-                sb.append("top ");
-                sb.append(getNumberOfRows());
+                context.sql("top ").sql(getNumberOfRows());
                 break;
+            }
 
             // A default implementation is necessary for hashCode() and toString()
-            default:
-                if (inlineParameters) {
-                    sb.append("limit ");
-                    sb.append(getNumberOfRows());
-                    sb.append(" offset ");
-                    sb.append(getOffset());
+            default: {
+                if (context.inline()) {
+                    context.sql("limit ")
+                           .sql(getNumberOfRows())
+                           .sql(" offset ")
+                           .sql(getOffset());
                 }
                 else {
-                    sb.append("limit ? offset ?");
+                    context.sql("limit ? offset ?");
                 }
-                break;
-        }
 
-        return sb.toString();
+                break;
+            }
+        }
     }
 
     @Override

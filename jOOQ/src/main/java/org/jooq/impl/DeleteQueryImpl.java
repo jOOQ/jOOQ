@@ -47,6 +47,7 @@ import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Operator;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -110,17 +111,13 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("delete from ");
-        sb.append(internal(getFrom()).toSQLReference(configuration, inlineParameters));
+    public final void toSQL(RenderContext context) {
+        context.sql("delete from ");
+        context.sql(getFrom());
 
         if (!(getWhere() instanceof TrueCondition)) {
-            sb.append(" where ");
-            sb.append(internal(getWhere()).toSQLReference(configuration, inlineParameters));
+            context.sql(" where ");
+            context.sql(getWhere());
         }
-
-        return sb.toString();
     }
 }

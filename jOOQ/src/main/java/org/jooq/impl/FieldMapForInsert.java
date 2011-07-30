@@ -43,6 +43,7 @@ import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -58,46 +59,38 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(toSQLReferenceKeys(configuration));
-        sb.append(" values ");
-        sb.append(toSQLReferenceValues(configuration, inlineParameters));
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        toSQLReferenceKeys(context);
+        context.sql(" values ");
+        toSQLReferenceValues(context);
     }
 
-    final String toSQLReferenceKeys(Configuration configuration) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("(");
+    final void toSQLReferenceKeys(RenderContext context) {
+        context.sql("(");
 
         String separator = "";
         for (Field<?> field : keySet()) {
-            sb.append(separator);
-            sb.append(JooqUtil.toSQLLiteral(configuration, field.getName()));
+            context.sql(separator);
+            context.literal(field.getName());
 
             separator = ", ";
         }
 
-        sb.append(")");
-        return sb.toString();
+        context.sql(")");
     }
 
-    final String toSQLReferenceValues(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("(");
+    final void toSQLReferenceValues(RenderContext context) {
+        context.sql("(");
 
         String separator = "";
         for (Field<?> field : values()) {
-            sb.append(separator);
-            sb.append(internal(field).toSQLReference(configuration, inlineParameters));
+            context.sql(separator);
+            context.sql(field);
 
             separator = ", ";
         }
 
-        sb.append(")");
-        return sb.toString();
+        context.sql(")");
     }
 
     @Override

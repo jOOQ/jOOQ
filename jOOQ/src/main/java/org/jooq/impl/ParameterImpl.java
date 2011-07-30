@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
 /**
@@ -86,7 +87,8 @@ public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> impl
     }
 
     @Override
-    public String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return getName();
+    public final void toSQL(RenderContext context) {
+        // TODO [#771] Check if this should be an escaped literal
+        context.sql(getName());
     }
 }

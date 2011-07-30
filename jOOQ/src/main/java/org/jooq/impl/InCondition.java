@@ -44,6 +44,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -85,24 +86,20 @@ class InCondition<T> extends AbstractCondition {
     }
 
     @Override
-    public String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(internal(field).toSQLReference(configuration, inlineParameters));
-        sb.append(" ");
-        sb.append(operator.toSQL());
-        sb.append(" (");
+    public final void toSQL(RenderContext context) {
+        context.sql(field)
+               .sql(" ")
+               .sql(operator.toSQL())
+               .sql(" (");
 
         String separator = "";
         for (Field<?> value : values) {
-            sb.append(separator);
-            sb.append(internal(value).toSQLReference(configuration, inlineParameters));
+            context.sql(separator);
+            context.sql(value);
 
             separator = ", ";
         }
 
-        sb.append(")");
-
-        return sb.toString();
+        context.sql(")");
     }
 }

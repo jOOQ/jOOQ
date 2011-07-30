@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.impl.Factory;
+
 /**
  * The common base type for all objects that can be used for query composition.
  * <p>
@@ -51,6 +53,24 @@ public interface QueryPart extends Attachable {
 
     /**
      * Retrieve the SQL code rendered by this query part.
+     *
+     * @deprecated - 1.6.4 [#758][#776] - Use
+     *             {@link RenderContext#render(QueryPart)} or
+     *             {@link Factory#render(QueryPart)}, or {@link Query#getSQL()}
+     *             instead.
+     *             <p>
+     *             The internals of query rendering have been changed
+     *             fundamentally. It is not recommended to render a
+     *             {@link QueryPart} outside the scope of a
+     *             {@link Configuration} or a {@link RenderContext}.
+     *             <p>
+     *             The rationale is this: A {@link QueryPart} is
+     *             {@link Configuration}-independent, hence it cannot know what
+     *             kind of {@link SQLDialect} should be used for rendering. Some
+     *             {@link QueryPart}'s are highly dependent on the SQL dialect.
+     *             Instead, {@link RenderContext#render(QueryPart)} or
+     *             {@link Factory#render(QueryPart)} should be used.
      */
+    @Deprecated
     String getSQL();
 }

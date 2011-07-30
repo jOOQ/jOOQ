@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -106,17 +107,13 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        if (getMappedSchema(configuration, getSchema()) != null) {
-            sb.append(internal(getMappedSchema(configuration, getSchema())).toSQLReference(configuration, inlineParameters));
-            sb.append(".");
+    public final void toSQL(RenderContext context) {
+        if (getMappedSchema(context, getSchema()) != null) {
+            context.sql(getMappedSchema(context, getSchema()));
+            context.sql(".");
         }
 
-        sb.append(JooqUtil.toSQLLiteral(configuration, getMappedTable(configuration, this).getName()));
-
-        return sb.toString();
+        context.literal(getMappedTable(context, this).getName());
     }
 
     @Override

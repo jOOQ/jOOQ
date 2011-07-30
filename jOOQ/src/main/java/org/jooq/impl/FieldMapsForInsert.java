@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -72,38 +73,37 @@ class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
+    public final void toSQL(RenderContext context) {
         if (!isExecutable()) {
-            return "[ no fields are inserted ]";
+            context.sql("[ no fields are inserted ]");
         }
 
         // Single record inserts can use the standard syntax in any dialect
-        if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
-            return internal(insertMaps.get(0)).toSQLReference(configuration, inlineParameters);
+        else if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
+            context.sql(insertMaps.get(0));
         }
 
-        // Multi-record inserts aren't always supported
+        // True SQL92 multi-record inserts aren't always supported
         else {
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // Some dialects don't support multi-record inserts
                 case INGRES:
                 case ORACLE:
                 case SQLITE:
-                    return toSQLInsertSelect(configuration, inlineParameters);
+                    toSQLInsertSelect(context);
+                    break;
 
                 default:
-                    return toSQL92Values(configuration, inlineParameters);
+                    toSQL92Values(context);
+                    break;
             }
         }
     }
 
-    private String toSQLInsertSelect(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(" ");
-        sb.append(insertMaps.get(0).toSQLReferenceKeys(configuration));
-        sb.append(" ");
+    private void toSQLInsertSelect(RenderContext context) {
+        insertMaps.get(0).toSQLReferenceKeys(context);
+        context.sql(" ");
 
         Select<Record> select = null;
         for (FieldMapForInsert map : insertMaps) {
@@ -119,26 +119,21 @@ class FieldMapsForInsert extends AbstractQueryPart {
             }
         }
 
-        sb.append(internal(select).toSQLReference(configuration, inlineParameters));
-
-        return sb.toString();
+        context.sql(select);
     }
 
-    private String toSQL92Values(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(internal(insertMaps.get(0)).toSQLReference(configuration, inlineParameters));
+    private void toSQL92Values(RenderContext context) {
+        context.sql(insertMaps.get(0));
 
         int i = 0;
         for (FieldMapForInsert map : insertMaps) {
             if (map != null && i > 0) {
-                sb.append(", ");
-                sb.append(map.toSQLReferenceValues(configuration, inlineParameters));
+                context.sql(", ");
+                map.toSQLReferenceValues(context);
             }
 
             i++;
         }
-
-        return sb.toString();
     }
 
     @Override

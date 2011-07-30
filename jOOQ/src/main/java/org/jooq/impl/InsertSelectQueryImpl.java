@@ -43,6 +43,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertSelectQuery;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -74,24 +75,16 @@ class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery impl
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("insert into ");
-        sb.append(internal(into).toSQLReference(configuration, inlineParameters));
-        sb.append(" (");
+    public final void toSQL(RenderContext context) {
+        context.sql("insert into ").sql(into).sql(" (");
 
         String separator = "";
         for (Field<?> field : into.getFields()) {
-            sb.append(separator);
-            sb.append(JooqUtil.toSQLLiteral(configuration, field.getName()));
+            context.sql(separator).literal(field.getName());
             separator = ", ";
         }
 
-        sb.append(") ");
-        sb.append(internal(select).toSQLReference(configuration, inlineParameters));
-
-        return sb.toString();
+        context.sql(") ").sql(select);
     }
 
     @Override

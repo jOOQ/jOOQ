@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.CaseWhenStep;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V, T> {
 
@@ -151,33 +152,31 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("case");
+    public final void toSQL(RenderContext context) {
+        context.sql("case");
 
-        switch (configuration.getDialect()) {
+        switch (context.getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
                 for (int i = 0; i < compareValues.size(); i++) {
-                    sb.append(" when ");
-                    sb.append(internal(value.equal(compareValues.get(i))).toSQLReference(configuration, inlineParameters));
-                    sb.append(" then ");
-                    sb.append(internal(results.get(i)).toSQLReference(configuration, inlineParameters));
+                    context.sql(" when ");
+                    context.sql(value.equal(compareValues.get(i)));
+                    context.sql(" then ");
+                    context.sql(results.get(i));
                 }
 
                 break;
             }
 
             default: {
-                sb.append(" ");
-                sb.append(internal(value).toSQLReference(configuration, inlineParameters));
+                context.sql(" ").sql(value);
 
                 for (int i = 0; i < compareValues.size(); i++) {
-                    sb.append(" when ");
-                    sb.append(internal(compareValues.get(i)).toSQLReference(configuration, inlineParameters));
-                    sb.append(" then ");
-                    sb.append(internal(results.get(i)).toSQLReference(configuration, inlineParameters));
+                    context.sql(" when ");
+                    context.sql(compareValues.get(i));
+                    context.sql(" then ");
+                    context.sql(results.get(i));
                 }
 
                 break;
@@ -185,12 +184,10 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            sb.append(" else ");
-            sb.append(internal(otherwise).toSQLReference(configuration, inlineParameters));
+            context.sql(" else ").sql(otherwise);
         }
 
-        sb.append(" end");
-        return sb.toString();
+        context.sql(" end");
     }
 
     @Override

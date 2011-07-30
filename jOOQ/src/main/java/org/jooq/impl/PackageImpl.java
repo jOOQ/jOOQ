@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Package;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 
@@ -84,8 +85,8 @@ public class PackageImpl extends AbstractSchemaProviderQueryPart implements Pack
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return JooqUtil.toSQLLiteral(configuration, getName());
+    public final void toSQL(RenderContext context) {
+        context.literal(getName());
     }
 
     @Override

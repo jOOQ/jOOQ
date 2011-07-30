@@ -43,6 +43,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * A base class for all built-in functions that have vendor-specific behaviour
@@ -70,8 +71,8 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(getFunction(configuration)).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(getFunction(context));
     }
 
     @Override

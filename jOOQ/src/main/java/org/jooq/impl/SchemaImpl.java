@@ -45,6 +45,7 @@ import java.util.Map;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -86,8 +87,8 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return JooqUtil.toSQLLiteral(configuration, getName());
+    public final void toSQL(RenderContext context) {
+        context.literal(getName());
     }
 
     @Override

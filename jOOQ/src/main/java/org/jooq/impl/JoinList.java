@@ -57,4 +57,9 @@ class JoinList extends QueryPartList<Join> {
     protected String getListSeparator() {
         return "";
     }
+
+    @Override
+    public final boolean declaresTables() {
+        return true;
+    }
 }

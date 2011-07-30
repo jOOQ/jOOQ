@@ -46,6 +46,7 @@ import org.jooq.Configuration;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Operator;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -77,8 +78,8 @@ class DeleteImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return delegate.toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(delegate);
     }
 
     @Override

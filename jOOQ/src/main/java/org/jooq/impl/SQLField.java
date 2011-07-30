@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.RenderContext;
 
 class SQLField<T> extends AbstractField<T> {
 
@@ -67,8 +68,8 @@ class SQLField<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return JooqUtil.toSQLReference(configuration, sql, bindings, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        JooqUtil.toSQLReference(context, sql, bindings);
     }
 
     @Override

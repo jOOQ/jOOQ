@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -69,24 +70,25 @@ class ArrayConstant<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        if (inlineParameters) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(array.getName());
-            sb.append("(");
+    public final void toSQL(RenderContext context) {
+        if (context.inline()) {
+
+            // TODO [#771] Check if this should be escaped as a literal
+            context.sql(array.getName());
+            context.sql("(");
 
             String separator = "";
             for (Object object : array.get()) {
-                sb.append(separator);
-                sb.append(internal(create(configuration).val(object)).toSQLReference(configuration, inlineParameters));
+                context.sql(separator);
+                context.sql(create(context).val(object));
 
                 separator = ", ";
             }
 
-            sb.append(")");
-            return sb.toString();
-        } else {
-            return "?";
+            context.sql(")");
+        }
+        else {
+            context.sql("?");
         }
     }
 

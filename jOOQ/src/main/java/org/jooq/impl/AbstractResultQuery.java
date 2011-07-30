@@ -111,16 +111,27 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     abstract boolean isSelectingRefCursor();
 
     private final Cursor<R> executeLazy(Configuration configuration, Connection connection) throws SQLException {
+        StopWatch watch = new StopWatch();
         PreparedStatement statement = null;
 
-        String sql = toSQLReference(configuration);
+        String sql = create(configuration).render(this);
+        watch.splitTrace("SQL rendered");
 
-        if (log.isDebugEnabled()) log.debug("Lazy executing query", toSQLReference(configuration, true));
-        if (log.isTraceEnabled()) log.trace("Preparing statement", sql);
+        if (log.isDebugEnabled())
+            log.debug("Lazy executing query", create(configuration).renderInlined(this));
+        if (log.isTraceEnabled())
+            log.trace("Preparing statement", sql);
 
         statement = connection.prepareStatement(sql);
+        watch.splitTrace("Statement prepared");
+
         bindReference(configuration, statement);
-        return executeLazy(configuration, statement);
+        watch.splitTrace("Variables bound");
+
+        Cursor<R> cursor = executeLazy(configuration, statement);
+        watch.splitTrace("Statement executed");
+
+        return cursor;
     }
 
     private final Cursor<R> executeLazy(Configuration configuration, PreparedStatement statement) throws SQLException {

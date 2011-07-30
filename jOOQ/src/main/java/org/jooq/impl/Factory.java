@@ -70,8 +70,10 @@ import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
@@ -199,6 +201,52 @@ public class Factory implements Configuration {
     @Override
     public final SchemaMapping getSchemaMapping() {
         return mapping;
+    }
+
+    // -------------------------------------------------------------------------
+    // RenderContext and BindContext accessors
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get a new {@link RenderContext} for the context of this factory
+     * <p>
+     * This will return an initialised render context as such:
+     * <ul>
+     * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
+     * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
+     * <li> <code>{@link RenderContext#inline()} == false</code></li>
+     * </ul>
+     * <p>
+     * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
+     */
+    public final RenderContext renderContext() {
+        return new DefaultRenderContext(this);
+    }
+
+    /**
+     * Render a QueryPart in the context of this factory
+     * <p>
+     * This is the same as calling <code>renderContext().render(part)</code>
+     *
+     * @param part The {@link QueryPart} to be rendered
+     * @return The rendered SQL
+     */
+    public final String render(QueryPart part) {
+        return renderContext().render(part);
+    }
+
+    /**
+     * Render a QueryPart in the context of this factory, inlining all bind
+     * variables.
+     * <p>
+     * This is the same as calling
+     * <code>renderContext().inline(true).render(part)</code>
+     *
+     * @param part The {@link QueryPart} to be rendered
+     * @return The rendered SQL
+     */
+    public final String renderInlined(QueryPart part) {
+        return renderContext().inline(true).render(part);
     }
 
     // -------------------------------------------------------------------------

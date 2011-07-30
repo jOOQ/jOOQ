@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Table;
 
 /**
@@ -88,8 +89,8 @@ class SQLTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return JooqUtil.toSQLReference(configuration, sql, bindings, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        JooqUtil.toSQLReference(context, sql, bindings);
     }
 
     @Override

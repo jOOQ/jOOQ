@@ -41,6 +41,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -65,27 +66,26 @@ class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Tr
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        switch (configuration.getDialect()) {
+    public final void toSQL(RenderContext context) {
+        switch (context.getDialect()) {
 
             // These dialects don't implement the TRUNCATE statement
             case INGRES:
             case SQLITE: {
-                return internal(create(configuration).delete(table)).toSQLReference(configuration, inlineParameters);
+                context.sql(create(context).delete(table));
+                break;
             }
 
             // All other dialects do
             default: {
-                StringBuilder sb = new StringBuilder();
+                context.sql("truncate table ");
+                context.sql(table);
 
-                sb.append("truncate table ");
-                sb.append(internal(table).toSQLReference(configuration, inlineParameters));
-
-                if (configuration.getDialect() == SQLDialect.DB2) {
-                    sb.append(" immediate");
+                if (context.getDialect() == SQLDialect.DB2) {
+                    context.sql(" immediate");
                 }
 
-                return sb.toString();
+                break;
             }
         }
     }

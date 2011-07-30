@@ -36,7 +36,7 @@
 
 package org.jooq.impl;
 
-import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -50,7 +50,12 @@ class SelectFieldList extends FieldList {
     }
 
     @Override
-    protected String toSQLEmptyList(Configuration configuration) {
-        return "1";
+    protected void toSQLEmptyList(RenderContext context) {
+        context.sql("1");
+    }
+
+    @Override
+    public final boolean declaresFields() {
+        return true;
     }
 }

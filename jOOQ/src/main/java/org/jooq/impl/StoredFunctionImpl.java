@@ -46,6 +46,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.StoredFunction;
@@ -109,8 +110,10 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
                 i++;
             }
 
-            String name = toSQLQualifiedName(attachable.getConfiguration());
-            function = new Function<T>(name, type, array);
+            RenderContext local = create(attachable).renderContext();
+            toSQLQualifiedName(local);
+
+            function = new Function<T>(local.render(), type, array);
         }
 
         return function;
@@ -143,8 +146,8 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
     }
 
     @Override
-    public String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(create(configuration).select(asField())).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(create(context).select(asField()));
     }
 
     @Override

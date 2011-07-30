@@ -46,6 +46,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -98,34 +99,40 @@ class DescribeQuery<R extends Record> extends AbstractQuery {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
+    public final void toSQL(RenderContext context) {
         Limit limit = new Limit();
         limit.setNumberOfRows(1);
 
-        sb.append("select ");
-        // TODO [#21] Refactor this and correctly implement Limit for Sybase
-        if (configuration.getDialect() == SQLDialect.SYBASE ||
-            configuration.getDialect() == SQLDialect.SQLSERVER) {
-            sb.append(limit.toSQLReference(configuration, true));
-        }
-        sb.append(" * from ");
-        sb.append(internal(table).toSQLReference(configuration, inlineParameters));
-        sb.append(" ");
+        context.sql("select ");
 
         // TODO [#21] Refactor this and correctly implement Limit for Sybase
-        if (configuration.getDialect() == SQLDialect.SYBASE ||
-            configuration.getDialect() == SQLDialect.SQLSERVER) {
-            // nothing to do here, limit expression added at start of statement
-        } else if (configuration.getDialect() != SQLDialect.ORACLE) {
-            sb.append(limit.toSQLReference(configuration, true));
-        } else {
-            sb.append("where rownum < 1");
+        if (context.getDialect() == SQLDialect.SYBASE ||
+            context.getDialect() == SQLDialect.SQLSERVER) {
+            context.inline(true)
+                   .sql(limit)
+                   .inline(false);
         }
 
-        return sb.toString();
+        context.sql(" * from ");
+        context.sql(table);
+        context.sql(" ");
 
+        // nothing to do here, top clause added at start of statement
+        if (context.getDialect() == SQLDialect.SYBASE ||
+            context.getDialect() == SQLDialect.SQLSERVER) {
+        }
+
+        // Oracle can filter by rownum
+        else if (context.getDialect() == SQLDialect.ORACLE) {
+            context.sql("where rownum < 1");
+        }
+
+        // Most RDBMS support a limit clause at the end
+        else {
+            context.inline(true)
+                   .sql(limit)
+                   .inline(false);
+        }
     }
 
     @Override

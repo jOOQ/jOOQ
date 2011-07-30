@@ -42,6 +42,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 class SQLCondition extends AbstractCondition {
 
@@ -64,11 +65,11 @@ class SQLCondition extends AbstractCondition {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
+    public final void toSQL(RenderContext context) {
         // We have no control over the plain SQL content, hence we MUST put it
         // in parentheses to ensure correct semantics
 
-        return JooqUtil.toSQLReferenceWithParentheses(configuration, sql, bindings, inlineParameters);
+        JooqUtil.toSQLReferenceWithParentheses(context, sql, bindings);
     }
 
     @Override

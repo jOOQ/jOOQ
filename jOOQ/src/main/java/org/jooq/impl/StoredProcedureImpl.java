@@ -52,6 +52,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTRecord;
@@ -100,11 +101,13 @@ public class StoredProcedureImpl extends AbstractStoredProcedure {
             Configuration configuration = attachable.getConfiguration();
             Connection connection = configuration.getConnection();
 
-            String sql = toSQLReference(configuration);
+            String sql = create(configuration).render(this);
             watch.splitTrace("SQL rendered");
 
-            if (log.isDebugEnabled()) log.debug("Executing query", toSQLReference(configuration, true));
-            if (log.isTraceEnabled()) log.trace("Preparing statement", sql);
+            if (log.isDebugEnabled())
+                log.debug("Executing procedure", create(configuration).renderInlined(this));
+            if (log.isTraceEnabled())
+                log.trace("Preparing statement", sql);
 
             statement = connection.prepareCall(sql);
             watch.splitTrace("Statement prepared");
@@ -230,22 +233,20 @@ public class StoredProcedureImpl extends AbstractStoredProcedure {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("{ ");
+    public final void toSQL(RenderContext context) {
+        context.sql("{ ");
 
         if (getReturnParameter() != null) {
-            sb.append("? = ");
+            context.sql("? = ");
         }
 
-        sb.append("call ");
-        sb.append(toSQLQualifiedName(configuration));
-        sb.append("(");
+        context.sql("call ");
+        toSQLQualifiedName(context);
+        context.sql("(");
 
         String separator = "";
         for (Parameter<?> parameter : getParameters()) {
-            sb.append(separator);
+            context.sql(separator);
 
             // The return value has already been written
             if (parameter.equals(getReturnParameter())) {
@@ -254,7 +255,7 @@ public class StoredProcedureImpl extends AbstractStoredProcedure {
 
             // OUT and IN OUT parameters are always written as a '?' bind variable
             else if (getOutParameters().contains(parameter)) {
-                sb.append("?");
+                context.sql("?");
             }
 
             // IN parameters are rendered normally
@@ -262,19 +263,17 @@ public class StoredProcedureImpl extends AbstractStoredProcedure {
                 Field<?> value = getInValues().get(parameter);
 
                 // Disambiguate overloaded procedure signatures
-                if (SQLDialect.POSTGRES == configuration.getDialect() && isOverloaded()) {
+                if (SQLDialect.POSTGRES == context.getDialect() && isOverloaded()) {
                     value = value.cast(parameter.getType());
                 }
 
-                sb.append(internal(value).toSQLReference(configuration, inlineParameters));
+                context.sql(value);
             }
 
             separator = ", ";
         }
 
-        sb.append(") }");
-        return sb.toString();
-
+        context.sql(") }");
     }
 
     @Override

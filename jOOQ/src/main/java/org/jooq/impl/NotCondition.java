@@ -42,6 +42,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 class NotCondition extends AbstractCondition {
 
@@ -59,14 +60,8 @@ class NotCondition extends AbstractCondition {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("not(");
-        sb.append(internal(condition).toSQLReference(configuration, inlineParameters));
-        sb.append(")");
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql("not(").sql(condition).sql(")");
     }
 
     @Override

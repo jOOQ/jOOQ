@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.AliasProvider;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -76,39 +77,35 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return JooqUtil.toSQLLiteral(configuration, alias);
-    }
+    public final void toSQL(RenderContext context) {
+        if (context.declareFields() || context.declareTables()) {
+            if (wrapInParentheses) {
+                context.sql("(");
+            }
 
-    @Override
-    public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
+            context.sql(aliasProvider);
 
-        if (wrapInParentheses) {
-            sb.append("(");
+            if (wrapInParentheses) {
+                context.sql(")");
+            }
+
+            switch (context.getDialect()) {
+
+                // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
+                case POSTGRES:
+                case HSQLDB:
+                case DERBY:
+                case MYSQL:
+                    context.sql(" as");
+                    break;
+            }
+
+            context.sql(" ");
+            context.literal(alias);
         }
-
-        sb.append(internal(aliasProvider).toSQLDeclaration(configuration, inlineParameters));
-
-        if (wrapInParentheses) {
-            sb.append(")");
+        else {
+            context.literal(alias);
         }
-
-        switch (configuration.getDialect()) {
-
-            // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
-            case POSTGRES:
-            case HSQLDB:
-            case DERBY:
-            case MYSQL:
-                sb.append(" as");
-                break;
-        }
-
-        sb.append(" ");
-        sb.append(JooqUtil.toSQLLiteral(configuration, alias));
-
-        return sb.toString();
     }
 
     @Override
@@ -125,5 +122,15 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
     @Override
     public final T as(String as) {
         return aliasProvider.as(as);
+    }
+
+    @Override
+    public final boolean declaresFields() {
+        return true;
+    }
+
+    @Override
+    public final boolean declaresTables() {
+        return true;
     }
 }

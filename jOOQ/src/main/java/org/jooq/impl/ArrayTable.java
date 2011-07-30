@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
 import org.jooq.util.h2.H2DataType;
@@ -90,32 +91,26 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        switch (configuration.getDialect()) {
+    public final void toSQL(RenderContext context) {
+        switch (context.getDialect()) {
             case ORACLE: {
-                sb.append("table(");
-                sb.append(internal(array).toSQLReference(configuration, inlineParameters));
-                sb.append(")");
+                context.sql("table(").sql(array).sql(")");
                 break;
             }
 
             case H2: {
-                sb.append("table(COLUMN_VALUE ");
+                context.sql("table(COLUMN_VALUE ");
 
                 // If the array type is unknown (e.g. because it's returned from a stored function
                 // Then the best choice for arbitrary types is varchar
                 if (array.getDataType().getType() == Object[].class) {
-                    sb.append(H2DataType.VARCHAR.getTypeName());
+                    context.sql(H2DataType.VARCHAR.getTypeName());
                 }
                 else {
-                    sb.append(array.getDataType().getTypeName());
+                    context.sql(array.getDataType().getTypeName());
                 }
 
-                sb.append(" = ");
-                sb.append(internal(array).toSQLReference(configuration, inlineParameters));
-                sb.append(")");
+                context.sql(" = ").sql(array).sql(")");
                 break;
             }
 
@@ -123,18 +118,13 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
             case POSTGRES: {
 
                 // [#756] TODO: Handle aliasing correctly
-                sb.append("unnest(");
-                sb.append(internal(array).toSQLReference(configuration, inlineParameters));
-                sb.append(") ARRAY_TABLE(COLUMN_VALUE)");
-
+                context.sql("unnest(").sql(array).sql(") array_table(COLUMN_VALUE)");
                 break;
             }
 
             default:
-                throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.getDialect());
+                throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + context.getDialect());
         }
-
-        return sb.toString();
     }
 
     @Override

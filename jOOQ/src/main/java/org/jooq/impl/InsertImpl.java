@@ -52,6 +52,7 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
+import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.exception.DetachedException;
@@ -85,8 +86,8 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(delegate).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(delegate);
     }
 
     @Override

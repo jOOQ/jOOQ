@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.impl.AbstractStoredProcedure;
@@ -81,8 +82,8 @@ public class PostgresSingleUDTOutParameterProcedure extends AbstractStoredProced
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return getDelegate().toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(getDelegate());
     }
 
     @Override

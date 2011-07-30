@@ -46,6 +46,7 @@ import org.jooq.Attachable;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Operator;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -110,27 +111,27 @@ class CombinedCondition extends AbstractCondition {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
+    public final void toSQL(RenderContext context) {
         if (conditions.isEmpty()) {
-            return internal(create().trueCondition()).toSQLReference(configuration, inlineParameters);
+            context.sql(create().trueCondition());
         }
-
-        if (conditions.size() == 1) {
-            return internal(conditions.get(0)).toSQLReference(configuration, inlineParameters);
+        else if (conditions.size() == 1) {
+            context.sql(conditions.get(0));
         }
+        else {
+            context.sql("(");
 
-        StringBuilder sb = new StringBuilder();
-        String operatorName = " " + operator.name().toLowerCase() + " ";
-        String separator = "";
+            String operatorName = " " + operator.name().toLowerCase() + " ";
+            String separator = "";
 
-        sb.append("(");
-        for (Condition condition : conditions) {
-            sb.append(separator);
-            sb.append(internal(condition).toSQLReference(configuration, inlineParameters));
-            separator = operatorName;
+            for (Condition condition : conditions) {
+                context.sql(separator);
+                context.sql(condition);
+
+                separator = operatorName;
+            }
+
+            context.sql(")");
         }
-        sb.append(")");
-
-        return sb.toString();
     }
 }

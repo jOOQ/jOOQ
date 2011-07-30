@@ -44,6 +44,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
 
@@ -69,28 +70,33 @@ class Dual extends AbstractTable<Record> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        switch (configuration.getDialect()) {
+    public final void toSQL(RenderContext context) {
+        switch (context.getDialect()) {
             case HSQLDB:
-                return "INFORMATION_SCHEMA.SYSTEM_USERS";
+                context.sql("INFORMATION_SCHEMA.SYSTEM_USERS");
+                break;
 
-            case INGRES:   // No break
-            case POSTGRES: // No break
-            case SQLITE:   // No break
+            case INGRES:
+            case POSTGRES:
+            case SQLITE:
             case SQLSERVER:
-                return "";
+                break;
 
             case DB2:
-                return "SYSIBM.DUAL";
+                context.sql("SYSIBM.DUAL");
+                break;
 
             case DERBY:
-                return "SYSIBM.SYSDUMMY1";
+                context.sql("SYSIBM.SYSDUMMY1");
+                break;
 
             case SYBASE:
-                return "SYS.DUMMY";
+                context.sql("SYS.DUMMY");
+                break;
 
             default:
-                return "dual";
+                context.sql("dual");
+                break;
         }
     }
 

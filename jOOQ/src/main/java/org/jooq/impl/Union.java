@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -84,26 +85,22 @@ class Union<R extends Record> extends AbstractSelect<R> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
+    public final void toSQL(RenderContext context) {
         for (int i = 0; i < queries.size(); i++) {
             if (i != 0) {
-                sb.append(" ");
-                sb.append(operator.toSQL(configuration.getDialect()));
-                sb.append(" ");
+                context.sql(" ");
+                context.sql(operator.toSQL(context.getDialect()));
+                context.sql(" ");
             }
 
-            wrappingParenthesis(configuration, sb, "(");
-            sb.append(internal(queries.get(i)).toSQLReference(configuration, inlineParameters));
-            wrappingParenthesis(configuration, sb, ")");
+            wrappingParenthesis(context, "(");
+            context.sql(queries.get(i));
+            wrappingParenthesis(context, ")");
         }
-
-        return sb.toString();
     }
 
-    private final void wrappingParenthesis(Configuration configuration, StringBuilder sb, String parenthesis) {
-        switch (configuration.getDialect()) {
+    private final void wrappingParenthesis(RenderContext context, String parenthesis) {
+        switch (context.getDialect()) {
             // SQLite and DERBY have some syntax issues with unions.
             // Check out https://issues.apache.org/jira/browse/DERBY-2374
             case SQLITE: // no break
@@ -115,7 +112,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
                 return;
         }
 
-        sb.append(parenthesis);
+        context.sql(parenthesis);
     }
 
     @Override

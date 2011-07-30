@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -88,15 +89,11 @@ class BetweenCondition<T> extends AbstractCondition {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(internal(field).toSQLReference(configuration, inlineParameters));
-        sb.append(" between ");
-        sb.append(internal(minValue).toSQLReference(configuration, inlineParameters));
-        sb.append(" and ");
-        sb.append(internal(maxValue).toSQLReference(configuration, inlineParameters));
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql(field)
+               .sql(" between ")
+               .sql(minValue)
+               .sql(" and ")
+               .sql(maxValue);
     }
 }

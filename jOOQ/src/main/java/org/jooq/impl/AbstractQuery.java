@@ -87,11 +87,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             PreparedStatement statement = null;
             int result = 0;
             try {
-                String sql = toSQLReference(configuration);
+                String sql = create(configuration).render(this);
                 watch.splitTrace("SQL rendered");
 
-                if (log.isDebugEnabled()) log.debug("Executing query", toSQLReference(configuration, true));
-                if (log.isTraceEnabled()) log.trace("Preparing statement", sql);
+                if (log.isDebugEnabled())
+                    log.debug("Executing query", create(configuration).renderInlined(this));
+                if (log.isTraceEnabled())
+                    log.trace("Preparing statement", sql);
 
                 statement = connection.prepareStatement(sql);
                 watch.splitTrace("Statement prepared");

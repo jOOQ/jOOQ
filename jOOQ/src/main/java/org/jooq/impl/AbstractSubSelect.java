@@ -52,6 +52,7 @@ import org.jooq.LockProvider;
 import org.jooq.Operator;
 import org.jooq.OrderProvider;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.Table;
@@ -164,32 +165,32 @@ implements
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
+    public final void toSQL(RenderContext context) {
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
                 case ORACLE:
-                    sb.append(toSQLReferenceLimitOracle(configuration, inlineParameters));
+                    toSQLReferenceLimitOracle(context);
                     break;
 
                 // With DB2, there are two possibilities
-                case DB2:
+                case DB2: {
 
                     // DB2 natively supports a "FIRST ROWS" clause, without offset
                     if (getLimit().getOffset() == 0) {
-                        sb.append(toSQLReferenceLimitDefault(configuration, inlineParameters));
+                        toSQLReferenceLimitDefault(context);
                     }
 
                     // "OFFSET" has to be simulated
                     else {
-                        sb.append(toSQLReferenceLimitDB2SQLServerSybase(configuration, inlineParameters));
+                        toSQLReferenceLimitDB2SQLServerSybase(context);
                     }
 
                     break;
+                }
 
                 case SQLSERVER:
                 case SYBASE: {
@@ -197,12 +198,12 @@ implements
                     // SQL Server and Sybase natively support a "TOP" clause,
                     // without offset
                     if (getLimit().getOffset() == 0) {
-                        sb.append(toSQLReference0(configuration, inlineParameters));
+                        toSQLReference0(context);
                     }
 
                     // "OFFSET" has to be simulated
                     else {
-                        sb.append(toSQLReferenceLimitDB2SQLServerSybase(configuration, inlineParameters));
+                        toSQLReferenceLimitDB2SQLServerSybase(context);
                     }
 
                     break;
@@ -210,27 +211,27 @@ implements
 
                 // By default, render the dialect's limit clause
                 default: {
-                    sb.append(toSQLReferenceLimitDefault(configuration, inlineParameters));
+                    toSQLReferenceLimitDefault(context);
                 }
             }
         }
 
         // If no limit applies, just render the rest of the query
         else {
-            sb.append(toSQLReference0(configuration, inlineParameters));
+            toSQLReference0(context);
         }
 
         if (forUpdate) {
-            sb.append(" for update");
+            context.sql(" for update");
 
             if (!forUpdateOf.isEmpty()) {
-                sb.append(" of ");
-                sb.append(forUpdateOf.toSQLNames(configuration));
+                context.sql(" of ");
+                forUpdateOf.toSQLNames(context);
             }
             else if (!forUpdateOfTables.isEmpty()) {
-                sb.append(" of ");
+                context.sql(" of ");
 
-                switch (configuration.getDialect()) {
+                switch (context.getDialect()) {
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though
@@ -238,249 +239,253 @@ implements
                     case DERBY:
                     case INGRES:
                     case ORACLE: {
-                        sb.append(forUpdateOfTables.toSQLFieldNames(configuration));
+                        forUpdateOfTables.toSQLFieldNames(context);
                         break;
                     }
 
                     // Render the OF [table-names] clause
                     default:
-                        sb.append(forUpdateOfTables.toSQLNames(configuration));
+                        forUpdateOfTables.toSQLNames(context);
                         break;
                 }
             }
 
             if (forUpdateMode != null) {
-                sb.append(" ");
-                sb.append(forUpdateMode.toSQL());
+                context.sql(" ");
+                context.sql(forUpdateMode.toSQL());
 
                 if (forUpdateMode == ForUpdateMode.WAIT) {
-                    sb.append(" ");
-                    sb.append(forUpdateWait);
+                    context.sql(" ");
+                    context.sql(forUpdateWait);
                 }
             }
         }
         else if (forShare) {
-            switch (configuration.getDialect()) {
+            switch (context.getDialect()) {
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
                 case MYSQL:
-                    sb.append(" lock in share mode");
+                    context.sql(" lock in share mode");
                     break;
 
                 // Postgres is known to implement the "FOR SHARE" clause like this
                 default:
-                    sb.append(" for share");
+                    context.sql(" for share");
                     break;
             }
         }
-
-        return sb.toString();
     }
 
     /**
      * The default LIMIT / OFFSET clause in most dialects
      */
-    private String toSQLReferenceLimitDefault(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        String enclosed = toSQLReference0(configuration, inlineParameters);
+    private void toSQLReferenceLimitDefault(RenderContext context) {
+        toSQLReference0(context);
 
-        sb.append(enclosed);
-        sb.append(" ");
-        sb.append(getLimit().toSQLReference(configuration, inlineParameters));
-
-        return sb.toString();
+        context.sql(" ");
+        context.sql(getLimit());
     }
 
     /**
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2} and
      * {@link SQLDialect#SQLSERVER} dialects
      */
-    private final String toSQLReferenceLimitDB2SQLServerSybase(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-        String enclosed = toSQLReference0(configuration, inlineParameters);
+    private final void toSQLReferenceLimitDB2SQLServerSybase(RenderContext context) {
+        RenderContext local = new DefaultRenderContext(context);
+        toSQLReference0(local);
+        String enclosed = local.render();
 
         String subqueryName = "limit_" + Math.abs(enclosed.hashCode());
         String rownumName = "rownum_" + Math.abs(enclosed.hashCode());
 
-        sb.append("select * from (select ");
-        sb.append(subqueryName);
-        sb.append(".*, row_number() over (order by ");
+        context.sql("select * from (select ")
+               .sql(subqueryName)
+               .sql(".*, row_number() over (order by ");
 
         if (getOrderBy().isEmpty()) {
-            sb.append(getSelect().get(0).getName());
+
+            // TODO [#771] Check whether this literal should be escaped
+            context.sql(getSelect().get(0).getName());
         }
         else {
             String separator = "";
+
             for (SortField<?> field : getOrderBy()) {
-                sb.append(separator);
-                sb.append(field.getName());
-                sb.append(" ");
-                sb.append(field.getOrder().toSQL());
+
+                // TODO [#771] Check whether this literal should be escaped
+                context.sql(separator)
+                       .sql(field.getName())
+                       .sql(" ")
+                       .sql(field.getOrder().toSQL());
 
                 separator = ", ";
             }
         }
 
-        sb.append(") as ");
-        sb.append(rownumName);
-        sb.append(" from (");
-        sb.append(enclosed);
-        sb.append(") as ");
-        sb.append(subqueryName);
-        sb.append(") as outer_");
-        sb.append(subqueryName);
-        sb.append(" where ");
-        sb.append(rownumName);
-        sb.append(" >= ");
+        context.sql(") as ")
+               .sql(rownumName)
+               .sql(" from (")
+               .sql(enclosed)
+               .sql(") as ")
+               .sql(subqueryName)
+               .sql(") as outer_")
+               .sql(subqueryName)
+               .sql(" where ")
+               .sql(rownumName)
+               .sql(" >= ");
 
-        if (inlineParameters) {
-            sb.append(getLimit().getLowerRownum());
+        if (context.inline()) {
+            context.sql(getLimit().getLowerRownum());
         }
         else {
-            sb.append("?");
+            context.sql("?");
         }
 
-        sb.append(" and ");
-        sb.append(rownumName);
-        sb.append(" < ");
+        context.sql(" and ")
+               .sql(rownumName)
+               .sql(" < ");
 
-        if (inlineParameters) {
-            sb.append(getLimit().getUpperRownum());
+        if (context.inline()) {
+            context.sql(getLimit().getUpperRownum());
         }
         else {
-            sb.append("?");
+            context.sql("?");
         }
-
-        return sb.toString();
     }
 
     /**
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#ORACLE}
      * dialect
      */
-    private final String toSQLReferenceLimitOracle(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        String enclosed = toSQLReference0(configuration, inlineParameters);
+    private final void toSQLReferenceLimitOracle(RenderContext context) {
+        RenderContext local = new DefaultRenderContext(context);
+        toSQLReference0(local);
+        String enclosed = local.render();
 
         String subqueryName = "limit_" + Math.abs(enclosed.hashCode());
         String rownumName = "rownum_" + Math.abs(enclosed.hashCode());
 
-        sb.append("select * from (select ");
-        sb.append(subqueryName);
-        sb.append(".*, rownum as ");
-        sb.append(rownumName);
-        sb.append(" from (");
-        sb.append(enclosed);
-        sb.append(") ");
-        sb.append(subqueryName);
-        sb.append(") where ");
-        sb.append(rownumName);
-        sb.append(" >= ");
+        context.sql("select * from (select ")
+               .sql(subqueryName)
+               .sql(".*, rownum as ")
+               .sql(rownumName)
+               .sql(" from (")
+               .sql(enclosed)
+               .sql(") ")
+               .sql(subqueryName)
+               .sql(") where ")
+               .sql(rownumName)
+               .sql(" >= ");
 
-        if (inlineParameters) {
-            sb.append(getLimit().getLowerRownum());
+        if (context.inline()) {
+            context.sql(getLimit().getLowerRownum());
         }
         else {
-            sb.append("?");
+            context.sql("?");
         }
 
-        sb.append(" and ");
-        sb.append(rownumName);
-        sb.append(" < ");
+        context.sql(" and ")
+               .sql(rownumName)
+               .sql(" < ");
 
-        if (inlineParameters) {
-            sb.append(getLimit().getUpperRownum());
+        if (context.inline()) {
+            context.sql(getLimit().getUpperRownum());
         }
         else {
-            sb.append("?");
+            context.sql("?");
         }
-
-        return sb.toString();
     }
 
     /**
      * This method renders the main part of a query without the LIMIT clause.
      * This part is common to any type of limited query
      */
-    private final String toSQLReference0(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
+    private final void toSQLReference0(RenderContext context) {
 
-        sb.append("select ");
+        // SELECT clause
+        // -------------
+        context.sql("select ");
         if (distinct) {
-            sb.append("distinct ");
+            context.sql("distinct ");
         }
 
         if (!StringUtils.isBlank(hint)) {
-            sb.append(hint);
-            sb.append(" ");
+            context.sql(hint).sql(" ");
         }
 
         // SQL Server is a bit different from the other dialects
-        switch (configuration.getDialect()) {
+        switch (context.getDialect()) {
             case SQLSERVER: // No break
-            case SYBASE:
+            case SYBASE: {
 
                 // If we have a limit, it needs to be rendered here
                 if (getLimit().isApplicable() && getLimit().getOffset() == 0) {
-                    sb.append(getLimit().toSQLReference(configuration, inlineParameters));
-                    sb.append(" ");
+                    context.sql(getLimit()).sql(" ");
                 }
 
                 // If we don't have a limit, some subqueries still need a "TOP" clause
-                else if (configuration.getDialect() == SQLSERVER && !getOrderBy().isEmpty()) {
-                    sb.append("top 100 percent ");
+                // TODO [#759] Omit this when unnecessary
+                else if (context.getDialect() == SQLSERVER && !getOrderBy().isEmpty()) {
+                    context.sql("top 100 percent ");
                 }
+            }
         }
 
-        sb.append(getSelect().toSQLDeclaration(configuration, inlineParameters));
-        if (!getFrom().toSQLDeclaration(configuration, inlineParameters).isEmpty()) {
-            sb.append(" from ");
-            sb.append(getFrom().toSQLDeclaration(configuration, inlineParameters));
+        context.declareFields(true);
+        context.sql(getSelect());
+        context.declareFields(false);
+
+        // FROM and JOIN clauses
+        // ---------------------
+        context.declareTables(true);
+
+        if (!context.render(getFrom()).isEmpty()) {
+            context.sql(" from ").sql(getFrom());
         }
 
         if (!getJoin().isEmpty()) {
-            sb.append(" ");
-            sb.append(getJoin().toSQLDeclaration(configuration, inlineParameters));
+            context.sql(" ").sql(getJoin());
         }
 
+        context.declareTables(false);
+
+        // WHERE clause
+        // ------------
         if (!(getWhere().getWhere() instanceof TrueCondition)) {
-            sb.append(" where ");
-            sb.append(getWhere().toSQLReference(configuration, inlineParameters));
+            context.sql(" where ").sql(getWhere());
         }
 
+        // CONNECT BY clause
+        // -----------------
         if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
-            sb.append(" connect by");
+            context.sql(" connect by");
 
             if (connectByNoCycle) {
-                sb.append(" nocycle");
+                context.sql(" nocycle");
             }
 
-            sb.append(" ");
-            sb.append(getConnectBy().toSQLReference(configuration, inlineParameters));
+            context.sql(" ").sql(getConnectBy());
 
             if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
-                sb.append(" start with ");
-                sb.append(getConnectByStartWith().toSQLReference(configuration, inlineParameters));
+                context.sql(" start with ").sql(getConnectByStartWith());
             }
         }
 
+        // GROUP BY and HAVING clause
+        // --------------------------
         if (!getGroupBy().isEmpty()) {
-            sb.append(" group by ");
-            sb.append(getGroupBy().toSQLReference(configuration, inlineParameters));
+            context.sql(" group by ").sql(getGroupBy());
         }
 
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
-            sb.append(" having ");
-            sb.append(getHaving().toSQLReference(configuration, inlineParameters));
+            context.sql(" having ").sql(getHaving());
         }
 
+        // ORDER BY clause
+        // ---------------
         if (!getOrderBy().isEmpty()) {
-            sb.append(" order by ");
-            sb.append(getOrderBy().toSQLReference(configuration, inlineParameters));
+            context.sql(" order by ").sql(getOrderBy());
         }
-
-        return sb.toString();
     }
 
     // @Mixin - Declaration in SelectQuery
@@ -573,7 +578,7 @@ implements
 
     @Override
     public final FieldList getSelect() {
-        // #109 : Don't allow empty select lists to render select *
+        // [#109] : Don't allow empty select lists to render select *
         // Even if select * would be useful, generated client code
         // would be required to be in sync with the database schema
 
@@ -604,6 +609,7 @@ implements
         // Generated record classes only come into play, when the select is
         // - on a single table
         // - a select *
+
         if (getTables().size() == 1 && getSelect0().isEmpty()) {
             return (Class<? extends R>) getTables().get(0).asTable().getRecordType();
         }

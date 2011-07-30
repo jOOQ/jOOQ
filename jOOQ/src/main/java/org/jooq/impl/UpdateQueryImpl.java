@@ -47,6 +47,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdateQuery;
@@ -129,20 +130,17 @@ class UpdateQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("update ");
-        sb.append(internal(getInto()).toSQLDeclaration(configuration, inlineParameters));
-        sb.append(" set ");
-        sb.append(internal(updateMap).toSQLReference(configuration, inlineParameters));
+    public final void toSQL(RenderContext context) {
+        context.sql("update ")
+               .declareTables(true)
+               .sql(getInto())
+               .declareTables(false)
+               .sql(" set ")
+               .sql(updateMap);
 
         if (!(getWhere() instanceof TrueCondition)) {
-            sb.append(" where ");
-            sb.append(internal(getWhere()).toSQLReference(configuration, inlineParameters));
+            context.sql(" where ").sql(getWhere());
         }
-
-        return sb.toString();
     }
 
     @Override

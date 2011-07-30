@@ -46,6 +46,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -68,25 +69,21 @@ class Function<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getFNPrefix());
-        sb.append(getName());
-        sb.append(getArgumentListDelimiter(configuration, "("));
+    public final void toSQL(RenderContext context) {
+        context.sql(getFNPrefix());
+        context.sql(getName());
+        context.sql(getArgumentListDelimiter(context, "("));
 
         String separator = "";
         for (NamedQueryPart field : arguments) {
-            sb.append(separator);
-            sb.append(toSQLField(configuration, field, inlineParameters));
+            context.sql(separator);
+            toSQLField(context, field);
 
             separator = ", ";
         }
 
-        sb.append(getArgumentListDelimiter(configuration, ")"));
-        sb.append(getFNSuffix());
-
-        return sb.toString();
+        context.sql(getArgumentListDelimiter(context, ")"));
+        context.sql(getFNSuffix());
     }
 
     /**
@@ -138,8 +135,8 @@ class Function<T> extends AbstractField<T> {
      * Subclasses may override this method, if needed (e.g. to render
      * count(distinct [field])
      */
-    protected String toSQLField(Configuration configuration, NamedQueryPart field, boolean inlineParameters) {
-        return internal(field).toSQLReference(configuration, inlineParameters);
+    protected void toSQLField(RenderContext context, NamedQueryPart field) {
+        context.sql(field);
     }
 
     @Override

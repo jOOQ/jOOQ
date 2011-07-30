@@ -47,6 +47,7 @@ import org.jooq.Condition;
 import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.Operator;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 
 /**
@@ -124,8 +125,8 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(getWhere()).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(getWhere());
     }
 
     // -------------------------------------------------------------------------

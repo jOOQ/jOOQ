@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 class Expression<T> extends AbstractField<T> {
 
@@ -89,21 +90,18 @@ class Expression<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("(");
-        sb.append(internal(lhs).toSQLReference(configuration, inlineParameters));
+    public final void toSQL(RenderContext context) {
+        context.sql("(");
+        context.sql(lhs);
 
         for (Field<?> field : rhs) {
-            sb.append(" ");
-            sb.append(operator.toSQL());
-            sb.append(" ");
-            sb.append(internal(field).toSQLReference(configuration, inlineParameters));
+            context.sql(" ")
+                   .sql(operator.toSQL())
+                   .sql(" ")
+                   .sql(field);
         }
 
-        sb.append(")");
-        return sb.toString();
+        context.sql(")");
     }
 
     @Override

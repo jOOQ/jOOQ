@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -87,7 +88,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(query).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(query);
     }
 }

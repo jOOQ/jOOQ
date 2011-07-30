@@ -48,7 +48,6 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Arrays;
-import java.util.regex.Matcher;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
@@ -59,6 +58,7 @@ import org.jooq.FieldProvider;
 import org.jooq.MasterDataType;
 import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 
@@ -124,69 +124,49 @@ final class JooqUtil {
     }
 
     /**
-     * Delimit literals (such as schema, table, column names) for greater
-     * compatibility.
-     */
-    static String toSQLLiteral(Configuration configuration, String literal) {
-        switch (configuration.getDialect()) {
-            case MYSQL:
-                return "`" + literal + "`";
-
-            case DB2:
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case INGRES:
-            case ORACLE:
-            case POSTGRES:
-                return "\"" + literal + "\"";
-
-            // SQLite should support all sorts of delimiters, but it seems
-            // quite buggy
-            case SQLITE:
-                return literal;
-
-            case SQLSERVER:
-            case SYBASE:
-                return "[" + literal + "]";
-
-            default:
-                return literal;
-        }
-    }
-
-    /**
      * Create SQL
      */
-    static String toSQLReference(Configuration configuration, String sql, Object[] bindings, boolean inlineParameters) {
-        String result = sql;
+    static void toSQLReference(RenderContext context, String sql, Object[] bindings) {
 
-        if (inlineParameters) {
+        // Replace bind variables by their associated bind values
+        if (context.inline()) {
 
             // [#724] When bindings is null, this is probably due to API-misuse
             // The user probably meant new Object[] { null }
             if (bindings == null) {
-                result = toSQLReference(configuration, sql, new Object[] { null }, inlineParameters);
+                toSQLReference(context, sql, new Object[] { null });
             }
             else {
-                for (Object binding : bindings) {
-                    result = result.replaceFirst(
-                        "\\?",
-                        Matcher.quoteReplacement(FieldTypeHelper.toSQL(configuration, binding, inlineParameters)));
+
+                // TODO: Skip ? inside of string literals, e.g.
+                // insert into x values ('Hello? Anybody out there?');
+                String[] split = sql.split("\\?");
+
+                for (int i = 0; i < split.length; i++) {
+                    context.sql(split[i]);
+
+                    if (i < bindings.length) {
+                        FieldTypeHelper.toSQL(context, bindings[i]);
+                    }
                 }
             }
         }
 
-        return result;
+        // If not inlining, just append the plain SQL the way it is
+        else {
+            context.sql(sql);
+        }
     }
 
     /**
      * Create SQL wrapped in parentheses
      *
-     * @see #toSQLReference(SQLDialect, String, Object[], boolean)
+     * @see #toSQLReference(RenderContext, String, Object[])
      */
-    static String toSQLReferenceWithParentheses(Configuration configuration, String sql, Object[] bindings, boolean inlineParameters) {
-        return "(" + toSQLReference(configuration, sql, bindings, inlineParameters) + ")";
+    static void toSQLReferenceWithParentheses(RenderContext context, String sql, Object[] bindings) {
+        context.sql("(");
+        toSQLReference(context, sql, bindings);
+        context.sql(")");
     }
 
     /**

@@ -45,6 +45,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -110,14 +111,8 @@ public class TableFieldImpl<R extends Record, T> extends AbstractField<T> implem
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(internal(table).toSQLReference(configuration, inlineParameters));
-        sb.append(".");
-        sb.append(JooqUtil.toSQLLiteral(configuration, getName()));
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql(table).sql(".").literal(getName());
     }
 
     @Override

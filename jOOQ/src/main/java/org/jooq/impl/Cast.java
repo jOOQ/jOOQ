@@ -43,6 +43,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -68,16 +69,12 @@ class Cast<T> extends AbstractField<T> {
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("cast(");
-        sb.append(internal(field).toSQLReference(configuration, inlineParameters));
-        sb.append(" as ");
-        sb.append(getDataType(configuration).getCastTypeName(configuration));
-        sb.append(")");
-
-        return sb.toString();
+    public final void toSQL(RenderContext context) {
+        context.sql("cast(")
+               .sql(field)
+               .sql(" as ")
+               .sql(getDataType(context).getCastTypeName(context))
+               .sql(")");
     }
 
     @Override

@@ -47,6 +47,7 @@ import java.util.ListIterator;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -74,37 +75,23 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return toSQL(configuration, inlineParameters, false);
-    }
+    public final void toSQL(RenderContext context) {
 
-    @Override
-    public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        return toSQL(configuration, inlineParameters, true);
-    }
-
-    private final String toSQL(Configuration configuration, boolean inlineParameters, boolean renderAsDeclaration) {
+        // Some lists render different SQL when empty
         if (isEmpty()) {
-            return toSQLEmptyList(configuration);
+            toSQLEmptyList(context);
         }
 
-        StringBuilder sb = new StringBuilder();
+        else {
+            String separator = "";
 
-        String separator = "";
-        for (T queryPart : this) {
-            sb.append(separator);
+            for (T queryPart : this) {
+                context.sql(separator);
+                context.sql(queryPart);
 
-            if (renderAsDeclaration) {
-                sb.append(internal(queryPart).toSQLDeclaration(configuration, inlineParameters));
+                separator = getListSeparator() + " ";
             }
-            else {
-                sb.append(internal(queryPart).toSQLReference(configuration, inlineParameters));
-            }
-
-            separator = getListSeparator() + " ";
         }
-
-        return sb.toString();
     }
 
     @Override
@@ -135,8 +122,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
      * Subclasses may override this method
      */
     @SuppressWarnings("unused")
-    protected String toSQLEmptyList(Configuration configuration) {
-        return "";
+    protected void toSQLEmptyList(RenderContext context) {
     }
 
     /**

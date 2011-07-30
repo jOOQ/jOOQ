@@ -45,6 +45,7 @@ import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -79,8 +80,8 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     }
 
     @Override
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        return internal(query).toSQLReference(configuration, inlineParameters);
+    public final void toSQL(RenderContext context) {
+        context.sql(query);
     }
 
     @Override

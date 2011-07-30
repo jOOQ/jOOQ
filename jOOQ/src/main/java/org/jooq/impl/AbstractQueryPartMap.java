@@ -47,6 +47,7 @@ import java.util.Set;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -71,7 +72,7 @@ implements Map<K, V> {
     // -------------------------------------------------------------------------
 
     @Override
-    public abstract String toSQLReference(Configuration configuration, boolean inlineParameters);
+    public abstract void toSQL(RenderContext context);
 
     @Override
     public abstract int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException;

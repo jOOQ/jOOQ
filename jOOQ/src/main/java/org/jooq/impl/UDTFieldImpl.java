@@ -96,8 +96,7 @@ public class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> im
 
     @Override
     public final void toSQL(RenderContext context) {
-        // TODO [#771] Check if this should be escaped as literal
-        context.sql(getName());
+        context.literal(getName());
     }
 
     @Override

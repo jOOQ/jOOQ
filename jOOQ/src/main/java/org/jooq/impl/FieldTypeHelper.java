@@ -193,7 +193,7 @@ public final class FieldTypeHelper {
         }
 
         // In Postgres, some additional casting must be done in some cases...
-        // TODO: Improve this implementation with #215 (cast support)
+        // TODO: Improve this implementation with [#215] (cast support)
         else if (context.getDialect() == SQLDialect.POSTGRES) {
 
             // Postgres needs explicit casting for array types
@@ -202,10 +202,10 @@ public final class FieldTypeHelper {
                 context.sql(getDataType(context.getDialect(), type).getCastTypeName(context));
             }
 
-            // TODO [#771] Check if this type literal should be escaped
+            // ... and also for enum types
             else if (EnumType.class.isAssignableFrom(type)) {
                 context.sql("?::");
-                context.sql(((EnumType) value).getName());
+                context.literal(((EnumType) value).getName());
             }
 
             else {

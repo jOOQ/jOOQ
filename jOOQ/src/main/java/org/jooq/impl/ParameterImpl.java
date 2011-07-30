@@ -87,7 +87,6 @@ public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> impl
 
     @Override
     public final void toSQL(RenderContext context) {
-        // TODO [#771] Check if this should be an escaped literal
-        context.sql(getName());
+        context.literal(getName());
     }
 }

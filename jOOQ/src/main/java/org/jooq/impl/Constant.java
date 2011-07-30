@@ -104,7 +104,7 @@ class Constant<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(value, getType());
+        context.bindValue(value, getType());
     }
 
     @Override

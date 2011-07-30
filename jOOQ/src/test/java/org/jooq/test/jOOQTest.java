@@ -394,7 +394,7 @@ public class jOOQTest {
             @Override
             public void bind(BindContext ctx) throws SQLException {
                 ctx.statement().setInt(ctx.nextIndex(), 1);
-                ctx.bind(1);
+                ctx.bindValues(1);
             }
         };
 
@@ -450,7 +450,7 @@ public class jOOQTest {
 
             @Override
             public void bind(BindContext ctx) throws SQLException {
-                ctx.bind(1);
+                ctx.bindValues(1);
             }
         };
 

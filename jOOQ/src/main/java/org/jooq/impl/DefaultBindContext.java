@@ -145,17 +145,17 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     }
 
     @Override
-    public final BindContext bind(Object... values) throws SQLException {
+    public final BindContext bindValues(Object... values) throws SQLException {
 
         // [#724] When values is null, this is probably due to API-misuse
         // The user probably meant new Object[] { null }
         if (values == null) {
-            bind(new Object[] { null });
+            bindValues(new Object[] { null });
         }
         else {
             for (Object value : values) {
                 Class<?> type = (value == null) ? Object.class : value.getClass();
-                bind(value, type);
+                bindValue(value, type);
             }
         }
 
@@ -164,7 +164,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
 
     @SuppressWarnings("unchecked")
     @Override
-    public final BindContext bind(Object value, Class<?> type) throws SQLException {
+    public final BindContext bindValue(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.getDialect();
 
         if (log.isTraceEnabled()) {
@@ -297,7 +297,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
         }
         else if (MasterDataType.class.isAssignableFrom(type)) {
             Object primaryKey = ((MasterDataType<?>) value).getPrimaryKey();
-            bind(primaryKey, primaryKey.getClass());
+            bindValue(primaryKey, primaryKey.getClass());
         }
         else {
             stmt.setObject(nextIndex(), value);

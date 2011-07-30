@@ -93,7 +93,7 @@ class ArrayConstant<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bind(array);
+        context.bindValues(array);
     }
 
     @Override

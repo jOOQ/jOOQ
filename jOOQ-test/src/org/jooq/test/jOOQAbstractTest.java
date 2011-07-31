@@ -1135,43 +1135,31 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------
         // - (Object[]) null: API misuse
         // - (Object) null: Single null bind value
-        switch (getDialect()) {
+        assertEquals(1, create()
+            .query("update t_author set first_name = ? where id = 3", (Object[]) null)
+            .execute());
+        author.refresh();
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals(null, author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Roten", author.getValue(TAuthor_LAST_NAME()));
 
-            // TODO [#730] This should work also for DB2, Derby, and Ingres
-            case SYBASE:
-                log.info("SKIPPING", "Sybase can't handle untyped null literals");
-                break;
+        // Reset name
+        assertEquals(1, create()
+            .query("update t_author set first_name = ? where id = 3", "Michèle")
+            .execute());
+        author.refresh();
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals("Michèle", author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Roten", author.getValue(TAuthor_LAST_NAME()));
 
-            default: {
-                assertEquals(1, create()
-                    .query("update t_author set first_name = ? where id = 3", (Object[]) null)
-                    .execute());
-                author.refresh();
-                assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
-                assertEquals(null, author.getValue(TAuthor_FIRST_NAME()));
-                assertEquals("Roten", author.getValue(TAuthor_LAST_NAME()));
-
-                // Reset name
-                assertEquals(1, create()
-                    .query("update t_author set first_name = ? where id = 3", "Michèle")
-                    .execute());
-                author.refresh();
-                assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
-                assertEquals("Michèle", author.getValue(TAuthor_FIRST_NAME()));
-                assertEquals("Roten", author.getValue(TAuthor_LAST_NAME()));
-
-                // [#724] Check for correct binding when passing (Object) null
-                assertEquals(1, create()
-                    .query("update t_author set first_name = ? where id = 3", (Object) null)
-                    .execute());
-                author.refresh();
-                assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
-                assertEquals(null, author.getValue(TAuthor_FIRST_NAME()));
-                assertEquals("Roten", author.getValue(TAuthor_LAST_NAME()));
-
-                break;
-            }
-        }
+        // [#724] Check for correct binding when passing (Object) null
+        assertEquals(1, create()
+            .query("update t_author set first_name = ? where id = 3", (Object) null)
+            .execute());
+        author.refresh();
+        assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
+        assertEquals(null, author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Roten", author.getValue(TAuthor_LAST_NAME()));
 
         // Function
         // --------
@@ -2641,7 +2629,6 @@ public abstract class jOOQAbstractTest<
         record.refresh();
         assertEquals("Blah", new String(record.getValue(T725_LOB())));
 
-        // [#730] TODO: Handle this case for Sybase
         assertEquals(1, create().query("insert into " + T725().getName() + " values (?, ?)", 2, (Object) null).execute());
         assertEquals(1, create().query("insert into " + T725().getName() + " values (?, ?)", 3, new byte[0]).execute());
         assertEquals(1, create().query("insert into " + T725().getName() + " values (?, ?)", 4, "abc".getBytes()).execute());

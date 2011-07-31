@@ -1903,7 +1903,7 @@ public class Factory implements Configuration {
      * @param type The data type to enforce upon the value
      * @return A field representing the constant value
      * @see #constant(Object, DataType)
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, type)} instead.
+     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, Class)} instead.
      */
     @Deprecated
     public final <T> Field<T> constant(Object value, Class<? extends T> type) {
@@ -1921,7 +1921,7 @@ public class Factory implements Configuration {
      * @param field The field whose data type to enforce upon the value
      * @return A field representing the constant value
      * @see #constant(Object, DataType)
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, field)} instead.
+     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, Field)} instead.
      */
     @Deprecated
     public final <T> Field<T> constant(Object value, Field<T> field) {
@@ -1943,7 +1943,7 @@ public class Factory implements Configuration {
      * @param value The constant value
      * @param type The data type to enforce upon the value
      * @return A field representing the constant value
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, type)} instead.
+     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, DataType)} instead.
      */
     @Deprecated
     public final <T> Field<T> constant(Object value, DataType<T> type) {

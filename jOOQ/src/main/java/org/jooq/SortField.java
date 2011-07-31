@@ -40,8 +40,8 @@ package org.jooq;
  *
  * @param <T> The field type
  * @author Lukas Eder
- * @see Field#ascending()
- * @see Field#descending()
+ * @see Field#asc()
+ * @see Field#desc()
  */
 public interface SortField<T> extends NamedTypeProviderQueryPart<T> {
 

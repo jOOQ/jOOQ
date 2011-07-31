@@ -43,29 +43,38 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Pi extends AbstractFunction<BigDecimal> {
+class E extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -420788300355442056L;
 
-    Pi() {
-        super("pi", SQLDataType.NUMERIC);
+    E() {
+        super("e", SQLDataType.NUMERIC);
     }
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case DB2:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
             case ORACLE:
-                return create(configuration).one().asin().mul(create(configuration).two());
+            case POSTGRES:
+            case SQLSERVER:
+            case SYBASE:
+                return create(configuration).one().exp();
 
             case SQLITE:
-                return create(configuration).literal(Math.PI, BigDecimal.class);
+                return create(configuration).literal(Math.E, BigDecimal.class);
 
+            // The Euler number doesn't seem to exist in any dialect...
             default:
-                return new Function<BigDecimal>("pi", getDataType());
+                return new Function<BigDecimal>("e", getDataType());
         }
     }
 }

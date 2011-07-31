@@ -176,6 +176,8 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
             }
         }
 
+        // Setting null onto a prepared statement is subtly different for every
+        // SQL dialect. See the following section for details
         if (value == null) {
             int sqlType = FieldTypeHelper.getDataType(dialect, type).getSQLType();
 
@@ -196,8 +198,12 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
                 stmt.setNull(nextIndex(), sqlType);
             }
 
+            // [#730] For Sybase, unknown types can be set to null using varchar
+            else if (configuration.getDialect() == SQLDialect.SYBASE) {
+                stmt.setNull(nextIndex(), Types.VARCHAR);
+            }
+
             // [#729] In the absence of the correct JDBC type, try setObject
-            // [#730] TODO: Handle this case for Sybase
             else {
                 stmt.setObject(nextIndex(), null);
             }

@@ -107,7 +107,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 return result;
             }
             finally {
-                JooqUtil.safeClose(statement);
+                if (!keepStatementOpen()) {
+                    JooqUtil.safeClose(statement);
+                }
+
                 watch.splitDebug("Statement executed");
             }
         }
@@ -118,6 +121,14 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
             return 0;
         }
+    }
+
+    /**
+     * Default implementation to indicate whether this query should close the
+     * statement after execution. Subclasses may override this method.
+     */
+    protected boolean keepStatementOpen() {
+        return false;
     }
 
     /**

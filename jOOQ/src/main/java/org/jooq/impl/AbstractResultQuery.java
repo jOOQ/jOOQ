@@ -65,8 +65,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      * Generated UID
      */
     private static final long       serialVersionUID = -5588344253566055707L;
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractSelect.class);
 
+    private transient boolean       lazy;
+    private transient Cursor<R>     cursor;
     private Result<R>               result;
 
     AbstractResultQuery(Configuration configuration) {
@@ -94,7 +95,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
 
         try {
-            result = executeLazy(configuration, statement).fetchResult();
+            ResultSet rs = statement.executeQuery();
+            FieldList fields = new FieldList(getFields(rs.getMetaData()));
+            cursor = new CursorImpl<R>(configuration, fields, rs, statement, getRecordType());
+
+            if (!lazy) {
+                result = cursor.fetchResult();
+                cursor = null;
+            }
         }
         finally {
             if (autoCommit) {
@@ -102,7 +110,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
         }
 
-        return result.size();
+        return result != null ? result.size() : 0;
+    }
+
+    @Override
+    protected final boolean keepStatementOpen() {
+        return lazy;
     }
 
     /**
@@ -110,55 +123,19 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      */
     abstract boolean isSelectingRefCursor();
 
-    private final Cursor<R> executeLazy(Configuration configuration, Connection connection) throws SQLException {
-        StopWatch watch = new StopWatch();
-        PreparedStatement statement = null;
-
-        String sql = create(configuration).render(this);
-        watch.splitTrace("SQL rendered");
-
-        if (log.isDebugEnabled())
-            log.debug("Lazy executing query", create(configuration).renderInlined(this));
-        if (log.isTraceEnabled())
-            log.trace("Preparing statement", sql);
-
-        statement = connection.prepareStatement(sql);
-        watch.splitTrace("Statement prepared");
-
-        create(configuration).bind(this, statement);
-        watch.splitTrace("Variables bound");
-
-        Cursor<R> cursor = executeLazy(configuration, statement);
-        watch.splitTrace("Statement executed");
-
-        return cursor;
-    }
-
-    private final Cursor<R> executeLazy(Configuration configuration, PreparedStatement statement) throws SQLException {
-        ResultSet rs = statement.executeQuery();
-
-        Class<? extends R> type = getRecordType();
-        FieldList fields = new FieldList(getFields(rs.getMetaData()));
-        return new CursorImpl<R>(configuration, fields, rs, statement, type);
-    }
-
     @Override
     public final Result<R> fetch() throws SQLException {
         execute();
-        return getResult();
+        return result;
     }
 
     @Override
     public final Cursor<R> fetchLazy() throws SQLException {
-        Configuration configuration = attachable.getConfiguration();
-        Connection connection = configuration.getConnection();
+        lazy = true;
+        execute();
+        lazy = false;
 
-        if (connection != null) {
-            return executeLazy(configuration, connection);
-        }
-        else {
-            throw new SQLException("Cannot execute query. No Connection configured");
-        }
+        return cursor;
     }
 
     @Override

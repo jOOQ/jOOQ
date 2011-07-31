@@ -52,6 +52,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     private final StringBuilder sql;
     private boolean             inline;
+    private int                 alias;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -70,6 +71,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
     // RenderContext API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final String peekAlias() {
+        return "alias_" + (alias + 1);
+    }
+
+    @Override
+    public final String nextAlias() {
+        return "alias_" + (++alias);
+    }
 
     @Override
     public final String render() {

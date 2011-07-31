@@ -8,7 +8,7 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/jOOQ-codegen"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-io-1.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/ojdbc6.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hsqldb.jar" sourcepath="/jOOQ-sources/hsqldb-2.1.0.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/hsqldb.jar" sourcepath="/jOOQ-sources/hsqldb-2.2.4.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/db2jcc4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlitejdbc-v056.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/derby.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>

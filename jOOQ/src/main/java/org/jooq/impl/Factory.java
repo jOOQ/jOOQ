@@ -2243,6 +2243,19 @@ public class Factory implements Configuration {
         return new Pi();
     }
 
+    /**
+     * The <code>E</code> literal (Euler number)
+     * <p>
+     * This will be any of the following:
+     * <ul>
+     * <li>The underlying RDBMS' <code>E</code> literal or <code>E()</code> function</li>
+     * <li>{@link Math#E}</li>
+     * </ul>
+     */
+    public final Field<BigDecimal> e() {
+        return new E();
+    }
+
     // -------------------------------------------------------------------------
     // Aggregate and window functions
     // -------------------------------------------------------------------------

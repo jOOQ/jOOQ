@@ -3544,7 +3544,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Arrays.asList(1, 2, 3, 4), books.getValues(b_ID));
     }
 
-    // @Test TODO [#579] re-enable this test when fixing this bug
+    // @Test // TODO [#579] re-enable this test when fixing this bug
     public void testUnaliasedSubqueryProjections() throws Exception {
         // Test whether unaliased literals in subquery projections are correctly
         // handled

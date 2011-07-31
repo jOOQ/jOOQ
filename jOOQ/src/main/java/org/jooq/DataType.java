@@ -175,8 +175,6 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#NVARCHAR}</li>
      * <li> {@link SQLDataType#VARCHAR}</li>
      * </ul>
-     *
-     * @return
      */
     boolean isString();
 
@@ -188,8 +186,6 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#TIME}</li>
      * <li> {@link SQLDataType#TIMESTAMP}</li>
      * </ul>
-     *
-     * @return
      */
     boolean isTemporal();
 
@@ -202,8 +198,6 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#LONGVARBINARY}</li>
      * <li> {@link SQLDataType#VARBINARY}</li>
      * </ul>
-     *
-     * @return
      */
     boolean isBinary();
 }

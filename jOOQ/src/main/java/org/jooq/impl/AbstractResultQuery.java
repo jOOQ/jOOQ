@@ -282,6 +282,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return convertToArray(fetchOne());
     }
 
+    @Override
+    public final <T> List<T> fetchInto(Class<? extends T> type) throws SQLException {
+        return fetch().into(type);
+    }
+
     private final Object[] convertToArray(R record) {
         final List<Field<?>> fields = record.getFields();
         Object[] array = new Object[fields.size()];

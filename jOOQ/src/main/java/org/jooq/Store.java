@@ -421,4 +421,29 @@ public interface Store<E> extends Attachable {
      */
     Timestamp getValueAsTimestamp(int index, Timestamp defaultValue) throws IllegalArgumentException;
 
+    /**
+     * Get a converted value from this Store, providing a field index.
+     *
+     * @param <T> The conversion type parameter
+     * @param index The field's index
+     * @param type The conversion type
+     * @return The value of a field's index contained in this Store
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the Store
+     */
+    <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this Store, providing a field index.
+     *
+     * @param <T> The conversion type parameter
+     * @param index The field's index
+     * @param type The conversion type
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's index contained in this Store, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the Store
+     */
+    <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException;
 }

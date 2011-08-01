@@ -2134,6 +2134,122 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoWithAnnotations() throws Exception {
+        List<BookWithAnnotations> result =
+        create().select(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetchInto(BookWithAnnotations.class);
+
+        assertEquals(4, result.size());
+
+        assertEquals(1, (int) result.get(0).id);
+        assertEquals(2, (int) result.get(1).id);
+        assertEquals(3, (int) result.get(2).id);
+        assertEquals(4, (int) result.get(3).id);
+
+        assertEquals(1, result.get(0).id2);
+        assertEquals(2, result.get(1).id2);
+        assertEquals(3, result.get(2).id2);
+        assertEquals(4, result.get(3).id2);
+
+        assertEquals(1, result.get(0).id3);
+        assertEquals(2, result.get(1).id3);
+        assertEquals(3, result.get(2).id3);
+        assertEquals(4, result.get(3).id3);
+
+        assertEquals("1984", result.get(0).title);
+        assertEquals("Animal Farm", result.get(1).title);
+        assertEquals("O Alquimista", result.get(2).title);
+        assertEquals("Brida", result.get(3).title);
+
+        assertEquals("George", result.get(0).firstName);
+        assertEquals("George", result.get(1).firstName);
+        assertEquals("Paulo", result.get(2).firstName);
+        assertEquals("Paulo", result.get(3).firstName);
+
+        assertEquals("George", result.get(0).firstName2);
+        assertEquals("George", result.get(1).firstName2);
+        assertEquals("Paulo", result.get(2).firstName2);
+        assertEquals("Paulo", result.get(3).firstName2);
+
+        assertEquals("Orwell", result.get(0).lastName);
+        assertEquals("Orwell", result.get(1).lastName);
+        assertEquals("Coelho", result.get(2).lastName);
+        assertEquals("Coelho", result.get(3).lastName);
+
+        assertEquals("Orwell", result.get(0).lastName2);
+        assertEquals("Orwell", result.get(1).lastName2);
+        assertEquals("Coelho", result.get(2).lastName2);
+        assertEquals("Coelho", result.get(3).lastName2);
+    }
+
+    @Test
+    public void testFetchIntoWithoutAnnotations() throws Exception {
+        List<BookWithoutAnnotations> result =
+        create().select(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME())
+                .from(TBook())
+                .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+                .orderBy(TBook_ID())
+                .fetchInto(BookWithoutAnnotations.class);
+
+        assertEquals(4, result.size());
+
+        assertEquals(1, (int) result.get(0).id);
+        assertEquals(2, (int) result.get(1).id);
+        assertEquals(3, (int) result.get(2).id);
+        assertEquals(4, (int) result.get(3).id);
+
+        assertEquals(1, result.get(0).id2);
+        assertEquals(2, result.get(1).id2);
+        assertEquals(3, result.get(2).id2);
+        assertEquals(4, result.get(3).id2);
+
+        assertEquals(1, result.get(0).ID);
+        assertEquals(2, result.get(1).ID);
+        assertEquals(3, result.get(2).ID);
+        assertEquals(4, result.get(3).ID);
+
+        assertEquals("1984", result.get(0).title);
+        assertEquals("Animal Farm", result.get(1).title);
+        assertEquals("O Alquimista", result.get(2).title);
+        assertEquals("Brida", result.get(3).title);
+
+        assertEquals("George", result.get(0).firstName);
+        assertEquals("George", result.get(1).firstName);
+        assertEquals("Paulo", result.get(2).firstName);
+        assertEquals("Paulo", result.get(3).firstName);
+
+        assertEquals("George", result.get(0).firstName2);
+        assertEquals("George", result.get(1).firstName2);
+        assertEquals("Paulo", result.get(2).firstName2);
+        assertEquals("Paulo", result.get(3).firstName2);
+
+        assertEquals("Orwell", result.get(0).lastName);
+        assertEquals("Orwell", result.get(1).lastName);
+        assertEquals("Coelho", result.get(2).lastName);
+        assertEquals("Coelho", result.get(3).lastName);
+
+        assertEquals("Orwell", result.get(0).lastName2);
+        assertEquals("Orwell", result.get(1).lastName2);
+        assertEquals("Coelho", result.get(2).lastName2);
+        assertEquals("Coelho", result.get(3).lastName2);
+
+        assertEquals("Orwell", result.get(0).LAST_NAME);
+        assertEquals("Orwell", result.get(1).LAST_NAME);
+        assertEquals("Coelho", result.get(2).LAST_NAME);
+        assertEquals("Coelho", result.get(3).LAST_NAME);
+    }
+    @Test
     public void testGrouping() throws Exception {
 
         // Test a simple group by query

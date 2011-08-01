@@ -326,6 +326,19 @@ public interface ResultQuery<R extends Record> extends Query {
     Object[] fetchOneArray() throws SQLException;
 
     /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code>fetch().into(type)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     */
+    <E> List<E> fetchInto(Class<? extends E> type) throws SQLException;
+
+    /**
      * The record type produced by this query
      */
     Class<? extends R> getRecordType();

@@ -39,6 +39,7 @@ package org.jooq;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
@@ -1718,4 +1719,15 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#into(Class)
      */
     <E> List<E> into(Class<? extends E> type);
+
+    /**
+     * Map results into a custom target callback
+     *
+     * @param target The target callback
+     * @return Convenience result, returning the parameter target itself
+     * @see <a href="http://code.google.com/p/ollin/">Ollin Framework</a>:
+     *      Another framework that supports a "row visitor" concept
+     */
+    RecordTarget<R> into(RecordTarget<R> target) throws SQLException;
+
 }

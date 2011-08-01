@@ -42,6 +42,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+
 /**
  * A wrapper for database result records returned by
  * <code>{@link SelectQuery}</code>
@@ -793,6 +795,58 @@ public interface Record extends FieldProvider, Store<Object> {
     Time getValueAsTime(String fieldName, Time defaultValue) throws IllegalArgumentException;
 
     /**
+     * Get a converted value from this Record, providing a field.
+     *
+     * @param <T> The conversion type parameter
+     * @param field The field
+     * @param type The conversion type
+     * @return The value of a field contained in this record
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this record, providing a field.
+     *
+     * @param <T> The conversion type parameter
+     * @param field The field
+     * @param type The conversion type
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field contained in this record, or defaultValue,
+     *         if <code>null</code>
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     */
+    <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     *
+     * @param <T> The conversion type parameter
+     * @param fieldName The field's name
+     * @param type The conversion type
+     * @return The value of a field's name contained in this record
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     */
+    <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException;
+
+    /**
+     * Get a converted value from this record, providing a field name.
+     *
+     * @param <T> The conversion type parameter
+     * @param fieldName The field's name
+     * @param type The conversion type
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's name contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     */
+    <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException;
+
+    /**
      * Set a value into this record.
      *
      * @param <T> The generic field parameter
@@ -802,11 +856,46 @@ public interface Record extends FieldProvider, Store<Object> {
     <T> void setValue(Field<T> field, T value);
 
     /**
-     * Whether any values have been changed since the record was loaded.
+     * Map resulting records onto a custom type. The mapping algorithm is this:
+     * <h3>If any JPA {@link Column} annotations are found on the provided
+     * <code>type</code>, only those are used:</h3>
+     * <ul>
+     * <li>If <code>type</code> contains public single-argument methods
+     * annotated with <code>Column</code>, those methods are invoked</li>
+     * <li>If <code>type</code> contains public no-argument methods starting
+     * with <code>getXXX</code> or <code>isXXX</code>, annotated with
+     * <code>Column</code>, then matching <code>setXXX()</code> methods are
+     * invoked</li>
+     * <li>If <code>type</code> contains public members annotated with
+     * <code>Column</code>, those members are set</li>
+     * <li>The same annotation can be re-used for several methods/members</li>
+     * <li>{@link Column#name()} must match {@link Field#getName()}. All other
+     * annotation attributes are ignored</li>
+     * </ul>
+     * <h3>If there are no JPA <code>Column</code> annotations, or jOOQ can't
+     * find the <code>javax.persistence</code> API on the classpath, jOOQ will
+     * map <code>Record</code> values by naming convention:</h3> If a field's
+     * value for {@link Field#getName()} is <code>MY_field</code>
+     * (case-sensitive!), then this field's value will be set on all of these:
+     * <ul>
+     * <li>Public member <code>MY_field</code></li>
+     * <li>Public member <code>myField</code></li>
+     * <li>Public method <code>MY_field(...)</code></li>
+     * <li>Public method <code>myField(...)</code></li>
+     * <li>Public method <code>setMY_field(...)</code></li>
+     * <li>Public method <code>setMyField(...)</code></li>
+     * </ul>
+     * <h3>Other restrictions</h3>
+     * <ul>
+     * <li><code>type</code> must provide a public default constructor</li>
+     * <li>primitive types are supported. If a value is <code>null</code>, this
+     * will result in setting the primitive type's default value (zero for
+     * numbers, or <code>false</code> for booleans). Hence, there is no way of
+     * distinguishing <code>null</code> and <code>0</code> in that case.</li>
+     * </ul>
      *
-     * @deprecated - This method is part of the internal API and will be removed
-     *             in the future.
+     * @param <E> The generic entity type.
+     * @param type The entity type.
      */
-    @Deprecated
-    boolean hasChangedValues();
+    <E> E into(Class<? extends E> type);
 }

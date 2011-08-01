@@ -35,9 +35,14 @@
  */
 package org.jooq.impl;
 
+import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
@@ -55,17 +60,24 @@ import org.jooq.RenderContext;
 final class JooqUtil {
 
     /**
+     * Indicating whether JPA (<code>javax.persistence</code>) is on the
+     * classpath.
+     */
+    private static Boolean isJPAAvailable;
+
+    /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
      */
     static <R extends ArrayRecord<?>> R newArrayRecord(Class<R> type, Configuration configuration) {
-       try{
-           return type.getConstructor(Configuration.class).newInstance(configuration);
-       } catch (Exception e) {
-           throw new IllegalStateException(
-               "ArrayRecord type does not provide a constructor with signature ArrayRecord(FieldProvider) : " + type +
-               ". Exception : " + e.getMessage());
+        try {
+            return type.getConstructor(Configuration.class).newInstance(configuration);
+        }
+        catch (Exception e) {
+            throw new IllegalStateException(
+                "ArrayRecord type does not provide a constructor with signature ArrayRecord(FieldProvider) : " + type
+                    + ". Exception : " + e.getMessage());
 
-       }
+        }
     }
 
     /**
@@ -227,5 +239,143 @@ final class JooqUtil {
     static void safeClose(ResultSet resultSet, PreparedStatement statement) {
         safeClose(resultSet);
         safeClose(statement);
+    }
+
+    /**
+     * Check if JPA classes can be loaded. This is only done once per JVM!
+     */
+    static boolean isJPAAvailable() {
+        if (isJPAAvailable == null) {
+            try {
+                Class.forName(Column.class.getName());
+                isJPAAvailable = true;
+            }
+            catch (Exception e) {
+                isJPAAvailable = false;
+            }
+        }
+
+        return isJPAAvailable;
+    }
+
+    /**
+     * Check whether <code>type</code> has any {@link Column} annotated members
+     * or methods
+     */
+    static final boolean hasColumnAnnotations(Class<?> type) {
+        for (java.lang.reflect.Field member : type.getFields()) {
+            if (member.getAnnotation(Column.class) != null) {
+                return true;
+            }
+        }
+
+        for (Method method : type.getMethods()) {
+            if (method.getAnnotation(Column.class) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Get all members annotated with a given column name
+     */
+    static final List<java.lang.reflect.Field> getAnnotatedMembers(Class<?> type, String name) {
+        List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+
+        for (java.lang.reflect.Field member : type.getFields()) {
+            Column annotation = member.getAnnotation(Column.class);
+
+            if (annotation != null) {
+                if (name.equals(annotation.name())) {
+                    result.add(member);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get all members matching a given column name
+     */
+    static final List<java.lang.reflect.Field> getMatchingMembers(Class<?> type, String name) {
+        List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+
+        for (java.lang.reflect.Field member : type.getFields()) {
+            if (name.equals(member.getName())) {
+                result.add(member);
+            }
+            else if (StringUtils.toCamelCaseLC(name).equals(member.getName())) {
+                result.add(member);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get all methods annotated with a given column name
+     */
+    static final List<Method> getAnnotatedMethods(Class<?> type, String name) {
+        List<Method> result = new ArrayList<Method>();
+
+        for (Method method : type.getMethods()) {
+            Column annotation = method.getAnnotation(Column.class);
+
+            if (annotation != null && name.equals(annotation.name())) {
+
+                // Annotated setter
+                if (method.getParameterTypes().length == 1) {
+                    result.add(method);
+                }
+
+                // Annotated getter with matching setter
+                else if (method.getParameterTypes().length == 0) {
+                    String m = method.getName();
+
+                    if (m.startsWith("get") || m.startsWith("is")) {
+                        try {
+                            Method setter = type.getMethod("set" + m.substring(3), method.getReturnType());
+
+                            // Setter annotation is more relevant
+                            if (setter.getAnnotation(Column.class) == null) {
+                                result.add(setter);
+                            }
+                        }
+                        catch (NoSuchMethodException ignore) {}
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get all methods matching a given column name
+     */
+    static final List<Method> getMatchingMethods(Class<?> type, String name) {
+        List<Method> result = new ArrayList<Method>();
+
+        for (Method method : type.getMethods()) {
+            if (method.getParameterTypes().length == 1) {
+                if (name.equals(method.getName())) {
+                    result.add(method);
+                }
+                else if (StringUtils.toCamelCaseLC(name).equals(method.getName())) {
+                    result.add(method);
+                }
+                else if (("set" + name).equals(method.getName())) {
+                    result.add(method);
+                }
+                else if (("set" + StringUtils.toCamelCase(name)).equals(method.getName())) {
+                    result.add(method);
+                }
+            }
+        }
+
+        return result;
     }
 }

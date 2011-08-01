@@ -189,6 +189,11 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     }
 
     @Override
+    public final <T> List<T> fetchInto(Class<? extends T> type) throws SQLException {
+        return query.fetchInto(type);
+    }
+
+    @Override
     public final int execute() throws SQLException {
         return query.execute();
     }

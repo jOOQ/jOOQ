@@ -1705,4 +1705,17 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
      */
     String formatXML();
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code>record.into(type)</code> on every
+     * record contained in this <code>Result</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     */
+    <E> List<E> into(Class<? extends E> type);
 }

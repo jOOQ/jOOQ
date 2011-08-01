@@ -1171,6 +1171,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             new String[] { "&quot;", "&apos;", "&lt;", "&gt;", "&amp;"});
     }
 
+    @Override
+    public final <T> List<T> into(Class<? extends T> type) {
+        List<T> list = new ArrayList<T>();
+
+        for (Record record : this) {
+            list.add(record.into(type));
+        }
+
+        return list;
+    }
+
     // -------------------------------------------------------------------------
     // Object API
     // -------------------------------------------------------------------------

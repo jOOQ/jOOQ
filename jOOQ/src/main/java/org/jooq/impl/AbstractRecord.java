@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -75,7 +77,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         this.fields = fields;
     }
 
-    FieldProvider getMetaData() {
+    final FieldProvider getMetaData() {
         return fields;
     }
 
@@ -137,7 +139,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         return fields.getIndex(field);
     }
 
-    private void init() {
+    private final void init() {
         values = new Value<?>[fields.getFields().size()];
 
         for (int i = 0; i < values.length; i++) {
@@ -162,17 +164,6 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     final <T> void setValue(Field<T> field, Value<T> value) {
         getValues()[getIndex(field)] = value;
-    }
-
-    @Override
-    public final boolean hasChangedValues() {
-        for (Value<?> value : getValues()) {
-            if (value.isChanged()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override
@@ -472,5 +463,130 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     @Override
     public final Time getValueAsTime(String fieldName, Time defaultValue) throws IllegalArgumentException {
         return getValueAsTime(getField(fieldName), defaultValue);
+    }
+
+    @Override
+    public final <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException {
+        return TypeUtils.convert(getValue(field), type);
+    }
+
+    @Override
+    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException {
+        final T result = getValue(field, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException {
+        return TypeUtils.convert(getValue(fieldName), type);
+    }
+
+    @Override
+    public final <Z> Z getValue(String fieldName, Class<? extends Z> type, Z defaultValue) throws IllegalArgumentException {
+        final Z result = getValue(fieldName, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T> T into(Class<? extends T> type) {
+        try {
+            T result = type.newInstance();
+
+            for (Field<?> field : getFields()) {
+                List<java.lang.reflect.Field> members;
+                List<java.lang.reflect.Method> methods;
+
+                // Annotations are available and present
+                if (JooqUtil.isJPAAvailable() && JooqUtil.hasColumnAnnotations(type)) {
+                    members = JooqUtil.getAnnotatedMembers(type, field.getName());
+                    methods = JooqUtil.getAnnotatedMethods(type, field.getName());
+                }
+
+                // No annotations are present
+                else {
+                    members = JooqUtil.getMatchingMembers(type, field.getName());
+                    methods = JooqUtil.getMatchingMethods(type, field.getName());
+                }
+
+                for (java.lang.reflect.Field member : members) {
+                    copyInto(result, member, field);
+                }
+
+                for (java.lang.reflect.Method method : methods) {
+                    copyInto(result, method, field);
+                }
+            }
+
+            return result;
+        }
+
+        // All reflection exceptions are intercepted
+        catch (Exception e) {
+            throw new IllegalStateException("An error ocurred when mapping record to " + type, e);
+        }
+    }
+
+    private final void copyInto(Object result, Method method, Field<?> field)
+        throws IllegalAccessException, InvocationTargetException {
+
+        Class<?> mType = method.getParameterTypes()[0];
+
+        if (mType.isPrimitive()) {
+            if (mType == byte.class) {
+                method.invoke(result, getValueAsByte(field, (byte) 0));
+            }
+            else if (mType == short.class) {
+                method.invoke(result, getValueAsShort(field, (short) 0));
+            }
+            else if (mType == int.class) {
+                method.invoke(result, getValueAsInteger(field, 0));
+            }
+            else if (mType == long.class) {
+                method.invoke(result, getValueAsLong(field, 0L));
+            }
+            else if (mType == float.class) {
+                method.invoke(result, getValueAsFloat(field, 0.0f));
+            }
+            else if (mType == double.class) {
+                method.invoke(result, getValueAsDouble(field, 0.0));
+            }
+            else if (mType == boolean.class) {
+                method.invoke(result, getValueAsBoolean(field, false));
+            }
+        }
+        else {
+            method.invoke(result, getValue(field, mType));
+        }
+    }
+
+    private final void copyInto(Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
+        Class<?> mType = member.getType();
+
+        if (mType.isPrimitive()) {
+            if (mType == byte.class) {
+                member.setByte(result, getValueAsByte(field, (byte) 0));
+            }
+            else if (mType == short.class) {
+                member.setShort(result, getValueAsShort(field, (short) 0));
+            }
+            else if (mType == int.class) {
+                member.setInt(result, getValueAsInteger(field, 0));
+            }
+            else if (mType == long.class) {
+                member.setLong(result, getValueAsLong(field, 0L));
+            }
+            else if (mType == float.class) {
+                member.setFloat(result, getValueAsFloat(field, 0.0f));
+            }
+            else if (mType == double.class) {
+                member.setDouble(result, getValueAsDouble(field, 0.0));
+            }
+            else if (mType == boolean.class) {
+                member.setBoolean(result, getValueAsBoolean(field, false));
+            }
+        }
+        else {
+            member.set(result, getValue(field, mType));
+        }
     }
 }

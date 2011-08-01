@@ -244,6 +244,17 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
         return result == null ? defaultValue : result;
     }
 
+    @Override
+    public final <Z> Z getValue(int index, Class<? extends Z> type) throws IllegalArgumentException {
+        return TypeUtils.convert(getValue(index), type);
+    }
+
+    @Override
+    public final <Z> Z getValue(int index, Class<? extends Z> type, Z defaultValue) throws IllegalArgumentException {
+        final Z result = getValue(index, type);
+        return result == null ? defaultValue : result;
+    }
+
     // -------------------------------------------------------------------------
     // equals and hashCode
     // -------------------------------------------------------------------------

@@ -24,6 +24,5 @@
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jconn3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
-	<classpathentry kind="lib" path="lib/persistence-api-1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

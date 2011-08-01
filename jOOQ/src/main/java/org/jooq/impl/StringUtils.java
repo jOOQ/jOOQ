@@ -851,4 +851,48 @@ public class StringUtils {
     }
 
     private StringUtils() {}
+
+    // -------------------------------------------------------------------------
+    // Custom additions to StringUtils. The following methods are not part of
+    // Apache's commons-lang library
+    // -------------------------------------------------------------------------
+
+    /**
+     * Convert a string to camel case
+     */
+    public static String toCamelCase(String string) {
+        StringBuilder result = new StringBuilder();
+
+        for (String word : string.split("_")) {
+
+            // Uppercase first letter of a word
+            if (word.length() > 0) {
+
+                // [#82] - If a word starts with a digit, prevail the
+                // underscore to prevent naming clashes
+                if (Character.isDigit(word.charAt(0))) {
+                    result.append("_");
+                }
+
+                result.append(word.substring(0, 1).toUpperCase());
+                result.append(word.substring(1).toLowerCase());
+            }
+
+            // If no letter exists, prevail the underscore (e.g. leading
+            // underscores)
+            else {
+                result.append("_");
+            }
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * Convert a string to camel case starting with a lower case letter
+     */
+    public static String toCamelCaseLC(String string) {
+        String cc = toCamelCase(string);
+        return cc.substring(0, 1).toLowerCase() + cc.substring(1);
+    }
 }

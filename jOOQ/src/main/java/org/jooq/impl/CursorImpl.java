@@ -46,6 +46,7 @@ import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.RecordTarget;
 import org.jooq.Result;
 
 /**
@@ -159,6 +160,17 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         }
 
         return result;
+    }
+
+    @Override
+    public final RecordTarget<R> fetchInto(RecordTarget<R> target) throws SQLException {
+        R record = null;
+
+        while ((record = fetchOne()) != null) {
+            target.next(record);
+        }
+
+        return target;
     }
 
     @Override

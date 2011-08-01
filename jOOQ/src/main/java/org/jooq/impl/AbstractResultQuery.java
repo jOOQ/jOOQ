@@ -50,6 +50,7 @@ import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.RecordTarget;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -285,6 +286,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) throws SQLException {
         return fetch().into(type);
+    }
+
+    @Override
+    public final RecordTarget<R> fetchInto(RecordTarget<R> target) throws SQLException {
+        return fetch().into(target);
     }
 
     private final Object[] convertToArray(R record) {

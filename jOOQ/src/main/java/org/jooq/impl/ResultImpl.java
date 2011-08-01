@@ -45,6 +45,7 @@ import static org.jooq.impl.StringUtils.rightPad;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.RecordTarget;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.tools.json.JSONObject;
@@ -1175,11 +1177,20 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     public final <T> List<T> into(Class<? extends T> type) {
         List<T> list = new ArrayList<T>();
 
-        for (Record record : this) {
+        for (R record : this) {
             list.add(record.into(type));
         }
 
         return list;
+    }
+
+    @Override
+    public final RecordTarget<R> into(RecordTarget<R> target) throws SQLException {
+        for (R record : this) {
+            target.next(record);
+        }
+
+        return target;
     }
 
     // -------------------------------------------------------------------------

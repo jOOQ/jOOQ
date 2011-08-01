@@ -63,10 +63,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -94,6 +96,7 @@ import org.jooq.MergeFinalStep;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
+import org.jooq.RecordTarget;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -2249,6 +2252,71 @@ public abstract class jOOQAbstractTest<
         assertEquals("Coelho", result.get(2).LAST_NAME);
         assertEquals("Coelho", result.get(3).LAST_NAME);
     }
+
+    @Test
+    public void testFetchIntoRecordTarget() throws Exception {
+
+        // Test a simple query with typed records
+        // --------------------------------------
+        final Queue<Integer> ids = new LinkedList<Integer>();
+        final Queue<String> titles = new LinkedList<String>();
+
+        ids.addAll(Arrays.asList(1, 2, 3, 4));
+        titles.addAll(Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"));
+
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetchInto(new RecordTarget<B>() {
+                    @Override
+                    public void next(B record) {
+                        assertEquals(ids.poll(), record.getValue(TBook_ID()));
+                        assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
+                    }
+                });
+
+        assertTrue(ids.isEmpty());
+        assertTrue(titles.isEmpty());
+
+        // Test lazy fetching
+        // --------------------------------------
+        ids.addAll(Arrays.asList(1, 2, 3, 4));
+        titles.addAll(Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"));
+
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .fetchLazy()
+                .fetchInto(new RecordTarget<B>() {
+                    @Override
+                    public void next(B record) {
+                        assertEquals(ids.poll(), record.getValue(TBook_ID()));
+                        assertEquals(titles.poll(), record.getValue(TBook_TITLE()));
+                    }
+                });
+
+        assertTrue(ids.isEmpty());
+        assertTrue(titles.isEmpty());
+
+        // Test a generic query with any records
+        // -------------------------------------
+        final Queue<Integer> authorIDs = new LinkedList<Integer>();
+        final Queue<Integer> count = new LinkedList<Integer>();
+
+        authorIDs.addAll(Arrays.asList(1, 2));
+        count.addAll(Arrays.asList(2, 2));
+
+        create().select(TBook_AUTHOR_ID(), create().count())
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .orderBy(TBook_AUTHOR_ID())
+                .fetchInto(new RecordTarget<Record>() {
+                    @Override
+                    public void next(Record record) {
+                        assertEquals(authorIDs.poll(), record.getValue(TBook_AUTHOR_ID()));
+                        assertEquals(count.poll(), record.getValue(create().count()));
+                    }
+                });
+    }
+
     @Test
     public void testGrouping() throws Exception {
 

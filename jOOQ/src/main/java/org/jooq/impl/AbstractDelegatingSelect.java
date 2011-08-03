@@ -38,11 +38,13 @@ package org.jooq.impl;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Cursor;
 import org.jooq.Field;
+import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordTarget;
 import org.jooq.RenderContext;
@@ -197,6 +199,16 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     @Override
     public final RecordTarget<R> fetchInto(RecordTarget<R> target) throws SQLException {
         return query.fetchInto(target);
+    }
+
+    @Override
+    public final FutureResult<R> fetchLater() throws SQLException {
+        return query.fetchLater();
+    }
+
+    @Override
+    public final FutureResult<R> fetchLater(ExecutorService executor) throws SQLException {
+        return query.fetchLater(executor);
     }
 
     @Override

@@ -71,6 +71,8 @@ import java.util.Properties;
 import java.util.Queue;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -2315,6 +2317,48 @@ public abstract class jOOQAbstractTest<
                         assertEquals(count.poll(), record.getValue(create().count()));
                     }
                 });
+    }
+
+    @Test
+    public void testFetchLater() throws Exception {
+        Future<Result<B>> later;
+        Result<B> result;
+
+        int activeCount = Thread.activeCount();
+
+        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
+
+        // That's too fast for the query to be done
+        assertFalse(later.isDone());
+        assertFalse(later.isCancelled());
+        assertEquals(activeCount + 1, Thread.activeCount());
+
+        // Get should make sure the internal thread is terminated
+        result = later.get();
+        Thread.sleep(30);
+        assertEquals(activeCount, Thread.activeCount());
+
+        // Subsequent gets are ok
+        result = later.get();
+        result = later.get(1000, TimeUnit.MILLISECONDS);
+
+        // Check the data
+        assertEquals(4, result.size());
+        assertEquals(Arrays.asList(1, 2, 3, 4), result.getValues(TBook_ID()));
+
+        // Start new threads
+        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
+        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
+        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
+        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
+        assertEquals(activeCount + 4, Thread.activeCount());
+
+        // This should be enough to ensure that GC will collect finished threads
+        later = null;
+        System.gc();
+        System.gc();
+        Thread.sleep(30);
+        assertEquals(activeCount, Thread.activeCount());
     }
 
     @Test

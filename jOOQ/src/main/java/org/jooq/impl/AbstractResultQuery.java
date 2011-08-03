@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.concurrent.Executors.newSingleThreadExecutor;
+
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,10 +47,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.Field;
+import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordTarget;
 import org.jooq.Result;
@@ -293,6 +299,19 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch().into(target);
     }
 
+    @Override
+    public final FutureResult<R> fetchLater() throws SQLException {
+        ExecutorService executor = newSingleThreadExecutor();
+        Future<Result<R>> future = executor.submit(new ResultQueryCallable());
+        return new FutureResultImpl<R>(future, executor);
+    }
+
+    @Override
+    public final FutureResult<R> fetchLater(ExecutorService executor) throws SQLException {
+        Future<Result<R>> future = executor.submit(new ResultQueryCallable());
+        return new FutureResultImpl<R>(future);
+    }
+
     private final Object[] convertToArray(R record) {
         final List<Field<?>> fields = record.getFields();
         Object[] array = new Object[fields.size()];
@@ -307,5 +326,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final Result<R> getResult() {
         return result;
+    }
+
+    /**
+     * A wrapper for the {@link ResultQuery#fetch()} method
+     */
+    private final class ResultQueryCallable implements Callable<Result<R>> {
+
+        @Override
+        public final Result<R> call() throws Exception {
+            return fetch();
+        }
     }
 }

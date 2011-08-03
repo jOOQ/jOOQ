@@ -128,8 +128,6 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      *
      * @param target The target callback
      * @return Convenience result, returning the parameter target itself
-     * @see <a href="http://code.google.com/p/ollin/">Ollin Framework</a>:
-     *      Another framework that supports a "row visitor" concept
      */
     RecordTarget<R> fetchInto(RecordTarget<R> target) throws SQLException;
 

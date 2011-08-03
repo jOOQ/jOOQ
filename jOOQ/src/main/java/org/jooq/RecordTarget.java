@@ -38,10 +38,8 @@ package org.jooq;
 /**
  * A <code>RecordTarget</code> is a target that can receive {@link Record}
  * objects, when fetching data from the database.
- * 
+ *
  * @author Lukas Eder
- * @see <a href="http://code.google.com/p/ollin/">Ollin Framework</a>: Another
- *      framework that supports a "row visitor" concept
  */
 public interface RecordTarget<R extends Record> {
 

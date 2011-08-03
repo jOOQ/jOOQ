@@ -1725,8 +1725,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param target The target callback
      * @return Convenience result, returning the parameter target itself
-     * @see <a href="http://code.google.com/p/ollin/">Ollin Framework</a>:
-     *      Another framework that supports a "row visitor" concept
      */
     RecordTarget<R> into(RecordTarget<R> target) throws SQLException;
 

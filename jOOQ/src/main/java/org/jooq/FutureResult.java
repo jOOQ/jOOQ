@@ -51,9 +51,6 @@ import java.util.concurrent.Future;
  * all data into a single report</li>
  * <li>...</li>
  * </ul>
- *
- * @see <a href="http://avaje.org">Avajé Ebean</a>, which served as the
- *      inspiration of this functionality.
  */
 public interface FutureResult<R extends Record> extends Future<Result<R>> {
 

@@ -57,4 +57,11 @@ public interface Key<R extends Record> extends Serializable {
      * The fields that make up the <code>KEY</code>
      */
     List<TableField<R, ?>> getFields();
+
+    /**
+     * The fields that make up the <code>KEY</code>
+     *
+     * @see #getFields()
+     */
+    TableField<R, ?>[] getFieldsArray();
 }

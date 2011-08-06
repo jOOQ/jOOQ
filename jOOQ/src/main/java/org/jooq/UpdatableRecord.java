@@ -100,29 +100,63 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
      * fields were modified, neither an <code>UPDATE</code> nor an
      * <code>INSERT</code> will be executed.
+     * Possible statements are
+     * <ul>
+     * <li>
+     * <code><pre>
+     * INSERT INTO [table] ([modified fields, including main key])
+     * VALUES ([modified values, including main key])</pre></code></li>
+     * <li>
+     * <code><pre>
+     * UPDATE [table]
+     * SET [modified fields = modified values, excluding main key]
+     * WHERE [main key fields = main key values]</pre></code></li>
+     * </ul>
+     * <p>
+     * This is in fact the same as calling
+     * <code>store(getTable().getMainKey().getFieldsArray())</code>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
      * @throws SQLException
+     * @see {@link #storeUsing(TableField...)}
      */
     int store() throws SQLException;
 
     /**
      * Deletes this record from the database, based on the value of the primary
      * key or main unique key.
+     * <p>
+     * The executed statement is
+     * <code><pre>
+     * DELETE FROM [table]
+     * WHERE [main key fields = main key values]</pre></code>
+     * <p>
+     * This is in fact the same as calling
+     * <code>delete(getTable().getMainKey().getFieldsArray())</code>
      *
      * @return <code>1</code> if the record was deleted from the database.
      *         <code>0</code> if deletion was not necessary.
      * @throws SQLException
+     * @see {@link #deleteUsing(TableField...)}
      */
     int delete() throws SQLException;
 
     /**
      * Refresh this record from the database, based on the value of the primary
      * key or main unique key.
+     * <p>
+     * This is in fact the same as calling
+     * <code>refresh(getTable().getMainKey().getFieldsArray())</code>
+     * <p>
+     * The executed statement is
+     * <code><pre>
+     * SELECT * FROM [table]
+     * WHERE [main key fields = main key values]</pre></code>
      *
      * @throws SQLException - If there is an underlying {@link SQLException} or
      *             if the record does not exist anymore in the database.
+     * @see #refreshUsing(TableField...)
      */
     void refresh() throws SQLException;
 

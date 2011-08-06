@@ -35,17 +35,27 @@
  */
 package org.jooq.impl;
 
+import java.sql.SQLException;
+
+import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
-import org.jooq.Record;
+import org.jooq.DeleteQuery;
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.InsertQuery;
+import org.jooq.SimpleSelectQuery;
+import org.jooq.StoreQuery;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.UpdateQuery;
 
 /**
  * A record implementation for a record originating from a single table
  *
  * @author Lukas Eder
  */
-public class TableRecordImpl<R extends Record> extends TypeRecord<Table<R>> implements TableRecord<R> {
+public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<R>> implements TableRecord<R> {
 
     /**
      * Generated UID
@@ -70,10 +80,155 @@ public class TableRecordImpl<R extends Record> extends TypeRecord<Table<R>> impl
     }
 
     /*
-     * This method is overridden by UpdatableRecordImpl
+     * This method is overridden covariantly by UpdatableRecordImpl
      */
     @Override
     public Table<R> getTable() {
         return getType0();
+    }
+
+    @Override
+    public final int storeUsing(TableField<R, ?>... keys) throws SQLException {
+        boolean executeUpdate = false;
+
+        for (TableField<R, ?> field : keys) {
+
+            // If any primary key value is null or changed, execute an insert
+            if (getValue(field) == null || getValue0(field).isChanged()) {
+                executeUpdate = false;
+                break;
+            }
+
+            // If primary key values are unchanged, updates are possible
+            else {
+                executeUpdate = true;
+            }
+        }
+
+        int result = 0;
+
+        if (executeUpdate) {
+            result = storeUpdate(keys);
+        }
+        else {
+            result = storeInsert();
+        }
+
+        for (Value<?> value : getValues()) {
+            value.setChanged(false);
+        }
+
+        return result;
+    }
+
+    @SuppressWarnings("unchecked")
+    private final int storeInsert() throws SQLException {
+        InsertQuery<R> insert = create().insertQuery(getTable());
+
+        for (Field<?> field : getFields()) {
+            if (getValue0(field).isChanged()) {
+                addValue(insert, (TableField<R, ?>)field);
+            }
+        }
+
+        int result = insert.execute();
+
+        // If an insert was executed successfully try fetching the generated
+        // IDENTITY value
+        if (result > 0) {
+            Identity<R, ? extends Number> identity = getIdentity();
+
+            if (identity != null) {
+                setValue0(identity.getField(), new Value<Number>(create().lastID(identity)));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Subclasses may override this method to provide an identity
+     */
+    Identity<R, ? extends Number> getIdentity() {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private final int storeUpdate(TableField<R, ?>... keys) throws SQLException {
+        UpdateQuery<R> update = create().updateQuery(getTable());
+
+        for (Field<?> field : getFields()) {
+            if (getValue0(field).isChanged()) {
+                addValue(update, (TableField<R, ?>)field);
+            }
+        }
+
+        for (Field<?> field : keys) {
+            addCondition(update, field);
+        }
+
+        return update.execute();
+    }
+
+    @Override
+    public final int deleteUsing(TableField<R, ?>... keys) throws SQLException {
+        try {
+            DeleteQuery<R> delete = create().deleteQuery(getTable());
+
+            for (Field<?> field : keys) {
+                addCondition(delete, field);
+            }
+
+            return delete.execute();
+        }
+
+        // [#673] If store() is called after delete(), a new INSERT should
+        // be executed and the record should be recreated
+        finally {
+            for (Field<?> field : getFields()) {
+                getValue0(field).setChanged(true);
+            }
+        }
+    }
+
+    @Override
+    public final void refreshUsing(TableField<R, ?>... keys) throws SQLException {
+        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+
+        for (Field<?> field : keys) {
+            addCondition(select, field);
+        }
+
+        if (select.execute() == 1) {
+            AbstractRecord record = (AbstractRecord) select.getResult().get(0);
+
+            for (Field<?> field : getFields()) {
+                setValue0(field, record.getValue0(field));
+            }
+        } else {
+            throw new SQLException("Exactly one row expected for refresh. Record does not exist in database.");
+        }
+    }
+
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    @SuppressWarnings("unchecked")
+    private final <T> void setValue0(Field<T> field, Value<?> value) {
+        setValue(field, (Value<T>) value);
+    }
+
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    private final <T> void addCondition(ConditionProvider provider, Field<T> field) {
+        provider.addConditions(field.equal(getValue(field)));
+    }
+
+    /**
+     * Extracted method to ensure generic type safety.
+     */
+    private final <T> void addValue(StoreQuery<?> store, Field<T> field) {
+        store.addValue(field, getValue(field));
     }
 }

@@ -58,6 +58,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.TBookStore;
 import org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.sqlite.generatedclasses.tables.T_658Ref;
 import org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.sqlite.generatedclasses.tables.T_785;
 import org.jooq.test.sqlite.generatedclasses.tables.VLibrary;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord;
@@ -65,6 +66,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.sqlite.SQLiteDataType;
@@ -83,7 +85,8 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
         XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
-        T_639NumbersTableRecord> {
+        T_639NumbersTableRecord,
+        T_785Record> {
 
     @Override
     protected Factory create(SchemaMapping mapping) {
@@ -178,6 +181,26 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
     @Override
     protected Table<T_639NumbersTableRecord> T639() {
         return T_639NumbersTable.T_639_NUMBERS_TABLE;
+    }
+
+    @Override
+    protected Table<T_785Record> T785() {
+        return T_785.T_785;
+    }
+
+    @Override
+    protected TableField<T_785Record, Integer> T785_ID() {
+        return T_785.ID;
+    }
+
+    @Override
+    protected TableField<T_785Record, String> T785_NAME() {
+        return T_785.NAME;
+    }
+
+    @Override
+    protected TableField<T_785Record, String> T785_VALUE() {
+        return T_785.VALUE;
     }
 
     @Override

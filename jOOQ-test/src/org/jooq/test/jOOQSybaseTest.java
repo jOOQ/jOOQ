@@ -57,6 +57,7 @@ import org.jooq.test.sybase.generatedclasses.tables.TBookStore;
 import org.jooq.test.sybase.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.sybase.generatedclasses.tables.T_658Ref;
 import org.jooq.test.sybase.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.sybase.generatedclasses.tables.T_785;
 import org.jooq.test.sybase.generatedclasses.tables.VLibrary;
 import org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord;
@@ -64,6 +65,7 @@ import org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.sybase.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.sybase.SybaseDataType;
@@ -82,7 +84,8 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
         XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
-        T_639NumbersTableRecord> {
+        T_639NumbersTableRecord,
+        T_785Record> {
 
     @Override
     protected Factory create(SchemaMapping mapping) {
@@ -173,6 +176,26 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     @Override
     protected Table<T_658RefRecord> T658() {
         return T_658Ref.T_658_REF;
+    }
+
+    @Override
+    protected Table<T_785Record> T785() {
+        return T_785.T_785;
+    }
+
+    @Override
+    protected TableField<T_785Record, Integer> T785_ID() {
+        return T_785.ID;
+    }
+
+    @Override
+    protected TableField<T_785Record, String> T785_NAME() {
+        return T_785.NAME;
+    }
+
+    @Override
+    protected TableField<T_785Record, String> T785_VALUE() {
+        return T_785.VALUE;
     }
 
     @Override

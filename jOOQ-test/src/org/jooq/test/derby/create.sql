@@ -20,6 +20,7 @@ DROP TABLE t_658_12/
 DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
+DROP TABLE t_785/
 
 CREATE SCHEMA test AUTHORIZATION test
 /
@@ -101,6 +102,13 @@ CREATE TABLE t_725_lob_test (
   LOB BLOB,
   
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_785 (
+  ID int,
+  NAME varchar(50),
+  VALUE varchar(50)
 )
 /
 

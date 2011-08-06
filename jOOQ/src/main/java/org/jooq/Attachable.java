@@ -59,7 +59,7 @@ import java.sql.Connection;
 public interface Attachable extends Adapter, Serializable {
 
     /**
-     * Attach this record to a new {@link Configuration}
+     * Attach this object to a new {@link Configuration}
      */
     void attach(Configuration configuration);
 }

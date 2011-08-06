@@ -66,6 +66,7 @@ import org.jooq.test.oracle.generatedclasses.tables.TBookStore;
 import org.jooq.test.oracle.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.oracle.generatedclasses.tables.T_658Ref;
 import org.jooq.test.oracle.generatedclasses.tables.T_725LobTest;
+import org.jooq.test.oracle.generatedclasses.tables.T_785;
 import org.jooq.test.oracle.generatedclasses.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.tables.VLibrary;
 import org.jooq.test.oracle.generatedclasses.tables.records.TArraysRecord;
@@ -75,6 +76,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_725LobTestRecord;
+import org.jooq.test.oracle.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.oracle.generatedclasses.tables.records.VIncompleteRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.oracle.generatedclasses.udt.OInvalidType;
@@ -104,7 +106,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         TArraysRecord,
         T_658RefRecord,
         T_725LobTestRecord,
-        T_639NumbersTableRecord> {
+        T_639NumbersTableRecord,
+        T_785Record> {
 
     static {
         // [#624] Incomplete or erroneous artefacts must be generated too. This
@@ -210,6 +213,26 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
         return T_725LobTest.LOB;
+    }
+
+    @Override
+    protected Table<T_785Record> T785() {
+        return T_785.T_785;
+    }
+
+    @Override
+    protected TableField<T_785Record, Integer> T785_ID() {
+        return T_785.ID;
+    }
+
+    @Override
+    protected TableField<T_785Record, String> T785_NAME() {
+        return T_785.NAME;
+    }
+
+    @Override
+    protected TableField<T_785Record, String> T785_VALUE() {
+        return T_785.VALUE;
     }
 
     @Override

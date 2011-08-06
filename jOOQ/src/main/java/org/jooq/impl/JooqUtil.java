@@ -100,18 +100,20 @@ final class JooqUtil {
     @SuppressWarnings("unchecked")
     static <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
         try {
+            R result;
+
             // An ad-hoc type resulting from a JOIN or arbitrary SELECT
             if (type == RecordImpl.class) {
-                return (R) new RecordImpl(provider, configuration);
+                result = (R) new RecordImpl(provider);
             }
 
-            // Any generated UpdatableRecord
-            if (UpdatableRecordImpl.class.isAssignableFrom(type)) {
-                return type.getConstructor(Configuration.class).newInstance(configuration);
+            // Any generated record
+            else {
+                result = type.newInstance();
             }
 
-            // Any generated TableRecord
-            return type.newInstance();
+            result.attach(configuration);
+            return result;
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record. Please report this issue", e);

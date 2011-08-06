@@ -123,7 +123,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * Subclasses must override this method if they use the generic type
      * parameter <R> for other types than {@link Record}
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @Override
     public Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;

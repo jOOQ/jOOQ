@@ -831,19 +831,16 @@ public class DefaultGenerator implements Generator {
                     out.println(");");
                     out.println("\t}");
 
-        			if (TableRecordImpl.class != baseClass || generateDeprecated()) {
+        			if (generateDeprecated()) {
         	            out.println();
 
         	            out.println("\t/**");
         	            out.println("\t * Create an attached " + strategy.getJavaClassName(table, "Record"));
-        	            if (TableRecordImpl.class == baseClass) {
-        	                out.println("\t * @deprecated - (#363) use the other constructor instead");
-        	            }
+    	                out.println("\t * @deprecated - 1.6.4 [#363, #789] - use the other constructor instead for unattached");
+    	                out.println("\t * records, or {@link org.jooq.impl.Factory#newRecord(org.jooq.Table)} for attached ones");
 
         	            out.println("\t */");
-                        if (TableRecordImpl.class == baseClass) {
-                            out.println("\t@Deprecated");
-                        }
+                        out.println("\t@Deprecated");
 
     	                out.print("\tpublic ");
     	                out.print(strategy.getJavaClassName(table, "Record"));

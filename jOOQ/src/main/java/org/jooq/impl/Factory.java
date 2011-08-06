@@ -2253,7 +2253,7 @@ public class Factory implements Configuration {
      * </ul>
      */
     public final Field<BigDecimal> e() {
-        return new E();
+        return new Euler();
     }
 
     // -------------------------------------------------------------------------

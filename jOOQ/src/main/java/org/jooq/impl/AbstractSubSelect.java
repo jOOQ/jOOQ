@@ -608,7 +608,7 @@ implements
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     public final Class<? extends R> getRecordType() {
         // Generated record classes only come into play, when the select is
         // - on a single table

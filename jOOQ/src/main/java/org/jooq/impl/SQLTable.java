@@ -78,6 +78,7 @@ class SQLTable extends AbstractTable<Record> {
         attachable.attach(configuration);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;

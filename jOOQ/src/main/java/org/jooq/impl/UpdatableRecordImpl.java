@@ -41,6 +41,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Record;
+import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
@@ -58,10 +59,17 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
      */
     private static final long serialVersionUID = -1012420583600561579L;
 
+    @SuppressWarnings("deprecation")
     public UpdatableRecordImpl(UpdatableTable<R> table) {
         this(table, null);
     }
 
+    /**
+     * @deprecated - 1.6.4 [#789] - Create attached records using
+     *             {@link Factory#newRecord(Table)} instead. Detached records
+     *             can be created using {@link #TableRecordImpl(Table)}
+     */
+    @Deprecated
     public UpdatableRecordImpl(UpdatableTable<R> table, Configuration configuration) {
         super(table, configuration);
     }
@@ -99,7 +107,7 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
     }
 
     @Override
-    final Identity<R, ? extends Number> getIdentity() {
+    final Identity<R, ? extends Number> identity() {
         return getTable().getIdentity();
     }
 

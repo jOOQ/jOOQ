@@ -78,7 +78,7 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
         this.field.add(create().field("COLUMN_VALUE", arrayType));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @Override
     public final Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;

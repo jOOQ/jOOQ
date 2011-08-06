@@ -53,6 +53,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -67,11 +68,17 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     private final FieldProvider fields;
     private Value<?>[]          values;
 
-    public AbstractRecord(FieldProvider fields) {
+    AbstractRecord(FieldProvider fields) {
         this(fields, null);
     }
 
-    public AbstractRecord(FieldProvider fields, Configuration configuration) {
+    /**
+     * @deprecated - 1.6.4 [#789] - Create attached records using
+     *             {@link Factory#newRecord(Table)} instead. Detached records
+     *             can be created using {@link #TableRecordImpl(Table)}
+     */
+    @Deprecated
+    AbstractRecord(FieldProvider fields, Configuration configuration) {
         super(configuration);
 
         this.fields = fields;

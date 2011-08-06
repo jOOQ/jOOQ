@@ -68,7 +68,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient ResultSet         rs;
     private transient Iterator<R>       iterator;
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     CursorImpl(Configuration configuration, FieldProvider fields, ResultSet rs) {
         this(configuration, fields, rs, null, (Class<? extends R>) RecordImpl.class);
     }

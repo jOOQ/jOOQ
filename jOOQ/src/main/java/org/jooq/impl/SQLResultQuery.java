@@ -84,6 +84,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
         return Collections.emptyList();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;

@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS t_658_12/
 DROP TABLE IF EXISTS t_658_22/
 DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
+DROP TABLE IF EXISTS t_785/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,
@@ -98,6 +99,13 @@ CREATE TABLE t_725_lob_test (
   LOB BLOB NULL,
   
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_785 (
+  ID int,
+  NAME varchar(50),
+  VALUE varchar(50)
 )
 /
 

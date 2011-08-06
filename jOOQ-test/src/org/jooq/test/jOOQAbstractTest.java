@@ -145,7 +145,8 @@ public abstract class jOOQAbstractTest<
         X extends TableRecord<X>,
         T658 extends TableRecord<T658>,
         T725 extends UpdatableRecord<T725>,
-        T639 extends UpdatableRecord<T639>> {
+        T639 extends UpdatableRecord<T639>,
+        T785 extends TableRecord<T785>> {
 
     private static final String       JDBC_SCHEMA   = "jdbc.Schema";
     private static final String       JDBC_PASSWORD = "jdbc.Password";
@@ -165,6 +166,7 @@ public abstract class jOOQAbstractTest<
         Statement stmt = null;
         File file = new File(getClass().getResource(script).toURI());
         String allSQL = FileUtils.readFileToString(file);
+        testSQLWatch.splitDebug("Loaded SQL file");
 
         for (String sql : allSQL.split("/")) {
             try {
@@ -381,6 +383,10 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<T725, Integer> T725_ID();
     protected abstract TableField<T725, byte[]> T725_LOB();
     protected abstract Table<T639> T639();
+    protected abstract Table<T785> T785();
+    protected abstract TableField<T785, Integer> T785_ID();
+    protected abstract TableField<T785, String> T785_NAME();
+    protected abstract TableField<T785, String> T785_VALUE();
 
     protected abstract Table<X> TArrays();
     protected abstract TableField<X, Integer> TArrays_ID();
@@ -901,7 +907,7 @@ public abstract class jOOQAbstractTest<
                 assertEquals(1, schema.getSequences().size());
             }
 
-            int tables = 14;
+            int tables = 15;
             if (TArrays() == null) {
                 assertEquals(tables, schema.getTables().size());
             }
@@ -2328,14 +2334,14 @@ public abstract class jOOQAbstractTest<
 
         later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
 
-        // That's too fast for the query to be done
+        // That's too fast for the query to be done, mostly
         assertFalse(later.isDone());
         assertFalse(later.isCancelled());
         assertEquals(activeCount + 1, Thread.activeCount());
 
         // Get should make sure the internal thread is terminated
         result = later.get();
-        Thread.sleep(30);
+        Thread.sleep(500);
         assertEquals(activeCount, Thread.activeCount());
 
         // Subsequent gets are ok
@@ -2357,7 +2363,7 @@ public abstract class jOOQAbstractTest<
         later = null;
         System.gc();
         System.gc();
-        Thread.sleep(30);
+        Thread.sleep(500);
         assertEquals(activeCount, Thread.activeCount());
     }
 
@@ -3120,6 +3126,22 @@ public abstract class jOOQAbstractTest<
         // Store an empty record
         S store = create().newRecord(TBookStore());
         assertEquals(0, store.store());
+
+        // [#787] Store the same record twice.
+        author = create().newRecord(TAuthor());
+        author.setValue(TAuthor_ID(), 78);
+        author.setValue(TAuthor_LAST_NAME(), "Cohen");
+        assertEquals(1, author.store());
+        assertEquals(0, author.store()); // No INSERT/UPDATE should be made
+
+        author.setValue(TAuthor_FIRST_NAME(), "Arthur");
+        assertEquals(1, author.store()); // This should produce an UPDATE
+        assertEquals(1, create()
+            .select(create().count())
+            .from(TAuthor())
+            .where(TAuthor_FIRST_NAME().equal("Arthur"))
+            .and(TAuthor_LAST_NAME().equal("Cohen"))
+            .fetchOne(0));
     }
 
     @Test
@@ -3187,6 +3209,73 @@ public abstract class jOOQAbstractTest<
 
         store = create().fetchOne(TBookStore(), TBookStore_NAME().equal("Rösslitor"));
         assertEquals("Rösslitor", store.getValue(TBookStore_NAME()));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testNonUpdatables() throws Exception {
+        reset = false;
+
+        // Insert three records first
+        T785 record = create().newRecord(T785());
+        record.setValue(T785_ID(), 1);
+        assertEquals(1, record.storeUsing(T785_ID()));
+        assertEquals(0, record.storeUsing(T785_ID()));
+
+        record.setValue(T785_ID(), 2);
+        assertEquals(1, record.storeUsing(T785_ID()));
+        record.setValue(T785_NAME(), "N");
+        record.setValue(T785_VALUE(), "V");
+        assertEquals(1, record.storeUsing(T785_ID()));
+
+        record = create().newRecord(T785());
+        record.setValue(T785_ID(), 3);
+        record.setValue(T785_NAME(), "N");
+        assertEquals(1, record.storeUsing(T785_ID()));
+        assertEquals(0, record.storeUsing(T785_ID()));
+
+        // Load data again
+        record = create().newRecord(T785());
+        record.setValue(T785_ID(), 2);
+        record.refreshUsing(T785_ID());
+        assertEquals("N", record.getValue(T785_NAME()));
+        assertEquals("V", record.getValue(T785_VALUE()));
+
+        // When NAME is used as the key, multiple updates may occur
+        record.setValue(T785_VALUE(), "Some value");
+        assertEquals(2, record.storeUsing(T785_NAME()));
+        assertEquals(2, create().fetch(T785(), T785_VALUE().equal("Some value")).size());
+
+        // Don't allow refreshing on multiple results
+        try {
+            record = create().newRecord(T785());
+            record.setValue(T785_VALUE(), "Some value");
+            record.refreshUsing(T785_VALUE());
+            fail();
+        }
+        catch (SQLException expected) {}
+
+
+        // Don't allow refreshing on inexistent results
+        try {
+            record = create().newRecord(T785());
+            record.setValue(T785_ID(), 4);
+            record.refreshUsing(T785_ID());
+            fail();
+        }
+        catch (SQLException expected) {}
+
+        // Delete records again
+        record = create().newRecord(T785());
+        record.setValue(T785_ID(), 1);
+        assertEquals(1, record.deleteUsing(T785_ID()));
+        assertEquals(2, create().fetch(T785()).size());
+        assertEquals(0, create().fetch(T785(), T785_ID().equal(1)).size());
+
+        record = create().newRecord(T785());
+        record.setValue(T785_NAME(), "N");
+        assertEquals(2, record.deleteUsing(T785_NAME()));
+        assertEquals(0, create().fetch(T785()).size());
     }
 
     @Test
@@ -5260,6 +5349,8 @@ public abstract class jOOQAbstractTest<
         store.setValue(TBookStore_NAME(), "Barnes and Noble");
         assertEquals(1, store.store());
 
+        store = create.newRecord(TBookStore());
+        store.setValue(TBookStore_NAME(), "Barnes and Noble");
         store.attach(null);
 
         try {

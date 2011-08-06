@@ -22,6 +22,7 @@ DROP TABLE t_658_12/
 DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
+DROP TABLE t_785/
 
 DROP PROCEDURE p_arrays1/
 DROP PROCEDURE p_arrays2/
@@ -131,6 +132,13 @@ CREATE TABLE t_725_lob_test (
   LOB varbinary(max) NULL,
   
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_785 (
+  ID int,
+  NAME varchar(50),
+  VALUE varchar(50)
 )
 /
 

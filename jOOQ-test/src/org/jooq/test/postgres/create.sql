@@ -21,6 +21,7 @@ DROP TABLE IF EXISTS t_658_12 CASCADE/
 DROP TABLE IF EXISTS t_658_22 CASCADE/
 DROP TABLE IF EXISTS t_658_32 CASCADE/
 DROP TABLE IF EXISTS t_725_lob_test/
+DROP TABLE IF EXISTS t_785/
 
 DROP FUNCTION f_arrays(in_array IN integer[])/
 DROP FUNCTION f_arrays(in_array IN bigint[])/
@@ -157,6 +158,13 @@ CREATE TABLE t_725_lob_test (
   LOB BYTEA NULL,
   
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_785 (
+  ID int,
+  NAME varchar(50),
+  VALUE varchar(50)
 )
 /
 

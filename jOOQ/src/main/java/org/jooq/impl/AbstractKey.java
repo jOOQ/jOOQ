@@ -53,14 +53,14 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
     /**
      * Generated UID
      */
-    private static final long            serialVersionUID = 8176874459141379340L;
+    private static final long        serialVersionUID = 8176874459141379340L;
 
-    private final Table<R>               table;
-    private final List<TableField<R, ?>> fields;
+    private final Table<R>           table;
+    private final TableField<R, ?>[] fields;
 
     AbstractKey(Table<R> table, TableField<R, ?>... fields) {
         this.table = table;
-        this.fields = Arrays.asList(fields);
+        this.fields = fields;
     }
 
     @Override
@@ -70,6 +70,11 @@ abstract class AbstractKey<R extends Record> implements Key<R> {
 
     @Override
     public final List<TableField<R, ?>> getFields() {
+        return Arrays.asList(fields);
+    }
+
+    @Override
+    public final TableField<R, ?>[] getFieldsArray() {
         return fields;
     }
 }

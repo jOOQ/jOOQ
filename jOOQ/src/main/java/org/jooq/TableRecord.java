@@ -35,9 +35,11 @@
  */
 package org.jooq;
 
+import java.sql.SQLException;
+
 /**
  * A record originating from a single table
- *
+ * 
  * @param <R> The record type
  * @author Lukas Eder
  */
@@ -47,4 +49,83 @@ public interface TableRecord<R extends Record> extends Record {
      * The table from which this record was read
      */
     Table<R> getTable();
+
+    /**
+     * Store this record back to the database.
+     * <p>
+     * Depending on the state of the provided keys' value, an
+     * <code>INSERT</code> or an <code>UPDATE</code> statement is executed.
+     * <p>
+     * <ul>
+     * <li>If this record was created by client code, an <code>INSERT</code>
+     * statement is executed</li>
+     * <li>If this record was loaded by jOOQ, but the provided keys' value was
+     * changed, an <code>INSERT</code> statement is executed. jOOQ expects that
+     * primary key values will never change due to the principle of
+     * normalisation in RDBMS. So if client code changes primary key values,
+     * this is interpreted by jOOQ as client code wanting to duplicate this
+     * record.</li>
+     * <li>If this record was loaded by jOOQ, and the provided keys' value was
+     * not changed, an <code>UPDATE</code> statement is executed.</li>
+     * </ul>
+     * <p>
+     * In either statement, only those fields are inserted/updated, which had
+     * been explicitly set by client code, in order to allow for
+     * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
+     * fields were modified, neither an <code>UPDATE</code> nor an
+     * <code>INSERT</code> will be executed.
+     * <p>
+     * Possible statements are
+     * <ul>
+     * <li>
+     * <code><pre>
+     * INSERT INTO [table] ([modified fields, including keys])
+     * VALUES ([modified values, including keys])</pre></code></li>
+     * <li>
+     * <code><pre>
+     * UPDATE [table]
+     * SET [modified fields = modified values, excluding keys]
+     * WHERE [key fields = key values]</pre></code></li>
+     * </ul>
+     * 
+     * @param keys The key fields used for deciding whether to execute an
+     *            <code>INSERT</code> or <code>UPDATE</code> statement. If an
+     *            <code>UPDATE</code> statement is executed, they are also the
+     *            key fields for the <code>UPDATE</code> statement's
+     *            <code>WHERE</code> clause.
+     * @return The number of stored records.
+     * @throws SQLException
+     */
+    int storeUsing(TableField<R, ?>... keys) throws SQLException;
+
+    /**
+     * Deletes this record from the database, based on the value of the provided
+     * keys.
+     * <p>
+     * The executed statement is <code><pre>
+     * DELETE FROM [table]
+     * WHERE [key fields = key values]</pre></code>
+     * 
+     * @param keys The key fields for the <code>DELETE</code> statement's
+     *            <code>WHERE</code> clause.
+     * @return The number of deleted records.
+     * @throws SQLException
+     */
+    int deleteUsing(TableField<R, ?>... keys) throws SQLException;
+
+    /**
+     * Refresh this record from the database, based on the value of the provided
+     * keys.
+     * <p>
+     * The executed statement is <code><pre>
+     * SELECT * FROM [table]
+     * WHERE [key fields = key values]</pre></code>
+     * 
+     * @param keys The key fields for the <code>SELECT</code> statement's
+     *            <code>WHERE</code> clause.
+     * @throws SQLException - If there is an underlying {@link SQLException} or
+     *             if the record does not exist anymore in the database, or if
+     *             the provided keys return several records.
+     */
+    void refreshUsing(TableField<R, ?>... keys) throws SQLException;
 }

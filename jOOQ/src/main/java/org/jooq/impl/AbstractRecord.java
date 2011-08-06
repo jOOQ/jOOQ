@@ -122,11 +122,11 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @SuppressWarnings("unchecked")
-    protected final <T> Value<T> getValue0(Field<T> field) {
+    final <T> Value<T> getValue0(Field<T> field) {
         return (Value<T>) getValues()[getIndex(field)];
     }
 
-    private final Value<?>[] getValues() {
+    final Value<?>[] getValues() {
         if (values == null) {
             init();
         }

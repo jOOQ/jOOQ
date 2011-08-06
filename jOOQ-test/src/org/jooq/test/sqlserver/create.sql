@@ -143,12 +143,12 @@ CREATE TABLE t_785 (
 /
 
 CREATE TABLE t_author (
-  id int NOT NULL,
-  first_name VARCHAR(50),
-  last_name VARCHAR(50) NOT NULL,
-  date_of_birth DATE,
-  year_of_birth int,
-  address VARCHAR(50),
+  ID int NOT NULL,
+  FIRST_NAME VARCHAR(50),
+  LAST_NAME VARCHAR(50) NOT NULL,
+  DATE_OF_BIRTH DATE,
+  YEAR_OF_BIRTH int,
+  ADDRESS VARCHAR(50),
   
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
@@ -162,15 +162,15 @@ CREATE TABLE t_book_details (
 /
 
 CREATE TABLE t_book (
-  id int NOT NULL,
-  author_id int NOT NULL,
-  co_author_id int,
-  details_id int,
-  title VARCHAR(400) NOT NULL,
-  published_in int NOT NULL,
-  language_id int NOT NULL,
-  content_text text,
-  content_pdf varbinary(max),
+  ID int NOT NULL,
+  AUTHOR_ID int NOT NULL,
+  CO_AUTHOR_ID int,
+  DETAILS_ID int,
+  TITLE VARCHAR(400) NOT NULL,
+  PUBLISHED_IN int NOT NULL,
+  LANGUAGE_ID int NOT NULL,
+  CONTENT_TEXT text,
+  CONTENT_PDF varbinary(max),
   
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
@@ -182,8 +182,8 @@ CREATE TABLE t_book (
 
 
 CREATE TABLE t_book_store (
-  id INTEGER IDENTITY(1,1) NOT NULL,
-  name VARCHAR(400) NOT NULL,
+  ID INTEGER IDENTITY(1,1) NOT NULL,
+  NAME VARCHAR(400) NOT NULL,
   
   CONSTRAINT uk_t_book_store_name UNIQUE(name)
 )
@@ -191,9 +191,9 @@ CREATE TABLE t_book_store (
 
 
 CREATE TABLE t_book_to_book_store (
-  book_store_name VARCHAR(400) NOT NULL,
-  book_id INTEGER NOT NULL,
-  stock INTEGER,
+  BOOK_STORE_NAME VARCHAR(400) NOT NULL,
+  BOOK_ID INTEGER NOT NULL,
+  STOCK INTEGER,
    
   CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)

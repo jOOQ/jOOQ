@@ -2007,80 +2007,58 @@ public class DefaultGenerator implements Generator {
 
 	                    TableDefinition referencing = foreignKey.getKeyTable();
 
-	                    prefixLoop: for (String prefix : new String[] { "fetch", "get" }) {
+                        printFieldJavaDoc(out, null, column);
+                        out.print("\tpublic ");
+                        out.print(List.class);
+                        out.print("<");
+                        out.print(strategy.getFullJavaClassName(referencing, "Record"));
+                        out.print("> fetch");
+                        out.print(strategy.getJavaClassName(referencing));
 
-	                        // #187 - Mark getter navigation methods as deprecated
-	                        String deprecation = null;
-	                        if ("get".equals(prefix)) {
+                        // #352 - Disambiguate foreign key navigation directions
+                        out.print("List");
 
-	                            // Only generate this code, if deprecation is
-	                            // accepted
-	                            if (!generateDeprecated()) {
-	                                continue prefixLoop;
-	                            }
+                        // #350 - Disambiguate multiple foreign keys referencing
+                        // the same table
+                        if (foreignKey.countSimilarReferences() > 1) {
+                            out.print("By");
+                            out.print(strategy.getJavaClassName(foreignKey.getKeyColumns().get(0)));
+                        }
 
-	                            deprecation =
-	                                "Because of risk of ambiguity (#187), code generation for this<br/>\n"+
-	                                "method will not be supported anymore, soon.<br/><br/>\n" +
-	                                "If you wish to remove this method, adapt your configuration:<br/>\n" +
-	                                "<code>generator.generate.deprecated=false</code>";
-	                        }
+                        out.print("() throws ");
+                        out.print(SQLException.class);
+                        out.println(" {");
 
+                        out.println("\t\treturn create()");
+                        out.print("\t\t\t.selectFrom(");
+                        out.print(strategy.getFullJavaIdentifierUC(referencing));
+                        out.println(")");
 
-	                        printFieldJavaDoc(out, null, column, deprecation);
-	                        out.print("\tpublic ");
-	                        out.print(List.class);
-	                        out.print("<");
-	                        out.print(strategy.getFullJavaClassName(referencing, "Record"));
-	                        out.print("> ");
-	                        out.print(prefix);
-	                        out.print(strategy.getJavaClassName(referencing));
+                        String connector = "\t\t\t.where(";
 
-	                        // #352 - Disambiguate foreign key navigation directions
-	                        out.print("List");
+                        for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
+                            out.print(connector);
+                            out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyColumns().get(i)));
+                            out.print(".equal(getValue");
 
-	                        // #350 - Disambiguate multiple foreign keys referencing
-	                        // the same table
-	                        if (foreignKey.countSimilarReferences() > 1) {
-	                            out.print("By");
-	                            out.print(strategy.getJavaClassName(foreignKey.getKeyColumns().get(0)));
-	                        }
+                            DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
+                            DataTypeDefinition primaryType = uniqueKey.getKeyColumns().get(i).getType();
 
-	                        out.print("() throws ");
-	                        out.print(SQLException.class);
-	                        out.println(" {");
+                            // Convert foreign key value, if there is a type mismatch
+                            if (!match(foreignType, primaryType)) {
+                                out.print("As");
+                                out.print(getSimpleJavaType(foreignKey.getKeyColumns().get(i).getType()));
+                            }
 
-	                        out.println("\t\treturn create()");
-	                        out.print("\t\t\t.selectFrom(");
-	                        out.print(strategy.getFullJavaIdentifierUC(referencing));
-	                        out.println(")");
+                            out.print("(");
+                            out.print(strategy.getFullJavaIdentifierUC(uniqueKey.getKeyColumns().get(i)));
+                            out.println(")))");
 
-	                        String connector = "\t\t\t.where(";
+                            connector = "\t\t\t.and(";
+                        }
 
-	                        for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
-	                            out.print(connector);
-	                            out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyColumns().get(i)));
-	                            out.print(".equal(getValue");
-
-	                            DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
-	                            DataTypeDefinition primaryType = uniqueKey.getKeyColumns().get(i).getType();
-
-	                            // Convert foreign key value, if there is a type mismatch
-	                            if (!match(foreignType, primaryType)) {
-	                                out.print("As");
-	                                out.print(getSimpleJavaType(foreignKey.getKeyColumns().get(i).getType()));
-	                            }
-
-	                            out.print("(");
-	                            out.print(strategy.getFullJavaIdentifierUC(uniqueKey.getKeyColumns().get(i)));
-	                            out.println(")))");
-
-	                            connector = "\t\t\t.and(";
-	                        }
-
-	                        out.println("\t\t\t.fetch();");
-	                        out.println("\t}");
-	                    }
+                        out.println("\t\t\t.fetch();");
+                        out.println("\t}");
 	                }
 	            }
 			}
@@ -2109,74 +2087,53 @@ public class DefaultGenerator implements Generator {
                 }
 
                 if (!skipGeneration) {
-                    prefixLoop: for (String prefix : new String[] { "fetch", "get" }) {
+                    printFieldJavaDoc(out, null, column);
+                    out.print("\tpublic ");
+                    out.print(strategy.getFullJavaClassName(referenced, "Record"));
+                    out.print(" fetch");
+                    out.print(strategy.getJavaClassName(referenced));
 
-                        // #187 - Mark getter navigation methods as deprecated
-                        String deprecation = null;
-                        if ("get".equals(prefix)) {
-
-                            // Only generate this code, if deprecation is
-                            // accepted
-                            if (!generateDeprecated()) {
-                                continue prefixLoop;
-                            }
-
-                            deprecation =
-                                "Because of risk of ambiguity (#187), code generation for this<br/>\n"+
-                                "method will not be supported anymore, soon.<br/><br/>\n" +
-                                "If you wish to remove this method, adapt your configuration:<br/>\n" +
-                                "<code>generator.generate.deprecated=false</code>";
-                        }
-
-                        printFieldJavaDoc(out, null, column, deprecation);
-                        out.print("\tpublic ");
-                        out.print(strategy.getFullJavaClassName(referenced, "Record"));
-                        out.print(" ");
-                        out.print(prefix);
-                        out.print(strategy.getJavaClassName(referenced));
-
-                        // #350 - Disambiguate multiple foreign keys referencing
-                        // the same table
-                        if (foreignKey.countSimilarReferences() > 1) {
-                            out.print("By");
-                            out.print(strategy.getJavaClassName(column));
-                        }
-
-                        out.print("() throws ");
-                        out.print(SQLException.class);
-                        out.println(" {");
-
-                        out.println("\t\treturn create()");
-                        out.print("\t\t\t.selectFrom(");
-                        out.print(strategy.getFullJavaIdentifierUC(referenced));
-                        out.println(")");
-
-                        String connector = "\t\t\t.where(";
-
-                        for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
-                            out.print(connector);
-                            out.print(strategy.getFullJavaIdentifierUC(foreignKey.getReferencedColumns().get(i)));
-                            out.print(".equal(getValue");
-
-                            DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
-                            DataTypeDefinition primaryType = foreignKey.getReferencedColumns().get(i).getType();
-
-                            // Convert foreign key value, if there is a type mismatch
-                            if (!match(foreignType, primaryType)) {
-                                out.print("As");
-                                out.print(getSimpleJavaType(foreignKey.getReferencedColumns().get(i).getType()));
-                            }
-
-                            out.print("(");
-                            out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyColumns().get(i)));
-                            out.println(")))");
-
-                            connector = "\t\t\t.and(";
-                        }
-
-                        out.println("\t\t\t.fetchOne();");
-                        out.println("\t}");
+                    // #350 - Disambiguate multiple foreign keys referencing
+                    // the same table
+                    if (foreignKey.countSimilarReferences() > 1) {
+                        out.print("By");
+                        out.print(strategy.getJavaClassName(column));
                     }
+
+                    out.print("() throws ");
+                    out.print(SQLException.class);
+                    out.println(" {");
+
+                    out.println("\t\treturn create()");
+                    out.print("\t\t\t.selectFrom(");
+                    out.print(strategy.getFullJavaIdentifierUC(referenced));
+                    out.println(")");
+
+                    String connector = "\t\t\t.where(";
+
+                    for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
+                        out.print(connector);
+                        out.print(strategy.getFullJavaIdentifierUC(foreignKey.getReferencedColumns().get(i)));
+                        out.print(".equal(getValue");
+
+                        DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
+                        DataTypeDefinition primaryType = foreignKey.getReferencedColumns().get(i).getType();
+
+                        // Convert foreign key value, if there is a type mismatch
+                        if (!match(foreignType, primaryType)) {
+                            out.print("As");
+                            out.print(getSimpleJavaType(foreignKey.getReferencedColumns().get(i).getType()));
+                        }
+
+                        out.print("(");
+                        out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyColumns().get(i)));
+                        out.println(")))");
+
+                        connector = "\t\t\t.and(";
+                    }
+
+                    out.println("\t\t\t.fetchOne();");
+                    out.println("\t}");
                 }
 			}
 		}

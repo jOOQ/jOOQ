@@ -117,6 +117,10 @@ import org.jooq.util.oracle.OracleFactory;
  * <code><pre>
  * Condition condition = new Factory().exists(new Factory().select(...));
  * </pre></code>
+ * <p>
+ * A <code>Factory</code> holds a reference to a JDBC {@link Connection} and
+ * operates upon that connection. This means, that a <code>Factory</code> is
+ * <i>not</i> thread-safe, since a JDBC Connection is not thread-safe either.
  *
  * @author Lukas Eder
  */

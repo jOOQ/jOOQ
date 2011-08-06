@@ -66,16 +66,13 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         super(table);
     }
 
-    public TableRecordImpl(Table<R> table, Configuration configuration) {
-        super(table, configuration);
-    }
-
     /**
-     * @deprecated - TableRecords should not hold a reference to
-     *             {@link Configuration}. Use the other constructor instead.
+     * @deprecated - 1.6.4 [#789] - Create attached records using
+     *             {@link Factory#newRecord(Table)} instead. Detached records
+     *             can be created using {@link #TableRecordImpl(Table)}
      */
     @Deprecated
-    public TableRecordImpl(Configuration configuration, Table<R> table) {
+    public TableRecordImpl(Table<R> table, Configuration configuration) {
         super(table, configuration);
     }
 
@@ -127,7 +124,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
         for (Field<?> field : getFields()) {
             if (getValue0(field).isChanged()) {
-                addValue(insert, (TableField<R, ?>)field);
+                addValue(insert, (TableField<R, ?>) field);
             }
         }
 
@@ -136,7 +133,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         // If an insert was executed successfully try fetching the generated
         // IDENTITY value
         if (result > 0) {
-            Identity<R, ? extends Number> identity = getIdentity();
+            Identity<R, ? extends Number> identity = identity();
 
             if (identity != null) {
                 setValue0(identity.getField(), new Value<Number>(create().lastID(identity)));
@@ -149,7 +146,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     /**
      * Subclasses may override this method to provide an identity
      */
-    Identity<R, ? extends Number> getIdentity() {
+    Identity<R, ? extends Number> identity() {
         return null;
     }
 
@@ -159,7 +156,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
         for (Field<?> field : getFields()) {
             if (getValue0(field).isChanged()) {
-                addValue(update, (TableField<R, ?>)field);
+                addValue(update, (TableField<R, ?>) field);
             }
         }
 
@@ -205,7 +202,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             for (Field<?> field : getFields()) {
                 setValue0(field, record.getValue0(field));
             }
-        } else {
+        }
+        else {
             throw new SQLException("Exactly one row expected for refresh. Record does not exist in database.");
         }
     }

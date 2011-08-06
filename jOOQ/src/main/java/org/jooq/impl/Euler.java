@@ -43,14 +43,14 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class E extends AbstractFunction<BigDecimal> {
+class Euler extends AbstractFunction<BigDecimal> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -420788300355442056L;
 
-    E() {
+    Euler() {
         super("e", SQLDataType.NUMERIC);
     }
 

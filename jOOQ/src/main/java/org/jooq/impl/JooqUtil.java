@@ -97,7 +97,7 @@ final class JooqUtil {
     /**
      * Create a new record
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     static <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
         try {
             R result;

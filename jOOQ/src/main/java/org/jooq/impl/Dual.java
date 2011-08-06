@@ -58,6 +58,7 @@ class Dual extends AbstractTable<Record> {
         super("dual", (Schema) null);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;

@@ -8,9 +8,13 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
+	<properties>
+        <jooq.version>1.6.4</jooq.version>
+    </properties>
+	
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq</artifactId>
-	<version>1.6.4-SNAPSHOT</version>
+	<version>${jooq.version}</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ</name>

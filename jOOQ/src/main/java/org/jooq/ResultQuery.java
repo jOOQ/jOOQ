@@ -345,7 +345,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      */
-    RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException;
+    <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException;
 
     /**
      * Fetch results asynchronously.

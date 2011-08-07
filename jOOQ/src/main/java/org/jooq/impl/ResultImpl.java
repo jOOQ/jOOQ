@@ -1185,7 +1185,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final RecordHandler<R> into(RecordHandler<R> handler) throws SQLException {
+    public final <H extends RecordHandler<R>> H into(H handler) throws SQLException {
         for (R record : this) {
             handler.next(record);
         }

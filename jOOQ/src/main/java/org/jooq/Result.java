@@ -1726,6 +1726,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      */
-    RecordHandler<R> into(RecordHandler<R> handler) throws SQLException;
+    <H extends RecordHandler<R>> H into(H handler) throws SQLException;
 
 }

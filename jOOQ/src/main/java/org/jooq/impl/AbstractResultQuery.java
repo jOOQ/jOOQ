@@ -295,7 +295,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException {
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException {
         return fetch().into(handler);
     }
 

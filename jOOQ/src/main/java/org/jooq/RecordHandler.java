@@ -36,12 +36,12 @@
 package org.jooq;
 
 /**
- * A <code>RecordTarget</code> is a target that can receive {@link Record}
+ * A <code>RecordHandler</code> is a handler that can receive {@link Record}
  * objects, when fetching data from the database.
  *
  * @author Lukas Eder
  */
-public interface RecordTarget<R extends Record> {
+public interface RecordHandler<R extends Record> {
 
     /**
      * A callback method indicating that the next record has been fetched.

@@ -1721,11 +1721,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     <E> List<E> into(Class<? extends E> type);
 
     /**
-     * Map results into a custom target callback
+     * Map results into a custom handler callback
      *
-     * @param target The target callback
-     * @return Convenience result, returning the parameter target itself
+     * @param handler The handler callback
+     * @return Convenience result, returning the parameter handler itself
      */
-    RecordTarget<R> into(RecordTarget<R> target) throws SQLException;
+    RecordHandler<R> into(RecordHandler<R> handler) throws SQLException;
 
 }

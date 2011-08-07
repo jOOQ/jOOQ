@@ -46,7 +46,7 @@ import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FutureResult;
 import org.jooq.Record;
-import org.jooq.RecordTarget;
+import org.jooq.RecordHandler;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -197,8 +197,8 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     }
 
     @Override
-    public final RecordTarget<R> fetchInto(RecordTarget<R> target) throws SQLException {
-        return query.fetchInto(target);
+    public final RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException {
+        return query.fetchInto(handler);
     }
 
     @Override

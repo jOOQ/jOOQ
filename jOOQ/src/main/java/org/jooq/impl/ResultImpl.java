@@ -65,7 +65,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
-import org.jooq.RecordTarget;
+import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.tools.json.JSONObject;
@@ -1185,12 +1185,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final RecordTarget<R> into(RecordTarget<R> target) throws SQLException {
+    public final RecordHandler<R> into(RecordHandler<R> handler) throws SQLException {
         for (R record : this) {
-            target.next(record);
+            handler.next(record);
         }
 
-        return target;
+        return handler;
     }
 
     // -------------------------------------------------------------------------

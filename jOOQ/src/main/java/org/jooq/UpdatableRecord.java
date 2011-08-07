@@ -119,7 +119,7 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
      * @throws SQLException
-     * @see {@link #storeUsing(TableField...)}
+     * @see #storeUsing(TableField...)
      */
     int store() throws SQLException;
 
@@ -138,7 +138,7 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      * @return <code>1</code> if the record was deleted from the database.
      *         <code>0</code> if deletion was not necessary.
      * @throws SQLException
-     * @see {@link #deleteUsing(TableField...)}
+     * @see #deleteUsing(TableField...)
      */
     int delete() throws SQLException;
 

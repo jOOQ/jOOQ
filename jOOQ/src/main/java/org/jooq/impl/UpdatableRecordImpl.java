@@ -67,7 +67,8 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
     /**
      * @deprecated - 1.6.4 [#789] - Create attached records using
      *             {@link Factory#newRecord(Table)} instead. Detached records
-     *             can be created using {@link #TableRecordImpl(Table)}
+     *             can be created using
+     *             {@link #UpdatableRecordImpl(UpdatableTable)}
      */
     @Deprecated
     public UpdatableRecordImpl(UpdatableTable<R> table, Configuration configuration) {

@@ -57,7 +57,7 @@ public class RecordImpl extends AbstractRecord {
     /**
      * @deprecated - 1.6.4 [#789] - Create attached records using
      *             {@link Factory#newRecord(Table)} instead. Detached records
-     *             can be created using {@link #TableRecordImpl(Table)}
+     *             can be created using {@link #RecordImpl(FieldProvider)}
      */
     @Deprecated
     public RecordImpl(FieldProvider fields, Configuration configuration) {

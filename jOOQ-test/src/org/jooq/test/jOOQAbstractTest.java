@@ -149,25 +149,31 @@ public abstract class jOOQAbstractTest<
         T639 extends UpdatableRecord<T639>,
         T785 extends TableRecord<T785>> {
 
-    private static final String       JDBC_SCHEMA   = "jdbc.Schema";
-    private static final String       JDBC_PASSWORD = "jdbc.Password";
-    private static final String       JDBC_USER     = "jdbc.User";
-    private static final String       JDBC_URL      = "jdbc.URL";
-    private static final String       JDBC_DRIVER   = "jdbc.Driver";
+    private static final String          JDBC_SCHEMA   = "jdbc.Schema";
+    private static final String          JDBC_PASSWORD = "jdbc.Password";
+    private static final String          JDBC_USER     = "jdbc.User";
+    private static final String          JDBC_URL      = "jdbc.URL";
+    private static final String          JDBC_DRIVER   = "jdbc.Driver";
 
-    protected static final JooqLogger log           = JooqLogger.getLogger(jOOQAbstractTest.class);
-    protected static final StopWatch  testSQLWatch  = new StopWatch();
-    protected static boolean          initialised;
-    protected static boolean          reset;
-    protected static Connection       connection;
-    protected static String           jdbcURL;
-    protected static String           jdbcSchema;
+    protected static final JooqLogger    log           = JooqLogger.getLogger(jOOQAbstractTest.class);
+    protected static final StopWatch     testSQLWatch  = new StopWatch();
+    protected static boolean             initialised;
+    protected static boolean             reset;
+    protected static Connection          connection;
+    protected static String              jdbcURL;
+    protected static String              jdbcSchema;
+    protected static Map<String, String> scripts       = new HashMap<String, String>();
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
-        File file = new File(getClass().getResource(script).toURI());
-        String allSQL = FileUtils.readFileToString(file);
-        testSQLWatch.splitDebug("Loaded SQL file");
+
+        String allSQL = scripts.get(script);
+        if (allSQL == null) {
+            File file = new File(getClass().getResource(script).toURI());
+            allSQL = FileUtils.readFileToString(file);
+            scripts.put(script, allSQL);
+            testSQLWatch.splitDebug("Loaded SQL file");
+        }
 
         for (String sql : allSQL.split("/")) {
             try {

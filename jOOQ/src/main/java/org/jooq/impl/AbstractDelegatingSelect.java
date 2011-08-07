@@ -197,7 +197,7 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     }
 
     @Override
-    public final RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException {
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException {
         return query.fetchInto(handler);
     }
 

@@ -2,6 +2,86 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.6.4
+=================================================================
+
+This release ships with a couple of useful concepts inspired by
+other frameworks. These are:
+
+- selecting into custom POJO's. Results can be mapped to POJO's
+  by convention or using JPA @Column annotations
+- selecting into custom callbacks. This is already a wide-spread
+  practice in Spring JdbcTemplates.
+- selecting long-running queries asynchronously. This idea has
+  been inspired by the Avajé Ebean framework
+
+Apart from these changes and some bugfixes, the internal API has
+been completely re-designed. The idea here is that query
+rendering and variable binding are even faster (less String
+objects), more extensible and more accurate. This is a pre-
+requisite for many future developments with even more complex SQL
+statements, such as for instance CTE's (Common Table Expressions)
+
+Features and improvements
+-------------------------
+#137 - Add support for asynchronous query execution using
+       FutureResult<R> ResultQuery.fetchLater() similar to 
+       Avajé Ebean
+#198 - Add SELECT INTO functionality into POJO's using 
+       <T> T ResultQuery.fetchInto(Class<T>) similar to JPA
+       CriteriaQuery
+#728 - Add .fetchInto(RecordHandler<R>) to ResultQuery, Result,
+       and Cursor to allow for callbacks similar to Spring's
+       JdbcTemplate/Ollin Framework
+#774 - Add more TRACE logging to .fetchLazy()
+#777 - CURSOR: Add function alias: UNNEST for TABLE
+#781 - Add E function (Euler number)
+#782 - Add <T> T Record.getValue(..., Class<? extends T>) methods
+       for convenient type conversion
+#785 - Allow for storing TableRecord with a provided Field<?>[]
+       indicating the primary key
+#786 - Document thread-safety facts in Factory Javadoc
+#788 - Add Key.getFieldsArray() convenience method
+#793 - Add support for Oracle's SYS_CONNECT_BY_PATH function
+
+API changes (backwards-incompatible)
+------------------------------------
+#758 - Change internal QueryPart rendering and binding API to use
+       Configuration and Context as callback parameters. If you
+       use CustomField or CustomCondition, please correct your
+       implementations accordingly. Other parts of the API should
+       not be affected
+#778 - Purge deprecated API, deprecation prior to jOOQ 1.5.7
+#790 - Purge deprecated generated code, deprecation prior to
+       jOOQ 1.5.7
+
+API changes (previous API now deprecated)
+-----------------------------------------
+#776 - Deprecate QueryPart.getSQL(), add Query.getSQL()
+#789 - Deprecate Record constructors with Configuration
+       parameter
+
+Test cases
+----------
+#636 - Add integration tests for more advanced CONNECT BY
+       example
+#772 - Add integration tests for selecting cartesian products
+       (several tables in FROM clause)
+
+Bug fixes
+---------
+#730 - Sybase cannot bind null values in plain SQL
+#759 - Omit the TOP 100 PERCENT clause in SQL Server ordered
+       top-level queries
+#767 - An empty Java package is generated for PL/SQL packages 
+       containing underscores
+#771 - Some exotic literals are not properly escaped with quotes
+       yet, e.g. UDT identifiers, VARRAY types, etc.
+#775 - Automatic re-attaching after deserialisation does not work
+       when used with .fetchLazy()
+#787 - The UpdatableRecord's internal changed flags are not
+       updated after INSERTs / UPDATEs
+
 Version 1.6.3
 =================================================================
 
@@ -38,9 +118,6 @@ API changes (backwards-incompatible)
        to Byte/Short/Integer/Long/BigInteger instead of
        BigDecimal in generated source code. Re-generated code
        will not be compatible!
-
-API changes (backwards-compatible)
-----------------------------------
 
 API changes (previous API now deprecated)
 -----------------------------------------
@@ -1190,5 +1267,5 @@ Features
 #7 - Implement ant task for code generation
 
 Version 1.0.0
-=================================================================
+================================================================================
 Initial Release

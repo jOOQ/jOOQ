@@ -109,6 +109,7 @@
 					<maxmemory>512</maxmemory>
 					<encoding>UTF-8</encoding>
 					<show>protected</show>
+					<notree>true</notree>
 				</configuration>
 			</plugin>
 

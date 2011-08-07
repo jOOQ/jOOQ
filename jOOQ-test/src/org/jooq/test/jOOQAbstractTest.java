@@ -3733,16 +3733,37 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testCrossJoin() throws Exception {
+        Result<Record> result;
+
+        // Using the CROSS JOIN clause
         assertEquals(Integer.valueOf(8),
         create().select(create().count())
                 .from(TAuthor())
                 .crossJoin(TBook())
                 .fetchOne(0));
 
-        Result<Record> result =
+        result =
         create().select()
                 .from(create().select(val(1).cast(Integer.class).as("a")))
                 .crossJoin(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch();
+
+        assertEquals(Integer.valueOf(1), result.getValue(0, 0));
+        assertEquals(Integer.valueOf(1), result.getValue(0, 1));
+        assertEquals(Integer.valueOf(1), result.getValue(1, 0));
+        assertEquals(Integer.valueOf(2), result.getValue(1, 1));
+
+
+        // [#772] Using the FROM clause for regular cartesian products
+        assertEquals(Integer.valueOf(8),
+        create().select(create().count())
+                .from(TAuthor(), TBook())
+                .fetchOne(0));
+
+        result =
+        create().select()
+                .from(create().select(val(1).cast(Integer.class).as("a")), TAuthor())
                 .orderBy(TAuthor_ID())
                 .fetch();
 

@@ -13,7 +13,7 @@ other frameworks. These are:
 - selecting into custom callbacks. This is already a wide-spread
   practice in Spring JdbcTemplates.
 - selecting long-running queries asynchronously. This idea has
-  been inspired by the Avajé Ebean framework
+  been inspired by the Avaje Ebean framework
 
 Apart from these changes and some bugfixes, the internal API has
 been completely re-designed. The idea here is that query
@@ -26,7 +26,7 @@ Features and improvements
 -------------------------
 #137 - Add support for asynchronous query execution using
        FutureResult<R> ResultQuery.fetchLater() similar to 
-       Avajé Ebean
+       Avaje Ebean
 #198 - Add SELECT INTO functionality into POJO's using 
        <T> T ResultQuery.fetchInto(Class<T>) similar to JPA
        CriteriaQuery

@@ -340,12 +340,12 @@ public interface ResultQuery<R extends Record> extends Query {
     <E> List<E> fetchInto(Class<? extends E> type) throws SQLException;
 
     /**
-     * Fetch results into a custom target callback
+     * Fetch results into a custom handler callback
      *
-     * @param target The target callback
-     * @return Convenience result, returning the parameter target itself
+     * @param handler The handler callback
+     * @return Convenience result, returning the parameter handler itself
      */
-    RecordTarget<R> fetchInto(RecordTarget<R> target) throws SQLException;
+    RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException;
 
     /**
      * Fetch results asynchronously.

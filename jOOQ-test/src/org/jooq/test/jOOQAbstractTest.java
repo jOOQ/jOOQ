@@ -98,7 +98,7 @@ import org.jooq.MergeFinalStep;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
-import org.jooq.RecordTarget;
+import org.jooq.RecordHandler;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -2292,7 +2292,7 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testFetchIntoRecordTarget() throws Exception {
+    public void testFetchIntoRecordHandler() throws Exception {
 
         // Test a simple query with typed records
         // --------------------------------------
@@ -2304,7 +2304,7 @@ public abstract class jOOQAbstractTest<
 
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
-                .fetchInto(new RecordTarget<B>() {
+                .fetchInto(new RecordHandler<B>() {
                     @Override
                     public void next(B record) {
                         assertEquals(ids.poll(), record.getValue(TBook_ID()));
@@ -2323,7 +2323,7 @@ public abstract class jOOQAbstractTest<
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
                 .fetchLazy()
-                .fetchInto(new RecordTarget<B>() {
+                .fetchInto(new RecordHandler<B>() {
                     @Override
                     public void next(B record) {
                         assertEquals(ids.poll(), record.getValue(TBook_ID()));
@@ -2346,7 +2346,7 @@ public abstract class jOOQAbstractTest<
                 .from(TBook())
                 .groupBy(TBook_AUTHOR_ID())
                 .orderBy(TBook_AUTHOR_ID())
-                .fetchInto(new RecordTarget<Record>() {
+                .fetchInto(new RecordHandler<Record>() {
                     @Override
                     public void next(Record record) {
                         assertEquals(authorIDs.poll(), record.getValue(TBook_AUTHOR_ID()));

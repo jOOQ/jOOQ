@@ -13,7 +13,7 @@
     
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-meta</artifactId>
-	<version>${jooq.version}</version>
+	<version>1.6.4</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ Meta</name>

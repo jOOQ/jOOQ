@@ -74,6 +74,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.h2.H2DataType;
 
 /**
@@ -87,6 +88,7 @@ public class jOOQH2Test extends jOOQAbstractTest<
         TBookStoreRecord,
         VLibraryRecord,
         TArraysRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -311,6 +313,31 @@ public class jOOQH2Test extends jOOQAbstractTest<
     }
 
     @Override
+    protected UpdatableTable<XUnusedRecord> TDirectory() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Byte> TDirectory_IS_DIRECTORY() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
+        return null;
+    }
+
+    @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
         return Functions.fAuthorExists(authorName);
     }
@@ -404,6 +431,11 @@ public class jOOQH2Test extends jOOQAbstractTest<
     @Override
     protected boolean supportsReferences() {
         return true;
+    }
+
+    @Override
+    protected boolean supportsRecursiveQueries() {
+        return false;
     }
 
     @Override

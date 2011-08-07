@@ -42,6 +42,7 @@ import static org.jooq.test.oracle.generatedclasses.tables.VBook.V_BOOK;
 
 import java.sql.Date;
 import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -63,6 +64,7 @@ import org.jooq.test.oracle.generatedclasses.tables.TArrays;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 import org.jooq.test.oracle.generatedclasses.tables.TBookStore;
+import org.jooq.test.oracle.generatedclasses.tables.TDirectory;
 import org.jooq.test.oracle.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.oracle.generatedclasses.tables.T_658Ref;
 import org.jooq.test.oracle.generatedclasses.tables.T_725LobTest;
@@ -73,6 +75,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.oracle.generatedclasses.tables.records.TDirectoryRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_725LobTestRecord;
@@ -104,6 +107,7 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         TBookStoreRecord,
         VLibraryRecord,
         TArraysRecord,
+        TDirectoryRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -346,6 +350,31 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected UpdatableTable<TDirectoryRecord> TDirectory() {
+        return TDirectory.T_DIRECTORY;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, Integer> TDirectory_ID() {
+        return TDirectory.ID;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, Integer> TDirectory_PARENT_ID() {
+        return TDirectory.PARENT_ID;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, Byte> TDirectory_IS_DIRECTORY() {
+        return TDirectory.IS_DIRECTORY;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
+        return TDirectory.NAME;
+    }
+
+    @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
         return Functions.fAuthorExists(authorName);
     }
@@ -445,6 +474,11 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected boolean supportsRecursiveQueries() {
+        return true;
+    }
+
+    @Override
     protected Class<?> cFunctions() {
         return Functions.class;
     }
@@ -482,13 +516,12 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         };
     }
 
-
     // -------------------------------------------------------------------------
     // Oracle-specific tests
     // -------------------------------------------------------------------------
 
     @Test
-    public void testOracleConnectBy() throws Exception {
+    public void testOracleConnectBySimple() throws Exception {
         OracleFactory ora = new OracleFactory(create().getConnection(), create().getSchemaMapping());
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
@@ -529,5 +562,47 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals(Boolean.FALSE, result.getValue(0, ora.connectByIsCycle()));
         assertEquals(Boolean.FALSE, result.getValue(1, ora.connectByIsCycle()));
         assertEquals(Boolean.FALSE, result.getValue(2, ora.connectByIsCycle()));
+    }
+
+    @Test
+    public void testOracleConnectByDirectory() throws Exception {
+        OracleFactory ora = new OracleFactory(create().getConnection(), create().getSchemaMapping());
+
+        List<?> paths =
+        ora.select(ora.sysConnectByPath(TDirectory_NAME(), "/").substring(2))
+           .from(TDirectory())
+           .connectBy(ora.prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
+           .startWith(TDirectory_PARENT_ID().isNull())
+           .orderBy(ora.literal(1))
+           .fetch(0);
+
+        assertEquals(26, paths.size());
+        assertEquals(Arrays.asList(
+            "C:",
+            "C:/eclipse",
+            "C:/eclipse/configuration",
+            "C:/eclipse/dropins",
+            "C:/eclipse/eclipse.exe",
+            "C:/eclipse/eclipse.ini",
+            "C:/eclipse/features",
+            "C:/eclipse/plugins",
+            "C:/eclipse/p2",
+            "C:/eclipse/readme",
+            "C:/eclipse/readme/readme_eclipse.html",
+            "C:/eclipse/src",
+            "C:/Program Files",
+            "C:/Program Files/Internet Explorer",
+            "C:/Program Files/Internet Explorer/de-DE",
+            "C:/Program Files/Internet Explorer/ielowutil.exe",
+            "C:/Program Files/Internet Explorer/iexplore.exe",
+            "C:/Program Files/Java",
+            "C:/Program Files/Java/jre6",
+            "C:/Program Files/Java/jre6/bin",
+            "C:/Program Files/Java/jre6/bin/java.exe",
+            "C:/Program Files/Java/jre6/bin/javaw.exe",
+            "C:/Program Files/Java/jre6/bin/javaws.exe",
+            "C:/Program Files/Java/jre6/lib",
+            "C:/Program Files/Java/jre6/lib/javaws.jar",
+            "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
     }
 }

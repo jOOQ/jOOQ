@@ -11,6 +11,7 @@ DELETE FROM t_book_store/
 DELETE FROM t_book/
 DELETE FROM t_author/
 DELETE FROM t_language/
+DELETE FROM t_directory/
 
 DROP SEQUENCE s_author_id/
 CREATE SEQUENCE s_author_id/
@@ -64,3 +65,30 @@ INSERT INTO t_arrays VALUES (1, null, null, null, null)/
 INSERT INTO t_arrays VALUES (2, u_string_array(), u_number_array(), u_number_long_array(), u_date_array())/
 INSERT INTO t_arrays VALUES (3, u_string_array('a'), u_number_array(1), u_number_long_array(1), u_date_array(TO_DATE('1981-07-10', 'YYYY-MM-DD')))/
 INSERT INTO t_arrays VALUES (4, u_string_array('a', 'b'), u_number_array(1, 2), u_number_long_array(1, 2), u_date_array(TO_DATE('1981-07-10', 'YYYY-MM-DD'), TO_DATE('2000-01-01', 'YYYY-MM-DD')))/
+
+INSERT INTO t_directory VALUES                     ( 1, null, 1, 'C:')/
+	INSERT INTO t_directory VALUES                 ( 2,    1, 1, 'eclipse')/
+		INSERT INTO t_directory VALUES             ( 3,    2, 1, 'configuration')/
+		INSERT INTO t_directory VALUES             ( 4,    2, 1, 'dropins')/
+		INSERT INTO t_directory VALUES             ( 5,    2, 1, 'features')/
+		INSERT INTO t_directory VALUES             ( 6,    2, 1, 'p2')/
+		INSERT INTO t_directory VALUES             ( 7,    2, 1, 'plugins')/
+		INSERT INTO t_directory VALUES             ( 8,    2, 1, 'readme')/
+			INSERT INTO t_directory VALUES         ( 9,    8, 0, 'readme_eclipse.html')/
+		INSERT INTO t_directory VALUES             (10,    2, 1, 'src')/
+		INSERT INTO t_directory VALUES             (11,    2, 0, 'eclipse.exe')/
+		INSERT INTO t_directory VALUES             (12,    2, 0, 'eclipse.ini')/
+	INSERT INTO t_directory VALUES                 (13,    1, 1, 'Program Files')/
+		INSERT INTO t_directory VALUES             (14,   13, 1, 'Internet Explorer')/
+			INSERT INTO t_directory VALUES         (15,   14, 1, 'de-DE')/
+			INSERT INTO t_directory VALUES         (16,   14, 0, 'ielowutil.exe')/
+			INSERT INTO t_directory VALUES         (17,   14, 0, 'iexplore.exe')/
+		INSERT INTO t_directory VALUES             (18,   13, 1, 'Java')/
+			INSERT INTO t_directory VALUES         (19,   18, 1, 'jre6')/
+				INSERT INTO t_directory VALUES     (20,   19, 1, 'bin')/
+					INSERT INTO t_directory VALUES (21,   20, 0, 'java.exe')/
+					INSERT INTO t_directory VALUES (22,   20, 0, 'javaw.exe')/
+					INSERT INTO t_directory VALUES (23,   20, 0, 'javaws.exe')/
+				INSERT INTO t_directory VALUES     (24,   19, 1, 'lib')/
+					INSERT INTO t_directory VALUES (25,   24, 0, 'javaws.jar')/
+					INSERT INTO t_directory VALUES (26,   24, 0, 'rt.jar')/

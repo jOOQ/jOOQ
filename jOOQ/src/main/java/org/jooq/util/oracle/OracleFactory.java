@@ -105,7 +105,7 @@ public class OracleFactory extends Factory {
 
     /**
      * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
-     * for <code>CONNECT BY</code> clauses)
+     * along with <code>CONNECT BY</code> clauses)
      */
     public final Field<Integer> level() {
         return field("level", Integer.class);
@@ -113,7 +113,7 @@ public class OracleFactory extends Factory {
 
     /**
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
-     * (to be used for <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses)
      */
     public final Field<Boolean> connectByIsCycle() {
         return field("connect_by_iscycle", Boolean.class);
@@ -121,15 +121,25 @@ public class OracleFactory extends Factory {
 
     /**
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
-     * (to be used for <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses)
      */
     public final Field<Boolean> connectByIsLeaf() {
         return field("connect_by_isleaf", Boolean.class);
     }
 
     /**
+     * Retrieve the Oracle-specific
+     * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
+     * along with <code>CONNECT BY</code> clauses).
+     */
+    public final Field<String> sysConnectByPath(Field<?> field, String separator) {
+        String escaped = "'" + separator.replace("'", "''") + "'";
+        return function("sys_connect_by_path", String.class, field, literal(escaped));
+    }
+
+    /**
      * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
-     * (to be used for <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses)
      */
     public final <T> Field<T> prior(Field<T> field) {
         return new Prior<T>(field);

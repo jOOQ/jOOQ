@@ -82,6 +82,7 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
         TBookStoreRecord,
         VLibraryRecord,
         XUnusedRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -299,6 +300,36 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected UpdatableTable<XUnusedRecord> TDirectory() {
+        return null;
+    }
+
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
+        return null;
+    }
+
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
+        return null;
+    }
+
+
+    @Override
+    protected TableField<XUnusedRecord, Byte> TDirectory_IS_DIRECTORY() {
+        return null;
+    }
+
+
+    @Override
+    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
+        return null;
+    }
+
+
+    @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
         return Functions.fAuthorExists(authorName);
     }
@@ -395,6 +426,11 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     @Override
     protected boolean supportsReferences() {
         return true;
+    }
+
+    @Override
+    protected boolean supportsRecursiveQueries() {
+        return false;
     }
 
     @Override

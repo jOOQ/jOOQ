@@ -143,6 +143,7 @@ public abstract class jOOQAbstractTest<
         S extends UpdatableRecord<S>,
         L extends TableRecord<L>,
         X extends TableRecord<X>,
+        D extends UpdatableRecord<D>,
         T658 extends TableRecord<T658>,
         T725 extends UpdatableRecord<T725>,
         T639 extends UpdatableRecord<T639>,
@@ -428,6 +429,12 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<L, String> VLibrary_TITLE();
     protected abstract TableField<L, String> VLibrary_AUTHOR();
 
+    protected abstract UpdatableTable<D> TDirectory();
+    protected abstract TableField<D, Integer> TDirectory_ID();
+    protected abstract TableField<D, Integer> TDirectory_PARENT_ID();
+    protected abstract TableField<D, Byte> TDirectory_IS_DIRECTORY();
+    protected abstract TableField<D, String> TDirectory_NAME();
+
     protected abstract Field<? extends Number> FAuthorExistsField(String authorName);
     protected abstract Field<? extends Number> FOneField();
     protected abstract Field<? extends Number> FNumberField(Number n);
@@ -445,6 +452,7 @@ public abstract class jOOQAbstractTest<
 
     protected abstract boolean supportsOUTParameters();
     protected abstract boolean supportsReferences();
+    protected abstract boolean supportsRecursiveQueries();
     protected abstract Class<?> cProcedures();
     protected abstract Class<?> cFunctions();
     protected abstract Class<?> cLibrary();
@@ -908,6 +916,12 @@ public abstract class jOOQAbstractTest<
             }
 
             int tables = 15;
+
+            // The additional T_DIRECTORY table for recursive queries
+            if (supportsRecursiveQueries()) {
+                tables++;
+            }
+
             if (TArrays() == null) {
                 assertEquals(tables, schema.getTables().size());
             }

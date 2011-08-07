@@ -9,6 +9,7 @@ DROP TABLE t_book/
 DROP TABLE t_book_details/
 DROP TABLE t_author/
 DROP TABLE t_language/
+DROP TABLE t_directory/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
 DROP TABLE x_test_case_85/
@@ -89,6 +90,17 @@ CREATE TYPE u_address_type AS OBJECT (
 )
 /
 
+CREATE TABLE t_directory (
+  id           number(7) NOT NULL,
+  parent_id    number(7),
+  is_directory number(1),
+  "name"       varchar2(50),
+
+  CONSTRAINT pk_t_directory PRIMARY KEY (ID),
+  CONSTRAINT pk_t_directory_self FOREIGN KEY (PARENT_ID) REFERENCES t_directory(ID)
+)
+/
+
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,
   description VARCHAR2(50),
@@ -98,14 +110,10 @@ CREATE TABLE t_language (
   CONSTRAINT pk_t_language PRIMARY KEY (ID)
 )
 /
-COMMENT ON TABLE t_language IS 'An entity holding language master data'
-/
-COMMENT ON COLUMN t_language.id IS 'The language ID'
-/
-COMMENT ON COLUMN t_language.cd IS 'The language ISO code'
-/
-COMMENT ON COLUMN t_language.description IS 'The language description'
-/
+COMMENT ON TABLE t_language IS 'An entity holding language master data'/
+COMMENT ON COLUMN t_language.id IS 'The language ID'/
+COMMENT ON COLUMN t_language.cd IS 'The language ISO code'/
+COMMENT ON COLUMN t_language.description IS 'The language description'/
 
 CREATE TABLE t_658_11 (
   id CHAR(3) NOT NULL,
@@ -195,20 +203,13 @@ CREATE TABLE t_author (
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
 /
-COMMENT ON TABLE t_author IS 'An entity holding authors of books'
-/
-COMMENT ON COLUMN t_author.id IS 'The author ID'
-/
-COMMENT ON COLUMN t_author.first_name IS 'The author''s first name'
-/
-COMMENT ON COLUMN t_author.last_name IS 'The author''s last name'
-/
-COMMENT ON COLUMN t_author.date_of_birth IS 'The author''s date of birth'
-/
-COMMENT ON COLUMN t_author.year_of_birth IS 'The author''s year of birth'
-/
-COMMENT ON COLUMN t_author.address IS 'The author''s address'
-/
+COMMENT ON TABLE t_author IS 'An entity holding authors of books'/
+COMMENT ON COLUMN t_author.id IS 'The author ID'/
+COMMENT ON COLUMN t_author.first_name IS 'The author''s first name'/
+COMMENT ON COLUMN t_author.last_name IS 'The author''s last name'/
+COMMENT ON COLUMN t_author.date_of_birth IS 'The author''s date of birth'/
+COMMENT ON COLUMN t_author.year_of_birth IS 'The author''s year of birth'/
+COMMENT ON COLUMN t_author.address IS 'The author''s address'/
 
 CREATE TABLE t_book_details (
   ID NUMBER(7),
@@ -237,22 +238,14 @@ CREATE TABLE t_book (
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
 )
 /
-COMMENT ON TABLE t_book IS 'An entity holding books'
-/
-COMMENT ON COLUMN t_book.id IS 'The book ID'
-/
-COMMENT ON COLUMN t_book.author_id IS 'The author ID in entity ''author'''
-/
-COMMENT ON COLUMN t_book.title IS 'The book''s title'
-/
-COMMENT ON COLUMN t_book.published_in IS  'The year the book was published in'
-/
-COMMENT ON COLUMN t_book.language_id IS  'The language of the book'
-/
-COMMENT ON COLUMN t_book.content_text IS 'Some textual content of the book'
-/
-COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'
-/
+COMMENT ON TABLE t_book IS 'An entity holding books'/
+COMMENT ON COLUMN t_book.id IS 'The book ID'/
+COMMENT ON COLUMN t_book.author_id IS 'The author ID in entity ''author'''/
+COMMENT ON COLUMN t_book.title IS 'The book''s title'/
+COMMENT ON COLUMN t_book.published_in IS  'The year the book was published in'/
+COMMENT ON COLUMN t_book.language_id IS  'The language of the book'/
+COMMENT ON COLUMN t_book.content_text IS 'Some textual content of the book'/
+COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'/
 
 
 CREATE TABLE t_book_store (
@@ -281,14 +274,10 @@ CREATE TABLE t_book_to_book_store (
                              ON DELETE CASCADE
 )
 /
-COMMENT ON TABLE t_book_to_book_store IS 'An m:n relation between books and book stores'
-/
-COMMENT ON COLUMN t_book_to_book_store.book_store_name IS 'The book store name'
-/
-COMMENT ON COLUMN t_book_to_book_store.book_id IS 'The book ID'
-/
-COMMENT ON COLUMN t_book_to_book_store.stock IS 'The number of books on stock'
-/
+COMMENT ON TABLE t_book_to_book_store IS 'An m:n relation between books and book stores'/
+COMMENT ON COLUMN t_book_to_book_store.book_store_name IS 'The book store name'/
+COMMENT ON COLUMN t_book_to_book_store.book_id IS 'The book ID'/
+COMMENT ON COLUMN t_book_to_book_store.stock IS 'The number of books on stock'/
 
 
 CREATE TABLE t_arrays (

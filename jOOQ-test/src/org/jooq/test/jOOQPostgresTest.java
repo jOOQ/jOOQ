@@ -74,6 +74,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
 import org.jooq.test.postgres.generatedclasses.udt.UStreetType;
 import org.jooq.util.postgres.PostgresDataType;
@@ -88,6 +89,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
         TBookStoreRecord,
         VLibraryRecord,
         TArraysRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -309,6 +311,31 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected UpdatableTable<XUnusedRecord> TDirectory() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Byte> TDirectory_IS_DIRECTORY() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
+        return null;
+    }
+
+    @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
         return Functions.fAuthorExists(authorName);
     }
@@ -399,6 +426,11 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
     @Override
     protected boolean supportsReferences() {
         return true;
+    }
+
+    @Override
+    protected boolean supportsRecursiveQueries() {
+        return false;
     }
 
     @Override

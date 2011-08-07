@@ -60,6 +60,7 @@ import org.jooq.test.oracle.generatedclasses.Sequences;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 import org.jooq.test.oracle.generatedclasses.tables.TBookStore;
+import org.jooq.test.oracle.generatedclasses.tables.TDirectory;
 import org.jooq.test.oracle.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.oracle.generatedclasses.tables.T_658Ref;
 import org.jooq.test.oracle.generatedclasses.tables.T_725LobTest;
@@ -69,6 +70,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.oracle.generatedclasses.tables.records.TDirectoryRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_725LobTestRecord;
@@ -84,6 +86,7 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
         TBookStoreRecord,
         VLibraryRecord,
         TArraysRecord,
+        TDirectoryRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -307,6 +310,31 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     }
 
     @Override
+    protected UpdatableTable<TDirectoryRecord> TDirectory() {
+        return TDirectory.T_DIRECTORY;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, Integer> TDirectory_ID() {
+        return TDirectory.ID;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, Integer> TDirectory_PARENT_ID() {
+        return TDirectory.PARENT_ID;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, Byte> TDirectory_IS_DIRECTORY() {
+        return TDirectory.IS_DIRECTORY;
+    }
+
+    @Override
+    protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
+        return TDirectory.NAME;
+    }
+
+    @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
         return Functions.fAuthorExists(authorName);
     }
@@ -395,6 +423,11 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     @Override
     protected boolean supportsReferences() {
         return true;
+    }
+
+    @Override
+    protected boolean supportsRecursiveQueries() {
+        return false;
     }
 
     @Override

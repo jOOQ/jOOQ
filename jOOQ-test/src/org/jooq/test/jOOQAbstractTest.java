@@ -61,6 +61,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -2039,6 +2040,45 @@ public abstract class jOOQAbstractTest<
 
                 break;
             }
+        }
+    }
+
+    @Test
+    public void testLargeINCondition() throws Exception {
+        Field<Integer> count = create().count();
+        assertEquals(1, (int) create().select(count)
+                                      .from(TBook())
+                                      .where(TBook_ID().in(Collections.nCopies(999, 1)))
+                                      .fetchOne(count));
+
+        switch (getDialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "SQLite can't handle more than 999 variables");
+                break;
+
+            default:
+                assertEquals(1, (int) create().select(count)
+                    .from(TBook())
+                    .where(TBook_ID().in(Collections.nCopies(1000, 1)))
+                    .fetchOne(count));
+
+                assertEquals(1, (int) create().select(count)
+                    .from(TBook())
+                    .where(TBook_ID().in(Collections.nCopies(1001, 1)))
+                    .fetchOne(count));
+
+                // SQL Server's is at 2100...
+                assertEquals(1, (int) create().select(count)
+                    .from(TBook())
+                    .where(TBook_ID().in(Collections.nCopies(2222, 1)))
+                    .fetchOne(count));
+
+                assertEquals(3, (int) create().select(count)
+                    .from(TBook())
+                    .where(TBook_ID().notIn(Collections.nCopies(2050, 1)))
+                    .fetchOne(count));
+
+                break;
         }
     }
 

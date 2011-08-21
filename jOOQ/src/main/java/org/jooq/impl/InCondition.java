@@ -38,6 +38,7 @@ package org.jooq.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -51,6 +52,7 @@ import org.jooq.RenderContext;
 class InCondition<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -1653924248576930761L;
+    private static final int  IN_LIMIT         = 1000;
 
     private final Field<T>    field;
     private final Field<?>[]  values;
@@ -79,13 +81,52 @@ class InCondition<T> extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
+        List<Field<?>> list = Arrays.asList(values);
+
+        if (list.size() > IN_LIMIT) {
+            // [#798] Oracle and some other dialects can only hold 1000 values
+            // in an IN (...) clause
+            switch (context.getDialect()) {
+                case ORACLE:
+                case INGRES:
+                case SQLSERVER: {
+                    context.sql("(");
+
+                    for (int i = 0; i < list.size(); i += IN_LIMIT) {
+                        if (i > 0) {
+                            context.sql(" or ");
+                        }
+
+                        toSQLSubValues(context, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
+                    }
+
+                    context.sql(")");
+                    break;
+                }
+
+                // Most dialects can handle larger lists
+                default: {
+                    toSQLSubValues(context, list);
+                    break;
+                }
+            }
+        }
+        else {
+            toSQLSubValues(context, list);
+        }
+    }
+
+    /**
+     * Render the SQL for a sub-set of the <code>IN</code> clause's values
+     */
+    private void toSQLSubValues(RenderContext context, List<Field<?>> subValues) {
         context.sql(field)
                .sql(" ")
                .sql(operator.toSQL())
                .sql(" (");
 
         String separator = "";
-        for (Field<?> value : values) {
+        for (Field<?> value : subValues) {
             context.sql(separator);
             context.sql(value);
 

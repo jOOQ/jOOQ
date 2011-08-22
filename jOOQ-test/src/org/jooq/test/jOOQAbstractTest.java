@@ -94,6 +94,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
+import org.jooq.Loader;
 import org.jooq.MasterDataType;
 import org.jooq.MergeFinalStep;
 import org.jooq.QueryPart;
@@ -6552,6 +6553,156 @@ public abstract class jOOQAbstractTest<
 
         assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch().equals(
                     create().select(TBook_TITLE(), TBook_ID()).from(TBook()).fetch()));
+    }
+
+    @Test
+    public void testLoader() throws Exception {
+        Field<Integer> count = create().count();
+
+        // Empty CSV file
+        // --------------
+        Loader<A> loader =
+        create().loadInto(TAuthor())
+                .loadCSV("")
+                .fields(TAuthor_ID())
+                .execute();
+
+        assertEquals(0, loader.processed());
+        assertEquals(0, loader.errors().size());
+        assertEquals(0, loader.stored());
+        assertEquals(0, loader.ignored());
+        assertEquals(2, (int) create().select(count).from(TAuthor()).fetchOne(count));
+
+        // Constraint violations (LAST_NAME is NOT NULL)
+        // Loading is aborted
+        // ---------------------------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .loadCSV(
+                    "3\n" +
+                    "4")
+                .fields(TAuthor_ID())
+                .ignoreRows(0)
+                .execute();
+
+        assertEquals(1, loader.processed());
+        assertEquals(1, loader.errors().size());
+        assertNotNull(loader.errors().get(0));
+        assertEquals(0, loader.stored());
+        assertEquals(1, loader.ignored());
+        assertEquals(2, (int) create().select(count).from(TAuthor()).fetchOne(count));
+
+        // Constraint violations (LAST_NAME is NOT NULL)
+        // Errors are ignored
+        // ---------------------------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .onErrorIgnore()
+                .loadCSV(
+                    "3\n" +
+                    "4")
+                .fields(TAuthor_ID())
+                .ignoreRows(0)
+                .execute();
+
+        assertEquals(2, loader.processed());
+        assertEquals(2, loader.errors().size());
+        assertNotNull(loader.errors().get(0));
+        assertNotNull(loader.errors().get(1));
+        assertEquals(0, loader.stored());
+        assertEquals(2, loader.ignored());
+        assertEquals(2, (int) create().select(count).from(TAuthor()).fetchOne(count));
+
+        // Constraint violations (Duplicate records)
+        // Loading is aborted
+        // -----------------------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .onDuplicateKeyError()
+                .onErrorAbort()
+                .loadCSV(
+                    "1;'Kafka'\n" +
+                    "2;Frisch")
+                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                .quote('\'')
+                .separator(';')
+                .ignoreRows(0)
+                .execute();
+
+        assertEquals(1, loader.processed());
+        assertEquals(1, loader.errors().size());
+        assertNotNull(loader.errors().get(0));
+        assertEquals(0, loader.stored());
+        assertEquals(1, loader.ignored());
+        assertEquals(2, (int) create().select(count).from(TAuthor()).fetchOne(count));
+
+        // Constraint violations (Duplicate records)
+        // Errors are ignored
+        // -----------------------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .onDuplicateKeyIgnore()
+                .onErrorAbort()
+                .loadCSV(
+                    "1,\"Kafka\"\n" +
+                    "2,Frisch")
+                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                .ignoreRows(0)
+                .execute();
+
+        assertEquals(2, loader.processed());
+        assertEquals(0, loader.errors().size());
+        assertEquals(2, loader.ignored());
+        assertEquals(2, (int) create().select(count).from(TAuthor()).fetchOne(count));
+
+        // Two records
+        // -----------
+        loader =
+        create().loadInto(TAuthor())
+                .loadCSV(
+                    "####Some Data####\n" +
+                    "\"ID\",\"Last Name\"\r" +
+                    "3,Hesse\n" +
+                    "4,Frisch")
+                .fields(TAuthor_ID(), TAuthor_LAST_NAME())
+                .quote('"')
+                .separator(',')
+                .ignoreRows(2)
+                .execute();
+
+        assertEquals(2, loader.processed());
+        assertEquals(2, loader.stored());
+        assertEquals(0, loader.ignored());
+        assertEquals(0, loader.errors().size());
+        assertEquals(2, (int) create().select(count)
+                                      .from(TAuthor())
+                                      .where(TAuthor_ID().in(3, 4))
+                                      .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                                      .fetchOne(count));
+
+        // Two records but don't load one column
+        // -------------------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .loadCSV(
+                    "\"ID\",\"First Name\",\"Last Name\"\r" +
+                    "5,Hermann,Hesse\n" +
+                    "6,\"Max\",Frisch")
+                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                .execute();
+
+        assertEquals(2, loader.processed());
+        assertEquals(2, loader.stored());
+        assertEquals(0, loader.ignored());
+        assertEquals(0, loader.errors().size());
+        assertEquals(2, (int) create().select(count)
+                                      .from(TAuthor())
+                                      .where(TAuthor_ID().in(5, 6))
+                                      .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                                      .fetchOne(count));
+
+        // TODO Add commit / rollback tests
+        // TODO Add onDuplicateKeyUpdate tests
     }
 
     /**

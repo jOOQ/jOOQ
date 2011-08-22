@@ -70,6 +70,7 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertSelectQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
+import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -196,6 +197,18 @@ public class Factory implements Configuration {
     @Override
     public final SchemaMapping getSchemaMapping() {
         return mapping;
+    }
+
+    // -------------------------------------------------------------------------
+    // Access to the loader API
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new <code>Loader</code> object to load data from a CSV or XML
+     * source
+     */
+    public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
+        return new LoaderImpl<R>(this, table);
     }
 
     // -------------------------------------------------------------------------

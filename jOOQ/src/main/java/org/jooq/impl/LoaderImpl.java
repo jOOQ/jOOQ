@@ -353,13 +353,13 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     insert.onDuplicateKeyUpdate(true);
 
                     for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && mainKey[i]) {
+                        if (i < fields.length && fields[i] != null && !mainKey[i]) {
                             insert.addValueForUpdate(fields[i], fields[i].getDataType().convert(row[i]));
                         }
                     }
                 }
 
-                // TODO: This can be implemented faster using a MERGE statements
+                // TODO: This can be implemented faster using a MERGE statement
                 // in some dialects
                 else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
                     SimpleSelectQuery<R> select = create.selectQuery(table);

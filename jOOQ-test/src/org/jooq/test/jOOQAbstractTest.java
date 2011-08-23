@@ -2071,7 +2071,7 @@ public abstract class jOOQAbstractTest<
                 // SQL Server's is at 2100...
                 assertEquals(1, (int) create().select(count)
                     .from(TBook())
-                    .where(TBook_ID().in(Collections.nCopies(2222, 1)))
+                    .where(TBook_ID().in(Collections.nCopies(2050, 1)))
                     .fetchOne(count));
 
                 assertEquals(3, (int) create().select(count)
@@ -6680,6 +6680,8 @@ public abstract class jOOQAbstractTest<
                                       .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
                                       .fetchOne(count));
 
+        assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(3, 4)).execute());
+
         // Two records but don't load one column
         // -------------------------------------
         loader =
@@ -6695,14 +6697,69 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, loader.stored());
         assertEquals(0, loader.ignored());
         assertEquals(0, loader.errors().size());
-        assertEquals(2, (int) create().select(count)
-                                      .from(TAuthor())
-                                      .where(TAuthor_ID().in(5, 6))
-                                      .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
-                                      .fetchOne(count));
+
+        Result<A> result =
+        create().selectFrom(TAuthor())
+                .where(TAuthor_ID().in(5, 6))
+                .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                .orderBy(TAuthor_ID())
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(5, (int) result.getValue(0, TAuthor_ID()));
+        assertEquals(6, (int) result.getValue(1, TAuthor_ID()));
+        assertEquals("Hesse", result.getValue(0, TAuthor_LAST_NAME()));
+        assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
+        assertEquals(null, result.getValue(0, TAuthor_FIRST_NAME()));
+        assertEquals(null, result.getValue(1, TAuthor_FIRST_NAME()));
+
+        assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(5, 6)).execute());
+
+        // Update duplicate records
+        // ------------------------
+        switch (getDialect()) {
+            case DERBY:
+            case H2:
+            case INGRES:
+            case POSTGRES:
+            case SQLITE:
+                // TODO [#558] Simulate this
+                log.info("SKIPPING", "Duplicate record insertion");
+                break;
+
+            default: {
+                loader =
+                create().loadInto(TAuthor())
+                        .onDuplicateKeyUpdate()
+                        .loadCSV(
+                            "\"ID\",\"First Name\",\"Last Name\"\r" +
+                            "1,Hermann,Hesse\n" +
+                            "7,\"Max\",Frisch")
+                        .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                        .execute();
+
+                assertEquals(2, loader.processed());
+                assertEquals(2, loader.stored());
+                assertEquals(0, loader.ignored());
+                assertEquals(0, loader.errors().size());
+
+                result =
+                create().selectFrom(TAuthor())
+                        .where(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
+                        .orderBy(TAuthor_ID())
+                        .fetch();
+
+                assertEquals(2, result.size());
+                assertEquals(1, (int) result.getValue(0, TAuthor_ID()));
+                assertEquals(7, (int) result.getValue(1, TAuthor_ID()));
+                assertEquals("Hesse", result.getValue(0, TAuthor_LAST_NAME()));
+                assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
+                assertEquals("George", result.getValue(0, TAuthor_FIRST_NAME()));
+                assertEquals(null, result.getValue(1, TAuthor_FIRST_NAME()));
+            }
+        }
 
         // TODO Add commit / rollback tests
-        // TODO Add onDuplicateKeyUpdate tests
     }
 
     /**

@@ -179,6 +179,7 @@ public abstract class jOOQAbstractTest<
     protected static boolean             initialised;
     protected static boolean             reset;
     protected static Connection          connection;
+    protected static boolean             autocommit;
     protected static String              jdbcURL;
     protected static String              jdbcSchema;
     protected static Map<String, String> scripts       = new HashMap<String, String>();
@@ -290,6 +291,7 @@ public abstract class jOOQAbstractTest<
     @Before
     public void setUp() throws Exception {
         connection = getConnection();
+        autocommit = connection.getAutoCommit();
 
         if (!initialised) {
             initialised = true;
@@ -304,6 +306,7 @@ public abstract class jOOQAbstractTest<
 
     @After
     public void tearDown() throws Exception {
+        connection.setAutoCommit(autocommit);
     }
 
     protected final void register(final Configuration configuration) {
@@ -6574,6 +6577,8 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLoader() throws Exception {
+        connection.setAutoCommit(false);
+
         Field<Integer> count = create().count();
 
         // Empty CSV file
@@ -6773,10 +6778,75 @@ public abstract class jOOQAbstractTest<
                 assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
                 assertEquals("George", result.getValue(0, TAuthor_FIRST_NAME()));
                 assertEquals(null, result.getValue(1, TAuthor_FIRST_NAME()));
+
+                assertEquals(1, create().delete(TAuthor()).where(TAuthor_ID().in(7)).execute());
             }
         }
 
-        // TODO Add commit / rollback tests
+        // Rollback on duplicate keys
+        // --------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .commitAll()
+                .onDuplicateKeyError()
+                .onErrorAbort()
+                .loadCSV(
+                    "\"ID\",\"First Name\",\"Last Name\"\r" +
+                    "8,Hermann,Hesse\n" +
+                    "1,\"Max\",Frisch\n" +
+                    "2,Friedrich,Dürrenmatt")
+                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                .execute();
+
+        assertEquals(2, loader.processed());
+        assertEquals(0, loader.stored());
+        assertEquals(1, loader.ignored());
+        assertEquals(1, loader.errors().size());
+        assertEquals(1, loader.errors().get(0).rowIndex());
+        assertEquals(
+            Arrays.asList("1", "Max", "Frisch"),
+            Arrays.asList(loader.errors().get(0).row()));
+
+        result =
+        create().selectFrom(TAuthor())
+                .where(TAuthor_ID().in(8))
+                .orderBy(TAuthor_ID())
+                .fetch();
+
+        assertEquals(0, result.size());
+
+        // Commit and ignore duplicates
+        // ----------------------------
+        loader =
+        create().loadInto(TAuthor())
+                .commitAll()
+                .onDuplicateKeyIgnore()
+                .onErrorAbort()
+                .loadCSV(
+                    "\"ID\",\"First Name\",\"Last Name\"\r" +
+                    "8,Hermann,Hesse\n" +
+                    "1,\"Max\",Frisch\n" +
+                    "2,Friedrich,Dürrenmatt")
+                .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
+                .execute();
+
+        assertEquals(3, loader.processed());
+        assertEquals(1, loader.stored());
+        assertEquals(2, loader.ignored());
+        assertEquals(0, loader.errors().size());
+
+        result =
+        create().selectFrom(TAuthor())
+                .where(TAuthor_ID().in(1, 2, 8))
+                .orderBy(TAuthor_ID())
+                .fetch();
+
+        assertEquals(3, result.size());
+        assertEquals(8, (int) result.getValue(2, TAuthor_ID()));
+        assertNull(result.getValue(2, TAuthor_FIRST_NAME()));
+        assertEquals("Hesse", result.getValue(2, TAuthor_LAST_NAME()));
+        assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
+        assertEquals("Orwell", result.getValue(0, TAuthor_LAST_NAME()));
     }
 
     /**

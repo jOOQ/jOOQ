@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import java.sql.Connection;
+
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
@@ -80,9 +82,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * in a later step of <code>Loader</code>, then loading is rollbacked on
      * abort.
      * <p>
-     * If you don't specify a behaviour, this will be
-     * the default. This cannot be combined with {@link #onDuplicateKeyIgnore()}
-     * or {@link #onDuplicateUpdate()}
+     * If you don't specify a behaviour, this will be the default. This cannot
+     * be combined with {@link #onDuplicateKeyIgnore()} or
+     * {@link #onDuplicateUpdate()}
      */
     LoaderOptionsStep<R> onDuplicateKeyError();
 
@@ -121,7 +123,10 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
-     * the database.
+     * the database. Use this on fresh transactions only. Commits/Rollbacks are
+     * executed directly upon {@link Configuration#getConnection()}. This might
+     * not work with container-managed transactions, or when
+     * {@link Connection#getAutoCommit()} is set to true.
      * <p>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
@@ -138,7 +143,10 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
-     * the database.
+     * the database. Use this on fresh transactions only. Commits/Rollbacks are
+     * executed directly upon {@link Configuration#getConnection()}. This might
+     * not work with container-managed transactions, or when
+     * {@link Connection#getAutoCommit()} is set to true.
      * <p>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
@@ -155,7 +163,10 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
-     * the database.
+     * the database. Use this on fresh transactions only. Commits/Rollbacks are
+     * executed directly upon {@link Configuration#getConnection()}. This might
+     * not work with container-managed transactions, or when
+     * {@link Connection#getAutoCommit()} is set to true.
      * <p>
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
@@ -170,7 +181,9 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * the database.
      * <p>
      * If you don't specify a COMMIT OPTION, this will be the default, leaving
-     * transaction handling up to you.
+     * transaction handling up to you. This should be your choice, when you use
+     * container-managed transactions, too, or your
+     * {@link Connection#getAutoCommit()} value is set to true.
      */
     LoaderOptionsStep<R> commitNone();
 

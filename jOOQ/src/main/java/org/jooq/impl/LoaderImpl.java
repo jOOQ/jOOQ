@@ -409,6 +409,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
             try {
                 if (commit == COMMIT_ALL) {
                     if (!errors.isEmpty()) {
+                        stored = 0;
                         create.getConnection().rollback();
                     }
                     else {

@@ -137,15 +137,32 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sybase.jdbc3.jdbc.SybSQLException;
 
 /**
+ * The abstract test suite uses generic types to model the generated test schema
+ * types, such as <code>T_AUTHOR</code>, <code>T_BOOK</code>, etc
+ *
  * @author Lukas Eder
  */
 public abstract class jOOQAbstractTest<
+
+        // T_AUTHOR table
         A extends UpdatableRecord<A>,
+
+        // T_BOOK table
         B extends UpdatableRecord<B>,
+
+        // T_BOOK_STORE table
         S extends UpdatableRecord<S>,
+
+        // V_LIBRARY view
         L extends TableRecord<L>,
+
+        // X_UNUSED table
         X extends TableRecord<X>,
+
+        // T_DIRECTORY table
         D extends UpdatableRecord<D>,
+
+        // Various tables related to trac ticket numbers
         T658 extends TableRecord<T658>,
         T725 extends UpdatableRecord<T725>,
         T639 extends UpdatableRecord<T639>,

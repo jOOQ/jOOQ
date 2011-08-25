@@ -183,9 +183,19 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException {
+        return TypeUtils.convert(fetchOne(fieldIndex), type);
+    }
+
+    @Override
     public final Object fetchOne(String fieldName) throws SQLException {
         R record = fetchOne();
         return record == null ? null : record.getValue(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException {
+        return TypeUtils.convert(fetchOne(fieldName), type);
     }
 
     @Override

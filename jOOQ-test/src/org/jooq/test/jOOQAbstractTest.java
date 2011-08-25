@@ -1475,6 +1475,60 @@ public abstract class jOOQAbstractTest<
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), BigDecimal.class));
 
 
+        // .fetchArray(..., Class)
+        // ------------------
+        assertEquals(
+            Arrays.asList((byte) 1, (byte) 2),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Byte.class)));
+        assertEquals(
+            Arrays.asList((short) 1, (short) 2),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Short.class)));
+        assertEquals(
+            Arrays.asList(1, 2),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Integer.class)));
+        assertEquals(
+            Arrays.asList(1L, 2L),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Long.class)));
+        assertEquals(
+            Arrays.asList(1.0f, 2.0f),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Float.class)));
+        assertEquals(
+            Arrays.asList(1.0, 2.0),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Double.class)));
+        assertEquals(
+            Arrays.asList(new BigInteger("1"), new BigInteger("2")),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, BigInteger.class)));
+        assertEquals(
+            Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, BigDecimal.class)));
+
+
+        assertEquals(
+            Arrays.asList((byte) 1, (byte) 2),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Byte.class)));
+        assertEquals(
+            Arrays.asList((short) 1, (short) 2),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Short.class)));
+        assertEquals(
+            Arrays.asList(1, 2),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Integer.class)));
+        assertEquals(
+            Arrays.asList(1L, 2L),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Long.class)));
+        assertEquals(
+            Arrays.asList(1.0f, 2.0f),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Float.class)));
+        assertEquals(
+            Arrays.asList(1.0, 2.0),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Double.class)));
+        assertEquals(
+            Arrays.asList(new BigInteger("1"), new BigInteger("2")),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), BigInteger.class)));
+        assertEquals(
+            Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), BigDecimal.class)));
+
+
         // .fetchOne(..., Class)
         // ---------------------
         assertEquals(

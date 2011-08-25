@@ -293,9 +293,21 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return fetch(fieldIndex).toArray();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws SQLException {
+        return (T[]) TypeUtils.convertArray(fetchArray(fieldIndex), type);
+    }
+
     @Override
     public final Object[] fetchArray(String fieldName) throws SQLException {
         return fetch(fieldName).toArray();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws SQLException {
+        return (T[]) TypeUtils.convertArray(fetchArray(fieldName), type);
     }
 
     @SuppressWarnings("unchecked")

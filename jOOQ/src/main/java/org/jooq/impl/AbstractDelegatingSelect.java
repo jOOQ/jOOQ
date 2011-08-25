@@ -142,8 +142,18 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     }
 
     @Override
+    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException {
+        return query.fetchOne(fieldIndex, type);
+    }
+
+    @Override
     public final Object fetchOne(String fieldName) throws SQLException {
         return query.fetchOne(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException {
+        return query.fetchOne(fieldName, type);
     }
 
     @Override

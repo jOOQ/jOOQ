@@ -78,6 +78,7 @@ import java.util.concurrent.TimeUnit;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.FileUtils;
@@ -3689,7 +3690,6 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testFormatXML() throws Exception {
-        List<Field<?>> fields = TBook().getFields();
         Result<B> books = create().selectFrom(TBook()).fetch();
         String xml = books.formatXML();
         InputStream is = new ByteArrayInputStream(xml.getBytes());
@@ -3698,9 +3698,20 @@ public abstract class jOOQAbstractTest<
         DocumentBuilder db = dbf.newDocumentBuilder();
         Document doc = db.parse(is);
 
+        testXML(doc, books);
+    }
+
+    @Test
+    public void testExportXML() throws Exception {
+        Result<B> books = create().selectFrom(TBook()).fetch();
+        testXML(books.exportXML(), books);
+    }
+
+    private void testXML(Document doc, Result<B> books) throws XPathExpressionException {
         XPathFactory xpfactory = XPathFactory.newInstance();
         XPath xp = xpfactory.newXPath();
 
+        List<Field<?>> fields = TBook().getFields();
         assertEquals("1", xp.evaluate("count(/result)", doc));
         assertEquals("1", xp.evaluate("count(/result/fields)", doc));
         assertEquals("" + fields.size(),

@@ -58,6 +58,10 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
@@ -69,6 +73,8 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.tools.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Lukas Eder
@@ -1175,6 +1181,53 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         sb.append("</jooq-export:result>");
 
         return sb.toString();
+    }
+
+    @Override
+    public final Document exportXML() {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.newDocument();
+
+            Element eResult = document.createElement("jooq-export:result");
+            eResult.setAttribute("xmlns:jooq-export", "http://www.jooq.org/xsd/jooq-export-1.6.2.xsd");
+            document.appendChild(eResult);
+
+            Element eFields = document.createElement("fields");
+            eResult.appendChild(eFields);
+
+            for (Field<?> field : getFields()) {
+                Element eField = document.createElement("field");
+                eField.setAttribute("name", field.getName());
+                eFields.appendChild(eField);
+            }
+
+            Element eRecords = document.createElement("records");
+            eResult.appendChild(eRecords);
+
+            for (Record record : this) {
+                Element eRecord = document.createElement("record");
+                eRecords.appendChild(eRecord);
+
+                for (Field<?> field : getFields()) {
+                    Object value = record.getValue(field);
+
+                    Element eValue = document.createElement("value");
+                    eValue.setAttribute("field", field.getName());
+                    eRecord.appendChild(eValue);
+
+                    if (value != null) {
+                        eValue.setTextContent(format0(value));
+                    }
+                }
+            }
+
+            return document;
+        }
+        catch (ParserConfigurationException ignore) {
+            throw new RuntimeException(ignore);
+        }
     }
 
     private final String escapeXML(String string) {

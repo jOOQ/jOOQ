@@ -41,8 +41,10 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.jooq.SQLDialectNotSupportedException;
@@ -77,7 +79,7 @@ final class TypeUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static Object[] convertArray(Object[] from, Class<?> toClass) {
+    static Object[] convertArray(Object[] from, Class<?> toClass) {
         if (from == null) {
             return null;
         }
@@ -108,6 +110,52 @@ final class TypeUtils {
         }
     }
 
+    /**
+     * Convert an object to a type. These are the conversion rules:
+     * <ul>
+     * <li><code>null</code> is always converted to <code>null</code>,
+     * regardless of the target type.</li>
+     * <li>Identity conversion is always possible</li>
+     * <li>All types can be converted to <code>String</code></li>
+     * <li>All types can be converted to <code>Object</code></li>
+     * <li>All <code>Number</code> types can be converted to other
+     * <code>Number</code> types</li>
+     * <li>All <code>Number</code> or <code>String</code> types can be converted
+     * to <code>Boolean</code>. Possible (case-insensitive) values for
+     * <code>true</code>:
+     * <ul>
+     * <li><code>1</code></li>
+     * <li><code>y</code></li>
+     * <li><code>yes</code></li>
+     * <li><code>true</code></li>
+     * <li><code>on</code></li>
+     * <li><code>enabled</code></li>
+     * </ul>
+     * <p>
+     * Possible (case-insensitive) values for <code>false</code>:
+     * <ul>
+     * <li><code>0</code></li>
+     * <li><code>n</code></li>
+     * <li><code>no</code></li>
+     * <li><code>false</code></li>
+     * <li><code>off</code></li>
+     * <li><code>disabled</code></li>
+     * </ul>
+     * <p>
+     * All other values evaluate to <code>null</code></li>
+     * <li>All <code>Date</code> types can be converted into each other</li>
+     * <li><code>byte[]</code> can be converted into <code>String</code>, using
+     * the platform's default charset</li>
+     * <li><code>Object[]</code> can be converted into any other array type, if
+     * array elements can be converted, too</li>
+     * <li><b>All other combinations that are not listed above will result in an
+     * undisclosed unchecked exception.</b></li>
+     * </ul>
+     *
+     * @param from The object to convert
+     * @param toClass The target type
+     * @return The converted object
+     */
     @SuppressWarnings("unchecked")
     public static <T> T convert(Object from, Class<? extends T> toClass) {
         if (from == null) {
@@ -188,6 +236,24 @@ final class TypeUtils {
         }
 
         throw new SQLDialectNotSupportedException("Cannot convert from " + from + " to " + toClass);
+    }
+
+    /**
+     * Convert a list of objects to a list of <code>T</code>, using
+     * {@link #convert(Object, Class)}
+     *
+     * @param list The list of objects
+     * @param type The target type
+     * @return The list of converted objects
+     */
+    public static <T> List<T> convert(List<?> list, Class<? extends T> type) {
+        List<T> result = new ArrayList<T>();
+
+        for (Object o : list) {
+            result.add(convert(o, type));
+        }
+
+        return result;
     }
 
     private TypeUtils() {}

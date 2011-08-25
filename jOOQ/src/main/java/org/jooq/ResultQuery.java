@@ -115,6 +115,17 @@ public interface ResultQuery<R extends Record> extends Query {
     List<?> fetch(int fieldIndex) throws SQLException;
 
     /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(int, Class)}
+     *
+     * @return The resulting values.
+     */
+    <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws SQLException;
+
+    /**
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
@@ -124,6 +135,17 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return The resulting values.
      */
     List<?> fetch(String fieldName) throws SQLException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(String, Class)}
+     *
+     * @return The resulting values.
+     */
+    <T> List<T> fetch(String fieldName, Class<? extends T> type) throws SQLException;
 
     /**
      * Execute the query and return return at most one resulting value for a

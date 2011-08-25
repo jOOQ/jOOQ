@@ -1420,6 +1420,60 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testConversionResult() throws Exception {
+        assertEquals(
+            Arrays.asList((byte) 1, (byte) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Byte.class));
+        assertEquals(
+            Arrays.asList((short) 1, (short) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Short.class));
+        assertEquals(
+            Arrays.asList(1, 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Integer.class));
+        assertEquals(
+            Arrays.asList(1L, 2L),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Long.class));
+        assertEquals(
+            Arrays.asList(1.0f, 2.0f),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Float.class));
+        assertEquals(
+            Arrays.asList(1.0, 2.0),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Double.class));
+        assertEquals(
+            Arrays.asList(new BigInteger("1"), new BigInteger("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, BigInteger.class));
+        assertEquals(
+            Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, BigDecimal.class));
+
+
+        assertEquals(
+            Arrays.asList((byte) 1, (byte) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Byte.class));
+        assertEquals(
+            Arrays.asList((short) 1, (short) 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Short.class));
+        assertEquals(
+            Arrays.asList(1, 2),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Integer.class));
+        assertEquals(
+            Arrays.asList(1L, 2L),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Long.class));
+        assertEquals(
+            Arrays.asList(1.0f, 2.0f),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Float.class));
+        assertEquals(
+            Arrays.asList(1.0, 2.0),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Double.class));
+        assertEquals(
+            Arrays.asList(new BigInteger("1"), new BigInteger("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), BigInteger.class));
+        assertEquals(
+            Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), BigDecimal.class));
+    }
+
+    @Test
     public void testForUpdateClauses() throws Exception {
         switch (getDialect()) {
             case SQLITE:

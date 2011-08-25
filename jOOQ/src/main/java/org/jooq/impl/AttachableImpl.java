@@ -116,4 +116,14 @@ class AttachableImpl implements AttachableInternal {
     public final List<Attachable> getAttachables() {
         return delegate.getAttachables();
     }
+
+    @Override
+    public final String toString() {
+        if (configuration == null) {
+            return "[ detached ]";
+        }
+        else {
+            return configuration.toString();
+        }
+    }
 }

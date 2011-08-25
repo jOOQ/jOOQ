@@ -156,8 +156,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws SQLException {
+        return fetch().getValues(fieldIndex, type);
+    }
+
+    @Override
     public final List<?> fetch(String fieldName) throws SQLException {
         return fetch().getValues(fieldName);
+    }
+
+    @Override
+    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) throws SQLException {
+        return fetch().getValues(fieldName, type);
     }
 
     @Override

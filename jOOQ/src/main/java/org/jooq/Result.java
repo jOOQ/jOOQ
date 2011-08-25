@@ -44,6 +44,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.w3c.dom.Document;
+
 /**
  * A wrapper for database results returned by <code>{@link SelectQuery}</code>
  *
@@ -1722,10 +1724,20 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Get this result formatted as XML
      *
+     * @see #exportXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
      */
     String formatXML();
+
+    /**
+     * Get this result as XML
+     * 
+     * @see #formatXML()
+     * @see <a
+     *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
+     */
+    Document exportXML();
 
     /**
      * Map resulting records onto a custom type.

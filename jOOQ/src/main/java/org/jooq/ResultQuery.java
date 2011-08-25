@@ -183,6 +183,23 @@ public interface ResultQuery<R extends Record> extends Query {
 
     /**
      * Execute the query and return return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(int, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws SQLException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one value</li>
+     *             </ul>
+     */
+    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -197,6 +214,23 @@ public interface ResultQuery<R extends Record> extends Query {
      *             </ul>
      */
     Object fetchOne(String fieldName) throws SQLException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(String, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws SQLException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one value</li>
+     *             </ul>
+     */
+    <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException;
 
     /**
      * Execute the query and return at most one resulting record.

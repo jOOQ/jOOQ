@@ -1421,6 +1421,8 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testConversionResult() throws Exception {
+        // .fetch(..., Class)
+        // ------------------
         assertEquals(
             Arrays.asList((byte) 1, (byte) 2),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Byte.class));
@@ -1471,6 +1473,61 @@ public abstract class jOOQAbstractTest<
         assertEquals(
             Arrays.asList(new BigDecimal("1"), new BigDecimal("2")),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), BigDecimal.class));
+
+
+        // .fetchOne(..., Class)
+        // ---------------------
+        assertEquals(
+            (byte) 1,
+            (byte) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Byte.class));
+        assertEquals(
+            (short) 1,
+            (short) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Short.class));
+        assertEquals(
+            1,
+            (int) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Integer.class));
+        assertEquals(
+            1L,
+            (long) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Long.class));
+        assertEquals(
+            1.0f,
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Float.class));
+        assertEquals(
+            1.0,
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Double.class));
+        assertEquals(
+            new BigInteger("1"),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, BigInteger.class));
+        assertEquals(
+            new BigDecimal("1"),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, BigDecimal.class));
+
+
+        assertEquals(
+            (byte) 1,
+            (byte) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Byte.class));
+        assertEquals(
+            (short) 1,
+            (short) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Short.class));
+        assertEquals(
+            1,
+            (int) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Integer.class));
+        assertEquals(
+            1L,
+            (long) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Long.class));
+        assertEquals(
+            1.0f,
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Float.class));
+        assertEquals(
+            1.0,
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Double.class));
+        assertEquals(
+            new BigInteger("1"),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), BigInteger.class));
+        assertEquals(
+            new BigDecimal("1"),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), BigDecimal.class));
+
     }
 
     @Test

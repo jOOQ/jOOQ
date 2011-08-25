@@ -345,6 +345,17 @@ public interface ResultQuery<R extends Record> extends Query {
     Object[] fetchArray(int fieldIndex) throws SQLException;
 
     /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     */
+    <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws SQLException;
+
+    /**
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
@@ -354,6 +365,17 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return The resulting values.
      */
     Object[] fetchArray(String fieldName) throws SQLException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     */
+    <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws SQLException;
 
     /**
      * Execute the query and return all values for a field from the generated

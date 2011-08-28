@@ -8,12 +8,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<properties>
-        <jooq.version>1.6.4</jooq.version>
+        <jooq.version>1.6.5</jooq.version>
     </properties>
     
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-meta</artifactId>
-	<version>1.6.4</version>
+	<version>1.6.5</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ Meta</name>

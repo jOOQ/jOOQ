@@ -2,6 +2,40 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.6.5
+=================================================================
+
+This release finally adds a loader for CSV data to jOOQ. You can
+now load CSV data using a simple fluent API, configuring error
+handling, duplicate behaviour and transaction handling, as well
+as various CSV parameters.
+
+This release also changes the way generated keys are retrieved
+after INSERT's. Instead of (potentially inconsistently) running
+SELECT MAX(pk) immediately after the INSERT, Postgres' INSERT..
+RETURNING clause is used (or simulated), in a single statement.
+
+Features and improvements
+-------------------------
+#784 - Add Result.exportXML() to retrieve a DOM document similar
+       to that of .formatXML()
+#792 - Add support for loading of CSV data into tables
+#795 - Add <T> List<T> fetch(int, Class<T>) and 
+       fetch(String, Class<T>) convenience methods
+#803 - Add support for INSERT .. RETURNING or simulate it where
+       not available
+#805 - Add <T> T[] fetchArray(int, Class<T>) and 
+       fetchArray(String, Class<T>) convenience methods
+#806 - Add <T> T fetchOne(int, Class<T>) and 
+       fetchOne(String, Class<T>) convenience methods
+
+Bug fixes
+---------
+#798 - Oracle IN (...) clause with more than 1000 arguments does
+       not work
+#802 - Use "INSERT .. RETURNING" instead of "SELECT MAX(pk)"
+       to retrieve the primary key of a new record
+
 Version 1.6.4
 =================================================================
 

@@ -70,7 +70,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * <p>
      * If you don't specify a behaviour, {@link #onDuplicateKeyError()} will be
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
-     * or {@link #onDuplicateUpdate()}
+     * or {@link #onDuplicateKeyUpdate()}
      */
     LoaderOptionsStep<R> onDuplicateKeyIgnore();
 
@@ -84,7 +84,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * <p>
      * If you don't specify a behaviour, this will be the default. This cannot
      * be combined with {@link #onDuplicateKeyIgnore()} or
-     * {@link #onDuplicateUpdate()}
+     * {@link #onDuplicateKeyUpdate()}
      */
     LoaderOptionsStep<R> onDuplicateKeyError();
 
@@ -118,8 +118,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * {@link #commitAfter(int)} with <code>1</code> as parameter.
      * <p>
      * With this clause, errors will never result in a rollback, even when you
-     * specify {@link LoaderOptionsStep#onDuplicateKeyError()} or
-     * {@link LoaderOnErrorStep#onErrorAbort()}
+     * specify {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
@@ -138,8 +137,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * <code>INSERT</code>'s for at most <code>number</code> records.
      * <p>
      * With this clause, errors will never result in a rollback, even when you
-     * specify {@link LoaderOptionsStep#onDuplicateKeyError()} or
-     * {@link LoaderOnErrorStep#onErrorAbort()}
+     * specify {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in
@@ -157,9 +155,8 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
 
     /**
      * Commit only after inserting all records. If this is used together with
-     * {@link LoaderOptionsStep#onDuplicateKeyError()} or
-     * {@link LoaderOnErrorStep#onErrorAbort()}, an abort will result in a
-     * rollback of previously loaded records.
+     * {@link #onDuplicateKeyError()} or {@link #onErrorAbort()}, an abort will
+     * result in a rollback of previously loaded records.
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in

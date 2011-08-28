@@ -1734,7 +1734,7 @@ public class Factory implements Configuration {
      * @return The new record
      */
     public final <R extends Record> R newRecord(Table<R> table) {
-        return JooqUtil.newRecord(table.getRecordType(), table, this);
+        return JooqUtil.newRecord(table, this);
     }
 
     // -------------------------------------------------------------------------

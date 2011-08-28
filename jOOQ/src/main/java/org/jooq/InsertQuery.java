@@ -36,6 +36,7 @@
 
 package org.jooq;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -105,4 +106,60 @@ public interface InsertQuery<R extends TableRecord<R>> extends StoreQuery<R>, In
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
+
+    /**
+     * Configure the <code>INSERT</code> statement to return all fields in
+     * <code>R</code>.
+     *
+     * @see #getReturned()
+     */
+    void setReturning();
+
+    /**
+     * Configure the <code>INSERT</code> statement to return the generated
+     * identity value.
+     *
+     * @param identity The table's identity
+     * @see #getReturned()
+     */
+    void setReturning(Identity<R, ? extends Number> identity);
+
+    /**
+     * Configure the <code>INSERT</code> statement to return a list of fields in
+     * <code>R</code>.
+     *
+     * @param fields Fields to be returned
+     * @see #getReturned()
+     */
+    void setReturning(Field<?>... fields);
+
+    /**
+     * Configure the <code>INSERT</code> statement to return a list of fields in
+     * <code>R</code>.
+     *
+     * @param fields Fields to be returned
+     * @see #getReturned()
+     */
+    void setReturning(Collection<? extends Field<?>> fields);
+
+    /**
+     * The record holding returned values as specified by any of the
+     * {@link #setReturning()} methods.
+     * <p>
+     * This implemented differently for every dialect:
+     * <ul>
+     * <li>Postgres has native support for <code>INSERT .. RETURNING</code>
+     * clauses</li>
+     * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
+     * column as "generated key" in one statement</li>
+     * <li>Derby, H2, MySQL, SQL Server only allow for retrieving IDENTITY
+     * column values as "generated key". If other fields are requested, a second
+     * statement is issued. Client code must assure transactional integrity
+     * between the two statements.</li>
+     * <li>Ingres support will be added with #808</li>
+     * <li>Sybase support will be added with #809</li>
+     * <li>SQLite support will be added with #810</li>
+     * </ul>
+     */
+    R getReturned();
 }

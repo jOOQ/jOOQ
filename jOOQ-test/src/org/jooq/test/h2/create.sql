@@ -1,6 +1,10 @@
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 DROP VIEW IF EXISTS v_library/
+
+DROP TRIGGER IF EXISTS t_triggers_trigger/
+
+DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_arrays/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
@@ -33,6 +37,21 @@ DROP ALIAS IF EXISTS f317/
 DROP ALIAS IF EXISTS p_create_author/
 DROP ALIAS IF EXISTS p_create_author_by_name/
 DROP ALIAS IF EXISTS f_get_one_cursor/
+
+CREATE TABLE t_triggers (
+  id int AUTO_INCREMENT,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE TRIGGER t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+FOR EACH ROW
+CALL "org.jooq.test.h2.TTriggersTrigger"
+/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,

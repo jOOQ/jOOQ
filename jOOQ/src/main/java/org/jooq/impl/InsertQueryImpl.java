@@ -36,8 +36,14 @@
 
 package org.jooq.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +52,11 @@ import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
+import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
@@ -63,6 +72,8 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
     private final FieldMapForUpdate  updateMap;
     private final FieldMapsForInsert insertMaps;
+    private final FieldList          returning;
+    private R                        returned;
     private boolean                  onDuplicateKeyUpdate;
 
     InsertQueryImpl(Configuration configuration, Table<R> into) {
@@ -70,6 +81,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
         updateMap = new FieldMapForUpdate();
         insertMaps = new FieldMapsForInsert();
+        returning = new FieldList();
     }
 
     @Override
@@ -212,11 +224,38 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     private final void toSQLInsert(RenderContext context) {
-        context.sql("insert into ").sql(getInto()).sql(" ").sql(insertMaps);
+        context.sql("insert into ")
+               .sql(getInto())
+               .sql(" ")
+               .sql(insertMaps);
+
+        if (!returning.isEmpty()) {
+            switch (context.getDialect()) {
+                case POSTGRES:
+                    context.sql(" returning ").sql(returning);
+                    break;
+
+                default:
+                    // Other dialects don't render a RETURNING clause, but
+                    // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
+            }
+        }
     }
 
-    private void bindInsert(BindContext context) throws SQLException {
-        context.bind(getInto()).bind(insertMaps).bind(updateMap);
+    private final void bindInsert(BindContext context) throws SQLException {
+        context.bind(getInto())
+               .bind(insertMaps)
+               .bind(updateMap);
+
+        switch (context.getDialect()) {
+            case POSTGRES:
+                context.bind((QueryPart) returning);
+                break;
+
+            default:
+                // Other dialects don't bind a RETURNING clause, but
+                // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -256,7 +295,174 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    protected boolean isExecutable() {
+    protected final boolean isExecutable() {
         return insertMaps.isExecutable();
+    }
+
+    @Override
+    protected final PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
+        if (returning.isEmpty()) {
+            return super.prepare(configuration, sql);
+        }
+        else {
+            Connection connection = configuration.getConnection();
+
+            switch (configuration.getDialect()) {
+                // Some JDBC drivers do not support generated keys altogether
+                case INGRES:
+                case SYBASE:
+                case SQLITE: {
+                    return super.prepare(configuration, sql);
+                }
+
+                // Postgres uses the RETURNING clause in SQL
+                case POSTGRES:
+                    return super.prepare(configuration, sql);
+
+                // Some dialects can only return AUTO_INCREMENT values
+                // Other values have to be fetched in a second step
+                case DERBY:
+                case H2:
+                case MYSQL:
+                    return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+                case SQLSERVER:
+                    return connection.prepareStatement(sql, new String[] { "id_generated" });
+
+                // The default is to return all requested fields directly
+                default: {
+                    List<String> names = new ArrayList<String>();
+
+                    for (Field<?> field : returning) {
+                        names.add(field.getName());
+                    }
+
+                    return connection.prepareStatement(sql, names.toArray(new String[names.size()]));
+                }
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected final int execute(Configuration configuration, PreparedStatement statement) throws SQLException {
+        if (returning.isEmpty()) {
+            return super.execute(configuration, statement);
+        }
+        else {
+            int result = 1;
+            ResultSet rs;
+
+            switch (configuration.getDialect()) {
+
+                // Some JDBC drivers do not support generated keys altogether
+                case INGRES:
+                case SYBASE:
+                case SQLITE: {
+                    return super.execute(configuration, statement);
+                }
+
+                // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
+                // Additional values have to be fetched explicitly
+                case DERBY:
+                case H2:
+                case MYSQL:
+                case SQLSERVER: {
+                    result = statement.executeUpdate();
+                    rs = statement.getGeneratedKeys();
+
+                    if (rs.next() && getInto() instanceof UpdatableTable) {
+                        UpdatableTable<R> updatable = (UpdatableTable<R>) getInto();
+
+                        // This shouldn't be null, as relevant dialects should
+                        // return empty generated keys ResultSet
+                        if (updatable.getIdentity() != null) {
+                            Field<Number> id = (Field<Number>) updatable.getIdentity().getField();
+                            Number value = id.getDataType().convert(rs.getObject(1));
+                            returned = JooqUtil.newRecord(updatable, configuration);
+
+                            // Only the IDENTITY value was requested. No need for an
+                            // additional query
+                            if (returning.size() == 1 && returning.get(0).equals(id)) {
+                                ((AbstractRecord) returned).setValue(id, new Value<Number>(value));
+                            }
+
+                            // Other values are requested, too. Run another query
+                            else {
+                                Record record =
+                                create(configuration).select(returning)
+                                                     .from(updatable)
+                                                     .where(id.equal(value))
+                                                     .fetchOne();
+
+                                for (Field<?> field : returning) {
+                                    setValue(record, field);
+                                }
+                            }
+                        }
+                    }
+
+                    return result;
+                }
+
+                // Postgres can execute the INSERT .. RETURNING clause like
+                // a select clause. JDBC support is not implemented
+                case POSTGRES: {
+                    rs = statement.executeQuery();
+
+                    break;
+                }
+
+               // These dialects have full JDBC support
+                case DB2:
+                case HSQLDB:
+                case ORACLE:
+                default: {
+                    result = statement.executeUpdate();
+                    rs = statement.getGeneratedKeys();
+
+                    break;
+                }
+            }
+
+            CursorImpl<R> cursor = new CursorImpl<R>(configuration, returning, rs, statement, getInto().getRecordType());
+            returned = cursor.fetchOne();
+            return result;
+        }
+    }
+
+    /**
+     * Generic type-safe utility method
+     */
+    private final <T> void setValue(Record record, Field<T> field) {
+        ((AbstractRecord) returned).setValue(field, new Value<T>(record.getValue(field)));
+    }
+
+    @Override
+    public final void setReturning() {
+        setReturning(getInto().getFields());
+    }
+
+    @Override
+    public final void setReturning(Identity<R, ? extends Number> identity) {
+        if (identity != null) {
+            setReturning(identity.getField());
+        }
+    }
+
+    @Override
+    public final void setReturning(Field<?>... fields) {
+        setReturning(Arrays.asList(fields));
+    }
+
+    @Override
+    public final void setReturning(Collection<? extends Field<?>> fields) {
+        returning.clear();
+        returning.addAll(fields);
+    }
+
+    @Override
+    public final R getReturned() {
+        return returned;
     }
 }

@@ -65,6 +65,7 @@ import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
 import org.jooq.test.oracle.generatedclasses.tables.TBookStore;
 import org.jooq.test.oracle.generatedclasses.tables.TDirectory;
+import org.jooq.test.oracle.generatedclasses.tables.TTriggers;
 import org.jooq.test.oracle.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.oracle.generatedclasses.tables.T_658Ref;
 import org.jooq.test.oracle.generatedclasses.tables.T_725LobTest;
@@ -76,6 +77,7 @@ import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TDirectoryRecord;
+import org.jooq.test.oracle.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_725LobTestRecord;
@@ -108,6 +110,7 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         VLibraryRecord,
         TArraysRecord,
         TDirectoryRecord,
+        TTriggersRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -372,6 +375,21 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
         return TDirectory.NAME;
+    }
+
+    @Override
+    protected UpdatableTable<TTriggersRecord> TTriggers() {
+        return TTriggers.T_TRIGGERS;
+    }
+
+    @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
+        return TTriggers.ID;
+    }
+
+    @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
+        return TTriggers.COUNTER;
     }
 
     @Override

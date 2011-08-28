@@ -1,6 +1,9 @@
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
+
+DROP TABLE IF EXISTS t_triggers/
+
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
 DROP TABLE IF EXISTS t_book/
@@ -21,6 +24,24 @@ DROP TABLE IF EXISTS t_658_22/
 DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
+
+CREATE TABLE t_triggers (
+  id int not null,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE TRIGGER IF NOT EXISTS t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+FOR EACH ROW
+BEGIN
+	insert into t_triggers
+	select ifnull(max(id), 0) + 1, ifnull(max(counter), 0) + 2 from t_triggers;
+END;
+/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,

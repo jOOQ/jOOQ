@@ -12,6 +12,7 @@ DELETE FROM t_book/
 DELETE FROM t_author/
 DELETE FROM t_language/
 DELETE FROM t_directory/
+DELETE FROM t_triggers/
 
 DROP SEQUENCE s_author_id/
 CREATE SEQUENCE s_author_id/

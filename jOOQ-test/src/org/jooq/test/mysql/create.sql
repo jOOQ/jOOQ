@@ -1,6 +1,8 @@
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
+DROP TRIGGER IF EXISTS t_triggers_trigger/
+DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
 DROP TABLE IF EXISTS t_book/
@@ -31,6 +33,25 @@ DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
+
+CREATE TABLE t_triggers (
+  id int not null AUTO_INCREMENT,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+) ENGINE = InnoDB
+/
+
+CREATE TRIGGER t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+FOR EACH ROW
+BEGIN
+	DECLARE new_counter INT;
+	select ifnull(max(counter), 0) + 2 into new_counter from t_triggers;
+	SET NEW.counter = new_counter;
+END;
+/
 
 CREATE TABLE t_language (
   CD CHAR(2) NOT NULL COMMENT 'The language ISO code',

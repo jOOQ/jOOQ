@@ -1,6 +1,9 @@
 DROP VIEW v_author/
 DROP VIEW v_book/
 DROP VIEW v_library/
+
+DROP TRIGGER t_triggers_trigger/
+DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
 DROP TABLE t_book/
@@ -23,6 +26,25 @@ DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 
 CREATE SCHEMA test AUTHORIZATION test
+/
+
+CREATE TABLE t_triggers (
+  id_generated INTEGER GENERATED ALWAYS AS IDENTITY,
+  id int,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers UNIQUE (ID)
+)
+/
+
+CREATE TRIGGER t_triggers_trigger
+AFTER INSERT
+ON t_triggers
+REFERENCING NEW AS new
+FOR EACH ROW
+	update t_triggers 
+	set id = id_generated,
+	    counter = id_generated * 2
 /
 
 CREATE TABLE t_language (

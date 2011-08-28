@@ -311,6 +311,27 @@ public final class Functions {
 	}
 
 	/**
+	 * Invoke P_TRIGGERS
+	 *
+	 */
+	public static java.lang.Object pTriggers(org.jooq.Configuration configuration) throws java.sql.SQLException {
+		org.jooq.test.postgres.generatedclasses.functions.PTriggers f = new org.jooq.test.postgres.generatedclasses.functions.PTriggers();
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get P_TRIGGERS as a field
+	 *
+	 */
+	public static org.jooq.Field<java.lang.Object> pTriggers() {
+		org.jooq.test.postgres.generatedclasses.functions.PTriggers f = new org.jooq.test.postgres.generatedclasses.functions.PTriggers();
+
+		return f.asField();
+	}
+
+	/**
 	 * No instances
 	 */
 	private Functions() {}

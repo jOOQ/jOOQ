@@ -18,6 +18,11 @@ public final class Sequences {
 	public static final org.jooq.Sequence S_AUTHOR_ID = new org.jooq.impl.SequenceImpl("S_AUTHOR_ID", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 
 	/**
+	 * The sequence S_TRIGGER_ID
+	 */
+	public static final org.jooq.Sequence S_TRIGGER_ID = new org.jooq.impl.SequenceImpl("S_TRIGGER_ID", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+
+	/**
 	 * No instances
 	 */
 	private Sequences() {}

@@ -95,7 +95,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 if (log.isTraceEnabled())
                     log.trace("Preparing statement", sql);
 
-                statement = connection.prepareStatement(sql);
+                statement = prepare(configuration, sql);
                 watch.splitTrace("Statement prepared");
 
                 create(configuration).bind(this, statement);
@@ -129,6 +129,18 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
      */
     protected boolean keepStatementOpen() {
         return false;
+    }
+
+    /**
+     * Default implementation for preparing a statement. Subclasses may override
+     * this method.
+     *
+     * @param configuration The configuration holding a connection
+     * @param sql The generated SQL
+     * @return The prepared statement
+     */
+    protected PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
+        return configuration.getConnection().prepareStatement(sql);
     }
 
     /**

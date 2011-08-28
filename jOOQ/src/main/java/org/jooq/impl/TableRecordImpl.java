@@ -128,14 +128,19 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             }
         }
 
+        // TODO [#814] Reload also the primary key, as it might be
+        // 1. different from the identity
+        // 2. initialised by a trigger
+        Identity<R, ? extends Number> identity = identity();
+        insert.setReturning(identity);
         int result = insert.execute();
 
-        // If an insert was executed successfully try fetching the generated
-        // IDENTITY value
-        if (result > 0) {
-            Identity<R, ? extends Number> identity = identity();
-
-            if (identity != null) {
+        // If an insert was successful try fetching the generated IDENTITY value
+        if (identity != null && result > 0) {
+            if (insert.getReturned() != null) {
+                setValue0(identity.getField(), new Value<Number>(insert.getReturned().getValue(identity.getField())));
+            }
+            else {
                 setValue0(identity.getField(), new Value<Number>(create().lastID(identity)));
             }
         }

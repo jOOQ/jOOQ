@@ -2,6 +2,10 @@ DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
 DROP VIEW v_incomplete/
+
+DROP TRIGGER t_triggers_trigger/
+
+DROP TABLE t_triggers/
 DROP TABLE t_arrays/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
@@ -88,6 +92,25 @@ CREATE TYPE u_address_type AS OBJECT (
   since DATE,
   code NUMBER(7)
 )
+/
+
+CREATE TABLE t_triggers (
+  id number(7) not null,
+  counter number(7) not null,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE OR REPLACE TRIGGER t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+REFERENCING NEW AS new
+FOR EACH ROW
+BEGIN
+	select nvl(max(id), 0) + 1 into :new.id from t_triggers;
+	select nvl(max(counter), 0) + 2 into :new.counter from t_triggers;
+END t_triggers_trigger;
 /
 
 CREATE TABLE t_directory (

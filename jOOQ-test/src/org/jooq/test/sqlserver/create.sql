@@ -1,6 +1,10 @@
 DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
+
+DROP TRIGGER t_triggers_trigger/
+
+DROP TABLE t_triggers/
 DROP TABLE t_arrays/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
@@ -54,6 +58,23 @@ DROP TYPE u_number_long_array/
 DROP TYPE u_date_array/
 
 
+
+CREATE TABLE t_triggers (
+  id_generated int IDENTITY(1,1) not null,
+  id int,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers UNIQUE (ID)
+)
+/
+
+CREATE TRIGGER t_triggers_trigger
+ON t_triggers
+AFTER INSERT AS
+    update t_triggers
+    set id = id_generated,
+        counter = id_generated * 2;
+/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,

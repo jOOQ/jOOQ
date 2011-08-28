@@ -1,6 +1,10 @@
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
+
+DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
+
+DROP TABLE IF EXISTS t_triggers CASCADE/
 DROP TABLE IF EXISTS t_arrays CASCADE/
 DROP TABLE IF EXISTS t_book_to_book_store CASCADE/
 DROP TABLE IF EXISTS t_book_store CASCADE/
@@ -23,6 +27,7 @@ DROP TABLE IF EXISTS t_658_32 CASCADE/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 
+DROP FUNCTION p_triggers()/
 DROP FUNCTION f_arrays(in_array IN integer[])/
 DROP FUNCTION f_arrays(in_array IN bigint[])/
 DROP FUNCTION f_arrays(in_array IN text[])/
@@ -71,6 +76,33 @@ CREATE TYPE u_address_type AS (
   since DATE,
   code INTEGER
 )
+/
+
+CREATE TABLE t_triggers (
+  id int not null,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE FUNCTION p_triggers ()
+RETURNS trigger
+AS $$
+BEGIN
+	select coalesce(max(id), 0) + 1 into new.id from t_triggers;
+	new.counter = new.id * 2;
+	
+	return new;
+END 
+$$ LANGUAGE plpgsql;
+/
+
+CREATE TRIGGER t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+FOR EACH ROW
+EXECUTE PROCEDURE p_triggers()
 /
 
 CREATE TABLE t_language (

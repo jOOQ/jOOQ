@@ -1,6 +1,8 @@
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
+DROP TRIGGER IF EXISTS t_triggers_trigger/
+DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
 DROP TABLE IF EXISTS t_book/
@@ -31,6 +33,23 @@ DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
+
+CREATE TABLE t_triggers (
+  id int not null,
+  counter int null,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE TRIGGER t_triggers_trigger
+ON t_triggers
+FOR INSERT AS
+    insert into t_triggers
+    select case when max(id) is null then 1 else max(id) + 1 end, 
+           case when max(counter) is null then 2 else max(counter) + 2 end
+    from t_triggers;
+/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,

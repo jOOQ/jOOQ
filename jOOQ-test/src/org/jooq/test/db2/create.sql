@@ -3,13 +3,18 @@ DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p_create_author/ 
 DROP PROCEDURE p_create_author_by_name/ 
 DROP PROCEDURE p391/
+
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
 DROP FUNCTION f_number/
 DROP FUNCTION f317/
+
 DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
+
+DROP TRIGGER t_triggers_trigger/
+DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
 DROP TABLE t_book/
@@ -30,6 +35,28 @@ DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
+
+DROP SEQUENCE s_trigger_id/
+CREATE SEQUENCE s_trigger_id/
+
+CREATE TABLE t_triggers (
+  id int not null,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE TRIGGER t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+REFERENCING NEW AS new
+FOR EACH ROW
+BEGIN
+	select s_trigger_id.nextval into new.id from sysibm.dual;
+	set new.counter = new.id * 2;
+END
+/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,

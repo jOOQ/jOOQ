@@ -20,6 +20,10 @@ DROP FUNCTION IF EXISTS f_get_one_cursor/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 DROP VIEW IF EXISTS v_library/
+
+DROP TRIGGER IF EXISTS t_triggers_trigger/
+
+DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_arrays/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
@@ -49,6 +53,24 @@ DROP TABLE IF EXISTS object/
 DROP TABLE IF EXISTS string/
 DROP TABLE IF EXISTS big_decimal/
 
+CREATE TABLE t_triggers (
+  id int not null,
+  counter int,
+  
+  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+)
+/
+
+CREATE TRIGGER t_triggers_trigger
+BEFORE INSERT
+ON t_triggers
+REFERENCING NEW AS new
+FOR EACH ROW
+BEGIN ATOMIC
+	select nvl(max(id), 0) + 1 into new.id from t_triggers;
+	select nvl(max(counter), 0) + 2 into new.counter from t_triggers;
+END
+/
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,

@@ -51,6 +51,7 @@ import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Table;
 
 /**
  * General jooq utilities
@@ -92,6 +93,20 @@ final class JooqUtil {
      */
     static <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
         return newRecord(type, provider, null);
+    }
+
+    /**
+     * Create a new record
+     */
+    static <R extends Record> R newRecord(Table<R> table) {
+        return newRecord(table, null);
+    }
+
+    /**
+     * Create a new record
+     */
+    static <R extends Record> R newRecord(Table<R> table, Configuration configuration) {
+        return newRecord(table.getRecordType(), table, configuration);
     }
 
     /**

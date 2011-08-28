@@ -14,6 +14,8 @@ DELETE FROM t_language/
 
 DROP SEQUENCE s_author_id/
 CREATE SEQUENCE s_author_id/
+DROP SEQUENCE s_trigger_id/
+CREATE SEQUENCE s_trigger_id/
 
 INSERT INTO t_language (id, cd, description, description_english) VALUES (1, 'en', 'English', 'English')/
 INSERT INTO t_language (id, cd, description, description_english) VALUES (2, 'de', 'Deutsch', 'German')/

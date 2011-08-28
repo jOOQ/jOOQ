@@ -57,6 +57,7 @@ import org.jooq.test.derby.generatedclasses.TestFactory;
 import org.jooq.test.derby.generatedclasses.tables.TAuthor;
 import org.jooq.test.derby.generatedclasses.tables.TBook;
 import org.jooq.test.derby.generatedclasses.tables.TBookStore;
+import org.jooq.test.derby.generatedclasses.tables.TTriggers;
 import org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.derby.generatedclasses.tables.T_658Ref;
 import org.jooq.test.derby.generatedclasses.tables.T_725LobTest;
@@ -65,6 +66,7 @@ import org.jooq.test.derby.generatedclasses.tables.VLibrary;
 import org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord;
@@ -83,6 +85,7 @@ public class jOOQDerbyTest extends jOOQAbstractTest<
         VLibraryRecord,
         XUnusedRecord,
         XUnusedRecord,
+        TTriggersRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -326,6 +329,21 @@ public class jOOQDerbyTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, String> TDirectory_NAME() {
         return null;
+    }
+
+    @Override
+    protected UpdatableTable<TTriggersRecord> TTriggers() {
+        return TTriggers.T_TRIGGERS;
+    }
+
+    @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
+        return TTriggers.ID;
+    }
+
+    @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
+        return TTriggers.COUNTER;
     }
 
     @Override

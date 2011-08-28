@@ -60,6 +60,7 @@ import org.jooq.test.postgres.generatedclasses.tables.TArrays;
 import org.jooq.test.postgres.generatedclasses.tables.TAuthor;
 import org.jooq.test.postgres.generatedclasses.tables.TBook;
 import org.jooq.test.postgres.generatedclasses.tables.TBookStore;
+import org.jooq.test.postgres.generatedclasses.tables.TTriggers;
 import org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.postgres.generatedclasses.tables.T_658Ref;
 import org.jooq.test.postgres.generatedclasses.tables.T_725LobTest;
@@ -69,6 +70,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
@@ -90,6 +92,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
         VLibraryRecord,
         TArraysRecord,
         XUnusedRecord,
+        TTriggersRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -333,6 +336,21 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, String> TDirectory_NAME() {
         return null;
+    }
+
+    @Override
+    protected UpdatableTable<TTriggersRecord> TTriggers() {
+        return TTriggers.T_TRIGGERS;
+    }
+
+    @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
+        return TTriggers.ID;
+    }
+
+    @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
+        return TTriggers.COUNTER;
     }
 
     @Override

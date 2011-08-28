@@ -163,6 +163,9 @@ public abstract class jOOQAbstractTest<
         // T_DIRECTORY table
         D extends UpdatableRecord<D>,
 
+        // T_TRIGGERS table
+        T extends UpdatableRecord<T>,
+
         // Various tables related to trac ticket numbers
         T658 extends TableRecord<T658>,
         T725 extends UpdatableRecord<T725>,
@@ -400,11 +403,11 @@ public abstract class jOOQAbstractTest<
         return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset.sql";
     }
 
-    protected final <T> Field<T> val(T value) throws Exception {
+    protected final <Z> Field<Z> val(Z value) throws Exception {
         return create().val(value);
     }
 
-    protected final <T> List<Field<?>> vals(Object... value) throws Exception {
+    protected final List<Field<?>> vals(Object... value) throws Exception {
         return create().vals(value);
     }
 
@@ -464,6 +467,10 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<D, Byte> TDirectory_IS_DIRECTORY();
     protected abstract TableField<D, String> TDirectory_NAME();
 
+    protected abstract UpdatableTable<T> TTriggers();
+    protected abstract TableField<T, Integer> TTriggers_ID();
+    protected abstract TableField<T, Integer> TTriggers_COUNTER();
+
     protected abstract Field<? extends Number> FAuthorExistsField(String authorName);
     protected abstract Field<? extends Number> FOneField();
     protected abstract Field<? extends Number> FNumberField(Number n);
@@ -475,9 +482,9 @@ public abstract class jOOQAbstractTest<
     protected abstract Field<Integer[]> FArrays1Field(Field<Integer[]> array);
     protected abstract Field<Long[]> FArrays2Field(Field<Long[]> array);
     protected abstract Field<String[]> FArrays3Field(Field<String[]> array);
-    protected abstract <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array);
-    protected abstract <T extends ArrayRecord<Long>> Field<T> FArrays2Field_R(Field<T> array);
-    protected abstract <T extends ArrayRecord<String>> Field<T> FArrays3Field_R(Field<T> array);
+    protected abstract <Z extends ArrayRecord<Integer>> Field<Z> FArrays1Field_R(Field<Z> array);
+    protected abstract <Z extends ArrayRecord<Long>> Field<Z> FArrays2Field_R(Field<Z> array);
+    protected abstract <Z extends ArrayRecord<String>> Field<Z> FArrays3Field_R(Field<Z> array);
 
     protected abstract boolean supportsOUTParameters();
     protected abstract boolean supportsReferences();
@@ -937,17 +944,31 @@ public abstract class jOOQAbstractTest<
         // Test correct source code generation for the meta model
         Schema schema = TAuthor().getSchema();
         if (schema != null) {
-            if (cSequences() == null) {
-                assertEquals(0, schema.getSequences().size());
+            int sequences = 0;
+
+            if (cSequences() != null) {
+                sequences++;
+
+                // DB2 has an additional sequence for the T_TRIGGERS table
+                if (getDialect() == SQLDialect.DB2) {
+                    sequences++;
+                }
             }
-            else {
-                assertEquals(1, schema.getSequences().size());
-            }
+
+
+            assertEquals(sequences, schema.getSequences().size());
+
+
 
             int tables = 15;
 
             // The additional T_DIRECTORY table for recursive queries
             if (supportsRecursiveQueries()) {
+                tables++;
+            }
+
+            // The additional T_TRIGGERS table for INSERT .. RETURNING
+            if (TTriggers() != null) {
                 tables++;
             }
 
@@ -2774,8 +2795,8 @@ public abstract class jOOQAbstractTest<
     }
 
     // Generic type safety...
-    private final <T extends UDTRecord<?>> void addAddressValue(StoreQuery<?> q, Field<T> field) throws Exception {
-        Class<? extends T> addressType = field.getType();
+    private final <Z extends UDTRecord<?>> void addAddressValue(StoreQuery<?> q, Field<Z> field) throws Exception {
+        Class<? extends Z> addressType = field.getType();
         Class<?> countryType = addressType.getMethod("getCountry").getReturnType();
         Class<?> streetType = addressType.getMethod("getStreet").getReturnType();
 
@@ -2788,7 +2809,7 @@ public abstract class jOOQAbstractTest<
         }
 
         Object street = streetType.newInstance();
-        T address = addressType.newInstance();
+        Z address = addressType.newInstance();
 
         streetType.getMethod("setStreet", String.class).invoke(street, "Bahnhofstrasse");
         streetType.getMethod("setNo", String.class).invoke(street, "1");
@@ -3539,6 +3560,56 @@ public abstract class jOOQAbstractTest<
         record.setValue(T785_NAME(), "N");
         assertEquals(2, record.deleteUsing(T785_NAME()));
         assertEquals(0, create().fetch(T785()).size());
+    }
+
+    @Test
+    public void testInsertReturning() throws Exception {
+        if (TTriggers() == null) {
+            log.info("SKIPPING", "INSERT RETURNING tests");
+            return;
+        }
+
+        switch (getDialect()) {
+            case INGRES: // TODO [#808]
+            case SQLITE: // TODO [#809]
+            case SYBASE: // TODO [#810]
+                log.info("SKIPPING", "INSERT RETURNING tests - JDBC driver did not implement this yet");
+                return;
+        }
+
+        InsertQuery<T> query;
+
+        // Without RETURNING clause
+        query = create().insertQuery(TTriggers());
+        query.addValue(TTriggers_COUNTER(), 0);
+        assertEquals(1, query.execute());
+        assertNull(query.getReturned());
+
+        // Check if the trigger works correctly
+        assertEquals(1, create().selectFrom(TTriggers()).fetch().size());
+        assertEquals(1, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
+        assertEquals(2, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
+
+        // Returning all fields
+        query = create().insertQuery(TTriggers());
+        query.addValue(TTriggers_COUNTER(), 0);
+        query.setReturning();
+        assertEquals(1, query.execute());
+        assertNotNull(query.getReturned());
+        assertEquals(2, (int) query.getReturned().getValue(TTriggers_ID()));
+        assertEquals(4, (int) query.getReturned().getValue(TTriggers_COUNTER()));
+
+        // Returning only the ID field
+        query = create().insertQuery(TTriggers());
+        query.addValue(TTriggers_COUNTER(), 0);
+        query.setReturning(TTriggers_ID());
+        assertEquals(1, query.execute());
+        assertNotNull(query.getReturned());
+        assertEquals(3, (int) query.getReturned().getValue(TTriggers_ID()));
+        assertNull(query.getReturned().getValue(TTriggers_COUNTER()));
+
+        query.getReturned().refresh();
+        assertEquals(6, (int) query.getReturned().getValue(TTriggers_COUNTER()));
     }
 
     @Test
@@ -5080,7 +5151,7 @@ public abstract class jOOQAbstractTest<
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T runSerialisation(T value) throws Exception {
+    private <Z> Z runSerialisation(Z value) throws Exception {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ObjectOutputStream o = new ObjectOutputStream(out);
         o.writeObject(value);
@@ -5088,7 +5159,7 @@ public abstract class jOOQAbstractTest<
 
         ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
         ObjectInputStream i = new ObjectInputStream(in);
-        return (T) i.readObject();
+        return (Z) i.readObject();
     }
 
     @Test

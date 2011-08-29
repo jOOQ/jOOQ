@@ -68,10 +68,16 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
 
             String name = record.getValueAsString("name");
             String dataType = record.getValueAsString("type")
-                                    .replaceAll("\\(\\d+\\)", "")
-                                    .replaceAll(" identity", "");
+                                    .replaceAll("\\(\\d+\\)", "");
             Number precision = parsePrecision(record.getValueAsString("type"));
             Number scale = parseScale(record.getValueAsString("type"));
+
+            // SQLite identities are primary keys whose tables are mentioned in
+            // sqlite_sequence
+            boolean pk = record.getValueAsBoolean("pk");
+            boolean identity = pk && create()
+                .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
+                .getValue(0, Boolean.class);
 
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
             ColumnDefinition column = new DefaultColumnDefinition(
@@ -79,7 +85,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 name,
                 position,
                 type,
-                false,
+                identity,
                 null);
 
             result.add(column);

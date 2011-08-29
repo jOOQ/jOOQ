@@ -167,7 +167,7 @@ CREATE TABLE t_book (
 /
 
 CREATE TABLE t_book_store (
-  id INT identity, 
+  id INT, 
   name VARCHAR(400) NOT NULL,
   
   CONSTRAINT uk_t_book_store_name PRIMARY KEY(name)

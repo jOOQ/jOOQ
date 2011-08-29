@@ -37,6 +37,7 @@ package org.jooq.util.sqlite;
 
 import java.sql.Connection;
 
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.impl.Factory;
@@ -73,5 +74,16 @@ public class SQLiteFactory extends Factory {
      */
     public SQLiteFactory(Connection connection) {
         super(connection, SQLDialect.SQLITE);
+    }
+
+    // -------------------------------------------------------------------------
+    // General pseudo-columns
+    // -------------------------------------------------------------------------
+
+    /**
+     * Retrieve the SQLite-specific <code>ROWID</code> pseudo-field
+     */
+    public final Field<Long> rowid() {
+        return field("rowid", Long.class);
     }
 }

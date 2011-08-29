@@ -35,20 +35,33 @@ DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
 
 CREATE TABLE t_triggers (
-  id int not null,
+  id_generated int IDENTITY not null,
+  id int null,
   counter int null,
   
-  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+  CONSTRAINT pk_t_triggers UNIQUE (ID)
 )
 /
 
-CREATE TRIGGER t_triggers_trigger
+CREATE OR REPLACE TRIGGER t_triggers_reset
+BEFORE INSERT
 ON t_triggers
-FOR INSERT AS
-    insert into t_triggers
-    select case when max(id) is null then 1 else max(id) + 1 end, 
-           case when max(counter) is null then 2 else max(counter) + 2 end
-    from t_triggers;
+REFERENCING NEW AS n
+FOR EACH ROW
+BEGIN
+	set n.id = 0;
+END
+/
+
+CREATE TRIGGER t_triggers_trigger
+AFTER INSERT
+ON t_triggers
+FOR EACH ROW
+BEGIN
+	update t_triggers
+    set id = id_generated,
+        counter = id_generated * 2;
+END
 /
 
 CREATE TABLE t_language (

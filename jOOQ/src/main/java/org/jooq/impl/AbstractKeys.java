@@ -44,6 +44,8 @@ import org.jooq.UniqueKey;
 
 /**
  * A base class for generated static references
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */

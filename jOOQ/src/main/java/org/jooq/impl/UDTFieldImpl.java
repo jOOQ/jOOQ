@@ -51,6 +51,10 @@ import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 
 /**
+ * A common base type for UDT attributes / fields
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T> {

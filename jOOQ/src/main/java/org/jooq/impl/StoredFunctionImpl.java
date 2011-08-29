@@ -52,6 +52,10 @@ import org.jooq.Schema;
 import org.jooq.StoredFunction;
 
 /**
+ * A common base class for stored functions
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class StoredFunctionImpl<T> extends AbstractStoredObject implements StoredFunction<T> {

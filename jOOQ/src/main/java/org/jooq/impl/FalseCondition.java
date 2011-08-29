@@ -44,13 +44,12 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
 
-
 /**
  * @author Lukas Eder
  */
-public class FalseCondition extends AbstractCondition {
+class FalseCondition extends AbstractCondition {
 
-    private static final long          serialVersionUID = -3972466479081463547L;
+    private static final long serialVersionUID = -3972466479081463547L;
 
     @Override
     public void bind(BindContext context) throws SQLException {}
@@ -65,6 +64,5 @@ public class FalseCondition extends AbstractCondition {
         return Collections.emptyList();
     }
 
-    FalseCondition() {
-    }
+    FalseCondition() {}
 }

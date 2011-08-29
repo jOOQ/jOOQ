@@ -47,6 +47,10 @@ import org.jooq.Schema;
 import org.jooq.StoredProcedure;
 
 /**
+ * A common base class for stored procedures
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public abstract class AbstractStoredProcedure extends AbstractStoredObject implements StoredProcedure {

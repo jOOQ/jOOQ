@@ -52,6 +52,10 @@ import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.util.oracle.OracleUtils;
 
 /**
+ * A common base class for Oracle ARRAY types
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<T> {

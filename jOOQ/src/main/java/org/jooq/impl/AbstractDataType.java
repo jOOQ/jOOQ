@@ -57,6 +57,15 @@ import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.UDTRecord;
 
+/**
+ * A common base class for data types.
+ * <p>
+ * This also acts as a static data type registry for jOOQ internally.
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
+ * @author Lukas Eder
+ */
 @SuppressWarnings("unchecked")
 public abstract class AbstractDataType<T> implements DataType<T> {
 

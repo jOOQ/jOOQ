@@ -52,6 +52,13 @@ import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 
+/**
+ * A common base type for UDT's
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
+ * @author Lukas Eder
+ */
 public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements UDT<R> {
 
     private static final long               serialVersionUID = -2208672099190913126L;

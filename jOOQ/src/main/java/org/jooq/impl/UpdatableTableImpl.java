@@ -49,6 +49,8 @@ import org.jooq.UpdatableTable;
 
 /**
  * A table implementation for a table holding a primary key
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */

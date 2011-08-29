@@ -52,6 +52,8 @@ import org.jooq.UpdateQuery;
 
 /**
  * A record implementation for a record originating from a single table
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */

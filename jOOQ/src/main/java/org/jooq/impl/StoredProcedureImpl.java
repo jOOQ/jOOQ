@@ -58,6 +58,10 @@ import org.jooq.Schema;
 import org.jooq.UDTRecord;
 
 /**
+ * A common base class for stored procedures
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class StoredProcedureImpl extends AbstractStoredProcedure {

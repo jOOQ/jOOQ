@@ -60,9 +60,17 @@ import org.jooq.util.sybase.SybaseDataType;
 
 
 /**
+ * The SQL standard data types, as described in {@link Types}.
+ * <p>
+ * These types are usually the ones that are referenced by generated source
+ * code. Most RDBMS have an almost 1:1 mapping between their vendor-specific
+ * types and the ones in this class (except Oracle). Some RDBMS also have
+ * extensions, e.g. for geospacial data types. See the dialect-specific data
+ * type classes for more information.
+ *
  * @author Lukas Eder
  */
-public class SQLDataType<T> extends AbstractDataType<T> {
+public final class SQLDataType<T> extends AbstractDataType<T> {
 
     /**
      * Generated UID

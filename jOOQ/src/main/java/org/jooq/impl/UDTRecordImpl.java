@@ -46,6 +46,8 @@ import org.jooq.UDTRecord;
 
 /**
  * A record implementation for a record originating from a single UDT
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */

@@ -1031,8 +1031,7 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Execute a new query holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
+     * Execute a new query holding plain SQL.
      * <p>
      * Example (Postgres):
      * <p>
@@ -1079,6 +1078,58 @@ public class Factory implements Configuration {
      */
     public final Result<Record> fetch(String sql, Object... bindings) throws SQLException {
         return new SQLResultQuery(this, sql, bindings).fetch();
+    }
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code>
+     * Example (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws SQLException if more than one record was found
+     */
+    public final Record fetchOne(String sql) throws SQLException {
+        return fetchOne(sql, new Object[0]);
+    }
+
+    /**
+     * Execute a new query holding plain SQL. There must be as many binding
+     * variables contained in the SQL, as passed in the bindings parameter
+     * <p>
+     * Example (Postgres):
+     * <p>
+     * <code><pre>
+     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code>
+     * Example (SQLite):
+     * <p>
+     * <code><pre>
+     * String sql = "pragma table_info('my_table')";</pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return A query wrapping the plain SQL
+     * @throws SQLException if more than one record was found
+     */
+    public final Record fetchOne(String sql, Object... bindings) throws SQLException {
+        return new SQLResultQuery(this, sql, bindings).fetchOne();
     }
 
     // -------------------------------------------------------------------------

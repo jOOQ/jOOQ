@@ -324,10 +324,8 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                 case DERBY:
                 case H2:
                 case MYSQL:
-                    return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
                 case SQLSERVER:
-                    return connection.prepareStatement(sql, new String[] { "id_generated" });
+                    return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
                 // The default is to return all requested fields directly
                 default: {

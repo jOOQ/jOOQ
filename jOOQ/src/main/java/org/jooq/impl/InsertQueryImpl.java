@@ -308,10 +308,13 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
             Connection connection = configuration.getConnection();
 
             switch (configuration.getDialect()) {
+
                 // Some JDBC drivers do not support generated keys altogether
                 case INGRES:
-                case SYBASE:
-                case SQLITE: {
+                case SQLITE:
+
+                // Sybase will select @@identity after the INSERT
+                case SYBASE: {
                     return super.prepare(configuration, sql);
                 }
 
@@ -341,7 +344,6 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     protected final int execute(Configuration configuration, PreparedStatement statement) throws SQLException {
         if (returning.isEmpty()) {
@@ -355,9 +357,15 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
                 // Some JDBC drivers do not support generated keys altogether
                 case INGRES:
-                case SYBASE:
                 case SQLITE: {
                     return super.execute(configuration, statement);
+                }
+
+                // Sybase can select @@identity after the insert
+                case SYBASE: {
+                    result = statement.executeUpdate();
+                    selectReturning(configuration, create(configuration).lastID());
+                    return result;
                 }
 
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
@@ -369,35 +377,8 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                     result = statement.executeUpdate();
                     rs = statement.getGeneratedKeys();
 
-                    if (rs.next() && getInto() instanceof UpdatableTable) {
-                        UpdatableTable<R> updatable = (UpdatableTable<R>) getInto();
-
-                        // This shouldn't be null, as relevant dialects should
-                        // return empty generated keys ResultSet
-                        if (updatable.getIdentity() != null) {
-                            Field<Number> id = (Field<Number>) updatable.getIdentity().getField();
-                            Number value = id.getDataType().convert(rs.getObject(1));
-                            returned = JooqUtil.newRecord(updatable, configuration);
-
-                            // Only the IDENTITY value was requested. No need for an
-                            // additional query
-                            if (returning.size() == 1 && returning.get(0).equals(id)) {
-                                ((AbstractRecord) returned).setValue(id, new Value<Number>(value));
-                            }
-
-                            // Other values are requested, too. Run another query
-                            else {
-                                Record record =
-                                create(configuration).select(returning)
-                                                     .from(updatable)
-                                                     .where(id.equal(value))
-                                                     .fetchOne();
-
-                                for (Field<?> field : returning) {
-                                    setValue(record, field);
-                                }
-                            }
-                        }
+                    if (rs.next()) {
+                        selectReturning(configuration, rs.getObject(1));
                     }
 
                     return result;
@@ -426,6 +407,44 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
             CursorImpl<R> cursor = new CursorImpl<R>(configuration, returning, rs, statement, getInto().getRecordType());
             returned = cursor.fetchOne();
             return result;
+        }
+    }
+
+    /**
+     * Get the returning record in those dialects that do not support fetching
+     * arbitrary fields from JDBC's {@link Statement#getGeneratedKeys()} method.
+     */
+    @SuppressWarnings("unchecked")
+    private void selectReturning(Configuration configuration, Object o) throws SQLException {
+        if (getInto() instanceof UpdatableTable) {
+            UpdatableTable<R> updatable = (UpdatableTable<R>) getInto();
+
+            // This shouldn't be null, as relevant dialects should
+            // return empty generated keys ResultSet
+            if (updatable.getIdentity() != null) {
+                Field<Number> id = (Field<Number>) updatable.getIdentity().getField();
+                Number value = id.getDataType().convert(o);
+                returned = JooqUtil.newRecord(updatable, configuration);
+
+                // Only the IDENTITY value was requested. No need for an
+                // additional query
+                if (returning.size() == 1 && returning.get(0).equals(id)) {
+                    ((AbstractRecord) returned).setValue(id, new Value<Number>(value));
+                }
+
+                // Other values are requested, too. Run another query
+                else {
+                    Record record =
+                    create(configuration).select(returning)
+                                         .from(updatable)
+                                         .where(id.equal(value))
+                                         .fetchOne();
+
+                    for (Field<?> field : returning) {
+                        setValue(record, field);
+                    }
+                }
+            }
         }
     }
 

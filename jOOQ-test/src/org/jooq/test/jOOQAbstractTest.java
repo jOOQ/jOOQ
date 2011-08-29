@@ -3571,8 +3571,7 @@ public abstract class jOOQAbstractTest<
 
         switch (getDialect()) {
             case INGRES: // TODO [#808]
-            case SQLITE: // TODO [#809]
-            case SYBASE: // TODO [#810]
+            case SQLITE: // TODO [#810]
                 log.info("SKIPPING", "INSERT RETURNING tests - JDBC driver did not implement this yet");
                 return;
         }

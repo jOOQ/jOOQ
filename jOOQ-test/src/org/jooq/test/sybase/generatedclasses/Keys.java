@@ -14,6 +14,7 @@ package org.jooq.test.sybase.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
+	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sybase.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_t_book_store = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.sybase.generatedclasses.tables.TBookStore.ID);
 
 	// UNIQUE and PRIMARY KEY definitions

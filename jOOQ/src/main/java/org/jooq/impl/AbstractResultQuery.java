@@ -214,14 +214,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchAny() throws SQLException {
-        // TODO: restrict ROWNUM = 1
-        Result<R> r = fetch();
+        Cursor<R> c = fetchLazy();
 
-        if (r.size() > 0) {
-            return r.get(0);
+        try {
+            return c.fetchOne();
         }
-
-        return null;
+        finally {
+            c.close();
+        }
     }
 
     @Override

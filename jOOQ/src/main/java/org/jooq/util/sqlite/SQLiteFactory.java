@@ -81,9 +81,14 @@ public class SQLiteFactory extends Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Retrieve the SQLite-specific <code>ROWID</code> pseudo-field
+     * Retrieve the SQLite-specific <code>_rowid_</code> pseudo-field.
+     * <code>_rowid_</code> was chosen over <code>rowid</code> as it is less
+     * likely to be used as an actual table column in client code.
+     *
+     * @see <a
+     *      href="http://www.sqlite.org/lang_createtable.html#rowid">http://www.sqlite.org/lang_createtable.html#rowid</a>
      */
     public final Field<Long> rowid() {
-        return field("rowid", Long.class);
+        return field("_rowid_", Long.class);
     }
 }

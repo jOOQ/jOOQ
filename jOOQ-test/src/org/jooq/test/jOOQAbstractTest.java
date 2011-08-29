@@ -3576,7 +3576,12 @@ public abstract class jOOQAbstractTest<
                 return;
         }
 
+        // Non-DSL querying
+        // ----------------
+
         InsertQuery<T> query;
+
+        int ID = 0;
 
         // Without RETURNING clause
         query = create().insertQuery(TTriggers());
@@ -3586,8 +3591,8 @@ public abstract class jOOQAbstractTest<
 
         // Check if the trigger works correctly
         assertEquals(1, create().selectFrom(TTriggers()).fetch().size());
-        assertEquals(1, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
-        assertEquals(2, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
+        assertEquals(++ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
+        assertEquals(2*ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
 
         // Returning all fields
         query = create().insertQuery(TTriggers());
@@ -3595,8 +3600,8 @@ public abstract class jOOQAbstractTest<
         query.setReturning();
         assertEquals(1, query.execute());
         assertNotNull(query.getReturned());
-        assertEquals(2, (int) query.getReturned().getValue(TTriggers_ID()));
-        assertEquals(4, (int) query.getReturned().getValue(TTriggers_COUNTER()));
+        assertEquals(++ID, (int) query.getReturned().getValue(TTriggers_ID()));
+        assertEquals(2*ID, (int) query.getReturned().getValue(TTriggers_COUNTER()));
 
         // Returning only the ID field
         query = create().insertQuery(TTriggers());
@@ -3604,11 +3609,23 @@ public abstract class jOOQAbstractTest<
         query.setReturning(TTriggers_ID());
         assertEquals(1, query.execute());
         assertNotNull(query.getReturned());
-        assertEquals(3, (int) query.getReturned().getValue(TTriggers_ID()));
+        assertEquals(++ID, (int) query.getReturned().getValue(TTriggers_ID()));
         assertNull(query.getReturned().getValue(TTriggers_COUNTER()));
 
         query.getReturned().refresh();
-        assertEquals(6, (int) query.getReturned().getValue(TTriggers_COUNTER()));
+        assertEquals(2*ID, (int) query.getReturned().getValue(TTriggers_COUNTER()));
+
+        // TODO [#813] DSL querying
+        // ------------------------
+
+        // store() and similar methods
+        T triggered = create().newRecord(TTriggers());
+        triggered.setValue(TTriggers_COUNTER(), 0);
+        assertEquals(1, triggered.store());
+        assertEquals(++ID, (int) triggered.getValue(TTriggers_ID()));
+        assertEquals(0, (int) triggered.getValue(TTriggers_COUNTER()));
+        triggered.refresh();
+        assertEquals(2*ID, (int) triggered.getValue(TTriggers_COUNTER()));
     }
 
     @Test

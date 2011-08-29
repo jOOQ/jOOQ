@@ -36,6 +36,10 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -110,8 +114,16 @@ public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordIm
     }
 
     @Override
-    final Identity<R, ? extends Number> identity() {
-        return getTable().getIdentity();
+    List<Field<?>> getKey() {
+        Set<Field<?>> result = new LinkedHashSet<Field<?>>();
+
+        Identity<R, ?> identity = getTable().getIdentity();
+        if (identity != null) {
+            result.add(identity.getField());
+        }
+
+        result.addAll(getMainKey().getFields());
+        return new ArrayList<Field<?>>(result);
     }
 
     @Override

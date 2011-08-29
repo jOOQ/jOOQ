@@ -517,6 +517,7 @@ public abstract class jOOQAbstractTest<
     }
 
     // IMPORTANT! Make this the first test, to prevent side-effects
+    @SuppressWarnings("deprecation")
     @Test
     public void testInsertIdentity() throws Exception {
         switch (getDialect()) {
@@ -3571,7 +3572,6 @@ public abstract class jOOQAbstractTest<
 
         switch (getDialect()) {
             case INGRES: // TODO [#808]
-            case SQLITE: // TODO [#810]
                 log.info("SKIPPING", "INSERT RETURNING tests - JDBC driver did not implement this yet");
                 return;
         }

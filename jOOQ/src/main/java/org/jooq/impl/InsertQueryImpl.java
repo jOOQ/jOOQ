@@ -62,6 +62,7 @@ import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.util.sqlite.SQLiteFactory;
 
 /**
  * @author Lukas Eder
@@ -356,9 +357,29 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
             switch (configuration.getDialect()) {
 
                 // Some JDBC drivers do not support generated keys altogether
-                case INGRES:
-                case SQLITE: {
+                case INGRES: {
                     return super.execute(configuration, statement);
+                }
+
+                // SQLite can select _rowid_ after the insert
+                case SQLITE: {
+                    result = statement.executeUpdate();
+                    returned = JooqUtil.newRecord(getInto(), configuration);
+
+                    SQLiteFactory create = new SQLiteFactory(configuration.getConnection());
+                    Field<Long> rowid = create.rowid();
+
+                    Record record =
+                    create.select(returning)
+                          .from(getInto())
+                          .where(rowid.equal(rowid.getDataType().convert(create.lastID())))
+                          .fetchOne();
+
+                    for (Field<?> field : returning) {
+                        setValue(record, field);
+                    }
+
+                    return result;
                 }
 
                 // Sybase can select @@identity after the insert

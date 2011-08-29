@@ -1598,7 +1598,19 @@ public class Factory implements Configuration {
      *
      * @return The last inserted ID. This may be <code>null</code> in some
      *         dialects, if no such number is available.
+     * @deprecated - 1.6.6 - This is not a precise way of fetching generated
+     *             identity values, because it assumes that:
+     *             <ul>
+     *             <li>identity values are increased by one</li> <li>
+     *             transactional integrity is given (no race conditions
+     *             occurred)</li>
+     *             </ul>
+     *             <p>
+     *             Use <code>INSERT .. RETURNING</code> instead, in
+     *             {@link InsertQuery#getReturned()}, or {@link #lastID()} if
+     *             your RDBMS supports such a clause.
      */
+    @Deprecated
     public final <T extends Number> T lastID(Identity<?, T> identity) throws SQLException {
         return select(identity.getField().max()).from(identity.getTable()).fetchOne(identity.getField().max());
     }

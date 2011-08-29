@@ -49,6 +49,10 @@ import org.jooq.Schema;
 import org.jooq.Table;
 
 /**
+ * A common base type for tables
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class TableImpl<R extends Record> extends AbstractTable<R> {

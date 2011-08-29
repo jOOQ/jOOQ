@@ -49,6 +49,10 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
 /**
+ * A common base class for stored procedure parameters
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {

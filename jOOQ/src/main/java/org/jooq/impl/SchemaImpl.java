@@ -52,6 +52,10 @@ import org.jooq.Table;
 import org.jooq.UDT;
 
 /**
+ * A common base class for database schemata
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class SchemaImpl extends AbstractNamedQueryPart implements Schema {

@@ -44,6 +44,10 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 
 /**
+ * A common base class for sequences
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
+ *
  * @author Lukas Eder
  */
 public class SequenceImpl implements Sequence {

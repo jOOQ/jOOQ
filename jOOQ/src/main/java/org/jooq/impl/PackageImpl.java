@@ -52,6 +52,8 @@ import org.jooq.Schema;
  * functions)
  * <p>
  * Currently, this is only supported for the {@link SQLDialect#ORACLE} dialect.
+ * <p>
+ * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */

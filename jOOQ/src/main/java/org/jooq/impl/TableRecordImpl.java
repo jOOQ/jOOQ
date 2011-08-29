@@ -36,12 +36,13 @@
 package org.jooq.impl;
 
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 
 import org.jooq.ConditionProvider;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
-import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
@@ -130,20 +131,17 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             }
         }
 
-        // TODO [#814] Reload also the primary key, as it might be
-        // 1. different from the identity
-        // 2. initialised by a trigger
-        Identity<R, ? extends Number> identity = identity();
-        insert.setReturning(identity);
+        // [#814] Refresh identity and/or main unique key values
+        List<Field<?>> key = getKey();
+        insert.setReturning(key);
         int result = insert.execute();
 
         // If an insert was successful try fetching the generated IDENTITY value
-        if (identity != null && result > 0) {
+        if (!key.isEmpty() && result > 0) {
             if (insert.getReturned() != null) {
-                setValue0(identity.getField(), new Value<Number>(insert.getReturned().getValue(identity.getField())));
-            }
-            else {
-                setValue0(identity.getField(), new Value<Number>(create().lastID(identity)));
+                for (Field<?> field : key) {
+                    setValue0(field, new Value<Object>(insert.getReturned().getValue(field)));
+                }
             }
         }
 
@@ -153,8 +151,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     /**
      * Subclasses may override this method to provide an identity
      */
-    Identity<R, ? extends Number> identity() {
-        return null;
+    List<Field<?>> getKey() {
+        return Collections.emptyList();
     }
 
     @SuppressWarnings("unchecked")

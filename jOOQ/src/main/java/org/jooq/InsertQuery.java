@@ -156,9 +156,12 @@ public interface InsertQuery<R extends TableRecord<R>> extends StoreQuery<R>, In
      * column values as "generated key". If other fields are requested, a second
      * statement is issued. Client code must assure transactional integrity
      * between the two statements.</li>
+     * <li>Sybase and SQLite allow for retrieving IDENTITY values as
+     * <code>@@identity</code> or <code>last_inserted_rowid()</code> values.
+     * Those values are fetched in a separate <code>SELECT</code> statement. If
+     * other fields are requested, a second statement is issued. Client code
+     * must assure transactional integrity between the two statements.</li>
      * <li>Ingres support will be added with #808</li>
-     * <li>Sybase support will be added with #809</li>
-     * <li>SQLite support will be added with #810</li>
      * </ul>
      */
     R getReturned();

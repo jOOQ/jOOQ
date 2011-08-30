@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import java.sql.SQLException;
 
 /**
  * This type is used for the {@link Insert}'s DSL API.
@@ -43,38 +43,37 @@ import org.jooq.impl.Factory;
  * Example: <code><pre>
  * Factory create = new Factory();
  *
+ * TableRecord<?> record =
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
- *       .values(value3, value4)
- *       .onDuplicateKeyUpdate()
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .execute();
+ *       .returning(field1)
+ *       .fetchOne();
  * </pre></code>
+ * <p>
+ * This implemented differently for every dialect:
+ * <ul>
+ * <li>Postgres has native support for <code>INSERT .. RETURNING</code> clauses</li>
+ * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
+ * column as "generated key" in one statement</li>
+ * <li>Derby, H2, MySQL, SQL Server only allow for retrieving IDENTITY column
+ * values as "generated key". If other fields are requested, a second statement
+ * is issued. Client code must assure transactional integrity between the two
+ * statements.</li>
+ * <li>Sybase and SQLite allow for retrieving IDENTITY values as
+ * <code>@@identity</code> or <code>last_inserted_rowid()</code> values. Those
+ * values are fetched in a separate <code>SELECT</code> statement. If other
+ * fields are requested, a second statement is issued. Client code must assure
+ * transactional integrity between the two statements.</li>
+ * <li>Ingres support will be added with #808</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
-public interface InsertOnDuplicateStep extends InsertFinalStep, InsertReturningStep {
+public interface InsertResultStep extends Insert {
 
     /**
-     * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.
-     * <p>
-     * This will try to <code>INSERT</code> a record. If there is a primary key
-     * or unique key in this <code>INSERT</code> statement's affected table that
-     * matches the value being inserted, then the <code>UPDATE</code> clause is
-     * executed instead.
-     * <p>
-     * MySQL is the only database that natively implements this type of clause.
-     * Some other databases simulate this clause using a <code>MERGE</code>
-     * statement. The conditions for a RDBMS to simulate this clause are:
-     * <ul>
-     * <li>The <code>INSERT</code> statement's table is an
-     * {@link UpdatableTable}</li>
-     * <li>The RDBMS supports the <code>MERGE</code> clause (see
-     * {@link Factory#mergeInto(Table)}).</li>
-     * </ul>
-     * <p>
-     * These are the dialects that fulfill the above requirements:
+     * The record holding returned values as specified by the
+     * {@link InsertReturningStep}
      */
-    InsertOnDuplicateSetStep onDuplicateKeyUpdate();
+    TableRecord<?> fetchOne() throws SQLException;
 }

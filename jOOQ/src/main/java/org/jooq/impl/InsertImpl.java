@@ -49,6 +49,7 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
+import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
@@ -65,7 +66,8 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     // Cascading interface implementations for Insert behaviour
     InsertValuesStep,
     InsertSetMoreStep,
-    InsertOnDuplicateSetMoreStep {
+    InsertOnDuplicateSetMoreStep,
+    InsertResultStep {
 
     /**
      * Generated UID
@@ -184,5 +186,29 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     public final InsertSetStep newRecord() {
         delegate.newRecord();
         return this;
+    }
+
+    @Override
+    public final InsertResultStep returning() {
+        delegate.setReturning();
+        return this;
+    }
+
+    @Override
+    public final InsertResultStep returning(Field<?>... f) {
+        delegate.setReturning(f);
+        return this;
+    }
+
+    @Override
+    public final InsertResultStep returning(Collection<? extends Field<?>> f) {
+        delegate.setReturning(f);
+        return this;
+    }
+
+    @Override
+    public final TableRecord<?> fetchOne() throws SQLException {
+        delegate.execute();
+        return delegate.getReturned();
     }
 }

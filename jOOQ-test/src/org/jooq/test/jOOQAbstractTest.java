@@ -3563,6 +3563,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(0, create().fetch(T785()).size());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testInsertReturning() throws Exception {
         if (TTriggers() == null) {
@@ -3617,6 +3618,26 @@ public abstract class jOOQAbstractTest<
 
         // TODO [#813] DSL querying
         // ------------------------
+        TableRecord<T> returned = (TableRecord<T>)
+        create().insertInto(TTriggers(), TTriggers_COUNTER())
+                .values(0)
+                .returning()
+                .fetchOne();
+        assertNotNull(returned);
+        assertEquals(++ID, (int) returned.getValue(TTriggers_ID()));
+        assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
+
+        returned = (TableRecord<T>)
+        create().insertInto(TTriggers(), TTriggers_COUNTER())
+                .values(0)
+                .returning(TTriggers_ID())
+                .fetchOne();
+        assertNotNull(returned);
+        assertEquals(++ID, (int) returned.getValue(TTriggers_ID()));
+        assertNull(returned.getValue(TTriggers_COUNTER()));
+
+        returned.refreshUsing(TTriggers_ID());
+        assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
 
         // store() and similar methods
         T triggered = create().newRecord(TTriggers());

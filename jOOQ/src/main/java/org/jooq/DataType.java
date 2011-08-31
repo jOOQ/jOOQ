@@ -130,6 +130,16 @@ public interface DataType<T> extends Serializable {
     String getCastTypeName(Configuration configuration);
 
     /**
+     * Retrieve the dialect-specific type name associated with this data type
+     * used for casting
+     * <p>
+     * This is useful for some dialects that have specialised type names for
+     * cast expressions. Other dialects require type-length binding when
+     * casting, (e.g. DECIMAL(20,5))
+     */
+    String getCastTypeName(Configuration configuration, int precision, int scale);
+
+    /**
      * Retrieve the underlying {@link SQLDialect}
      */
     SQLDialect getDialect();

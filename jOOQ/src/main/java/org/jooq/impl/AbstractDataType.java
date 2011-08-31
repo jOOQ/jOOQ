@@ -302,6 +302,24 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final String getCastTypeName(Configuration configuration, int precision, int scale) {
+
+        // Remove existing precision / scale information, first
+        String result = getCastTypeName(configuration).replaceAll("\\([^\\)]*\\)", "");
+
+        if (precision != 0) {
+            if (scale != 0) {
+                result += "(" + precision + ", " + scale + ")";
+            }
+            else {
+                result += "(" + precision + ")";
+            }
+        }
+
+        return result;
+    }
+
+    @Override
     public String getCastTypeName(Configuration configuration) {
         return getDataType(configuration).getCastTypeName();
     }

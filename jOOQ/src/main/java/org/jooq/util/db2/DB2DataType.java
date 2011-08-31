@@ -99,7 +99,7 @@ public class DB2DataType<T> extends AbstractDataType<T> {
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DB2DataType<BigInteger> __BIGINTEGER = new DB2DataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DB2DataType<BigInteger> __BIGINTEGER = new DB2DataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

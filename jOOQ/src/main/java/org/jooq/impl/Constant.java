@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -89,17 +90,54 @@ class Constant<T> extends AbstractField<T> {
                     case INGRES:
 
                     // [#632] Sybase needs explicit casting in very rare cases.
-                    case SYBASE:
-                        context.sql("cast(? as ")
-                               .sql(getDataType(context).getCastTypeName(context))
-                               .sql(")");
+                    case SYBASE: {
+                        toSQLCast(context);
                         return;
+                    }
                 }
             }
         }
 
         // Most RDBMS can handle constants as typeless literals
         FieldTypeHelper.toSQL(context, value, this);
+    }
+
+    /**
+     * Render the bind variable including a cast, if necessary
+     */
+    private void toSQLCast(RenderContext context) {
+        switch (context.getDialect()) {
+
+            // [#822] Some RDBMS need precision / scale information on BigDecimals
+            case DB2:
+            case DERBY:
+            case HSQLDB: {
+
+                // Add precision / scale on BigDecimals
+                if (getType() == BigDecimal.class) {
+                    int scale = ((BigDecimal) value).scale();
+                    int precision = scale + ((BigDecimal) value).precision();
+
+                    context.sql("cast(? as ")
+                           .sql(getDataType(context).getCastTypeName(context, precision, scale))
+                           .sql(")");
+                    break;
+                }
+
+                // No break, fall through
+                else {
+                }
+            }
+
+            // These dialects don't need precision / scale info on BigDecimals
+            case H2:
+            case INGRES:
+            case SYBASE: {
+                context.sql("cast(? as ")
+                       .sql(getDataType(context).getCastTypeName(context))
+                       .sql(")");
+            }
+        }
     }
 
     @Override

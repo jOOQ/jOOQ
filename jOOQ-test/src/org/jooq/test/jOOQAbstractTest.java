@@ -95,6 +95,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
+import org.jooq.InsertSetMoreStep;
 import org.jooq.Loader;
 import org.jooq.MasterDataType;
 import org.jooq.MergeFinalStep;
@@ -416,6 +417,20 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<T725, Integer> T725_ID();
     protected abstract TableField<T725, byte[]> T725_LOB();
     protected abstract Table<T639> T639();
+    protected abstract TableField<T639, Integer> T639_ID();
+    protected abstract TableField<T639, BigDecimal> T639_BIG_DECIMAL();
+    protected abstract TableField<T639, BigInteger> T639_BIG_INTEGER();
+    protected abstract TableField<T639, Byte> T639_BYTE();
+    protected abstract TableField<T639, Byte> T639_BYTE_DECIMAL();
+    protected abstract TableField<T639, Short> T639_SHORT();
+    protected abstract TableField<T639, Short> T639_SHORT_DECIMAL();
+    protected abstract TableField<T639, Integer> T639_INTEGER();
+    protected abstract TableField<T639, Integer> T639_INTEGER_DECIMAL();
+    protected abstract TableField<T639, Long> T639_LONG();
+    protected abstract TableField<T639, Long> T639_LONG_DECIMAL();
+    protected abstract TableField<T639, Double> T639_DOUBLE();
+    protected abstract TableField<T639, Float> T639_FLOAT();
+
     protected abstract Table<T785> T785();
     protected abstract TableField<T785, Integer> T785_ID();
     protected abstract TableField<T785, String> T785_NAME();
@@ -1123,6 +1138,71 @@ public abstract class jOOQAbstractTest<
                 assertEquals(SQLDataType.FLOAT, field.getDataType());
             }
         }
+    }
+
+    @Test
+    public void testNumbers() throws Exception {
+
+        // Insert some numbers
+        // -------------------
+        InsertSetMoreStep set =
+        create().insertInto(T639())
+                .set(T639_ID(), 1)
+                .set(T639_BIG_DECIMAL(), new BigDecimal("1234.5670"))
+                .set(T639_BIG_INTEGER(), new BigInteger("1234567890"))
+                .set(T639_BYTE_DECIMAL(), (byte) 2)
+                .set(T639_INTEGER(), 3)
+                .set(T639_INTEGER_DECIMAL(), 4)
+                .set(T639_LONG(), 5L)
+                .set(T639_LONG_DECIMAL(), 6L)
+                .set(T639_SHORT(), (short) 7)
+                .set(T639_SHORT_DECIMAL(), (short) 8);
+
+        if (T639_BYTE() != null) set.set(T639_BYTE(), (byte) 9);
+        if (T639_DOUBLE() != null) set.set(T639_DOUBLE(), 10.125);
+        if (T639_FLOAT() != null) set.set(T639_FLOAT(), 11.375f);
+
+        assertEquals(1, set.execute());
+
+        T639 record = create().fetchOne(T639());
+        assertEquals(1, (int) record.getValue(T639_ID()));
+        assertTrue(new BigDecimal("1234.567").compareTo(record.getValue(T639_BIG_DECIMAL())) == 0);
+        assertEquals(new BigInteger("1234567890"), record.getValue(T639_BIG_INTEGER()));
+        assertEquals(2, (byte) record.getValue(T639_BYTE_DECIMAL()));
+        assertEquals(3, (int) record.getValue(T639_INTEGER()));
+        assertEquals(4, (int) record.getValue(T639_INTEGER_DECIMAL()));
+        assertEquals(5L, (long) record.getValue(T639_LONG()));
+        assertEquals(6L, (long) record.getValue(T639_LONG_DECIMAL()));
+        assertEquals(7, (short) record.getValue(T639_SHORT()));
+        assertEquals(8, (short) record.getValue(T639_SHORT_DECIMAL()));
+
+        if (T639_BYTE() != null) assertEquals(9, (byte) record.getValue(T639_BYTE()));
+        if (T639_DOUBLE() != null) assertEquals(10.125, (double) record.getValue(T639_DOUBLE()));
+        if (T639_FLOAT() != null) assertEquals(11.375f, (float) record.getValue(T639_FLOAT()));
+
+        // Various BigDecimal tests
+        // ------------------------
+        create().insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
+                .values(2, new BigDecimal("123456789012345.67899"))
+                .values(3, new BigDecimal("999999999999999.99999"))
+                .values(4, new BigDecimal("1.00001"))
+                .values(5, new BigDecimal("0.00001"))
+                .values(6, new BigDecimal("0.000012"))
+                .execute();
+
+        Result<Record> result =
+        create().select(T639_ID(), T639_BIG_DECIMAL())
+                .from(T639())
+                .where(T639_ID().between(2, 6))
+                .orderBy(T639_ID())
+                .fetch();
+
+        assertEquals(Arrays.asList(2, 3, 4, 5, 6), result.getValues(0));
+        assertEquals(new BigDecimal("123456789012345.67899"), result.getValue(0, 1));
+        assertEquals(new BigDecimal("999999999999999.99999"), result.getValue(1, 1));
+        assertEquals(new BigDecimal("1.00001"), result.getValue(2, 1));
+        assertEquals(new BigDecimal("0.00001"), result.getValue(3, 1));
+        assertEquals(new BigDecimal("0.00001"), result.getValue(4, 1));
     }
 
     @Test
@@ -3447,7 +3527,7 @@ public abstract class jOOQAbstractTest<
         Number identity2 = new Integer(0);
         if (TBookStore().getIdentity() != null) {
             identity1 = store.getValue(TBookStore().getIdentity().getField());
-            assertNotNull(identity1);
+            assertNotNull(identity1); // TODO [#808] This is currently broken
         }
         else {
             log.info("SKIPPING", "Identity check");

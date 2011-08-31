@@ -215,10 +215,20 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
             stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
-            stmt.setBigDecimal(nextIndex(), (BigDecimal) value);
+            if (dialect == SQLDialect.SQLITE) {
+                stmt.setString(nextIndex(), value.toString());
+            }
+            else {
+                stmt.setBigDecimal(nextIndex(), (BigDecimal) value);
+            }
         }
         else if (type == BigInteger.class) {
-            stmt.setBigDecimal(nextIndex(), new BigDecimal((BigInteger) value));
+            if (dialect == SQLDialect.SQLITE) {
+                stmt.setString(nextIndex(), value.toString());
+            }
+            else {
+                stmt.setBigDecimal(nextIndex(), new BigDecimal((BigInteger) value));
+            }
         }
         else if (type == Byte.class) {
             stmt.setByte(nextIndex(), (Byte) value);

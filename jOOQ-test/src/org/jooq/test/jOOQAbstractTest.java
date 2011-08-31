@@ -1142,6 +1142,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testNumbers() throws Exception {
+        reset = false;
 
         // Insert some numbers
         // -------------------
@@ -1182,27 +1183,32 @@ public abstract class jOOQAbstractTest<
 
         // Various BigDecimal tests
         // ------------------------
-        create().insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
-                .values(2, new BigDecimal("123456789012345.67899"))
-                .values(3, new BigDecimal("999999999999999.99999"))
-                .values(4, new BigDecimal("1.00001"))
-                .values(5, new BigDecimal("0.00001"))
-                .values(6, new BigDecimal("0.000012"))
-                .execute();
+        if (getDialect() == SQLDialect.SQLITE) {
+            log.info("SKIPPING", "Advanced BigDecimal tests");
+        }
+        else {
+            create().insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
+                    .values(2, new BigDecimal("123456789012345.67899"))
+                    .values(3, new BigDecimal("999999999999999.99999"))
+                    .values(4, new BigDecimal("1.00001"))
+                    .values(5, new BigDecimal("0.00001"))
+                    .values(6, new BigDecimal("0.000012"))
+                    .execute();
 
-        Result<Record> result =
-        create().select(T639_ID(), T639_BIG_DECIMAL())
-                .from(T639())
-                .where(T639_ID().between(2, 6))
-                .orderBy(T639_ID())
-                .fetch();
+            Result<Record> result =
+            create().select(T639_ID(), T639_BIG_DECIMAL())
+                    .from(T639())
+                    .where(T639_ID().between(2, 6))
+                    .orderBy(T639_ID())
+                    .fetch();
 
-        assertEquals(Arrays.asList(2, 3, 4, 5, 6), result.getValues(0));
-        assertEquals(new BigDecimal("123456789012345.67899"), result.getValue(0, 1));
-        assertEquals(new BigDecimal("999999999999999.99999"), result.getValue(1, 1));
-        assertEquals(new BigDecimal("1.00001"), result.getValue(2, 1));
-        assertEquals(new BigDecimal("0.00001"), result.getValue(3, 1));
-        assertEquals(new BigDecimal("0.00001"), result.getValue(4, 1));
+            assertEquals(Arrays.asList(2, 3, 4, 5, 6), result.getValues(0));
+            assertEquals(new BigDecimal("123456789012345.67899"), result.getValue(0, 1));
+            assertEquals(new BigDecimal("999999999999999.99999"), result.getValue(1, 1));
+            assertEquals(new BigDecimal("1.00001"), result.getValue(2, 1));
+            assertEquals(new BigDecimal("0.00001"), result.getValue(3, 1));
+            assertEquals(new BigDecimal("0.00001"), result.getValue(4, 1));
+        }
     }
 
     @Test

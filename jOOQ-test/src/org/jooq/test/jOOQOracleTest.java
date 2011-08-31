@@ -40,6 +40,8 @@ import static junit.framework.Assert.assertEquals;
 import static org.jooq.test.oracle.generatedclasses.tables.VAuthor.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.tables.VBook.V_BOOK;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
@@ -250,6 +252,71 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected Table<T_639NumbersTableRecord> T639() {
         return T_639NumbersTable.T_639_NUMBERS_TABLE;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Integer> T639_ID() {
+        return T_639NumbersTable.ID;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
+        return T_639NumbersTable.BIG_DECIMAL;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
+        return T_639NumbersTable.BIG_INTEGER;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
+        return T_639NumbersTable.BYTE;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE_DECIMAL() {
+        return T_639NumbersTable.BYTE_DECIMAL;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Short> T639_SHORT() {
+        return T_639NumbersTable.SHORT;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Short> T639_SHORT_DECIMAL() {
+        return T_639NumbersTable.SHORT_DECIMAL;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER() {
+        return T_639NumbersTable.INTEGER;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER_DECIMAL() {
+        return T_639NumbersTable.INTEGER_DECIMAL;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Long> T639_LONG() {
+        return T_639NumbersTable.LONG;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Long> T639_LONG_DECIMAL() {
+        return T_639NumbersTable.LONG_DECIMAL;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Double> T639_DOUBLE() {
+        return null;
+    }
+
+    @Override
+    protected TableField<T_639NumbersTableRecord, Float> T639_FLOAT() {
+        return null;
     }
 
     @Override

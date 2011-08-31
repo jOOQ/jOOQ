@@ -108,7 +108,7 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DerbyDataType<BigInteger> __BIGINTEGER            = new DerbyDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DerbyDataType<BigInteger> __BIGINTEGER            = new DerbyDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

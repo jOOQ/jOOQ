@@ -266,9 +266,10 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
-                // There is no DROP SEQUENCE IF EXISTS statement in Ingres
+                // There are no DROP SEQUENCE IF EXISTS and
+                // DROP RULE IF EXISTS statements in Ingres
                 else if (e instanceof SQLSyntaxErrorException) {
-                    if (sql.contains("DROP SEQUENCE")) {
+                    if (sql.contains("DROP SEQUENCE") || sql.contains("DROP RULE")) {
                         continue;
                     }
                 }
@@ -3655,12 +3656,6 @@ public abstract class jOOQAbstractTest<
         if (TTriggers() == null) {
             log.info("SKIPPING", "INSERT RETURNING tests");
             return;
-        }
-
-        switch (getDialect()) {
-            case INGRES: // TODO [#808]
-                log.info("SKIPPING", "INSERT RETURNING tests - JDBC driver did not implement this yet");
-                return;
         }
 
         // Non-DSL querying

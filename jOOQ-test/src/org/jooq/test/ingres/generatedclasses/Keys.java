@@ -15,6 +15,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
 	public static final org.jooq.Identity<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_t_book_store = createIdentity(org.jooq.test.ingres.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.ingres.generatedclasses.tables.TBookStore.ID);
+	public static final org.jooq.Identity<org.jooq.test.ingres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.ingres.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.ingres.generatedclasses.tables.TTriggers.ID);
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord> pk_t_639_numbers_table = createUniqueKey(org.jooq.test.ingres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.ingres.generatedclasses.tables.T_639NumbersTable.ID);

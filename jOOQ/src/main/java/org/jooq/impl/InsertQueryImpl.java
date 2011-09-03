@@ -310,23 +310,19 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
             switch (configuration.getDialect()) {
 
-                // Some JDBC drivers do not support generated keys altogether
-                case INGRES:
-                case SQLITE:
-
-                // Sybase will select @@identity after the INSERT
-                case SYBASE: {
-                    return super.prepare(configuration, sql);
-                }
-
                 // Postgres uses the RETURNING clause in SQL
                 case POSTGRES:
+                // SQLite will select last_insert_rowid() after the INSER
+                case SQLITE:
+                // Sybase will select @@identity after the INSERT
+                case SYBASE:
                     return super.prepare(configuration, sql);
 
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
                 case DERBY:
                 case H2:
+                case INGRES:
                 case MYSQL:
                 case SQLSERVER:
                     return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -355,11 +351,6 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
             ResultSet rs;
 
             switch (configuration.getDialect()) {
-
-                // Some JDBC drivers do not support generated keys altogether
-                case INGRES: {
-                    return super.execute(configuration, statement);
-                }
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
@@ -393,6 +384,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                 // Additional values have to be fetched explicitly
                 case DERBY:
                 case H2:
+                case INGRES:
                 case MYSQL:
                 case SQLSERVER: {
                     result = statement.executeUpdate();

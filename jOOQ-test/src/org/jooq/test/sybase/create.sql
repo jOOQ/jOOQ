@@ -1,7 +1,9 @@
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
+
 DROP TRIGGER IF EXISTS t_triggers_trigger/
+
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/

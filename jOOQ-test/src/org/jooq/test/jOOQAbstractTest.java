@@ -6947,6 +6947,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLoader() throws Exception {
+        reset = false;
         connection.setAutoCommit(false);
 
         Field<Integer> count = create().count();

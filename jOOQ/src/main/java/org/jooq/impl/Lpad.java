@@ -64,6 +64,7 @@ class Lpad extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case ADAPTIVESERVER:
             case SQLSERVER:
             case SYBASE: {
                 if (character == null) {

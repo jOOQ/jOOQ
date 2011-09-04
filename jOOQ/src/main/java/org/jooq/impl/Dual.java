@@ -76,6 +76,7 @@ class Dual extends AbstractTable<Record> {
                 context.sql("INFORMATION_SCHEMA.SYSTEM_USERS");
                 break;
 
+            case ADAPTIVESERVER:
             case INGRES:
             case POSTGRES:
             case SQLITE:

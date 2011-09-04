@@ -44,7 +44,7 @@ import org.jooq.impl.Factory;
 public class SybaseFactory extends Factory {
 
     /**
-     *
+     * Generated UID
      */
     private static final long serialVersionUID = 6530433807914995633L;
 

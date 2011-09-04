@@ -72,6 +72,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.UDTRecord;
+import org.jooq.util.adaptiveserver.AdaptiveServerDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.h2.H2DataType;
@@ -812,6 +813,8 @@ public final class FieldTypeHelper {
 
     public static <T> DataType<T> getDataType(SQLDialect dialect, Class<? extends T> type) {
         switch (dialect) {
+            case ADAPTIVESERVER:
+                return AdaptiveServerDataType.getDataType(type);
             case DB2:
                 return DB2DataType.getDataType(type);
             case DERBY:

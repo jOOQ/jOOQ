@@ -148,6 +148,7 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            case ADAPTIVESERVER:
             case SQLSERVER:
             case SYBASE: {
                 if (getOffset() != 0) {
@@ -200,6 +201,7 @@ class Limit extends AbstractQueryPart {
 
             // These dialects don't allow bind variables in their TOP clauses
             // -----------------------------------------------------------------
+            case ADAPTIVESERVER:
             case DB2:
             case SQLSERVER:
             case SYBASE: {

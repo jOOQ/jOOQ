@@ -107,7 +107,8 @@ class DescribeQuery<R extends Record> extends AbstractQuery {
         context.sql("select ");
 
         // TODO [#21] Refactor this and correctly implement Limit for Sybase
-        if (context.getDialect() == SQLDialect.SYBASE ||
+        if (context.getDialect() == SQLDialect.ADAPTIVESERVER ||
+            context.getDialect() == SQLDialect.SYBASE ||
             context.getDialect() == SQLDialect.SQLSERVER) {
             context.inline(true)
                    .sql(limit)
@@ -119,7 +120,8 @@ class DescribeQuery<R extends Record> extends AbstractQuery {
         context.sql(" ");
 
         // nothing to do here, top clause added at start of statement
-        if (context.getDialect() == SQLDialect.SYBASE ||
+        if (context.getDialect() == SQLDialect.ADAPTIVESERVER ||
+            context.getDialect() == SQLDialect.SYBASE ||
             context.getDialect() == SQLDialect.SQLSERVER) {
         }
 

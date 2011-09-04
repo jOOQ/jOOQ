@@ -37,6 +37,7 @@
 package org.jooq;
 
 import org.jooq.impl.Factory;
+import org.jooq.util.adaptiveserver.AdaptiveServerFactory;
 import org.jooq.util.db2.DB2Factory;
 import org.jooq.util.derby.DerbyFactory;
 import org.jooq.util.h2.H2Factory;
@@ -63,6 +64,11 @@ public enum SQLDialect {
      */
     @Deprecated
     SQL99(null, null),
+
+    /**
+     * The Sybase Adaptive Server SQL dialect
+     */
+    ADAPTIVESERVER("AdaptiveServer", AdaptiveServerFactory.class),
 
     /**
      * The IBM DB2 SQL dialect

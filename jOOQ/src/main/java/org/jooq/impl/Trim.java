@@ -59,6 +59,7 @@ class Trim extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case ADAPTIVESERVER:
             case INGRES:
             case SQLSERVER:
                 return argument.rtrim().ltrim();

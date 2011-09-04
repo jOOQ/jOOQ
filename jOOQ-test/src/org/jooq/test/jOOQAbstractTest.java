@@ -130,6 +130,7 @@ import org.jooq.impl.StopWatch;
 import org.jooq.impl.StringUtils;
 import org.jooq.util.GenerationTool;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.postgresql.util.PSQLException;
@@ -274,6 +275,11 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
+                // There are no IF EXISTS clauses in Sybase ASE
+                else if (e.getMessage().contains("doesn't exist") && getDialect() == SQLDialect.ADAPTIVESERVER) {
+                    continue;
+                }
+
                 // All other errors
                 System.out.println("Error while executing : " + sql.trim());
                 System.out.println();
@@ -313,6 +319,20 @@ public abstract class jOOQAbstractTest<
     @After
     public void tearDown() throws Exception {
         connection.setAutoCommit(autocommit);
+    }
+
+    @AfterClass
+    public static void quit() throws Exception {
+        log.info("QUITTING");
+
+        // Issue a log dump on adaptive server. Don't know why this is needed
+        // http://www.faqs.org/faqs/databases/sybase-faq/part6/
+        if (connection.getClass().getPackage().getName().contains("jtds")) {
+            log.info("RUNNING", "dump tran TEST with truncate_only");
+            connection.createStatement().execute("dump tran TEST with truncate_only");
+        }
+
+        connection.close();
     }
 
     protected final void register(final Configuration configuration) {
@@ -1342,16 +1362,16 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testCustomSQL() throws Exception {
-        final Field<Integer> IDx2 = new CustomField<Integer>("ID", TBook_ID().getDataType()) {
+        final Field<Integer> IDx2 = new CustomField<Integer>(TBook_ID().getName(), TBook_ID().getDataType()) {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void toSQL(RenderContext context) {
                 if (context.inline()) {
-                    context.sql("ID * 2");
+                    context.sql(TBook_ID().getName() + " * 2");
                 }
                 else {
-                    context.sql("ID * ?");
+                    context.sql(TBook_ID().getName() + " * ?");
                 }
             }
 
@@ -2364,14 +2384,15 @@ public abstract class jOOQAbstractTest<
                     .fetchOne(count));
 
                 // SQL Server's is at 2100...
+                // Sybase ASE's is at 2000...
                 assertEquals(1, (int) create().select(count)
                     .from(TBook())
-                    .where(TBook_ID().in(Collections.nCopies(2050, 1)))
+                    .where(TBook_ID().in(Collections.nCopies(1950, 1)))
                     .fetchOne(count));
 
                 assertEquals(3, (int) create().select(count)
                     .from(TBook())
-                    .where(TBook_ID().notIn(Collections.nCopies(2050, 1)))
+                    .where(TBook_ID().notIn(Collections.nCopies(1950, 1)))
                     .fetchOne(count));
 
                 break;
@@ -2504,6 +2525,7 @@ public abstract class jOOQAbstractTest<
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -2568,6 +2590,7 @@ public abstract class jOOQAbstractTest<
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");

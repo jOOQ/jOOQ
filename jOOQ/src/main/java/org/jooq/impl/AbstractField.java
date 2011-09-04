@@ -638,7 +638,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> replace(Field<String> search) {
-        return new Function<String>("replace", SQLDataType.VARCHAR, this, search);
+        return new Replace(this, search);
     }
 
     @Override
@@ -648,7 +648,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> replace(Field<String> search, Field<String> replace) {
-        return new Function<String>("replace", SQLDataType.VARCHAR, this, search, replace);
+        return new Replace(this, search, replace);
     }
 
     @Override

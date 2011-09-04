@@ -23,6 +23,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.1.15-bin.jar" sourcepath="/jOOQ-sources/mysql-connector-java-5.1.15.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/log4j-1.2.16.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jconn3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jtds-1.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

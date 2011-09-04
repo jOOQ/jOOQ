@@ -59,6 +59,9 @@ class BitLength extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case ADAPTIVESERVER:
+                return new Function<Integer>("8 * datalength", SQLDataType.INTEGER, argument);
+
             case DB2:    // No break
             case DERBY:  // No break
             case INGRES: // No break

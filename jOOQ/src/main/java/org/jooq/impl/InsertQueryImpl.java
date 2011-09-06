@@ -320,7 +320,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
-                case ADAPTIVESERVER:
+                case ASE:
                 case DERBY:
                 case H2:
                 case INGRES:
@@ -383,7 +383,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
-                case ADAPTIVESERVER:
+                case ASE:
                 case DERBY:
                 case H2:
                 case INGRES:

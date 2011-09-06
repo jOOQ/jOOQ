@@ -68,7 +68,7 @@ class Ln extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         if (base == null) {
             switch (configuration.getDialect()) {
-                case ADAPTIVESERVER:
+                case ASE:
                 case H2:
                 case SQLSERVER:
                     return new Function<BigDecimal>("log", SQLDataType.NUMERIC, argument);
@@ -81,7 +81,7 @@ class Ln extends AbstractFunction<BigDecimal> {
             Field<Integer> baseField = create(configuration).literal(base);
 
             switch (configuration.getDialect()) {
-                case ADAPTIVESERVER:
+                case ASE:
                 case DB2:
                 case DERBY:
                 case H2:

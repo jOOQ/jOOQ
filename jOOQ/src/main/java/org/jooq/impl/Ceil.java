@@ -64,7 +64,7 @@ class Ceil<T> extends AbstractFunction<T> {
             case SQLITE:
                 return argument.add(0.5).round();
 
-            case ADAPTIVESERVER:
+            case ASE:
             case H2:
             case SQLSERVER:
                 return new Function<T>("ceiling", getDataType(), argument);

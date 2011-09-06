@@ -47,6 +47,7 @@ import org.jooq.Field;
 import org.jooq.JoinType;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableLike;
 
@@ -99,25 +100,30 @@ class Join extends AbstractQueryPart {
         }
     }
 
-    public final Condition getCondition() {
+    final Condition getCondition() {
         return condition.getWhere();
     }
 
-    public final Table<?> getTable() {
+    final Table<?> getTable() {
         return table.asTable();
     }
 
-    public final JoinType getType() {
-        return type;
+    final JoinType getType(RenderContext context) {
+        if (context.getDialect() == SQLDialect.ASE && type == JoinType.CROSS_JOIN) {
+            return JoinType.JOIN;
+        }
+        else {
+            return type;
+        }
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(getType().toSQL());
+        context.sql(getType(context).toSQL());
         context.sql(" ");
         context.sql(getTable());
 
-        switch (getType()) {
+        switch (getType(context)) {
 
             // CROSS JOIN does not have any additional clauses
             case CROSS_JOIN:
@@ -130,17 +136,20 @@ class Join extends AbstractQueryPart {
 
             // Regular JOINs
             default: {
-                if (usingSyntax) {
-                    context.sql(" using (");
-                    using.toSQLNames(context);
-                    context.sql(")");
-                }
-                else {
-                    context.sql(" on ").sql(getCondition());
-                }
-
+                toSQL0(context);
                 break;
             }
+        }
+    }
+
+    private void toSQL0(RenderContext context) {
+        if (usingSyntax) {
+            context.sql(" using (");
+            using.toSQLNames(context);
+            context.sql(")");
+        }
+        else {
+            context.sql(" on ").sql(getCondition());
         }
     }
 

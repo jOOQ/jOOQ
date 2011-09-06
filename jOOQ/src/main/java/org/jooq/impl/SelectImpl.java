@@ -571,8 +571,8 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
         return simpleJoin0(table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
-    private final SelectImpl simpleJoin0(TableLike<?> table, JoinType naturalJoinType) {
-        getQuery().addJoin(table, naturalJoinType);
+    private final SelectImpl simpleJoin0(TableLike<?> table, JoinType type) {
+        getQuery().addJoin(table, type);
         joinTable = null;
         joinType = null;
         return this;

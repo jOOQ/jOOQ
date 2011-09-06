@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/jOOQ-test/src/org/jooq/test/jOOQAdaptiveServerTest.java"/>
+<listEntry value="/jOOQ-test/src/org/jooq/test/jOOQASETest.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -14,7 +14,7 @@
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.jOOQAdaptiveServerTest"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.jooq.test.jOOQASETest"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djdbc.properties=/org/jooq/configuration/${env_var:USERNAME}/adaptiveserver/library.properties"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djdbc.properties=/org/jooq/configuration/${env_var:USERNAME}/ase/library.properties"/>
 </launchConfiguration>

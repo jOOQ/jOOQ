@@ -105,7 +105,7 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                 case DB2:
 
                 // These dialects don't support this syntax at all
-                case ADAPTIVESERVER:
+                case ASE:
                 case INGRES:
                 case MYSQL:
                 case SQLITE:

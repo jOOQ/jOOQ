@@ -55,7 +55,7 @@ class Replace extends AbstractFunction<String> {
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
-            case ADAPTIVESERVER: {
+            case ASE: {
                 if (getArguments().length == 2) {
                     return new Function<String>("str_replace", SQLDataType.VARCHAR,
                         getArguments()[0], getArguments()[1], val(""));

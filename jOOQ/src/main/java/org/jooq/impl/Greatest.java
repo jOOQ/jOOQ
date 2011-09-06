@@ -66,7 +66,7 @@ class Greatest<T> extends AbstractFunction<T> {
             // This implementation has O(2^n) complexity. Better implementations
             // are very welcome
 
-            case ADAPTIVESERVER:
+            case ASE:
             case DERBY:
             case SQLSERVER:
             case SYBASE: {

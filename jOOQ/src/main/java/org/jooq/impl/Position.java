@@ -76,7 +76,7 @@ class Position extends AbstractFunction<Integer> {
             case ORACLE:
                 return new Function<Integer>("instr", SQLDataType.INTEGER, in, search);
 
-            case ADAPTIVESERVER:
+            case ASE:
             case SQLSERVER:
                 return new Function<Integer>("charindex", SQLDataType.INTEGER, search, in);
 

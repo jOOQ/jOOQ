@@ -45,7 +45,7 @@ import java.sql.Types;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.util.adaptiveserver.AdaptiveServerDataType;
+import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.h2.H2DataType;
@@ -267,7 +267,7 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
         // Load all dialect-specific data types
 
         try {
-            Class.forName(AdaptiveServerDataType.class.getName());
+            Class.forName(ASEDataType.class.getName());
             Class.forName(DB2DataType.class.getName());
             Class.forName(DerbyDataType.class.getName());
             Class.forName(H2DataType.class.getName());

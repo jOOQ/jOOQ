@@ -133,7 +133,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 sql(literal);
                 break;
 
-            case ADAPTIVESERVER:
+            case ASE:
             case SQLSERVER:
             case SYBASE:
                 sql("[").sql(literal).sql("]");

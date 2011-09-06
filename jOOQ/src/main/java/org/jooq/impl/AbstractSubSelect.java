@@ -193,7 +193,7 @@ implements
                     break;
                 }
 
-                case ADAPTIVESERVER:
+                case ASE:
                 case SQLSERVER:
                 case SYBASE: {
 
@@ -413,7 +413,7 @@ implements
 
         // SQL Server is a bit different from the other dialects
         switch (context.getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case SQLSERVER: // No break
             case SYBASE: {
 

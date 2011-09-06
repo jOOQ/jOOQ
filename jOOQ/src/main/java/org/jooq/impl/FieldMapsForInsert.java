@@ -87,7 +87,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
             switch (context.getDialect()) {
 
                 // Some dialects don't support multi-record inserts
-                case ADAPTIVESERVER:
+                case ASE:
                 case INGRES:
                 case ORACLE:
                 case SQLITE:

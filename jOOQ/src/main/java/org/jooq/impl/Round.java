@@ -89,8 +89,9 @@ class Round<T> extends AbstractFunction<T> {
             }
 
             // These dialects have a mandatory decimals argument
-            case INGRES:    // No break
-            case SQLSERVER: // No break
+            case ADAPTIVESERVER:
+            case INGRES:
+            case SQLSERVER:
             case SYBASE: {
                 return new Function<T>("round", getDataType(), argument, val(decimals));
             }

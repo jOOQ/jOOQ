@@ -696,6 +696,7 @@ public abstract class jOOQAbstractTest<
         // Schema mapping is supported in many RDBMS. But maintaining several
         // databases is non-trivial in some of them.
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case DB2:
             case DERBY:
             case H2:
@@ -1735,6 +1736,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, result2.size());
 
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case DB2:
             case DERBY:
             case HSQLDB:
@@ -4903,7 +4905,7 @@ public abstract class jOOQAbstractTest<
         q.addSelect(position);
 
         // https://issues.apache.org/jira/browse/DERBY-5005
-        q.addOrderBy(create().field("AUTHOR"));
+        q.addOrderBy(create().field(VLibrary_AUTHOR().getName()));
 
         q.execute();
         Record r1 = q.getResult().get(1); // George Orwell
@@ -5911,6 +5913,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testWindowFunctions() throws Exception {
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case DERBY:
             case H2:
             case HSQLDB:
@@ -7129,6 +7132,7 @@ public abstract class jOOQAbstractTest<
         // Update duplicate records
         // ------------------------
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case DERBY:
             case H2:
             case INGRES:

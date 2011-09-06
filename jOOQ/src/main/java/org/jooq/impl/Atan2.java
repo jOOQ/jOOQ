@@ -63,6 +63,7 @@ class Atan2 extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case ADAPTIVESERVER:
             case SQLSERVER:
                 return new Function<BigDecimal>("atn2", SQLDataType.NUMERIC, arg1, arg2);
 

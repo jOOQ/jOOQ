@@ -3447,6 +3447,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Arrays.asList("Coelho", "Orwell"), new ArrayList<String>(authorNames));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testUpdatablesPK() throws Exception {
         reset = false;
@@ -3492,6 +3493,11 @@ public abstract class jOOQAbstractTest<
         assertEquals(id, book2.getValue(TBook_ID()));
         assertEquals("1985", book1.getValue(TBook_TITLE()));
         assertEquals("1985", book2.getValue(TBook_TITLE()));
+
+        // No ON DELETE CASCADE constraints for Sybase ASE
+        if (getDialect() == SQLDialect.ASE) {
+            create().truncate((Table) create().table("t_book_to_book_store")).execute();
+        }
 
         // Delete the modified record
         assertEquals(1, book1.delete());
@@ -3594,7 +3600,7 @@ public abstract class jOOQAbstractTest<
         Number identity2 = new Integer(0);
         if (TBookStore().getIdentity() != null) {
             identity1 = store.getValue(TBookStore().getIdentity().getField());
-            assertNotNull(identity1); // TODO [#808] This is currently broken
+            assertNotNull(identity1);
         }
         else {
             log.info("SKIPPING", "Identity check");
@@ -3625,8 +3631,9 @@ public abstract class jOOQAbstractTest<
         assertEquals(null, create().fetchOne(TBookStore(), TBookStore_NAME().equal("Amazon")));
 
         switch (getDialect()) {
-            // SQL server does not allow for explicitly setting values on
-            // IDENTITY columns
+            // Sybase ASE and SQL server do not allow for explicitly setting
+            // values on IDENTITY columns
+            case ASE:
             case SQLSERVER:
                 log.info("SKIPPING", "Storing previously deleted UpdatableRecords");
                 break;

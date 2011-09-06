@@ -276,7 +276,7 @@ public abstract class jOOQAbstractTest<
                 }
 
                 // There are no IF EXISTS clauses in Sybase ASE
-                else if (e.getMessage().contains("doesn't exist") && getDialect() == SQLDialect.ADAPTIVESERVER) {
+                else if (e.getMessage().contains("doesn't exist") && getDialect() == SQLDialect.ASE) {
                     continue;
                 }
 
@@ -696,7 +696,7 @@ public abstract class jOOQAbstractTest<
         // Schema mapping is supported in many RDBMS. But maintaining several
         // databases is non-trivial in some of them.
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case DB2:
             case DERBY:
             case H2:
@@ -1151,7 +1151,7 @@ public abstract class jOOQAbstractTest<
             // [#746] TODO: Fix this, too
             else if ("DOUBLE".equalsIgnoreCase(field.getName())
                     && getDialect() != SQLDialect.SQLSERVER
-                    && getDialect() != SQLDialect.ADAPTIVESERVER) {
+                    && getDialect() != SQLDialect.ASE) {
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
@@ -1737,7 +1737,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, result2.size());
 
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case DB2:
             case DERBY:
             case HSQLDB:
@@ -1916,7 +1916,7 @@ public abstract class jOOQAbstractTest<
         }
 
         // Sybase ASE does not know null bits
-        if (getDialect() != SQLDialect.ADAPTIVESERVER) {
+        if (getDialect() != SQLDialect.ASE) {
             assertEquals(null, create().select(create().castNull(Boolean.class)).fetchOne(0));
         }
 
@@ -1990,7 +1990,7 @@ public abstract class jOOQAbstractTest<
                 }
             }
 
-            if (getDialect() == SQLDialect.ADAPTIVESERVER) {
+            if (getDialect() == SQLDialect.ASE) {
                 if (type.getType() == Boolean.class) {
                     log.info("SKIPPING", "Casting to bit type in Sybase ASE");
                     continue;
@@ -2539,7 +2539,7 @@ public abstract class jOOQAbstractTest<
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -2604,7 +2604,7 @@ public abstract class jOOQAbstractTest<
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -3047,7 +3047,7 @@ public abstract class jOOQAbstractTest<
 
         switch (getDialect()) {
             // Sybase ASE doesn't allow for selecting data inside VALUES()
-            case ADAPTIVESERVER:
+            case ASE:
 
             // MySQL doesn't allow for selecting from the INSERT INTO table
             case MYSQL:
@@ -3118,7 +3118,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testOnDuplicateKey() throws Exception {
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case DERBY:
             case H2:
             case INGRES:
@@ -3156,7 +3156,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testMerge() throws Exception {
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case DERBY:
             case H2:
             case INGRES:
@@ -5930,7 +5930,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testWindowFunctions() throws Exception {
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case DERBY:
             case H2:
             case HSQLDB:
@@ -7149,7 +7149,7 @@ public abstract class jOOQAbstractTest<
         // Update duplicate records
         // ------------------------
         switch (getDialect()) {
-            case ADAPTIVESERVER:
+            case ASE:
             case DERBY:
             case H2:
             case INGRES:

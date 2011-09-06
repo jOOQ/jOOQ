@@ -117,7 +117,7 @@ CREATE TABLE t_658_ref (
 
 CREATE TABLE t_725_lob_test (
   id int NOT NULL,
-  lob BINARY NULL,
+  lob VARBINARY(500) NULL,
   
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
 )
@@ -158,7 +158,7 @@ CREATE TABLE t_book (
   published_in INT NOT NULL,
   language_id INT NOT NULL,
   content_text text NULL,
-  content_pdf BINARY NULL,
+  content_pdf BINARY(400) NULL,
   
   CONSTRAINT pk_t_book PRIMARY KEY (id),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (author_id) REFERENCES t_author(id),

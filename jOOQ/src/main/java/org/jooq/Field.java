@@ -829,6 +829,12 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Find the greatest among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
      *
      * @see #greatest(Field...)
      */
@@ -836,11 +842,23 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Find the greatest among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
      */
     Field<T> greatest(Field<?>... others);
 
     /**
      * Find the least among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
      *
      * @see #least(Field...)
      */
@@ -848,6 +866,12 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Find the least among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
      */
     Field<T> least(Field<?>... others);
 

@@ -92,7 +92,7 @@ public class AdaptiveServerTableDefinition extends AbstractTableDefinition {
                     precision, scale);
 
                 result.add(new DefaultColumnDefinition(
-                    this,
+                    getDatabase().getTable(getName()),
                     rs.getString("Column_name"),
                     position++,
                     type,

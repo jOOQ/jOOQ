@@ -1150,7 +1150,8 @@ public abstract class jOOQAbstractTest<
 
             // [#746] TODO: Fix this, too
             else if ("DOUBLE".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.SQLSERVER) {
+                    && getDialect() != SQLDialect.SQLSERVER
+                    && getDialect() != SQLDialect.ADAPTIVESERVER) {
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
@@ -3045,6 +3046,10 @@ public abstract class jOOQAbstractTest<
         Field<Integer> ID4;
 
         switch (getDialect()) {
+            // Sybase ASE doesn't allow for selecting data inside VALUES()
+            case ADAPTIVESERVER:
+
+            // MySQL doesn't allow for selecting from the INSERT INTO table
             case MYSQL:
                 ID3 = create().select(val(3)).asField();
                 ID4 = create().select(val(4)).asField();
@@ -3087,14 +3092,13 @@ public abstract class jOOQAbstractTest<
         switch (getDialect()) {
             case SQLITE:
             case MYSQL:
-            case SQLSERVER:
                 log.info("SKIPPING", "UPDATE .. SET .. = (SELECT ..) integration test. This syntax is poorly supported by " + getDialect());
                 return;
         }
 
         reset = false;
 
-        Table<A> a1 = TAuthor().as("a1");
+        Table<A> a1 = TAuthor();
         Table<A> a2 = TAuthor().as("a2");
         Field<String> f1 = a1.getField(TAuthor_FIRST_NAME());
         Field<String> f2 = a2.getField(TAuthor_FIRST_NAME());
@@ -3114,6 +3118,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testOnDuplicateKey() throws Exception {
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case DERBY:
             case H2:
             case INGRES:
@@ -3151,6 +3156,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testMerge() throws Exception {
         switch (getDialect()) {
+            case ADAPTIVESERVER:
             case DERBY:
             case H2:
             case INGRES:

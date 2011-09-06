@@ -108,6 +108,8 @@ public class AdaptiveServerDataType<T> extends AbstractDataType<T> {
     public static final AdaptiveServerDataType<String>     UNICHAR               = new AdaptiveServerDataType<String>(SQLDataType.NCHAR, "unichar");
     public static final AdaptiveServerDataType<String>     UNITEXT               = new AdaptiveServerDataType<String>(SQLDataType.NCLOB, "unitext");
     public static final AdaptiveServerDataType<String>     UNIVARCHAR            = new AdaptiveServerDataType<String>(SQLDataType.NVARCHAR, "univarchar");
+    public static final AdaptiveServerDataType<String>     SYSNAME               = new AdaptiveServerDataType<String>(SQLDataType.VARCHAR, "sysname");
+    public static final AdaptiveServerDataType<String>     LONGSYSNAME           = new AdaptiveServerDataType<String>(SQLDataType.VARCHAR, "longsysname");
     public static final AdaptiveServerDataType<BigDecimal> MONEY                 = new AdaptiveServerDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
     public static final AdaptiveServerDataType<BigDecimal> SMALLMONEY            = new AdaptiveServerDataType<BigDecimal>(SQLDataType.DECIMAL, "smallmoney");
     public static final AdaptiveServerDataType<Timestamp>  SMALLDATETIME         = new AdaptiveServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "smalldatetime");

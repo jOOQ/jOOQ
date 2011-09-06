@@ -75,16 +75,14 @@ public class AdaptiveServerDataType<T> extends AbstractDataType<T> {
     public static final AdaptiveServerDataType<Boolean>    BIT                        = new AdaptiveServerDataType<Boolean>(SQLDataType.BIT, "bit");
     public static final AdaptiveServerDataType<String>     VARCHAR                    = new AdaptiveServerDataType<String>(SQLDataType.VARCHAR, "varchar");
     public static final AdaptiveServerDataType<String>     CHAR                       = new AdaptiveServerDataType<String>(SQLDataType.CHAR, "char");
-    public static final AdaptiveServerDataType<String>     LONGNVARCHAR               = new AdaptiveServerDataType<String>(SQLDataType.LONGNVARCHAR, "long nvarchar");
-    public static final AdaptiveServerDataType<String>     LONGVARCHAR                = new AdaptiveServerDataType<String>(SQLDataType.LONGVARCHAR, "long varchar");
+    public static final AdaptiveServerDataType<String>     LONGVARCHAR                = new AdaptiveServerDataType<String>(SQLDataType.LONGVARCHAR, "text");
     public static final AdaptiveServerDataType<String>     NCHAR                      = new AdaptiveServerDataType<String>(SQLDataType.NCHAR, "nchar");
-    public static final AdaptiveServerDataType<String>     NTEXT                      = new AdaptiveServerDataType<String>(SQLDataType.NCLOB, "ntext");
     public static final AdaptiveServerDataType<String>     NVARCHAR                   = new AdaptiveServerDataType<String>(SQLDataType.NVARCHAR, "nvarchar");
     public static final AdaptiveServerDataType<String>     TEXT                       = new AdaptiveServerDataType<String>(SQLDataType.CLOB, "text");
     public static final AdaptiveServerDataType<Date>       DATE                       = new AdaptiveServerDataType<Date>(SQLDataType.DATE, "date");
     public static final AdaptiveServerDataType<Time>       TIME                       = new AdaptiveServerDataType<Time>(SQLDataType.TIME, "time");
     public static final AdaptiveServerDataType<Timestamp>  DATETIME                   = new AdaptiveServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final AdaptiveServerDataType<Timestamp>  TIMESTAMP                  = new AdaptiveServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
+    public static final AdaptiveServerDataType<Timestamp>  TIMESTAMP                  = new AdaptiveServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
     public static final AdaptiveServerDataType<byte[]>     BINARY                     = new AdaptiveServerDataType<byte[]>(SQLDataType.BINARY, "binary");
     public static final AdaptiveServerDataType<byte[]>     VARBINARY                  = new AdaptiveServerDataType<byte[]>(SQLDataType.VARBINARY, "varbinary");
 
@@ -93,7 +91,9 @@ public class AdaptiveServerDataType<T> extends AbstractDataType<T> {
     // -------------------------------------------------------------------------
 
     protected static final AdaptiveServerDataType<byte[]>  __BLOB                     = new AdaptiveServerDataType<byte[]>(SQLDataType.BLOB, "binary");
+    protected static final AdaptiveServerDataType<byte[]>  __LONGVARBINARY            = new AdaptiveServerDataType<byte[]>(SQLDataType.LONGVARBINARY, "varbinary");
     protected static final AdaptiveServerDataType<Boolean> __BOOLEAN                  = new AdaptiveServerDataType<Boolean>(SQLDataType.BOOLEAN, "bit");
+    protected static final AdaptiveServerDataType<String>  __LONGNVARCHAR             = new AdaptiveServerDataType<String>(SQLDataType.LONGNVARCHAR, "unitext");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
@@ -111,6 +111,8 @@ public class AdaptiveServerDataType<T> extends AbstractDataType<T> {
     public static final AdaptiveServerDataType<BigDecimal> MONEY                 = new AdaptiveServerDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
     public static final AdaptiveServerDataType<BigDecimal> SMALLMONEY            = new AdaptiveServerDataType<BigDecimal>(SQLDataType.DECIMAL, "smallmoney");
     public static final AdaptiveServerDataType<Timestamp>  SMALLDATETIME         = new AdaptiveServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "smalldatetime");
+    public static final AdaptiveServerDataType<Timestamp>  BIGDATETIME           = new AdaptiveServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "bigdatetime");
+    public static final AdaptiveServerDataType<Time>       BIGTIME               = new AdaptiveServerDataType<Time>(SQLDataType.TIME, "bigtime");
     public static final AdaptiveServerDataType<byte[]>     IMAGE                 = new AdaptiveServerDataType<byte[]>(SQLDataType.BINARY, "image");
 
 

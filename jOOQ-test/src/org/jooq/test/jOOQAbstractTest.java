@@ -1914,7 +1914,11 @@ public abstract class jOOQAbstractTest<
                 assertEquals("1", create().select(create().cast(1, String.class)).fetchOne(0));
         }
 
-        assertEquals(null, create().select(create().castNull(Boolean.class)).fetchOne(0));
+        // Sybase ASE does not know null bits
+        if (getDialect() != SQLDialect.ADAPTIVESERVER) {
+            assertEquals(null, create().select(create().castNull(Boolean.class)).fetchOne(0));
+        }
+
         assertEquals(null, create().select(create().castNull(Byte.class)).fetchOne(0));
         assertEquals(null, create().select(create().castNull(Short.class)).fetchOne(0));
         assertEquals(null, create().select(create().castNull(Integer.class)).fetchOne(0));
@@ -1981,6 +1985,13 @@ public abstract class jOOQAbstractTest<
                     type == SQLDataType.NCLOB) {
 
                     log.info("SKIPPING", "Casting to lob type in Oracle");
+                    continue;
+                }
+            }
+
+            if (getDialect() == SQLDialect.ADAPTIVESERVER) {
+                if (type.getType() == Boolean.class) {
+                    log.info("SKIPPING", "Casting to bit type in Sybase ASE");
                     continue;
                 }
             }

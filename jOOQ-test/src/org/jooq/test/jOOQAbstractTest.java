@@ -1215,7 +1215,7 @@ public abstract class jOOQAbstractTest<
                     .values(3, new BigDecimal("999999999999999.99999"))
                     .values(4, new BigDecimal("1.00001"))
                     .values(5, new BigDecimal("0.00001"))
-                    .values(6, new BigDecimal("0.000012"))
+                    .values(6, new BigDecimal("0.00001"))
                     .execute();
 
             Result<Record> result =
@@ -3261,6 +3261,14 @@ public abstract class jOOQAbstractTest<
         record.refresh();
 
         switch (getDialect()) {
+
+            // In ASE, there don't seem to be any empty byte[]
+            case ASE:
+                assertEquals(1, record.getValue(T725_LOB()).length);
+                assertEquals(0, record.getValue(T725_LOB())[0]);
+                break;
+
+            // These don't make a difference between an empty byte[] and null
             case ORACLE:
             case SQLITE:
                 assertNull(record.getValue(T725_LOB()));
@@ -3289,6 +3297,11 @@ public abstract class jOOQAbstractTest<
         record.refresh();
 
         switch (getDialect()) {
+            case ASE:
+                assertEquals(1, record.getValue(T725_LOB()).length);
+                assertEquals(0, record.getValue(T725_LOB())[0]);
+                break;
+
             case ORACLE:
             case SQLITE:
                 assertNull(record.getValue(T725_LOB()));
@@ -3312,6 +3325,11 @@ public abstract class jOOQAbstractTest<
         assertNull(result.getValue(1, 1));
 
         switch (getDialect()) {
+            case ASE:
+                assertEquals(1, result.getValue(2, T725_LOB()).length);
+                assertEquals(0, result.getValue(2, T725_LOB())[0]);
+                break;
+
             case ORACLE:
             case SQLITE:
                 assertNull(result.getValue(2, T725_LOB()));
@@ -4024,11 +4042,12 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testOrderByInSubquery() throws Exception {
-        // TODO: [#780] Fix this for Ingres
-
-        if (getDialect() == SQLDialect.INGRES) {
-            log.info("SKIPPING", "Ordered subqueries");
-            return;
+        // TODO: [#780] Fix this for Ingres and Sybase ASE
+        switch (getDialect()) {
+            case ASE:
+            case INGRES:
+                log.info("SKIPPING", "Ordered subqueries");
+                return;
         }
 
         // Some RDBMS don't accept ORDER BY clauses in subqueries without

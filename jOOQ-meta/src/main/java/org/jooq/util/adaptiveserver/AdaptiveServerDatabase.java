@@ -45,6 +45,7 @@ import org.jooq.Record;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.FunctionDefinition;
@@ -55,6 +56,7 @@ import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.adaptiveserver.sys.DboFactory;
 import org.jooq.util.adaptiveserver.sys.tables.Sysindexes;
+import org.jooq.util.adaptiveserver.sys.tables.Sysreferences;
 
 /**
  * Sybase Adaptive Server implementation of {@link AbstractDatabase}
@@ -118,19 +120,6 @@ public class AdaptiveServerDatabase extends AbstractDatabase {
      * unique-clustered-indexes.html</a>
      */
     private List<Record> fetchKeys(int incl, int excl) throws SQLException {
-//        select 'Table name' = object_name(id),'column_name' = index_col(object_name(id),indid,1),
-//        'index_description' = convert(varchar(210), case when (status & 16)<>0 then 'clustered' else 'nonclustered' end
-//            + case when (status & 1)<>0 then ', '+'ignore duplicate keys' else '' end
-//            + case when (status & 2)<>0 then ', '+'unique' else '' end
-//            + case when (status & 4)<>0 then ', '+'ignore duplicate rows' else '' end
-//            + case when (status & 64)<>0 then ', '+'statistics' else case when (status & 32)<>0 then ', '+'hypothetical' else '' end end
-//            + case when (status & 2048)<>0 then ', '+'primary key' else '' end
-//            + case when (status & 4096)<>0 then ', '+'unique key' else '' end
-//            + case when (status & 8388608)<>0 then ', '+'auto create' else '' end
-//            + case when (status & 16777216)<>0 then ', '+'stats no recompute' else '' end),
-//            'index_name' = name
-//            from sysindexes where (status & 64) = 0
-//            order by id
         return create().select(
                     create().field("name", String.class),
                     create().field("object_name(id)", String.class),
@@ -150,7 +139,47 @@ public class AdaptiveServerDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected void loadForeignKeys(DefaultRelations r) throws SQLException {}
+    protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        for (Record record : create().select(
+                create().field("object_name(tableid)", String.class).as("fk_table"),
+                create().field("object_name(constrid)", String.class).as("fk"),
+                create().field("index_name(pmrydbid, reftabid, indexid)", String.class).as("pk"),
+                create().field("col_name(tableid, fokey1)", String.class),
+                create().field("col_name(tableid, fokey2)", String.class),
+                create().field("col_name(tableid, fokey3)", String.class),
+                create().field("col_name(tableid, fokey4)", String.class),
+                create().field("col_name(tableid, fokey5)", String.class),
+                create().field("col_name(tableid, fokey6)", String.class),
+                create().field("col_name(tableid, fokey7)", String.class),
+                create().field("col_name(tableid, fokey8)", String.class),
+                create().field("col_name(tableid, fokey9)", String.class),
+                create().field("col_name(tableid, fokey10)", String.class),
+                create().field("col_name(tableid, fokey11)", String.class),
+                create().field("col_name(tableid, fokey12)", String.class),
+                create().field("col_name(tableid, fokey13)", String.class),
+                create().field("col_name(tableid, fokey14)", String.class),
+                create().field("col_name(tableid, fokey15)", String.class),
+                create().field("col_name(tableid, fokey16)", String.class))
+            .from(Sysreferences.SYSREFERENCES)
+            .fetch()) {
+
+            TableDefinition referencingTable = getTable(record.getValueAsString("fk_table"));
+            if (referencingTable != null) {
+                for (int i = 0; i < 16; i++) {
+                    if (record.getValue(i + 3) == null) {
+                        break;
+                    }
+
+                    String foreignKeyName = record.getValueAsString("fk");
+                    String foreignKeyColumnName = record.getValueAsString(i + 3);
+                    String uniqueKeyName = record.getValueAsString("pk");
+
+                    ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
+                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column);
+                }
+            }
+        }
+    }
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {

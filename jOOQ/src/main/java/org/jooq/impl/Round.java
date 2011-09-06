@@ -89,7 +89,7 @@ class Round<T> extends AbstractFunction<T> {
             }
 
             // These dialects have a mandatory decimals argument
-            case ADAPTIVESERVER:
+            case ASE:
             case INGRES:
             case SQLSERVER:
             case SYBASE: {

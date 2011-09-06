@@ -58,7 +58,7 @@ class Substring extends AbstractFunction<String> {
 
         switch (configuration.getDialect()) {
             // Sybase ASE and SQL Server requires 3 arguments
-            case ADAPTIVESERVER:
+            case ASE:
             case SQLSERVER: {
                 if (getArguments().length == 2) {
                     return new Function<String>(functionName, SQLDataType.VARCHAR, getArguments()[0],

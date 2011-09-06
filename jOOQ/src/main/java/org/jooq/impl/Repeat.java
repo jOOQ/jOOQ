@@ -66,7 +66,7 @@ class Repeat extends AbstractFunction<String> {
             case ORACLE:
                 return string.rpad(string.length().mul(count), (Field<String>) string);
 
-            case ADAPTIVESERVER:
+            case ASE:
             case SQLSERVER:
                 return new Function<String>("replicate", SQLDataType.VARCHAR, string, count);
 

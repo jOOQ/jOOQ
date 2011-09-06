@@ -129,6 +129,7 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
+            case ADAPTIVESERVER:
             case SQLSERVER:
             case SYBASE:
                 switch (datePart) {

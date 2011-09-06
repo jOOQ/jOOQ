@@ -4282,7 +4282,10 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testNaturalJoin() throws Exception {
+        // TODO [#577] Simulate this
+
         switch (getDialect()) {
+            case ASE:
             case DB2:
             case INGRES:
             case SQLSERVER:
@@ -4341,7 +4344,10 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testJoinUsing() throws Exception {
+        // TODO [#582] Simulate this
+
         switch (getDialect()) {
+            case ASE:
             case DB2:
             case H2:
             case SQLSERVER:

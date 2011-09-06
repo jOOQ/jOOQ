@@ -69,7 +69,7 @@ import org.jooq.test.adaptiveserver.generatedclasses.tables.records.T_725LobTest
 import org.jooq.test.adaptiveserver.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.adaptiveserver.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.adaptiveserver.generatedclasses.tables.records.XUnusedRecord;
-import org.jooq.util.sybase.SybaseDataType;
+import org.jooq.util.adaptiveserver.AdaptiveServerDataType;
 
 
 /**
@@ -531,29 +531,39 @@ public class jOOQAdaptiveServerTest extends jOOQAbstractTest<
     @Override
     protected DataType<?>[] getCastableDataTypes() {
         return new DataType<?>[] {
-            SybaseDataType.MONEY,
-            SybaseDataType.SMALLMONEY,
-            SybaseDataType.CHAR,
-            SybaseDataType.LONGNVARCHAR,
-            SybaseDataType.LONGVARCHAR,
-            SybaseDataType.NCHAR,
-            SybaseDataType.NTEXT,
-            SybaseDataType.NVARCHAR,
-            SybaseDataType.TEXT,
-            SybaseDataType.UNIQUEIDENTIFIERSTR,
-            SybaseDataType.VARCHAR,
-            SybaseDataType.XML,
-            SybaseDataType.UNIQUEIDENTIFIER,
-            SybaseDataType.BIGINT,
-            SybaseDataType.BIT,
-            SybaseDataType.DECIMAL,
-            SybaseDataType.DOUBLE,
-            SybaseDataType.FLOAT,
-            SybaseDataType.INTEGER,
-            SybaseDataType.NUMERIC,
-            SybaseDataType.REAL,
-            SybaseDataType.SMALLINT,
-            SybaseDataType.TINYINT,
+            AdaptiveServerDataType.BIGINT,
+            AdaptiveServerDataType.BINARY,
+            AdaptiveServerDataType.CHAR,
+            AdaptiveServerDataType.DATE,
+            AdaptiveServerDataType.DATETIME,
+            AdaptiveServerDataType.DEC,
+            AdaptiveServerDataType.DECIMAL,
+            AdaptiveServerDataType.DOUBLE_PRECISION,
+            AdaptiveServerDataType.FLOAT,
+            AdaptiveServerDataType.IMAGE,
+            AdaptiveServerDataType.INT,
+            AdaptiveServerDataType.INTEGER,
+            AdaptiveServerDataType.LONGVARCHAR,
+            AdaptiveServerDataType.MONEY,
+            AdaptiveServerDataType.NCHAR,
+            AdaptiveServerDataType.NUMERIC,
+            AdaptiveServerDataType.NVARCHAR,
+            AdaptiveServerDataType.REAL,
+            AdaptiveServerDataType.SMALLDATETIME,
+            AdaptiveServerDataType.SMALLINT,
+            AdaptiveServerDataType.SMALLMONEY,
+            AdaptiveServerDataType.TEXT,
+            AdaptiveServerDataType.TIME,
+            AdaptiveServerDataType.TIMESTAMP,
+            AdaptiveServerDataType.TINYINT,
+            AdaptiveServerDataType.UNICHAR,
+            AdaptiveServerDataType.UNITEXT,
+            AdaptiveServerDataType.UNIVARCHAR,
+            AdaptiveServerDataType.UNSIGNEDBIGINT,
+            AdaptiveServerDataType.UNSIGNEDINT,
+            AdaptiveServerDataType.UNSIGNEDSMALLLINT,
+            AdaptiveServerDataType.VARBINARY,
+            AdaptiveServerDataType.VARCHAR,
         };
     }
 }

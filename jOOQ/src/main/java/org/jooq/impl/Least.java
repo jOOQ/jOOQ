@@ -63,8 +63,12 @@ class Least<T> extends AbstractFunction<T> {
         }
 
         switch (configuration.getDialect()) {
-            case DERBY:     // No break
-            case SQLSERVER: // No break
+            // This implementation has O(2^n) complexity. Better implementations
+            // are very welcome
+
+            case ADAPTIVESERVER:
+            case DERBY:
+            case SQLSERVER:
             case SYBASE: {
                 Field<T> first = (Field<T>) getArguments()[0];
                 Field<T> other = (Field<T>) getArguments()[1];

@@ -61,6 +61,7 @@ class Sinh extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case ADAPTIVESERVER:
             case HSQLDB:
             case INGRES:
             case MYSQL:

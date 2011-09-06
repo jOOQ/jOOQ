@@ -1629,6 +1629,7 @@ public class Factory implements Configuration {
                 return select(field).fetchOne(field);
             }
 
+            case ADAPTIVESERVER:
             case SQLSERVER:
             case SYBASE: {
                 Field<BigInteger> field = field("@@identity", BigInteger.class);
@@ -2487,6 +2488,9 @@ public class Factory implements Configuration {
      */
     public final Field<Timestamp> currentTimestamp() {
         switch (getDialect()) {
+            case ADAPTIVESERVER:
+                return new Function<Timestamp>("current_bigdatetime", SQLDataType.TIMESTAMP);
+
             case ORACLE:
                 return new Function<Timestamp>("sysdate", SQLDataType.TIMESTAMP);
 
@@ -2512,6 +2516,9 @@ public class Factory implements Configuration {
      */
     public final Field<String> currentUser() {
         switch (getDialect()) {
+            case ADAPTIVESERVER:
+                return field("user", SQLDataType.VARCHAR);
+
             case ORACLE:
                 return new Function<String>("user", SQLDataType.VARCHAR);
 

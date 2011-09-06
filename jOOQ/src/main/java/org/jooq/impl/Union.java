@@ -101,10 +101,11 @@ class Union<R extends Record> extends AbstractSelect<R> {
 
     private final void wrappingParenthesis(RenderContext context, String parenthesis) {
         switch (context.getDialect()) {
-            // SQLite and DERBY have some syntax issues with unions.
+            // Sybase ASE, SQLite and DERBY have some syntax issues with unions.
             // Check out https://issues.apache.org/jira/browse/DERBY-2374
-            case SQLITE: // no break
-            case DERBY:  // no break
+            case SQLITE:
+            case DERBY:
+            case ASE:
 
             // [#288] MySQL has a very special way of dealing with UNION's
             // So include it as well

@@ -65,6 +65,9 @@ class DateSub<T> extends AbstractFunction<T> {
         Factory create = create(configuration);
 
         switch (configuration.getDialect()) {
+            case ASE:
+                return new Function<T>("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
+
             case DB2:
             case HSQLDB:
                 return field.sub(create.field("? day", BigDecimal.class, value));

@@ -65,6 +65,9 @@ class DateAdd<T> extends AbstractFunction<T> {
         Factory create = create(configuration);
 
         switch (configuration.getDialect()) {
+            case ASE:
+                return new Function<T>("dateadd", getDataType(), literal("day"), val(value), field);
+
             case DB2:
             case HSQLDB:
                 return field.add(create.field("? day", BigDecimal.class, value));

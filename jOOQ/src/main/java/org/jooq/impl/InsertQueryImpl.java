@@ -58,6 +58,7 @@ import org.jooq.Merge;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -302,12 +303,21 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
     @Override
     protected final PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
-        if (returning.isEmpty()) {
+        Connection connection = configuration.getConnection();
+
+        // Just in case, always set Sybase ASE statement mode to return
+        // Generated keys if client code wants to SELECT @@identity afterwards
+        if (configuration.getDialect() == SQLDialect.ASE) {
+            return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        }
+
+        // Normal statement preparing if no values should be returned
+        else if (returning.isEmpty()) {
             return super.prepare(configuration, sql);
         }
-        else {
-            Connection connection = configuration.getConnection();
 
+        // Values should be returned from the INSERT
+        else {
             switch (configuration.getDialect()) {
 
                 // Postgres uses the RETURNING clause in SQL

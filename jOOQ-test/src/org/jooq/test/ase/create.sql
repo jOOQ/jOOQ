@@ -2,6 +2,8 @@ DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
 
+DROP TRIGGER t_triggers_trigger/
+
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
@@ -41,6 +43,12 @@ CREATE TABLE t_triggers (
   
   CONSTRAINT pk_t_triggers UNIQUE (id)
 )
+/
+
+CREATE TRIGGER t_triggers_trigger
+ON t_triggers
+FOR INSERT
+AS UPDATE t_triggers SET id = id_generated, counter = id_generated * 2
 /
 
 CREATE TABLE t_language (

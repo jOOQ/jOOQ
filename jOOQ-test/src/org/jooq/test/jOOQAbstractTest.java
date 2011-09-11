@@ -599,6 +599,7 @@ public abstract class jOOQAbstractTest<
                 assertEquals(null, create().lastID());
                 break;
 
+            case ASE:
             case SYBASE:
                 assertEquals(BigInteger.ZERO, create().lastID());
                 break;

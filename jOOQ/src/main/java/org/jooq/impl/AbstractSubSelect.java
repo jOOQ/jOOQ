@@ -187,33 +187,39 @@ implements
 
                     // "OFFSET" has to be simulated
                     else {
-                        toSQLReferenceLimitDB2SQLServerSybase(context);
+                        toSQLReferenceLimitDB2SQLServer(context);
                     }
 
                     break;
                 }
 
+                // Sybase ASE and SQL Server support a TOP clause without OFFSET
+                // OFFSET can be simulated in SQL Server, not in ASE
                 case ASE:
-                case SQLSERVER:
-                case SYBASE: {
+                case SQLSERVER: {
 
-                    // SQL Server and Sybase natively support a "TOP" clause,
-                    // without offset
+                    // Native TOP support, without OFFSET
                     if (getLimit().getOffset() == 0) {
                         toSQLReference0(context);
                     }
 
-                    // "OFFSET" has to be simulated
+                    // OFFSET simulation
                     else {
-                        toSQLReferenceLimitDB2SQLServerSybase(context);
+                        toSQLReferenceLimitDB2SQLServer(context);
                     }
 
+                    break;
+                }
+
+                case SYBASE: {
+                    toSQLReference0(context);
                     break;
                 }
 
                 // By default, render the dialect's limit clause
                 default: {
                     toSQLReferenceLimitDefault(context);
+                    break;
                 }
             }
         }
@@ -292,7 +298,7 @@ implements
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2} and
      * {@link SQLDialect#SQLSERVER} dialects
      */
-    private final void toSQLReferenceLimitDB2SQLServerSybase(RenderContext context) {
+    private final void toSQLReferenceLimitDB2SQLServer(RenderContext context) {
         RenderContext local = new DefaultRenderContext(context);
         toSQLReference0(local);
         String enclosed = local.render();
@@ -411,11 +417,10 @@ implements
             context.sql(hint).sql(" ");
         }
 
-        // SQL Server is a bit different from the other dialects
+        // Sybase and SQL Server have leading TOP clauses
         switch (context.getDialect()) {
             case ASE:
-            case SQLSERVER: // No break
-            case SYBASE: {
+            case SQLSERVER: {
 
                 // If we have a TOP clause, it needs to be rendered here
                 if (getLimit().isApplicable() && getLimit().getOffset() == 0) {
@@ -430,9 +435,19 @@ implements
                         context.sql("top 100 percent ");
                     }
                 }
+
+                break;
             }
 
-            // [#780] Ordered subqueries should be handled for Ingres as well
+            case SYBASE: {
+                if (getLimit().isApplicable()) {
+                    context.sql(getLimit()).sql(" ");
+                }
+
+                break;
+            }
+
+            // [#780] Ordered subqueries should be handled for Ingres and ASE as well
             case INGRES: {
             }
         }

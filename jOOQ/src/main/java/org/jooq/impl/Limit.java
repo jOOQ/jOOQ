@@ -131,8 +131,19 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            // Nice TOP .. START AT support
+            // ----------------------------
+            case SYBASE: {
+                context.sql("top ")
+                       .sql(getNumberOfRows())
+                       .sql(" start at ")
+                       .sql(getOffset() + 1);
+
+                break;
+            }
+
             // Only "TOP" support provided by the following dialects.
-            // "OFFSET" support is simulated in AbstractResultProviderSelectQuery
+            // "OFFSET" support is simulated with nested selects
             // -----------------------------------------------------------------
             case DB2: {
                 if (getOffset() != 0) {
@@ -149,8 +160,7 @@ class Limit extends AbstractQueryPart {
             }
 
             case ASE:
-            case SQLSERVER:
-            case SYBASE: {
+            case SQLSERVER: {
                 if (getOffset() != 0) {
                     throw new SQLDialectNotSupportedException("Offsets in TOP clause not supported");
                 }
@@ -181,30 +191,38 @@ class Limit extends AbstractQueryPart {
     public final void bind(BindContext context) throws SQLException {
         switch (context.getDialect()) {
 
-            // True LIMIT / OFFSET support provided by the following dialects
-            // -----------------------------------------------------------------
-            case MYSQL:    // No break
+            // OFFSET .. LIMIT support provided by the following dialects
+            // ----------------------------------------------------------
+            case MYSQL:
             case DERBY: {
                 context.bind(create(context).val(getOffset()));
                 context.bind(create(context).val(getNumberOfRows()));
                 break;
             }
 
-            case HSQLDB:   // No break
-            case H2:       // No break
-            case POSTGRES: // No break
+            // LIMIT .. OFFSET support provided by the following dialects
+            // ----------------------------------------------------------
+            case HSQLDB:
+            case H2:
+            case POSTGRES:
             case SQLITE: {
                 context.bind(create(context).val(getNumberOfRows()));
                 context.bind(create(context).val(getOffset()));
                 break;
             }
 
+            // No bind variables in the TOP .. START AT clause
+            // -----------------------------------------------
+            case INGRES:
+            case SYBASE: {
+                break;
+            }
+
             // These dialects don't allow bind variables in their TOP clauses
-            // -----------------------------------------------------------------
+            // --------------------------------------------------------------
             case ASE:
             case DB2:
-            case SQLSERVER:
-            case SYBASE: {
+            case SQLSERVER: {
 
                 // TOP clauses without bind variables
                 if (offset == 0) {

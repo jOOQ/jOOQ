@@ -39,6 +39,7 @@ import static org.jooq.util.ase.sys.tables.Sysindexes.SYSINDEXES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Record;
@@ -202,8 +203,10 @@ public class ASEDatabase extends AbstractDatabase {
         List<String> result = new ArrayList<String>();
 
         for (Record record : create().fetch("sp_help")) {
-            if (getSchemaName().equals(record.getValueAsString("Owner"))) {
-                result.add(record.getValueAsString("Name"));
+            if (Arrays.asList("view", "user table", "system table").contains(record.getValueAsString("Object_type"))) {
+                if (getSchemaName().equals(record.getValueAsString("Owner"))) {
+                    result.add(record.getValueAsString("Name"));
+                }
             }
         }
 

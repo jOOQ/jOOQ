@@ -26,7 +26,8 @@ DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 
 CREATE TABLE t_triggers (
-  id integer primary key autoincrement,
+  id_generated integer primary key autoincrement,
+  id int,
   counter int
 )
 /
@@ -37,7 +38,8 @@ ON t_triggers
 FOR EACH ROW
 BEGIN
 	update t_triggers
-	set counter = id * 2;
+	set id = id_generated,
+	    counter = id_generated * 2;
 END;
 /
 

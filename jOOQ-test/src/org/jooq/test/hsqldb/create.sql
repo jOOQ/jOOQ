@@ -22,6 +22,7 @@ DROP VIEW IF EXISTS v_book/
 DROP VIEW IF EXISTS v_library/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger/
+DROP SEQUENCE s_triggers_sequence/
 
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_arrays/
@@ -53,11 +54,14 @@ DROP TABLE IF EXISTS object/
 DROP TABLE IF EXISTS string/
 DROP TABLE IF EXISTS big_decimal/
 
+CREATE SEQUENCE s_triggers_sequence START WITH 1/
+
 CREATE TABLE t_triggers (
-  id int not null,
+  id_generated int not null,
+  id int,
   counter int,
   
-  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 
@@ -67,8 +71,12 @@ ON t_triggers
 REFERENCING NEW AS new
 FOR EACH ROW
 BEGIN ATOMIC
-	select nvl(max(id), 0) + 1 into new.id from t_triggers;
-	select nvl(max(counter), 0) + 2 into new.counter from t_triggers;
+    select next value for s_triggers_sequence 
+	into new.id_generated
+	from information_schema.system_users;
+	
+	set new.id = new.id_generated;
+	set new.counter = new.id_generated * 2;
 END
 /
 

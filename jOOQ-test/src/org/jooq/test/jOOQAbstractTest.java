@@ -227,6 +227,11 @@ public abstract class jOOQAbstractTest<
                     continue;
                 }
 
+                // There is no DROP TRIGGER IF EXISTS statement in Oracle
+                else if (e.getMessage().contains("ORA-04080")) {
+                    continue;
+                }
+
                 // There is no DROP TABLE IF EXISTS statement in DB2
                 else if (e.getMessage().contains("SQLCODE=-204") && e.getMessage().contains("SQLSTATE=42704")) {
                     continue;
@@ -504,6 +509,7 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<D, String> TDirectory_NAME();
 
     protected abstract UpdatableTable<T> TTriggers();
+    protected abstract TableField<T, Integer> TTriggers_ID_GENERATED();
     protected abstract TableField<T, Integer> TTriggers_ID();
     protected abstract TableField<T, Integer> TTriggers_COUNTER();
 
@@ -989,14 +995,14 @@ public abstract class jOOQAbstractTest<
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (getDialect() == SQLDialect.DB2) {
+                if (getDialect() == SQLDialect.DB2 ||
+                    getDialect() == SQLDialect.H2) {
+
                     sequences++;
                 }
             }
 
-
             assertEquals(sequences, schema.getSequences().size());
-
 
 
             int tables = 15;
@@ -3742,46 +3748,90 @@ public abstract class jOOQAbstractTest<
 
         // Without RETURNING clause
         query = create().insertQuery(TTriggers());
+        query.addValue(TTriggers_ID(), null);
         query.addValue(TTriggers_COUNTER(), 0);
         assertEquals(1, query.execute());
-        assertNull(query.getReturned());
+        assertNull(query.getReturnedRecord());
 
         // Check if the trigger works correctly
         assertEquals(1, create().selectFrom(TTriggers()).fetch().size());
-        assertEquals(++ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
+        assertEquals(++ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED()));
+        assertEquals(  ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
         assertEquals(2*ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
 
         // Returning all fields
         query = create().insertQuery(TTriggers());
+        query.addValue(TTriggers_COUNTER(), null);
         query.addValue(TTriggers_COUNTER(), 0);
         query.setReturning();
         assertEquals(1, query.execute());
-        assertNotNull(query.getReturned());
-        assertEquals(++ID, (int) query.getReturned().getValue(TTriggers_ID()));
-        assertEquals(2*ID, (int) query.getReturned().getValue(TTriggers_COUNTER()));
+        assertNotNull(query.getReturnedRecord());
+        assertEquals(++ID, (int) query.getReturnedRecord().getValue(TTriggers_ID_GENERATED()));
+        assertEquals(  ID, (int) query.getReturnedRecord().getValue(TTriggers_ID()));
+        assertEquals(2*ID, (int) query.getReturnedRecord().getValue(TTriggers_COUNTER()));
 
         // Returning only the ID field
         query = create().insertQuery(TTriggers());
         query.addValue(TTriggers_COUNTER(), 0);
-        query.setReturning(TTriggers_ID());
+        query.setReturning(TTriggers_ID_GENERATED());
         assertEquals(1, query.execute());
-        assertNotNull(query.getReturned());
-        assertEquals(++ID, (int) query.getReturned().getValue(TTriggers_ID()));
-        assertNull(query.getReturned().getValue(TTriggers_COUNTER()));
+        assertNotNull(query.getReturnedRecord());
+        assertEquals(++ID, (int) query.getReturnedRecord().getValue(TTriggers_ID_GENERATED()));
+        assertNull(query.getReturnedRecord().getValue(TTriggers_ID()));
+        assertNull(query.getReturnedRecord().getValue(TTriggers_COUNTER()));
 
-        query.getReturned().refresh();
-        assertEquals(2*ID, (int) query.getReturned().getValue(TTriggers_COUNTER()));
+        query.getReturnedRecord().refresh();
+        assertEquals(  ID, (int) query.getReturnedRecord().getValue(TTriggers_ID_GENERATED()));
+        assertEquals(  ID, (int) query.getReturnedRecord().getValue(TTriggers_ID()));
+        assertEquals(2*ID, (int) query.getReturnedRecord().getValue(TTriggers_COUNTER()));
 
-        // TODO [#813] DSL querying
-        // ------------------------
+        // DSL querying
+        // ------------
         TableRecord<T> returned = (TableRecord<T>)
         create().insertInto(TTriggers(), TTriggers_COUNTER())
                 .values(0)
                 .returning()
                 .fetchOne();
         assertNotNull(returned);
-        assertEquals(++ID, (int) returned.getValue(TTriggers_ID()));
+        assertEquals(++ID, (int) returned.getValue(TTriggers_ID_GENERATED()));
+        assertEquals(  ID, (int) returned.getValue(TTriggers_ID()));
         assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
+
+        switch (getDialect()) {
+            case ASE:
+            case DERBY:
+            case H2:
+            case INGRES:
+            case ORACLE:
+            // TODO [#832] Fix this. This might be a driver issue for Sybase
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "Multiple INSERT RETURNING");
+                break;
+
+            default:
+                Result<?> many =
+                create().insertInto(TTriggers(), TTriggers_COUNTER())
+                        .values(-1)
+                        .values(-2)
+                        .values(-3)
+                        .returning()
+                        .fetch();
+                assertNotNull(many);
+                assertEquals(3, many.size());
+                assertEquals(++ID, (int) many.getValue(0, TTriggers_ID_GENERATED()));
+                assertEquals(  ID, (int) many.getValue(0, TTriggers_ID()));
+                assertEquals(2*ID, (int) many.getValue(0, TTriggers_COUNTER()));
+                assertEquals(++ID, (int) many.getValue(1, TTriggers_ID_GENERATED()));
+                assertEquals(  ID, (int) many.getValue(1, TTriggers_ID()));
+                assertEquals(2*ID, (int) many.getValue(1, TTriggers_COUNTER()));
+                assertEquals(++ID, (int) many.getValue(2, TTriggers_ID_GENERATED()));
+                assertEquals(  ID, (int) many.getValue(2, TTriggers_ID()));
+                assertEquals(2*ID, (int) many.getValue(2, TTriggers_COUNTER()));
+                break;
+        }
+
 
         returned = (TableRecord<T>)
         create().insertInto(TTriggers(), TTriggers_COUNTER())
@@ -3790,18 +3840,22 @@ public abstract class jOOQAbstractTest<
                 .fetchOne();
         assertNotNull(returned);
         assertEquals(++ID, (int) returned.getValue(TTriggers_ID()));
+        assertNull(returned.getValue(TTriggers_ID_GENERATED()));
         assertNull(returned.getValue(TTriggers_COUNTER()));
 
         returned.refreshUsing(TTriggers_ID());
+        assertEquals(  ID, (int) returned.getValue(TTriggers_ID_GENERATED()));
         assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
 
         // store() and similar methods
         T triggered = create().newRecord(TTriggers());
         triggered.setValue(TTriggers_COUNTER(), 0);
         assertEquals(1, triggered.store());
-        assertEquals(++ID, (int) triggered.getValue(TTriggers_ID()));
+        assertEquals(++ID, (int) triggered.getValue(TTriggers_ID_GENERATED()));
+        assertEquals(null, triggered.getValue(TTriggers_ID()));
         assertEquals(0, (int) triggered.getValue(TTriggers_COUNTER()));
         triggered.refresh();
+        assertEquals(  ID, (int) triggered.getValue(TTriggers_ID()));
         assertEquals(2*ID, (int) triggered.getValue(TTriggers_COUNTER()));
     }
 

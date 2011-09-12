@@ -39,7 +39,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.h2.api.Trigger;
-import org.jooq.test.h2.generatedclasses.tables.TTriggers;
+import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.util.h2.H2Factory;
 
 /**
@@ -56,12 +56,10 @@ public class TTriggersTrigger implements Trigger {
     @Override
     public void fire(Connection conn, Object[] oldRow, Object[] newRow) throws SQLException {
         H2Factory create = new H2Factory(conn);
-        Integer maxID =
-        create.select(TTriggers.ID.max().nvl(0).add(1))
-              .from(TTriggers.T_TRIGGERS)
-              .fetchOne(0, Integer.class);
-
-        newRow[1] = maxID * 2;
+        int maxID = create.nextval(Sequences.S_TRIGGERS_SEQUENCE).intValue();
+        newRow[0] = maxID;
+        newRow[1] = maxID;
+        newRow[2] = maxID * 2;
     }
 
     @Override

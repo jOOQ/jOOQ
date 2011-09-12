@@ -41,18 +41,8 @@ CREATE TABLE t_triggers (
   id int null,
   counter int null,
   
-  CONSTRAINT pk_t_triggers UNIQUE (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
-/
-
-CREATE OR REPLACE TRIGGER t_triggers_reset
-BEFORE INSERT
-ON t_triggers
-REFERENCING NEW AS n
-FOR EACH ROW
-BEGIN
-	set n.id = 0;
-END
 /
 
 CREATE TRIGGER t_triggers_trigger

@@ -64,7 +64,7 @@ CREATE TABLE t_triggers (
   id int,
   counter int,
   
-  CONSTRAINT pk_t_triggers UNIQUE (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 

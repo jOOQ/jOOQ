@@ -18,7 +18,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	public static final org.jooq.Identity<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_T_BOOK_STORE = createIdentity(org.jooq.test.derby.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.derby.generatedclasses.tables.TBookStore.ID);
 
 	// UNIQUE and PRIMARY KEY definitions
-	public static final org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.derby.generatedclasses.tables.TTriggers.ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.derby.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.derby.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.derby.generatedclasses.tables.T_725LobTest.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.derby.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.derby.generatedclasses.tables.TAuthor.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> PK_T_BOOK = createUniqueKey(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.derby.generatedclasses.tables.TBook.ID);

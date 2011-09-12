@@ -3,6 +3,7 @@ DROP VIEW v_author/
 DROP VIEW v_book/
 DROP VIEW v_incomplete/
 
+DROP SEQUENCE s_triggers_sequence/
 DROP TRIGGER t_triggers_trigger/
 
 DROP TABLE t_triggers/
@@ -94,11 +95,15 @@ CREATE TYPE u_address_type AS OBJECT (
 )
 /
 
+CREATE SEQUENCE s_triggers_sequence
+/
+
 CREATE TABLE t_triggers (
+  id_generated number(7) not null,
   id number(7) not null,
   counter number(7) not null,
   
-  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 
@@ -108,8 +113,12 @@ ON t_triggers
 REFERENCING NEW AS new
 FOR EACH ROW
 BEGIN
-	select nvl(max(id), 0) + 1 into :new.id from t_triggers;
-	select nvl(max(counter), 0) + 2 into :new.counter from t_triggers;
+	select s_triggers_sequence.nextval
+	  into :new.id_generated 
+	  from dual;
+	
+	:new.id := :new.id_generated;
+	:new.counter := :new.id_generated * 2;
 END t_triggers_trigger;
 /
 

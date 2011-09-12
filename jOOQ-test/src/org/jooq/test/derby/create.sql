@@ -3,6 +3,7 @@ DROP VIEW v_book/
 DROP VIEW v_library/
 
 DROP TRIGGER t_triggers_trigger/
+
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
@@ -33,7 +34,7 @@ CREATE TABLE t_triggers (
   id int,
   counter int,
   
-  CONSTRAINT pk_t_triggers UNIQUE (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 

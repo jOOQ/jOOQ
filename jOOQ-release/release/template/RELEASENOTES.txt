@@ -2,6 +2,57 @@ jOOQ Release notes
 ------------------
 For an overview, see also https://sourceforge.net/apps/trac/jooq/report/6
 
+Version 1.6.6
+=================================================================
+
+Finally, support for another RDBMS has been added. Sybase's other
+important product Sybase Adaptive Server Enterprise (or simply
+Sybase ASE) is now officially supported by jOOQ
+
+Apart from this, there had been important improvements with the
+recently added INSERT .. RETURNING clause, as well as some fixes
+related to DECIMAL / NUMERIC data types
+
+Features and improvements
+-------------------------
+#796 - Complete missing public org.jooq.impl Javadoc
+#800 - Add support for Sybase Adaptive Server Enterprise
+#808 - Add support for INSERT .. RETURNING for Ingres
+#809 - Add support for INSERT .. RETURNING for Sybase SQL
+       Anywhere using SELECT @@identity
+#810 - Add support for INSERT .. RETURNING for SQLite using
+       last_inserted_rowid()
+#813 - Add DSL support for INSERT .. RETURNING
+#814 - Change TableRecord to reload its trigger-initialised main
+       key in Oracle and other RDBMS that don't support IDENTITY
+       columns
+#818 - Add SQLiteFactory.rowid()
+#819 - Support SQLite AUTOINCREMENT columns as IDENTITY
+#820 - Add Factory.fetchOne(String) for executing plain SQL
+       queries that return single records
+#826 - Allow for returning several records in the INSERT ..
+       RETURNING clause. This now works for DB2, HSQLDB, MySQL, 
+       and Postgres
+#827 - Support Sybase SQL Anywhere's TOP n START AT m clause
+       instead of simulating it with nested SELECT's
+       
+API changes (previous API now deprecated)
+-----------------------------------------
+#817 - Deprecate Factory.lastID(Identity)
+
+Bug fixes
+---------
+#815 - SQL Server fetching of IDENTITY value is broken
+#821 - Optimise ResultQuery.fetchAny() executing fetchLazy()
+       internally, and only fetching one record from the cursor
+#822 - Let Constant cast to more precise NUMERIC/DECIMAL types
+       in those RDBMS where casting is necessary
+#823 - Cannot bind SQLite BigDecimal, BigInteger types - bind
+       them as String instead
+#824 - BigInteger values cannot be bound in DB2, Derby
+#828 - Document inefficient implementation for GREATEST and LEAST
+       in some RDBMS
+
 Version 1.6.5
 =================================================================
 

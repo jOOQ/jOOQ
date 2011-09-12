@@ -14,6 +14,7 @@ DROP VIEW v_author/
 DROP VIEW v_book/
 
 DROP TRIGGER t_triggers_trigger/
+
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
 DROP TABLE t_book_store/
@@ -40,10 +41,11 @@ DROP SEQUENCE s_trigger_id/
 CREATE SEQUENCE s_trigger_id/
 
 CREATE TABLE t_triggers (
-  id int not null,
+  id_generated int not null,
+  id int,
   counter int,
   
-  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 
@@ -53,8 +55,10 @@ ON t_triggers
 REFERENCING NEW AS new
 FOR EACH ROW
 BEGIN
-	select s_trigger_id.nextval into new.id from sysibm.dual;
-	set new.counter = new.id * 2;
+	select s_trigger_id.nextval into new.id_generated from sysibm.dual;
+	
+	set new.id = new.id_generated;
+	set new.counter = new.id_generated * 2;
 END
 /
 

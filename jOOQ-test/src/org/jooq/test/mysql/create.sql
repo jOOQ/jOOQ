@@ -1,7 +1,9 @@
 DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
+
 DROP TRIGGER IF EXISTS t_triggers_trigger/
+
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
@@ -35,10 +37,11 @@ DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
 
 CREATE TABLE t_triggers (
-  id int not null AUTO_INCREMENT,
+  id_generated int not null AUTO_INCREMENT,
+  id int,
   counter int,
   
-  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 ) ENGINE = InnoDB
 /
 
@@ -47,9 +50,12 @@ BEFORE INSERT
 ON t_triggers
 FOR EACH ROW
 BEGIN
-	DECLARE new_counter INT;
-	select ifnull(max(counter), 0) + 2 into new_counter from t_triggers;
-	SET NEW.counter = new_counter;
+	DECLARE new_id INT;
+	
+	SELECT IFNULL(MAX(id_generated), 0) + 1 INTO new_id FROM t_triggers;
+	
+	SET NEW.id = new_id;
+	SET NEW.counter = new_id * 2;
 END;
 /
 

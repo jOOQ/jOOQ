@@ -138,9 +138,9 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
 
         // If an insert was successful try fetching the generated IDENTITY value
         if (!key.isEmpty() && result > 0) {
-            if (insert.getReturned() != null) {
+            if (insert.getReturnedRecord() != null) {
                 for (Field<?> field : key) {
-                    setValue0(field, new Value<Object>(insert.getReturned().getValue(field)));
+                    setValue0(field, new Value<Object>(insert.getReturnedRecord().getValue(field)));
                 }
             }
         }

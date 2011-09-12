@@ -397,6 +397,11 @@ public class jOOQASETest extends jOOQAbstractTest<
     }
 
     @Override
+    protected TableField<TTriggersRecord, Integer> TTriggers_ID_GENERATED() {
+        return TTriggers.ID_GENERATED;
+    }
+
+    @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
         return TTriggers.ID;
     }

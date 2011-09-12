@@ -54,6 +54,7 @@ import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.RenderContext;
+import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.exception.DetachedException;
@@ -207,8 +208,14 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     }
 
     @Override
+    public final Result<?> fetch() throws SQLException {
+        delegate.execute();
+        return delegate.getReturnedRecords();
+    }
+
+    @Override
     public final TableRecord<?> fetchOne() throws SQLException {
         delegate.execute();
-        return delegate.getReturned();
+        return delegate.getReturnedRecord();
     }
 }

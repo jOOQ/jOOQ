@@ -58,6 +58,7 @@ import org.jooq.Merge;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
@@ -75,7 +76,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     private final FieldMapForUpdate  updateMap;
     private final FieldMapsForInsert insertMaps;
     private final FieldList          returning;
-    private R                        returned;
+    private Result<R>                returned;
     private boolean                  onDuplicateKeyUpdate;
 
     InsertQueryImpl(Configuration configuration, Table<R> into) {
@@ -366,25 +367,31 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
                     result = statement.executeUpdate();
-                    returned = JooqUtil.newRecord(getInto(), configuration);
 
                     SQLiteFactory create = new SQLiteFactory(configuration.getConnection());
                     Field<Long> rowid = create.rowid();
 
-                    Record record =
-                    create.select(returning)
-                          .from(getInto())
-                          .where(rowid.equal(rowid.getDataType().convert(create.lastID())))
-                          .fetchOne();
+                    for (Record untyped : create
+                            .select(returning)
+                            .from(getInto())
+                            .where(rowid.equal(rowid.getDataType().convert(create.lastID())))
+                            .fetch()) {
 
-                    for (Field<?> field : returning) {
-                        setValue(record, field);
+                        R typed = JooqUtil.newRecord(getInto(), configuration);
+                        for (Field<?> field : returning) {
+                            setValue(field, typed, untyped);
+                        }
+
+                        getReturnedRecords().add(typed);
                     }
 
                     return result;
                 }
 
                 // Sybase can select @@identity after the insert
+                // TODO [#832] Fix this. This might be a driver issue. JDBC
+                // Generated keys don't work with jconn3, but they seem to work
+                // with jTDS (which is used for Sybase ASE integration)
                 case SYBASE: {
                     result = statement.executeUpdate();
                     selectReturning(configuration, create(configuration).lastID());
@@ -402,11 +409,18 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                     result = statement.executeUpdate();
                     rs = statement.getGeneratedKeys();
 
-                    if (rs.next()) {
-                        selectReturning(configuration, rs.getObject(1));
-                    }
+                    try {
+                        List<Object> list = new ArrayList<Object>();
+                        while (rs.next()) {
+                            list.add(rs.getObject(1));
+                        }
 
-                    return result;
+                        selectReturning(configuration, list.toArray());
+                        return result;
+                    }
+                    finally {
+                        rs.close();
+                    }
                 }
 
                 // Postgres can execute the INSERT .. RETURNING clause like
@@ -430,7 +444,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
             }
 
             CursorImpl<R> cursor = new CursorImpl<R>(configuration, returning, rs, statement, getInto().getRecordType());
-            returned = cursor.fetchOne();
+            returned = cursor.fetchResult();
             return result;
         }
     }
@@ -440,33 +454,42 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
      * arbitrary fields from JDBC's {@link Statement#getGeneratedKeys()} method.
      */
     @SuppressWarnings("unchecked")
-    private void selectReturning(Configuration configuration, Object o) throws SQLException {
+    private final void selectReturning(Configuration configuration, Object... values) throws SQLException {
         if (getInto() instanceof UpdatableTable) {
             UpdatableTable<R> updatable = (UpdatableTable<R>) getInto();
 
             // This shouldn't be null, as relevant dialects should
             // return empty generated keys ResultSet
             if (updatable.getIdentity() != null) {
-                Field<Number> id = (Field<Number>) updatable.getIdentity().getField();
-                Number value = id.getDataType().convert(o);
-                returned = JooqUtil.newRecord(updatable, configuration);
+                Field<Number> field = (Field<Number>) updatable.getIdentity().getField();
+                Number[] ids = new Number[values.length];
+                for (int i = 0; i < values.length; i++) {
+                    ids[i] = field.getDataType().convert(values[i]);
+                }
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returning.size() == 1 && returning.get(0).equals(id)) {
-                    ((AbstractRecord) returned).setValue(id, new Value<Number>(value));
+                if (returning.size() == 1 && returning.get(0).equals(field)) {
+                    for (Number id : ids) {
+                        R typed = JooqUtil.newRecord(getInto(), configuration);
+                        ((AbstractRecord) typed).setValue(field, new Value<Number>(id));
+                        getReturnedRecords().add(typed);
+                    }
                 }
 
                 // Other values are requested, too. Run another query
                 else {
-                    Record record =
-                    create(configuration).select(returning)
-                                         .from(updatable)
-                                         .where(id.equal(value))
-                                         .fetchOne();
+                    for (Record untyped : create(configuration).select(returning)
+                            .from(updatable)
+                            .where(field.in(ids))
+                            .fetch()) {
 
-                    for (Field<?> field : returning) {
-                        setValue(record, field);
+                        R typed = JooqUtil.newRecord(getInto(), configuration);
+                        for (Field<?> f : returning) {
+                            setValue(f, typed, untyped);
+                        }
+
+                        getReturnedRecords().add(typed);
                     }
                 }
             }
@@ -474,10 +497,10 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     /**
-     * Generic type-safe utility method
+     * Generic typesafety
      */
-    private final <T> void setValue(Record record, Field<T> field) {
-        ((AbstractRecord) returned).setValue(field, new Value<T>(record.getValue(field)));
+    private <T> void setValue(Field<T> field, R typed, Record untyped) {
+        typed.setValue(field, untyped.getValue(field));
     }
 
     @Override
@@ -504,7 +527,27 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
+    @Deprecated
     public final R getReturned() {
+        return getReturnedRecord();
+    }
+
+    @Override
+    public final R getReturnedRecord() {
+        if (getReturnedRecords().size() == 0) {
+            return null;
+        }
+
+        return getReturnedRecords().get(0);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public final Result<R> getReturnedRecords() {
+        if (returned == null) {
+            returned = new ResultImpl<R>(getConfiguration(), returning);
+        }
+
         return returned;
     }
 }

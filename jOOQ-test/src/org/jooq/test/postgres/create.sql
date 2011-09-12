@@ -79,10 +79,11 @@ CREATE TYPE u_address_type AS (
 /
 
 CREATE TABLE t_triggers (
-  id int not null,
+  id_generated serial4 not null,
+  id int,
   counter int,
   
-  CONSTRAINT pk_t_triggers PRIMARY KEY (ID)
+  CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
 
@@ -90,10 +91,10 @@ CREATE FUNCTION p_triggers ()
 RETURNS trigger
 AS $$
 BEGIN
-	select coalesce(max(id), 0) + 1 into new.id from t_triggers;
-	new.counter = new.id * 2;
-	
-	return new;
+	new.id = new.id_generated;
+	new.counter = new.id_generated * 2;
+        
+    return new;
 END 
 $$ LANGUAGE plpgsql;
 /

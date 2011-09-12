@@ -72,6 +72,12 @@ import java.sql.SQLException;
 public interface InsertResultStep extends Insert {
 
     /**
+     * The result holding returned values as specified by the
+     * {@link InsertReturningStep}
+     */
+    Result<?> fetch() throws SQLException;
+
+    /**
      * The record holding returned values as specified by the
      * {@link InsertReturningStep}
      */

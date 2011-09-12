@@ -55,16 +55,15 @@ import java.sql.SQLException;
  * <li>Postgres has native support for <code>INSERT .. RETURNING</code> clauses</li>
  * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
  * column as "generated key" in one statement</li>
- * <li>Derby, H2, MySQL, SQL Server only allow for retrieving IDENTITY column
- * values as "generated key". If other fields are requested, a second statement
- * is issued. Client code must assure transactional integrity between the two
- * statements.</li>
+ * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving IDENTITY
+ * column values as "generated key". If other fields are requested, a second
+ * statement is issued. Client code must assure transactional integrity between
+ * the two statements.</li>
  * <li>Sybase and SQLite allow for retrieving IDENTITY values as
  * <code>@@identity</code> or <code>last_inserted_rowid()</code> values. Those
  * values are fetched in a separate <code>SELECT</code> statement. If other
  * fields are requested, a second statement is issued. Client code must assure
  * transactional integrity between the two statements.</li>
- * <li>Ingres support will be added with #808</li>
  * </ul>
  *
  * @author Lukas Eder
@@ -74,6 +73,8 @@ public interface InsertResultStep extends Insert {
     /**
      * The result holding returned values as specified by the
      * {@link InsertReturningStep}
+     * <p>
+     * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
      */
     Result<?> fetch() throws SQLException;
 

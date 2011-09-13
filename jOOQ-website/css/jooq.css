@@ -1,0 +1,138 @@
+body {
+	font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-weight: normal;
+    text-shadow: 0 1px 0 #FFFFFF;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: 1.4;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: none;
+    word-spacing: 0;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia',Serif;
+   	font-weight: normal;
+   	color: #000000;
+}
+
+h1 {
+	font-size: 4em;
+	text-shadow: 0 1px 1px #666666;
+}
+
+h2 {
+	font-size: 2.5em;
+	text-shadow: 0 1px 1px #666666;
+}
+
+h3 {
+	font-size: 1.3em;
+	text-shadow: 0 1px 0 #666666;
+}
+
+pre {
+	background: none repeat scroll 0 0 #ffeedd;
+    border-radius: 10px 10px 10px 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #882222;
+    box-shadow: 5px 5px 20px #aa6633;
+    color: #000000;
+    display: block;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.5em;
+    margin: 1.5em 0;
+    padding: 1em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+p {
+}
+
+p.slogan {
+	padding-left: 2em;
+	color: #888888;
+	font-family: 'Georgia',Serif;
+	font-style: italic;
+}
+
+td.left {
+	padding-right: 5px;
+	padding-bottom: 5px;
+	vertical-align: top;
+	text-align: right;
+}
+td.right {
+	padding-left: 5px;
+	padding-bottom: 5px;
+	vertical-align: top;
+	text-align: left;
+}
+
+td h3 {
+	white-space: nowrap;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
+	list-style-image:url(../favicon-16.png);
+}
+
+a, a:link, a:visited, a:hover, a:active {
+    color: #882222;
+    text-decoration: none;
+	text-shadow: 0 1px 1px #666666;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+#wrapper {
+	background: url("../img/bodytile.jpg") repeat scroll left top #FFFFFF;
+    height: auto;
+    min-height: 101%;
+}
+
+#all {
+	background-color: #FFFFFF;
+    margin: 0 auto;
+    position: relative;
+    width: 940px;
+    
+    padding-top: 1em;
+    padding-left: 3em;
+    padding-right: 3em;
+    border-width: 0;
+    border-style: solid;
+    border-color: #882222;
+    box-shadow: 0 0 20px #aa6633;
+}
+
+#header {
+	height: 240px;
+}
+
+#navigation {
+	height: 40px;
+}
+
+div.navigation-item-left {
+	float: left;
+	padding-right: 2em;
+}
+
+#content {
+}
+

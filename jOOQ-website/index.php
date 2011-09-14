@@ -40,7 +40,7 @@ create.selectFrom(BOOK)
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 		<td width="50%" class="left"><p>jOOQ also supports more complex SQL statements</p></td>
-		<td width="50%" class="right"><p>...and its equivalent in jOOQ</p></td>
+		<td width="50%" class="right"><p>...and their equivalent in jOOQ</p></td>
 	</tr>
 	<tr>
 		<td width="50%" class="left"><pre class="prettyprint lang-sql">

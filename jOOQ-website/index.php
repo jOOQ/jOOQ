@@ -63,7 +63,7 @@ ORDER BY LAST_NAME ASC NULLS FIRST
   OFFSET 1
      FOR UPDATE
       OF FIRST_NAME, LAST_NAME</pre></td>
-		<td width="50%" class="right"><pre class="prettyprint lang-sql">
+		<td width="50%" class="right"><pre class="prettyprint lang-java">
 
 
 

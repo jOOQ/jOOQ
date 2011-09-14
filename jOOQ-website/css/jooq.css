@@ -79,6 +79,10 @@ td.right {
 	text-align: left;
 }
 
+table.ticket-table td {
+	vertical-align: top;
+}
+
 td h3 {
 	white-space: nowrap;
 }
@@ -86,7 +90,7 @@ td h3 {
 ul {
 	padding: 0;
 	margin: 0;
-	list-style-image:url(../favicon-16.png);
+	list-style-image:url(../img/favicon-16.png);
 }
 
 a, a:link, a:visited, a:hover, a:active {

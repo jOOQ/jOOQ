@@ -40,7 +40,7 @@ h3 {
 pre {
 	background: none repeat scroll 0 0 #ffeedd;
     border-radius: 10px 10px 10px 10px;
-    border-width: 1px;
+    border-width: 2px;
     border-style: solid;
     border-color: #882222;
     box-shadow: 5px 5px 20px #aa6633;
@@ -109,7 +109,7 @@ a:hover {
     min-height: 101%;
 }
 
-#all {
+.block {
 	background-color: #FFFFFF;
     margin: 0 auto;
     position: relative;
@@ -124,10 +124,6 @@ a:hover {
     box-shadow: 0 0 20px #aa6633;
 }
 
-#header {
-	height: 240px;
-}
-
 #navigation {
 	height: 40px;
 }
@@ -137,6 +133,12 @@ div.navigation-item-left {
 	padding-right: 2em;
 }
 
-#content {
+#tweets {
+	height: 40px;
+}
+
+div.tweet-item-left {
+	float: left;
+	padding-right: 2em;
 }
 

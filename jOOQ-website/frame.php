@@ -4,6 +4,7 @@
 		<link href="css/jooq.css" type="text/css" rel="stylesheet">
 		<link href="js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="js/prettify/prettify.js"></script>
+		<script type="text/javascript" src="js/prettify/lang-sql.js"></script>
 	</head>
 	<body onload="prettyPrint()">
 		<div id="wrapper">

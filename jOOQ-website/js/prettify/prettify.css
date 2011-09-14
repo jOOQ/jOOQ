@@ -4,9 +4,9 @@
 .pln { color: #000 }  /* plain text */
 
 @media screen {
-  .str { color: #080 }  /* string content */
-  .kwd { color: #008 }  /* a keyword */
-  .com { color: #800 }  /* a comment */
+  .str { color: #888 }  /* string content */
+  .kwd { color: #a00; font-weight: bold }  /* a keyword */
+  .com { color: #888 }  /* a comment */
   .typ { color: #606 }  /* a type name */
   .lit { color: #066 }  /* a literal value */
   /* punctuation, lisp open bracket, lisp close bracket */
@@ -20,9 +20,9 @@
 
 /* Use higher contrast and text-weight for printable form. */
 @media print, projection {
-  .str { color: #060 }
-  .kwd { color: #006; font-weight: bold }
-  .com { color: #600; font-style: italic }
+  .str { color: #888 }
+  .kwd { color: #a00; font-weight: bold }
+  .com { color: #888; font-style: italic }
   .typ { color: #404; font-weight: bold }
   .lit { color: #044 }
   .pun, .opn, .clo { color: #440 }

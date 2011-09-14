@@ -23,7 +23,7 @@
 				    		<a href="http://jooq.sourceforge.net/javadoc/latest/" title="jOOQ Main Javadoc">Javadoc</a>
 				    	</div>
 				    	<div class="navigation-item-left">
-				    		<a href="http://jooq.sourceforge.net/releasenotes/RELEASENOTES.txt" title="jOOQ Release Notes">Release Notes</a>
+				    		<a href="notes.php" title="jOOQ Release Notes">Release Notes</a>
 				    	</div>
 				    	<div class="navigation-item-left">
 				    		<a href="https://sourceforge.net/apps/trac/jooq/report/6" title="jOOQ Roadmap">Roadmap</a>

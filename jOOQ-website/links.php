@@ -39,9 +39,11 @@ function printContent() {
 	<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html" title="QueryDSL, a product similar to jOOQ">JPA</a>: The J2EE standard</li>
 </ul>
 
-<h2>Other tools by Lukas Eder</h2>
+<h2>Other tools</h2>
 <div style="height: 100px;">
-	<img src="img/joox-small.png" alt="jOOX" style="float:left; margin-right: 4em;"/>
+	<a href="http://code.google.com/p/joox/"
+		title="jOOX, a product inspired by jOOQ">
+		<img src="img/joox-small.png" alt="jOOX" style="float:left; margin-right: 4em; border: 0"/></a>
 	<p><a href="http://code.google.com/p/joox/"
 		title="jOOX, a product inspired by jOOQ">jOOX</a> stands for Java
 	Object Oriented XML. It is a simple wrapper for the org.w3c.dom package,

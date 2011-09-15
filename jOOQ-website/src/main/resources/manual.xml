@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manual>
+	<section id="manual">
+		<title>Manual</title>
+		<toc />
+		<sections>
+			<section id="JOOQ">
+				<title>jOOQ classes and their use</title>
+				<toc />
+				<content>
+					<p>
+						In this section, you will learn about how to use jOOQ object
+						factories and the jOOQ object oriented query model, to express
+						your
+						SQL in jOOQ
+					</p>
+					<h2>Overview</h2>
+					<p>jOOQ essentially has two packages:</p>
+					<ul>
+						<li>org.jooq: the jOOQ API. Here you will find interfaces for all
+							SQL concepts
+						</li>
+						<li>org.jooq.impl: the jOOQ implementation and factories. Most
+							implementation classes are package private, you can only access
+							them using the org.jooq.impl.Factory
+						</li>
+					</ul>
+					<p>
+						This section is about the main jOOQ classes and the global
+						architecture. Most of the time, however, you will be using the DSL
+						API (DSL for Domain Specific Language) in order to create queries
+						the way you're used to in SQL
+					</p>
+				</content>
+				<sections>
+					<section id="ExampleDatabase">
+						<title>The example database</title>
+						<content>
+							<p>
+								For the examples in this manual, the same database will always be
+								referred to. It essentially contains of these entities (for
+								example in the Oracle dialect):
+							</p>
+							<pre class="prettyprint lang-sql">
+CREATE TABLE t_language (
+  id NUMBER(7) NOT NULL PRIMARY KEY,
+  cd CHAR(2) NOT NULL,
+  description VARCHAR2(50)
+)
+
+CREATE TABLE t_author (
+  id NUMBER(7) NOT NULL PRIMARY KEY,
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50) NOT NULL,
+  date_of_birth DATE,
+  year_of_birth NUMBER(7)
+)
+
+CREATE TABLE t_book (
+  id NUMBER(7) NOT NULL PRIMARY KEY,
+  author_id NUMBER(7) NOT NULL,
+  title VARCHAR2(400) NOT NULL,
+  published_in NUMBER(7) NOT NULL,
+  language_id NUMBER(7) NOT NULL,
+  FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
+  FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
+)
+
+CREATE TABLE t_book_store (
+  name VARCHAR2(400) NOT NULL UNIQUE
+)
+
+CREATE TABLE t_book_to_book_store (
+  book_store_name VARCHAR2(400) NOT NULL,
+  book_id INTEGER NOT NULL,
+  stock INTEGER,
+  PRIMARY KEY(book_store_name, book_id),
+  CONSTRAINT b2bs_book_store_id
+    FOREIGN KEY (book_store_name)
+    REFERENCES t_book_store (name)
+    ON DELETE CASCADE,
+  CONSTRAINT b2bs_book_id
+    FOREIGN KEY (book_id)
+    REFERENCES t_book (id)
+    ON DELETE CASCADE
+)							
+							</pre>
+							<p>More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc),
+								stored procedures and packages are introduced for specific examples
+							</p>
+						</content>
+					</section>
+					<section id="Factory">
+						<title>The factory class</title>
+					</section>
+				</sections>
+			</section>
+			<section id="META">
+				<title>Meta model source code generation</title>
+				<toc />
+			</section>
+			<section id="DSL">
+				<title>DSL support</title>
+				<toc />
+			</section>
+			<section id="Advanced">
+				<title>Advanced topics</title>
+				<toc />
+			</section>
+		</sections>
+	</section>
+</manual>

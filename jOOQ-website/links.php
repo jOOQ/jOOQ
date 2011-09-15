@@ -1,5 +1,8 @@
 <?php 
 require 'frame.php';
+function printH1() {
+	print 'Useful links for jOOQ';
+}
 function printSlogan() {}
 function printContent() {
 ?>
@@ -43,7 +46,7 @@ function printContent() {
 <div style="height: 100px;">
 	<a href="http://code.google.com/p/joox/"
 		title="jOOX, a product inspired by jOOQ">
-		<img src="img/joox-small.png" alt="jOOX" style="float:left; margin-right: 4em; border: 0"/></a>
+		<img src="<?=root?>/img/joox-small.png" alt="jOOX" style="float:left; margin-right: 4em; border: 0"/></a>
 	<p><a href="http://code.google.com/p/joox/"
 		title="jOOX, a product inspired by jOOQ">jOOX</a> stands for Java
 	Object Oriented XML. It is a simple wrapper for the org.w3c.dom package,

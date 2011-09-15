@@ -25,6 +25,8 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	font-size: 4em;
 	text-shadow: 0 1px 1px #666666;
+	padding: 0;
+	margin: 0;
 }
 
 h2 {
@@ -88,9 +90,17 @@ td h3 {
 }
 
 ul {
-	padding: 0;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-left: 0;
+	padding-right: 0;
 	margin: 0;
 	list-style-image:url(../img/favicon-16.png);
+}
+
+ol {
+	padding-top: 1em;
+	padding-bottom: 1em;
 }
 
 a, a:link, a:visited, a:hover, a:active {

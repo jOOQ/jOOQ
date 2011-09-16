@@ -10,9 +10,11 @@ function printSlogan() {}
 function printContent() {
     global $root;
 ?>
-<p>
-<a href="../">Manual</a> : <a href="">jOOQ classes and their use</a>
-</p><p>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="right"><a href="<?=$root?>/manual/">Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their use</a></td><td class="left"><a href="<?=$root?>/manual/JOOQ/">next</a></td>
+</tr>
+</table><p>
 						In this section, you will learn about how to use jOOQ object
 						factories and the jOOQ object oriented query model, to express
 						your
@@ -35,10 +37,10 @@ function printContent() {
 						the way you're used to in SQL
 					</p><ol>
 <li>
-<a href="<?=$root?>/JOOQ/ExampleDatabase" title="The example database">The example database</a>
+<a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">The example database</a>
 </li>
 <li>
-<a href="<?=$root?>/JOOQ/Factory" title="The factory class">The factory class</a>
+<a href="<?=$root?>/manual/JOOQ/Factory/" title="The factory class">The factory class</a>
 </li>
 </ol>
 <?php 

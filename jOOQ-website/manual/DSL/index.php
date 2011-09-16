@@ -10,9 +10,11 @@ function printSlogan() {}
 function printContent() {
     global $root;
 ?>
-<p>
-<a href="../">Manual</a> : <a href="">DSL support</a>
-</p>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td class="right"><a href="<?=$root?>/manual/">Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL support</a></td><td class="left"><a href="<?=$root?>/manual/DSL/">previous</a> : <a href="<?=$root?>/manual/DSL/">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>

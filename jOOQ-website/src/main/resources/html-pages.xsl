@@ -7,6 +7,8 @@
 	<xsl:param name="sectionID"/>
 	<xsl:param name="relativePath"/>
 
+	<!-- Main match -->
+
 	<xsl:template match="/">
 		<xsl:text disable-output-escaping="yes">
 &lt;?php 
@@ -33,14 +35,23 @@ function printContent() {
 </xsl:text>
 	</xsl:template>
 
+	<!-- matching templates -->
+	
 	<xsl:template match="//section[@id = $sectionID]" mode="title">
 		<xsl:value-of select="title"/>
 	</xsl:template>
 
 	<xsl:template match="//section[@id = $sectionID]" mode="content">
-		<p>
-			<xsl:apply-templates select="." mode="breadcrumb"/>
-		</p>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td class="right">
+					<xsl:apply-templates select="." mode="breadcrumb"/>
+				</td>
+				<td class="left">
+					<xsl:apply-templates select="." mode="prev-next"/>
+				</td>
+			</tr>
+		</table>
 		
 		
 		<xsl:apply-templates select="content"/>
@@ -48,38 +59,68 @@ function printContent() {
 	</xsl:template>
 	
 	<xsl:template match="section" mode="breadcrumb">
-		<xsl:param name="href"/>
-		
 		<xsl:if test="name(../..) = 'section'">
-			<xsl:apply-templates select="../.." mode="breadcrumb">
-				<xsl:with-param name="href">
-					<xsl:text>../</xsl:text>
-					<xsl:value-of select="$href"/>
-				</xsl:with-param>
-			</xsl:apply-templates>
-			
+			<xsl:apply-templates select="../.." mode="breadcrumb"/>
 			<xsl:text> : </xsl:text>
 		</xsl:if>
+		
+		<xsl:variable name="href">
+			<xsl:apply-templates select="." mode="href"/>
+		</xsl:variable>
 		
 		<a href="{$href}">
 			<xsl:value-of select="title"/>
 		</a>
 	</xsl:template>
 	
-	<xsl:template match="section" mode="toc">
-		<xsl:param name="path" select="@id"/>
+	<xsl:template match="section" mode="href">
+		<xsl:choose>
+			<xsl:when test="name(../..) = 'section'">
+				<xsl:apply-templates select="../.." mode="href"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>&lt;?=$root?&gt;/</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+
+		<xsl:value-of select="@id"/>
+		<xsl:text>/</xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="section" mode="prev-next">
+		<xsl:variable name="prev" select="preceding::section"/>
+		<xsl:variable name="next" select="following::section"/>
+		<xsl:variable name="href">
+			<xsl:apply-templates select="." mode="href"/>
+		</xsl:variable>
 		
+		<xsl:if test="$prev">
+			<a href="{$href}">previous</a>
+		</xsl:if>
+		
+		<xsl:if test="$prev and $next">
+			<xsl:text> : </xsl:text>
+		</xsl:if>
+		
+		<xsl:if test="$next">
+			<a href="{$href}">next</a>
+		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="section" mode="toc">
 		<xsl:if test="toc and count(sections/section) &gt; 0">
 			<ol>
 				<xsl:for-each select="sections/section">
 					<li>
-						<a href="&lt;?=$root?&gt;/{$path}/{@id}" title="{title}">
+						<xsl:variable name="href">
+							<xsl:apply-templates select="." mode="href"/>
+						</xsl:variable>
+						
+						<a href="{$href}" title="{title}">
 							<xsl:value-of select="title"/>
 						</a>
 						
-						<xsl:apply-templates select="." mode="toc">
-							<xsl:with-param name="path" select="concat($path, '/', @id)"/>
-						</xsl:apply-templates>
+						<xsl:apply-templates select="." mode="toc"/>
 					</li>
 				</xsl:for-each>
 			</ol>
@@ -89,4 +130,5 @@ function printContent() {
 	<xsl:template match="content">
 		<xsl:copy-of select="*"/>
 	</xsl:template>
+	
 </xsl:stylesheet>

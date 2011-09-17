@@ -44,10 +44,10 @@ function printContent() {
 	<xsl:template match="//section[@id = $sectionID]" mode="content">
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
 			<tr>
-				<td class="right">
+				<td align="left">
 					<xsl:apply-templates select="." mode="breadcrumb"/>
 				</td>
-				<td class="left">
+				<td align="right">
 					<xsl:apply-templates select="." mode="prev-next"/>
 				</td>
 			</tr>
@@ -55,6 +55,10 @@ function printContent() {
 		
 		
 		<xsl:apply-templates select="content"/>
+		
+		<xsl:if test="count(sections/section) &gt; 0">
+			<h3>Table of contents</h3>
+		</xsl:if>
 		<xsl:apply-templates select="." mode="toc"/>	
 	</xsl:template>
 	
@@ -88,14 +92,18 @@ function printContent() {
 	</xsl:template>
 	
 	<xsl:template match="section" mode="prev-next">
-		<xsl:variable name="prev" select="preceding::section"/>
-		<xsl:variable name="next" select="following::section"/>
-		<xsl:variable name="href">
-			<xsl:apply-templates select="." mode="href"/>
+		<xsl:variable name="prev" select="(preceding::section | ancestor::section)[last()]"/>
+		<xsl:variable name="prevhref">
+			<xsl:apply-templates select="$prev" mode="href"/>
+		</xsl:variable>
+		
+		<xsl:variable name="next" select="(following::section | descendant::section)[1]"/>
+		<xsl:variable name="nexthref">
+			<xsl:apply-templates select="$next" mode="href"/>
 		</xsl:variable>
 		
 		<xsl:if test="$prev">
-			<a href="{$href}">previous</a>
+			<a href="{$prevhref}">previous</a>
 		</xsl:if>
 		
 		<xsl:if test="$prev and $next">
@@ -103,12 +111,48 @@ function printContent() {
 		</xsl:if>
 		
 		<xsl:if test="$next">
-			<a href="{$href}">next</a>
+			<a href="{$nexthref}">next</a>
 		</xsl:if>
 	</xsl:template>
 	
+	<xsl:template match="section" mode="prev-id">
+		<xsl:variable name="id" select="@id"/>
+		
+		<xsl:variable name="position">
+			<xsl:for-each select="//section">
+				<xsl:if test="@id = $id">
+					<xsl:value-of select="position()"/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		
+		<xsl:for-each select="//section">
+			<xsl:if test="position() = $position - 1">
+				<xsl:value-of select="@id"/>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:template>
+	
+	<xsl:template match="section" mode="next-id">
+		<xsl:variable name="id" select="@id"/>
+		
+		<xsl:variable name="position">
+			<xsl:for-each select="//section">
+				<xsl:if test="@id = $id">
+					<xsl:value-of select="position()"/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		
+		<xsl:for-each select="//section">
+			<xsl:if test="position() = $position + 1">
+				<xsl:value-of select="@id"/>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:template>
+	
 	<xsl:template match="section" mode="toc">
-		<xsl:if test="toc and count(sections/section) &gt; 0">
+		<xsl:if test="count(sections/section) &gt; 0">
 			<ol>
 				<xsl:for-each select="sections/section">
 					<li>
@@ -128,7 +172,26 @@ function printContent() {
 	</xsl:template>
 	
 	<xsl:template match="content">
-		<xsl:copy-of select="*"/>
+		<xsl:apply-templates select="@*|node()" mode="content"/>
 	</xsl:template>
 	
+	<xsl:template match="@*|node()" mode="content">
+		<xsl:choose>
+			<xsl:when test="name(.) = 'reference'">
+				<xsl:variable name="id" select="@id"/>
+				
+				<a>
+					<xsl:attribute name="href">
+						<xsl:apply-templates select="//section[@id = $id]" mode="href"/>
+					</xsl:attribute>
+					<xsl:value-of select="//section[@id = $id]/title"/>
+				</a>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy>
+		            <xsl:apply-templates select="@*|node()" mode="content"/>
+		        </xsl:copy>
+			</xsl:otherwise>
+		</xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>

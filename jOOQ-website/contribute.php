@@ -1,12 +1,16 @@
 <?php 
 require 'frame.php';
 function printH1() {
-	print 'Be part of jOOQ!';
+	print 'Be part of jOOQ!<br/>Become a jOOQer';
 }
-function getSlogan() {}
+function getSlogan() {
+	return "jOOQ can only be as great as its community. You can make the change happen! jOOQ needs
+	        motivated staff, providing new database integrations, website translations, and shouting out to
+	        the world about jOOQ. You have a blog? Write about jOOQ in your language!";
+}
 function printContent() {
 ?>
-<h2>Be a jOOQ contributor!</h2>
+<h2>The hall of fame</h2>
 <p>jOOQ needs your help to implement all of this and more! Make it to the hall of fame of jOOQ contributors:</p>
 <ul>
     <li>Lukas Eder: Project lead</li>
@@ -18,8 +22,9 @@ function printContent() {
 </ul>
 <p>Thanks to all of the above people!</p>
 
-<h2>Instructions</h2>
-<p>You can contribute anything. Ideas, feature requests or bug reports (please use trac, and be explicit). Or code! If you want to share code, please follow these instructions</p>
+<h2>Contribution instructions</h2>
+<p>You can contribute anything. Ideas, feature requests or bug reports (please use trac, and be explicit). You can also help enlarge the community, by shouting out to the world about jOOQ and how you use it. You have a blog? Write about jOOQ!</p>
+<p>Or contribute code! If you want to share code, please follow these instructions</p>
 <ul>
 	<li>Check out the codebase from sourceforge: <a href="https://sourceforge.net/scm/?type=svn&group_id=283484" title="jOOQ SVN repository">SVN</a>. <a href="https://github.com/lukaseder/jOOQ" title="jOOQ GitHub repository">GitHub</a> is also available but may be incomplete</li>
     <li>Import the five jOOQ projects into <a href="http://www.eclipse.org/" title="jOOQ developers use Eclipse">Eclipse</a></li>
@@ -37,7 +42,7 @@ function printContent() {
     <li>If you are a committer on sourceforge, please commit with the following comment scheme: <br/>[#Trac-ID] Trac-Ticket-Title - Your specific comment</li>
 </ul>
 
-<h2>Hints</h2>
+<h2>Hints for new database integrations</h2>
 
 <p>Should you wish to provide an extension/support for a new RDBMS (such as Informix, Firebird, etc) your work would consist of these steps:</p>
 <ul>

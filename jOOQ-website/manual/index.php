@@ -58,7 +58,7 @@ function printContent() {
 				
 <li>
 					
-<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API">DSL or fluent API</a>
+<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL or fluent API. Where SQL meets Java</a>
 					
 <p>
 						See these chapters to learn about how to use jOOQ in every day's work. The
@@ -99,7 +99,7 @@ function printContent() {
 <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Updatable Records">Updatable Records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Query/" title="Query and its subtypes">Query and its subtypes</a>
+<a href="<?=$root?>/manual/JOOQ/Query/" title="The Query and its various subtypes">The Query and its various subtypes</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="ResultQuery and various ways of fetching data">ResultQuery and various ways of fetching data</a>
@@ -139,7 +139,7 @@ function printContent() {
 </ol>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/" title="DSL or fluent API">DSL or fluent API</a>
+<a href="<?=$root?>/manual/DSL/" title="DSL or fluent API. Where SQL meets Java">DSL or fluent API. Where SQL meets Java</a>
 <ol>
 <li>
 <a href="<?=$root?>/manual/DSL/SELECT/" title="Complete SELECT syntax">Complete SELECT syntax</a>

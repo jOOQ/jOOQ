@@ -13,25 +13,6 @@
 	<body onload="prettyPrint()">
 		<div id="wrapper">
 			<div class="block">
-				<div id="tweets">
-					<div class="tweet-item-left">
-						<a href="http://twitter.com/share" class="twitter-share-button" data-text="jOOQ - A nice database abstraction library for Java" data-count="horizontal" data-via="lukaseder">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-					</div>
-					<div class="tweet-item-left">
-						<g:plusone size="medium"></g:plusone>
-					</div>
-					<div class="tweet-item-left">
-						<div id="fb-root"></div>
-						<script>(function(d, s, id) {
-						  var js, fjs = d.getElementsByTagName(s)[0];
-						  if (d.getElementById(id)) {return;}
-						  js = d.createElement(s); js.id = id;
-						  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
-						  fjs.parentNode.insertBefore(js, fjs);
-						}(document, 'script', 'facebook-jssdk'));</script>
-						<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana"></div>
-					</div>
-				</div>
 			    <div id="navigation">
 			    	<div class="navigation-item-left">
 			    		<a href="<?=$root?>/" title="jOOQ Home Page">Home</a>
@@ -43,7 +24,7 @@
 			    		<a href="<?=$root?>/manual" title="jOOQ User Manual">Manual</a>
 			    	</div>
 			    	<div class="navigation-item-left">
-			    		<a href="http://jooq.sourceforge.net/javadoc/latest/" title="jOOQ Main Javadoc">Javadoc</a>
+			    		<a href="<?=$root?>/javadoc/latest/" title="jOOQ Main Javadoc">Javadoc</a>
 			    	</div>
 			    	<div class="navigation-item-left">
 			    		<a href="<?=$root?>/notes.php" title="jOOQ Release Notes">Release Notes</a>
@@ -62,26 +43,47 @@
 			    	</div>
 			    </div>
 
-				<table width="100%" cellpadding="0" cellspacing="0">
-					<tr>
-						<td width="700" valign="top">
-							<h1><?php printH1(); ?></h1></td>
-						<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
-					</tr>
-				</table>
-
-				<?php 
-				  $slogan = getSlogan();
-				  
-				  if ($slogan != '') {
-				  	print '<p class="slogan">' . $slogan . '</p>';
-				  }
-				  
-				  printContent();
-			    ?>
-				
-				<br/>
-				<br/>
+				<div id="content">
+					<div id="tweets">
+						<div class="tweet-item-left">
+							<a href="http://twitter.com/share" class="twitter-share-button" data-text="jOOQ - A nice database abstraction library for Java" data-count="horizontal" data-via="lukaseder">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+						</div>
+						<div class="tweet-item-left">
+							<g:plusone size="medium"></g:plusone>
+						</div>
+						<div class="tweet-item-left">
+							<div id="fb-root"></div>
+							<script>(function(d, s, id) {
+							  var js, fjs = d.getElementsByTagName(s)[0];
+							  if (d.getElementById(id)) {return;}
+							  js = d.createElement(s); js.id = id;
+							  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
+							  fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));</script>
+							<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana"></div>
+						</div>
+					</div>
+					<table width="100%" cellpadding="0" cellspacing="0">
+						<tr>
+							<td width="700" valign="top">
+								<h1><?php printH1(); ?></h1></td>
+							<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
+						</tr>
+					</table>
+	
+					<?php 
+					  $slogan = getSlogan();
+					  
+					  if ($slogan != '') {
+					  	print '<p class="slogan">' . $slogan . '</p>';
+					  }
+					  
+					  printContent();
+				    ?>
+					
+					<br/>
+					<br/>
+				</div>
 			</div>
 		</div>
 		

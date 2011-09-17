@@ -70,8 +70,15 @@
 					</tr>
 				</table>
 
-				<?php printSlogan(); ?>
-				<?php printContent(); ?>
+				<?php 
+				  $slogan = getSlogan();
+				  
+				  if ($slogan != '') {
+				  	print '<p class="slogan">' . $slogan . '</p>';
+				  }
+				  
+				  printContent();
+			    ?>
 				
 				<br/>
 				<br/>

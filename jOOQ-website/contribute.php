@@ -3,7 +3,7 @@ require 'frame.php';
 function printH1() {
 	print 'Be part of jOOQ!';
 }
-function printSlogan() {}
+function getSlogan() {}
 function printContent() {
 ?>
 <h2>Be a jOOQ contributor!</h2>

@@ -4,18 +4,151 @@
 // Please do not edit this content manually
 require '../../../frame.php';
 function printH1() {
-    print 'The factory class';
+    print "The Factory class";
 }
-function printSlogan() {}
+function getSlogan() {
+	return "
+							jOOQ hides most implementation facts from you by letting you
+							use the jOOQ Factory as a single entry point to all of the jOOQ API.
+							This way, you can discover all of the API using syntax auto-completion, for
+							instance. 
+						";
+}
 function printContent() {
     global $root;
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their use</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The factory class</a></td><td align="right"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/" title="Tables and Fields">next</a></td>
 </tr>
 </table>
+							<h2>The Factory and the jOOQ API</h2>
+							<p>
+								jOOQ exposes a lot of interfaces and hides most implementation facts 
+								from client code. The reasons for this are: 
+							</p>
+							<ul>
+								
+<li>Interface-driven design. This allows for modelling queries in a fluent API most efficiently</li>
+								
+<li>Reduction of complexity for client code.</li>
+								
+<li>API guarantee. You only depend on the exposed interfaces, not concrete (potentially dialect-specific) implementations.</li>
+							
+</ul>
+							<p>
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java">org.jooq.impl.Factory</a> 
+								class is the main class from where you will create all jOOQ objects. 
+								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java">org.jooq.Configuration</a> 
+								and needs to be instanciated with the Configuration's properties: 
+							</p>
+							<ul>
+								
+<li>
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java">org.jooq.SQLDialect</a> : 
+								The dialect of your database. This may be any of the currently
+								supported database types</li>
+								
+<li>
+<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html">java.sql.Connection</a> : 
+								A JDBC Connection that will be re-used for the whole
+    							lifecycle of your Factory</li>
+    							
+<li>
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java">org.jooq.SchemaMapping</a> : 
+    							An optional mapping of schemata. Check out the 
+    							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">SchemaMapping</a>
+    							page for details</li> 
+							
+</ul>
+							<p>If you are planning on using several RDBMS (= SQLDialects) or
+								several distinct JDBC Connections in your software, this will mean
+								that you have to create a new Factory every time. </p>
+							
+							<h3>Factory subclasses</h3>
+							<p>
+								There are a couple of subclasses for the general Factory. Each SQL
+								dialect has its own dialect-specific factory. For instance, if you're
+								only using the MySQL dialect, you can choose to create a new Factory
+								using any of the following types: 
+							</p>
+							<pre class="prettyprint lang-java">
+// A general, dialect-unspecific factory
+Factory create = new Factory(connection, SQLDialect.MYSQL);
+
+// A MySQL-specific factory
+MySQLFactory create = new MySQLFactory(connection);
+							</pre>
+							<p>
+								The advantage of using a dialect-specific Factory lies in the fact,
+								that you have access to more proprietary RDMBS functionality. This may
+								include: 
+							</p>
+							<ul>
+								
+<li>Oracle's <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">CONNECT BY</a>
+								    pseudo columns and functions</li>
+    							
+<li>MySQL's encryption functions</li>
+    							
+<li>PL/SQL constructs, pgplsql, or any other dialect's ROUTINE-language (maybe in the future)</li>
+							
+</ul>
+							<p>
+								Another type of Factory subclasses are each generated schema's
+								factories. If you generate your schema TEST, then you will have access
+								to a TestFactory. This will be useful in the future, when access to
+								schema artefacts will be unified. Currently, this has no use. 
+							</p>
+							
+							<h3>Potential problems</h3>
+							<p>
+								The jOOQ Factory expects its underlying
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html">java.sql.Connection</a>
+								to be <strong>open and ready</strong>
+								for
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/PreparedStatement.html">java.sql.PreparedStatement</a>
+								creation. You are responsible yourself for the
+								lifecycle dependency between Factory and Connection. This means: 
+							</p>
+							<ul>
+								
+<li>jOOQ will never close the Connection.</li>
+								
+<li>jOOQ will never commit or rollback on the Connection 
+									(Except for CSV-imports, if explicitly configured in the <a href="<?=$root?>/manual/ADVANCED/Import/">Import API</a>)</li>
+								
+<li>jOOQ will never start any transactions.</li>
+								
+<li>
+									jOOQ does not know the concept of a session as for instance
+									<a href="http://docs.jboss.org/hibernate/core/3.6/reference/en-US/html/architecture.html#architecture-current-session">Hibernate</a>
+								
+</li>
+								
+<li>jOOQ does not know the concept of a second-level cache. SQL is
+									executed directly on the underlying RDBMS.</li>
+								
+<li>jOOQ does not make assumptions about the origin of the Connection.
+									If it is container managed, that is fine.</li> 
+							
+</ul>
+							<p>
+								So if you want your queries to run in separate transactions, if you
+								want to roll back a transactions, if you want to close a Connection and
+								return it to your container, you will have to take care of that
+								yourself. jOOQ's Factory will always expect its Connection to be in a
+								ready state for creating new PreparedStatements. If it is not, you have
+								to create a new Factory. 
+							</p>
+							<p>
+								Please keep in mind that many jOOQ objects will reference your Factory
+								for their whole lifecycle. This is especially interesting, when dealing
+								with <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a>,
+								that can perform CRUD operations on the
+								Factory's underlying Connection.
+							</p>
+						
 <?php 
 }
 ?>
-

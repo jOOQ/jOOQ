@@ -118,7 +118,7 @@ function printContent() {
 							</p>
 							<p>
 								See some details about how to create these queries in the
-								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: Query and its subtypes">Query section</a> of the manual 
+								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Query section</a> of the manual 
 							</p>
 							
 							<h2>TableFields</h2>

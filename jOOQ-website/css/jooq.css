@@ -1,5 +1,5 @@
 body {
-	font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+	font-family: 'Lucida Grande',Helvetica,Arial,sans-serif;;
 	font-weight: normal;
     text-shadow: 0 1px 0 #FFFFFF;
     font-size: 15px;
@@ -33,19 +33,19 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
 	font-size: 4em;
-	text-shadow: 0 1px 1px #666666;
+	text-shadow: 0 1px 1px #444;
 	padding: 0;
 	margin: 0;
 }
 
 h2 {
 	font-size: 2.5em;
-	text-shadow: 0 1px 1px #666666;
+	text-shadow: 0 1px 1px #444;
 }
 
 h3 {
 	font-size: 1.3em;
-	text-shadow: 0 1px 0 #666666;
+	text-shadow: 0 1px 0 #444;
 }
 
 pre {
@@ -72,7 +72,7 @@ p {
 
 p.slogan {
 	padding-left: 2em;
-	color: #888888;
+	color: #444;
 	font-family: 'Georgia',Serif;
 	font-style: italic;
 	height: 2.5em;
@@ -129,19 +129,50 @@ a:hover {
 	background-color: #FFFFFF;
     margin: 0 auto;
     position: relative;
-    width: 980px;
+    width: 1050px;
     
-    padding-top: 1em;
-    padding-left: 3em;
-    padding-right: 3em;
     border-width: 0;
     border-style: solid;
     border-color: #882222;
-    box-shadow: 0 0 20px #aa6633;
+    box-shadow: 0 0 30px #aa6633;
+}
+
+#content {
+    padding-top: 1em;
+    padding-left: 3em;
+    padding-right: 3em;
+    
+    background: #fadccb;
+    background: -webkit-gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
+    background: -moz-linear-gradient(left, #f6cab9, #ffeedd);
+    background: gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
+    
 }
 
 #navigation {
+	padding-top: 1em;
+	padding-left: 3em;
+    padding-right: 3em;
+    
 	height: 40px;
+    background: #444;
+    background:  -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
+    background:  -moz-linear-gradient(top, #555, #333);
+    background:  gradient(linear, left top, left bottom, from(#555), to(#333));
+}
+
+#navigation a,
+#navigation a:link,
+#navigation a:visited,
+#navigation a:hover,
+#navigation a:active {
+    color: #ddcccc;
+    text-decoration: none;
+	text-shadow: 0 1px 1px #666666;
+}
+
+#navigation a:hover {
+	text-decoration: underline;
 }
 
 div.navigation-item-left {

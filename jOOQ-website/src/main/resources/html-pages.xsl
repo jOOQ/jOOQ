@@ -187,6 +187,7 @@ function printContent() {
 						<xsl:choose>
 							<xsl:when test="@id">
 								<xsl:apply-templates select="//section[@id = $id]" mode="href"/>
+								<xsl:value-of select="@anchor"/>
 
 								<xsl:if test="not(//section[@id = $id])">
 									<xsl:message>
@@ -196,16 +197,25 @@ function printContent() {
 								</xsl:if>
 							</xsl:when>
 							
+							<xsl:when test="@class and starts-with(@class, 'org.jooq.test')">
+								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/</xsl:text>
+								<xsl:value-of select="translate(@class, '.', '/')"/>
+								<xsl:text>.java</xsl:text>
+								<xsl:value-of select="@anchor"/>
+							</xsl:when>
+							
 							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
 								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.java</xsl:text>
+								<xsl:value-of select="@anchor"/>
 							</xsl:when>
 							
 							<xsl:when test="@class and starts-with(@class, 'java')">
 								<xsl:text>http://download.oracle.com/javase/6/docs/api/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.html</xsl:text>
+								<xsl:value-of select="@anchor"/>
 							</xsl:when>
 							
 							<xsl:otherwise>

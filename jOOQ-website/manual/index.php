@@ -16,7 +16,7 @@ function printContent() {
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="jOOQ classes and their usage">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Next section: jOOQ classes and their usage">next</a></td>
 </tr>
 </table>
 			<h3>Single-paged manuals</h3>
@@ -34,7 +34,7 @@ function printContent() {
 				
 <li>
 					
-<a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a>
+<a href="<?=$root?>/manual/JOOQ/" title="jOOQ Manual reference: jOOQ classes and their usage">jOOQ classes and their usage</a>
 					
 <p>
 						See these chapters for an overview of the jOOQ internal architecture
@@ -47,7 +47,7 @@ function printContent() {
 				
 <li>
 					
-<a href="<?=$root?>/manual/META/">Meta model code generation</a>
+<a href="<?=$root?>/manual/META/" title="jOOQ Manual reference: Meta model code generation">Meta model code generation</a>
 					
 <p>
 						See these chapters to understand how you can use jOOQ as a source code
@@ -58,7 +58,7 @@ function printContent() {
 				
 <li>
 					
-<a href="<?=$root?>/manual/DSL/">DSL or fluent API</a>
+<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API">DSL or fluent API</a>
 					
 <p>
 						See these chapters to learn about how to use jOOQ in every day's work. The
@@ -70,7 +70,7 @@ function printContent() {
 				
 <li>
 					
-<a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a>
+<a href="<?=$root?>/manual/ADVANCED/" title="jOOQ Manual reference: Advanced topics">Advanced topics</a>
 					
 <p>
 						Some advanced topics including not-everyday functionality

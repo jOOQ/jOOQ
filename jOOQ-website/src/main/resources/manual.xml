@@ -47,6 +47,8 @@
 				</li>
 			</ul>
 		</content>
+		
+		
 		<sections>
 			<section id="JOOQ">
 				<title>jOOQ classes and their usage</title>
@@ -75,6 +77,8 @@
 						the way you're used to in SQL
 					</p>
 				</content>
+				
+				
 				<sections>
 					<section id="ExampleDatabase">
 						<title>The example database</title>
@@ -135,6 +139,8 @@ CREATE TABLE t_book_to_book_store (
 							</p>
 						</content>
 					</section>
+					
+					
 					<section id="Factory">
 						<title>The Factory class</title>
 						<slogan>
@@ -249,9 +255,140 @@ MySQLFactory create = new MySQLFactory(connection);
 							</p>
 						</content>
 					</section>
+					
+					
 					<section id="Table">
 						<title>Tables and Fields</title>
+						<slogan>
+							Tables and their Fields are probably the most important objects in
+							jOOQ. Tables represent any entity in your underlying RDBMS, that holds
+							data for selection, insertion, updates, and deletion. In other words,
+							views are also considered tables by jOOQ. 
+						</slogan>
+						<content>
+							<h2>The Table</h2>
+							<p>The formal definition of a <reference class="org.jooq.Table"/> starts with </p>
+							<pre class="prettyprint lang-java">public interface Table&lt;R extends Record&gt; // [...]</pre>
+							<p>
+								This means that every table is associated with a subtype of the
+								<reference class="org.jooq.Record" />
+								class (see also
+								<reference id="Result" title="Results and Records" />
+								). For anonymous or ad-hoc tables,
+								&lt;R&gt; will always bind to Record itself. 
+							</p>
+							<p>
+								Unlike in the
+								<a href="http://download.oracle.com/javaee/6/tutorial/doc/gjitv.html"
+									title="Tutorial about JPA CriteriaQuery">JPA CriteriaQuery API</a>,
+								this generic type
+								&lt;R&gt;
+								is not given so much importance as far as
+								type-safety is concerned.
+								SQL itself is inherently type-unsafe. But then
+								again, you have
+								incredible flexibility of creating anonymous or ad-hoc
+								types and
+								reusing them from
+								<reference id="NESTED" title="NESTED SELECT statements" />
+								or from many other
+								use-cases. If
+								&lt;R&gt; would play a role as important
+								as in JPA, jOOQ
+								would suffer from
+								the same verbosity, or inflexibility
+								that JPA
+								CriteriaQueries may
+								have. 
+							</p>
+							
+							<h2>The Field</h2>
+							<p>The formal definition of a Field starts with </p>
+							<pre class="prettyprint lang-java">public interface Field&lt;T&gt; // [...]</pre>
+							<p>
+								Fields are generically parameterised with a Java type
+								&lt;T&gt;
+								that reflects the closest match to the RDMBS's underlying datatype for that
+								field. For instance, if you have a VARCHAR2 type Field in Oracle,
+								&lt;T&gt;
+								would bind to
+								<reference class="java.lang.String" />
+								for that Field in jOOQ. Oracle's NUMBER(7) would
+								let
+								&lt;T&gt;
+								bind to
+								<reference class="java.lang.Integer" />,
+								etc. This generic type is useful for two purposes:
+							</p>
+							<ul>
+								<li>It allows you to write type safe queries. For instance, you cannot
+									compare Field
+									&lt;String&gt;
+									with Field
+									&lt;Integer&gt;</li>
+						
+								<li>It
+									allows you to fetch correctly cast and converted values from
+									your database result set. This is especially useful when &lt;T&gt; binds
+									to
+									advanced data types, such as
+									<reference id="UDT" title="UDT's, ARRAY or ENUM types" />
+									, where jOOQ
+									does the difficult non-standardised JDBC data type conversions for you.
+								</li>
+							</ul> 
+							
+							<h2>Fields and tables put into action</h2>
+							<p>The Field itself is a very broad concept. Other tools, or databases
+								refer to it as expression or column. When you just want to </p>
+								
+							<pre class="prettyprint lang-sql">SELECT 1 FROM DUAL</pre>
+							<p>
+								Then 1 is considered a Field or more explicitly, a
+								<reference class="org.jooq.impl.Constant" />, 
+								which implements Field, and DUAL is considered a Table or more explicitly 
+								<reference class="org.jooq.impl.Dual"/>, which implements Table
+							</p>
+							<p>
+								More advanced uses become clear quickly, when you do things like 
+							</p>
+							<pre class="prettyprint lang-sql">SELECT 1 + 1 FROM DUAL</pre>
+							<p>
+								Where 1 + 1 itself is a Field or more explicitly, an 
+								<reference class="org.jooq.impl.Expression"/> 
+								joining two Constants together. 
+							</p>
+							<p>
+								See some details about how to create these queries in the
+								<reference id="Query" title="Query section"/> of the manual 
+							</p>
+							
+							<h2>TableFields</h2>
+							<p>
+								A specific type of field is the
+								<reference class="org.jooq.TableField" />,
+								which represents a physical
+								Field in a physical Table. Both the
+								TableField and its referenced Table
+								know each other. The physical aspect
+								of their nature is represented in
+								jOOQ by
+								<reference id="TABLE" title="meta model code generation" />,
+								where every entity in your database
+								schema will be generated into a
+								corresponding Java class.
+							</p>
+							<p>
+								TableFields join both &lt;R&gt; and &lt;T&gt; generic parameters into their specification: 
+							</p>
+							<pre class="prettyprint lang-java">public interface TableField&lt;R extends Record, T&gt; // [...]</pre>
+							<p>
+								This can be used for additional type safety in the future, or by client code.
+							</p>
+						</content>
 					</section>
+					
+					
 					<section id="Result">
 						<title>Results and Records</title>
 					</section>

@@ -39,7 +39,7 @@ function printContent() {
 					<p>
 						This section is about the main jOOQ classes and the global
 						architecture. Most of the time, however, you will be using the
-						<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API">DSL or fluent API</a>
+						<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL or fluent API. Where SQL meets Java</a>
 						in order to create queries
 						the way you're used to in SQL
 					</p>
@@ -60,7 +60,7 @@ function printContent() {
 <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Updatable Records">Updatable Records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Query/" title="Query and its subtypes">Query and its subtypes</a>
+<a href="<?=$root?>/manual/JOOQ/Query/" title="The Query and its various subtypes">The Query and its various subtypes</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="ResultQuery and various ways of fetching data">ResultQuery and various ways of fetching data</a>

@@ -105,7 +105,7 @@ function printContent() {
 		</xsl:variable>
 		
 		<xsl:if test="$prev">
-			<a href="{$prevhref}" title="{$prev/title}">previous</a>
+			<a href="{$prevhref}" title="Previous section: {$prev/title}">previous</a>
 		</xsl:if>
 		
 		<xsl:if test="$prev and $next">
@@ -113,7 +113,7 @@ function printContent() {
 		</xsl:if>
 		
 		<xsl:if test="$next">
-			<a href="{$nexthref}" title="{$next/title}">next</a>
+			<a href="{$nexthref}" title="Next section: {$next/title}">next</a>
 		</xsl:if>
 	</xsl:template>
 	
@@ -213,6 +213,23 @@ function printContent() {
 									<xsl:text>Reference not supported</xsl:text>
 								</xsl:message>
 							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:attribute>
+					
+					<xsl:attribute name="title">
+						<xsl:choose>
+							<xsl:when test="@id">
+								<xsl:text>jOOQ Manual reference: </xsl:text>
+								<xsl:value-of select="//section[@id = $id]/title"/>
+							</xsl:when>
+							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
+								<xsl:text>Internal API reference: </xsl:text>
+								<xsl:value-of select="@class"/>
+							</xsl:when>
+							<xsl:when test="@class and starts-with(@class, 'java')">
+								<xsl:text>External API reference: </xsl:text>
+								<xsl:value-of select="@class"/>
+							</xsl:when>
 						</xsl:choose>
 					</xsl:attribute>
 					

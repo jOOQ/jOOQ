@@ -14,7 +14,7 @@ function printContent() {
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested select statements using the EXISTS operator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/IN/" title="Nested select statements using the IN operator">previous</a> : <a href="<?=$root?>/manual/DSL/NESTED/" title="Other types of nested selects">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested select statements using the EXISTS operator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/IN/" title="Previous section: Nested select statements using the IN operator">previous</a> : <a href="<?=$root?>/manual/DSL/NESTED/" title="Next section: Other types of nested selects">next</a></td>
 </tr>
 </table>
 <?php 

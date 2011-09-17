@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/" title="Tables and Fields">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Previous section: The example database">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/" title="Next section: Tables and Fields">next</a></td>
 </tr>
 </table>
 							<h2>The Factory and the jOOQ API</h2>
@@ -37,27 +37,27 @@ function printContent() {
 							
 </ul>
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java">org.jooq.impl.Factory</a> 
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a> 
 								class is the main class from where you will create all jOOQ objects. 
-								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java">org.jooq.Configuration</a> 
+								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a> 
 								and needs to be instanciated with the Configuration's properties: 
 							</p>
 							<ul>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java">org.jooq.SQLDialect</a> : 
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> : 
 								The dialect of your database. This may be any of the currently
 								supported database types</li>
 								
 <li>
-<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html">java.sql.Connection</a> : 
+<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a> : 
 								A JDBC Connection that will be re-used for the whole
     							lifecycle of your Factory</li>
     							
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java">org.jooq.SchemaMapping</a> : 
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a> : 
     							An optional mapping of schemata. Check out the 
-    							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">SchemaMapping</a>
+    							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables to productive environments">SchemaMapping</a>
     							page for details</li> 
 							
 </ul>
@@ -86,7 +86,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							</p>
 							<ul>
 								
-<li>Oracle's <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">CONNECT BY</a>
+<li>Oracle's <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/" title="jOOQ Manual reference: The Oracle CONNECT BY clause for hierarchical queries">CONNECT BY</a>
 								    pseudo columns and functions</li>
     							
 <li>MySQL's encryption functions</li>
@@ -104,10 +104,10 @@ MySQLFactory create = new MySQLFactory(connection);
 							<h3>Potential problems</h3>
 							<p>
 								The jOOQ Factory expects its underlying
-								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html">java.sql.Connection</a>
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a>
 								to be <strong>open and ready</strong>
 								for
-								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/PreparedStatement.html">java.sql.PreparedStatement</a>
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/PreparedStatement.html" title="External API reference: java.sql.PreparedStatement">java.sql.PreparedStatement</a>
 								creation. You are responsible yourself for the
 								lifecycle dependency between Factory and Connection. This means: 
 							</p>
@@ -116,7 +116,7 @@ MySQLFactory create = new MySQLFactory(connection);
 <li>jOOQ will never close the Connection.</li>
 								
 <li>jOOQ will never commit or rollback on the Connection 
-									(Except for CSV-imports, if explicitly configured in the <a href="<?=$root?>/manual/ADVANCED/Import/">Import API</a>)</li>
+									(Except for CSV-imports, if explicitly configured in the <a href="<?=$root?>/manual/ADVANCED/Import/" title="jOOQ Manual reference: Importing data from XML, CSV">Import API</a>)</li>
 								
 <li>jOOQ will never start any transactions.</li>
 								
@@ -144,7 +144,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							<p>
 								Please keep in mind that many jOOQ objects will reference your Factory
 								for their whole lifecycle. This is especially interesting, when dealing
-								with <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a>,
+								with <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>,
 								that can perform CRUD operations on the
 								Factory's underlying Connection.
 							</p>

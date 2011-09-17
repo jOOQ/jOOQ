@@ -2,7 +2,7 @@ body {
 	font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
 	font-weight: normal;
     text-shadow: 0 1px 0 #FFFFFF;
-    font-size: 16px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 400;
     color: #000000;
@@ -16,10 +16,19 @@ body {
     padding: 0;
 }
 
+hr {
+	border: 0;
+	height: 5px;
+	color: #000;
+	background-color: #000;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Georgia',Serif;
    	font-weight: normal;
    	color: #000000;
+   	margin-top: 0.5em;
+   	margin-bottom: 0.5em;
 }
 
 h1 {
@@ -66,6 +75,7 @@ p.slogan {
 	color: #888888;
 	font-family: 'Georgia',Serif;
 	font-style: italic;
+	height: 2.5em;
 }
 
 td.left {
@@ -90,10 +100,6 @@ td h3 {
 }
 
 ul {
-	padding-top: 1em;
-	padding-bottom: 1em;
-	padding-left: 0;
-	padding-right: 0;
 	margin: 0;
 	list-style-image:url(../img/favicon-16.png);
 }
@@ -106,11 +112,11 @@ ol {
 a, a:link, a:visited, a:hover, a:active {
     color: #882222;
     text-decoration: none;
-	text-shadow: 0 1px 1px #666666;
+	text-shadow: 0 1px 2px #666666;
 }
 
 a:hover {
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 #wrapper {
@@ -123,7 +129,7 @@ a:hover {
 	background-color: #FFFFFF;
     margin: 0 auto;
     position: relative;
-    width: 940px;
+    width: 980px;
     
     padding-top: 1em;
     padding-left: 3em;

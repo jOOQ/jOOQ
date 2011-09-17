@@ -3,7 +3,7 @@ require 'frame.php';
 function printH1() {
 	print 'The history of jOOQ';
 }
-function printSlogan() {}
+function getSlogan() {}
 function printContent() {
 	$contents = file('inc/RELEASENOTES.txt');
 

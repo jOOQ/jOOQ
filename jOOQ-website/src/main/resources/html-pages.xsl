@@ -7,6 +7,8 @@
 	<xsl:param name="sectionID"/>
 	<xsl:param name="relativePath"/>
 
+	<xsl:variable name="apos">&apos;</xsl:variable>
+
 	<!-- Main match -->
 
 	<xsl:template match="/">
@@ -18,11 +20,15 @@ require '</xsl:text>
 		<xsl:value-of select="$relativePath"/>
 <xsl:text disable-output-escaping="yes">frame.php';
 function printH1() {
-    print '</xsl:text>
-	<xsl:apply-templates select="//section[@id = $sectionID]" mode="title"/>
-<xsl:text disable-output-escaping="yes">';
+    print "</xsl:text>
+	<xsl:value-of select="//section[@id = $sectionID]/title"/>
+<xsl:text disable-output-escaping="yes">";
 }
-function printSlogan() {}
+function getSlogan() {
+	return "</xsl:text>
+	<xsl:value-of select="//section[@id = $sectionID]/slogan"/>
+<xsl:text disable-output-escaping="yes">";
+}
 function printContent() {
     global $root;
 ?&gt;
@@ -37,17 +43,13 @@ function printContent() {
 
 	<!-- matching templates -->
 	
-	<xsl:template match="//section[@id = $sectionID]" mode="title">
-		<xsl:value-of select="title"/>
-	</xsl:template>
-
 	<xsl:template match="//section[@id = $sectionID]" mode="content">
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
 			<tr>
-				<td align="left">
+				<td align="left" valign="top">
 					<xsl:apply-templates select="." mode="breadcrumb"/>
 				</td>
-				<td align="right">
+				<td align="right" valign="top" style="white-space: nowrap">
 					<xsl:apply-templates select="." mode="prev-next"/>
 				</td>
 			</tr>
@@ -103,7 +105,7 @@ function printContent() {
 		</xsl:variable>
 		
 		<xsl:if test="$prev">
-			<a href="{$prevhref}">previous</a>
+			<a href="{$prevhref}" title="{$prev/title}">previous</a>
 		</xsl:if>
 		
 		<xsl:if test="$prev and $next">
@@ -111,7 +113,7 @@ function printContent() {
 		</xsl:if>
 		
 		<xsl:if test="$next">
-			<a href="{$nexthref}">next</a>
+			<a href="{$nexthref}" title="{$next/title}">next</a>
 		</xsl:if>
 	</xsl:template>
 	
@@ -182,9 +184,49 @@ function printContent() {
 				
 				<a>
 					<xsl:attribute name="href">
-						<xsl:apply-templates select="//section[@id = $id]" mode="href"/>
+						<xsl:choose>
+							<xsl:when test="@id">
+								<xsl:apply-templates select="//section[@id = $id]" mode="href"/>
+
+								<xsl:if test="not(//section[@id = $id])">
+									<xsl:message>
+										<xsl:text>Reference not found: </xsl:text>
+										<xsl:value-of select="$id"/>
+									</xsl:message>
+								</xsl:if>
+							</xsl:when>
+							
+							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
+								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/</xsl:text>
+								<xsl:value-of select="translate(@class, '.', '/')"/>
+								<xsl:text>.java</xsl:text>
+							</xsl:when>
+							
+							<xsl:when test="@class and starts-with(@class, 'java')">
+								<xsl:text>http://download.oracle.com/javase/6/docs/api/</xsl:text>
+								<xsl:value-of select="translate(@class, '.', '/')"/>
+								<xsl:text>.html</xsl:text>
+							</xsl:when>
+							
+							<xsl:otherwise>
+								<xsl:message>
+									<xsl:text>Reference not supported</xsl:text>
+								</xsl:message>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:attribute>
-					<xsl:value-of select="//section[@id = $id]/title"/>
+					
+					<xsl:choose>
+						<xsl:when test="@title">
+							<xsl:value-of select="@title"/>
+						</xsl:when>
+						<xsl:when test="@id">
+							<xsl:value-of select="//section[@id = $id]/title"/>
+						</xsl:when>
+						<xsl:when test="@class">
+							<xsl:value-of select="@class"/>
+						</xsl:when>
+					</xsl:choose>
 				</a>
 			</xsl:when>
 			<xsl:otherwise>

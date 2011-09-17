@@ -3,13 +3,11 @@ require 'frame.php';
 function printH1() {
 	print 'jOOQ : A peace treaty between SQL and Java';
 }
-function printSlogan() {
-?>
-<p class="slogan">SQL was never meant to be abstracted. To be confined in the narrow boundaries
-of heavy mappers, hiding the beauty and simplicity of relational data.
-SQL was never meant to be object-oriented. SQL was never meant to be
-anything other than... SQL!</p>
-<?php 
+function getSlogan() {
+	return "SQL was never meant to be abstracted. To be confined in the narrow boundaries 
+			of heavy mappers, hiding the beauty and simplicity of relational data.
+			SQL was never meant to be object-oriented. SQL was never meant to be
+			anything other than... SQL!";
 }
 function printContent() {
 ?>
@@ -178,7 +176,7 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
     <li>Teradata</li>
     </ul>
     
-    <h3>Other requirements</h3>
+    <h2>Other requirements</h2>
 <p>jOOQ runs with Java 1.6+</p> 
 
 <h3>License</h3>

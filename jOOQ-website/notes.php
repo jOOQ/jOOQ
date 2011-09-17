@@ -1,9 +1,13 @@
 <?php 
 require 'frame.php';
 function printH1() {
-	print 'The history of jOOQ';
+	print 'The history of jOOQ<br/>From 2009 to ' . date('Y');
 }
-function getSlogan() {}
+function getSlogan() {
+	return "jOOQ has come a long way. The community is growing as features are being added
+			in the beginning, jOOQ was no more than type-safe querying for simple statements. See how
+			jOOQ is growing to support almost all SQL constructs by 12 different RDBMS";
+}
 function printContent() {
 	$contents = file('inc/RELEASENOTES.txt');
 

@@ -18,7 +18,7 @@ function printContent() {
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/" title="The jOOQ User Manual">previous</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/" title="Previous section: The jOOQ User Manual">previous</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Next section: The example database">next</a></td>
 </tr>
 </table>
 					<h2>Overview</h2>
@@ -31,7 +31,7 @@ function printContent() {
 						
 <li>org.jooq.impl: the jOOQ implementation and factories. Most
 							implementation classes are package private, you can only access
-							them using the <a href="<?=$root?>/manual/JOOQ/Factory/">org.jooq.impl.Factory</a> 
+							them using the <a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">org.jooq.impl.Factory</a> 
 						
 </li>
 					
@@ -39,7 +39,7 @@ function printContent() {
 					<p>
 						This section is about the main jOOQ classes and the global
 						architecture. Most of the time, however, you will be using the
-						<a href="<?=$root?>/manual/DSL/">DSL or fluent API</a>
+						<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API">DSL or fluent API</a>
 						in order to create queries
 						the way you're used to in SQL
 					</p>

@@ -4,23 +4,23 @@
 // Please do not edit this content manually
 require '../../frame.php';
 function printH1() {
-    print 'jOOQ classes and their use';
+    print "jOOQ classes and their usage";
 }
-function printSlogan() {}
+function getSlogan() {
+	return "
+					In these sections, you will learn about how to use jOOQ object
+					factories and the jOOQ object oriented query model, to express
+					your SQL in jOOQ
+				";
+}
 function printContent() {
     global $root;
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their use</a></td><td align="right"><a href="<?=$root?>/manual/">previous</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/" title="The jOOQ User Manual">previous</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">next</a></td>
 </tr>
 </table>
-					<p>
-						In this section, you will learn about how to use jOOQ object
-						factories and the jOOQ object oriented query model, to express
-						your
-						SQL in jOOQ
-					</p>
 					<h2>Overview</h2>
 					<p>jOOQ essentially has two packages:</p>
 					<ul>
@@ -31,14 +31,16 @@ function printContent() {
 						
 <li>org.jooq.impl: the jOOQ implementation and factories. Most
 							implementation classes are package private, you can only access
-							them using the org.jooq.impl.Factory
-						</li>
+							them using the <a href="<?=$root?>/manual/JOOQ/Factory/">org.jooq.impl.Factory</a> 
+						
+</li>
 					
 </ul>
 					<p>
 						This section is about the main jOOQ classes and the global
-						architecture. Most of the time, however, you will be using the DSL
-						API (DSL for Domain Specific Language) in order to create queries
+						architecture. Most of the time, however, you will be using the
+						<a href="<?=$root?>/manual/DSL/">DSL or fluent API</a>
+						in order to create queries
 						the way you're used to in SQL
 					</p>
 				<h3>Table of contents</h3><ol>
@@ -46,7 +48,7 @@ function printContent() {
 <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">The example database</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Factory/" title="The factory class">The factory class</a>
+<a href="<?=$root?>/manual/JOOQ/Factory/" title="The Factory class">The Factory class</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/JOOQ/Table/" title="Tables and Fields">Tables and Fields</a>

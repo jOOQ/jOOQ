@@ -3,7 +3,7 @@ require 'frame.php';
 function printH1() {
 	print 'Useful links for jOOQ';
 }
-function printSlogan() {}
+function getSlogan() {}
 function printContent() {
 ?>
 <h2>NEWS</h2>

@@ -12,13 +12,15 @@ function printContent() {
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td class="right"><a href="<?=$root?>/manual/">Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their use</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td class="left"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">next</a></td>
+<td align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their use</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td align="right"><a href="<?=$root?>/manual/JOOQ/">previous</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
 </tr>
-</table><p>
+</table>
+							<p>
 								For the examples in this manual, the same database will always be
 								referred to. It essentially contains of these entities (for
 								example in the Oracle dialect):
-							</p><pre class="prettyprint lang-sql">
+							</p>
+							<pre class="prettyprint lang-sql">
 CREATE TABLE t_language (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   cd CHAR(2) NOT NULL,
@@ -61,10 +63,11 @@ CREATE TABLE t_book_to_book_store (
     REFERENCES t_book (id)
     ON DELETE CASCADE
 )							
-							</pre><p>More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc),
+							</pre>
+							<p>More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc),
 								stored procedures and packages are introduced for specific examples
 							</p>
+						
 <?php 
 }
 ?>
-

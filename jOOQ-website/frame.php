@@ -79,9 +79,13 @@
 					  }
 					  printContent();
 				    ?>
-					
 					<br/>
-					<br/>
+				</div>
+				
+				<div id="footer">
+					<p>jOOQ is brought to you by <a href="http://lukaseder.wordpress.com" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>. 
+					Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2 License">Apache 2 licence</a>
+					 
 				</div>
 			</div>
 		</div>

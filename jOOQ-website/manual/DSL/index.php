@@ -7,7 +7,8 @@ function printH1() {
     print "DSL or fluent API. Where SQL meets Java";
 }
 function getSlogan() {
-	return "";
+	return "
+				";
 }
 function printContent() {
     global $root;
@@ -16,7 +17,54 @@ function printContent() {
 <tr>
 <td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/SEQUENCE/" title="Previous section: Sequences">previous</a> : <a href="<?=$root?>/manual/DSL/SELECT/" title="Next section: Complete SELECT syntax">next</a></td>
 </tr>
-</table><h3>Table of contents</h3><ol>
+</table>
+					<p>jOOQ ships with its own DSL (or Domain Specific Language) that
+						simulates SQL as good as possible in Java. This means, that you can
+						write SQL statements almost as if Java natively supported that syntax
+						just like .NET's C# does with <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL.</a>
+</p>
+						
+					<p>Here is an example to show you what that means. When you want to write a query like this in SQL: </p>
+					<table cellpadding="0" cellspacing="0" width="100%">
+						
+<tr>
+							
+<td width="50%">Here is an example to show you what that means. When you want to write a query like this in SQL: </td>
+							<td width="50%">Then, using jOOQ's DSL API, you can write the same query as such: </td>
+						
+</tr>
+						
+<tr>
+							
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">
+-- Select all books by authors born after 1920, 
+-- named "Paulo" from a catalogue:
+SELECT * 
+  FROM t_author a 
+  JOIN t_book b ON a.id = b.author_id 
+ WHERE a.year_of_birth &gt; 1920 
+   AND a.first_name = 'Paulo'
+ ORDER BY b.title</pre>
+</td>
+								<td class="right" width="50%">
+<pre class="prettyprint lang-java">
+Result&lt;Record&gt; result = 
+create.select()
+      .from(T_AUTHOR)
+      .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
+      .where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920)
+      .and(TAuthor.FIRST_NAME.equal("Paulo")))
+      .orderBy(TBook.TITLE)
+      .fetch();</pre>
+</td>
+						
+</tr>
+					
+</table>
+					
+					<p>You couldn't come much closer to SQL itself in Java, without re-writing the compiler. </p>
+				<h3>Table of contents</h3><ol>
 <li>
 <a href="<?=$root?>/manual/DSL/SELECT/" title="Complete SELECT syntax">Complete SELECT syntax</a>
 </li>

@@ -51,7 +51,12 @@ function printContent() {
 							<pre class="prettyprint lang-java">
 public final java.util.List&lt;org.jooq.Sequence&gt; getSequences();
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
-						
+						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/Configuration/" title="Previous section: Configuration and setup of the generator">previous</a> : <a href="<?=$root?>/manual/META/TABLE/" title="Next section: Tables, views and their corresponding records">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>
+

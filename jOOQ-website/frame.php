@@ -77,7 +77,6 @@
 					  if ($slogan != '') {
 					  	print '<p class="slogan">' . $slogan . '</p>';
 					  }
-					  
 					  printContent();
 				    ?>
 					

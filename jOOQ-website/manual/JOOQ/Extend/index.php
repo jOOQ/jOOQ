@@ -59,7 +59,12 @@ public void bind(BindContext context) throws SQLException;
 								<a href="<?=$root?>/manual/DSL/SQL/" title="jOOQ Manual reference: When it's just much easier: Plain SQL">Plain SQL</a> functionality,
 								where you can provide jOOQ with a simple String representation of your
 								embedded SQL. </p>
-						
+						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Serializability/" title="Previous section: Serializability of QueryParts and Results">previous</a> : <a href="<?=$root?>/manual/META/" title="Next section: Meta model code generation">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>
+

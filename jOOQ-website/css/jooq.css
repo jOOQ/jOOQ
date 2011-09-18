@@ -183,6 +183,25 @@ div.navigation-item-left {
 	height: 40px;
 }
 
+#footer {
+	font-size: 0.7em;
+	color: #ddd;
+	
+	padding-top: 1em;
+	padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 1em;
+    
+    background: #888787;
+    background: -webkit-gradient(linear, left bottom, right top, from(#888787), to(#666));
+    background: -moz-linear-gradient(left bottom, #888787, #666);
+    background: gradient(linear, left bottom, right top, from(#888787), to(#666));
+    -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    -moz-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    border-top: 1px solid rgba(0,0,0,.2);
+    text-shadow: #555 -1px -1px 0px;}
+
 div.tweet-item-left {
 	float: left;
 	padding-right: 2em;

@@ -54,7 +54,7 @@
 				<title>jOOQ classes and their usage</title>
 				<slogan>
 					In these sections, you will learn about how to use jOOQ object
-					factories and the jOOQ object oriented query model, to express
+					factories and the jOOQ query model, to express
 					your SQL in jOOQ
 				</slogan>
 				<content>
@@ -969,33 +969,715 @@ create.mergeInto(T_AUTHOR)
 					
 					<section id="ResultQuery">
 						<title>ResultQuery and various ways of fetching data</title>
+						<slogan>
+							Various jOOQ query type extend the ResultQuery which provides many means of
+							fetching data. In general, fetching means executing and returning some
+							sort of result.
+						</slogan>
+						<content>
+							<h2>The ResultQuery provides many convenience methods</h2>
+							<pre class="prettyprint lang-java">
+public interface ResultQuery&lt;R extends Record&gt; {
+
+  // These methods allow for fetching a jOOQ Result
+  // or parts of it.
+  // ----------------------------------------------
+
+  // Fetch the whole result
+  Result&lt;R&gt; fetch();
+
+  // Fetch a single field from the result
+  &lt;T&gt; List&lt;T&gt; fetch(Field&lt;T&gt; field);
+      List&lt;?&gt; fetch(int fieldIndex);
+      List&lt;?&gt; fetch(String fieldName);
+
+  // Fetch the first Record
+  R fetchAny();
+
+  // Fetch exactly one Record
+  R fetchOne();
+
+  // Fetch a single field of exactly one Record
+  &lt;T&gt; T  fetchOne(Field&lt;T&gt; field);
+  Object fetchOne(int fieldIndex);
+  Object fetchOne(String fieldName);
+
+  // These methods transform the result into another
+  // form, if org.jooq.Result is not optimal
+  // -----------------------------------------------
+
+  // Fetch the resulting records as Maps
+  List&lt;Map&lt;String, Object&gt;&gt; fetchMaps();
+  Map&lt;String, Object&gt; fetchOneMap();
+
+  // Fetch the result as a Map
+  &lt;K&gt;    Map&lt;K, R&gt; fetchMap(Field&lt;K&gt; key);
+  &lt;K, V&gt; Map&lt;K, V&gt; fetchMap(Field&lt;K&gt; key, Field&lt;V&gt; value);
+
+  // Fetch the resulting records as arrays
+  Object[][] fetchArrays();
+  Object[] fetchOneArray();
+
+  // Fetch a single field as an array
+  &lt;T&gt; T[] fetchArray(Field&lt;T&gt; field);
+  Object[] fetchArray(int fieldIndex);
+  Object[] fetchArray(String fieldName);
+
+  // These methods transform the result into a user-
+  // defined form, if org.jooq.Result is not optimal
+  // -----------------------------------------------
+
+  // Fetch the resulting records into a custom POJO
+  // type, which may or may not be JPA-annotated
+  &lt;E&gt; List&lt;E&gt; fetchInto(Class&lt;? extends E&gt; type);
+
+  // Fetch the resulting records into a custom
+  // record handler, similar to how Spring JdbcTemplate's
+  // RowMapper or the Ollin Framework works.
+  &lt;H extends RecordHandler&lt;R&gt;&gt; H fetchInto(H handler);
+
+  // These change the behaviour of fetching itself,
+  // especially, when not all data should be
+  // fetched at once
+  // ----------------------------------------------
+
+  // Fetch a Cursor for lazy iteration
+  Cursor&lt;R&gt; fetchLazy();
+
+  // Fetch data asynchronously and let client code
+  // decide, when the data must be available.
+  // This makes use of the java.util.concurrent API,
+  // Similar to how Avajé Ebean works.
+  FutureResult&lt;R&gt; fetchLater();
+  FutureResult&lt;R&gt; fetchLater(ExecutorService executor);
+}</pre>
+						</content>
 					</section>
+					
+					
 					<section id="QueryPart">
 						<title>QueryParts and the global architecture</title>
+						<slogan>When constructing Query objects in jOOQ, everything is
+							considered a QueryPart. The purpose of this quickly becomes clear when
+							checking out the QueryPart API essentials</slogan>
 					</section>
+					 
+					 
 					<section id="Serializability">
 						<title>Serializability of QueryParts and Results</title>
+						<slogan>Most of the jOOQ API implements the Serializable interface.
+							This helps storing queries and partial queries in files, transferring
+							queries or result data over TCP/IP, etc. </slogan>
+						<content>
+							<h2>Attaching QueryParts</h2>
+							<p>
+								The only transient element in any jOOQ object is the 
+								<reference id="Factory"/>'s
+								underlying 
+								<reference class="java.sql.Connection"/>. When you want to execute queries after
+								de-serialisation, or when you want to store/refresh/delete 
+								<reference id="UpdatableRecord" title="Updatable Records"/>, 
+								you will have to "import" or "re-attach" them to a Factory
+							</p>
+							<pre class="prettyprint lang-java">
+// Deserialise a SELECT statement
+ObjectInputStream in = new ObjectInputStream(...);
+Select&lt;?&gt; select = (Select&lt;?&gt;) in.readObject();
+
+// This will throw a DetachedException:
+select.execute();
+
+// In order to execute the above select, attach it first
+Factory create = new Factory(connection, SQLDialect.ORACLE);
+create.attach(select);</pre>
+					
+					
+							<h2>Automatically attaching QueryParts</h2>
+							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
+							<pre class="prettyprint lang-java">
+// Create your own custom ConfigurationProvider that will make
+// your default Factory available to jOOQ
+ConfigurationProvider provider = new CustomConfigurationProvider();
+
+// Statically register the provider to jOOQ's ConfigurationRegistry
+ConfigurationRegistry.setProvider(provider);</pre>
+
+							<p>Once you have executed these steps, all subsequent deserialisations
+								will try to access a Configuration (containing a JDBC Connection) from
+								your ConfigurationProvider. This may be useful when </p>
+							<ul>
+								<li>transporting jOOQ QueryParts or Records via TCP/IP, RMI, etc (e.g.
+									between client and server), before immediately executing queries,
+									storing UpdatableRecords</li>
+								<li>
+									Using automatic mechanisms as known in
+									<a href="http://wicket.apache.org/">Wicket</a>
+								</li>
+							</ul>
+						</content>
 					</section>
+					
+					
 					<section id="Extend">
-						<title>Extend jOOQ types with custom implementations</title>
+						<title>Extend jOOQ with custom types</title>
+						<slogan>Maybe jOOQ is missing functionality that you would like to see,
+							or you can't wait for the next release... In this case, you can extend
+							any of the following open jOOQ implementation classes</slogan>
+						<content>
+							<h2>Write your own QueryPart implementations</h2>
+							<p>If a SQL clause is too complex to express with jOOQ, you can extend
+								either one of the following types for use directly in a jOOQ query:</p>
+							<pre class="prettyprint lang-java">
+public abstract class CustomField&lt;T&gt; extends AbstractField&lt;T&gt; {
+  // [...]
+}
+public abstract class CustomCondition extends AbstractCondition {
+  // [...]
+}</pre>
+
+							<p>These two classes are declared public and covered by integration
+								tests. When you extend these classes, you will have to provide your
+								own implementations for the <reference id="QueryPart" title="QueryParts"/>' 
+								bind(<reference class="org.jooq.BindContext" title="BindContext"/>) and 
+								toSQL(<reference class="org.jooq.RenderContext" title="RenderContext"/>) methods:</p>
+							<pre class="prettyprint lang-java">
+// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
+// in the correct order, passing the render context.
+//
+// If context.inline() is true, you must inline all bind variables
+// If context.inline() is false, you must generate ? for your bind variables
+public void toSQL(RenderContext context);
+
+// This method must bind all bind variables to a PreparedStatement. If your QueryPart contains other QueryParts, you may delegate
+// variable binding to them in the correct order, passing the bind context.
+//
+// Every QueryPart must ensure, that it starts binding its variables at context.nextIndex().
+public void bind(BindContext context) throws SQLException;
+</pre>
+
+							<p>The above contract may be a bit tricky to understand at first. The
+								best thing is to check out jOOQ source code and have a look at a
+								couple of QueryParts, to see how it's done.</p>
+							<h2>Plain SQL as an alternative</h2>
+							<p>If you don't need integration of rather complex QueryParts into
+								jOOQ, then you might be safer using simple 
+								<reference id="SQL" title="Plain SQL"/> functionality,
+								where you can provide jOOQ with a simple String representation of your
+								embedded SQL. </p>
+						</content>
 					</section>
 				</sections>
 			</section>
+			
+			
+			
+			
 			<section id="META">
 				<title>Meta model code generation</title>
+				<slogan>In these sections you will learn about how to configure and use
+					jOOQ's source code generator</slogan>
+				<content>
+					<h2>Overview</h2>
+					<p>
+						In the previous chapter, we have seen how to use the 
+						<reference id="Factory" title="Factory"/> in order to create 
+						<reference id="Query" title="Queries"/> and fetch data in 
+						<reference id="Result" title="Results"/>. The strength of jOOQ not
+						only lies in its object-oriented 
+						<reference id="QueryPart" title="Query model"/>, 
+						but also in the fact
+						that Java source code is generated from your database schema into the
+						META data model. jOOQ follows the paradigm, that your database comes
+						first (see also <a href="&lt;?=$root?&gt;/">home page</a>). 
+						This means that you should not modify
+						generated source code, but only adapt entities in your database. Every
+						change in your database is reflected in a corresponding change in your
+						generated meta-model.
+					</p>
+					<p>
+						Artefacts, such as tables, views, user defined types, sequences, stored
+						procedures, packages have a corresponding artefact in Java.
+					</p>
+				</content>
+				
+				
 				<sections>
 					<section id="Configuration">
-						<title>Configuration and setup</title>
+						<title>Configuration and setup of the generator</title>
+						<slogan>jOOQ uses a simple configuration file to configure source code generation.</slogan>
+						<content>
+							<h2>The deliverables</h2>
+							<p>
+								There are three binaries available with jOOQ, to be downloaded from
+								<a href="https://sourceforge.net/projects/jooq/">SourceForge</a>
+								or from Maven central:
+							</p>
+							<ul>
+								<li>
+									<strong>jOOQ.jar</strong>
+									<br />
+									The main library that you will include in your application to run jOOQ
+								</li>
+								<li>
+									<strong>jOOQ-meta.jar</strong>
+									<br />
+									The utility that you will include in your build to navigate your
+									database schema for code generation. This can be used as a schema
+									crawler as well.
+								</li>
+								<li>
+									<strong>jOOQ-codegen.jar</strong>
+									<br />
+									The utility that you will include in your build to generate your
+									database schema
+								</li>
+							</ul>
+							
+							<h2>Dependencies</h2>
+							<p>All of jOOQ's dependencies are "optional", i.e. you can run
+								jOOQ without any of those libraries.
+								For instance, jOOQ maintains an "optional" dependency on log4j and slf4j.
+								This means, that jOOQ tries to find log4j (and /log4j.xml) or slf4j on the
+								classpath. If they are not present, then java.util.logging.Logger is
+								used instead.
+							</p>
+							
+							
+							<h2>Configure jOOQ</h2>
+							<p>You need to tell jOOQ some things about your database connection.
+								Here's an example of how to do it for a MySQL database </p>
+							<pre class="prettyprint">
+#Configure the database connection here
+jdbc.Driver=com.mysql.jdbc.Driver
+jdbc.URL=jdbc:mysql://[your jdbc URL]
+jdbc.Schema=[your database schema]
+jdbc.User=[your database user]
+jdbc.Password=[your database password]
+
+#The default code generator. You can override this one, to generate your own code style
+#Defaults to org.jooq.util.DefaultGenerator
+generator=org.jooq.util.DefaultGenerator
+
+#The database type. The format here is:
+#generator.database=org.util.[database].[database]Database
+generator.database=org.jooq.util.mysql.MySQLDatabase
+
+#All elements that are generated from your schema (several Java regular expressions, separated by comma)
+#Watch out for case-sensitivity. Depending on your database, this might be important!
+generator.database.includes=.*
+
+#All elements that are excluded from your schema (several Java regular expressions, separated by comma). Excludes match before includes
+generator.database.excludes=
+
+#Primary key / foreign key relations should be generated and used. 
+#This will be a prerequisite for various advanced features
+#Defaults to false
+generator.generate.relations=true
+
+#Generate deprecated code for backwards compatibility 
+#Defaults to true
+generator.generate.deprecated=false
+
+#The destination package of your generated classes (within the destination directory)
+generator.target.package=[org.jooq.your.package]
+
+#The destination directory of your generated classes
+generator.target.directory=[/path/to/your/dir]</pre>
+
+							<p>And you can add some optional advanced configuration parameters: </p>
+							<pre class="prettyprint">
+#Generate a master data table enum classes (several Java regular expressions, separated by comma)
+generator.generate.master-data-tables=[a list of tables]
+
+#For every master data table, specify two special columns
+generator.generate.master-data-table-literal.[master data table]=[column used for enum literals]
+generator.generate.master-data-table-description.[master data table]=[column used for documentation]</pre>
+							<p>Check out the manual's section about 
+								<reference id="MasterData" title="master data"/>
+								 to find out more
+								about those advanced configuration parameters. </p>
+								
+							<h2>Run jOOQ code generation</h2>
+							<p>Code generation works by calling this class with the above property file as argument.</p>
+							<pre class="prettyprint">
+org.jooq.util.GenerationTool /jooq-config.properties</pre>
+							<p>Be sure that these elements are located on the classpath: </p>
+							<ul>
+								<li>The property file</li>
+								<li>jooq.jar, jooq-meta.jar, jooq-codegen.jar</li>
+								<li>The JDBC driver you configured</li>
+							</ul>
+							
+							<h3>A command-line example (For Windows, unix/linux/etc will be similar)</h3>
+							<ul>
+								<li>Put the property file, jooq*.jar and the JDBC driver into 
+									a directory, e.g. C:\temp\jooq</li>
+							    <li>Go to C:\temp\jooq</li>
+							    <li>Run java -cp jooq.jar;jooq-meta.jar;jooq-codegen.jar;[JDBC-driver].jar;. org.jooq.util.GenerationTool /[property file] </li>
+							</ul>
+							<p>Note that the property file must be passed as a classpath resource</p>
+							
+							<h3>Run code generation from Eclipse</h3>
+							<p>Of course, you can also run code generation from your IDE. In
+								Eclipse, set up a project like this. Note that this example uses
+								jOOQ's log4j support by adding log4j.xml and log4j.jar to the project
+								classpath: </p>
+							<div class="screenshot">
+							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-01.png" alt="Eclipse configuration"/>
+							</div>
+							
+							<p>Once the project is set up correctly with all required artefacts on
+								the classpath, you can configure an Eclipse Run Configuration for
+								org.jooq.util.GenerationTool. </p>
+							<div class="screenshot">
+							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-02.png" alt="Eclipse configuration"/>
+							</div>
+							
+							<p>With the properties file as an argument </p>
+							<div class="screenshot">
+							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-03.png" alt="Eclipse configuration"/>
+							</div>
+							
+							<p>And the classpath set up correctly</p>
+							<div class="screenshot">
+							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-04.png" alt="Eclipse configuration"/>
+							</div>
+							
+							<p>Finally, run the code generation and see your generated artefacts</p>
+							<div class="screenshot">
+							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-05.png" alt="Eclipse configuration"/>
+							</div>
+							
+							<h3>Run generation with ant</h3>
+							<p>You can also use an ant task to generate your classes: </p>
+							<pre class="prettyprint lang-xml">
+&lt;!-- Task definition --&gt;
+&lt;taskdef name="generate-classes" classname="org.jooq.util.GenerationTask"&gt;
+  &lt;classpath&gt;
+    &lt;fileset dir="${path.to.jooq.distribution}"&gt;
+      &lt;include name="jOOQ.jar"/&gt;
+      &lt;include name="jOOQ-meta.jar"/&gt;
+      &lt;include name="jOOQ-codegen.jar"/&gt;
+    &lt;/fileset&gt;
+    &lt;fileset dir="${path.to.mysql.driver}"&gt;
+      &lt;include name="${mysql.driver}.jar"/&gt;
+    &lt;/fileset&gt;
+  &lt;/classpath&gt;
+&lt;/taskdef&gt;
+
+&lt;!-- Run the code generation task --&gt;
+&lt;target name="generate-test-classes"&gt;
+  &lt;generate-classes 
+      jdbcurl="jdbc:mysql://localhost/test"
+      jdbcschema="test"
+      jdbcuser="root"
+      jdbcpassword=""
+      generatortargetpackage="org.jooq.test.generatedclasses"
+      generatortargetdirectory="${basedir}/src"/&gt;
+&lt;/target&gt;</pre>
+							
+							<h3>Use jOOQ generated classes in your application</h3>
+							<p>Be sure, both jOOQ.jar and your generated package (see
+								configuration) are located on your classpath. Once this is done, you
+								can execute SQL statements with your generated classes.</p>
+						</content>
 					</section>
+					
+					
 					<section id="SCHEMA">
-						<title>Schemata</title>
+						<title>The schema, top-level generated artefact</title>
+						<slogan>The schema is the top-level generated object in jOOQ. In many 
+							RDBMS, the schema coincides with the owner of tables and other objects
+						</slogan>
+						<content>
+							<h2>The Schema</h2>
+							<p>
+								As of jOOQ 1.5, the top-level generated object is the
+								<reference class="org.jooq.Schema" />.
+								The Schema itself has no relevant functionality, except for holding
+								the schema name for all dependent generated artefacts. jOOQ queries try
+								to always fully qualify an entity within the database using that Schema
+							</p>
+							
+							<p>
+								Currently, it is not possible to link generated artefacts from various
+								schemata. If you have a stored function from Schema A, which returns a
+								UDT from Schema B, the types cannot be linked. This enhancement is on
+								the roadmap, though: <reference ticket="282"/>.
+							</p>
+							
+							<p>
+								When you have several schemata that are logically equivalent (i.e. they
+								contain identical entities, but the schemata stand for different
+								users/customers/clients, etc), there is a solution for that. Check out
+								the manual's section on support for 
+								<reference id="SchemaMapping" title="multiple equivalent schemata"/> 
+							</p>
+
+							<h3>Schema contents</h3>
+							<p>The schema can be used to dynamically discover generate database
+								artefacts. Tables, sequences, and other items are accessible from the
+								schema. For example:</p>
+							<pre class="prettyprint lang-java">
+public final java.util.List&lt;org.jooq.Sequence&gt; getSequences();
+public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
+						</content>
 					</section>
+					
+					
 					<section id="TABLE">
-						<title>Tables and views and their corresponding records</title>
+						<title>Tables, views and their corresponding records</title>
+						<slogan>
+							The most important generated artefacts are Tables and TableRecords.
+							Every Table has a Record type associated with it that models a single tuple
+							of that entity: Table&lt;R extends Record&gt;.
+						</slogan>
+						<content>
+							<h2>Tables and TableRecords</h2>
+							<p>
+								The most important generated artefacts are 
+								<reference class="org.jooq.Table" title="Tables"/> and 
+								<reference class="org.jooq.TableRecord" title="TableRecords"/>. As
+								discussed in previous chapters about 
+								<reference id="Table" title="Tables"/> and 
+								<reference id="Result" title="Results"/>, jOOQ uses the
+								Table class to model entities (both tables and views) in your database
+								Schema. Every Table has a Record type associated with it that models a
+								single tuple of that entity: Table&lt;R extends Record&gt;. This
+								couple of Table&lt;R&gt; and R are generated as such:
+							</p>
+							<p>
+								Suppose we have the tables as defined in the 
+								<reference id="ExampleDatabase" title="example database"/>. 
+								Then, using a
+								default configuration, these (simplified for the example) classes will
+								be generated:
+							</p>
+							
+							<h3>The Table as an entity meta model</h3>
+							<pre class="prettyprint lang-java">
+public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
+
+    // The singleton instance of the Table
+    public static final TAuthor T_AUTHOR = new TAuthor();
+
+    // The Table's fields    
+    public static final TableField&lt;TAuthorRecord, Integer&gt; ID =            // [...]
+    public static final TableField&lt;TAuthorRecord, String&gt; FIRST_NAME =     // [...]
+    public static final TableField&lt;TAuthorRecord, String&gt; LAST_NAME =      // [...]
+    public static final TableField&lt;TAuthorRecord, Date&gt; DATE_OF_BIRTH =    // [...]
+    public static final TableField&lt;TAuthorRecord, Integer&gt; YEAR_OF_BIRTH = // [...]
+}</pre>
+
+							<h3>The Table's associated TableRecord</h3>
+							<p>If you use the 
+								<reference id="Query" title="SimpleSelectQuery"/>
+								 syntax (both in standard and DSL
+								mode), then your SELECT statement will return the single Table&lt;R
+								extends Record&gt;'s associated Record type &lt;R&gt;. In the case of
+								the above TAuthor Table, this will be a TAuthorRecord. </p>
+								
+							<pre class="prettyprint lang-java">
+public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
+
+    // Getters and setters for the various fields
+    public void setId(Integer value) {       // [...]
+    public Integer getId() {                 // [...]
+    public void setFirstName(String value) { // [...]
+    public String getFirstName() {           // [...]
+    public void setLastName(String value) {  // [...]
+    public String getLastName() {            // [...]
+    public void setDateOfBirth(Date value) { // [...]
+    public Date getDateOfBirth() {           // [...]
+
+    // Navigation methods for foreign keys
+    public List&lt;TBookRecord&gt; getTBooks() throws SQLException { // [...]
+}</pre>
+						</content>
 					</section>
+					
+					
 					<section id="PROCEDURE">
 						<title>Procedures and packages</title>
+						<slogan>
+							Procedure support is one of the most important reasons why you should consider
+							jOOQ. jOOQ heavily facilitates the use of stored procedures and
+							functions via its source code generation.
+						</slogan>
+						<content>
+							<h2>Stored procedures in modern RDBMS</h2>
+							<p>This is one of the most important reasons why you should consider
+								jOOQ. Read also my 
+								<a href="http://java.dzone.com/articles/2011-great-year-stored" title="Article on stored procedures and how to use them with jOOQ">article on dzone</a>
+								about why stored procedures become
+								more and more important in future versions of RDMBS. In this section
+								of the manual, we will learn how jOOQ handles stored procedures in
+								code generation. Especially before 
+								<reference id="UDT" title="UDT and ARRAY support"/> was
+								introduced to major RDBMS, these procedures tend to have dozens of
+								parameters, with IN, OUT, IN OUT parameters mixed in all variations.
+								JDBC only knows very basic, low-level support for those constructs.
+								jOOQ heavily facilitates the use of stored procedures and functions
+								via its source code generation. Essentially, it comes down to this:
+							</p>
+							
+							<h3>"Standalone" stored procedures and functions</h3>
+							<p>Let's say you have these stored procedures and functions in your Oracle database </p>
+							<pre class="prettyprint lang-sql">
+-- Check whether there is an author in T_AUTHOR by that name
+CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2) RETURN NUMBER;
+
+-- Check whether there is an author in T_AUTHOR by that name
+CREATE OR REPLACE PROCEDURE p_author_exists (author_name VARCHAR2, result OUT NUMBER);
+
+-- Check whether there is an author in T_AUTHOR by that name and get his ID
+CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT NUMBER, id OUT NUMBER);</pre>
+							
+							<p>jOOQ will essentially generate two artefacts for every procedure/function: </p>
+							<ul>
+								<li>A class holding a formal Java representation of the procedure/function</li>
+    							<li>Some convenience methods to facilitate calling that procedure/function </li>
+							</ul>
+							<p>Let's see what these things look like, in Java. The classes (simplified for the example): </p>
+							
+							<pre class="prettyprint lang-java">
+// The function has a generic type parameter &lt;T&gt; bound to its return value
+public class FAuthorExists extends StoredFunctionImpl&lt;BigDecimal&gt; {
+
+    // Much like Tables, functions have static parameter definitions
+    public static final Parameter&lt;String&gt; AUTHOR_NAME = // [...]
+
+    // And much like TableRecords, they have setters for their parameters
+    public void setAuthorName(String value) { // [...]
+    public void setAuthorName(Field&lt;String&gt; value) { // [...]
+}
+
+public class PAuthorExists extends StoredProcedureImpl {
+
+    // In procedures, IN, OUT, IN OUT parameters are all represented
+    // as static parameter definitions as well
+    public static final Parameter&lt;String&gt; AUTHOR_NAME = // [...]
+    public static final Parameter&lt;BigDecimal&gt; RESULT = // [...]
+
+    // IN and IN OUT parameters have generated setters
+    public void setAuthorName(String value) { // [...]
+
+    // OUT and IN OUT parameters have generated getters
+    public BigDecimal getResult() { // [...]
+}
+
+public class PAuthorExists_2 extends StoredProcedureImpl {
+    public static final Parameter&lt;String&gt; AUTHOR_NAME = // [...]
+    public static final Parameter&lt;BigDecimal&gt; RESULT = // [...]
+    public static final Parameter&lt;BigDecimal&gt; ID = // [...]
+
+    // the setters...
+    public void setAuthorName(String value) { // [...]
+
+    // the getters...
+    public BigDecimal getResult() { // [...]
+    public BigDecimal getId() { // [...]
+}</pre>
+
+							<p>An example invocation of such a stored procedure might look like this: </p>
+							
+							<pre class="prettyprint lang-java">
+PAuthorExists p = new PAuthorExists();
+p.setAuthorName("Paulo");
+p.execute(configuration);
+assertEquals(BigDecimal.ONE, p.getResult());</pre>
+
+							<p>If you use the generated convenience methods, however, things are much simpler, still: </p>
+							<pre class="prettyprint lang-java">
+// Every schema has a single Functions class with convenience methods
+public final class Functions {
+
+    // Convenience method to directly call the stored function
+    public static BigDecimal fAuthorExists(Configuration configuration, String authorName) { // [...]
+
+    // Convenience methods to transform the stored function into a
+    // Field&lt;BigDecimal&gt;, such that it can be used in SQL
+    public static Field&lt;BigDecimal&gt; fAuthorExists(Field&lt;String&gt; authorName) { // [...]
+    public static Field&lt;BigDecimal&gt; fAuthorExists(String authorName) { // [...]
+}
+
+// Every schema has a single Procedures class with convenience methods
+public final class Procedures {
+
+    // Procedures with 0 OUT parameters create void methods
+    // Procedures with 1 OUT parameter create methods as such:
+    public static BigDecimal pAuthorExists(Configuration configuration, String authorName) { // [...]
+
+    // Procedures with more than 1 OUT parameter return the procedure
+    // object (see above example)
+    public static PAuthorExists_2 pAuthorExists_2(Configuration configuration, String authorName) { // [...]
+}</pre>
+
+							<p>An sample invocation, equivalent to the previous example:</p>
+							<pre class="prettyprint lang-java">
+assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</pre>
+
+
+							<h3>jOOQ's understanding of procedures vs functions</h3>
+							<p>
+								It might not be very clear, what defines a procedure and what
+								defines a
+								function in those RDBMS that support these objects. Most
+								often, a function
+								has a mandatory return value, whereas procedures can
+								return OUT parameters.
+								Oracle allows for mixing those concepts.
+								Postgres omits the term procedure, etc.
+							</p>
+							<p>
+								For jOOQ, the following applies:
+							</p>
+							<ul>
+								<li>
+									A procedure is an object that cannot be used in SQL (because it
+									has no
+									return value). A procedure is called internally by jOOQ using a
+									<reference class="java.sql.CallableStatement" />
+								</li>
+								<li>
+									A function is an object that can be used in SQL. There is always
+									the
+									possibility to create a
+									<reference class="org.jooq.Field" />
+									to represent the function
+									embedded in SQL.
+								</li>
+							</ul>
+							
+							
+							<h3>Packages in Oracle</h3>
+							<p>
+								Oracle uses the concept of a PACKAGE to group several
+								procedures/functions into a sort of namespace. The
+								<a href="http://www.contrib.andrew.cmu.edu/~shadow/sql/sql1992.txt"
+									title="SQL 92 standard">SQL standard</a>
+								talks about "modules", to represent this concept, even if this is
+								rarely implemented. This is reflected in jOOQ by the use of Java
+								sub-packages in the source code generation destination package. Every
+								Oracle package will be reflected by
+							</p>
+							<ul>
+								<li>A Java package holding classes for formal Java representations of
+									the procedure/function in that package
+								</li>
+								<li>A Java class holding convenience methods to facilitate calling
+									those procedures/functions
+								</li>
+							</ul>
+							<p>
+								Apart from this, the generated source code looks exactly like the
+								one for
+								standalone procedures/functions.
+							</p>
+						</content>
 					</section>
+					
+					
 					<section id="UDT">
 						<title>UDT's including ARRAY and ENUM types</title>
 					</section>
@@ -1004,6 +1686,10 @@ create.mergeInto(T_AUTHOR)
 					</section>
 				</sections>
 			</section>
+			
+			
+			
+			
 			<section id="DSL">
 				<title>DSL or fluent API. Where SQL meets Java</title>
 				<sections>

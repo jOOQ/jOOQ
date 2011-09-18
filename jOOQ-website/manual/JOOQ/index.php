@@ -9,7 +9,7 @@ function printH1() {
 function getSlogan() {
 	return "
 					In these sections, you will learn about how to use jOOQ object
-					factories and the jOOQ object oriented query model, to express
+					factories and the jOOQ query model, to express
 					your SQL in jOOQ
 				";
 }
@@ -72,7 +72,7 @@ function printContent() {
 <a href="<?=$root?>/manual/JOOQ/Serializability/" title="Serializability of QueryParts and Results">Serializability of QueryParts and Results</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Extend/" title="Extend jOOQ types with custom implementations">Extend jOOQ types with custom implementations</a>
+<a href="<?=$root?>/manual/JOOQ/Extend/" title="Extend jOOQ with custom types">Extend jOOQ with custom types</a>
 </li>
 </ol>
 <?php 

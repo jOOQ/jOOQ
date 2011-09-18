@@ -2336,26 +2336,238 @@ TBook book = create.selectFrom(T_BOOK)
 					
 					<section id="CONDITION">
 						<title>Conditions</title>
+						<slogan>
+							The creation of conditions is the part of any database abstraction that
+							attracts the most attention.
+						</slogan>
+						<content>
+							<h2>Conditions are the SELECT's core business</h2>
+							<p>In your average application, you will typically have 3-4 SQL queries
+								that have quite a long list of predicates (and possibly JOINs), such
+								that you start to lose track over the overall boolean expression that
+								you're trying to apply.</p>
+							<p>In jOOQ, most Conditions can be created and combined almost as
+								easily as in SQL itself. The two main participants for creating
+								Conditions are the <reference class="org.jooq.Field" title="Field"/>, 
+								which is typically a participant of a
+								condition, and the <reference class="org.jooq.Condition" title="Condition"/> 
+								itself: </p>
+							<pre class="prettyprint lang-java">
+public interface Condition {
+    Condition and(Condition other);
+    Condition and(String sql);
+    Condition and(String sql, Object... bindings);
+    Condition andNot(Condition other);
+    Condition andExists(Select&lt;?&gt; select);
+    Condition andNotExists(Select&lt;?&gt; select);
+    Condition or(Condition other);
+    Condition or(String sql);
+    Condition or(String sql, Object... bindings);
+    Condition orNot(Condition other);
+    Condition orExists(Select&lt;?&gt; select);
+    Condition orNotExists(Select&lt;?&gt; select);
+    Condition not();
+}</pre>
+
+							<p>The above example describes the essence of boolean logic in jOOQ. As
+								soon as you have a Condition object, you can connect that to other
+								Conditions, which will then give you a combined condition with exactly
+								the same properties. There are also convenience methods to create an
+								EXISTS clause and connect it to an existing condition. In order to
+								create a new Condition you are going to depart from a Field in most
+								cases. Here are some important API elements in the Field interface:
+							</p>
+							
+							<pre class="prettyprint lang-java">
+public interface Field&lt;T&gt; {
+    Condition isNull();
+    Condition isNotNull();
+    Condition like(T value);
+    Condition notLike(T value);
+    Condition in(T... values);
+    Condition in(Select&lt;?&gt; query);
+    Condition notIn(Collection&lt;T&gt; values);
+    Condition notIn(T... values);
+    Condition notIn(Select&lt;?&gt; query);
+    Condition in(Collection&lt;T&gt; values);
+    Condition between(T minValue, T maxValue);
+    Condition equal(T value);
+    Condition equal(Field&lt;T&gt; field);
+    Condition equal(Select&lt;?&gt; query);
+    Condition equalAny(Select&lt;?&gt; query);
+    Condition equalSome(Select&lt;?&gt; query);
+    Condition equalAll(Select&lt;?&gt; query);
+    Condition notEqual(T value);
+    Condition notEqual(Field&lt;T&gt; field);
+    Condition notEqual(Select&lt;?&gt; query);
+    Condition notEqualAny(Select&lt;?&gt; query);
+    Condition notEqualSome(Select&lt;?&gt; query);
+    Condition notEqualAll(Select&lt;?&gt; query);
+    Condition lessThan(T value);
+    Condition lessOrEqual(T value);
+    Condition greaterThan(T value);
+    Condition greaterOrEqual(T value);
+}</pre>
+
+							<p>As you see in the partially displayed API above, you can compare a
+								Field either with other Fields, with constant values (which is a
+								shortcut for calling Factory.val(T value)), or with a nested SELECT
+								statement. See some more 
+								<reference id="NESTED" title="Examples of nested SELECTs"/>. </p>
+							<p>Combining the API of Field and Condition you can express complex predicates like this: </p>
+							
+							<pre class="prettyprint lang-sql">
+(T_BOOK.TYPE_CODE IN (1, 2, 5, 8, 13, 21)       AND T_BOOK.LANGUAGE = 'DE') OR
+(T_BOOK.TYPE_CODE IN (2, 3, 5, 7, 11, 13)       AND T_BOOK.LANGUAGE = 'FR') OR
+(T_BOOK.TYPE_CODE IN (SELECT CODE FROM T_TYPES) AND T_BOOK.LANGUAGE = 'EN')</pre>
+
+							<p>Just write: </p>
+							<pre class="prettyprint lang-java">
+TBook.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                      .and(TBook.LANGUAGE.equal("DE")).or(
+TBook.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                      .and(TBook.LANGUAGE.equal("FR")).or(
+TBook.TYPE_CODE.in(create.select(TTypes.CODE).from(T_TYPES)).and(TBook.LANGUAGE.equal("EN"))));</pre>
+						</content>
 					</section>
 					
 					
 					<section id="ALIAS">
 						<title>Aliased tables and fields</title>
+						<slogan>
+							Aliasing is at the core of SQL and relational algebra. When you join
+							the same entity multiple times, you can rename it to distinguish the
+							various meanings of the same entity
+						</slogan>
+						<content>
+							<h2>Aliasing Tables</h2>
+							<p>A typical example of what you might want to do in SQL is this: </p>
+							<pre class="prettyprint lang-sql">
+SELECT a.ID, b.ID
+  FROM T_AUTHOR a
+  JOIN T_BOOK b on a.ID = b.AUTHOR_ID</pre>
+  
+  							<p>In this example, we are aliasing Tables, calling them a and b. Here is how you can create Table aliases in jOOQ: </p>
+  							<pre class="prettyprint lang-java">
+Table&lt;TBookRecord&gt; book = T_BOOK.as("b");
+Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</pre>
+
+							<p>Now, if you want to reference any fields from those Tables, you may
+								not use the original T_BOOK or T_AUTHOR meta-model objects anymore.
+								Instead, you have to get the fields from the new book and author Table
+								aliases: </p>
+								
+							<pre class="prettyprint lang-java">
+Field&lt;Integer&gt; bookID = book.getField(TBook.ID);
+Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
+
+							<p>
+								Unfortunately, this tends to be a bit verbose. The static meta-model
+								is not very suitable for accessing fields dynamically from Table
+								aliases. This will be resolved in a future version as of ticket
+								<reference ticket="117" />.
+								For now, this is how the above SQL statement would read in jOOQ:
+							</p>
+							<pre class="prettyprint lang-java">
+create.select(authorID, bookID)
+      .from(author)
+      .join(book).on(authorID.equal(book.getField(TBook.AUTHOR_ID)));</pre>
+      
+      
+      						<h3>Aliasing nested selects as tables</h3>
+							<p>There is an interesting, more advanced example of how you can select
+								from an aliased nested select in the manual's section about 
+								<reference id="NESTED" title="nested selects"/></p>
+								
+								
+							<h2>Aliasing fields</h2>
+							<p>Fields can also be aliased independently from Tables. Most often,
+								this is done when using functions or aggregate operators. Here is an
+								example: </p>
+							<pre class="prettyprint lang-sql">
+  SELECT FIRST_NAME || ' ' || LAST_NAME author, COUNT(*) books
+    FROM T_AUTHOR
+    JOIN T_BOOK ON T_AUTHOR.ID = AUTHOR_ID
+GROUP BY FIRST_NAME, LAST_NAME;</pre>
+							<p>Here is how it's done with jOOQ: </p>
+							<pre class="prettyprint lang-java">
+Record record = create.select(
+         TAuthor.FIRST_NAME.concat(" ", TAuthor.LAST_NAME).as("author"),
+         create.count().as("books"))
+      .from(T_AUTHOR)
+      .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
+      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME).fetchAny();</pre>
+      						<p>When you alias Fields like above, you can access those Fields' values using the alias name: </p>
+      						<pre class="prettyprint lang-java">
+System.out.println("Author : " + record.getValue("author"));
+System.out.println("Books  : " + record.getValue("books"));</pre>
+						</content>
 					</section>
 					
 					
 					<section id="IN">
-						<title>Nested select statements using the IN operator</title>
+						<title>Nested SELECT using the IN operator</title>
+						<slogan>
+							Set equal operations are very common when you want to select multiple
+							records. The IN operator can also be used for semi-joins, though
+						</slogan>
+						<content>
+							<h2>The IN operator for use in semi-joins</h2>
+							<p>
+								In addition to a list of constant values, the IN operator in 
+								<reference class="org.jooq.Field"/> 
+								also supports a 
+								<reference class="org.jooq.Select"/> as an argument. 
+								This can be any type of select as
+								discussed in the manual's section about 
+								<reference id="Query" title="Query types"/>. 
+								However, you must
+								ensure yourself, that the provided Select will only select a single
+								Field.
+							</p>
+							<p>Let's say you want to select books by authors born in 1920. Of
+								course, this is possible with a plain JOIN as well, but let's say we
+								want to use the IN operator. Then you have two possibilities: </p>
+								
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="50%" class="left"><pre class="prettyprint lang-sql">
+SELECT *
+  FROM T_BOOK
+ WHERE T_BOOK.AUTHOR_ID IN (
+           SELECT ID FROM T_AUTHOR
+            WHERE T_AUTHOR.BORN = 1920)
+
+-- OR:
+
+SELECT T_BOOK.*
+  FROM T_BOOK
+  JOIN T_AUTHOR ON (T_BOOK.AUTHOR_ID = T_AUTHOR.ID
+                AND T_AUTHOR.BORN    = 1920)</pre></td>
+									<td width="50%" class="right"><pre class="prettyprint lang-java">
+create.select()
+      .from(T_BOOK)
+      .where(TBook.AUTHOR_ID.in(
+          create.select(TAuthor.ID).from(T_AUTHOR)
+                .where(TAuthor.BORN.equal(1920))));
+
+// OR:
+
+create.select(T_BOOK.getFields())
+      .from(T_BOOK)
+      .join(T_AUTHOR).on(TBook.AUTHOR_ID.equal(TAuthor.ID)
+                     .and(TAuthor.BORN.equal(1920)));</pre></td>
+								</tr>
+							</table>								
+						</content>
 					</section>
 					
 					
 					<section id="EXISTS">
-						<title>Nested select statements using the EXISTS operator</title>
+						<title>Nested SELECT using the EXISTS operator</title>
 					</section>
 					
 					
 					<section id="NESTED">
-						<title>Other types of nested selects</title>
+						<title>Other types of nested SELECT</title>
 					</section>
 					
 					

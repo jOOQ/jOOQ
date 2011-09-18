@@ -45,7 +45,7 @@ function printContent() {
 								incredible flexibility of creating anonymous or ad-hoc
 								types and
 								reusing them from
-								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested selects">NESTED SELECT statements</a>
+								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">NESTED SELECT statements</a>
 								or from many other
 								use-cases. If
 								&lt;R&gt; would play a role as important

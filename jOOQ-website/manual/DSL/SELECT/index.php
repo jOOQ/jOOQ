@@ -243,7 +243,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>&lt;Record&gt;. 
 								This type can be reused in various expressions such as in the
 								<a href="<?=$root?>/manual/DSL/UNION/" title="jOOQ Manual reference: UNION and other set operations">UNION and other set operations</a>, 
-								<a href="<?=$root?>/manual/DSL/EXISTS/" title="jOOQ Manual reference: Nested select statements using the EXISTS operator">Nested select statements using the EXISTS operator</a>, 
+								<a href="<?=$root?>/manual/DSL/EXISTS/" title="jOOQ Manual reference: Nested SELECT using the EXISTS operator">Nested select statements using the EXISTS operator</a>, 
 								etc. If you just want to execute this select
 								statement, you can choose any of these methods as discussed in the 
 								section about the <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="jOOQ Manual reference: ResultQuery and various ways of fetching data">ResultQuery</a>:

@@ -148,7 +148,12 @@ MySQLFactory create = new MySQLFactory(connection);
 								that can perform CRUD operations on the
 								Factory's underlying Connection.
 							</p>
-						
+						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Previous section: The example database">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/" title="Next section: Tables and Fields">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>
+

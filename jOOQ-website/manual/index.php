@@ -205,7 +205,11 @@ function printContent() {
 </li>
 </ol>
 </li>
-</ol>
+</ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Next section: jOOQ classes and their usage">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>

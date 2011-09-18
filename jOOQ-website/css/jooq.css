@@ -120,7 +120,7 @@ a:hover {
 }
 
 #wrapper {
-	background: url("../img/bodytile.jpg") repeat scroll left top #FFFFFF;
+	background: url("../img/bg.jpg") repeat scroll left top #FFFFFF;
     height: auto;
     min-height: 101%;
 }
@@ -146,7 +146,6 @@ a:hover {
     background: -webkit-gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
     background: -moz-linear-gradient(left, #f6cab9, #ffeedd);
     background: gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
-    
 }
 
 #navigation {

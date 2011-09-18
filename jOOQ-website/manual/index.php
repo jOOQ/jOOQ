@@ -151,13 +151,13 @@ function printContent() {
 <a href="<?=$root?>/manual/DSL/ALIAS/" title="Aliased tables and fields">Aliased tables and fields</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/IN/" title="Nested select statements using the IN operator">Nested select statements using the IN operator</a>
+<a href="<?=$root?>/manual/DSL/IN/" title="Nested SELECT using the IN operator">Nested SELECT using the IN operator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/EXISTS/" title="Nested select statements using the EXISTS operator">Nested select statements using the EXISTS operator</a>
+<a href="<?=$root?>/manual/DSL/EXISTS/" title="Nested SELECT using the EXISTS operator">Nested SELECT using the EXISTS operator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/NESTED/" title="Other types of nested selects">Other types of nested selects</a>
+<a href="<?=$root?>/manual/DSL/NESTED/" title="Other types of nested SELECT">Other types of nested SELECT</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/DSL/UNION/" title="UNION and other set operations">UNION and other set operations</a>

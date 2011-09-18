@@ -214,7 +214,12 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							<p>Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you
 								can execute SQL statements with your generated classes.</p>
-						
+						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/" title="Previous section: Meta model code generation">previous</a> : <a href="<?=$root?>/manual/META/SCHEMA/" title="Next section: The schema, top-level generated artefact">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>
+

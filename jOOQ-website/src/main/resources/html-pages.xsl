@@ -44,6 +44,19 @@ function printContent() {
 	<!-- matching templates -->
 	
 	<xsl:template match="//section[@id = $sectionID]" mode="content">
+		<xsl:apply-templates select="." mode="navigation"/>
+		<xsl:apply-templates select="content"/>
+		
+		<xsl:if test="count(sections/section) &gt; 0">
+			<h3>Table of contents</h3>
+		</xsl:if>
+		<xsl:apply-templates select="." mode="toc"/>
+		
+		<br/>
+		<xsl:apply-templates select="." mode="navigation"/>
+	</xsl:template>
+	
+	<xsl:template match="section" mode="navigation">
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
 			<tr>
 				<td align="left" valign="top">
@@ -54,14 +67,6 @@ function printContent() {
 				</td>
 			</tr>
 		</table>
-		
-		
-		<xsl:apply-templates select="content"/>
-		
-		<xsl:if test="count(sections/section) &gt; 0">
-			<h3>Table of contents</h3>
-		</xsl:if>
-		<xsl:apply-templates select="." mode="toc"/>	
 	</xsl:template>
 	
 	<xsl:template match="section" mode="breadcrumb">

@@ -496,7 +496,12 @@ create.mergeInto(T_AUTHOR)
 </table>
 							<p>This is not supported by Ingres and SQLite. jOOQ will execute a DELETE FROM
 								T_AUTHOR statement instead. </p>
-						
+						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Previous section: Updatable Records">previous</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="Next section: ResultQuery and various ways of fetching data">next</a></td>
+</tr>
+</table>
 <?php 
 }
 ?>
+

@@ -111,7 +111,7 @@ function printContent() {
 <a href="<?=$root?>/manual/JOOQ/Serializability/" title="Serializability of QueryParts and Results">Serializability of QueryParts and Results</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Extend/" title="Extend jOOQ types with custom implementations">Extend jOOQ types with custom implementations</a>
+<a href="<?=$root?>/manual/JOOQ/Extend/" title="Extend jOOQ with custom types">Extend jOOQ with custom types</a>
 </li>
 </ol>
 </li>
@@ -119,13 +119,13 @@ function printContent() {
 <a href="<?=$root?>/manual/META/" title="Meta model code generation">Meta model code generation</a>
 <ol>
 <li>
-<a href="<?=$root?>/manual/META/Configuration/" title="Configuration and setup">Configuration and setup</a>
+<a href="<?=$root?>/manual/META/Configuration/" title="Configuration and setup of the generator">Configuration and setup of the generator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/SCHEMA/" title="Schemata">Schemata</a>
+<a href="<?=$root?>/manual/META/SCHEMA/" title="The schema, top-level generated artefact">The schema, top-level generated artefact</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/TABLE/" title="Tables and views and their corresponding records">Tables and views and their corresponding records</a>
+<a href="<?=$root?>/manual/META/TABLE/" title="Tables, views and their corresponding records">Tables, views and their corresponding records</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/META/PROCEDURE/" title="Procedures and packages">Procedures and packages</a>

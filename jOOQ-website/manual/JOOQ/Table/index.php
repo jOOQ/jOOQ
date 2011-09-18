@@ -131,7 +131,7 @@ function printContent() {
 								know each other. The physical aspect
 								of their nature is represented in
 								jOOQ by
-								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables and views and their corresponding records">meta model code generation</a>,
+								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their corresponding records">meta model code generation</a>,
 								where every entity in your database
 								schema will be generated into a
 								corresponding Java class.

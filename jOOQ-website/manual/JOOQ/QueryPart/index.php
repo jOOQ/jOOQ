@@ -7,7 +7,9 @@ function printH1() {
     print "QueryParts and the global architecture";
 }
 function getSlogan() {
-	return "";
+	return "When constructing Query objects in jOOQ, everything is
+							considered a QueryPart. The purpose of this quickly becomes clear when
+							checking out the QueryPart API essentials";
 }
 function printContent() {
     global $root;

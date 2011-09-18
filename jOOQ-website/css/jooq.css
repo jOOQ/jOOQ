@@ -49,7 +49,7 @@ h3 {
 }
 
 pre {
-	background: none repeat scroll 0 0 #ffeedd;
+	background: none repeat scroll 0 0 #ffffff;
     border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
@@ -166,7 +166,7 @@ a:hover {
 #navigation a:visited,
 #navigation a:hover,
 #navigation a:active {
-    color: #ddcccc;
+    color: #fadccb;
     text-decoration: none;
 	text-shadow: 0 1px 1px #666666;
 }
@@ -189,3 +189,20 @@ div.tweet-item-left {
 	padding-right: 2em;
 }
 
+div.screenshot {
+	background: none repeat scroll 0 0 #ffffff;
+    border-radius: 10px 10px 10px 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #882222;
+    box-shadow: 5px 5px 20px #aa6633;
+    color: #000000;
+    display: block;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.5em;
+    margin: 1.5em 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+	text-align: center;
+}

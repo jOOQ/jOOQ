@@ -218,6 +218,12 @@ function printContent() {
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
 							
+							<xsl:when test="@ticket">
+								<xsl:text>https://sourceforge.net/apps/trac/jooq/ticket/</xsl:text>
+								<xsl:value-of select="@ticket"/>
+								<xsl:value-of select="@anchor"/>
+							</xsl:when>
+							
 							<xsl:otherwise>
 								<xsl:message>
 									<xsl:text>Reference not supported</xsl:text>
@@ -240,6 +246,10 @@ function printContent() {
 								<xsl:text>External API reference: </xsl:text>
 								<xsl:value-of select="@class"/>
 							</xsl:when>
+							<xsl:when test="@ticket">
+								<xsl:text>Trac ticket: #</xsl:text>
+								<xsl:value-of select="@ticket"/>
+							</xsl:when>
 						</xsl:choose>
 					</xsl:attribute>
 					
@@ -252,6 +262,10 @@ function printContent() {
 						</xsl:when>
 						<xsl:when test="@class">
 							<xsl:value-of select="@class"/>
+						</xsl:when>
+						<xsl:when test="@ticket">
+							<xsl:text>#</xsl:text>
+							<xsl:value-of select="@ticket"/>
 						</xsl:when>
 					</xsl:choose>
 				</a>

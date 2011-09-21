@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "When it's just much easier: Plain SQL";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

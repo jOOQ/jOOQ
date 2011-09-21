@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Nested SELECT using the IN operator";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Set equal operations are very common when you want to select multiple

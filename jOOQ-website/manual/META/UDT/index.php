@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "UDT's including ARRAY and ENUM types";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Databases become more powerful when you can structure your data in user

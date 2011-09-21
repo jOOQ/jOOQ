@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "The example database";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							For the examples in this manual, the same database will always be

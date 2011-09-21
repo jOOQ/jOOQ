@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Mapping generated schemata and tables to productive environments";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

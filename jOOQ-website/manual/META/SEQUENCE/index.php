@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Sequences";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							jOOQ also generates convenience artefacts for sequences, where this is

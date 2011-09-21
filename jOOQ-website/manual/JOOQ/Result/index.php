@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Results and Records";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Results and their Records come into play, when SELECT statements are

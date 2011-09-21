@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "QueryParts and the global architecture";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "When constructing Query objects in jOOQ, everything is
 							considered a QueryPart. The purpose of this quickly becomes clear when

@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "The Query and its various subtypes";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							The Query type hierarchy is what you use to execute queries. It has the

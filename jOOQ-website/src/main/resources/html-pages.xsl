@@ -24,6 +24,9 @@ function printH1() {
 	<xsl:value-of select="//section[@id = $sectionID]/title"/>
 <xsl:text disable-output-escaping="yes">";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "</xsl:text>
 	<xsl:value-of select="//section[@id = $sectionID]/slogan"/>

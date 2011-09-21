@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Importing data from XML, CSV";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

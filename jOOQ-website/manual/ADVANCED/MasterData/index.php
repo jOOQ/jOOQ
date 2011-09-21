@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Master data generation";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

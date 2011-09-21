@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Configuration and setup of the generator";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "jOOQ uses a simple configuration file to configure source code generation.";
 }

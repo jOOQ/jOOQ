@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Other types of nested SELECT";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "Apart from the most common IN and EXISTS clauses that encourage
 							the use of nested selects, SQL knows a few more syntaxes to make use

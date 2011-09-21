@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Tables and Fields";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Tables and their Fields are probably the most important objects in

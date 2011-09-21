@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "ResultQuery and various ways of fetching data";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Various jOOQ query type extend the ResultQuery which provides many means of

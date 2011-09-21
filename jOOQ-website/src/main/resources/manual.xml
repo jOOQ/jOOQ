@@ -89,7 +89,7 @@
 						</slogan>
 						<content>
 							<h2>Example CREATE TABLE statements</h2>
-							<pre class="prettyprint lang-sql">
+							<sql>
 CREATE TABLE t_language (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   cd CHAR(2) NOT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE t_book_to_book_store (
     REFERENCES t_book (id)
     ON DELETE CASCADE
 )							
-							</pre>
+							</sql>
 							<p>
 								More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc),
 								stored procedures and packages are introduced for specific examples
@@ -189,13 +189,13 @@ CREATE TABLE t_book_to_book_store (
 								only using the MySQL dialect, you can choose to create a new Factory
 								using any of the following types: 
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // A general, dialect-unspecific factory
 Factory create = new Factory(connection, SQLDialect.MYSQL);
 
 // A MySQL-specific factory
 MySQLFactory create = new MySQLFactory(connection);
-							</pre>
+							</java>
 							<p>
 								The advantage of using a dialect-specific Factory lies in the fact,
 								that you have access to more proprietary RDMBS functionality. This may
@@ -268,7 +268,7 @@ MySQLFactory create = new MySQLFactory(connection);
 						<content>
 							<h2>The Table</h2>
 							<p>The formal definition of a <reference class="org.jooq.Table"/> starts with </p>
-							<pre class="prettyprint lang-java">public interface Table&lt;R extends Record&gt; // [...]</pre>
+							<java>public interface Table&lt;R extends Record&gt; // [...]</java>
 							<p>
 								This means that every table is associated with a subtype of the
 								<reference class="org.jooq.Record" />
@@ -304,7 +304,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							
 							<h2>The Field</h2>
 							<p>The formal definition of a Field starts with </p>
-							<pre class="prettyprint lang-java">public interface Field&lt;T&gt; // [...]</pre>
+							<java>public interface Field&lt;T&gt; // [...]</java>
 							<p>
 								Fields are generically parameterised with a Java type
 								&lt;T&gt;
@@ -342,7 +342,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							<p>The Field itself is a very broad concept. Other tools, or databases
 								refer to it as expression or column. When you just want to </p>
 								
-							<pre class="prettyprint lang-sql">SELECT 1 FROM DUAL</pre>
+							<sql>SELECT 1 FROM DUAL</sql>
 							<p>
 								Then 1 is considered a Field or more explicitly, a
 								<reference class="org.jooq.impl.Constant" />, 
@@ -352,7 +352,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							<p>
 								More advanced uses become clear quickly, when you do things like 
 							</p>
-							<pre class="prettyprint lang-sql">SELECT 1 + 1 FROM DUAL</pre>
+							<sql>SELECT 1 + 1 FROM DUAL</sql>
 							<p>
 								Where 1 + 1 itself is a Field or more explicitly, an 
 								<reference class="org.jooq.impl.Expression"/> 
@@ -381,7 +381,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							<p>
 								TableFields join both &lt;R&gt; and &lt;T&gt; generic parameters into their specification: 
 							</p>
-							<pre class="prettyprint lang-java">public interface TableField&lt;R extends Record, T&gt; // [...]</pre>
+							<java>public interface TableField&lt;R extends Record, T&gt; // [...]</java>
 							<p>
 								This can be used for additional type safety in the future, or by client code.
 							</p>
@@ -425,7 +425,7 @@ MySQLFactory create = new MySQLFactory(connection);
 								very much like the <reference class="java.util.Iterator"/>, 
 								by providing a very simple API: 
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Check whether there are any more records to be fetched
 boolean hasNext() throws SQLException;
 
@@ -433,7 +433,7 @@ boolean hasNext() throws SQLException;
 R fetchOne() throws SQLException;
 
 // Close the underlying JDBC ResultSet. Don't forget to call this, before disposing the Cursor.
-void close() throws SQLException;</pre>
+void close() throws SQLException;</java>
 
 							<h2>The Record</h2>
 							<p>
@@ -444,7 +444,7 @@ void close() throws SQLException;</pre>
 								its data and adds convenience methods for data type conversion. These
 								are the main access ways: 
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // If you can keep a reference of the selected field, then you can get the corresponding value type-safely
 &lt;T&gt; T getValue(Field&lt;T&gt; field);
 
@@ -454,7 +454,7 @@ Object getValue(String fieldName);
 
 // If you know the index of the selected field within the tuple,
 // then you can get its value without any type information
-Object getValue(int index);</pre>
+Object getValue(int index);</java>
 							<p>
 								In some cases, you will not be able to reference the selected Fields
 								both when you create the SELECT statement and when you fetch data from
@@ -463,7 +463,7 @@ Object getValue(int index);</pre>
 								you know what type you want to get, you can always use the Record's
 								convenience methods for type conversion, however. Some examples: 
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // These methods will try to convert a value to a BigDecimal.
 // This will work for all numeric types and for CHAR/VARCHAR types, if they contain numeric values:
 BigDecimal getValueAsBigDecimal(String fieldName);
@@ -471,7 +471,7 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 
 // This method can perform arbitrary conversions
 &lt;T&gt; T getValue(String fieldName, Class&lt;? extends T&gt; type);
-&lt;T&gt; T getValue(int fieldIndex, Class&lt;? extends T&gt; type);</pre>
+&lt;T&gt; T getValue(int fieldIndex, Class&lt;? extends T&gt; type);</java>
 						</content>
 					</section>
 					
@@ -487,7 +487,7 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 							<p>As of jOOQ 1.5, the UpdatableRecord essentially contains three additional
 							 methods <a href="http://de.wikipedia.org/wiki/CRUD">CRUD</a> 
 							 (Create Read Update Delete) operations: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Store any changes made to this record to the database.
 // The record executes an INSERT if the PRIMARY KEY is NULL or has been changed. Otherwise, an UPDATE is performed.
 int store();
@@ -496,9 +496,9 @@ int store();
 int delete();
 
 // Reflects changes made in the database to this Record
-void refresh();</pre>
+void refresh();</java>
 							<p>An example lifecycle of a book can be implemented as such:</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Create a new record and insert it into the database
 TBookRecord book = create.newRecord(T_BOOK);
 book.setTitle("My first book");
@@ -509,7 +509,7 @@ book.setPublishedIn(2010);
 book.store();
 
 // Delete it
-book.delete();</pre>
+book.delete();</java>
 							<p>These operations are very simple utilities. They do not 
 							reflect the functionality offered by <a href="http://www.hibernate.org/">Hibernate</a> 
 							or other persistence managers. </p>
@@ -523,7 +523,7 @@ book.delete();</pre>
 								key fields. The API looks like this: 
 							</p>
 							
-							<pre class="prettyprint lang-java">
+							<java>
 // INSERT or UPDATE the record using the provided keys
 int storeUsing(TableField&lt;R, ?&gt;... keys)
 
@@ -531,7 +531,7 @@ int storeUsing(TableField&lt;R, ?&gt;... keys)
 int deleteUsing(TableField&lt;R, ?&gt;... keys);
 
 // Reflects changes made in the database to this Record
-void refreshUsing(TableField&lt;R, ?&gt;... keys);</pre>
+void refreshUsing(TableField&lt;R, ?&gt;... keys);</java>
 						
 							<p>
 								This is useful if your RDBMS does not support referential constraints (e.g. MySQL's 
@@ -539,7 +539,7 @@ void refreshUsing(TableField&lt;R, ?&gt;... keys);</pre>
 								store records to an unconstrained view. An example lifecycle of a book without 
 								any keys can then be implemented as such: 
 							</p>
-							<pre class="prettyprint lang-lava">
+							<java>
 // Create a new record and insert it into the database
 TBookRecord book = create.newRecord(T_BOOK);
 book.setTitle("My first book");
@@ -550,7 +550,7 @@ book.setPublishedIn(2010);
 book.storeUsing(TBook.ID);
 
 // Delete it
-book.deleteUsing(TBook.ID);</pre>
+book.deleteUsing(TBook.ID);</java>
 						</content>
 					</section>
 					
@@ -613,13 +613,8 @@ book.deleteUsing(TBook.ID);</pre>
 							</ul>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
-							<tr>
-								<td width="50%" class="left">A sample SQL statement</td>
-								<td width="50%" class="right">...and its equivalent in jOOQ's DSL API</td>
-							</tr>
-							<tr>
-								<td width="50%" class="left"><pre class="prettyprint lang-sql">
+							<code-pair>
+								<sql>
 -- Select all books by authors born after 1920, named "Paulo" 
 -- from a catalogue consisting of authors and books:
 
@@ -630,8 +625,8 @@ SELECT *
     ON a.id = b.author_id 
  WHERE a.year_of_birth &gt; 1920 
    AND a.first_name = 'Paulo'
- ORDER BY b.title</pre></td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">
+ ORDER BY b.title</sql>
+ 								<java>
 // Instanciate your factory using a JDBC connection.
 Factory create = new Factory(connection, SQLDialect.ORACLE);
 
@@ -642,9 +637,8 @@ Result&lt;Record&gt; result = create.select()
     .on(ID.equal(AUTHOR_ID))
     .where(YEAR_OF_BIRTH.greaterThan(1920)
     .and(FIRST_NAME.equal("Paulo")))
-    .orderBy(TITLE).fetch();</pre></td>
-							</tr>
-							</table>
+    .orderBy(TITLE).fetch();</java>
+    						</code-pair>
 							
 							<p>
 								In the above example, some generated artefacts are used for querying. 
@@ -674,7 +668,7 @@ Result&lt;Record&gt; result = create.select()
 								want to add Query parts in the order SQL expects them), you can use
 								this syntax: 
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Re-use the factory to create a SelectQuery. This example will not make use of static imports...
 SelectQuery q = create.selectQuery();
 q.addFrom(TAuthor.T_AUTHOR);
@@ -686,7 +680,7 @@ q.addJoin(TBook.T_BOOK, TAuthor.ID.equal(TBook.AUTHOR_ID));
 // The AND operator between Conditions is implicit here
 q.addConditions(TAuthor.YEAR_OF_BIRTH.greaterThan(1920));
 q.addConditions(TAuthor.FIRST_NAME.equal("Paulo"));
-q.addOrderBy(TBook.TITLE);</pre>
+q.addOrderBy(TBook.TITLE);</java>
 
 							<h3>Fetching data</h3>
 							<p>
@@ -709,27 +703,18 @@ q.addOrderBy(TBook.TITLE);</pre>
 							The INSERT VALUES and the INSERT SELECT syntax</p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
-							<tr>
-								<td width="50%" class="left">A typical INSERT query looks like this</td>
-								<td width="50%" class="right">...and how it's done with jOOQ</td>
-							</tr>
-							<tr>
-								<td width="50%" class="left"><pre class="prettyprint lang-sql">
+							<code-pair><sql>
 INSERT INTO T_AUTHOR 
     (ID, FIRST_NAME, LAST_NAME)
 VALUES 
     (100, 'Hermann', 'Hesse'),
-    (101, 'Alfred', 'Döblin');</pre>
-								</td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">
+    (101, 'Alfred', 'Döblin');</sql>
+								<java>
 create.insertInto(T_AUTHOR, 
           TAuthor.ID, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       .values(100, "Hermann", "Hesse")
       .values(101, "Alfred", "Döblin")
-      .execute();</pre></td>
-							</tr>
-							</table>
+      .execute();</java></code-pair>
 
 							<p>The DSL syntax tries to stay close to actual SQL. In detail,
 								however, Java is limited in its possibilities. That's why the
@@ -747,7 +732,7 @@ create.insertInto(T_AUTHOR,
 								for INSERT statements. This is also supported in jOOQ, should you
 								prefer that syntax. The above INSERT statement can also be expressed
 								as follows: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 create.insertInto(T_AUTHOR)
       .set(TAuthor.ID, 100)
       .set(TAuthor.FIRST_NAME, "Hermann")
@@ -756,7 +741,7 @@ create.insertInto(T_AUTHOR)
       .set(TAuthor.ID, 101)
       .set(TAuthor.FIRST_NAME, "Alfred")
       .set(TAuthor.LAST_NAME, "Döblin")
-      .execute();</pre>
+      .execute();</java>
 							<p>As you can see, this syntax is a bit more verbose, but also more
 								type-safe, as every field can be matched with its value.</p>
 								
@@ -766,14 +751,14 @@ create.insertInto(T_AUTHOR)
 								which is supported by jOOQ and simulated in other RDBMS, where this is
 								possible. Here is an example how to use the ON DUPLICATE KEY UPDATE
 								clause: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Add a new author called "Koontz" with ID 3.
 // If that ID is already present, update the author's name
 create.insertInto(T_AUTHOR, TAuthor.ID, TAuthor.LAST_NAME)
       .values(3, "Koontz")
       .onDuplicateKeyUpdate()
       .set(TAuthor.LAST_NAME, "Koontz")
-      .execute();</pre>
+      .execute();</java>
       
       						<h3>Example: INSERT .. RETURNING clause</h3>
 							<p>The Postgres database has native support for an INSERT .. RETURNING
@@ -782,7 +767,7 @@ create.insertInto(T_AUTHOR, TAuthor.ID, TAuthor.LAST_NAME)
 								<reference class="java.sql.Statement" anchor="#getGeneratedKeys()" title="getGeneratedKeys()"/> 
 								method. Take this example:</p>
 								
-							<pre class="prettyprint lang-java">
+							<java>
 // Add another author, with a generated ID
 Record&lt;?&gt; record =
 create.insertInto(T_AUTHOR, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
@@ -799,11 +784,11 @@ create.insertInto(T_AUTHOR, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       .values("Friedrich", "Schiller")
       // You can request any field. Also trigger-generated values
       .returning(TAuthor.ID, TAuthor.CREATION_DATE)
-      .fetch();</pre>
+      .fetch();</java>
       						
       						<h3>Example: Non-DSL Query</h3>
       						<p>You can always use the more verbose regular syntax of the InsertQuery, if you need more control: </p>
-      						<pre class="prettyprint lang-java">
+      						<java>
 // Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
 i.addValue(TAuthor.ID, 100);
@@ -814,18 +799,18 @@ i.newRecord();
 i.addValue(TAuthor.ID, 101);
 i.addValue(TAuthor.FIRST_NAME, "Alfred");
 i.addValue(TAuthor.LAST_NAME, "Döblin");
-i.execute();</pre>
+i.execute();</java>
 
 							<h3>Example: INSERT Query combined with SELECT statements</h3>
 							<p>The InsertQuery.addValue() method is overloaded, such that you can
 								also provide a Field, potentially containing an expression: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
 i.addValue(TAuthor.ID, create.select(TAuthor.ID.max().add(1)).from(T_AUTHOR).asField())
 i.addValue(TAuthor.FIRST_NAME, "Hermann");
 i.addValue(TAuthor.LAST_NAME, "Hesse");
-i.execute();</pre>
+i.execute();</java>
 							<p>Note that especially MySQL (and some other RDBMS) has some
 								limitations regarding that syntax. You may not be able to
 								select from the same table you're inserting into</p>
@@ -833,10 +818,10 @@ i.execute();</pre>
 							<h3>Example: INSERT SELECT syntax support</h3>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when 
 								you copy records from one table to another: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
            create.selectFrom(T_AUTHOR).where(TAuthor.DECEASED.equal(1)));
-i.execute();</pre>
+i.execute();</java>
 
 							
 							<h2>UPDATE Statements</h2>
@@ -844,37 +829,27 @@ i.execute();</pre>
 							multi-table updates will be implemented in the near future. </p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
-							<tr>
-								<td width="50%" class="left">A typical UPDATE query looks like this</td>
-								<td width="50%" class="right">...and how it's done with jOOQ</td>
-							</tr>
-							<tr>
-								<td width="50%" class="left"><pre class="prettyprint lang-sql">
+							<code-pair><sql>
 
 UPDATE T_AUTHOR
    SET FIRST_NAME = 'Hermann',
        LAST_NAME = 'Hesse'
- WHERE ID = 3;</pre>
-								</td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">
+ WHERE ID = 3;</sql><java>
 create.update(T_AUTHOR)
       .set(TAuthor.FIRST_NAME, "Hermann")
       .set(TAuthor.LAST_NAME, "Hesse")
       .where(TAuthor.ID.equal(3))
-      .execute();</pre></td>
-							</tr>
-							</table>
+      .execute();</java></code-pair>
 							
 							<h3>Example: Non-DSL Query</h3>
 							<p>Using the <reference class="org.jooq.UpdateQuery"/> class, 
 							this is how you could express an UPDATE statement:</p> 
-							<pre class="prettyprint lang-java">
+							<java>
 UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
 u.addValue(TAuthor.FIRST_NAME, "Hermann");
 u.addValue(TAuthor.FIRST_NAME, "Hesse");
 u.addConditions(TAuthor.ID.equal(3));
-u.execute();</pre>
+u.execute();</java>
 
 							
 							<h2>DELETE Statements</h2>
@@ -882,31 +857,21 @@ u.execute();</pre>
 							multi-table deletes will be implemented in the near future. </p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
-							<tr>
-								<td width="50%" class="left">A typical DELETE query looks like this</td>
-								<td width="50%" class="right">...and how it's done with jOOQ</td>
-							</tr>
-							<tr>
-								<td width="50%" class="left"><pre class="prettyprint lang-sql">
+							<code-pair><sql>
 
 DELETE T_AUTHOR
- WHERE ID = 100;</pre>
-								</td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">
+ WHERE ID = 100;</sql><java>
 create.delete(T_AUTHOR)
       .where(TAuthor.ID.equal(100))
-      .execute();</pre></td>
-							</tr>
-							</table>
+      .execute();</java></code-pair>
 							
 							<h3>Example: Non-DSL Query</h3>
 							<p>Using the <reference class="org.jooq.DeleteQuery"/> class, 
 							this is how you could express a DELETE statement: </p> 
-							<pre class="prettyprint lang-java">
+							<java>
 DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
 d.addConditions(TAuthor.ID.equal(100));
-d.execute();</pre>
+d.execute();</java>
 
 
 							<h2>MERGE Statement</h2>
@@ -924,9 +889,7 @@ d.execute();</pre>
 								not supported. Here is an example:
 							</p>
 							
-							<table width="100%" cellpadding="0" cellspacing="0">
-							<tr>
-								<td width="50%" class="left"><pre class="prettyprint lang-sql">
+							<code-pair><sql>
 -- Check if there is already an author called 'Hitchcock'
 -- If there is, rename him to John. If there isn't add him.
 
@@ -934,9 +897,7 @@ MERGE INTO T_AUTHOR
 USING (SELECT 1 FROM DUAL)
 ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
-WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</pre>
-								</td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">
+WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</sql><java>
 create.mergeInto(T_AUTHOR)
       .using(create().selectOne())
       .on(TAuthor.LAST_NAME.equal("Hitchcock"))
@@ -944,22 +905,18 @@ create.mergeInto(T_AUTHOR)
       .set(TAuthor.FIRST_NAME, "John")
       .whenNotMatchedThenInsert(TAuthor.LAST_NAME)
       .values("Hitchcock")
-      .execute();</pre></td>
-							</tr>
-							</table>
+      .execute();</java></code-pair>
 							
 							
 							<h2>TRUNCATE Statement</h2>
 							<p>
 								The syntax is trivial:
 							</p>
-							<table width="100%" cellpadding="0" cellspacing="0">
-							<tr>
-								<td width="50%" class="left"><pre class="prettyprint lang-sql">TRUNCATE TABLE T_AUTHOR;</pre>
-								</td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">create.truncate(T_AUTHOR).execute();</pre></td>
-							</tr>
-							</table>
+							
+							<code-pair>
+								<sql>TRUNCATE TABLE T_AUTHOR;</sql>
+								<java>create.truncate(T_AUTHOR).execute();</java>
+							</code-pair>
 							<p>This is not supported by Ingres and SQLite. jOOQ will execute a DELETE FROM
 								T_AUTHOR statement instead. </p>
 						</content>
@@ -976,7 +933,7 @@ create.mergeInto(T_AUTHOR)
 						</slogan>
 						<content>
 							<h2>The ResultQuery provides many convenience methods</h2>
-							<pre class="prettyprint lang-java">
+							<java>
 public interface ResultQuery&lt;R extends Record&gt; {
 
   // These methods allow for fetching a jOOQ Result
@@ -1050,7 +1007,7 @@ public interface ResultQuery&lt;R extends Record&gt; {
   // Similar to how Avajé Ebean works.
   FutureResult&lt;R&gt; fetchLater();
   FutureResult&lt;R&gt; fetchLater(ExecutorService executor);
-}</pre>
+}</java>
 						</content>
 					</section>
 					
@@ -1079,7 +1036,7 @@ public interface ResultQuery&lt;R extends Record&gt; {
 								<reference id="UpdatableRecord" title="Updatable Records"/>, 
 								you will have to "import" or "re-attach" them to a Factory
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Deserialise a SELECT statement
 ObjectInputStream in = new ObjectInputStream(...);
 Select&lt;?&gt; select = (Select&lt;?&gt;) in.readObject();
@@ -1089,18 +1046,18 @@ select.execute();
 
 // In order to execute the above select, attach it first
 Factory create = new Factory(connection, SQLDialect.ORACLE);
-create.attach(select);</pre>
+create.attach(select);</java>
 					
 					
 							<h2>Automatically attaching QueryParts</h2>
 							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Create your own custom ConfigurationProvider that will make
 // your default Factory available to jOOQ
 ConfigurationProvider provider = new CustomConfigurationProvider();
 
 // Statically register the provider to jOOQ's ConfigurationRegistry
-ConfigurationRegistry.setProvider(provider);</pre>
+ConfigurationRegistry.setProvider(provider);</java>
 
 							<p>Once you have executed these steps, all subsequent deserialisations
 								will try to access a Configuration (containing a JDBC Connection) from
@@ -1127,20 +1084,20 @@ ConfigurationRegistry.setProvider(provider);</pre>
 							<h2>Write your own QueryPart implementations</h2>
 							<p>If a SQL clause is too complex to express with jOOQ, you can extend
 								either one of the following types for use directly in a jOOQ query:</p>
-							<pre class="prettyprint lang-java">
+							<java>
 public abstract class CustomField&lt;T&gt; extends AbstractField&lt;T&gt; {
   // [...]
 }
 public abstract class CustomCondition extends AbstractCondition {
   // [...]
-}</pre>
+}</java>
 
 							<p>These two classes are declared public and covered by integration
 								tests. When you extend these classes, you will have to provide your
 								own implementations for the <reference id="QueryPart" title="QueryParts"/>' 
 								bind(<reference class="org.jooq.BindContext" title="BindContext"/>) and 
 								toSQL(<reference class="org.jooq.RenderContext" title="RenderContext"/>) methods:</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
 // in the correct order, passing the render context.
 //
@@ -1152,8 +1109,7 @@ public void toSQL(RenderContext context);
 // variable binding to them in the correct order, passing the bind context.
 //
 // Every QueryPart must ensure, that it starts binding its variables at context.nextIndex().
-public void bind(BindContext context) throws SQLException;
-</pre>
+public void bind(BindContext context) throws SQLException;</java>
 
 							<p>The above contract may be a bit tricky to understand at first. The
 								best thing is to check out jOOQ source code and have a look at a
@@ -1350,7 +1306,7 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							
 							<h3>Run generation with ant</h3>
 							<p>You can also use an ant task to generate your classes: </p>
-							<pre class="prettyprint lang-xml">
+							<xml>
 &lt;!-- Task definition --&gt;
 &lt;taskdef name="generate-classes" classname="org.jooq.util.GenerationTask"&gt;
   &lt;classpath&gt;
@@ -1374,7 +1330,7 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
       jdbcpassword=""
       generatortargetpackage="org.jooq.test.generatedclasses"
       generatortargetdirectory="${basedir}/src"/&gt;
-&lt;/target&gt;</pre>
+&lt;/target&gt;</xml>
 							
 							<h3>Use jOOQ generated classes in your application</h3>
 							<p>Be sure, both jOOQ.jar and your generated package (see
@@ -1418,9 +1374,9 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							<p>The schema can be used to dynamically discover generate database
 								artefacts. Tables, sequences, and other items are accessible from the
 								schema. For example:</p>
-							<pre class="prettyprint lang-java">
+							<java>
 public final java.util.List&lt;org.jooq.Sequence&gt; getSequences();
-public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
+public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</java>
 						</content>
 					</section>
 					
@@ -1455,7 +1411,7 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
 							</p>
 							
 							<h3>The Table as an entity meta model</h3>
-							<pre class="prettyprint lang-java">
+							<java>
 public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
 
     // The singleton instance of the Table
@@ -1467,7 +1423,7 @@ public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
     public static final TableField&lt;TAuthorRecord, String&gt; LAST_NAME =      // [...]
     public static final TableField&lt;TAuthorRecord, Date&gt; DATE_OF_BIRTH =    // [...]
     public static final TableField&lt;TAuthorRecord, Integer&gt; YEAR_OF_BIRTH = // [...]
-}</pre>
+}</java>
 
 							<h3>The Table's associated TableRecord</h3>
 							<p>If you use the 
@@ -1477,7 +1433,7 @@ public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
 								extends Record&gt;'s associated Record type &lt;R&gt;. In the case of
 								the above TAuthor Table, this will be a TAuthorRecord. </p>
 								
-							<pre class="prettyprint lang-java">
+							<java>
 public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
 
     // Getters and setters for the various fields
@@ -1492,7 +1448,7 @@ public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
 
     // Navigation methods for foreign keys
     public List&lt;TBookRecord&gt; getTBooks() throws SQLException { // [...]
-}</pre>
+}</java>
 						</content>
 					</section>
 					
@@ -1523,7 +1479,7 @@ public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
 							
 							<h3>"Standalone" stored procedures and functions</h3>
 							<p>Let's say you have these stored procedures and functions in your Oracle database </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
 -- Check whether there is an author in T_AUTHOR by that name
 CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2) RETURN NUMBER;
 
@@ -1531,7 +1487,7 @@ CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2) RETURN NUMBER;
 CREATE OR REPLACE PROCEDURE p_author_exists (author_name VARCHAR2, result OUT NUMBER);
 
 -- Check whether there is an author in T_AUTHOR by that name and get his ID
-CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT NUMBER, id OUT NUMBER);</pre>
+CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT NUMBER, id OUT NUMBER);</sql>
 							
 							<p>jOOQ will essentially generate two artefacts for every procedure/function: </p>
 							<ul>
@@ -1540,7 +1496,7 @@ CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT 
 							</ul>
 							<p>Let's see what these things look like, in Java. The classes (simplified for the example): </p>
 							
-							<pre class="prettyprint lang-java">
+							<java>
 // The function has a generic type parameter &lt;T&gt; bound to its return value
 public class FAuthorExists extends StoredFunctionImpl&lt;BigDecimal&gt; {
 
@@ -1577,18 +1533,18 @@ public class PAuthorExists_2 extends StoredProcedureImpl {
     // the getters...
     public BigDecimal getResult() { // [...]
     public BigDecimal getId() { // [...]
-}</pre>
+}</java>
 
 							<p>An example invocation of such a stored procedure might look like this: </p>
 							
-							<pre class="prettyprint lang-java">
+							<java>
 PAuthorExists p = new PAuthorExists();
 p.setAuthorName("Paulo");
 p.execute(configuration);
-assertEquals(BigDecimal.ONE, p.getResult());</pre>
+assertEquals(BigDecimal.ONE, p.getResult());</java>
 
 							<p>If you use the generated convenience methods, however, things are much simpler, still: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Every schema has a single Functions class with convenience methods
 public final class Functions {
 
@@ -1611,11 +1567,11 @@ public final class Procedures {
     // Procedures with more than 1 OUT parameter return the procedure
     // object (see above example)
     public static PAuthorExists_2 pAuthorExists_2(Configuration configuration, String authorName) { // [...]
-}</pre>
+}</java>
 
 							<p>An sample invocation, equivalent to the previous example:</p>
-							<pre class="prettyprint lang-java">
-assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</pre>
+							<java>
+assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</java>
 
 
 							<h3>jOOQ's understanding of procedures vs functions</h3>
@@ -1732,7 +1688,7 @@ assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));<
 							</ul>
 							
 							<p>In Oracle, you would define UDTs like this: </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
 CREATE TYPE u_street_type AS OBJECT (
   street VARCHAR2(100),
   no VARCHAR2(30)
@@ -1745,17 +1701,17 @@ CREATE TYPE u_address_type AS OBJECT (
   country VARCHAR2(50),
   since DATE,
   code NUMBER(7)
-)</pre>
+)</sql>
 
 							<p>These types could then be used in tables and/or stored procedures like such: </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
 CREATE TABLE t_author (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   -- [...]
   address u_address_type
 )
 
-CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</pre>
+CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</sql>
 
 							<p>
 								Standard JDBC UDT support encourages JDBC-driver developers to implement
@@ -1774,7 +1730,7 @@ CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</pr
 								<reference class="org.jooq.UDT" title="UDT meta-model classes"/> and 
 								<reference class="org.jooq.UDTRecord" title="UDT record classes"/> as such:
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 // There is an analogy between UDT/Table and UDTRecord/TableRecord...
 public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
 
@@ -1789,24 +1745,24 @@ public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
     public static final UDTField&lt;UAddressTypeRecord, String&gt; COUNTRY =           // [...]
     public static final UDTField&lt;UAddressTypeRecord, Date&gt; SINCE =               // [...]
     public static final UDTField&lt;UAddressTypeRecord, Integer&gt; CODE =             // [...]
-}</pre>
+}</java>
 
 							<p>Now, when you interact with entities or procedures that hold UDT's, that's very simple as well. Here is an example: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Fetch any author from the T_AUTHOR table
 TAuthorRecord author = create.selectFrom(T_AUTHOR).fetchAny();
 
 // Print out the author's address's house number
-System.out.println(author.getAddress().getStreet().getNo());</pre>
+System.out.println(author.getAddress().getStreet().getNo());</java>
 
 							<p>A similar thing can be achieved when interacting with the example stored procedure: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // Create a new UDTRecord of type U_ADDRESS_TYPE
 UAddressTypeRecord address = new UAddressTypeRecord();
 address.setCountry("Switzerland");
 
 // Call the stored procedure with IN OUT parameter of type U_ADDRESS_TYPE
-address = Procedures.pCheckAddress(connection, address);</pre>
+address = Procedures.pCheckAddress(connection, address);</java>
 
 
 							<h2>ARRAY types</h2>
@@ -1841,17 +1797,17 @@ address = Procedures.pCheckAddress(connection, address);</pre>
 							<h3>Example: General ARRAY types</h3>
 							<p>An example usage of ARRAYs is given here for the Postgres dialect </p>
 							
-							<pre class="prettyprint lang-sql">
+							<sql>
 CREATE TABLE t_arrays (
   id integer not null primary key,
   string_array VARCHAR(20)[],
   number_array INTEGER[]
 )
 
-CREATE FUNCTION f_arrays(in_array IN text[]) RETURNS text[]</pre>
+CREATE FUNCTION f_arrays(in_array IN text[]) RETURNS text[]</sql>
 
 							<p>When generating source code from the above entities, these artefacts will be created in Java: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 public class TArrays extends UpdatableTableImpl&lt;TArraysRecord&gt; {
 
     // The generic type parameter &lt;T&gt; is bound to an array of a matching type
@@ -1864,7 +1820,7 @@ public final class Functions {
     public static String[] fArrays(Connection connection, String[] inArray) throws SQLException { // [...]
     public static Field&lt;String[]&gt; fArrays(String[] inArray) {                                     // [...]
     public static Field&lt;String[]&gt; fArrays(Field&lt;String[]&gt; inArray) {                              // [...]
-}</pre>
+}</java>
 
 							<h3>Example: Oracle VARRAY types</h3>
 							<p>In Oracle, a VARRAY type is something slightly different than in
@@ -1875,7 +1831,7 @@ public final class Functions {
 								generated objects from those types as well. The example above would
 								read like this in Oracle: </p>
 								
-							<pre class="prettyprint lang-sql">
+							<sql>
 CREATE TYPE u_string_array AS VARRAY(4) OF VARCHAR2(20)
 CREATE TYPE u_number_array AS VARRAY(4) OF NUMBER(7)
 
@@ -1886,7 +1842,7 @@ CREATE TABLE t_arrays (
 )
 
 CREATE OR REPLACE FUNCTION f_arrays (in_array u_string_array)
-RETURN u_string_array</pre>
+RETURN u_string_array</sql>
 
 							<p>Note that it becomes clear immediately, that a mapping from
 								U_STRING_ARRAY to String[] is obvious. But a mapping from String[] to
@@ -1894,7 +1850,7 @@ RETURN u_string_array</pre>
 								<reference class="org.jooq.ArrayRecord" /> and other
 								artefacts in Oracle: </p>
 								
-							<pre class="prettyprint lang-java">
+							<java>
 public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]
 public class UNumberArrayRecord extends ArrayRecordImpl&lt;Integer&gt; { // [...]
 
@@ -1907,7 +1863,7 @@ public final class Functions {
     public static UStringArrayRecord fArrays3(Connection connection, UStringArrayRecord inArray) { // [...]
     public static Field&lt;UStringArrayRecord&gt; fArrays3(UStringArrayRecord inArray) {                 // [...]
     public static Field&lt;UStringArrayRecord&gt; fArrays3(Field&lt;UStringArrayRecord&gt; inArray) {          // [...]
-}</pre>
+}</java>
 
 							
 							<h2>ENUM types</h2>
@@ -1922,7 +1878,7 @@ public final class Functions {
 							</ul>
 							
 							<p>Some examples: </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
 -- An example enum type
 CREATE TYPE u_book_status AS ENUM ('SOLD OUT', 'ON STOCK', 'ORDERED')
 
@@ -1932,19 +1888,19 @@ CREATE TABLE t_book (
 
   -- [...]
   status u_book_status
-)</pre>
+)</sql>
 
 							<p>The above Postgres ENUM type will be generated as </p>
-							<pre class="prettyprint lang-java">
+							<java>
 public enum UBookStatus implements EnumType {
     ORDERED("ORDERED"),
     ON_STOCK("ON STOCK"),
     SOLD_OUT("SOLD OUT");
 
     // [...]
-}</pre>
+}</java>
 							<p>Intuitively, the generated classes for the T_BOOK table in Postgres would look like this: </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
 // The meta-model class
 public class TBook extends UpdatableTableImpl&lt;TBookRecord&gt; {
 
@@ -1961,7 +1917,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
     // deal with the generated UBookStatus
     public void setStatus(UBookStatus value) { // [...]
     public UBookStatus getStatus() {           // [...]
-}</pre>
+}</sql>
 
 							<p>Note that jOOQ allows you to simulate ENUM types where this makes
 								sense in your data model. See the section on 
@@ -1982,31 +1938,31 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 							<p> Sequences implement the 
 							<reference class="org.jooq.Sequence"/> interface, providing essentially this functionality:</p>
 							
-							<pre class="prettyprint lang-java">
+							<java>
 // Get a field for the CURRVAL sequence property
 Field&lt;BigInteger&gt; currval();
 
 // Get a field for the NEXTVAL sequence property
-Field&lt;BigInteger&gt; nextval();</pre>		
+Field&lt;BigInteger&gt; nextval();</java>		
 							<p>So if you have a sequence like this in Oracle: </p>
-							<pre class="prettyprint lang-sql">CREATE SEQUENCE s_author_id</pre>		
+							<sql>CREATE SEQUENCE s_author_id</sql>		
 							<p>This is what jOOQ will generate: </p>	
-							<pre class="prettyprint lang-java">
+							<java>
 public final class Sequences {
 
     // A static sequence instance
     public static final Sequence S_AUTHOR_ID = // [...]
-}</pre>		
+}</java>		
 
 							<p>Which you can use in a select statement as such: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 Field&lt;BigInteger&gt; s = Sequences.S_AUTHOR_ID.nextval();
-BigInteger nextID   = create.select(s).fetchOne(s);</pre>
+BigInteger nextID   = create.select(s).fetchOne(s);</java>
 
 							<p>Or directly fetch currval() and nextval() from the sequence using the Factory: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 BigInteger currval = create.currval(Sequences.S_AUTHOR_ID);
-BigInteger nextval = create.nextval(Sequences.S_AUTHOR_ID);</pre>
+BigInteger nextval = create.nextval(Sequences.S_AUTHOR_ID);</java>
 						</content>
 					</section>
 				</sections>
@@ -2026,13 +1982,7 @@ BigInteger nextval = create.nextval(Sequences.S_AUTHOR_ID);</pre>
 						just like .NET's C# does with <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL.</a></p>
 						
 					<p>Here is an example to show you what that means. When you want to write a query like this in SQL: </p>
-					<table width="100%" cellpadding="0" cellspacing="0">
-						<tr>
-							<td width="50%">Here is an example to show you what that means. When you want to write a query like this in SQL: </td>
-							<td width="50%">Then, using jOOQ's DSL API, you can write the same query as such: </td>
-						</tr>
-						<tr>
-							<td width="50%" class="left"><pre class="prettyprint lang-sql">
+					<code-pair><sql>
 -- Select all books by authors born after 1920, 
 -- named "Paulo" from a catalogue:
 SELECT * 
@@ -2040,8 +1990,7 @@ SELECT *
   JOIN t_book b ON a.id = b.author_id 
  WHERE a.year_of_birth &gt; 1920 
    AND a.first_name = 'Paulo'
- ORDER BY b.title</pre></td>
-								<td width="50%" class="right"><pre class="prettyprint lang-java">
+ ORDER BY b.title</sql><java>
 Result&lt;Record&gt; result = 
 create.select()
       .from(T_AUTHOR)
@@ -2049,9 +1998,7 @@ create.select()
       .where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920)
       .and(TAuthor.FIRST_NAME.equal("Paulo")))
       .orderBy(TBook.TITLE)
-      .fetch();</pre></td>
-						</tr>
-					</table>
+      .fetch();</java></code-pair>
 					
 					<p>You couldn't come much closer to SQL itself in Java, without re-writing the compiler. </p>
 				</content>
@@ -2074,7 +2021,7 @@ create.select()
 							some extensions, is provided by a query like this:
 							</p>
 							
-							<pre class="prettyprint lang-sql">
+							<sql>
 -- get all authors' first and last names, and the number 
 -- of books they've written in German, if they have written
 -- more than five books in German in the last three years 
@@ -2092,14 +2039,14 @@ GROUP BY T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME
 ORDER BY T_AUTHOR.LAST_NAME ASC NULLS FIRST
    LIMIT 2 
   OFFSET 1
-     FOR UPDATE</pre>			
+     FOR UPDATE</sql>			
      
      						<p>So that's daily business. How to do it with jOOQ: When you first create a SELECT statement using the Factory's select() methods </p>
-     						<pre class="prettyprint lang-java">
+     						<java>
 SelectFromStep select(Field&lt;?&gt;... fields);
 
 // Example:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
+create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</java>
 
 							<p>
 								jOOQ will return an "intermediary" type to you, representing the
@@ -2117,12 +2064,12 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
 								clauses. Let's say you do decide to add a FROM clause, then you can
 								use this method for instance:
 							</p>			
-							<pre class="prettyprint lang-java">
+							<java>
 SelectJoinStep from(TableLike&lt;?&gt;... table);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
-      .from(T_AUTHOR);</pre>
+      .from(T_AUTHOR);</java>
 
 							<p>After adding the table-like structures (mostly just Tables) to
 								select from, you may optionally choose to add a JOIN clause, as the
@@ -2131,7 +2078,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								<reference class="org.jooq.SelectJoinStep"/> extends
 								<reference class="org.jooq.SelectWhereStep"/>. 
 								But let's say we add a JOIN: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 // These join types are supported
 SelectOnStep                    join(Table&lt;?&gt; table);
 SelectOnStep           leftOuterJoin(Table&lt;?&gt; table);
@@ -2145,7 +2092,7 @@ SelectJoinStep naturalRightOuterJoin(Table&lt;?&gt; table);
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .from(T_AUTHOR)
-      .join(T_BOOK);</pre>
+      .join(T_BOOK);</java>
 
 							<p>Now, if you do add a JOIN clause, you have to specify the JOIN .. ON
 								condition before you can add more clauses. That's not an optional step
@@ -2153,7 +2100,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								<reference class="org.jooq.SelectOnStep"/>
 								is a top-level interface. </p>
 								
-							<pre class="prettyprint lang-java">
+							<java>
 // These join conditions are supported
 SelectJoinStep    on(Condition... conditions);
 SelectJoinStep using(Field&lt;?&gt;... fields);
@@ -2161,7 +2108,7 @@ SelectJoinStep using(Field&lt;?&gt;... fields);
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID));</pre>
+      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID));</java>
 
 							<p>See the section about 
 								<reference id="CONDITION" title="Conditions"/> 
@@ -2171,14 +2118,14 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the 
 								<reference class="org.jooq.SelectWhereStep"/>: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 SelectConditionStep where(Condition... conditions);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .from(T_AUTHOR)
       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"));</pre>
+      .where(TBook.LANGUAGE.equal("DE"));</java>
 
 							<p>Now the returned type 
 								<reference class="org.jooq.SelectConditionStep"/> is a special one, where
@@ -2188,7 +2135,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								unlimited. Note that of course you can also just add a single combined
 								condition, if that is more readable or suitable for your use-case.
 								Here's how we add another condition: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 SelectConditionStep and(Condition condition);
 
 // The example, continued:
@@ -2196,13 +2143,13 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .from(T_AUTHOR)
       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
       .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')));</pre>
+      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')));</java>
 
 							<p>Let's assume we have that method parseDate() creating a
 								<reference class="java.sql.Date"/> for us. 
 								Then we'll continue adding the GROUP BY clause
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 SelectHavingStep groupBy(Field&lt;?&gt;... fields);
 
 // The example, continued:
@@ -2211,10 +2158,10 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
       .where(TBook.LANGUAGE.equal("DE"))
       .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME);</pre>
+      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME);</java>
       
       						<p>and the HAVING clause: </p>
-      						<pre class="prettyprint lang-java">
+      						<java>
 SelectOrderByStep having(Condition... conditions);
 
 // The example, continued:
@@ -2224,13 +2171,13 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .where(TBook.LANGUAGE.equal("DE"))
       .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
-      .having(create.count().greaterThan(5));</pre>
+      .having(create.count().greaterThan(5));</java>
 
 							<p>and the ORDER BY clause. Some RDBMS support NULLS FIRST and NULLS
 								LAST extensions to the ORDER BY clause. If this is not supported by
 								the RDBMS, then the behaviour is simulated with an additional CASE
 								WHEN ... IS NULL THEN 1 ELSE 0 END clause. </p>
-							<pre class="prettyprint lang-java">
+							<java>
 SelectLimitStep orderBy(Field&lt;?&gt;... fields);
 
 // The example, continued:
@@ -2241,7 +2188,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
       .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       .having(create.count().greaterThan(5))
-      .orderBy(TAuthor.LAST_NAME.asc().nullsFirst());</pre>
+      .orderBy(TAuthor.LAST_NAME.asc().nullsFirst());</java>
 
 							<p>and finally the LIMIT clause. Most dialects have a means of limiting
 								the number of result records (except Oracle). Some even support having
@@ -2250,7 +2197,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								will simulate the LIMIT clause using nested selects and filtering on
 								ROWNUM (for Oracle), or on ROW_NUMBER() (for DB2 and SQL
 								Server): </p>
-							<pre class="prettyprint lang-java">
+							<java>
 SelectFinalStep limit(int offset, int numberOfRows);
 
 // The example, continued:
@@ -2262,13 +2209,13 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       .having(create.count().greaterThan(5))
       .orderBy(TAuthor.LAST_NAME.asc().nullsFirst())
-      .limit(1, 2);</pre>
+      .limit(1, 2);</java>
 
 							<p>In the final step, there are some proprietary extensions available
 								only in some RDBMS. One of those extensions are the FOR UPDATE
 								(supported in most RDBMS) and FOR SHARE clauses (supported only in
 								MySQL and Postgres): </p>
-							<pre class="prettyprint lang-java">
+							<java>
 SelectFinalStep forUpdate();
 
 // The example, continued:
@@ -2281,7 +2228,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .having(create.count().greaterThan(5))
       .orderBy(TAuthor.LAST_NAME.asc().nullsFirst())
       .limit(1, 2)
-      .forUpdate();</pre>
+      .forUpdate();</java>
 
 							<p>
 								Now the most relevant super-type of the object we have just created is 
@@ -2294,7 +2241,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								section about the <reference id="ResultQuery" title="ResultQuery"/>:
 							</p>
 							
-							<pre class="prettyprint lang-java">
+							<java>
 // Just execute the query.
 int execute() throws SQLException;
 
@@ -2308,7 +2255,7 @@ Record fetchAny() throws SQLException;
 // An Exception is thrown if more records were available
 Record fetchOne() throws SQLException;
 
-// [...]</pre>
+// [...]</java>
 
 
 							<h2>SELECT from single physical tables</h2>
@@ -2320,16 +2267,16 @@ Record fetchOne() throws SQLException;
 								already made at the very first step, when you create the SELECT
 								statement with the Factory: </p>
 								
-							<pre class="prettyprint lang-java">public &lt;R extends Record&gt; SimpleSelectWhereStep&lt;R&gt; selectFrom(Table&lt;R&gt; table);</pre>
+							<java>public &lt;R extends Record&gt; SimpleSelectWhereStep&lt;R&gt; selectFrom(Table&lt;R&gt; table);</java>
 							<p>As you can see, there is no way to further restrict/project the selected
 								fields. This just selects all known TableFields in the supplied Table,
 								and it also binds &lt;R extends Record&gt; to your Table's associated
 								Record. An example of such a Query would then be: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 TBook book = create.selectFrom(T_BOOK)
                    .where(TBook.LANGUAGE.equal("DE"))
                    .orderBy(TBook.TITLE)
-                   .fetchAny();</pre>
+                   .fetchAny();</java>
 						</content>
 					</section>
 					
@@ -2352,7 +2299,7 @@ TBook book = create.selectFrom(T_BOOK)
 								which is typically a participant of a
 								condition, and the <reference class="org.jooq.Condition" title="Condition"/> 
 								itself: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 public interface Condition {
     Condition and(Condition other);
     Condition and(String sql);
@@ -2367,7 +2314,7 @@ public interface Condition {
     Condition orExists(Select&lt;?&gt; select);
     Condition orNotExists(Select&lt;?&gt; select);
     Condition not();
-}</pre>
+}</java>
 
 							<p>The above example describes the essence of boolean logic in jOOQ. As
 								soon as you have a Condition object, you can connect that to other
@@ -2378,7 +2325,7 @@ public interface Condition {
 								cases. Here are some important API elements in the Field interface:
 							</p>
 							
-							<pre class="prettyprint lang-java">
+							<java>
 public interface Field&lt;T&gt; {
     Condition isNull();
     Condition isNotNull();
@@ -2407,7 +2354,7 @@ public interface Field&lt;T&gt; {
     Condition lessOrEqual(T value);
     Condition greaterThan(T value);
     Condition greaterOrEqual(T value);
-}</pre>
+}</java>
 
 							<p>As you see in the partially displayed API above, you can compare a
 								Field either with other Fields, with constant values (which is a
@@ -2416,16 +2363,16 @@ public interface Field&lt;T&gt; {
 								<reference id="NESTED" title="Examples of nested SELECTs"/>. </p>
 							<p>Combining the API of Field and Condition you can express complex predicates like this: </p>
 							
-							<pre class="prettyprint lang-sql">
+							<sql>
 (T_BOOK.TYPE_CODE IN (1, 2, 5, 8, 13, 21)       AND T_BOOK.LANGUAGE = 'DE') OR
 (T_BOOK.TYPE_CODE IN (2, 3, 5, 7, 11, 13)       AND T_BOOK.LANGUAGE = 'FR') OR
-(T_BOOK.TYPE_CODE IN (SELECT CODE FROM T_TYPES) AND T_BOOK.LANGUAGE = 'EN')</pre>
+(T_BOOK.TYPE_CODE IN (SELECT CODE FROM T_TYPES) AND T_BOOK.LANGUAGE = 'EN')</sql>
 
 							<p>Just write: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 TBook.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                      .and(TBook.LANGUAGE.equal("DE")).or(
 TBook.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                      .and(TBook.LANGUAGE.equal("FR")).or(
-TBook.TYPE_CODE.in(create.select(TTypes.CODE).from(T_TYPES)).and(TBook.LANGUAGE.equal("EN"))));</pre>
+TBook.TYPE_CODE.in(create.select(TTypes.CODE).from(T_TYPES)).and(TBook.LANGUAGE.equal("EN"))));</java>
 						</content>
 					</section>
 					
@@ -2440,24 +2387,24 @@ TBook.TYPE_CODE.in(create.select(TTypes.CODE).from(T_TYPES)).and(TBook.LANGUAGE.
 						<content>
 							<h2>Aliasing Tables</h2>
 							<p>A typical example of what you might want to do in SQL is this: </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
 SELECT a.ID, b.ID
   FROM T_AUTHOR a
-  JOIN T_BOOK b on a.ID = b.AUTHOR_ID</pre>
+  JOIN T_BOOK b on a.ID = b.AUTHOR_ID</sql>
   
   							<p>In this example, we are aliasing Tables, calling them a and b. Here is how you can create Table aliases in jOOQ: </p>
-  							<pre class="prettyprint lang-java">
+  							<java>
 Table&lt;TBookRecord&gt; book = T_BOOK.as("b");
-Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</pre>
+Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</java>
 
 							<p>Now, if you want to reference any fields from those Tables, you may
 								not use the original T_BOOK or T_AUTHOR meta-model objects anymore.
 								Instead, you have to get the fields from the new book and author Table
 								aliases: </p>
 								
-							<pre class="prettyprint lang-java">
+							<java>
 Field&lt;Integer&gt; bookID = book.getField(TBook.ID);
-Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
+Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</java>
 
 							<p>
 								Unfortunately, this tends to be a bit verbose. The static meta-model
@@ -2466,10 +2413,10 @@ Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
 								<reference ticket="117" />.
 								For now, this is how the above SQL statement would read in jOOQ:
 							</p>
-							<pre class="prettyprint lang-java">
+							<java>
 create.select(authorID, bookID)
       .from(author)
-      .join(book).on(authorID.equal(book.getField(TBook.AUTHOR_ID)));</pre>
+      .join(book).on(authorID.equal(book.getField(TBook.AUTHOR_ID)));</java>
       
       
       						<h3>Aliasing nested selects as tables</h3>
@@ -2482,23 +2429,23 @@ create.select(authorID, bookID)
 							<p>Fields can also be aliased independently from Tables. Most often,
 								this is done when using functions or aggregate operators. Here is an
 								example: </p>
-							<pre class="prettyprint lang-sql">
+							<sql>
   SELECT FIRST_NAME || ' ' || LAST_NAME author, COUNT(*) books
     FROM T_AUTHOR
     JOIN T_BOOK ON T_AUTHOR.ID = AUTHOR_ID
-GROUP BY FIRST_NAME, LAST_NAME;</pre>
+GROUP BY FIRST_NAME, LAST_NAME;</sql>
 							<p>Here is how it's done with jOOQ: </p>
-							<pre class="prettyprint lang-java">
+							<java>
 Record record = create.select(
          TAuthor.FIRST_NAME.concat(" ", TAuthor.LAST_NAME).as("author"),
          create.count().as("books"))
       .from(T_AUTHOR)
       .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME).fetchAny();</pre>
+      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME).fetchAny();</java>
       						<p>When you alias Fields like above, you can access those Fields' values using the alias name: </p>
-      						<pre class="prettyprint lang-java">
+      						<java>
 System.out.println("Author : " + record.getValue("author"));
-System.out.println("Books  : " + record.getValue("books"));</pre>
+System.out.println("Books  : " + record.getValue("books"));</java>
 						</content>
 					</section>
 					
@@ -2510,7 +2457,7 @@ System.out.println("Books  : " + record.getValue("books"));</pre>
 							records. The IN operator can also be used for semi-joins, though
 						</slogan>
 						<content>
-							<h2>The IN operator for use in semi-joins</h2>
+							<h2>The IN operator for use in semi-joins or anti-joins</h2>
 							<p>
 								In addition to a list of constant values, the IN operator in 
 								<reference class="org.jooq.Field"/> 
@@ -2527,9 +2474,7 @@ System.out.println("Books  : " + record.getValue("books"));</pre>
 								course, this is possible with a plain JOIN as well, but let's say we
 								want to use the IN operator. Then you have two possibilities: </p>
 								
-							<table width="100%" cellpadding="0" cellspacing="0">
-								<tr>
-									<td width="50%" class="left"><pre class="prettyprint lang-sql">
+							<code-pair><sql>
 SELECT *
   FROM T_BOOK
  WHERE T_BOOK.AUTHOR_ID IN (
@@ -2541,8 +2486,7 @@ SELECT *
 SELECT T_BOOK.*
   FROM T_BOOK
   JOIN T_AUTHOR ON (T_BOOK.AUTHOR_ID = T_AUTHOR.ID
-                AND T_AUTHOR.BORN    = 1920)</pre></td>
-									<td width="50%" class="right"><pre class="prettyprint lang-java">
+                AND T_AUTHOR.BORN    = 1920)</sql><java>
 create.select()
       .from(T_BOOK)
       .where(TBook.AUTHOR_ID.in(
@@ -2554,15 +2498,79 @@ create.select()
 create.select(T_BOOK.getFields())
       .from(T_BOOK)
       .join(T_AUTHOR).on(TBook.AUTHOR_ID.equal(TAuthor.ID)
-                     .and(TAuthor.BORN.equal(1920)));</pre></td>
-								</tr>
-							</table>								
+                     .and(TAuthor.BORN.equal(1920)));</java></code-pair>						
 						</content>
 					</section>
 					
 					
 					<section id="EXISTS">
 						<title>Nested SELECT using the EXISTS operator</title>
+						<slogan>The EXISTS operator is a bit different from all other SQL
+							elements, as it cannot really be applied to any object in a DSL.
+						</slogan>
+						<content>
+							<h2>The EXISTS operator for use in semi-joins or anti-joins</h2>
+							<p>The EXISTS operator is rather independent and can stand any place
+								where there may be a new condition: </p>
+							<ul>
+								<li>It may be placed right after a WHERE keyword </li>
+								<li>It may be the right-hand-side of a boolean operator</li>
+								<li>It may be placed right after a ON or HAVING keyword (although, this is less likely to be done...) </li>
+							</ul>
+
+							<p>This is reflected by the fact that an EXISTS clause is usually
+								created directly from the Factory. While this is more verbose than all
+								the other SQL constructs, there is no other way, when static QueryPart
+								creation is not an option (for now). Here is how it's done in the
+								Factory: </p>
+								
+							<java>
+Condition exists(Select&lt;?&gt; query);
+Condition notExists(Select&lt;?&gt; query);</java>
+
+							<p>When you create such a Condition, it can then be connected to any
+								other condition using AND, OR operators (see also the manual's section
+								on 
+								<reference id="CONDITIONS" title="Conditions"/>). Because of this verbosity, there are also quite a few
+								convenience methods, where they might be useful. For instance in the
+								<reference class="org.jooq.Condition"/> itself: </p>
+								
+							<java>
+Condition andExists(Select&lt;?&gt; select);
+Condition andNotExists(Select&lt;?&gt; select);
+Condition orExists(Select&lt;?&gt; select);
+Condition orNotExists(Select&lt;?&gt; select);</java>
+
+							<p>Or in the <reference class="org.jooq.SelectWhereStep"/>:</p>
+							
+							<java>
+SelectConditionStep whereExists(Select&lt;?&gt; select);
+SelectConditionStep whereNotExists(Select&lt;?&gt; select);</java>
+
+							<p>Or in the <reference class="org.jooq.SelectConditionStep"/>: </p>
+							
+							<java>
+SelectConditionStep andExists(Select&lt;?&gt; select);
+SelectConditionStep andNotExists(Select&lt;?&gt; select);
+SelectConditionStep orExists(Select&lt;?&gt; select);
+SelectConditionStep orNotExists(Select&lt;?&gt; select);</java>
+
+							<p>An example of how to use it is quickly given. Get all authors that haven't written any books: </p>
+							<code-pair>
+								<sql>
+SELECT *
+  FROM T_AUTHOR
+ WHERE NOT EXISTS (SELECT 1 
+                     FROM T_BOOK 
+                    WHERE T_BOOK.AUTHOR_ID = T_AUTHOR.ID)</sql>
+                    			<java>
+create.select()
+      .from(T_AUTHOR)
+      .whereNotExists(create.select(1)
+                  .from(T_BOOK)
+                  .where(TBook.AUTHOR_ID.equal(T_AUTHOR.ID)));</java>
+							</code-pair>
+						</content>
 					</section>
 					
 					

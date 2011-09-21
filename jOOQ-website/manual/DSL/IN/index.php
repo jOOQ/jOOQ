@@ -20,7 +20,7 @@ function printContent() {
 <td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/IN/">Nested SELECT using the IN operator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/ALIAS/" title="Previous section: Aliased tables and fields">previous</a> : <a href="<?=$root?>/manual/DSL/EXISTS/" title="Next section: Nested SELECT using the EXISTS operator">next</a></td>
 </tr>
 </table>
-							<h2>The IN operator for use in semi-joins</h2>
+							<h2>The IN operator for use in semi-joins or anti-joins</h2>
 							<p>
 								In addition to a list of constant values, the IN operator in 
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">org.jooq.Field</a> 
@@ -37,11 +37,9 @@ function printContent() {
 								course, this is possible with a plain JOIN as well, but let's say we
 								want to use the IN operator. Then you have two possibilities: </p>
 								
-							<table cellpadding="0" cellspacing="0" width="100%">
-								
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-									
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 SELECT *
   FROM T_BOOK
@@ -55,8 +53,7 @@ SELECT T_BOOK.*
   FROM T_BOOK
   JOIN T_AUTHOR ON (T_BOOK.AUTHOR_ID = T_AUTHOR.ID
                 AND T_AUTHOR.BORN    = 1920)</pre>
-</td>
-									<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 create.select()
       .from(T_BOOK)
@@ -71,10 +68,8 @@ create.select(T_BOOK.getFields())
       .join(T_AUTHOR).on(TBook.AUTHOR_ID.equal(TAuthor.ID)
                      .and(TAuthor.BORN.equal(1920)));</pre>
 </td>
-								
 </tr>
-							
-</table>								
+</table>						
 						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
 <td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/IN/">Nested SELECT using the IN operator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/ALIAS/" title="Previous section: Aliased tables and fields">previous</a> : <a href="<?=$root?>/manual/DSL/EXISTS/" title="Next section: Nested SELECT using the EXISTS operator">next</a></td>

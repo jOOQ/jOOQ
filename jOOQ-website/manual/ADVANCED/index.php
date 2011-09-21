@@ -10,16 +10,20 @@ function getActiveMenu() {
 	return "manual";
 }
 function getSlogan() {
-	return "";
+	return "In these sections you will learn about advanced concepts that
+					you might not use every day";
 }
 function printContent() {
     global $root;
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SQL/" title="Previous section: When it's just much easier: Plain SQL">previous</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Next section: Master data generation">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SQL/" title="Previous section: When it's just easier: Plain SQL">previous</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Next section: Master data generation">next</a></td>
 </tr>
-</table><h3>Table of contents</h3><ol>
+</table>
+					<h2>Overview</h2>
+					<p>This section covers some advanced topics and features that don't fit into any other section. </p>
+				<h3>Table of contents</h3><ol>
 <li>
 <a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Master data generation">Master data generation</a>
 </li>
@@ -40,7 +44,7 @@ function printContent() {
 </li>
 </ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SQL/" title="Previous section: When it's just much easier: Plain SQL">previous</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Next section: Master data generation">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SQL/" title="Previous section: When it's just easier: Plain SQL">previous</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Next section: Master data generation">next</a></td>
 </tr>
 </table>
 <?php 

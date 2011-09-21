@@ -94,7 +94,7 @@ create.select(ID.max().add(1).as("next_id"))
 </table>
 							
 							<p>See also the section about 
-								<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="jOOQ Manual reference: Arithmetic operations">Arithmetic operations</a>
+								<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="jOOQ Manual reference: Arithmetic operations and concatenation">Arithmetic operations</a>
 </p>
 								
 							<h2>Window functions</h2>

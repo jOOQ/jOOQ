@@ -118,7 +118,7 @@ class AttachableImpl implements AttachableInternal {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         if (configuration == null) {
             return "[ detached ]";
         }

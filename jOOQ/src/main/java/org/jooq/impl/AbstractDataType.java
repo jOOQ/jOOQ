@@ -451,7 +451,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return getClass().getSimpleName() + " [" + type + ", " + typeName + "]";
     }
 }

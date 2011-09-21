@@ -327,7 +327,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     // ------------------------------------------------------------------------
 
     @Override
-    public final String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("binding   [index ");

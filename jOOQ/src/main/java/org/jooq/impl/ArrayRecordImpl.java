@@ -189,7 +189,7 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return getClass().getSimpleName() + " [values=" + getList() + "]";
     }
 

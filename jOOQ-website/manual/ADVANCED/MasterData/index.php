@@ -4,7 +4,7 @@
 // Please do not edit this content manually
 require '../../../frame.php';
 function printH1() {
-    print "Master data generation";
+    print "Master data generation. Enumeration tables";
 }
 function getActiveMenu() {
 	return "manual";
@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/" title="Previous section: Advanced topics">previous</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Next section: Mapping generated schemata and tables to productive environments">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/" title="Previous section: Advanced topics">previous</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Next section: Mapping generated schemata and tables">next</a></td>
 </tr>
 </table>
 							<h2>Enumeration tables</h2>
@@ -127,7 +127,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 								type is generated. </p>
 						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/" title="Previous section: Advanced topics">previous</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Next section: Mapping generated schemata and tables to productive environments">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/" title="Previous section: Advanced topics">previous</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Next section: Mapping generated schemata and tables">next</a></td>
 </tr>
 </table>
 <?php 

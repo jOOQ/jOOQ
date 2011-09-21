@@ -117,7 +117,7 @@ generator.generate.master-data-tables=[a list of tables]
 generator.generate.master-data-table-literal.[master data table]=[column used for enum literals]
 generator.generate.master-data-table-description.[master data table]=[column used for documentation]</pre>
 							<p>Check out the manual's section about 
-								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation">master data</a>
+								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
 								 to find out more
 								about those advanced configuration parameters. </p>
 								

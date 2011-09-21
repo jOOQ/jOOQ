@@ -70,12 +70,12 @@ class IdentityImpl<R extends Record, T> implements Identity<R, T> {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return toString().hashCode();
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof Identity) {
             return toString().equals(obj.toString());
         }
@@ -84,7 +84,7 @@ class IdentityImpl<R extends Record, T> implements Identity<R, T> {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return field.toString();
     }
 }

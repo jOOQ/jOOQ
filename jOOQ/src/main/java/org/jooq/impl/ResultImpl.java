@@ -1261,18 +1261,18 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // -------------------------------------------------------------------------
 
     @Override
-    public final String toString() {
+    public String toString() {
         return format();
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return records.hashCode();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof ResultImpl) {
             ResultImpl<R> other = (ResultImpl<R>) obj;
             return records.equals(other.records);

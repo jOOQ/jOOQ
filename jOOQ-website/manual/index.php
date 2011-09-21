@@ -189,19 +189,19 @@ function printContent() {
 <a href="<?=$root?>/manual/ADVANCED/" title="Advanced topics">Advanced topics</a>
 <ol>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Master data generation">Master data generation</a>
+<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Master data generation. Enumeration tables">Master data generation. Enumeration tables</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Mapping generated schemata and tables to productive environments">Mapping generated schemata and tables to productive environments</a>
+<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Mapping generated schemata and tables">Mapping generated schemata and tables</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Adding Oracle hints to queries">Adding Oracle hints to queries</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/CONNECTBY/" title="The Oracle CONNECT BY clause for hierarchical queries">The Oracle CONNECT BY clause for hierarchical queries</a>
+<a href="<?=$root?>/manual/ADVANCED/CONNECTBY/" title="The Oracle CONNECT BY clause">The Oracle CONNECT BY clause</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/Export/" title="Exporting data to XML, CSV, JSON, HTML, Text">Exporting data to XML, CSV, JSON, HTML, Text</a>
+<a href="<?=$root?>/manual/ADVANCED/Export/" title="Exporting to XML, CSV, JSON, HTML, Text">Exporting to XML, CSV, JSON, HTML, Text</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/ADVANCED/Import/" title="Importing data from XML, CSV">Importing data from XML, CSV</a>

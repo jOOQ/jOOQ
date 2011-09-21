@@ -1017,6 +1017,84 @@ public interface ResultQuery&lt;R extends Record&gt; {
 						<slogan>When constructing Query objects in jOOQ, everything is
 							considered a QueryPart. The purpose of this quickly becomes clear when
 							checking out the QueryPart API essentials</slogan>
+						<content>
+							<h2>Everything is a QueryPart</h2>
+							<p>
+								A
+								<reference class="org.jooq.Query" />
+								and all its contained objects is a
+								<reference class="org.jooq.QueryPart" />.
+								QueryParts essentially provide this functionality:
+							</p>
+							<ul>
+								<li>they can render SQL using the toSQL(RenderContext) method</li>
+								<li>they can bind variables using the bind(BindContext) method</li>
+							</ul>
+							
+							<p>Both of these methods are contained in jOOQ's internal API's
+							   <reference class="org.jooq.QueryPartInternal"/>, which is 
+							   internally implemented by every QueryPart. QueryPart internals are best
+							   illustrated with an example.</p>
+							   
+						   <h2>Example: CompareCondition</h2>
+						   <p>A simple example can be provided by checking out jOOQ's internal
+								representation of a 
+								<reference class="org.jooq.impl.CompareCondition"/>. 
+								It is used for any condition
+								comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID
+								condition here: </p>
+						   <sql>
+-- [...]
+FROM T_AUTHOR
+JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
+-- [...]</sql>
+
+							<p>This is how jOOQ implements such a condition: </p>
+							
+							<java><![CDATA[
+
+@Override
+public final void bind(BindContext context) throws SQLException {
+    // The CompareCondition itself does not bind any variables.
+    // But the two fields involved in the condition might do so...
+    context.bind(field1).bind(field2);
+}
+
+@Override
+public final void toSQL(RenderContext context) {
+    // The CompareCondition delegates rendering of the Fields to the Fields
+    // themselves and connects them using the Condition's comparator operator:    
+    context.sql(field1)
+           .sql(" ");
+
+    // If the second field is null, some convenience behaviour can be
+    // implemented here
+    if (field2.isNullLiteral()) {
+        switch (comparator) {
+            case EQUALS:
+                context.sql("is null");
+                break;
+
+            case NOT_EQUALS:
+                context.sql("is not null");
+                break;
+
+            default:
+                throw new IllegalStateException("Cannot compare null with " + comparator);
+        }
+    }
+    
+    // By default, also delegate the right hand side's SQL rendering to the
+    // underlying field
+    else {
+        context.sql(comparator.toSQL())
+               .sql(" ")
+               .sql(field2);
+    }
+}
+]]></java>
+							<p>For more complex examples, please refer to the codebase, directly</p>
+						</content>
 					</section>
 					 
 					 
@@ -3307,7 +3385,7 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 				
 				<sections>
 					<section id="MasterData">
-						<title>Master data generation</title>
+						<title>Master data generation. Enumeration tables</title>
 						<slogan>Enumerations are a powerful concept. Unfortunately, almost no
 							RDBMS supports them, leaving you to create numerous tables for your
 							enumerated values. But these values are still enumerations!</slogan>
@@ -3416,27 +3494,432 @@ public class TBookRecord extends UpdatableRecordImpl<TBookRecord> {
 					
 					
 					<section id="SchemaMapping">
-						<title>Mapping generated schemata and tables to productive environments</title>
+						<title>Mapping generated schemata and tables</title>
+						<slogan>
+							Sometimes, you cannot control productive schema names, because your
+							application is deployed on a shared host, and you only get one schema
+							to work with.
+						</slogan>
+						<content>
+							<h2>Mapping your DEV schema to a productive environment</h2>
+							<p>You may wish to design your database in a way that you have several
+								instances of your schema. This is useful when you want to cleanly
+								separate data belonging to several customers / organisation units /
+								branches / users and put each of those entities' data in a separate
+								database or schema. </p>
+							<p>In our T_AUTHOR example this would mean that you provide a book
+								reference database to several companies, such as My Book World and
+								Books R Us. In that case, you'll probably have a schema setup like
+								this: </p>
+							<ul>
+								<li>DEV: Your development schema. This will be the schema that you
+									base code generation upon, with jOOQ </li>
+								<li>MY_BOOK_WORLD: The schema instance for My Book World </li>
+								<li>BOOKS_R_US: The schema instance for Books R Us </li>
+							</ul>
+							
+							
+							<h2>Mapping DEV to MY_BOOK_WORLD with jOOQ</h2>
+							<p>When a user from My Book World logs in, you want them to access the
+								MY_BOOK_WORLD schema using classes generated from DEV. This can be
+								achieved with the 
+								<reference class="org.jooq.SchemaMapping"/>
+								class, that you can equip your Factory
+								with. Take the following example: </p>
+								
+							<java>
+SchemaMapping mapping = new SchemaMapping();
+mapping.add(DEV, "MY_BOOK_WORLD");
+
+// Add the mapping to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+
+// Run queries with the "mapped" factory
+create.selectFrom(T_AUTHOR).fetch();</java>
+
+							<p>The query executed with a Factory equipped with the above mapping
+								will in fact produce this SQL statement: </p>
+							<sql>SELECT * FROM MY_BOOK_WORLD.T_AUTHOR</sql>
+							<p>Even if T_AUTHOR was generated from DEV. </p>
+							
+							<h2>Mapping several schemata</h2>
+							<p>Your development database may not be restricted to hold only one DEV
+								schema. You may also have a LOG schema and a MASTER schema. Let's say
+								the MASTER schema is shared among all customers, but each customer has
+								their own LOG schema instance. Then you can enhance your SchemaMapping
+								like this: </p>
+								
+							<java>
+SchemaMapping mapping = new SchemaMapping();
+mapping.add(DEV, "MY_BOOK_WORLD");
+mapping.add(LOG, "MY_BOOK_WORLD_LOG");</java>
+
+							<p>This will map generated classes from DEV to MY_BOOK_WORLD, from LOG
+								to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you
+								want to change your mapping configuration, you will have to create a
+								new Factory</p>
+								
+								
+							<h2>Using a default schema</h2>
+							<p>Another option to switch schema names is to use a default schema for
+								the Factory's underlying Connection. Many RDBMS support a USE or SET
+								SCHEMA command, which you can call like this: </p>
+								
+							<java>
+// Set the default schema
+Schema MY_BOOK_WORLD = ...
+create.use(MY_BOOK_WORLD);
+
+// Run queries with factory having a default schema
+create.selectFrom(T_AUTHOR).fetch();</java>
+							<p>Queries generated from the above Factory will produce this kind of SQL statement: </p>
+							
+							<sql>
+-- the schema name is omitted from all SQL constructs.
+SELECT * FROM T_AUTHOR</sql>
+
+
+							<h2>Mapping of tables</h2>
+							<p>Not only schemata can be mapped, but also tables. If you are not the
+								owner of the database your application connects to, you might need to
+								install your schema with some sort of prefix to every table. In our
+								examples, this might mean that you will have to map DEV.T_AUTHOR to
+								something MY_BOOK_WORLD.MY_APP__T_AUTHOR, where MY_APP__ is a prefix
+								applied to all of your tables. This can be achieved by creating the
+								following mapping: </p>
+								
+							<java>
+SchemaMapping mapping = new SchemaMapping();
+mapping.add(DEV, "MY_BOOK_WORLD");
+mapping.add(T_AUTHOR, "MY_APP__T_AUTHOR");
+
+// Add the mapping to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+
+// Run queries with the "mapped" factory
+create.selectFrom(T_AUTHOR).fetch();</java>
+
+							<p>The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement: </p>
+							<sql>
+SELECT * FROM MY_BOOK_WORLD.MY_APP__T_AUTHOR</sql>
+						</content>
 					</section>
 					
 					
 					<section id="OracleHints">
 						<title>Adding Oracle hints to queries</title>
+						<slogan>
+							Oracle has a powerful syntax to add hints as comments directly in your SQL
+						</slogan>
+						<content>
+							<h2>How to embed Oracle hints in SELECT</h2>
+							<p>If you are closely coupling your application to an Oracle database,
+								you might need to be able to pass hints of the form /*+HINT*/ with
+								your SQL statements to the Oracle database. For example: </p>
+							<sql>
+SELECT /*+ALL_ROWS*/ FIRST_NAME, LAST_NAME
+  FROM T_AUTHOR</sql>
+  
+  							<p>This can be done in jOOQ using the .hint() clause in your SELECT statement: </p>
+  							<java>
+create.select(FIRST_NAME, LAST_NAME)
+      .hint("/*+ALL_ROWS*/")
+      .from(T_AUTHOR);</java>
+
+							<p>Note that you can pass any string in the .hint() clause. If you use
+								that clause, the passed string will always be put in between the
+								SELECT [DISTINCT] keywords and the actual projection list </p>
+						</content>
 					</section>
 					
 					
 					<section id="CONNECTBY">
-						<title>The Oracle CONNECT BY clause for hierarchical queries</title>
+						<title>The Oracle CONNECT BY clause</title>
+						<slogan>
+							Hierarchical queries are supported by many RDBMS using the WITH clause.
+							Oracle has a very neat and much less verbose syntax for hierarchical
+							queries: CONNECT BY .. STARTS WITH
+						</slogan>
+						<content>
+							<h2>CONNECT BY .. STARTS WITH</h2>
+							<p>If you are closely coupling your application to an Oracle database,
+								you can take advantage of some Oracle-specific features, such as the
+								CONNECT BY clause, used for hierarchical queries. The formal syntax
+								definition is as follows: </p>
+								
+							<sql>
+--   SELECT ..
+--     FROM ..
+--    WHERE ..
+ CONNECT BY [NOCYCLE] condition [AND condition, ...] [START WITH condition]
+-- GROUP BY ..</sql>
+							<p>This can be done in jOOQ using the .connectBy(Condition) clauses in your SELECT statement: </p>
+							<java>
+// Some Oracle-specific features are only available
+// from the OracleFactory
+OracleFactory create = new OracleFactory(connection);
+
+// Get a table with elements 1, 2, 3, 4, 5
+create.select(create.rownum())
+      .connectBy(create.level().lessOrEqual(5))
+      .fetch();</java>
+
+							<p>Here's a more complex example where you can recursively fetch
+								directories in your database, and concatenate them to a path:</p>
+							<java><![CDATA[
+ OracleFactory ora = new OracleFactory(connection);
+
+ List<?> paths =
+ ora.select(ora.sysConnectByPath(Directory.NAME, "/").substring(2))
+    .from(Directory)
+    .connectBy(ora.prior(Directory.ID).equal(Directory.PARENT_ID))
+    .startWith(Directory.PARENT_ID.isNull())
+    .orderBy(ora.literal(1))
+    .fetch(0);]]></java>
+    
+    						<p>The output might then look like this</p>
+    						<text>
++------------------------------------------------+
+|substring                                       |
++------------------------------------------------+
+|C:                                              |
+|C:/eclipse                                      |
+|C:/eclipse/configuration                        |
+|C:/eclipse/dropins                              |
+|C:/eclipse/eclipse.exe                          |
++------------------------------------------------+
+|...21 record(s) truncated...
+</text>
+						</content>
 					</section>
 					
 					
 					<section id="Export">
-						<title>Exporting data to XML, CSV, JSON, HTML, Text</title>
+						<title>Exporting to XML, CSV, JSON, HTML, Text</title>
+						<slogan>
+							Get your data out of the Java world. Stream your data using any of the supported, wide-spread formats
+						</slogan>
+						<content>
+							<h2>Exporting with jOOQ</h2>
+							<p>If you are using jOOQ for scripting purposes or in a slim, unlayered
+								application server, you might be interested in using jOOQ's exporting
+								functionality (see also importing functionality). You can export any
+								Result&lt;Record&gt; into any of these formats: </p>
+								
+							<h3>XML</h3>
+							<p>Export your results as XML: </p>
+							<java>
+// Fetch books and format them as XML
+String xml = create.selectFrom(T_BOOK).fetch().formatXML();</java>
+
+							<p>The above query will result in an XML document looking like the following one: </p>
+							<xml><![CDATA[
+<!-- Find the XSD definition on www.jooq.org: -->
+<jooq-export:result xmlns:jooq-export="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">
+  <fields>
+    <field name="ID"/>
+    <field name="AUTHOR_ID"/>
+    <field name="TITLE"/>
+  </fields>
+  <records>
+    <record>
+      <value field="ID">1</value>
+      <value field="AUTHOR_ID">1</value>
+      <value field="TITLE">1984</value>
+    </record>
+    <record>
+      <value field="ID">2</value>
+      <value field="AUTHOR_ID">1</value>
+      <value field="TITLE">Animal Farm</value>
+    </record>
+  </records>
+</jooq-export:result>]]></xml>
+
+							<h3>CSV</h3>
+							<p>Export your results as CSV: </p>
+							<java>
+// Fetch books and format them as CSV
+String csv = create.selectFrom(T_BOOK).fetch().formatCSV();</java>
+
+							<p>The above query will result in a CSV document looking like the following one: </p>
+							<text>
+ID;AUTHOR_ID;TITLE
+1;1;1984
+2;1;Animal Farm</text>
+
+
+							<h3>JSON</h3>
+							<p>Export your results as JSON: </p>
+							
+							<java>
+// Fetch books and format them as JSON
+String json = create.selectFrom(T_BOOK).fetch().formatJSON();</java>
+							<p>The above query will result in a JSON document looking like the following one: </p>
+							<text>
+{fields:["ID","AUTHOR_ID","TITLE"],
+ records:[[1,1,"1984"],[2,1,"Animal Farm"]]}</text>
+ 
+ 							<h3>HTML </h3>
+ 							<p>Export your results as HTML: </p>
+ 							<java>
+// Fetch books and format them as HTML
+String html = create.selectFrom(T_BOOK).fetch().formatHTML();</java>
+							<p>The above query will result in an HTML document looking like the following one: </p>
+							<xml><![CDATA[
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>AUTHOR_ID</th>
+      <th>TITLE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>1984</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>Animal Farm</td>
+    </tr>
+  </tbody>
+</table>]]></xml>
+
+							<h3>Text</h3>
+							<p>Export your results as text: </p>
+							<java>
+// Fetch books and format them as text
+String text = create.selectFrom(T_BOOK).fetch().format();</java>
+
+							<p>The above query will result in a text document looking like the following one: </p>
+							<text>
++---+---------+-----------+
+| ID|AUTHOR_ID|TITLE      |
++---+---------+-----------+
+|  1|        1|1984       |
+|  2|        1|Animal Farm|
++---+---------+-----------+</text>
+						</content>
 					</section>
 					
 					
 					<section id="Import">
 						<title>Importing data from XML, CSV</title>
+						<slogan>
+							Use jOOQ to easily merge imported data into your database.
+						</slogan>
+						<content>
+							<h2>Importing with jOOQ</h2>
+							<p>If you are using jOOQ for scripting purposes or in a slim, unlayered
+								application server, you might be interested in using jOOQ's importing
+								functionality (see also exporting functionality). You can import data
+								directly into a table from any of these formats: </p>
+								
+							<h3>CSV</h3>
+							<p>The below CSV data represents two author records that may have been
+								exported previously, by jOOQ's exporting functionality, and then
+								modified in Microsoft Excel or any other spreadsheet tool: </p>
+								
+							<text>
+ID;AUTHOR_ID;TITLE
+1;1;1984
+2;1;Animal Farm</text>
+
+							<p>With jOOQ, you can load this data using various parameters from the
+								loader API. A simple load may look like this: </p>
+								
+							<java>
+Factory create = new Factory(connection, SQLDialect.ORACLE);
+
+// Load data into the T_AUTHOR table from an input stream
+// holding the CSV data.
+create.loadInto(T_AUTHOR)
+      .loadCSV(inputstream)
+      .fields(ID, AUTHOR_ID, TITLE)
+      .execute();</java>
+      
+      						<p>Here are various other examples: </p>
+      						<java>
+// Ignore the AUTHOR_ID column from the CSV file when inserting
+create.loadInto(T_AUTHOR)
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();
+
+// Specify behaviour for duplicate records.
+create.loadInto(T_AUTHOR)
+
+      // choose any of these methods
+      .onDuplicateKeyUpdate()
+      .onDuplicateKeyIgnore()
+      .onDuplicateKeyError() // the default
+
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();
+
+// Specify behaviour when errors occur.
+create.loadInto(T_AUTHOR)
+
+      // choose any of these methods
+      .onErrorIgnore()
+      .onErrorAbort() // the default
+
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();
+
+// Specify transactional behaviour where this is possible
+// (e.g. not in container-managed transactions)
+create.loadInto(T_AUTHOR)
+
+      // choose any of these methods
+      .commitEach()
+      .commitAfter(10)
+      .commitAll()
+      .commitNone() // the default
+
+      .loadCSV(inputstream)
+      .fields(ID, null, TITLE)
+      .execute();</java>
+      
+							<p>Any of the above configuration methods can be combined to achieve
+								the type of load you need. Please refer to the API's Javadoc to learn
+								about more details. Errors that occur during the load are reported by
+								the execute method's result: </p>
+								
+							<java><![CDATA[
+Loader<TAuthor> loader = /* .. */ .execute();
+
+// The number of processed rows
+int processed = loader.processed();
+ 
+// The number of stored rows (INSERT or UPDATE)
+int stored = loader.stored();
+ 
+// The number of ignored rows (due to errors, or duplicate rule)
+int ignored = loader.ignored();
+ 
+// The errors that may have occurred during loading
+List<LoaderError> errors = loader.errors();
+LoaderError error = errors.get(0);
+ 
+// The exception that caused the error
+SQLException exception = error.exception();
+ 
+// The row that caused the error
+int rowIndex = error.rowIndex();
+String[] row = error.row();
+ 
+// The query that caused the error
+Query query = error.query();]]></java>
+
+							<h3>XML </h3>
+							<p>This will be implemented soon... </p>
+						</content>
 					</section>
 				</sections>
 			</section>

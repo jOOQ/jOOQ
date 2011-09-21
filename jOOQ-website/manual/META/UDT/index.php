@@ -328,7 +328,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 
 							<p>Note that jOOQ allows you to simulate ENUM types where this makes
 								sense in your data model. See the section on 
-								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation">master data</a> for more
+								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a> for more
 								details. </p>
 						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>

@@ -60,7 +60,7 @@ function printContent() {
 <li>
 <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a> : 
     							An optional mapping of schemata. Check out the 
-    							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables to productive environments">SchemaMapping</a>
+    							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">SchemaMapping</a>
     							page for details</li> 
 							
 </ul>
@@ -89,7 +89,7 @@ MySQLFactory create = new MySQLFactory(connection);
 							</p>
 							<ul>
 								
-<li>Oracle's <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/" title="jOOQ Manual reference: The Oracle CONNECT BY clause for hierarchical queries">CONNECT BY</a>
+<li>Oracle's <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/" title="jOOQ Manual reference: The Oracle CONNECT BY clause">CONNECT BY</a>
 								    pseudo columns and functions</li>
     							
 <li>MySQL's encryption functions</li>

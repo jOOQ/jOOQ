@@ -4,24 +4,78 @@
 // Please do not edit this content manually
 require '../../../frame.php';
 function printH1() {
-    print "The Oracle CONNECT BY clause for hierarchical queries";
+    print "The Oracle CONNECT BY clause";
 }
 function getActiveMenu() {
 	return "manual";
 }
 function getSlogan() {
-	return "";
+	return "
+							Hierarchical queries are supported by many RDBMS using the WITH clause.
+							Oracle has a very neat and much less verbose syntax for hierarchical
+							queries: CONNECT BY .. STARTS WITH
+						";
 }
 function printContent() {
     global $root;
 ?>
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause for hierarchical queries</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Previous section: Adding Oracle hints to queries">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Export/" title="Next section: Exporting data to XML, CSV, JSON, HTML, Text">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Previous section: Adding Oracle hints to queries">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Export/" title="Next section: Exporting to XML, CSV, JSON, HTML, Text">next</a></td>
 </tr>
-</table><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+</table>
+							<h2>CONNECT BY .. STARTS WITH</h2>
+							<p>If you are closely coupling your application to an Oracle database,
+								you can take advantage of some Oracle-specific features, such as the
+								CONNECT BY clause, used for hierarchical queries. The formal syntax
+								definition is as follows: </p>
+								
+							<pre class="prettyprint lang-sql">
+--   SELECT ..
+--     FROM ..
+--    WHERE ..
+ CONNECT BY [NOCYCLE] condition [AND condition, ...] [START WITH condition]
+-- GROUP BY ..</pre>
+							<p>This can be done in jOOQ using the .connectBy(Condition) clauses in your SELECT statement: </p>
+							<pre class="prettyprint lang-java">
+// Some Oracle-specific features are only available
+// from the OracleFactory
+OracleFactory create = new OracleFactory(connection);
+
+// Get a table with elements 1, 2, 3, 4, 5
+create.select(create.rownum())
+      .connectBy(create.level().lessOrEqual(5))
+      .fetch();</pre>
+
+							<p>Here's a more complex example where you can recursively fetch
+								directories in your database, and concatenate them to a path:</p>
+							<pre class="prettyprint lang-java">
+ OracleFactory ora = new OracleFactory(connection);
+
+ List&lt;?&gt; paths =
+ ora.select(ora.sysConnectByPath(Directory.NAME, "/").substring(2))
+    .from(Directory)
+    .connectBy(ora.prior(Directory.ID).equal(Directory.PARENT_ID))
+    .startWith(Directory.PARENT_ID.isNull())
+    .orderBy(ora.literal(1))
+    .fetch(0);</pre>
+    
+    						<p>The output might then look like this</p>
+    						<pre>
++------------------------------------------------+
+|substring                                       |
++------------------------------------------------+
+|C:                                              |
+|C:/eclipse                                      |
+|C:/eclipse/configuration                        |
+|C:/eclipse/dropins                              |
+|C:/eclipse/eclipse.exe                          |
++------------------------------------------------+
+|...21 record(s) truncated...
+</pre>
+						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause for hierarchical queries</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Previous section: Adding Oracle hints to queries">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Export/" title="Next section: Exporting data to XML, CSV, JSON, HTML, Text">next</a></td>
+<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Previous section: Adding Oracle hints to queries">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Export/" title="Next section: Exporting to XML, CSV, JSON, HTML, Text">next</a></td>
 </tr>
 </table>
 <?php 

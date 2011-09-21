@@ -58,7 +58,7 @@ public void bind(BindContext context) throws SQLException;</pre>
 							<h2>Plain SQL as an alternative</h2>
 							<p>If you don't need integration of rather complex QueryParts into
 								jOOQ, then you might be safer using simple 
-								<a href="<?=$root?>/manual/DSL/SQL/" title="jOOQ Manual reference: When it's just much easier: Plain SQL">Plain SQL</a> functionality,
+								<a href="<?=$root?>/manual/DSL/SQL/" title="jOOQ Manual reference: When it's just easier: Plain SQL">Plain SQL</a> functionality,
 								where you can provide jOOQ with a simple String representation of your
 								embedded SQL. </p>
 						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">

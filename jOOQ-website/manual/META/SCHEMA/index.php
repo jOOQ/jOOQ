@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "The schema, top-level generated artefact";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "The schema is the top-level generated object in jOOQ. In many 
 							RDBMS, the schema coincides with the owner of tables and other objects

@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Procedures and packages";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Procedure support is one of the most important reasons why you should consider

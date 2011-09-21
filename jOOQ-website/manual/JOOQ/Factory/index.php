@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "The Factory class";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							jOOQ hides most implementation facts from you by letting you

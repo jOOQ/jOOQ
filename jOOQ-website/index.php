@@ -9,49 +9,37 @@ function getSlogan() {
 			SQL was never meant to be object-oriented. SQL was never meant to be
 			anything other than... SQL!";
 }
+function getActiveMenu() {
+	return "home";
+}
 function printContent() {
 ?>
 <h2>What does jOOQ code look like?</h2>
 <p>It's simple. With the jOOQ DSL, SQL looks almost as if it were
-natively supported by Java.</p>
+natively supported by Java. For instance, get all books published in 2011, ordered by title</p>
 
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td width="50%" class="left"><p>A simple SQL statement</p></td>
-		<td width="50%" class="right"><p>...and its equivalent in jOOQ</p></td>
-	</tr>
-	<tr>
 		<td width="50%" class="left"><pre class="prettyprint lang-sql">
--- get all books published in 2011, ordered by title
-
-  SELECT *
-    FROM BOOK
+  SELECT * FROM BOOK
    WHERE PUBLISHED_IN = 2011
 ORDER BY TITLE</pre></td>
 		<td width="50%" class="right"><pre class="prettyprint lang-java">
-Result&lt;Book&gt; books =
 create.selectFrom(BOOK)
       .where(PUBLISHED_IN.equal(2011))
-      .orderBy(TITLE)
-      .fetch();
-      </pre></td>
+      .orderBy(TITLE)</pre></td>
 	</tr>
 </table>
 
+<p>jOOQ also supports more complex SQL statements. get all authors'
+	first and last names, and the number of books they've written in
+	German, if they have written more than five books in German in the last
+	three years (from 2011), and sort those authors by last names limiting
+	results to the second and third row, then lock first and last names
+	columns for update</p>
 <table width="100%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td width="50%" class="left"><p>jOOQ also supports more complex SQL statements</p></td>
-		<td width="50%" class="right"><p>...and their equivalent in jOOQ</p></td>
-	</tr>
-	<tr>
+<tr>
 		<td width="50%" class="left"><pre class="prettyprint lang-sql">
--- get all authors' first and last names, and the number 
--- of books they've written in German, if they have written
--- more than five books in German in the last three years 
--- (from 2011), and sort those authors by last names
--- limiting results to the second and third row, then lock
--- first and last names columns for update
-
   SELECT FIRST_NAME, LAST_NAME, COUNT(*)
     FROM AUTHOR
     JOIN BOOK ON AUTHOR.ID = BOOK.AUTHOR_ID
@@ -65,12 +53,6 @@ ORDER BY LAST_NAME ASC NULLS FIRST
      FOR UPDATE
       OF FIRST_NAME, LAST_NAME</pre></td>
 		<td width="50%" class="right"><pre class="prettyprint lang-java">
-
-
-
-
-
-Result&lt;Record&gt; result =
 create.select(FIRST_NAME, LAST_NAME, create.count())
       .from(AUTHOR)
       .join(BOOK).on(Author.ID.equal(Book.AUTHOR_ID))
@@ -82,36 +64,20 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
       .limit(2)
       .offset(1)
       .forUpdate()
-      .of(FIRST_NAME, LAST_NAME)
-      .fetch();</pre></td>
+      .of(FIRST_NAME, LAST_NAME)</pre></td>
 	</tr>
 </table>
       
-      <h2>What's jOOQ</h2>
+      <h2>What is jOOQ?</h2>
       <p>jOOQ stands for Java Object Oriented Querying. It combines these essential features:</p>
       
-      <table cellpadding="0" cellspacing="0" width="100%">
-      <tr>
-      	<td width="50%" class="left"><h3>Code Generation:</h3></td>
-      	<td width="50%" class="right"><p>jOOQ generates a simple Java representation of your database schema. Every table, view, stored procedure, enum, UDT is a class.</p></td>
-      </tr>
-      <tr>
-      	<td class="left"><h3>Active records:</h3></td>
-      	<td class="right"><p>jOOQ implements an easy-to-use active record pattern. It is NOT an OR-mapper, but provides a 1:1 mapping between tables/views and classes. Between columns and members.</p></td>
-      </tr>
-      <tr>
-      	<td class="left"><h3>Typesafe SQL:</h3></td>
-      	<td class="right"><p>jOOQ allows for writing compile-time typesafe querying using its built-in fluent API.</p></td>
-      </tr>
-      <tr>
-      	<td class="left"><h3>SQL standard:</h3></td>
-      	<td class="right"><p>jOOQ supports all standard SQL language features including the more complex UNION's, nested SELECTs, joins, aliasing</p></td>
-      </tr>
-      <tr>
-      	<td class="left"><h3>Vendor-specific feature support:</h3></td>
-      	<td class="right"><p>jOOQ encourages the use of vendor-specific extensions such as stored procedures, UDT's and ARRAY's, recursive queries, and many more.</p></td>
-      </tr>
-      </table>
+      <ul>
+      	<li>Code Generation: jOOQ generates a simple Java representation of your database schema. Every table, view, stored procedure, enum, UDT is a class.</li>
+		<li>Active records: jOOQ implements an easy-to-use active record pattern. It is NOT an OR-mapper, but provides a 1:1 mapping between tables/views and classes. Between columns and members.</li>
+        <li>Typesafe SQL: jOOQ allows for writing compile-time typesafe querying using its built-in fluent API.</li>
+        <li>SQL standard: jOOQ supports all standard SQL language features including the more complex UNION's, nested SELECTs, joins, aliasing</li>
+      	<li>Vendor-specific feature support: jOOQ encourages the use of vendor-specific extensions such as stored procedures, UDT's and ARRAY's, recursive queries, and many more.</li>
+      </ul>
       
       <h2>How does jOOQ help you?</h2>
       <ul>

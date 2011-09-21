@@ -8,6 +8,9 @@ function getSlogan() {
 	        motivated staff, providing new database integrations, website translations, and shouting out to
 	        the world about jOOQ. You have a blog? Write about jOOQ in your language!";
 }
+function getActiveMenu() {
+	return "contribute";
+}
 function printContent() {
 ?>
 <h2>The hall of fame</h2>

@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Nested SELECT using the EXISTS operator";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "The EXISTS operator is a bit different from all other SQL
 							elements, as it cannot really be applied to any object in a DSL.

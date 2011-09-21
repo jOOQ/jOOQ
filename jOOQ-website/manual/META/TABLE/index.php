@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Tables, views and their corresponding records";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							The most important generated artefacts are Tables and TableRecords.

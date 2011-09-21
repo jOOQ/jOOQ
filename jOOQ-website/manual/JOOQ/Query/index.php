@@ -84,18 +84,9 @@ function printContent() {
 </ul>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table cellpadding="0" cellspacing="0" width="100%">
-							
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-								
-<td class="left" width="50%">A sample SQL statement</td>
-								<td class="right" width="50%">...and its equivalent in jOOQ's DSL API</td>
-							
-</tr>
-							
-<tr>
-								
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 -- Select all books by authors born after 1920, named "Paulo" 
 -- from a catalogue consisting of authors and books:
@@ -108,8 +99,7 @@ SELECT *
  WHERE a.year_of_birth &gt; 1920 
    AND a.first_name = 'Paulo'
  ORDER BY b.title</pre>
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 // Instanciate your factory using a JDBC connection.
 Factory create = new Factory(connection, SQLDialect.ORACLE);
@@ -123,9 +113,7 @@ Result&lt;Record&gt; result = create.select()
     .and(FIRST_NAME.equal("Paulo")))
     .orderBy(TITLE).fetch();</pre>
 </td>
-							
 </tr>
-							
 </table>
 							
 							<p>
@@ -194,27 +182,16 @@ q.addOrderBy(TBook.TITLE);</pre>
 							The INSERT VALUES and the INSERT SELECT syntax</p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table cellpadding="0" cellspacing="0" width="100%">
-							
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-								
-<td class="left" width="50%">A typical INSERT query looks like this</td>
-								<td class="right" width="50%">...and how it's done with jOOQ</td>
-							
-</tr>
-							
-<tr>
-								
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 INSERT INTO T_AUTHOR 
     (ID, FIRST_NAME, LAST_NAME)
 VALUES 
     (100, 'Hermann', 'Hesse'),
     (101, 'Alfred', 'D&ouml;blin');</pre>
-								
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 create.insertInto(T_AUTHOR, 
           TAuthor.ID, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
@@ -222,9 +199,7 @@ create.insertInto(T_AUTHOR,
       .values(101, "Alfred", "D&ouml;blin")
       .execute();</pre>
 </td>
-							
 </tr>
-							
 </table>
 
 							<p>The DSL syntax tries to stay close to actual SQL. In detail,
@@ -340,27 +315,16 @@ i.execute();</pre>
 							multi-table updates will be implemented in the near future. </p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table cellpadding="0" cellspacing="0" width="100%">
-							
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-								
-<td class="left" width="50%">A typical UPDATE query looks like this</td>
-								<td class="right" width="50%">...and how it's done with jOOQ</td>
-							
-</tr>
-							
-<tr>
-								
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 
 UPDATE T_AUTHOR
    SET FIRST_NAME = 'Hermann',
        LAST_NAME = 'Hesse'
  WHERE ID = 3;</pre>
-								
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 create.update(T_AUTHOR)
       .set(TAuthor.FIRST_NAME, "Hermann")
@@ -368,9 +332,7 @@ create.update(T_AUTHOR)
       .where(TAuthor.ID.equal(3))
       .execute();</pre>
 </td>
-							
 </tr>
-							
 </table>
 							
 							<h3>Example: Non-DSL Query</h3>
@@ -389,33 +351,20 @@ u.execute();</pre>
 							multi-table deletes will be implemented in the near future. </p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table cellpadding="0" cellspacing="0" width="100%">
-							
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-								
-<td class="left" width="50%">A typical DELETE query looks like this</td>
-								<td class="right" width="50%">...and how it's done with jOOQ</td>
-							
-</tr>
-							
-<tr>
-								
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 
 DELETE T_AUTHOR
  WHERE ID = 100;</pre>
-								
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 create.delete(T_AUTHOR)
       .where(TAuthor.ID.equal(100))
       .execute();</pre>
 </td>
-							
 </tr>
-							
 </table>
 							
 							<h3>Example: Non-DSL Query</h3>
@@ -442,11 +391,9 @@ d.execute();</pre>
 								not supported. Here is an example:
 							</p>
 							
-							<table cellpadding="0" cellspacing="0" width="100%">
-							
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-								
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 -- Check if there is already an author called 'Hitchcock'
 -- If there is, rename him to John. If there isn't add him.
@@ -456,9 +403,7 @@ USING (SELECT 1 FROM DUAL)
 ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
 WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</pre>
-								
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 create.mergeInto(T_AUTHOR)
       .using(create().selectOne())
@@ -469,9 +414,7 @@ create.mergeInto(T_AUTHOR)
       .values("Hitchcock")
       .execute();</pre>
 </td>
-							
 </tr>
-							
 </table>
 							
 							
@@ -479,20 +422,15 @@ create.mergeInto(T_AUTHOR)
 							<p>
 								The syntax is trivial:
 							</p>
-							<table cellpadding="0" cellspacing="0" width="100%">
 							
+							<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-								
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">TRUNCATE TABLE T_AUTHOR;</pre>
-								
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">create.truncate(T_AUTHOR).execute();</pre>
 </td>
-							
 </tr>
-							
 </table>
 							<p>This is not supported by Ingres and SQLite. jOOQ will execute a DELETE FROM
 								T_AUTHOR statement instead. </p>

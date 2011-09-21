@@ -275,6 +275,33 @@ function printContent() {
 					</xsl:choose>
 				</a>
 			</xsl:when>
+			<xsl:when test="name(.) = 'java'">
+				<pre class="prettyprint lang-java">
+					<xsl:value-of select="text()"/>
+				</pre>
+			</xsl:when>
+			<xsl:when test="name(.) = 'sql'">
+				<pre class="prettyprint lang-sql">
+					<xsl:value-of select="text()"/>
+				</pre>
+			</xsl:when>
+			<xsl:when test="name(.) = 'xml'">
+				<pre class="prettyprint lang-xml">
+					<xsl:value-of select="text()"/>
+				</pre>
+			</xsl:when>
+			<xsl:when test="name(.) = 'code-pair'">
+				<table width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="50%" class="left">
+						<xsl:apply-templates select="sql" mode="content"/>
+					</td>
+					<td width="50%" class="right">
+						<xsl:apply-templates select="java" mode="content"/>
+					</td>
+				</tr>
+				</table>
+			</xsl:when>
 			<xsl:otherwise>
 				<xsl:copy>
 		            <xsl:apply-templates select="@*|node()" mode="content"/>

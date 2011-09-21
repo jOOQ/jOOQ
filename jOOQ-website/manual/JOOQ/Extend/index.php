@@ -47,8 +47,7 @@ public void toSQL(RenderContext context);
 // variable binding to them in the correct order, passing the bind context.
 //
 // Every QueryPart must ensure, that it starts binding its variables at context.nextIndex().
-public void bind(BindContext context) throws SQLException;
-</pre>
+public void bind(BindContext context) throws SQLException;</pre>
 
 							<p>The above contract may be a bit tricky to understand at first. The
 								best thing is to check out jOOQ source code and have a look at a

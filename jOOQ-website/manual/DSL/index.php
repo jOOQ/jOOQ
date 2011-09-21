@@ -25,18 +25,9 @@ function printContent() {
 </p>
 						
 					<p>Here is an example to show you what that means. When you want to write a query like this in SQL: </p>
-					<table cellpadding="0" cellspacing="0" width="100%">
-						
+					<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-							
-<td width="50%">Here is an example to show you what that means. When you want to write a query like this in SQL: </td>
-							<td width="50%">Then, using jOOQ's DSL API, you can write the same query as such: </td>
-						
-</tr>
-						
-<tr>
-							
-<td class="left" width="50%">
+<td width="50%" class="left">
 <pre class="prettyprint lang-sql">
 -- Select all books by authors born after 1920, 
 -- named "Paulo" from a catalogue:
@@ -46,8 +37,7 @@ SELECT *
  WHERE a.year_of_birth &gt; 1920 
    AND a.first_name = 'Paulo'
  ORDER BY b.title</pre>
-</td>
-								<td class="right" width="50%">
+</td><td width="50%" class="right">
 <pre class="prettyprint lang-java">
 Result&lt;Record&gt; result = 
 create.select()
@@ -58,9 +48,7 @@ create.select()
       .orderBy(TBook.TITLE)
       .fetch();</pre>
 </td>
-						
 </tr>
-					
 </table>
 					
 					<p>You couldn't come much closer to SQL itself in Java, without re-writing the compiler. </p>

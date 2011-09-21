@@ -76,7 +76,7 @@ void refreshUsing(TableField&lt;R, ?&gt;... keys);</pre>
 								store records to an unconstrained view. An example lifecycle of a book without 
 								any keys can then be implemented as such: 
 							</p>
-							<pre class="prettyprint lang-lava">
+							<pre class="prettyprint lang-java">
 // Create a new record and insert it into the database
 TBookRecord book = create.newRecord(T_BOOK);
 book.setTitle("My first book");

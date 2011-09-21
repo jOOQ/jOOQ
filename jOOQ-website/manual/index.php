@@ -172,7 +172,7 @@ function printContent() {
 <a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Stored procedures and functions">Stored procedures and functions</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Arithmetic operations">Arithmetic operations</a>
+<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Arithmetic operations and concatenation">Arithmetic operations and concatenation</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/DSL/CASE/" title="The CASE clause">The CASE clause</a>
@@ -181,7 +181,7 @@ function printContent() {
 <a href="<?=$root?>/manual/DSL/CAST/" title="Type casting">Type casting</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/SQL/" title="When it's just much easier: Plain SQL">When it's just much easier: Plain SQL</a>
+<a href="<?=$root?>/manual/DSL/SQL/" title="When it's just easier: Plain SQL">When it's just easier: Plain SQL</a>
 </li>
 </ol>
 </li>

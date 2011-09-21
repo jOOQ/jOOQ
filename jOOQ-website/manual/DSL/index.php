@@ -11,6 +11,8 @@ function getActiveMenu() {
 }
 function getSlogan() {
 	return "
+					In these sections you will learn about how jOOQ makes SQL available to
+					Java as if Java natively supported SQL
 				";
 }
 function printContent() {
@@ -21,6 +23,7 @@ function printContent() {
 <td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/SEQUENCE/" title="Previous section: Sequences">previous</a> : <a href="<?=$root?>/manual/DSL/SELECT/" title="Next section: Complete SELECT syntax">next</a></td>
 </tr>
 </table>
+					<h2>Overview</h2>
 					<p>jOOQ ships with its own DSL (or Domain Specific Language) that
 						simulates SQL as good as possible in Java. This means, that you can
 						write SQL statements almost as if Java natively supported that syntax
@@ -84,7 +87,7 @@ create.select()
 <a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Stored procedures and functions">Stored procedures and functions</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Arithmetic operations">Arithmetic operations</a>
+<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Arithmetic operations and concatenation">Arithmetic operations and concatenation</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/DSL/CASE/" title="The CASE clause">The CASE clause</a>
@@ -93,7 +96,7 @@ create.select()
 <a href="<?=$root?>/manual/DSL/CAST/" title="Type casting">Type casting</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/SQL/" title="When it's just much easier: Plain SQL">When it's just much easier: Plain SQL</a>
+<a href="<?=$root?>/manual/DSL/SQL/" title="When it's just easier: Plain SQL">When it's just easier: Plain SQL</a>
 </li>
 </ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>

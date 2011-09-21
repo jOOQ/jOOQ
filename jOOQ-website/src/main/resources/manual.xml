@@ -2531,7 +2531,7 @@ Condition notExists(Select&lt;?&gt; query);</java>
 							<p>When you create such a Condition, it can then be connected to any
 								other condition using AND, OR operators (see also the manual's section
 								on 
-								<reference id="CONDITIONS" title="Conditions"/>). Because of this verbosity, there are also quite a few
+								<reference id="CONDITION" title="Conditions"/>). Because of this verbosity, there are also quite a few
 								convenience methods, where they might be useful. For instance in the
 								<reference class="org.jooq.Condition"/> itself: </p>
 								
@@ -2576,6 +2576,112 @@ create.select()
 					
 					<section id="NESTED">
 						<title>Other types of nested SELECT</title>
+						<slogan>Apart from the most common IN and EXISTS clauses that encourage
+							the use of nested selects, SQL knows a few more syntaxes to make use
+							of such constructs. </slogan>
+						<content>
+							<h2>Comparison with single-field SELECT clause</h2>
+							<p>If you can ensure that a nested SELECT will only return one Record
+								with one Field, then you can test for equality. This is how it is done
+								in SQL: </p>
+								
+							<code-pair>
+								<sql>
+SELECT * 
+  FROM T_BOOK
+ WHERE T_BOOK.AUTHOR_ID = (
+ 		SELECT ID 
+          FROM T_AUTHOR 
+         WHERE LAST_NAME = 'Orwell')</sql><java>
+create.select()
+      .from(T_BOOK)
+      .where(TBook.AUTHOR_ID.equal(
+            create.select(TAuthor.ID)
+                  .from(T_AUTHOR)
+                  .where(TAuthor.LAST_NAME.equal("Orwell"))));</java>
+                            </code-pair>
+                            
+                            <p>More examples like the above can be guessed from the 
+                            <reference class="org.jooq.Field"/> API, as documented in the manual's section about 
+                            <reference id="CONDITION" title="Conditions"/>. For the = operator, the available comparisons are these:</p>
+                            
+                            <java>
+Condition equal(Select&lt;?&gt; query);
+Condition equalAny(Select&lt;?&gt; query);
+Condition equalSome(Select&lt;?&gt; query);
+Condition equalAll(Select&lt;?&gt; query);</java>
+                            
+                            
+                            <h2>Selecting from a SELECT - SELECT acts as a Table</h2>
+							<p>Often, you need to nest a SELECT statement simply because SQL is
+								limited in power. For instance, if you want to find out which author
+								has written the most books, then you cannot do this: </p>
+								
+							<sql>
+  SELECT AUTHOR_ID, count(*) books
+    FROM T_BOOK
+GROUP BY AUTHOR_ID
+ORDER BY books DESC</sql>
+
+							<p>Instead, you have to do this (or something similar). For jOOQ, this
+								is an excellent example, combining various SQL features into a single
+								statement. Here's how to do it: </p>
+								
+							<code-pair>
+								<sql>
+SELECT nested.* FROM (
+      SELECT AUTHOR_ID, count(*) books
+        FROM T_BOOK
+    GROUP BY AUTHOR_ID
+) nested
+ORDER BY nested.books DESC
+
+
+</sql><java>
+Table&lt;Record&gt; nested = 
+    create.select(TBook.AUTHOR_ID, create.count().as("books"))
+          .from(T_BOOK)
+          .groupBy(TBook.AUTHOR_ID).asTable("nested");
+
+create.select(nested.getFields())
+      .from(nested)
+      .orderBy(nested.getField("books"));</java>
+							</code-pair>
+							
+							<p>You'll notice how some verbosity seems inevitable when you combine nested SELECT statements with aliasing. </p>
+                    	
+	                    	<h2>Selecting a SELECT - SELECT acts as a Field</h2>
+							<p>Now SQL is even more powerful than that. You can also have SELECT
+								statements, wherever you can have Fields. It get's harder and harder
+								to find good examples, because there is always an easier way to
+								express the same thing. But why not just count the number of books the
+								really hard way? :-) But then again, maybe you want to take advantage
+								of <a href="http://lukaseder.wordpress.com/2011/09/02/oracle-scalar-subquery-caching/" title="Oracle Scalar Subquery Caching with jOOQ">Oracle Scalar Subquery Caching</a></p>
+							
+							<code-pair>
+								<sql>
+  SELECT LAST_NAME, (
+      SELECT COUNT(*) 
+       FROM T_BOOK 
+      WHERE T_BOOK.AUTHOR_ID = T_AUTHOR.ID) books
+    FROM T_AUTHOR
+ORDER BY books DESC
+
+
+
+
+</sql><java>
+// The type of books cannot be inferred from the Select&lt;?&gt;
+Field&lt;Object&gt; books = 
+    create.select(create.count())
+          .from(T_BOOK)
+          .where(TBook.AUTHOR_ID.equal(TAuthor.ID)).asField("books");
+
+create.select(TAuthor.ID, books)
+      .from(T_AUTHOR)
+      .orderBy(books, TAuthor.ID));</java>
+							</code-pair>
+                    	</content>
 					</section>
 					
 					

@@ -174,7 +174,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return getClass().getSimpleName() + " [values=" + Arrays.asList(getValues()) + "]";
     }
 

@@ -192,7 +192,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     // ------------------------------------------------------------------------
 
     @Override
-    public final String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
 
         sb.append("rendering [");

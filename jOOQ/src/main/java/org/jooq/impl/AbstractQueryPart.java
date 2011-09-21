@@ -215,7 +215,7 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // -------------------------------------------------------------------------
 
     @Override
-    public final boolean equals(Object that) {
+    public boolean equals(Object that) {
         if (that instanceof QueryPart) {
             String sql1 = create().renderInlined(this);
             String sql2 = create().renderInlined((QueryPart) that);
@@ -227,12 +227,12 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return create().renderInlined(this).hashCode();
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         try {
             return create().renderInlined(this);
         }

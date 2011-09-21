@@ -2759,7 +2759,7 @@ public class Factory implements Configuration {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "Factory [connected=" + (connection != null) + ", dialect=" + dialect + ", mapping=" + mapping + "]";
     }
 

@@ -272,7 +272,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     }
 
     @Override
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof Store) {
             final Store<?> that = (Store<?>) obj;
 

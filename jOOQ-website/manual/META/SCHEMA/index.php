@@ -43,7 +43,7 @@ function printContent() {
 								contain identical entities, but the schemata stand for different
 								users/customers/clients, etc), there is a solution for that. Check out
 								the manual's section on support for 
-								<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables to productive environments">multiple equivalent schemata</a> 
+								<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">multiple equivalent schemata</a> 
 							
 </p>
 

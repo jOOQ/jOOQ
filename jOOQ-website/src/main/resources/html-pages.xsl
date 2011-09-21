@@ -298,6 +298,11 @@ function printContent() {
 					<xsl:value-of select="text()"/>
 				</pre>
 			</xsl:when>
+			<xsl:when test="name(.) = 'text'">
+				<pre>
+					<xsl:value-of select="text()"/>
+				</pre>
+			</xsl:when>
 			<xsl:when test="name(.) = 'code-pair'">
 				<table width="100%" cellpadding="0" cellspacing="0">
 				<tr>

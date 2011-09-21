@@ -45,7 +45,7 @@ Condition notExists(Select&lt;?&gt; query);</pre>
 							<p>When you create such a Condition, it can then be connected to any
 								other condition using AND, OR operators (see also the manual's section
 								on 
-								<a href="" title="jOOQ Manual reference: ">Conditions</a>). Because of this verbosity, there are also quite a few
+								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>). Because of this verbosity, there are also quite a few
 								convenience methods, where they might be useful. For instance in the
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
 								

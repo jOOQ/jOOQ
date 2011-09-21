@@ -171,16 +171,16 @@ a:hover {
 
 #tweets {
 	display: none;
-	padding-top: 1.3em;
+	padding-top: 4px;
 	padding-left: 3em;
     padding-right: 3em;
 	
-	height: 40px;
+	height: 25px;
 
-    background: #444;
-    background:  -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
-    background:  -moz-linear-gradient(top, #555, #333);
-    background:  gradient(linear, left top, left bottom, from(#555), to(#333));
+    background: #eee;
+    background:  -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
+    background:  -moz-linear-gradient(top, #fff, #ddd);
+    background:  gradient(linear, left top, left bottom, from(#fff), to(#ddd));
 }
 
 #navigation a,

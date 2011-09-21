@@ -6,6 +6,9 @@ require '../../frame.php';
 function printH1() {
     print "Meta model code generation";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "In these sections you will learn about how to configure and use
 					jOOQ's source code generator";

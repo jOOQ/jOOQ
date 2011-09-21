@@ -8,6 +8,9 @@ function getSlogan() {
 			in the beginning, jOOQ was no more than type-safe querying for simple statements. See how
 			jOOQ is growing to support almost all SQL constructs by 12 different RDBMS";
 }
+function getActiveMenu() {
+	return "notes";
+}
 function printContent() {
 	$contents = file('inc/RELEASENOTES.txt');
 

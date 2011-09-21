@@ -8,6 +8,9 @@ function getSlogan() {
 			Here you will find further resources related to jOOQ, to similar products and
 			other inspiration related to jOOQ";
 }
+function getActiveMenu() {
+	return "links";
+}
 function printContent() {
 	global $root;
 ?>

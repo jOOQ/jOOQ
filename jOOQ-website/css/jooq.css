@@ -67,8 +67,19 @@ p.slogan {
 	padding-left: 2em;
 	color: #444;
 	font-family: 'Georgia',Serif;
-	font-style: italic;
-	height: 2.5em;
+	height: 3em;
+	
+	background: none repeat scroll 0 0 #ffffff;
+    border-radius: 10px 10px 10px 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #882222;
+    box-shadow: 5px 5px 20px #aa6633;
+    color: #000000;
+    display: block;
+    line-height: 1.5em;
+    margin: 1.5em 0;
+    padding: 1em;
 }
 
 td.left {
@@ -139,14 +150,33 @@ a:hover {
     background: -webkit-gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
     background: -moz-linear-gradient(left, #f6cab9, #ffeedd);
     background: gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
+    
+    -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    -moz-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    border-top: 1px solid rgba(0,0,0,.2);
 }
 
 #navigation {
-	padding-top: 1.3em;
+	padding-top: 20px;
 	padding-left: 3em;
     padding-right: 3em;
     
 	height: 40px;
+    background: #444;
+    background:  -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
+    background:  -moz-linear-gradient(top, #555, #333);
+    background:  gradient(linear, left top, left bottom, from(#555), to(#333));
+}
+
+#tweets {
+	display: none;
+	padding-top: 1.3em;
+	padding-left: 3em;
+    padding-right: 3em;
+	
+	height: 40px;
+
     background: #444;
     background:  -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
     background:  -moz-linear-gradient(top, #555, #333);
@@ -158,9 +188,18 @@ a:hover {
 #navigation a:visited,
 #navigation a:hover,
 #navigation a:active {
-    color: #fadccb;
+    color: #aaa;
+    text-shadow: #000 -1px -1px 0px;
     text-decoration: none;
-	text-shadow: 0 1px 1px #666666;
+    font-size: 15px;
+}
+
+#navigation .navigation-item-active a,
+#navigation .navigation-item-active a:link,
+#navigation .navigation-item-active a:visited,
+#navigation .navigation-item-active a:hover,
+#navigation .navigation-item-active a:active {
+    color: #fadccb;
 }
 
 #navigation a:hover {
@@ -169,11 +208,12 @@ a:hover {
 
 div.navigation-item-left {
 	float: left;
-	padding-right: 2em;
+	margin-right: 2em;
+	height: 40px;
 }
 
-#tweets {
-	height: 40px;
+div.navigation-item-active {
+    background: url("../img/navigation-item-active.png") no-repeat center bottom;
 }
 
 #footer {
@@ -193,7 +233,8 @@ div.navigation-item-left {
     -moz-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
     box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
     border-top: 1px solid rgba(0,0,0,.2);
-    text-shadow: #555 -1px -1px 0px;}
+    text-shadow: #555 -1px -1px 0px;
+ }
 
 div.tweet-item-left {
 	float: left;

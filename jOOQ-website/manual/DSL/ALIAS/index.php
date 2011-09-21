@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Aliased tables and fields";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							Aliasing is at the core of SQL and relational algebra. When you join

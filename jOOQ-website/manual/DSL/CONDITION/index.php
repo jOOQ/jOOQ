@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Conditions";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							The creation of conditions is the part of any database abstraction that

@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Updatable Records";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							UpdatableRecords are a specific subtype of TableRecord that have

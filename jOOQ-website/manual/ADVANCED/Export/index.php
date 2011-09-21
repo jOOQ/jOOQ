@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Exporting data to XML, CSV, JSON, HTML, Text";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

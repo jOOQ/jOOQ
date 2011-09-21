@@ -6,6 +6,9 @@ require '../../frame.php';
 function printH1() {
     print "jOOQ classes and their usage";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 					In these sections, you will learn about how to use jOOQ object

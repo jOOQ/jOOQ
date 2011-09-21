@@ -6,6 +6,9 @@ require '../../frame.php';
 function printH1() {
     print "Advanced topics";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

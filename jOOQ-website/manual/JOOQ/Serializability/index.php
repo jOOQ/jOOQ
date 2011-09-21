@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Serializability of QueryParts and Results";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "Most of the jOOQ API implements the Serializable interface.
 							This helps storing queries and partial queries in files, transferring

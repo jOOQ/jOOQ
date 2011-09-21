@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Adding Oracle hints to queries";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

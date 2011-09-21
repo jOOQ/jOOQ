@@ -6,6 +6,9 @@ require '../frame.php';
 function printH1() {
     print "The jOOQ User Manual";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 			Learn about jOOQ using its single or multi-paged manuals
@@ -163,7 +166,7 @@ function printContent() {
 <a href="<?=$root?>/manual/DSL/UNION/" title="UNION and other set operations">UNION and other set operations</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="Functions, aggregate operators, and window functions">Functions, aggregate operators, and window functions</a>
+<a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="Functions and aggregate operators">Functions and aggregate operators</a>
 </li>
 <li>
 <a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Stored procedures and functions">Stored procedures and functions</a>

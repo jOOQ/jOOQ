@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Extend jOOQ with custom types";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "Maybe jOOQ is missing functionality that you would like to see,
 							or you can't wait for the next release... In this case, you can extend

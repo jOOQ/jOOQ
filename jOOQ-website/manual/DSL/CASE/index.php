@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "The CASE clause";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "The Oracle CONNECT BY clause for hierarchical queries";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "";
 }

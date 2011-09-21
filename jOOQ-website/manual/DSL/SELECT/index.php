@@ -6,6 +6,9 @@ require '../../../frame.php';
 function printH1() {
     print "Complete SELECT syntax";
 }
+function getActiveMenu() {
+	return "manual";
+}
 function getSlogan() {
 	return "
 							A SELECT statement is more than just the R in CRUD. It allows for
@@ -59,7 +62,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
 							<p>
 								jOOQ will return an "intermediary" type to you, representing the
 								SELECT statement about to be created (by the way, check out the
-								section on <a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="jOOQ Manual reference: Functions, aggregate operators, and window functions">aggregate operators</a>
+								section on <a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="jOOQ Manual reference: Functions and aggregate operators">aggregate operators</a>
 								 to learn more about the COUNT(*)
 								function). This type is the 
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectFromStep.java" title="Internal API reference: org.jooq.SelectFromStep">org.jooq.SelectFromStep</a>. 

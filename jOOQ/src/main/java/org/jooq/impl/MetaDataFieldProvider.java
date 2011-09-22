@@ -168,4 +168,13 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
     public final int getIndex(Field<?> field) throws IllegalArgumentException {
         return fields.getIndex(field);
     }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return fields.toString();
+    }
 }

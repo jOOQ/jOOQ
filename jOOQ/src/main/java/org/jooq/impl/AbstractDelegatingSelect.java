@@ -107,6 +107,11 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
     }
 
     @Override
+    public final List<Result<Record>> fetchMany() throws SQLException {
+        return query.fetchMany();
+    }
+
+    @Override
     public final <T> List<T> fetch(Field<T> field) throws SQLException {
         return query.fetch(field);
     }

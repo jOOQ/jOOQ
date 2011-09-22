@@ -1485,6 +1485,17 @@ public abstract class jOOQAbstractTest<
         assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert("1"));
         assertEquals("1", SQLDataType.VARCHAR.convert("1"));
 
+        assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert("  1"));
+        assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert("  1"));
+        assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert("  1"));
+        assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert("  1"));
+        assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert("  1"));
+        assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert("  1"));
+        assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert("  1"));
+        assertEquals(new BigDecimal("1"), SQLDataType.NUMERIC.convert("  1"));
+        assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert("  1"));
+        assertEquals("  1", SQLDataType.VARCHAR.convert("  1"));
+
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((byte) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((byte) 1));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert((byte) 1));

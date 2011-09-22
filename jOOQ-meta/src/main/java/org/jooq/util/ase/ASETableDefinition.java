@@ -35,13 +35,11 @@
  */
 package org.jooq.util.ase;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -65,47 +63,30 @@ public class ASETableDefinition extends AbstractTableDefinition {
     protected List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
-        PreparedStatement stmt = null;
-        try {
-            stmt = create().getConnection().prepareStatement("sp_help '" + getName() + "'");
-            stmt.execute();
-            stmt.getMoreResults();
+        int position = 1;
+        for (Record record : create().fetchMany("sp_help '" + getName() + "'").get(1)) {
+            String p = record.getValueAsString("Prec");
+            String s = record.getValueAsString("Scale");
 
-            stmt.getResultSet().close();
-            stmt.getMoreResults();
+            int precision = 0;
+            int scale = 0;
 
-            ResultSet rs = stmt.getResultSet();
+            if (p != null && !"null".equalsIgnoreCase(p.trim())) precision = Integer.valueOf(p.trim());
+            if (s != null && !"null".equalsIgnoreCase(s.trim())) scale = Integer.valueOf(s.trim());
 
-            int position = 1;
-            while (rs.next()) {
-                String p = rs.getString("Prec");
-                String s = rs.getString("Scale");
+            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+                record.getValueAsString("Type"),
+                precision, scale);
 
-                int precision = 0;
-                int scale = 0;
-
-                if (p != null && !"null".equalsIgnoreCase(p.trim())) precision = Integer.valueOf(p.trim());
-                if (s != null && !"null".equalsIgnoreCase(s.trim())) scale = Integer.valueOf(s.trim());
-
-                DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                    rs.getString("Type"),
-                    precision, scale);
-
-                result.add(new DefaultColumnDefinition(
-                    getDatabase().getTable(getName()),
-                    rs.getString("Column_name"),
-                    position++,
-                    type,
-                    rs.getBoolean("Identity"),
-                    null));
-            }
+            result.add(new DefaultColumnDefinition(
+                getDatabase().getTable(getName()),
+                record.getValueAsString("Column_name"),
+                position++,
+                type,
+                record.getValueAsBoolean("Identity", false),
+                null));
         }
-        finally {
-            if (stmt != null) {
-                stmt.getMoreResults(Statement.CLOSE_ALL_RESULTS);
-                stmt.close();
-            }
-        }
+
         return result;
     }
 }

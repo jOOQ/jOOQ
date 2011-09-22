@@ -43,6 +43,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,6 +55,7 @@ import java.util.concurrent.Future;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.Field;
+import org.jooq.FieldProvider;
 import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
@@ -74,8 +76,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final long       serialVersionUID = -5588344253566055707L;
 
     private transient boolean       lazy;
+    private transient boolean       many;
     private transient Cursor<R>     cursor;
     private Result<R>               result;
+    private List<Result<Record>>    results;
 
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
@@ -103,12 +107,34 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         try {
             ResultSet rs = statement.executeQuery();
-            FieldList fields = new FieldList(getFields(rs.getMetaData()));
-            cursor = new CursorImpl<R>(configuration, fields, rs, statement, getRecordType());
 
-            if (!lazy) {
-                result = cursor.fetchResult();
-                cursor = null;
+            if (!many) {
+                FieldList fields = new FieldList(getFields(rs.getMetaData()));
+                cursor = new CursorImpl<R>(configuration, fields, rs, statement, getRecordType());
+
+                if (!lazy) {
+                    result = cursor.fetchResult();
+                    cursor = null;
+                }
+            }
+            else {
+                results = new ArrayList<Result<Record>>();
+
+                for (;;) {
+                    FieldProvider fields = new MetaDataFieldProvider(configuration, rs.getMetaData());
+                    Cursor<Record> c = new CursorImpl<Record>(configuration, fields, rs);
+                    results.add(c.fetchResult());
+
+                    if (statement.getMoreResults()) {
+                        rs = statement.getResultSet();
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                statement.getMoreResults(Statement.CLOSE_ALL_RESULTS);
+                statement.close();
             }
         }
         finally {
@@ -143,6 +169,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         lazy = false;
 
         return cursor;
+    }
+
+    @Override
+    public final List<Result<Record>> fetchMany() throws SQLException {
+        many = true;
+        execute();
+        many = false;
+
+        return results;
     }
 
     @Override

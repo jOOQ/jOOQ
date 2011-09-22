@@ -86,7 +86,7 @@ class SQLTable extends AbstractTable<Record> {
 
     @Override
     public final Table<Record> as(String alias) {
-        return new TableAlias<Record>(this, alias, true);
+        return new TableAlias<Record>(this, alias);
     }
 
     @Override

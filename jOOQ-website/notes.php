@@ -32,9 +32,29 @@ function printContent() {
 		else if (substr($contents[$i], 0, 3) == '---') {
 			// Skip
 		}
-		else if (trim($contents[$i]) == '') {
+		else if (trim($contents[$i]) == '' && substr($contents[$i + 1], 0, 1) != '-') {
 			print '<p>';
 		}
+		
+		// Create an <ul> from a list of "dashed" elements 
+		else if (substr($contents[$i], 0, 1) == '-') {
+			print '<ul>';
+			
+			while (trim($contents[$i]) != '') {
+				print '<li>';
+				print preg_replace('%-\s+(.*)%', '$1', $contents[$i]);
+				
+				while (trim($contents[++$i]) != '' && substr($contents[$i], 0, 1) != '-') {
+					print $contents[$i];
+				}
+				
+				print '</li>';
+			}
+			
+			print '</ul><p>';
+		}
+		
+		// Create a ticket-table from a list of "hashed" elements
 		else if (substr($contents[$i], 0, 1) == '#') {
 			print '<table class="ticket-table">';
 			

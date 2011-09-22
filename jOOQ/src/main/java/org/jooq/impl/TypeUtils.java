@@ -210,7 +210,7 @@ final class TypeUtils {
                 return (T) new BigDecimal(from.toString()).toBigInteger();
             }
             else if (toClass == Boolean.class) {
-                String s = from.toString().toLowerCase();
+                String s = from.toString().toLowerCase().trim();
 
                 if (TRUE_VALUES.contains(s)) {
                     return (T) Boolean.TRUE;

@@ -1264,6 +1264,16 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
      *
+     * @param field The values' field
+     * @param type The type used for type conversion
+     * @return The values
+     */
+    <T> List<T> getValues(Field<?> field, Class<? extends T> type);
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
      * @param fieldIndex The values' field index
      * @return The values
      */
@@ -1732,7 +1742,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Get this result as XML
-     * 
+     *
      * @see #formatXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>

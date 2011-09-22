@@ -93,6 +93,19 @@ public interface ResultQuery<R extends Record> extends Query {
     Cursor<R> fetchLazy() throws SQLException;
 
     /**
+     * Execute a query, possibly returning several result
+     * sets.
+     * <p>
+     * Example (Sybase ASE):
+     * <p>
+     * <code><pre>
+     * String sql = "sp_help 'my_table'";</pre></code>
+     *
+     * @return The resulting records
+     */
+    List<Result<Record>> fetchMany() throws SQLException;
+
+    /**
      * Execute the query and return all values for a field from the generated
      * result.
      * <p>

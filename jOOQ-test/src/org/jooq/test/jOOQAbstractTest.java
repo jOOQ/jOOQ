@@ -174,6 +174,9 @@ public abstract class jOOQAbstractTest<
         T639 extends UpdatableRecord<T639>,
         T785 extends TableRecord<T785>> {
 
+    private static final List<Integer>   BOOK_IDS      = Arrays.asList(1, 2, 3, 4);
+    private static final List<String>    BOOK_TITLES   = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
+
     private static final String          JDBC_SCHEMA   = "jdbc.Schema";
     private static final String          JDBC_PASSWORD = "jdbc.Password";
     private static final String          JDBC_USER     = "jdbc.User";
@@ -882,13 +885,13 @@ public abstract class jOOQAbstractTest<
         for (Entry<Integer, B> entry : map1.entrySet()) {
             assertEquals(entry.getKey(), entry.getValue().getValue(TBook_ID()));
         }
-        assertEquals(Arrays.asList(1, 2, 3, 4), new ArrayList<Integer>(map1.keySet()));
+        assertEquals(BOOK_IDS, new ArrayList<Integer>(map1.keySet()));
 
         // Key -> Value Map
         // ----------------
         Map<Integer, String> map2 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchMap(TBook_ID(), TBook_TITLE());
-        assertEquals(Arrays.asList(1, 2, 3, 4), new ArrayList<Integer>(map2.keySet()));
-        assertEquals(Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"), new ArrayList<String>(map2.values()));
+        assertEquals(BOOK_IDS, new ArrayList<Integer>(map2.keySet()));
+        assertEquals(BOOK_TITLES, new ArrayList<String>(map2.values()));
 
         // List of Map
         // -----------
@@ -1268,19 +1271,13 @@ public abstract class jOOQAbstractTest<
         Result<Record> result = create().select().from("t_book").orderBy(ID).fetch();
 
         assertEquals(4, result.size());
-        assertEquals(
-            Arrays.asList(1, 2, 3, 4),
-            result.getValues(ID));
-        assertEquals(
-            Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"),
-            result.getValues(TBook_TITLE()));
+        assertEquals(BOOK_IDS, result.getValues(ID));
+        assertEquals(BOOK_TITLES, result.getValues(TBook_TITLE()));
 
         // [#271] Aliased plain SQL table
         result = create().select(ID).from("(select * from t_book) b").orderBy(ID).fetch();
         assertEquals(4, result.size());
-        assertEquals(
-            Arrays.asList(1, 2, 3, 4),
-            result.getValues(ID));
+        assertEquals(BOOK_IDS, result.getValues(ID));
 
         // [#271] TODO: Aliased plain SQL table
 //        result = create().select().from("(select * from t_book) b").orderBy(ID).fetch();
@@ -1292,9 +1289,7 @@ public abstract class jOOQAbstractTest<
         // [#836] Aliased plain SQL table
         result = create().select().from(create().table("t_book").as("b")).orderBy(ID).fetch();
         assertEquals(4, result.size());
-        assertEquals(
-            Arrays.asList(1, 2, 3, 4),
-            result.getValues(ID));
+        assertEquals(BOOK_IDS, result.getValues(ID));
 
         // [#271] TODO: Check for aliased nested selects. The DescribeQuery does not seem to work
         // [#836] Aliased plain SQL nested select
@@ -2342,7 +2337,7 @@ public abstract class jOOQAbstractTest<
             .from(TBook())
             .where(TBook_ID().in(new Integer[0]))
             .fetch(TBook_ID()));
-        assertEquals(Arrays.asList(1, 2, 3, 4), create().select()
+        assertEquals(BOOK_IDS, create().select()
             .from(TBook())
             .where(TBook_ID().notIn(new Integer[0]))
             .orderBy(TBook_ID())
@@ -2589,6 +2584,25 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchMany() throws Exception {
+        switch (getDialect()) {
+            case ORACLE:
+            case SQLITE:
+            case SYBASE:
+                log.info("SKIPPING", "Fetch Many tests");
+                return;
+        }
+
+        List<Result<Record>> results = create().fetchMany(
+            "select * from t_book order by " + TBook_ID().getName());
+
+        assertEquals(1, results.size());
+        assertEquals(4, results.get(0).size());
+        assertEquals(BOOK_IDS, results.get(0).getValues(TBook_ID(), Integer.class));
+        assertEquals(BOOK_TITLES, results.get(0).getValues(TBook_TITLE()));
+    }
+
+    @Test
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
@@ -2731,8 +2745,8 @@ public abstract class jOOQAbstractTest<
         final Queue<Integer> ids = new LinkedList<Integer>();
         final Queue<String> titles = new LinkedList<String>();
 
-        ids.addAll(Arrays.asList(1, 2, 3, 4));
-        titles.addAll(Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"));
+        ids.addAll(BOOK_IDS);
+        titles.addAll(BOOK_TITLES);
 
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
@@ -2749,8 +2763,8 @@ public abstract class jOOQAbstractTest<
 
         // Test lazy fetching
         // --------------------------------------
-        ids.addAll(Arrays.asList(1, 2, 3, 4));
-        titles.addAll(Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida"));
+        ids.addAll(BOOK_IDS);
+        titles.addAll(BOOK_TITLES);
 
         create().selectFrom(TBook())
                 .orderBy(TBook_ID())
@@ -2812,7 +2826,7 @@ public abstract class jOOQAbstractTest<
 
         // Check the data
         assertEquals(4, result.size());
-        assertEquals(Arrays.asList(1, 2, 3, 4), result.getValues(TBook_ID()));
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
 
         // Start new threads
         later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
@@ -3374,7 +3388,7 @@ public abstract class jOOQAbstractTest<
             " from " + T725().getName() +
             " order by " + T725_ID().getName());
         assertEquals(4, result.size());
-        assertEquals(Arrays.asList(1, 2, 3, 4), result.getValues(0));
+        assertEquals(BOOK_IDS, result.getValues(0));
         assertNull(result.getValue(1, 1));
 
         switch (getDialect()) {
@@ -4208,7 +4222,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testOrderByIndirection() throws Exception {
-        assertEquals(Arrays.asList(1, 2, 3, 4),
+        assertEquals(BOOK_IDS,
             create().selectFrom(TBook())
             .orderBy(TBook_ID().sortAsc(), TBook_ID().asc())
             .fetch(TBook_ID()));
@@ -4512,11 +4526,11 @@ public abstract class jOOQAbstractTest<
 
         List<Integer> ids = create().select(b_ID).from(b).orderBy(b_ID).fetch(b_ID);
         assertEquals(4, ids.size());
-        assertEquals(Arrays.asList(1, 2, 3, 4), ids);
+        assertEquals(BOOK_IDS, ids);
 
         Result<Record> books = create().select().from(b).orderBy(b_ID).fetch();
         assertEquals(4, books.size());
-        assertEquals(Arrays.asList(1, 2, 3, 4), books.getValues(b_ID));
+        assertEquals(BOOK_IDS, books.getValues(b_ID));
     }
 
     // @Test // TODO [#579] re-enable this test when fixing this bug

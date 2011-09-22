@@ -186,28 +186,28 @@ final class TypeUtils {
 
             // Various number types are converted between each other via String
             else if (toClass == Byte.class) {
-                return (T) Byte.valueOf(new BigDecimal(from.toString()).byteValue());
+                return (T) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
             }
             else if (toClass == Short.class) {
-                return (T) Short.valueOf(new BigDecimal(from.toString()).shortValue());
+                return (T) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
             }
             else if (toClass == Integer.class) {
-                return (T) Integer.valueOf(new BigDecimal(from.toString()).intValue());
+                return (T) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
             }
             else if (toClass == Long.class) {
-                return (T) Long.valueOf(new BigDecimal(from.toString()).longValue());
+                return (T) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
             }
             else if (toClass == Float.class) {
-                return (T) Float.valueOf(from.toString());
+                return (T) Float.valueOf(from.toString().trim());
             }
             else if (toClass == Double.class) {
-                return (T) Double.valueOf(from.toString());
+                return (T) Double.valueOf(from.toString().trim());
             }
             else if (toClass == BigDecimal.class) {
-                return (T) new BigDecimal(from.toString());
+                return (T) new BigDecimal(from.toString().trim());
             }
             else if (toClass == BigInteger.class) {
-                return (T) new BigDecimal(from.toString()).toBigInteger();
+                return (T) new BigDecimal(from.toString().trim()).toBigInteger();
             }
             else if (toClass == Boolean.class) {
                 String s = from.toString().toLowerCase().trim();

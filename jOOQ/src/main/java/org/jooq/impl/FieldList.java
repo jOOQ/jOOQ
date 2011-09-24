@@ -63,6 +63,10 @@ class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
     @SuppressWarnings("unchecked")
     @Override
     public final <T> Field<T> getField(Field<T> field) {
+        if (field == null) {
+            return null;
+        }
+
         return (Field<T>) getField(field.getName());
     }
 

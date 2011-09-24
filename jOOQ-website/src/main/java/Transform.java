@@ -55,11 +55,22 @@ import org.joox.Match;
  *
  * @author Lukas Eder
  */
-public class HTMLPages {
-
+public class Transform {
     public static void main(String[] args) throws Exception {
-        InputStream isXML = HTMLPages.class.getResourceAsStream("manual.xml");
-        InputStream isXSL = HTMLPages.class.getResourceAsStream("html-pages.xsl");
+        System.out.println("Transforming multi-page manual");
+        System.out.println("------------------------------");
+        multiplePages();
+
+        System.out.println();
+        System.out.println("Transforming single-page manual");
+        System.out.println("-------------------------------");
+        singlePage();
+    }
+
+
+    public static void multiplePages() throws Exception {
+        InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
+        InputStream isXSL = Transform.class.getResourceAsStream("html-pages.xsl");
 
         StreamSource xsl = new StreamSource(isXSL);
         TransformerFactory factory = TransformerFactory.newInstance();
@@ -83,5 +94,26 @@ public class HTMLPages {
             transformer.setParameter("relativePath", relativePath);
             transformer.transform(source, target);
         }
+    }
+
+    public static void singlePage() throws Exception {
+        InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
+        InputStream isXSL = Transform.class.getResourceAsStream("html-page.xsl");
+
+        StreamSource xsl = new StreamSource(isXSL);
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer(xsl);
+
+        Match manual = $(isXML);
+
+        File dir = new File("manual-single-page");
+        dir.mkdirs();
+
+        System.out.println("Transforming manual");
+
+        Source source = new DOMSource(manual.document());
+        Result target = new StreamResult(new File(dir, "index.php"));
+
+        transformer.transform(source, target);
     }
 }

@@ -1,0 +1,30 @@
+#surefire
+#Sat Sep 24 16:23:04 CEST 2011
+testClassesDirectory=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\test-classes
+classPathUrl.4=C\:\\Users\\lukas\\.m2\\repository\\org\\hamcrest\\hamcrest-core\\1.1\\hamcrest-core-1.1.jar
+classPathUrl.3=C\:\\Users\\lukas\\.m2\\repository\\junit\\junit\\4.9\\junit-4.9.jar
+classPathUrl.2=C\:\\Users\\lukas\\.m2\\repository\\org\\jooq\\jooq\\1.6.7-SNAPSHOT\\jooq-1.6.7-SNAPSHOT.jar
+useManifestOnlyJar=true
+classPathUrl.1=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\classes
+reportsDirectory=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\surefire-reports
+classPathUrl.0=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\test-classes
+dirscanner.0=directoryScannerOptions
+providerConfiguration=org.apache.maven.surefire.junit4.JUnit4Provider
+testSuiteDefinitionTestSourceDirectory=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\src\\test\\java
+surefireClassPathUrl.1=C\:\\Users\\lukas\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.7.1\\surefire-api-2.7.1.jar
+surefireClassPathUrl.0=C\:\\Users\\lukas\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit4\\2.7.1\\surefire-junit4-2.7.1.jar
+report.2=org.apache.maven.surefire.report.XMLReporter
+useSystemClassLoader=true
+report.1=org.apache.maven.surefire.report.BriefFileReporter
+report.0=org.apache.maven.surefire.report.ForkingConsoleReporter
+excludes0=**/*$*
+isTrimStackTrace=true
+dirscanner.0.params=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\test-classes|[**/Test*.java, **/*Test.java, **/*TestCase.java]|[**/*$*]
+includes2=**/*TestCase.java
+enableAssertions=true
+failIfNoTests=false
+includes1=**/*Test.java
+dirscanner.0.types=java.io.File|java.util.ArrayList|java.util.ArrayList
+includes0=**/Test*.java
+childDelegation=false
+classPathUrl.5=C\:\\Users\\lukas\\.m2\\repository\\postgresql\\postgresql\\9.0-801.jdbc4\\postgresql-9.0-801.jdbc4.jar

@@ -17,7 +17,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Georgia',Serif;
+    font-family: Georgia,"Times New Roman",Times,serif;
    	font-weight: normal;
    	color: #000000;
    	margin-top: 0.5em;
@@ -66,7 +66,7 @@ p {
 p.slogan {
 	padding-left: 2em;
 	color: #444;
-	font-family: 'Georgia',Serif;
+	font-family: Georgia,"Times New Roman",Times,serif;
 	height: 3em;
 	
 	background: none repeat scroll 0 0 #ffffff;

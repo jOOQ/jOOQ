@@ -11,7 +11,7 @@ function getActiveMenu() {
 }
 function getSlogan() {
 	return "
-			Learn about jOOQ using its single or multi-paged manuals
+			The manual is the central reference for most of jOOQ's functionality.
 		";
 }
 function printContent() {
@@ -22,16 +22,22 @@ function printContent() {
 <td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Next section: jOOQ classes and their usage">next</a></td>
 </tr>
 </table>
-			<h3>Single-paged manuals</h3>
+			<h3>All manuals</h3>
 			<p>Coming soon in the manuals section of the jOOQ website:</p>
 			<ul>
 				
-<li>A single-paged HTML manual</li>
+<li>
+<a href="<?=$root?>/manual-single-page" title="The jOOQ Manual on one single page">A single-paged HTML manual</a>
+</li>
+				
+<li>
+<a href="<?=$root?>/manual" title="The jOOQ Manual on multiple pages">A multi-paged HTML manual</a>
+</li>
 				
 <li>A downloadable PDF manual</li>
 			
 </ul>
-			<h3>The multi-paged manual</h3>
+			<h3>Overview</h3>
 			<p>This manual is divided into four main sections:</p>
 			<ul>
 				

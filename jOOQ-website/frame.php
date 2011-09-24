@@ -59,7 +59,7 @@
 						<a href="http://twitter.com/share" 
 							class="twitter-share-button" 
 							data-url="http://www.jooq.org"
-							data-text="jOOQ - A nice database abstraction library for Java" 
+							data-text="#jOOQ - A nice database abstraction library for Java" 
 							data-count="horizontal" data-via="lukaseder">Tweet</a>
 						<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 					</div>

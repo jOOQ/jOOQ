@@ -121,6 +121,19 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     }
 
     @Override
+    public final List<Object> getBindValues() {
+        BindValueCollector collector = new BindValueCollector();
+
+        try {
+            create(getConfiguration()).bind(this, collector);
+        }
+        catch (SQLException ignore) {
+        }
+
+        return collector.result;
+    }
+
+    @Override
     @Deprecated
     public final String toSQLReference(Configuration configuration) {
         return toSQLReference(configuration, false);

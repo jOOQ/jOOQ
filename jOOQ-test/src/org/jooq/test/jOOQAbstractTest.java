@@ -54,6 +54,8 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
@@ -963,6 +965,31 @@ public abstract class jOOQAbstractTest<
         assertEquals(create().selectFrom(TBook()).orderBy(TBook_ID()).fetch(TBook_ID().getName()),
         Arrays.asList(create().selectFrom(TBook()).orderBy(TBook_ID()).fetchArray(TBook_ID().getName())));
 
+    }
+
+    @Test
+    public void testGetSQLAndGetBindValues() throws Exception {
+        Select<?> select =
+        create().select(TBook_ID(), TBook_ID().mul(6).div(2).div(3))
+                .from(TBook())
+                .orderBy(TBook_ID(), TBook_ID().mod(2));
+
+        assertEquals(
+            Arrays.asList(6, 2, 3, 2),
+            select.getBindValues());
+
+        PreparedStatement stmt = connection.prepareStatement(select.getSQL());
+        int i = 0;
+        for (Object value : select.getBindValues()) {
+            stmt.setObject(++i, value);
+        }
+
+        ResultSet rs = stmt.executeQuery();
+        Result<Record> result = create().fetch(rs);
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID(), Integer.class));
+        assertEquals(BOOK_IDS, result.getValues(1, Integer.class));
+
+        stmt.close();
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

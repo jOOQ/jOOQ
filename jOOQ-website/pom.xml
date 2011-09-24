@@ -25,5 +25,13 @@
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>fop</groupId>
+  		<artifactId>fop</artifactId>
+  		<version>0.93</version>
+  		<type>jar</type>
+  		<classifier>jdk14</classifier>
+  		<scope>compile</scope>
+  	</dependency>
   </dependencies>
 </project>

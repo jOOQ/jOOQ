@@ -989,6 +989,11 @@ public abstract class jOOQAbstractTest<
         assertEquals(BOOK_IDS, result.getValues(TBook_ID(), Integer.class));
         assertEquals(BOOK_IDS, result.getValues(1, Integer.class));
 
+        try {
+            assertEquals(BOOK_IDS, result.getValues(2, Integer.class));
+            fail();
+        } catch (IllegalArgumentException expected) {}
+
         stmt.close();
     }
 

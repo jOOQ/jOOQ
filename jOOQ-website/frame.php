@@ -5,6 +5,12 @@
 <html>
 	<head>
 		<title>jOOQ</title>
+		<meta property="og:title" content="jOOQ" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="http://www.jooq.org" />
+		<meta property="og:image" content="http://www.jooq.org/img/logo.png" />
+		<meta property="og:site_name" content="jOOQ" />
+		<meta property="fb:admins" content="649865547" />
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet">
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>
@@ -47,14 +53,20 @@
 			    	</div>
 			    </div>
 
+				<div id="content">
 				<div id="tweets">
-					<div class="tweet-item-left">
-						<a href="http://twitter.com/share" class="twitter-share-button" data-text="jOOQ - A nice database abstraction library for Java" data-count="horizontal" data-via="lukaseder">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+					<div class="tweet-item">
+						<a href="http://twitter.com/share" 
+							class="twitter-share-button" 
+							data-url="http://www.jooq.org"
+							data-text="jOOQ - A nice database abstraction library for Java" 
+							data-count="horizontal" data-via="lukaseder">Tweet</a>
+						<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 					</div>
-					<div class="tweet-item-left">
-						<g:plusone size="medium"></g:plusone>
+					<div class="tweet-item">
+						<g:plusone size="medium" href="http://www.jooq.org"></g:plusone>
 					</div>
-					<div class="tweet-item-left">
+					<div class="tweet-item">
 						<div id="fb-root"></div>
 						<script>(function(d, s, id) {
 						  var js, fjs = d.getElementsByTagName(s)[0];
@@ -63,11 +75,16 @@
 						  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
 						  fjs.parentNode.insertBefore(js, fjs);
 						}(document, 'script', 'facebook-jssdk'));</script>
-						<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="verdana"></div>
+						<div class="fb-like" 
+							data-send="false" 
+							data-href="http://www.jooq.org"
+							data-layout="button_count" 
+							data-width="450" 
+							data-show-faces="true" 
+							data-font="verdana"></div>
 					</div>
 				</div>
 				
-				<div id="content">
 					<table width="100%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="700" valign="top">
@@ -97,5 +114,8 @@
 		<a href="https://github.com/lukaseder/jOOQ"> <img
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
 			style="position: absolute; top: 0; right: 0; border: 0;"> </a>
+		<div style="display: none">
+			<img src="/img/logo.png" title="jOOQ Logo"/>
+		</div>
 	</body>
 </html>

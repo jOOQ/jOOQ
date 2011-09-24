@@ -1,0 +1,27 @@
+#surefire
+#Sat Sep 24 16:14:32 CEST 2011
+testClassesDirectory=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\test-classes
+classPathUrl.2=C\:\\Users\\lukas\\.m2\\repository\\org\\jooq\\jooq\\1.6.7-SNAPSHOT\\jooq-1.6.7-SNAPSHOT.jar
+useManifestOnlyJar=true
+classPathUrl.1=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\classes
+reportsDirectory=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\surefire-reports
+classPathUrl.0=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\test-classes
+dirscanner.0=directoryScannerOptions
+providerConfiguration=org.apache.maven.surefire.junit.JUnit3Provider
+testSuiteDefinitionTestSourceDirectory=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\src\\test\\java
+surefireClassPathUrl.1=C\:\\Users\\lukas\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.7.1\\surefire-api-2.7.1.jar
+surefireClassPathUrl.0=C\:\\Users\\lukas\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit3\\2.7.1\\surefire-junit3-2.7.1.jar
+report.2=org.apache.maven.surefire.report.XMLReporter
+useSystemClassLoader=true
+report.1=org.apache.maven.surefire.report.BriefFileReporter
+report.0=org.apache.maven.surefire.report.ForkingConsoleReporter
+excludes0=**/*$*
+isTrimStackTrace=true
+dirscanner.0.params=C\:\\Users\\lukas\\workspace\\jOOQ-codegen-maven-example\\target\\test-classes|[**/Test*.java, **/*Test.java, **/*TestCase.java]|[**/*$*]
+enableAssertions=true
+includes2=**/*TestCase.java
+failIfNoTests=false
+includes1=**/*Test.java
+dirscanner.0.types=java.io.File|java.util.ArrayList|java.util.ArrayList
+includes0=**/Test*.java
+childDelegation=false

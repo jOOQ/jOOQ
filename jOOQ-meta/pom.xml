@@ -7,13 +7,9 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<properties>
-        <jooq.version>1.6.6</jooq.version>
-    </properties>
-    
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-meta</artifactId>
-	<version>1.6.6</version>
+	<version>1.6.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ Meta</name>
@@ -153,7 +149,7 @@
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
-			<version>${jooq.version}</version>
+			<version>1.6.7-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>

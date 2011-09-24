@@ -37,6 +37,7 @@
 package org.jooq;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.Factory;
@@ -68,11 +69,11 @@ public interface Query extends QueryPart {
     int execute() throws SQLException, DetachedException;
 
     /**
-     * Retrieve the SQL code rendered by this query part.
+     * Retrieve the SQL code rendered by this Query
      * <p>
      * Unlike the recently deprecated {@link QueryPart#getSQL()} method, this
-     * method can be expected to work, as a query is usually "attached" when
-     * created from a {@link Factory}.
+     * method can be expected to work correctly for any SQL dialect, as a query
+     * is usually "attached" when created from a {@link Factory}.
      * <p>
      * Use this method, when you want to use jOOQ for object oriented query
      * creation, but execute the query with some other technology, such as
@@ -85,5 +86,10 @@ public interface Query extends QueryPart {
      */
     @Override
     String getSQL();
+
+    /**
+     * Retrieve the bind values that will be bound by this Query
+     */
+    List<Object> getBindValues();
 
 }

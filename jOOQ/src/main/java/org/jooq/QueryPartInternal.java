@@ -38,6 +38,7 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Base functionality declaration for all query objects
@@ -117,6 +118,13 @@ public interface QueryPartInternal extends QueryPart {
      * bind variables should be inlined or replaced by <code>'?'</code>, etc.
      */
     void toSQL(RenderContext context);
+
+    /**
+     * Retrieve the bind values that will be bound by this QueryPart
+     * <p>
+     * This method is exposed publicly in {@link Query#getBindValues()}
+     */
+    List<Object> getBindValues();
 
     /**
      * Bind all parameters of this QueryPart to a PreparedStatement. This always

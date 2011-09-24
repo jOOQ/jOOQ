@@ -44,6 +44,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -64,6 +65,7 @@ import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Field;
+import org.jooq.FieldProvider;
 import org.jooq.Identity;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
@@ -1174,6 +1176,19 @@ public class Factory implements Configuration {
      */
     public final Record fetchOne(String sql, Object... bindings) throws SQLException {
         return new SQLResultQuery(this, sql, bindings).fetchOne();
+    }
+
+    /**
+     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * closed.
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @return The resulting jOOQ Result
+     */
+    public final Result<Record> fetch(ResultSet rs) throws SQLException {
+        FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
+        return new CursorImpl<Record>(this, fields, rs).fetchResult();
     }
 
     // -------------------------------------------------------------------------

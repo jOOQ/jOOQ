@@ -45,7 +45,7 @@ function printContent() {
 				print preg_replace('%-\s+(.*)%', '$1', $contents[$i]);
 				
 				while (trim($contents[++$i]) != '' && substr($contents[$i], 0, 1) != '-') {
-					print $contents[$i];
+					print htmlentities($contents[$i]);
 				}
 				
 				print '</li>';
@@ -68,10 +68,10 @@ function printContent() {
 				print '</a>';
 				print '</td>';
 				print '<td>';
-				print preg_replace('%#\d+\s+-\s+(.*)%', '$1', $contents[$i]);
+				print htmlentities(preg_replace('%#\d+\s+-\s+(.*)%', '$1', $contents[$i]));
 				
 				while (trim($contents[++$i]) != '' && substr($contents[$i], 0, 1) != '#') {
-					print $contents[$i];
+					print htmlentities($contents[$i]);
 				}
 				
 				print '</td>';
@@ -87,6 +87,7 @@ function printContent() {
 }
 
 function markup($value) {
+	$value = htmlentities($value);
 	$value = preg_replace('%(https?://\S+)%', '<a href="$1">$1</a>', $value);
 	return $value;
 }

@@ -3,10 +3,51 @@ jOOQ Release notes
 For an interactive overview, see also 
 https://sourceforge.net/apps/trac/jooq/report/6
 
+For a formatted text version, see
+http://www.jooq.org/notes.php
+
 For a text version, see
 http://jooq.sourceforge.net/releasenotes/RELEASENOTES.txt
 
-Version 1.6.6
+Version 1.6.7 - September 25, 2011
+=================================================================
+
+This release coincides with the launch of the new website at
+http://www.jooq.org. Hence, it ships with little additions to the
+deliverable itself.
+
+Apart from new convenience methods, the main addition is a Maven
+plugin for jooq-codegen contributed by Sander Plas.
+
+Features and improvements
+-------------------------
+#797 - Create Maven plugin for source code generation
+#825 - Add List<Result<Record>> Factory.fetchMany(String) to
+       allow for fetching several result sets from stored 
+       procedures, such as Sybase ASE's "sp_help"
+#838 - Implement MetaDataFieldProvider.toString()
+#841 - Add <T> List<T> Result.getValues(Field<?>, Class<T>)
+#842 - Add Query.getBindValues() method to allow for extracting
+       bind values in the correct order
+#843 - Add Factory.fetch(ResultSet) to transform a JDBC ResultSet
+       into a jOOQ Result
+
+API changes (backwards-compatible)
+----------------------------------
+#837 - Avoid final keyword on Object methods, such as .equals(),
+       .hashCode(), etc
+
+Bug fixes
+---------
+#836 - Bad syntax when selecting from aliased plain SQL tables
+#839 - Boolean conversion in getValueAsBoolean() should trim 
+       String values first
+#840 - Numeric conversions in getValueAsXXX() should trim String
+       values first
+#844 - NullPointerException when selecting a column from a Result,
+       that does not exist
+
+Version 1.6.6 - September 11, 2011
 =================================================================
 
 Finally, support for another RDBMS has been added. Sybase's other
@@ -57,7 +98,7 @@ Bug fixes
 #828 - Document inefficient implementation for GREATEST and LEAST
        in some RDBMS
 
-Version 1.6.5
+Version 1.6.5 - August 28, 2011
 =================================================================
 
 This release finally adds a loader for CSV data to jOOQ. You can
@@ -91,7 +132,7 @@ Bug fixes
 #802 - Use "INSERT .. RETURNING" instead of "SELECT MAX(pk)"
        to retrieve the primary key of a new record
 
-Version 1.6.4
+Version 1.6.4 - August 07, 2011
 =================================================================
 
 This release ships with a couple of useful concepts inspired by
@@ -171,7 +212,7 @@ Bug fixes
 #787 - The UpdatableRecord's internal changed flags are not
        updated after INSERTs / UPDATEs
 
-Version 1.6.3
+Version 1.6.3 - July 31, 2011
 =================================================================
 
 This is mainly a maintenance release with lots of bugfixes,
@@ -249,7 +290,7 @@ Bug fixes
        of Long) and REAL (to BigDecimal instead of Float) when
        plain SQL tables are involved
 
-Version 1.6.2
+Version 1.6.2 - July 10, 2011
 =================================================================
 
 This release mainly introduces three new projects.
@@ -366,7 +407,7 @@ Bug fixes
 #729 - DB2, Derby, Ingres, Oracle cannot bind null values in
        plain SQL
 
-Version 1.6.1
+Version 1.6.1 - June 19, 2011
 =================================================================
 
 In this release, the PORTABILITY project has been implemented.
@@ -443,7 +484,7 @@ Bugfixes
 #633 - SchemaMapping is not applied to sequences
 #634 - Sequences are not escaped in generated SQL
 
-Version 1.6.0
+Version 1.6.0 - June 05, 2011
 =================================================================
 
 Apart from supporting various additional standard and non-
@@ -525,7 +566,7 @@ Bugfixes
 #583 - Accelerate integration tests: Reset schema only if
        necessary
 
-Version 1.5.9
+Version 1.5.9 - May 15, 2011
 =================================================================
 
 This version ships with lots of new functionality. Finally, the
@@ -600,7 +641,7 @@ Bug fixes
 #502 - Syntax error when creating an empty IN condition
 #526 - Corrected Javadoc in Field.coalesce()
 
-Version 1.5.8
+Version 1.5.8 - April 29, 2011
 =================================================================
 
 Finally, jOOQ now supports two important new RDBMS:
@@ -655,7 +696,7 @@ Bug fixes
 #449 - Changed Field.concatenate() to accept Field<?> parameters
        to avoid generic varargs warnings
 
-Version 1.5.7
+Version 1.5.7 - April 17, 2011
 =================================================================
 
 This is the first release built with support of Maven thanks to
@@ -739,7 +780,7 @@ Bug fixes
 #412 - limit(int) sets default offset incorrectly in some
        dialects
 
-Version 1.5.6
+Version 1.5.6 - March 31, 2011
 =================================================================
 
 This release consists mainly of code generation bug fixes and
@@ -822,7 +863,7 @@ Bugfixes
 #355 - Error when storing an UpdatableRecord that has no changed
        values
 
-Version 1.5.5.2
+Version 1.5.5.2 - March 15, 2011
 =================================================================
 
 A critical bug was reported from the 1.5 release stream where
@@ -838,7 +879,7 @@ Bugfixes
 #317 - StoredFunctionImpl.asField() renders parameters in wrong
        order
 
-Version 1.5.5.1
+Version 1.5.5.1 - March 13, 2011
 =================================================================
 
 In version 1.5.5, there was a fatal bug breaking Derby source
@@ -850,7 +891,7 @@ Bugfixes
 #315 - Generated master data records are not sorted by PK
 #316 - Derby code generation fatally broken
 
-Version 1.5.5
+Version 1.5.5 - March 12, 2011
 =================================================================
 
 This version is released early as there are some important
@@ -893,7 +934,7 @@ Bugfixes
 #304 - Let the DerbyDataType default for java.lang.String be
        VARCHAR, not LONG VARCHAR
 
-Version 1.5.4
+Version 1.5.4 - March 04, 2011
 =================================================================
 
 Feature #243 required a minor API change in the base classes of
@@ -1008,7 +1049,7 @@ Bugfixes
        dialects, which then only require the "AS" keyword
 #291 - Cannot create an aliased field called "year" in Postgres
 
-Version 1.5.3
+Version 1.5.3 - January 13, 2011
 =================================================================
 
 - Lots of stored procedure support was implemented
@@ -1053,7 +1094,7 @@ Bugfixes
 #202 - Added integration tests for stored procedures / functions without
        parameters
 
-Version 1.5.2
+Version 1.5.2 - December 27, 2010
 =================================================================
 
 - Improved support for stored procedures, also in packages
@@ -1092,7 +1133,7 @@ Bugfixes
 #177 - Fixed issue related to generated code for tables or UDTs without columns
 
 
-Version 1.5.1
+Version 1.5.1 - December 13, 2010
 =================================================================
 
 - H2 database support thanks to Espen Stromsnes
@@ -1115,7 +1156,7 @@ Bugfixes
        match their primary keys' types
 #141 - Encoding problem in generated master data classes
 
-Version 1.5.0
+Version 1.5.0 - November 22, 2010
 =================================================================
 
 - A big one. Major API changes / improvements
@@ -1167,7 +1208,7 @@ Bugfixes
        very large databases
 
 
-Version 1.4.4
+Version 1.4.4 - November 22, 2010
 =================================================================
 
 Unreleased version, fixes included in 1.5.0
@@ -1177,7 +1218,7 @@ Bugfixes
 
 #133 - JoinCondition does not take comparison operator
 
-Version 1.4.3
+Version 1.4.3 - October 25, 2010
 =================================================================
 
 Some more bugfixes
@@ -1192,7 +1233,7 @@ Bugfixes
 #82 - Conversion of literals to camelcase fails if numbers are
       involved
 
-Version 1.4.2
+Version 1.4.2 - October 22, 2010
 =================================================================
 
 Various bugfixes and minor improvements
@@ -1224,7 +1265,7 @@ Bugfixes
 #80 - Position function does not bind any variables
 #81 - Add cast function to Constants in HSQL
 
-Version 1.4.1
+Version 1.4.1 - October 18, 2010
 =================================================================
 
 Oracle patch release
@@ -1233,7 +1274,7 @@ Features
 --------
 #63 - Generate referential functionality for Oracle
 
-Version 1.4.0
+Version 1.4.0 - October 17, 2010
 =================================================================
 
 Support for PostGreSQL was added.
@@ -1274,7 +1315,7 @@ Bugfixes
 #58 - Count function renders bad SQL in various dialects
 #59 - Exception when selecting unaliased functions in queries
 
-Version 1.3.0
+Version 1.3.0 - August 24, 2010
 =================================================================
 
 Support for HSQLDB was added.
@@ -1303,7 +1344,7 @@ Bugfixes
       awkward. Keep an eye out for further fixes
 #43 - Join with aliased tables doesn't work
 
-Version 1.2.0
+Version 1.2.0 - August 21, 2010
 =================================================================
 
 The added Oracle support is now unit tested and more stable.
@@ -1323,7 +1364,7 @@ Bugfixes
 #31 - Pull up addOrderBy() methods from SelectQuery to
       ResultProviderQuery
 
-Version 1.1.0
+Version 1.1.0 - August 17, 2010
 =================================================================
 
 The main new feature is the Oracle support. Wait for 
@@ -1346,7 +1387,7 @@ Bugfixes
 
 #11 - Code generation does not remove files
 
-Version 1.0.1
+Version 1.0.1 - August 14, 2010
 =================================================================
 
 Features
@@ -1355,6 +1396,6 @@ Features
 #5 - Prevent code regeneration, if no changes were made
 #7 - Implement ant task for code generation
 
-Version 1.0.0
+Version 1.0.0 - August 14, 2010
 ================================================================================
 Initial Release

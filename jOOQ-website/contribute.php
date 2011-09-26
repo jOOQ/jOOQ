@@ -1,7 +1,7 @@
 <?php 
 require 'frame.php';
 function printH1() {
-	print 'Be part of jOOQ!<br/>Become a jOOQer';
+	print 'Be a part of jOOQ! Become a jOOQer';
 }
 function getSlogan() {
 	return "jOOQ can only be as great as its community. You can make the change happen! jOOQ needs
@@ -18,7 +18,7 @@ function printContent() {
 <ul>
     <li>Lukas Eder: Project lead</li>
     <li>Espen Stromsnes: DB2, H2, Sybase, and partial HSQLDB support, lots of helpful support</li>
-    <li>Sander Plas: jOOQ-wicket contribution</li>
+    <li>Sander Plas: jOOQ-codegen-maven, jOOQ-wicket contribution</li>
     <li>Christopher Klewes: Maven integration, good ideas to enhance the code generator</li>
     <li>Vladislav "FractalizeR" Rastrusny: Lots of constructive feedback, especially from the MySQL user perspective.</li>
     <li>You: ...</li> 

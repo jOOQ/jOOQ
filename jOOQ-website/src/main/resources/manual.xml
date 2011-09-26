@@ -11,7 +11,7 @@
 			<ul>
 				<li><a href="&lt;?=$root?&gt;/manual-single-page" title="The jOOQ Manual on one single page">A single-paged HTML manual</a></li>
 				<li><a href="&lt;?=$root?&gt;/manual" title="The jOOQ Manual on multiple pages">A multi-paged HTML manual</a></li>
-				<li>A downloadable PDF manual</li>
+				<li>A downloadable PDF manual (coming soon)</li>
 			</ul>
 			<h3>Overview</h3>
 			<p>This manual is divided into four main sections:</p>
@@ -1410,7 +1410,80 @@ org.jooq.util.GenerationTool /jooq-config.properties</config>
       generatortargetpackage="org.jooq.test.generatedclasses"
       generatortargetdirectory="${basedir}/src"/&gt;
 &lt;/target&gt;</xml>
+					
+										
+							<h3>Integrate generation with Maven</h3>
+							<p>Using the official jOOQ-codegen-maven plugin, you can integrate
+								source code generation in your Maven build process: </p>
 							
+							<xml><![CDATA[
+<plugin>
+
+  <!-- Specify the maven code generator plugin -->
+  <groupId>org.jooq</groupId>
+  <artifactId>jooq-codegen-maven</artifactId>
+  <version>1.6.7</version>
+  
+  <!-- The plugin should hook into the generate goal -->
+  <executions>
+    <execution>
+      <goals>
+        <goal>generate</goal>
+      </goals>
+    </execution>
+  </executions>
+  
+  <!-- Manage the plugin's dependency. In this example, we'll use a Postgres database -->
+  <dependencies>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>8.4-702.jdbc4</version>
+    </dependency>
+  </dependencies>
+  
+  <!-- Specify the plugin configuration -->
+  <configuration>
+  
+    <!-- JDBC connection parameters -->
+    <jdbc>
+      <driver>org.postgresql.Driver</driver>
+      <url>jdbc:postgresql:postgres</url>
+      <schema>public</schema>
+      <user>postgres</user>
+      <password>test</password>
+    </jdbc>
+    
+    <!-- Generator parameters -->
+    <generator>
+      <name>org.jooq.util.DefaultGenerator</name>
+      <database>
+        <name>org.jooq.util.postgres.PostgresDatabase</name>
+        <includes>.*</includes>
+        <excludes></excludes>
+      </database>
+      <generate>
+        <relations>true</relations>
+        <deprecated>false</deprecated>
+      </generate>
+      <target>
+        <packageName>org.jooq.util.maven.example</packageName>
+        <directory>target/generated-sources/jooq</directory>
+      </target>
+      <masterDataTables>
+        <masterDataTable>
+          <name>t_language</name>
+          <literal>cd</literal>
+          <description>description</description>
+        </masterDataTable>
+      </masterDataTables>
+    </generator>
+  </configuration>
+</plugin>
+]]></xml>
+							<p>See the full example of a pom.xml including the jOOQ-codegen artefact here:
+							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml" title="jOOQ-codegen-maven example pom.xml file">https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a></p>
+									
 							<h3>Use jOOQ generated classes in your application</h3>
 							<p>Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you

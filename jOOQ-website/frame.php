@@ -4,13 +4,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<title>jOOQ</title>
+		<title>jOOQ - <?php printH1(); ?></title>
 		<meta property="og:title" content="jOOQ" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://www.jooq.org" />
 		<meta property="og:image" content="http://www.jooq.org/img/logo.png" />
 		<meta property="og:site_name" content="jOOQ" />
 		<meta property="fb:admins" content="649865547" />
+		
+		<meta name="description" content="jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, UDTs, and Java in a fluent API. Supported DBs are DB2, Derby, Ingres, H2, HSQLDB, MySQL, Oracle, Postgres, SQLite, SQL Server, Sybase"/>
+		<meta name="author" content="Lukas Eder"/>
+		<meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI"/>
+		
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet">
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>

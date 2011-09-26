@@ -34,7 +34,7 @@ function printContent() {
 <a href="<?=$root?>/manual" title="The jOOQ Manual on multiple pages">A multi-paged HTML manual</a>
 </li>
 				
-<li>A downloadable PDF manual</li>
+<li>A downloadable PDF manual (coming soon)</li>
 			
 </ul>
 			<h3>Overview</h3>

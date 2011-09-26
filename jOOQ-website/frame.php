@@ -16,7 +16,7 @@
 		<meta name="author" content="Lukas Eder"/>
 		<meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI"/>
 		
-		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet">
+		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet" />
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>
 		<script type="text/javascript" src="<?=$root?>/js/prettify/lang-sql.js"></script>
@@ -111,14 +111,14 @@
 				
 				<div id="footer">
 					<p class="right">jOOQ is brought to you by <a href="http://lukaseder.wordpress.com" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>. 
-					Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2 License">Apache 2 licence</a>
+					Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2 License">Apache 2 licence</a></p>
 				</div>
 			</div>
 		</div>
 		
 		<a href="https://github.com/lukaseder/jOOQ"> <img
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
-			style="position: absolute; top: 0; right: 0; border: 0;"> </a>
+			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
 		<div style="display: none">
 			<img src="/img/logo.png" title="jOOQ Logo"/>
 		</div>

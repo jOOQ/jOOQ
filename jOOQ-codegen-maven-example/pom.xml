@@ -9,7 +9,7 @@
 	
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-codegen-maven-example</artifactId>
-	<version>1.6.7</version>
+	<version>1.6.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 		
 	<name>jOOQ Codegen Maven</name>
@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
-			<version>1.6.7</version>
+			<version>1.6.8-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>org.jooq</groupId>
 				<artifactId>jooq-codegen-maven</artifactId>
-				<version>1.6.7</version>
+				<version>1.6.8-SNAPSHOT</version>
 				<executions>
 					<execution>
 						<goals>

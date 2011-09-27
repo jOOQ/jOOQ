@@ -42,7 +42,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.InsertSelectQuery;
+import org.jooq.Insert;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -51,8 +51,7 @@ import org.jooq.TableRecord;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery implements InsertSelectQuery<R> {
+class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery implements Insert {
 
     /**
      * Generated UID

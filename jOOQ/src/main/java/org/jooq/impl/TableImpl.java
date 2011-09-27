@@ -41,10 +41,8 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 
@@ -59,31 +57,6 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     private static final long serialVersionUID = 261033315221985068L;
     private final FieldList   fields;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public TableImpl(SQLDialect dialect, String name) {
-        this(dialect, name, (Schema) null);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public TableImpl(SQLDialect dialect, String name, Schema schema) {
-        this(Factory.getStaticFactory(dialect), name, schema);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public TableImpl(Configuration configuration, String name, Schema schema) {
-        this(name, schema);
-    }
 
     public TableImpl(String name) {
         this(name, null);

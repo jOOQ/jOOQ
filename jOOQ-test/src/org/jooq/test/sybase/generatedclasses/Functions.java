@@ -26,25 +26,6 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F_AUTHOR_EXISTS
-	 *
-	 * @param authorName
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.lang.Integer fAuthorExists(java.sql.Connection connection, java.lang.String authorName) throws java.sql.SQLException {
-		org.jooq.test.sybase.generatedclasses.functions.FAuthorExists f = new org.jooq.test.sybase.generatedclasses.functions.FAuthorExists();
-		f.setAuthorName(authorName);
-
-		f.execute(connection);
-		return f.getReturnValue();
-	}
-
-	/**
 	 * Get F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
@@ -78,25 +59,6 @@ public final class Functions {
 		f.setN(n);
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F_NUMBER
-	 *
-	 * @param n
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.lang.Integer fNumber(java.sql.Connection connection, java.lang.Integer n) throws java.sql.SQLException {
-		org.jooq.test.sybase.generatedclasses.functions.FNumber f = new org.jooq.test.sybase.generatedclasses.functions.FNumber();
-		f.setN(n);
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 
@@ -136,23 +98,6 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F_ONE
-	 *
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.lang.Integer fOne(java.sql.Connection connection) throws java.sql.SQLException {
-		org.jooq.test.sybase.generatedclasses.functions.FOne f = new org.jooq.test.sybase.generatedclasses.functions.FOne();
-
-		f.execute(connection);
-		return f.getReturnValue();
-	}
-
-	/**
 	 * Get F_ONE as a field
 	 *
 	 */
@@ -178,31 +123,6 @@ public final class Functions {
 		f.setP4(p4);
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F317
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.lang.Integer f317(java.sql.Connection connection, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) throws java.sql.SQLException {
-		org.jooq.test.sybase.generatedclasses.functions.F317 f = new org.jooq.test.sybase.generatedclasses.functions.F317();
-		f.setP1(p1);
-		f.setP2(p2);
-		f.setP3(p3);
-		f.setP4(p4);
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 

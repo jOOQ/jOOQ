@@ -87,7 +87,6 @@ public class OracleFactory extends Factory {
     /**
      * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field
      */
-    @Override
     public final Field<Integer> rownum() {
         return field("rownum", Integer.class);
     }

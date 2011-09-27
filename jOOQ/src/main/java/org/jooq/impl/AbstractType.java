@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import org.jooq.AliasProvider;
-import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Schema;
@@ -48,24 +47,6 @@ abstract class AbstractType<R extends Record> extends AbstractSchemaProviderQuer
      * Generated UID
      */
     private static final long serialVersionUID = -4629861305735726005L;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    AbstractType(Configuration configuration, String name) {
-        this(name, null);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    AbstractType(Configuration configuration, String name, Schema schema) {
-        this(name, schema);
-    }
 
     AbstractType(String name) {
         this(name, null);

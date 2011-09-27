@@ -41,7 +41,6 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.Package;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
@@ -63,24 +62,6 @@ public class PackageImpl extends AbstractSchemaProviderQueryPart implements Pack
      * Generated UID
      */
     private static final long serialVersionUID = 7466890004995197675L;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public PackageImpl(SQLDialect dialect, String name, Schema schema) {
-        this(name, schema);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public PackageImpl(Configuration configuration, String name, Schema schema) {
-        this(name, schema);
-    }
 
     public PackageImpl(String name, Schema schema) {
         super(name, schema);

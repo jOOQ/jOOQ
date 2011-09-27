@@ -26,25 +26,6 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F_ARRAYS1
-	 *
-	 * @param inArray
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord fArrays1(java.sql.Connection connection, org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord inArray) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FArrays1 f = new org.jooq.test.oracle.generatedclasses.functions.FArrays1();
-		f.setInArray(inArray);
-
-		f.execute(connection);
-		return f.getReturnValue();
-	}
-
-	/**
 	 * Get F_ARRAYS1 as a field
 	 *
 	 * @param inArray
@@ -78,25 +59,6 @@ public final class Functions {
 		f.setInArray(inArray);
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F_ARRAYS2
-	 *
-	 * @param inArray
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord fArrays2(java.sql.Connection connection, org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord inArray) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FArrays2 f = new org.jooq.test.oracle.generatedclasses.functions.FArrays2();
-		f.setInArray(inArray);
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 
@@ -138,25 +100,6 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F_ARRAYS3
-	 *
-	 * @param inArray
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord fArrays3(java.sql.Connection connection, org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord inArray) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FArrays3 f = new org.jooq.test.oracle.generatedclasses.functions.FArrays3();
-		f.setInArray(inArray);
-
-		f.execute(connection);
-		return f.getReturnValue();
-	}
-
-	/**
 	 * Get F_ARRAYS3 as a field
 	 *
 	 * @param inArray
@@ -190,25 +133,6 @@ public final class Functions {
 		f.setAuthorName(authorName);
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F_AUTHOR_EXISTS
-	 *
-	 * @param authorName
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.math.BigDecimal fAuthorExists(java.sql.Connection connection, java.lang.String authorName) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FAuthorExists f = new org.jooq.test.oracle.generatedclasses.functions.FAuthorExists();
-		f.setAuthorName(authorName);
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 
@@ -250,25 +174,6 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F_GET_ONE_CURSOR
-	 *
-	 * @param bookIds
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static org.jooq.Result<org.jooq.Record> fGetOneCursor(java.sql.Connection connection, org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord bookIds) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FGetOneCursor f = new org.jooq.test.oracle.generatedclasses.functions.FGetOneCursor();
-		f.setBookIds(bookIds);
-
-		f.execute(connection);
-		return f.getReturnValue();
-	}
-
-	/**
 	 * Get F_GET_ONE_CURSOR as a field
 	 *
 	 * @param bookIds
@@ -302,25 +207,6 @@ public final class Functions {
 		f.setN(n);
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F_NUMBER
-	 *
-	 * @param n
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.math.BigDecimal fNumber(java.sql.Connection connection, java.lang.Number n) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FNumber f = new org.jooq.test.oracle.generatedclasses.functions.FNumber();
-		f.setN(n);
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 
@@ -360,23 +246,6 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F_ONE
-	 *
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.math.BigDecimal fOne(java.sql.Connection connection) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.FOne f = new org.jooq.test.oracle.generatedclasses.functions.FOne();
-
-		f.execute(connection);
-		return f.getReturnValue();
-	}
-
-	/**
 	 * Get F_ONE as a field
 	 *
 	 */
@@ -402,31 +271,6 @@ public final class Functions {
 		f.setP4(p4);
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F317
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.math.BigDecimal f317(java.sql.Connection connection, java.lang.Number p1, java.lang.Number p2, java.lang.Number p3, java.lang.Number p4) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.F317 f = new org.jooq.test.oracle.generatedclasses.functions.F317();
-		f.setP1(p1);
-		f.setP2(p2);
-		f.setP3(p3);
-		f.setP4(p4);
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 
@@ -474,23 +318,6 @@ public final class Functions {
 		org.jooq.test.oracle.generatedclasses.functions.F377 f = new org.jooq.test.oracle.generatedclasses.functions.F377();
 
 		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Invoke F377
-	 *
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.lang.Object f377(java.sql.Connection connection) throws java.sql.SQLException {
-		org.jooq.test.oracle.generatedclasses.functions.F377 f = new org.jooq.test.oracle.generatedclasses.functions.F377();
-
-		f.execute(connection);
 		return f.getReturnValue();
 	}
 

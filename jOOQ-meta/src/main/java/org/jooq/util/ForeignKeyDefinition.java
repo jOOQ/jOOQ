@@ -50,14 +50,6 @@ public interface ForeignKeyDefinition extends Definition {
     TableDefinition getKeyTable();
 
     /**
-     * The definition of the referencing table
-     *
-     * @deprecated - 1.5.9 - Use {@link #getKeyTable()} instead
-     */
-    @Deprecated
-    TableDefinition getKeyTableDefinition();
-
-    /**
      * The list of columns making up the foreign key.
      */
     List<ColumnDefinition> getKeyColumns();

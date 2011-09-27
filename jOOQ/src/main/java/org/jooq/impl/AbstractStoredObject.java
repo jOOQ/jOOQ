@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,13 +113,6 @@ abstract class AbstractStoredObject extends AbstractSchemaProviderQueryPart impl
     }
 
     protected abstract List<Attachable> getAttachables1();
-
-    @Override
-    @Deprecated
-    public final int execute(Connection connection) throws SQLException {
-        return execute(new Factory(connection, attachable.getDialect(), attachable.getSchemaMapping()));
-    }
-
 
     @Override
     public int execute(Configuration configuration) throws SQLException {

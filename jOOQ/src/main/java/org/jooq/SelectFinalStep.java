@@ -80,26 +80,6 @@ package org.jooq;
 public interface SelectFinalStep extends Select<Record> {
 
     /**
-     * Add a <code>FOR UPDATE</code> clause to the end of the query.
-     *
-     * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
-     * @deprecated - 1.6.1 [#589] - Use {@link SelectForUpdateStep#forUpdate()}
-     *             method instead
-     */
-    @Deprecated
-    SelectForUpdateOfStep forUpdate();
-
-    /**
-     * Add a <code>FOR SHARE</code> clause to the end of the query.
-     *
-     * @see LockProvider#setForShare(boolean) see LockProvider for more details
-     * @deprecated - 1.6.1 [#589] - Use {@link SelectForUpdateStep#forShare()}
-     *             method instead
-     */
-    @Deprecated
-    SelectFinalStep forShare();
-
-    /**
      * Get the underlying {@link Query} that is being constructed.
      */
     SelectQuery getQuery();

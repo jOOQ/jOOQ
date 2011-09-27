@@ -80,12 +80,6 @@ public class DefaultColumnDefinition
     }
 
     @Override
-    @Deprecated
-    public final String getTableName() {
-        return getTable().getName();
-    }
-
-    @Override
     public final DataTypeDefinition getType() {
 
         // Lazy initialise

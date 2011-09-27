@@ -61,7 +61,6 @@ public interface SimpleSelectForUpdateStep<R extends Record> extends SimpleSelec
      *
      * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
      */
-    @Override
     SimpleSelectForUpdateOfStep<R> forUpdate();
 
     /**
@@ -69,7 +68,6 @@ public interface SimpleSelectForUpdateStep<R extends Record> extends SimpleSelec
      *
      * @see LockProvider#setForShare(boolean) see LockProvider for more details
      */
-    @Override
     SimpleSelectFinalStep<R> forShare();
 
 }

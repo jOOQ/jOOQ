@@ -37,9 +37,7 @@ package org.jooq.impl;
 
 import java.math.BigInteger;
 
-import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 
@@ -54,23 +52,6 @@ public class SequenceImpl implements Sequence {
 
     final String name;
     final Schema schema;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public SequenceImpl(SQLDialect dialect, String name, Schema schema) {
-        this(Factory.getStaticFactory(dialect), name, schema);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public SequenceImpl(Configuration configuration, String name, Schema schema) {
-        this(name, schema);
-    }
 
     public SequenceImpl(String name, Schema schema) {
         this.name = name;

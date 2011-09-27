@@ -42,12 +42,10 @@ import java.util.Map;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -66,23 +64,6 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
     private final FieldList                 fields;
     private transient DataType<R>           type;
     private transient Map<String, Class<?>> typeMapping;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public UDTImpl(SQLDialect dialect, String name, Schema schema) {
-        this(Factory.getStaticFactory(dialect), name, schema);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public UDTImpl(Configuration configuration, String name, Schema schema) {
-        this(name, schema);
-    }
 
     public UDTImpl(String name, Schema schema) {
         super(name, schema);

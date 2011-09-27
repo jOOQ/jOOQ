@@ -541,7 +541,6 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         return getReturnedRecords().get(0);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final Result<R> getReturnedRecords() {
         if (returned == null) {

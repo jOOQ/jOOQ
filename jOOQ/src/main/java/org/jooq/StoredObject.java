@@ -36,7 +36,6 @@
 
 package org.jooq;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -65,22 +64,6 @@ public interface StoredObject extends NamedQueryPart, SchemaProvider {
      *         there is no such container.
      */
     Package getPackage();
-
-    /**
-     * Execute the stored object on a connection
-     *
-     * @deprecated - 1.6.1 [#453] - This method will not be supported anymore in
-     *             the future for two reasons:
-     *             <ol>
-     *             <li>[#176] Before 1.6.1, stored procedures and functions
-     *             could not be mapped to another {@link Schema} using a
-     *             {@link SchemaMapping}</li>
-     *             <li>[#453] Before 1.6.1, stored procedures and functions
-     *             depended on their associated {@link SQLDialect}</li>
-     *             </ol>
-     */
-    @Deprecated
-    int execute(Connection connection) throws SQLException;
 
     /**
      * Execute the stored object using a {@link Configuration} object

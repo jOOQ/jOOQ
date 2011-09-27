@@ -70,15 +70,6 @@ public abstract class CustomField<T> extends AbstractField<T> {
      */
     private static final long serialVersionUID = -1778024624798672262L;
 
-    /**
-     * @deprecated - 1.6.1 [#453] - Use {@link #CustomField(String, DataType)} instead
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    protected CustomField(Configuration configuration, String name, DataType<T> type) {
-        this(name, type);
-    }
-
     protected CustomField(String name, DataType<T> type) {
         super(name, type);
     }

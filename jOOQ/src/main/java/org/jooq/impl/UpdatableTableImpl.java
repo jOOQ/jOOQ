@@ -41,7 +41,6 @@ import java.util.List;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Record;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
@@ -60,24 +59,6 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
      * Generated UID
      */
     private static final long serialVersionUID = 8214807990871116060L;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public UpdatableTableImpl(SQLDialect dialect, String name) {
-        this(name, null);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public UpdatableTableImpl(SQLDialect dialect, String name, Schema schema) {
-        super(name, schema);
-    }
 
     public UpdatableTableImpl(String name) {
         this(name, null);

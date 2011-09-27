@@ -42,10 +42,8 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -62,23 +60,6 @@ public class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> im
     private static final long serialVersionUID = -2211214195583539735L;
 
     private final UDT<R>      udt;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public UDTFieldImpl(SQLDialect dialect, String name, DataType<T> type, UDT<R> udt) {
-        this(Factory.getStaticFactory(dialect), name, type, udt);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public UDTFieldImpl(Configuration configuration, String name, DataType<T> type, UDT<R> udt) {
-        this(name, type, udt);
-    }
 
     public UDTFieldImpl(String name, DataType<T> type, UDT<R> udt) {
         super(name, type);

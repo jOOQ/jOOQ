@@ -54,25 +54,9 @@ public enum JoinType {
     CROSS_JOIN("cross join"),
 
     /**
-     * Left outer join two tables
-     *
-     * @deprecated - Use {@link #LEFT_OUTER_JOIN} instead
-     */
-    @Deprecated
-    LEFT_JOIN("left join"),
-
-    /**
      * <code>LEFT OUTER JOIN</code> two tables
      */
     LEFT_OUTER_JOIN("left outer join"),
-
-    /**
-     * Right outer join two tables
-     *
-     * @deprecated - Use {@link #RIGHT_OUTER_JOIN} instead
-     */
-    @Deprecated
-    RIGHT_JOIN("right join"),
 
     /**
      * <code>RIGHT OUTER JOIN</code> two tables

@@ -1679,85 +1679,50 @@ public class DefaultGenerator implements Generator {
             return;
         }
 
-        // i == 0: Version 1.6.1 standard API
-        // i == 1: Deprecated API according to [#453]
-        for (int i = 0; i < 2; i++) {
-            String deprecation = null;
+        out.println();
+        out.println("\t/**");
+        out.println("\t * Invoke " + strategy.getJavaIdentifierUC(function));
+        out.println("\t *");
 
-            if (i == 1 && !generateDeprecated()) {
-                break;
-            }
-            else if (i == 1) {
-                deprecation =
-                    "1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>\n"+
-                    "See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>\n" +
-                    "If you wish to remove this method, adapt your configuration:<br/>\n" +
-                    "<code>generator.generate.deprecated=false</code>";
-            }
-
-            out.println();
-            out.println("\t/**");
-            out.println("\t * Invoke " + strategy.getJavaIdentifierUC(function));
-            out.println("\t *");
-
-            for (ParameterDefinition parameter : function.getInParameters()) {
-                out.println("\t * @param " + strategy.getJavaClassNameLC(parameter));
-            }
-
-            printDeprecation(out, deprecation);
-            out.println("\t */");
-
-            if (i == 1) {
-                out.println("\t@Deprecated");
-            }
-            out.print("\tpublic static ");
-            out.print(getJavaType(function.getReturnType()));
-            out.print(" ");
-            out.print(strategy.getJavaClassNameLC(function));
-
-            if (i == 0) {
-                out.print("(");
-                out.print(Configuration.class);
-                out.print(" configuration");
-            }
-            else {
-                out.print("(");
-                out.print(Connection.class);
-                out.print(" connection");
-            }
-
-            for (ParameterDefinition parameter : function.getInParameters()) {
-                out.print(", ");
-                printNumberType(out, parameter.getType());
-                out.print(" ");
-                out.print(strategy.getJavaClassNameLC(parameter));
-            }
-
-            out.print(") throws ");
-            out.print(SQLException.class);
-            out.println(" {");
-            out.print("\t\t");
-            out.print(strategy.getFullJavaClassName(function));
-            out.print(" f = new ");
-            out.print(strategy.getFullJavaClassName(function));
-            out.println("();");
-
-            for (ParameterDefinition parameter : function.getInParameters()) {
-                out.println("\t\tf.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
-            }
-
-            out.println();
-
-            if (i == 0) {
-                out.println("\t\tf.execute(configuration);");
-            }
-            else {
-                out.println("\t\tf.execute(connection);");
-            }
-
-            out.println("\t\treturn f.getReturnValue();");
-            out.println("\t}");
+        for (ParameterDefinition parameter : function.getInParameters()) {
+            out.println("\t * @param " + strategy.getJavaClassNameLC(parameter));
         }
+
+        out.println("\t */");
+
+        out.print("\tpublic static ");
+        out.print(getJavaType(function.getReturnType()));
+        out.print(" ");
+        out.print(strategy.getJavaClassNameLC(function));
+        out.print("(");
+        out.print(Configuration.class);
+        out.print(" configuration");
+
+        for (ParameterDefinition parameter : function.getInParameters()) {
+            out.print(", ");
+            printNumberType(out, parameter.getType());
+            out.print(" ");
+            out.print(strategy.getJavaClassNameLC(parameter));
+        }
+
+        out.print(") throws ");
+        out.print(SQLException.class);
+        out.println(" {");
+        out.print("\t\t");
+        out.print(strategy.getFullJavaClassName(function));
+        out.print(" f = new ");
+        out.print(strategy.getFullJavaClassName(function));
+        out.println("();");
+
+        for (ParameterDefinition parameter : function.getInParameters()) {
+            out.println("\t\tf.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
+        }
+
+        out.println();
+
+        out.println("\t\tf.execute(configuration);");
+        out.println("\t\treturn f.getReturnValue();");
+        out.println("\t}");
     }
 
     private void printPrivateConstructor(GenerationWriter out, String javaClassName) {
@@ -1775,109 +1740,75 @@ public class DefaultGenerator implements Generator {
             return;
         }
 
-        // i == 0: Version 1.6.1 standard API
-        // i == 1: Deprecated API according to [#453]
-        for (int i = 0; i < 2; i++) {
-            String deprecation = null;
+        out.println();
+        out.println("\t/**");
+        out.println("\t * Invoke " + strategy.getJavaIdentifierUC(procedure));
+        out.println("\t *");
 
-            if (i == 1 && !generateDeprecated()) {
-                break;
-            }
-            else if (i == 1) {
-                deprecation =
-                    "1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>\n"+
-                    "See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>\n" +
-                    "If you wish to remove this method, adapt your configuration:<br/>\n" +
-                    "<code>generator.generate.deprecated=false</code>";
-            }
+        for (ParameterDefinition parameter : procedure.getAllParameters()) {
+            out.print("\t * @param " + strategy.getJavaClassNameLC(parameter) + " ");
 
-            out.println();
-            out.println("\t/**");
-            out.println("\t * Invoke " + strategy.getJavaIdentifierUC(procedure));
-            out.println("\t *");
-
-            for (ParameterDefinition parameter : procedure.getAllParameters()) {
-                out.print("\t * @param " + strategy.getJavaClassNameLC(parameter) + " ");
-
-                if (procedure.getInParameters().contains(parameter)) {
-                    if (procedure.getOutParameters().contains(parameter)) {
-                        out.println("IN OUT parameter");
-                    } else {
-                        out.println("IN parameter");
-                    }
+            if (procedure.getInParameters().contains(parameter)) {
+                if (procedure.getOutParameters().contains(parameter)) {
+                    out.println("IN OUT parameter");
                 } else {
-                    out.println("OUT parameter");
+                    out.println("IN parameter");
                 }
+            } else {
+                out.println("OUT parameter");
             }
-
-            printDeprecation(out, deprecation);
-            out.println("\t */");
-
-            if (i == 1) {
-                out.println("\t@Deprecated");
-            }
-            out.print("\tpublic static ");
-
-            if (procedure.getOutParameters().size() == 0) {
-                out.print("void ");
-            }
-            else if (procedure.getOutParameters().size() == 1) {
-                out.print(getJavaType(procedure.getOutParameters().get(0).getType()));
-                out.print(" ");
-            }
-            else {
-                out.print(strategy.getFullJavaClassName(procedure) + " ");
-            }
-
-            out.print(strategy.getJavaClassNameLC(procedure));
-            if (i == 0) {
-                out.print("(");
-                out.print(Configuration.class);
-                out.print(" configuration");
-            }
-            else {
-                out.print("(");
-                out.print(Connection.class);
-                out.print(" connection");
-            }
-
-            for (ParameterDefinition parameter : procedure.getInParameters()) {
-                out.print(", ");
-                printNumberType(out, parameter.getType());
-                out.print(" ");
-                out.print(strategy.getJavaClassNameLC(parameter));
-            }
-
-            out.print(") throws ");
-            out.print(SQLException.class);
-            out.println(" {");
-            out.print("\t\t");
-            out.print(strategy.getFullJavaClassName(procedure));
-            out.print(" p = new ");
-            out.print(strategy.getFullJavaClassName(procedure));
-            out.println("();");
-
-            for (ParameterDefinition parameter : procedure.getInParameters()) {
-                out.println("\t\tp.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
-            }
-
-            out.println();
-            if (i == 0) {
-                out.println("\t\tp.execute(configuration);");
-            }
-            else {
-                out.println("\t\tp.execute(connection);");
-            }
-
-            if (procedure.getOutParameters().size() == 1) {
-                out.println("\t\treturn p.get" + strategy.getJavaClassName(procedure.getOutParameters().get(0)) + "();");
-            }
-            else if (procedure.getOutParameters().size() > 1) {
-                out.println("\t\treturn p;");
-            }
-
-            out.println("\t}");
         }
+
+        out.println("\t */");
+        out.print("\tpublic static ");
+
+        if (procedure.getOutParameters().size() == 0) {
+            out.print("void ");
+        }
+        else if (procedure.getOutParameters().size() == 1) {
+            out.print(getJavaType(procedure.getOutParameters().get(0).getType()));
+            out.print(" ");
+        }
+        else {
+            out.print(strategy.getFullJavaClassName(procedure) + " ");
+        }
+
+        out.print(strategy.getJavaClassNameLC(procedure));
+        out.print("(");
+        out.print(Configuration.class);
+        out.print(" configuration");
+
+        for (ParameterDefinition parameter : procedure.getInParameters()) {
+            out.print(", ");
+            printNumberType(out, parameter.getType());
+            out.print(" ");
+            out.print(strategy.getJavaClassNameLC(parameter));
+        }
+
+        out.print(") throws ");
+        out.print(SQLException.class);
+        out.println(" {");
+        out.print("\t\t");
+        out.print(strategy.getFullJavaClassName(procedure));
+        out.print(" p = new ");
+        out.print(strategy.getFullJavaClassName(procedure));
+        out.println("();");
+
+        for (ParameterDefinition parameter : procedure.getInParameters()) {
+            out.println("\t\tp.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
+        }
+
+        out.println();
+        out.println("\t\tp.execute(configuration);");
+
+        if (procedure.getOutParameters().size() == 1) {
+            out.println("\t\treturn p.get" + strategy.getJavaClassName(procedure.getOutParameters().get(0)) + "();");
+        }
+        else if (procedure.getOutParameters().size() > 1) {
+            out.println("\t\treturn p;");
+        }
+
+        out.println("\t}");
     }
 
     private void printRecordTypeMethod(Definition definition, GenerationWriter out) {

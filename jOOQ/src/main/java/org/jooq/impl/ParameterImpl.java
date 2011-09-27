@@ -42,11 +42,9 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 
 /**
  * A common base class for stored procedure parameters
@@ -58,24 +56,6 @@ import org.jooq.SQLDialect;
 public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public ParameterImpl(SQLDialect dialect, String name, DataType<T> type) {
-        this(name, type);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public ParameterImpl(Configuration configuration, String name, DataType<T> type) {
-        this(name, type);
-    }
 
     public ParameterImpl(String name, DataType<T> type) {
         super(name, type);

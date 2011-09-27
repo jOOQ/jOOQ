@@ -481,7 +481,7 @@ public final class FieldTypeHelper {
             ResultSet nested = (ResultSet) rs.getObject(index);
             FieldProvider fields = new MetaDataFieldProvider(configuration, nested.getMetaData());
             Cursor<Record> cursor = new CursorImpl<Record>(configuration, fields, nested);
-            return (T) cursor.fetchResult();
+            return (T) cursor.fetch();
         }
         else {
             return (T) rs.getObject(index);
@@ -721,7 +721,7 @@ public final class FieldTypeHelper {
             ResultSet nested = (ResultSet) stmt.getObject(index);
             FieldProvider fields = new MetaDataFieldProvider(configuration, nested.getMetaData());
             Cursor<Record> cursor = new CursorImpl<Record>(configuration, fields, nested);
-            return (T) cursor.fetchResult();
+            return (T) cursor.fetch();
         }
         else {
             return (T) stmt.getObject(index);

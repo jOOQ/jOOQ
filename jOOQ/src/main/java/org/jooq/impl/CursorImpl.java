@@ -122,8 +122,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     @Deprecated
-    public final R fetch() throws SQLException {
-        return fetchOne();
+    public final Result<R> fetch() throws SQLException {
+        return fetch(Integer.MAX_VALUE);
     }
 
     @Override

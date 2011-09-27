@@ -57,26 +57,6 @@ package org.jooq;
 public interface SimpleSelectFinalStep<R extends Record> extends Select<R> {
 
     /**
-     * Add a <code>FOR UPDATE</code> clause to the end of the query.
-     *
-     * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
-     * @deprecated - 1.6.1 [#589] - Use
-     *             {@link SimpleSelectForUpdateStep#forUpdate()} method instead
-     */
-    @Deprecated
-    SimpleSelectFinalStep<R> forUpdate();
-
-    /**
-     * Add a <code>FOR SHARE</code> clause to the end of the query.
-     *
-     * @see LockProvider#setForShare(boolean) see LockProvider for more details
-     * @deprecated - 1.6.1 [#589] - Use
-     *             {@link SimpleSelectForUpdateStep#forShare()} method instead
-     */
-    @Deprecated
-    SimpleSelectFinalStep<R> forShare();
-
-    /**
      * Get the underlying {@link Query} that is being constructed.
      */
     SimpleSelectQuery<R> getQuery();

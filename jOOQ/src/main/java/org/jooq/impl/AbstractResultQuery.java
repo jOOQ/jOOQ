@@ -113,7 +113,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 cursor = new CursorImpl<R>(configuration, fields, rs, statement, getRecordType());
 
                 if (!lazy) {
-                    result = cursor.fetchResult();
+                    result = cursor.fetch();
                     cursor = null;
                 }
             }
@@ -123,7 +123,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 for (;;) {
                     FieldProvider fields = new MetaDataFieldProvider(configuration, rs.getMetaData());
                     Cursor<Record> c = new CursorImpl<Record>(configuration, fields, rs);
-                    results.add(c.fetchResult());
+                    results.add(c.fetch());
 
                     if (statement.getMoreResults()) {
                         rs = statement.getResultSet();

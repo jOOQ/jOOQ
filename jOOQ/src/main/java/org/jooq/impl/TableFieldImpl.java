@@ -42,11 +42,9 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 
@@ -62,39 +60,6 @@ public class TableFieldImpl<R extends Record, T> extends AbstractField<T> implem
     private static final long serialVersionUID = -2211214195583539735L;
 
     private final Table<R>    table;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public TableFieldImpl(SQLDialect dialect, String name, Class<? extends T> type, Table<R> table) {
-        this(Factory.getStaticFactory(dialect), name, type, table);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public TableFieldImpl(Configuration configuration, String name, Class<? extends T> type, Table<R> table) {
-        this(configuration, name, FieldTypeHelper.getDataType(configuration.getDialect(), type), table);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @Deprecated
-    public TableFieldImpl(SQLDialect dialect, String name, DataType<T> type, Table<R> table) {
-        this(Factory.getStaticFactory(dialect), name, type, table);
-    }
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public TableFieldImpl(Configuration configuration, String name, DataType<T> type, Table<R> table) {
-        this(name, type, table);
-    }
 
     public TableFieldImpl(String name, DataType<T> type, Table<R> table) {
         super(name, type);

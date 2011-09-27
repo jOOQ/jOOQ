@@ -35,7 +35,6 @@
  */
 package org.jooq;
 
-import java.util.Collection;
 
 /**
  * This type is used for the window function DSL API.
@@ -59,35 +58,5 @@ public interface WindowOverStep<T> {
      * Add an <code>OVER</code> clause
      */
     WindowPartitionByStep<T> over();
-
-    /**
-     * @deprecated - 1.6.1 - Add an {@link #over()} clause first
-     */
-    @Deprecated
-    WindowOrderByStep<T> partitionBy(Field<?>... fields);
-
-    /**
-     * @deprecated - 1.6.1 - Add an {@link #over()} clause first
-     */
-    @Deprecated
-    WindowOrderByStep<T> partitionByOne();
-
-    /**
-     * @deprecated - 1.6.1 - Add an {@link #over()} clause first
-     */
-    @Deprecated
-    WindowRowsStep<T> orderBy(Field<?>... fields);
-
-    /**
-     * @deprecated - 1.6.1 - Add an {@link #over()} clause first
-     */
-    @Deprecated
-    WindowRowsStep<T> orderBy(SortField<?>... fields);
-
-    /**
-     * @deprecated - 1.6.1 - Add an {@link #over()} clause first
-     */
-    @Deprecated
-    WindowRowsStep<T> orderBy(Collection<SortField<?>> fields);
 
 }

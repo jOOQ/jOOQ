@@ -63,20 +63,12 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
     boolean hasNext() throws SQLException;
 
     /**
-     * Fetch the next record from the cursor
+     * Fetch all remaining records as a result.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
-     *
-     * @deprecated - 1.6.1 [#649] This is inconsistent with
-     *             {@link Select#fetch()}, which returns many records. Use
-     *             {@link #fetchOne()} instead. In the future, this will return
-     *             all records. If you wish to return all records, you can also
-     *             call {@link #fetch(int)} with {@link Integer#MAX_VALUE} as
-     *             argument.
      */
-    @Deprecated
-    R fetch() throws SQLException;
+    Result<R> fetch() throws SQLException;
 
     /**
      * Fetch the next couple of records from the cursor.
@@ -107,7 +99,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     *
+     * @deprecated - 1.6.8 [#849] - Use {@link #fetch()} instead
      */
+    @Deprecated
     Result<R> fetchResult() throws SQLException;
 
     /**
@@ -120,7 +115,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      *            or negative an empty result is returned, the cursor is
      *            untouched. If this is greater than the number of remaining
      *            records, then all remaining records are returned.
+     *
+     * @deprecated - 1.6.8 [#849] - Use {@link #fetch(int)} instead
      */
+    @Deprecated
     Result<R> fetchResult(int number) throws SQLException;
 
     /**

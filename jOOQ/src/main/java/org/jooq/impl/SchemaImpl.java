@@ -45,7 +45,6 @@ import java.util.Map;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -63,15 +62,6 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     private static final long           serialVersionUID = -8101463810207566546L;
 
     private final Map<String, Class<?>> typeMapping;
-
-    /**
-     * @deprecated - 1.6.1 [#453] - Regenerate your schema
-     */
-    @SuppressWarnings("unused")
-    @Deprecated
-    public SchemaImpl(SQLDialect dialect, String name) {
-        this(name);
-    }
 
     public SchemaImpl(String name) {
         super(name);

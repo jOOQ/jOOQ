@@ -57,7 +57,6 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Schema;
-import org.jooq.SchemaMapping;
 import org.jooq.Store;
 import org.jooq.Table;
 
@@ -92,10 +91,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
         attachable.attach(configuration);
     }
 
-    /**
-     * @deprecated - 1.6.1 [#453]
-     */
-    @Deprecated
     @Override
     public final Configuration getConfiguration() {
         return attachable.getConfiguration();
@@ -105,10 +100,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // The QueryPart and QueryPart internal API
     // -------------------------------------------------------------------------
 
-    /**
-     * @deprecated - 1.6.1 [#453]
-     */
-    @Deprecated
     @Override
     public final SQLDialect getDialect() {
         return getConfiguration().getDialect();
@@ -257,16 +248,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // -------------------------------------------------------------------------
     // Internal convenience methods
     // -------------------------------------------------------------------------
-
-    /**
-     * Internal convenience method
-     *
-     * @deprecated - 1.6.1 [#453]
-     */
-    @Deprecated
-    final SchemaMapping getSchemaMapping() {
-        return getConfiguration().getSchemaMapping();
-    }
 
     /**
      * Internal convenience method

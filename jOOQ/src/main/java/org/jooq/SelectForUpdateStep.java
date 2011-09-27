@@ -84,7 +84,6 @@ public interface SelectForUpdateStep extends SelectFinalStep {
      *
      * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
      */
-    @Override
     SelectForUpdateOfStep forUpdate();
 
     /**
@@ -92,7 +91,6 @@ public interface SelectForUpdateStep extends SelectFinalStep {
      *
      * @see LockProvider#setForShare(boolean) see LockProvider for more details
      */
-    @Override
     SelectFinalStep forShare();
 
 }

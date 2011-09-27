@@ -70,14 +70,6 @@ public abstract class CustomCondition extends AbstractCondition {
      */
     private static final long serialVersionUID = -3439681086987884991L;
 
-    /**
-     * @deprecated - 1.6.1 [#453] - Use {@link #CustomCondition(Configuration)} instead
-     */
-    @Deprecated
-    @SuppressWarnings("unused")
-    protected CustomCondition(Configuration configuration) {
-    }
-
     protected CustomCondition() {
     }
 

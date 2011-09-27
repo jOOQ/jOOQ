@@ -62,12 +62,6 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
     }
 
     @Override
-    @Deprecated
-    public TableDefinition getKeyTableDefinition() {
-        return getKeyTable();
-    }
-
-    @Override
     public List<ColumnDefinition> getKeyColumns() {
         return keyColumns;
     }

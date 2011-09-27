@@ -54,14 +54,6 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
     TableDefinition getTable();
 
     /**
-     * The column's table name
-     *
-     * @deprecated - 1.5.9 - Use {@link #getTable()} instead
-     */
-    @Deprecated
-    String getTableName();
-
-    /**
      * The column position in the table
      */
     int getPosition();

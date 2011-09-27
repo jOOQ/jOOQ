@@ -140,32 +140,6 @@ public interface SelectJoinStep extends SelectWhereStep {
     SelectJoinStep crossJoin(String sql, Object... bindings);
 
     /**
-     * Left join a table
-     *
-     * @deprecated - Use {@link #leftOuterJoin(TableLike)} instead
-     */
-    @Deprecated
-    SelectOnStep leftJoin(TableLike<?> table);
-
-    /**
-     * Left join a table
-     *
-     * @see Factory#condition(String)
-     * @deprecated - Use {@link #leftOuterJoin(String)} instead
-     */
-    @Deprecated
-    SelectOnStep leftJoin(String sql);
-
-    /**
-     * Left join a table
-     *
-     * @see Factory#condition(String, Object...)
-     * @deprecated - Use {@link #leftOuterJoin(String, Object...)} instead
-     */
-    @Deprecated
-    SelectOnStep leftJoin(String sql, Object... bindings);
-
-    /**
      * <code>LEFT OUTER JOIN</code> a table
      */
     SelectOnStep leftOuterJoin(TableLike<?> table);
@@ -193,32 +167,6 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#condition(String, Object...)
      */
     SelectOnStep leftOuterJoin(String sql, Object... bindings);
-
-    /**
-     * Right join a table
-     *
-     * @deprecated - Use {@link #rightOuterJoin(TableLike)} instead
-     */
-    @Deprecated
-    SelectOnStep rightJoin(TableLike<?> table);
-
-    /**
-     * Right join a table
-     *
-     * @see Factory#condition(String)
-     * @deprecated - Use {@link #rightOuterJoin(String)} instead
-     */
-    @Deprecated
-    SelectOnStep rightJoin(String sql);
-
-    /**
-     * Right join a table
-     *
-     * @see Factory#condition(String, Object...)
-     * @deprecated - Use {@link #rightOuterJoin(String, Object...)} instead
-     */
-    @Deprecated
-    SelectOnStep rightJoin(String sql, Object... bindings);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table

@@ -69,7 +69,6 @@ import org.jooq.FieldProvider;
 import org.jooq.Identity;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
-import org.jooq.InsertSelectQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
@@ -99,7 +98,6 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.exception.DetachedException;
-import org.jooq.util.oracle.OracleFactory;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
@@ -451,61 +449,6 @@ public class Factory implements Configuration {
      * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
      * can be sure that calling methods, such as {@link Table#getFields()} will
      * list the actual fields returned from your result set.
-     *
-     * @param sql The SQL
-     * @return A table wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use {@link #table(String)}
-     *             instead
-     */
-    @Deprecated
-    public final Table<Record> plainSQLTable(String sql) {
-        return table(sql, new Object[0]);
-    }
-
-    /**
-     * A PlainSQLTable is a table that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex, but static subqueries or tables from different schemas.
-     * There must be as many binding variables contained in the SQL, as passed
-     * in the bindings parameter
-     * <p>
-     * Example
-     * <p>
-     * <code><pre>
-     * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = ?";
-     * Object[] bindings = new Object[] { "MY_SCHEMA" };
-     * </pre></code>
-     * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#getFields()} will
-     * list the actual fields returned from your result set.
-     *
-     * @param sql The SQL
-     * @return A table wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #table(String, Object...)} instead
-     */
-    @Deprecated
-    public final Table<Record> plainSQLTable(String sql, Object... bindings) {
-        return table(sql, bindings);
-    }
-
-    /**
-     * A PlainSQLTable is a table that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex, but static subqueries or tables from different schemas.
-     * <p>
-     * Example
-     * <p>
-     * <code><pre>
-     * String sql = "SELECT * FROM USER_TABLES WHERE OWNER = 'MY_SCHEMA'";
-     * </pre></code>
-     * <p>
-     * The provided SQL must evaluate as a table whose type can be dynamically
-     * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#getFields()} will
-     * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -548,145 +491,6 @@ public class Factory implements Configuration {
      */
     public final Table<Record> table(String sql, Object... bindings) {
         return new SQLTable(this, sql, bindings);
-    }
-
-    /**
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex proprietary functions. There must not be any binding
-     * variables contained in the SQL.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
-     *
-     * @param sql The SQL
-     * @return A field wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use {@link #field(String)}
-     *             instead
-     */
-    @Deprecated
-    public final Field<?> plainSQLField(String sql) {
-        return field(sql, new Object[0]);
-    }
-
-    /**
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex proprietary functions. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
-     *
-     * @param sql The SQL
-     * @param bindings The bindings for the field
-     * @return A field wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #field(String, Object...)} instead
-     */
-    @Deprecated
-    public final Field<?> plainSQLField(String sql, Object... bindings) {
-        return field(sql, Object.class, bindings);
-    }
-
-    /**
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex proprietary functions. There must not be any binding
-     * variables contained in the SQL.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
-     *
-     * @param sql The SQL
-     * @param type The field type
-     * @return A field wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #field(String, Class)} instead
-     */
-    @Deprecated
-    public final <T> Field<T> plainSQLField(String sql, Class<T> type) {
-        return field(sql, type, new Object[0]);
-    }
-
-    /**
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex proprietary functions. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
-     *
-     * @param sql The SQL
-     * @param type The field type
-     * @param bindings The bindings for the field
-     * @return A field wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #field(String, Class, Object...)} instead
-     */
-    @Deprecated
-    public final <T> Field<T> plainSQLField(String sql, Class<T> type, Object... bindings) {
-        return field(sql, getDataType(type), bindings);
-    }
-
-    /**
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex proprietary functions. There must not be any binding
-     * variables contained in the SQL.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "DECODE(MY_FIELD, 1, 100, 200)";
-     * </pre></code>
-     *
-     * @param sql The SQL
-     * @param type The field type
-     * @return A field wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #field(String, DataType)} instead
-     */
-    @Deprecated
-    public final <T> Field<T> plainSQLField(String sql, DataType<T> type) {
-        return field(sql, type, new Object[0]);
-    }
-
-    /**
-     * A PlainSQLField is a field that can contain user-defined plain SQL,
-     * because sometimes it is easier to express things directly in SQL, for
-     * instance complex proprietary functions. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "DECODE(MY_FIELD, ?, ?, ?)";
-     * Object[] bindings = new Object[] { 1, 100, 200 };</pre></code>
-     *
-     * @param sql The SQL
-     * @param type The field type
-     * @param bindings The bindings for the field
-     * @return A field wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #field(String, DataType, Object...)} instead
-     */
-    @Deprecated
-    public final <T> Field<T> plainSQLField(String sql, DataType<T> type, Object... bindings) {
-        return field(sql, type, bindings);
     }
 
     /**
@@ -874,46 +678,6 @@ public class Factory implements Configuration {
      * <p>
      * <code><pre>
      * String sql = "(X = 1 and Y = 2)";</pre></code>
-     *
-     * @param sql The SQL
-     * @return A condition wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #condition(String)} instead
-     */
-    @Deprecated
-    public final Condition plainSQLCondition(String sql) {
-        return condition(sql, new Object[0]);
-    }
-
-    /**
-     * Create a new condition holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "(X = ? and Y = ?)";
-     * Object[] bindings = new Object[] { 1, 2 };</pre></code>
-     *
-     * @param sql The SQL
-     * @param bindings The bindings
-     * @return A condition wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #condition(String, Object...)} instead
-     */
-    @Deprecated
-    public final Condition plainSQLCondition(String sql, Object... bindings) {
-        return condition(sql, bindings);
-    }
-
-    /**
-     * Create a new condition holding plain SQL. There must not be any binding
-     * variables contained in the SQL
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "(X = 1 and Y = 2)";</pre></code>
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -948,45 +712,6 @@ public class Factory implements Configuration {
      */
     public final Condition condition(String sql, Object... bindings) {
         return new SQLCondition(sql, bindings);
-    }
-
-    /**
-     * Create a new query holding plain SQL. There must not be any binding
-     * variables contained in the SQL
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
-     *
-     * @param sql The SQL
-     * @return A query wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use {@link #query(String)}
-     *             instead
-     */
-    @Deprecated
-    public final Query plainSQLQuery(String sql) {
-        return query(sql, new Object[0]);
-    }
-
-    /**
-     * Create a new query holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
-     *
-     * @param sql The SQL
-     * @param bindings The bindings
-     * @return A query wrapping the plain SQL
-     * @deprecated - 1.6.1 [#656] (removal in 1.7) - use
-     *             {@link #query(String, Object...)} instead
-     */
-    @Deprecated
-    public final Query plainSQLQuery(String sql, Object... bindings) {
-        return query(sql, bindings);
     }
 
     /**
@@ -1261,44 +986,6 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Create a new DSL select statement for constant values
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.select(value1, value2)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
-     * </pre></code>
-     *
-     * @deprecated - 1.5.9 - [#529] - This signature is too general and leads to
-     *             major confusion when users want to use
-     *             {@link #select(Field...)} but in fact the compiler links
-     *             {@link #select(Object...)}.
-     *             <p>
-     *             Use {@link #selectZero()} or {@link #selectOne()} instead, if
-     *             you're just selecting dummy values.
-     *             <p>
-     *             Use {@link #constants(Object...)} if you really intend to
-     *             select several constants
-     */
-    @Deprecated
-    @SuppressWarnings("unchecked")
-    public final SelectSelectStep select(Object... values) {
-
-        // [#466] Check if the overloaded API was misused
-        if (values != null && values.length == 1 && values[0] instanceof Collection) {
-            return select((Collection<? extends Field<?>>) values[0]);
-        }
-        else {
-            return new SelectImpl(this).select(constants(values));
-        }
-    }
-
-    /**
      * Create a new DSL select statement for constant <code>0</code> literal
      * <p>
      * Example: <code><pre>
@@ -1492,20 +1179,6 @@ public class Factory implements Configuration {
      * </pre></code>
      */
     public final <R extends TableRecord<R>> Insert insertInto(Table<R> into, Select<?> select) {
-        return new InsertSelectQueryImpl<R>(this, into, select);
-    }
-
-    /**
-     * Create a new {@link InsertSelectQuery}
-     *
-     * @param into The table to insert data into
-     * @param select The select statement to select data from
-     * @return The new {@link InsertSelectQuery}
-     * @deprecated - 1.5.9 - Use the DSL syntax instead:
-     *             {@link #insertInto(Table, Select)}
-     */
-    @Deprecated
-    public final <R extends TableRecord<R>> InsertSelectQuery<R> insertQuery(Table<R> into, Select<?> select) {
         return new InsertSelectQueryImpl<R>(this, into, select);
     }
 
@@ -1841,7 +1514,7 @@ public class Factory implements Configuration {
      * @see #use(Schema)
      */
     public final int use(String schema) throws DetachedException, SQLException {
-        return use(new SchemaImpl(dialect, schema));
+        return use(new SchemaImpl(schema));
     }
 
     // -------------------------------------------------------------------------
@@ -2093,7 +1766,7 @@ public class Factory implements Configuration {
     /**
      * Get a list of constant values and fields
      *
-     * @deprecated - This method causes issues when overloading. Use
+     * @deprecated - 1.6.3 - This method causes issues when overloading. Use
      *             {@link #constants(Object...)} instead
      */
     @Deprecated
@@ -2309,25 +1982,9 @@ public class Factory implements Configuration {
 
     /**
      * Get the null field
-     *
-     * @deprecated - Use {@link #constant(Object)} instead. Cast the constant to
-     *             any type, if this is necessary in your RDBMS dialect.
      */
-    @Deprecated
-    public final Field<?> NULL() {
+    final Field<?> NULL() {
         return field("null");
-    }
-
-    /**
-     * Retrieve the rownum pseudo-field
-     *
-     * @deprecated - 1.5.9 - This Oracle-specific field will be removed from the
-     *             general API soon. Use {@link OracleFactory#rownum()} instead,
-     *             or the more general {@link #rowNumberOver()} window function.
-     */
-    @Deprecated
-    public Field<Integer> rownum() {
-        return field("rownum", Integer.class);
     }
 
     /**
@@ -2826,26 +2483,6 @@ public class Factory implements Configuration {
         for (SQLDialect dialect : SQLDialect.values()) {
             Factory.DEFAULT_INSTANCES[dialect.ordinal()] = new Factory(null, dialect);
         }
-    }
-
-    /**
-     * Get a default <code>Factory</code> without a {@link Connection}
-     *
-     * @deprecated - 1.6.0 - This is part of the internal API. Do not reuse
-     */
-    @Deprecated
-    public final static Factory getFactory(SQLDialect dialect) {
-        return getStaticFactory(dialect);
-    }
-
-    /**
-     * Get a default <code>Factory</code> with a {@link Connection}
-     *
-     * @deprecated - 1.6.0 - This is part of the internal API. Do not reuse
-     */
-    @Deprecated
-    public final static Factory getFactory(Configuration configuration) {
-        return getNewFactory(configuration);
     }
 
     /**

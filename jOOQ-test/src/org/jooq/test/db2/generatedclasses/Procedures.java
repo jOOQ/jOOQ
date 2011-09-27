@@ -34,33 +34,6 @@ public final class Procedures {
 	}
 
 	/**
-	 * Invoke P391
-	 *
-	 * @param i1 IN parameter
-	 * @param io1 IN OUT parameter
-	 * @param o1 OUT parameter
-	 * @param o2 OUT parameter
-	 * @param io2 IN OUT parameter
-	 * @param i2 IN parameter
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static org.jooq.test.db2.generatedclasses.procedures.P391 p391(java.sql.Connection connection, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.procedures.P391 p = new org.jooq.test.db2.generatedclasses.procedures.P391();
-		p.setI1(i1);
-		p.setIo1(io1);
-		p.setIo2(io2);
-		p.setI2(i2);
-
-		p.execute(connection);
-		return p;
-	}
-
-	/**
 	 * Invoke P_AUTHOR_EXISTS
 	 *
 	 * @param authorName IN parameter
@@ -75,26 +48,6 @@ public final class Procedures {
 	}
 
 	/**
-	 * Invoke P_AUTHOR_EXISTS
-	 *
-	 * @param authorName IN parameter
-	 * @param result OUT parameter
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static java.lang.Integer pAuthorExists(java.sql.Connection connection, java.lang.String authorName) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.procedures.PAuthorExists p = new org.jooq.test.db2.generatedclasses.procedures.PAuthorExists();
-		p.setAuthorName(authorName);
-
-		p.execute(connection);
-		return p.getResult();
-	}
-
-	/**
 	 * Invoke P_CREATE_AUTHOR
 	 *
 	 */
@@ -102,22 +55,6 @@ public final class Procedures {
 		org.jooq.test.db2.generatedclasses.procedures.PCreateAuthor p = new org.jooq.test.db2.generatedclasses.procedures.PCreateAuthor();
 
 		p.execute(configuration);
-	}
-
-	/**
-	 * Invoke P_CREATE_AUTHOR
-	 *
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static void pCreateAuthor(java.sql.Connection connection) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.procedures.PCreateAuthor p = new org.jooq.test.db2.generatedclasses.procedures.PCreateAuthor();
-
-		p.execute(connection);
 	}
 
 	/**
@@ -135,26 +72,6 @@ public final class Procedures {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR_BY_NAME
-	 *
-	 * @param firstName IN parameter
-	 * @param lastName IN parameter
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static void pCreateAuthorByName(java.sql.Connection connection, java.lang.String firstName, java.lang.String lastName) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.procedures.PCreateAuthorByName p = new org.jooq.test.db2.generatedclasses.procedures.PCreateAuthorByName();
-		p.setFirstName(firstName);
-		p.setLastName(lastName);
-
-		p.execute(connection);
-	}
-
-	/**
 	 * Invoke P_UNUSED
 	 *
 	 * @param in1 IN parameter
@@ -167,28 +84,6 @@ public final class Procedures {
 		p.setOut2(out2);
 
 		p.execute(configuration);
-		return p;
-	}
-
-	/**
-	 * Invoke P_UNUSED
-	 *
-	 * @param in1 IN parameter
-	 * @param out1 OUT parameter
-	 * @param out2 IN OUT parameter
-	 *
-	 * @deprecated 1.6.1 [#453] This method of calling stored functions is not supported anymore<br/>
-	 *             See {@link org.jooq.StoredObject#execute(java.sql.Connection)} for details.<br/><br/>
-	 *             If you wish to remove this method, adapt your configuration:<br/>
-	 *             <code>generator.generate.deprecated=false</code>
-	 */
-	@Deprecated
-	public static org.jooq.test.db2.generatedclasses.procedures.PUnused pUnused(java.sql.Connection connection, java.lang.String in1, java.lang.Integer out2) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.procedures.PUnused p = new org.jooq.test.db2.generatedclasses.procedures.PUnused();
-		p.setIn1(in1);
-		p.setOut2(out2);
-
-		p.execute(connection);
 		return p;
 	}
 

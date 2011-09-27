@@ -517,20 +517,8 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl leftJoin(TableLike<?> table) {
-        return join0(table, JoinType.LEFT_JOIN);
-    }
-
-    @Override
     public final SelectImpl leftOuterJoin(TableLike<?> table) {
         return join0(table, JoinType.LEFT_OUTER_JOIN);
-    }
-
-    @Override
-    @Deprecated
-    public final SelectImpl rightJoin(TableLike<?> table) {
-        return join0(table, JoinType.RIGHT_JOIN);
     }
 
     @Override
@@ -589,18 +577,6 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    @Deprecated
-    public final SelectImpl leftJoin(String sql) {
-        return leftJoin(create().table(sql));
-    }
-
-    @Override
-    @Deprecated
-    public final SelectImpl leftJoin(String sql, Object... bindings) {
-        return leftJoin(create().table(sql, bindings));
-    }
-
-    @Override
     public final SelectImpl leftOuterJoin(String sql) {
         return leftOuterJoin(create().table(sql));
     }
@@ -608,18 +584,6 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(create().table(sql, bindings));
-    }
-
-    @Override
-    @Deprecated
-    public final SelectImpl rightJoin(String sql) {
-        return rightJoin(create().table(sql));
-    }
-
-    @Override
-    @Deprecated
-    public final SelectImpl rightJoin(String sql, Object... bindings) {
-        return rightJoin(create().table(sql, bindings));
     }
 
     @Override

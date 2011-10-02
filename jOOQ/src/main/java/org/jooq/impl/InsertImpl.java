@@ -42,9 +42,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
-import org.jooq.AttachableInternal;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertOnDuplicateSetMoreStep;
@@ -53,7 +50,6 @@ import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
-import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -62,7 +58,9 @@ import org.jooq.exception.DetachedException;
 /**
  * @author Lukas Eder
  */
-class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
+class InsertImpl<R extends TableRecord<R>>
+    extends AbstractDelegatingQueryPart<InsertQuery<R>>
+    implements
 
     // Cascading interface implementations for Insert behaviour
     InsertValuesStep,
@@ -75,12 +73,11 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
      */
     private static final long    serialVersionUID = 4222898879771679107L;
 
-    private final InsertQuery<R> delegate;
     private final List<Field<?>> fields;
     private boolean              onDuplicateKeyUpdate;
 
     InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
-        this.delegate = new InsertQueryImpl<R>(configuration, into);
+        super(new InsertQueryImpl<R>(configuration, into));
         this.fields = new ArrayList<Field<?>>(fields);
     }
 
@@ -89,23 +86,8 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(delegate);
-    }
-
-    @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(delegate);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return internalAPI(AttachableInternal.class).getAttachables();
-    }
-
-    @Override
     public final int execute() throws SQLException, DetachedException {
-        return delegate.execute();
+        return getDelegate().execute();
     }
 
     // -------------------------------------------------------------------------
@@ -132,9 +114,9 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
             throw new IllegalArgumentException("The number of values must match the number of fields");
         }
 
-        delegate.newRecord();
+        getDelegate().newRecord();
         for (int i = 0; i < fields.size(); i++) {
-            delegate.addValue(fields.get(i), values.get(i));
+            getDelegate().addValue(fields.get(i), values.get(i));
         }
 
         return this;
@@ -143,17 +125,17 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     @Override
     public final InsertImpl<R> onDuplicateKeyUpdate() {
         onDuplicateKeyUpdate = true;
-        delegate.onDuplicateKeyUpdate(true);
+        getDelegate().onDuplicateKeyUpdate(true);
         return this;
     }
 
     @Override
     public final InsertImpl<R> set(Field<?> field, Object value) {
         if (onDuplicateKeyUpdate) {
-            delegate.addValueForUpdate(field, value);
+            getDelegate().addValueForUpdate(field, value);
         }
         else {
-            delegate.addValue(field, value);
+            getDelegate().addValue(field, value);
         }
 
         return this;
@@ -162,10 +144,10 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     @Override
     public final InsertImpl<R> set(Field<?> field, Field<?> value) {
         if (onDuplicateKeyUpdate) {
-            delegate.addValueForUpdate(field, value);
+            getDelegate().addValueForUpdate(field, value);
         }
         else {
-            delegate.addValue(field, value);
+            getDelegate().addValue(field, value);
         }
 
         return this;
@@ -174,10 +156,10 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
     @Override
     public final InsertImpl<R> set(Map<? extends Field<?>, ?> map) {
         if (onDuplicateKeyUpdate) {
-            delegate.addValuesForUpdate(map);
+            getDelegate().addValuesForUpdate(map);
         }
         else {
-            delegate.addValues(map);
+            getDelegate().addValues(map);
         }
 
         return this;
@@ -185,37 +167,37 @@ class InsertImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
 
     @Override
     public final InsertSetStep newRecord() {
-        delegate.newRecord();
+        getDelegate().newRecord();
         return this;
     }
 
     @Override
     public final InsertResultStep returning() {
-        delegate.setReturning();
+        getDelegate().setReturning();
         return this;
     }
 
     @Override
     public final InsertResultStep returning(Field<?>... f) {
-        delegate.setReturning(f);
+        getDelegate().setReturning(f);
         return this;
     }
 
     @Override
     public final InsertResultStep returning(Collection<? extends Field<?>> f) {
-        delegate.setReturning(f);
+        getDelegate().setReturning(f);
         return this;
     }
 
     @Override
     public final Result<?> fetch() throws SQLException {
-        delegate.execute();
-        return delegate.getReturnedRecords();
+        getDelegate().execute();
+        return getDelegate().getReturnedRecords();
     }
 
     @Override
     public final TableRecord<?> fetchOne() throws SQLException {
-        delegate.execute();
-        return delegate.getReturnedRecord();
+        getDelegate().execute();
+        return getDelegate().getReturnedRecord();
     }
 }

@@ -62,22 +62,22 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
     @Override
     public final Select<R> union(Select<R> select) {
-        return new Union<R>(attachable.getConfiguration(), this, select, CombineOperator.UNION);
+        return new Union<R>(getConfiguration(), this, select, CombineOperator.UNION);
     }
 
     @Override
     public final Select<R> unionAll(Select<R> select) {
-        return new Union<R>(attachable.getConfiguration(), this, select, CombineOperator.UNION_ALL);
+        return new Union<R>(getConfiguration(), this, select, CombineOperator.UNION_ALL);
     }
 
     @Override
     public final Select<R> except(Select<R> select) {
-        return new Union<R>(attachable.getConfiguration(), this, select, CombineOperator.EXCEPT);
+        return new Union<R>(getConfiguration(), this, select, CombineOperator.EXCEPT);
     }
 
     @Override
     public final Select<R> intersect(Select<R> select) {
-        return new Union<R>(attachable.getConfiguration(), this, select, CombineOperator.INTERSECT);
+        return new Union<R>(getConfiguration(), this, select, CombineOperator.INTERSECT);
     }
 
     @SuppressWarnings("unchecked")

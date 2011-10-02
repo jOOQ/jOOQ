@@ -35,69 +35,47 @@
  */
 package org.jooq.impl;
 
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
-import org.jooq.Field;
-import org.jooq.Record;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
 /**
- * A plain SQL query that returns results
- *
  * @author Lukas Eder
  */
-class SQLResultQuery extends AbstractResultQuery<Record> {
+abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends AbstractQueryPart {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1740879770879469220L;
+    private static final long serialVersionUID = 6710523592699040547L;
+    private final Q           delegate;
 
-    private final String      sql;
-    private final Object[]    bindings;
-
-    public SQLResultQuery(Configuration configuration, String sql, Object[] bindings) {
-        super(configuration);
-
-        this.sql = sql;
-        this.bindings = bindings;
+    AbstractDelegatingQueryPart(Q delegate) {
+        super(delegate.internalAPI(AttachableInternal.class).getConfiguration());
+        this.delegate = delegate;
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        JooqUtil.toSQLReference(context, sql, bindings);
+        context.sql(delegate);
     }
 
     @Override
     public final void bind(BindContext context) throws SQLException {
-        context.bindValues(bindings);
+        context.bind(delegate);
     }
 
     @Override
     public final List<Attachable> getAttachables() {
-        return Collections.emptyList();
+        return getAttachables(delegate);
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
-    }
-
-    @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) throws SQLException {
-        Configuration configuration = getConfiguration();
-        return new MetaDataFieldProvider(configuration, meta).getFields();
-    }
-
-    @Override
-    final boolean isSelectingRefCursor() {
-        return false;
+    final Q getDelegate() {
+        return delegate;
     }
 }

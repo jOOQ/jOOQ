@@ -7,7 +7,7 @@
   	<dependency>
   		<groupId>org.jooq</groupId>
   		<artifactId>joox</artifactId>
-  		<version>0.9.3-SNAPSHOT</version>
+  		<version>0.9.3</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>

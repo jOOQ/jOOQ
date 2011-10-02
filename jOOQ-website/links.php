@@ -27,7 +27,8 @@ function printContent() {
     <li>On GitHub: <a href="https://github.com/lukaseder/jOOQ" title="fork jOOQ on GitHub">https://github.com/lukaseder/jOOQ</a></li>
     <li>On ohloh: <a href="https://www.ohloh.net/p/jooq" title="see some statistics about jOOQ on ohloh">https://www.ohloh.net/p/jooq</a></li>
     <li>On freshmeat: <a href="http://freshmeat.net/projects/jooq" title="subscribe to some jOOQ announcements on freshmeat">http://freshmeat.net/projects/jooq</a></li>
-    <li>On Stack Overflow: <a href="http://stackoverflow.com/questions/tagged/jooq" title="ask questions about jOOQ on Stack Overflow">http://stackoverflow.com/questions/tagged/jooq</a></li> 
+    <li>On Stack Overflow: <a href="http://stackoverflow.com/questions/tagged/jooq" title="ask questions about jOOQ on Stack Overflow">http://stackoverflow.com/questions/tagged/jooq</a></li>
+    <li>On Facebook: <a href="http://www.facebook.com/pages/jOOQ/197164647019108" title="the jOOQ page on Facebook">http://www.facebook.com/pages/jOOQ/197164647019108</a></li> 
 </ul>
 
 <h2>jOOQ's source of inspiration, similar products</h2>

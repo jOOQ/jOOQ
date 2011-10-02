@@ -101,6 +101,27 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
 
             context.sql(" ");
             context.literal(alias);
+
+            // [#756] If the aliased object is an anonymous table (usually an
+            // unnested array), then field names must be part of the alias
+            // declaration. For example:
+            //
+            // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
+
+            switch (context.getDialect()) {
+                case HSQLDB:
+                case POSTGRES: {
+                    if (context.declareTables() && aliasProvider instanceof ArrayTable) {
+                        ArrayTable<?> table = (ArrayTable<?>) aliasProvider;
+
+                        context.sql("(");
+                        table.getFields().toSQLNames(context);
+                        context.sql(")");
+                    }
+
+                    break;
+                }
+            }
         }
         else {
             context.literal(alias);

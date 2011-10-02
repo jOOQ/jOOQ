@@ -33,29 +33,47 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util;
-
+package org.jooq;
 
 /**
- * An interface describing a callable object (stored procedure or function)
+ * A routine is a callable object in your RDBMS.
+ * <p>
+ * Callable objects are mainly stored procedures and stored functions. The
+ * distinction between those two object types is very subtle and not well
+ * defined across various RDBMS. In general, this can be said:
+ * <p>
+ * Procedures:
+ * <p>
+ * <ul>
+ * <li>Are called as callable statements</li>
+ * <li>Have no return value</li>
+ * <li>Support OUT parameters</li>
+ * </ul>
+ * Functions
+ * <p>
+ * <ul>
+ * <li>Can be used in SQL statements</li>
+ * <li>Have a return value</li>
+ * <li>Don't support OUT parameters</li>
+ * </ul>
+ * But there are exceptions to these rules:
+ * <p>
+ * <ul>
+ * <li>Oracle procedures may have a return value</li>
+ * <li>Postgres only knows functions (with all features combined)</li>
+ * <li>H2 only knows functions (without OUT parameters)</li>
+ * <li>Oracle knows functions that mustn't be used in SQL statements</li>
+ * <li>etc...</li>
+ * </ul>
+ * <p>
+ * Hence, with #852, jOOQ 1.6.8, the distinction between procedures and
+ * functions becomes obsolete. All stored routines are simply referred to as
+ * "Routine". For backwards-compatibility, this new type extends both
+ * {@link StoredProcedure} and {@link StoredFunction}
  *
  * @author Lukas Eder
- * @deprecated - 1.6.8 [#852] - The stored procedure / stored function
- *             distinction has been reviewed in jOOQ. The 12 currently supported
- *             RDBMS have such a distinct idea of what is a procedure and what
- *             is a function that it makes no longer sense to distinguish them
- *             generally, in jOOQ. See <a
- *             href="https://sourceforge.net/apps/trac/jooq/ticket/852"
- *             >https://sourceforge.net/apps/trac/jooq/ticket/852</a> for more
- *             details.
  */
-@Deprecated
-public interface CallableDefinition extends Definition {
-
-    /**
-     * @return The callable's package. <code>null</code> if the callable is not
-     *         in a package
-     */
-    PackageDefinition getPackage();
+@SuppressWarnings("deprecation")
+public interface Routine<T> extends StoredProcedure, StoredFunction<T> {
 
 }

@@ -249,16 +249,16 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         else if (definition instanceof PackageDefinition) {
             return "packages";
         }
-        else if (definition instanceof CallableDefinition) {
-            CallableDefinition callable = (CallableDefinition) definition;
+        else if (definition instanceof RoutineDefinition) {
+            RoutineDefinition routine = (RoutineDefinition) definition;
 
-            if (callable.getPackage() != null) {
-                return "packages." + getJavaIdentifierUC(callable.getPackage()).toLowerCase();
+            if (routine.getPackage() != null) {
+                return "packages." + getJavaIdentifierUC(routine.getPackage()).toLowerCase();
             }
-            else if (definition instanceof FunctionDefinition) {
+            else if (routine.getReturnValue() != null) {
                 return "functions";
             }
-            else if (definition instanceof ProcedureDefinition) {
+            else if (routine.getReturnValue() == null) {
                 return "procedures";
             }
         }

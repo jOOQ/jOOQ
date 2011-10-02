@@ -43,23 +43,25 @@ import java.sql.SQLException;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.util.AbstractFunctionDefinition;
+import org.jooq.impl.StringUtils;
+import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
+import org.jooq.util.ParameterDefinition;
 import org.jooq.util.oracle.sys.tables.AllArguments;
 
 /**
  * @author Lukas Eder
  */
-public class OracleFunctionDefinition extends AbstractFunctionDefinition {
+public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
     private final BigDecimal objectId;
 
-	public OracleFunctionDefinition(Database database, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
+	public OracleRoutineDefinition(Database database, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
 		super(database, pkg, name, comment, overload);
 
 		this.objectId = objectId;
@@ -88,7 +90,8 @@ public class OracleFunctionDefinition extends AbstractFunctionDefinition {
             .orderBy(AllArguments.POSITION.asc()).fetch();
 
 	    for (Record record : result) {
-	        String inOut = record.getValue(AllArguments.IN_OUT);
+	        InOutDefinition inOut =
+                InOutDefinition.getFromString(record.getValue(AllArguments.IN_OUT));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
                 record.getValue(AllArguments.DATA_TYPE),
@@ -96,19 +99,23 @@ public class OracleFunctionDefinition extends AbstractFunctionDefinition {
                 record.getValue(AllArguments.DATA_SCALE),
                 record.getValue(AllArguments.TYPE_NAME));
 
-	        if (InOutDefinition.getFromString(inOut) == InOutDefinition.OUT) {
-	            returnValue = new DefaultParameterDefinition(
-	                this,
-                    "RETURN_VALUE",
-                    record.getValueAsInteger(AllArguments.POSITION),
-                    type);
-	        } else {
-	            inParameters.add(new DefaultParameterDefinition(
-	                this,
-	                record.getValue(AllArguments.ARGUMENT_NAME),
-	                record.getValueAsInteger(AllArguments.POSITION),
-	                type));
-	        }
+            String name = record.getValue(AllArguments.ARGUMENT_NAME);
+            Integer position = record.getValueAsInteger(AllArguments.POSITION);
+
+            // [#378] Oracle supports stored functions with OUT parameters.
+            // They are mapped to procedures in jOOQ
+            if (StringUtils.isBlank(name) && position == 0) {
+                inOut = InOutDefinition.RETURN;
+                name = "RETURN_VALUE";
+            }
+
+            ParameterDefinition parameter = new DefaultParameterDefinition(
+                this,
+                name,
+                position,
+                type);
+
+            addParameter(inOut, parameter);
 	    }
 	}
 }

@@ -41,12 +41,17 @@ import java.util.List;
 
 import org.jooq.impl.JooqLogger;
 
+/**
+ * @author Lukas Eder
+ */
+@SuppressWarnings("deprecation")
 public abstract class AbstractPackageDefinition extends AbstractDefinition implements PackageDefinition {
 
     private static final JooqLogger   log = JooqLogger.getLogger(AbstractPackageDefinition.class);
 
     private List<ProcedureDefinition> procedures;
     private List<FunctionDefinition>  functions;
+    private List<RoutineDefinition>   routines;
 
     public AbstractPackageDefinition(Database database, String name, String comment) {
         super(database, name, comment);
@@ -57,11 +62,13 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         if (procedures == null) {
             procedures = new ArrayList<ProcedureDefinition>();
 
-            try {
-                procedures = getProcedures0();
-            }
-            catch (SQLException e) {
-                log.error("Error while initialising package", e);
+            for (RoutineDefinition routine : getRoutines()) {
+
+                // [#378] Oracle supports stored functions with OUT parameters.
+                // They were mapped to procedures in jOOQ before [#852]
+                if (routine.getReturnValue() == null || !routine.getOutParameters().isEmpty()) {
+                    procedures.add(routine);
+                }
             }
         }
 
@@ -73,17 +80,34 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         if (functions == null) {
             functions = new ArrayList<FunctionDefinition>();
 
-            try {
-                functions = getFunctions0();
-            }
-            catch (SQLException e) {
-                log.error("Error while initialising package", e);
+            for (RoutineDefinition routine : getRoutines()) {
+
+                // [#378] Oracle supports stored functions with OUT parameters.
+                // They were mapped to procedures in jOOQ before [#852]
+                if (routine.getReturnValue() != null && routine.getOutParameters().isEmpty()) {
+                    functions.add(routine);
+                }
             }
         }
 
         return functions;
     }
 
-    protected abstract List<ProcedureDefinition> getProcedures0() throws SQLException;
-    protected abstract List<FunctionDefinition> getFunctions0() throws SQLException;
+    @Override
+    public List<RoutineDefinition> getRoutines() {
+        if (routines == null) {
+            routines = new ArrayList<RoutineDefinition>();
+
+            try {
+                routines = getRoutines0();
+            }
+            catch (SQLException e) {
+                log.error("Error while initialising package", e);
+            }
+        }
+
+        return routines;
+    }
+
+    protected abstract List<RoutineDefinition> getRoutines0() throws SQLException;
 }

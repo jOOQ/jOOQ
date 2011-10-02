@@ -49,9 +49,8 @@ import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -214,14 +213,8 @@ public class ASEDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
-        return result;
-    }
-
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
         return result;
     }
 

@@ -67,8 +67,11 @@ public abstract class AbstractDatabase implements Database {
     private List<EnumDefinition>            enums;
     private List<UDTDefinition>             udts;
     private List<ArrayDefinition>           arrays;
+    @SuppressWarnings("deprecation")
     private List<ProcedureDefinition>       procedures;
+    @SuppressWarnings("deprecation")
     private List<FunctionDefinition>        functions;
+    private List<RoutineDefinition>         routines;
     private List<PackageDefinition>         packages;
     private Relations                       relations;
 
@@ -327,16 +330,23 @@ public abstract class AbstractDatabase implements Database {
         return relations;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<ProcedureDefinition> getProcedures() {
         if (procedures == null) {
             procedures = new ArrayList<ProcedureDefinition>();
 
             try {
-                List<ProcedureDefinition> p = getProcedures0();
+                List<RoutineDefinition> r = getRoutines();
 
-                procedures = filterExcludeInclude(p);
-                log.info("Procedures fetched", fetchedSize(p, procedures));
+                for (RoutineDefinition routine : r) {
+
+                    // [#378] Oracle supports stored functions with OUT parameters.
+                    // They were mapped to procedures in jOOQ before [#852]
+                    if (routine.getReturnValue() == null || !routine.getOutParameters().isEmpty()) {
+                        procedures.add(routine);
+                    }
+                }
             } catch (Exception e) {
                 log.error("Error while fetching procedures", e);
             }
@@ -345,22 +355,47 @@ public abstract class AbstractDatabase implements Database {
         return procedures;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<FunctionDefinition> getFunctions() {
         if (functions == null) {
             functions = new ArrayList<FunctionDefinition>();
 
             try {
-                List<FunctionDefinition> f = getFunctions0();
+                List<RoutineDefinition> r = getRoutines();
 
-                functions = filterExcludeInclude(f);
-                log.info("Functions fetched", fetchedSize(f, functions));
+                for (RoutineDefinition routine : r) {
+
+                    // [#378] Oracle supports stored functions with OUT parameters.
+                    // They were mapped to procedures in jOOQ before [#852]
+                    if (routine.getReturnValue() != null && routine.getOutParameters().isEmpty()) {
+                        functions.add(routine);
+                    }
+                }
             } catch (Exception e) {
                 log.error("Error while fetching functions", e);
             }
         }
 
         return functions;
+    }
+
+    @Override
+    public final List<RoutineDefinition> getRoutines() {
+        if (routines == null) {
+            routines = new ArrayList<RoutineDefinition>();
+
+            try {
+                List<RoutineDefinition> r = getRoutines0();
+
+                routines = filterExcludeInclude(r);
+                log.info("Routines fetched", fetchedSize(r, routines));
+            } catch (Exception e) {
+                log.error("Error while fetching functions", e);
+            }
+        }
+
+        return routines;
     }
 
     @Override
@@ -490,16 +525,10 @@ public abstract class AbstractDatabase implements Database {
     protected abstract List<TableDefinition> getTables0() throws SQLException;
 
     /**
-     * Retrieve ALL stored procedures from the database. This will be filtered
-     * in {@link #getProcedures()}
+     * Retrieve ALL stored routines (functions and procedures) from the
+     * database. This will be filtered in {@link #getRoutines()}
      */
-    protected abstract List<ProcedureDefinition> getProcedures0() throws SQLException;
-
-    /**
-     * Retrieve ALL stored functions from the database. This will be filtered in
-     * {@link #getFunctions()}
-     */
-    protected abstract List<FunctionDefinition> getFunctions0() throws SQLException;
+    protected abstract List<RoutineDefinition> getRoutines0() throws SQLException;
 
     /**
      * Retrieve ALL packages from the database. This will be filtered in

@@ -35,13 +35,14 @@
  */
 package org.jooq.util.h2;
 
+
 import static org.jooq.util.h2.information_schema.tables.FunctionColumns.FUNCTION_COLUMNS;
 
 import java.sql.SQLException;
 
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.util.AbstractProcedureDefinition;
+import org.jooq.impl.StringUtils;
+import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
@@ -49,31 +50,38 @@ import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.h2.information_schema.tables.FunctionColumns;
+
 /**
- * H2 implementation of {@link AbstractProcedureDefinition}
+ * H2 implementation of {@link AbstractRoutineDefinition}
  *
  * @author Espen Stromsnes
+ * @author Lukas Eder
  */
-public class H2ProcedureDefinition extends AbstractProcedureDefinition {
+public class H2RoutineDefinition extends AbstractRoutineDefinition {
 
-    public H2ProcedureDefinition(Database database, String name, String comment) {
+    public H2RoutineDefinition(Database database, String name, String comment, String typeName, Number precision, Number scale) {
         super(database, null, name, comment, null);
+
+        if (!StringUtils.isBlank(typeName)) {
+            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), typeName, precision, scale);
+            this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
+        }
     }
 
     @Override
     protected void init0() throws SQLException {
-        Result<Record> result = create().select(
-                FunctionColumns.COLUMN_NAME,
-                FunctionColumns.TYPE_NAME,
-                FunctionColumns.PRECISION,
-                FunctionColumns.SCALE,
-                FunctionColumns.POS)
-            .from(FUNCTION_COLUMNS)
-            .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchemaName()))
-            .and(FunctionColumns.ALIAS_NAME.equal(this.getName()))
-            .orderBy(FunctionColumns.POS.asc()).fetch();
+        for (Record record : create()
+                .select(
+                    FunctionColumns.COLUMN_NAME,
+                    FunctionColumns.TYPE_NAME,
+                    FunctionColumns.PRECISION,
+                    FunctionColumns.SCALE,
+                    FunctionColumns.POS)
+                .from(FUNCTION_COLUMNS)
+                .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchemaName()))
+                .and(FunctionColumns.ALIAS_NAME.equal(getName()))
+                .orderBy(FunctionColumns.POS.asc()).fetch()) {
 
-        for (Record record : result) {
             String paramName = record.getValue(FunctionColumns.COLUMN_NAME);
             String typeName = record.getValue(FunctionColumns.TYPE_NAME);
             Integer precision = record.getValue(FunctionColumns.PRECISION);

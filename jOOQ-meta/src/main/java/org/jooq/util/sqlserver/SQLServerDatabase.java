@@ -55,9 +55,8 @@ import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -224,37 +223,9 @@ public class SQLServerDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
-
-        for (Record record : create()
-            .select(Routines.ROUTINE_NAME, Routines.SPECIFIC_NAME)
-            .from(ROUTINES)
-            .where(Routines.ROUTINE_SCHEMA.equal(getSchemaName()))
-            .and(Routines.ROUTINE_TYPE.equal("PROCEDURE"))
-            .orderBy(Routines.ROUTINE_NAME)
-            .fetch()) {
-
-            String name = record.getValue(Routines.ROUTINE_NAME);
-            String specificName = record.getValue(Routines.SPECIFIC_NAME);
-
-            SQLServerProcedureDefinition procedure = new SQLServerProcedureDefinition(this, null, name, specificName);
-            result.add(procedure);
-        }
-
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create()
             .selectDistinct(
@@ -265,17 +236,16 @@ public class SQLServerDatabase extends AbstractDatabase {
                 Routines.NUMERIC_SCALE)
             .from(ROUTINES)
             .where(Routines.ROUTINE_SCHEMA.equal(getSchemaName()))
-            .and(Routines.ROUTINE_TYPE.equal("FUNCTION"))
             .orderBy(Routines.ROUTINE_NAME)
             .fetch()) {
 
-            SQLServerFunctionDefinition function = new SQLServerFunctionDefinition(this,
+            SQLServerRoutineDefinition routine = new SQLServerRoutineDefinition(this,
                 record.getValue(Routines.ROUTINE_NAME),
                 record.getValue(Routines.SPECIFIC_NAME),
                 record.getValue(Routines.DATA_TYPE),
                 record.getValue(Routines.NUMERIC_PRECISION),
                 record.getValue(Routines.NUMERIC_SCALE));
-            result.add(function);
+            result.add(routine);
         }
 
         return result;

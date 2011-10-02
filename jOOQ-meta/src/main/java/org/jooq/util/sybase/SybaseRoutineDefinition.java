@@ -37,12 +37,12 @@ import static org.jooq.util.sybase.sys.tables.Sysprocparm.SYSPROCPARM;
 import java.sql.SQLException;
 
 import org.jooq.Record;
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.AbstractProcedureDefinition;
+import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
+import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.sybase.sys.tables.Sysdomain;
@@ -50,13 +50,14 @@ import org.jooq.util.sybase.sys.tables.Sysprocedure;
 import org.jooq.util.sybase.sys.tables.Sysprocparm;
 
 /**
- * Sybase implementation of {@link AbstractProcedureDefinition}
+ * Sybase implementation of {@link AbstractRoutineDefinition}
  *
  * @author Espen Stromsnes
+ * @author Lukas Eder
  */
-public class SybaseFunctionDefinition extends AbstractFunctionDefinition {
+public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
 
-    public SybaseFunctionDefinition(Database database, PackageDefinition pkg, String name) {
+    public SybaseRoutineDefinition(Database database, PackageDefinition pkg, String name) {
         super(database, pkg, name, null, null);
     }
 
@@ -68,7 +69,9 @@ public class SybaseFunctionDefinition extends AbstractFunctionDefinition {
                     Sysprocparm.WIDTH,
                     Sysprocparm.SCALE,
                     Sysprocparm.PARM_ID,
-                    Sysprocparm.PARM_TYPE)
+                    Sysprocparm.PARM_TYPE,
+                    Sysprocparm.PARM_MODE_IN,
+                    Sysprocparm.PARM_MODE_OUT)
                 .from(SYSPROCPARM)
                 .join(SYSDOMAIN).on(Sysprocparm.DOMAIN_ID.equal(Sysdomain.DOMAIN_ID))
                 .join(SYSPROCEDURE).on(Sysprocparm.PROC_ID.equal(Sysprocedure.PROC_ID))
@@ -76,24 +79,38 @@ public class SybaseFunctionDefinition extends AbstractFunctionDefinition {
                 .orderBy(Sysprocparm.PARM_ID)
                 .fetch()) {
 
+            String paramModeIn = record.getValue(Sysprocparm.PARM_MODE_IN);
+            String paramModeOut = record.getValue(Sysprocparm.PARM_MODE_OUT);
+            int parmType = record.getValue(Sysprocparm.PARM_TYPE);
+
+            InOutDefinition inOutDefinition;
+            if (parmType == 4) {
+                inOutDefinition = InOutDefinition.RETURN;
+            }
+            else if ("Y".equals(paramModeIn) && "Y".equals(paramModeOut)) {
+                inOutDefinition = InOutDefinition.INOUT;
+            }
+            else if ("Y".equals(paramModeIn)) {
+                inOutDefinition = InOutDefinition.IN;
+            }
+            else if ("Y".equals(paramModeOut)) {
+                inOutDefinition = InOutDefinition.OUT;
+            }
+            else {
+                throw new IllegalArgumentException("Stored procedure param is neither in or out mode!");
+            }
+
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
                 record.getValue(Sysdomain.DOMAIN_NAME),
                 record.getValue(Sysprocparm.WIDTH),
                 record.getValue(Sysprocparm.SCALE));
 
-            String parmName = record.getValue(Sysprocparm.PARM_NAME);
+            ParameterDefinition parameter = new DefaultParameterDefinition(this,
+                record.getValue(Sysprocparm.PARM_NAME),
+                record.getValue(Sysprocparm.PARM_ID),
+                type);
 
-            int parmId = record.getValue(Sysprocparm.PARM_ID);
-            int parmType = record.getValue(Sysprocparm.PARM_TYPE);
-
-            if (parmType == 0) {
-                ParameterDefinition parameter = new DefaultParameterDefinition(this, parmName, parmId, type);
-                getInParameters().add(parameter);
-            } else if (parmType == 4) {
-                this.returnValue = new DefaultParameterDefinition(this, parmName, -1, type);
-            } else {
-                throw new IllegalArgumentException("Unsupported parmtype: " + parmType);
-            }
+            addParameter(inOutDefinition, parameter);
         }
     }
 }

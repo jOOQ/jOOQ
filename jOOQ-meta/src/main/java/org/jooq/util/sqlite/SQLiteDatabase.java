@@ -48,9 +48,8 @@ import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -63,17 +62,11 @@ import org.jooq.util.sqlite.sqlite_master.SQLiteMaster;
  */
 public class SQLiteDatabase extends AbstractDatabase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Factory create() {
         return new SQLiteFactory(getConnection());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (String tableName : create()
@@ -100,33 +93,21 @@ public class SQLiteDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -144,54 +125,30 @@ public class SQLiteDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<PackageDefinition> getPackages0() throws SQLException {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<ArrayDefinition> getArrays0() throws SQLException {
         List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();

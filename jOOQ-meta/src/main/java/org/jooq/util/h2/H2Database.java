@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
-import org.jooq.Select;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -55,9 +54,8 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -71,29 +69,16 @@ import org.jooq.util.h2.information_schema.tables.TypeInfo;
 
 /**
  * H2 implementation of {@link AbstractDatabase}
- * <p>
- * <b>NB! Special notes regarding "aliases":</b>
- * <p>
- * <ul>
- *   <li>aliases which do not return data are mapped to Procedures
- *   <li>all other aliases are mapped to Functions
- * </ul>
  *
  * @author Espen Stromsnes
  */
 public class H2Database extends AbstractDatabase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Factory create() {
         return new InformationSchemaFactory(getConnection());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
@@ -112,9 +97,6 @@ public class H2Database extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
@@ -144,9 +126,6 @@ public class H2Database extends AbstractDatabase {
             .fetch();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
@@ -179,9 +158,6 @@ public class H2Database extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
@@ -198,9 +174,6 @@ public class H2Database extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -223,64 +196,33 @@ public class H2Database extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        Select<?> query = create().select(
-                FunctionAliases.ALIAS_NAME,
-                FunctionAliases.REMARKS,
-                FunctionAliases.DATA_TYPE,
-                FunctionAliases.RETURNS_RESULT)
-            .from(FUNCTION_ALIASES)
-            .where(FunctionAliases.ALIAS_SCHEMA.equal(getSchemaName()))
-            .and(FunctionAliases.RETURNS_RESULT.equal((short) 1))
-            .orderBy(FunctionAliases.ALIAS_NAME);
+        for (Record record : create()
+                .select(
+                    FunctionAliases.ALIAS_NAME,
+                    FunctionAliases.REMARKS,
+                    FunctionAliases.DATA_TYPE,
+                    FunctionAliases.RETURNS_RESULT,
+                    TypeInfo.TYPE_NAME,
+                    TypeInfo.PRECISION,
+                    TypeInfo.MAXIMUM_SCALE)
+                .from(FUNCTION_ALIASES)
+                .leftOuterJoin(TYPE_INFO)
+                .on(FunctionAliases.DATA_TYPE.equal(TypeInfo.DATA_TYPE))
+                .where(FunctionAliases.ALIAS_SCHEMA.equal(getSchemaName()))
+                .and(FunctionAliases.RETURNS_RESULT.in((short) 1, (short) 2))
+                .orderBy(FunctionAliases.ALIAS_NAME).fetch()) {
 
-        for (Record record : query.fetch()) {
-            String name = record.getValue(FunctionAliases.ALIAS_NAME);
-            String comment = record.getValue(FunctionAliases.REMARKS);
-
-            result.add(new H2ProcedureDefinition(this, name, comment));
-        }
-
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-        Select<?> query = create().select(
-                FunctionAliases.ALIAS_NAME,
-                FunctionAliases.REMARKS,
-                FunctionAliases.DATA_TYPE,
-                FunctionAliases.RETURNS_RESULT,
-                TypeInfo.TYPE_NAME,
-                TypeInfo.PRECISION,
-                TypeInfo.MAXIMUM_SCALE)
-            .from(FUNCTION_ALIASES)
-            .leftOuterJoin(TYPE_INFO)
-            .on(FunctionAliases.DATA_TYPE.equal(TypeInfo.DATA_TYPE))
-            .where(FunctionAliases.ALIAS_SCHEMA.equal(getSchemaName()))
-            .and(FunctionAliases.RETURNS_RESULT.equal((short) 2))
-            .orderBy(FunctionAliases.ALIAS_NAME);
-
-        for (Record record : query.fetch()) {
             String name = record.getValue(FunctionAliases.ALIAS_NAME);
             String comment = record.getValue(FunctionAliases.REMARKS);
             String typeName = record.getValue(TypeInfo.TYPE_NAME);
             Integer precision = record.getValue(TypeInfo.PRECISION);
             Short scale = record.getValue(TypeInfo.MAXIMUM_SCALE);
 
-            H2FunctionDefinition function = new H2FunctionDefinition(this, name, comment, typeName, precision, scale);
-            result.add(function);
+            result.add(new H2RoutineDefinition(this, name, comment, typeName, precision, scale));
         }
 
         return result;

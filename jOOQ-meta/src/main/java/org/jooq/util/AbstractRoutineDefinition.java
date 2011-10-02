@@ -44,26 +44,17 @@ import org.jooq.impl.JooqLogger;
 
 /**
  * @author Lukas Eder
- * @deprecated - 1.6.8 [#852] - The stored procedure / stored function
- *             distinction has been reviewed in jOOQ. The 12 currently supported
- *             RDBMS have such a distinct idea of what is a procedure and what
- *             is a function that it makes no longer sense to distinguish them
- *             generally, in jOOQ. See <a
- *             href="https://sourceforge.net/apps/trac/jooq/ticket/852"
- *             >https://sourceforge.net/apps/trac/jooq/ticket/852</a> for more
- *             details.
  */
-@Deprecated
-public abstract class AbstractProcedureDefinition extends AbstractCallableDefinition implements ProcedureDefinition {
+public abstract class AbstractRoutineDefinition extends AbstractCallableDefinition implements RoutineDefinition {
 
-    private static final JooqLogger   log = JooqLogger.getLogger(AbstractProcedureDefinition.class);
+    private static final JooqLogger     log = JooqLogger.getLogger(AbstractRoutineDefinition.class);
 
-    private List<ParameterDefinition> inParameters;
-    private List<ParameterDefinition> outParameters;
-    private ParameterDefinition       returnValue;
-    private List<ParameterDefinition> allParameters;
+    protected List<ParameterDefinition> inParameters;
+    protected List<ParameterDefinition> outParameters;
+    protected ParameterDefinition       returnValue;
+    protected List<ParameterDefinition> allParameters;
 
-    public AbstractProcedureDefinition(Database database, PackageDefinition pkg, String name, String comment, String overload) {
+    public AbstractRoutineDefinition(Database database, PackageDefinition pkg, String name, String comment, String overload) {
         super(database, pkg, name, comment, overload);
     }
 
@@ -116,6 +107,16 @@ public abstract class AbstractProcedureDefinition extends AbstractCallableDefini
         }
 
         return returnValue;
+    }
+
+    @Override
+    public final DataTypeDefinition getReturnType() {
+        if (getReturnValue() != null) {
+            return getReturnValue().getType();
+        }
+        else {
+            return new DefaultDataTypeDefinition(getDatabase(), "unknown", 0, 0);
+        }
     }
 
     protected final void addParameter(InOutDefinition inOut, ParameterDefinition parameter) {

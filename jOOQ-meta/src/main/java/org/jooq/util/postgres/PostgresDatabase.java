@@ -40,7 +40,6 @@ import static org.jooq.util.postgres.information_schema.tables.Attributes.ATTRIB
 import static org.jooq.util.postgres.information_schema.tables.Attributes.UDT_NAME;
 import static org.jooq.util.postgres.information_schema.tables.Attributes.UDT_SCHEMA;
 import static org.jooq.util.postgres.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
-import static org.jooq.util.postgres.information_schema.tables.Parameters.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.tables.Routines.ROUTINES;
 import static org.jooq.util.postgres.information_schema.tables.Sequences.SEQUENCES;
@@ -65,16 +64,14 @@ import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
 import org.jooq.util.postgres.information_schema.InformationSchemaFactory;
 import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
-import org.jooq.util.postgres.information_schema.tables.Parameters;
 import org.jooq.util.postgres.information_schema.tables.ReferentialConstraints;
 import org.jooq.util.postgres.information_schema.tables.Routines;
 import org.jooq.util.postgres.information_schema.tables.Sequences;
@@ -93,9 +90,6 @@ import org.jooq.util.postgres.pg_catalog.tables.PgType;
  */
 public class PostgresDatabase extends AbstractDatabase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
@@ -110,9 +104,6 @@ public class PostgresDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
@@ -143,9 +134,6 @@ public class PostgresDatabase extends AbstractDatabase {
             .fetch();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
@@ -179,9 +167,6 @@ public class PostgresDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -201,9 +186,6 @@ public class PostgresDatabase extends AbstractDatabase {
         return result;
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
@@ -220,9 +202,6 @@ public class PostgresDatabase extends AbstractDatabase {
         return result;
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
@@ -248,9 +227,6 @@ public class PostgresDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
@@ -266,21 +242,15 @@ public class PostgresDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<ArrayDefinition> getArrays0() throws SQLException {
         List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-	@Override
-	protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-	    List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    @Override
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         Table<RoutinesRecord> r1 = ROUTINES.as("r1");
         Table<RoutinesRecord> r2 = ROUTINES.as("r2");
@@ -289,24 +259,20 @@ public class PostgresDatabase extends AbstractDatabase {
                 r1.getField(Routines.ROUTINE_NAME),
                 r1.getField(Routines.SPECIFIC_NAME),
                 r1.getField(Routines.DATA_TYPE),
+                r1.getField(Routines.NUMERIC_PRECISION),
+                r1.getField(Routines.NUMERIC_SCALE),
                 r1.getField(Routines.TYPE_UDT_NAME),
                 getOverloadField(r1, r2))
             .from(r1)
             .where(r1.getField(Routines.ROUTINE_SCHEMA).equal(getSchemaName()))
-            .and(r1.getField(Routines.DATA_TYPE).lower().in("void", "record")
-            .orExists(create().selectOne()
-                .from(PARAMETERS)
-                .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
-                .and(Parameters.SPECIFIC_NAME.equal(r1.getField(Routines.SPECIFIC_NAME)))
-                .and(Parameters.PARAMETER_MODE.lower().in("out", "inout"))))
-            .orderBy(r1.getField(Routines.SPECIFIC_NAME).asc())
+            .orderBy(r1.getField(Routines.ROUTINE_NAME).asc())
             .fetch()) {
 
-            result.add(new PostgresProcedureDefinition(this, record));
+            result.add(new PostgresRoutineDefinition(this, record));
         }
 
         return result;
-	}
+    }
 
     private Field<Object> getOverloadField(Table<RoutinesRecord> r1, Table<RoutinesRecord> r2) {
         return create().decode().when(
@@ -323,53 +289,12 @@ public class PostgresDatabase extends AbstractDatabase {
                     .and(r2.getField(Routines.SPECIFIC_NAME).lessOrEqual(r1.getField(Routines.SPECIFIC_NAME))).asField()).as("overload");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-	protected List<FunctionDefinition> getFunctions0() throws SQLException {
-		List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-		Table<RoutinesRecord> r1 = ROUTINES.as("r1");
-        Table<RoutinesRecord> r2 = ROUTINES.as("r2");
-
-		for (Record record : create().select(
-		        r1.getField(Routines.ROUTINE_NAME),
-		        r1.getField(Routines.SPECIFIC_NAME),
-	            r1.getField(Routines.DATA_TYPE),
-	            r1.getField(Routines.NUMERIC_PRECISION),
-	            r1.getField(Routines.NUMERIC_SCALE),
-                r1.getField(Routines.TYPE_UDT_NAME),
-		        getOverloadField(r1, r2))
-		    .from(r1)
-		    .where(r1.getField(Routines.ROUTINE_SCHEMA).equal(getSchemaName()))
-		    .and(r1.getField(Routines.DATA_TYPE).lower().notIn("void", "record"))
-		    .andNotExists(create().selectOne()
-		        .from(PARAMETERS)
-		        .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
-		        .and(Parameters.SPECIFIC_NAME.equal(r1.getField(Routines.SPECIFIC_NAME)))
-		        .and(Parameters.PARAMETER_MODE.lower().in("out", "inout")))
-		    .orderBy(r1.getField(Routines.ROUTINE_NAME).asc())
-		    .fetch()) {
-
-            result.add(new PostgresFunctionDefinition(this, record));
-		}
-
-		return result;
-	}
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<PackageDefinition> getPackages0() throws SQLException {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Factory create() {
         return new InformationSchemaFactory(getConnection());

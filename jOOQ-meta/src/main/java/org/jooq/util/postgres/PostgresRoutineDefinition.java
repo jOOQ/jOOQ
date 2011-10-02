@@ -33,85 +33,83 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.sqlserver;
+package org.jooq.util.postgres;
 
-import static org.jooq.util.sqlserver.information_schema.tables.Parameters.PARAMETERS;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.util.AbstractFunctionDefinition;
+import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
-import org.jooq.util.sqlserver.information_schema.tables.Parameters;
-import org.jooq.util.sqlserver.information_schema.tables.Routines;
+import org.jooq.util.postgres.information_schema.tables.Parameters;
+import org.jooq.util.postgres.information_schema.tables.Routines;
 
 /**
+ * Postgres implementation of {@link AbstractRoutineDefinition}
+ *
  * @author Lukas Eder
  */
-public class SQLServerFunctionDefinition extends AbstractFunctionDefinition {
+public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
 
-    /**
-     * internal name for the function used by HSQLDB / SQL Server
-     */
     private final String specificName;
 
-    public SQLServerFunctionDefinition(Database database, String name, String specificName, String dataType, Number precision, Number scale) {
-        super(database, null, name, null, null);
+    public PostgresRoutineDefinition(Database database, Record record) {
+        super(database,
+            null,
+            record.getValue(Routines.ROUTINE_NAME),
+            null,
+            record.getValueAsString("overload"));
 
-        DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
+        if (!Arrays.asList("void", "record").contains(record.getValue(Routines.DATA_TYPE))) {
+            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+                record.getValue(Routines.DATA_TYPE),
+                record.getValue(Routines.NUMERIC_PRECISION),
+                record.getValue(Routines.NUMERIC_SCALE),
+                record.getValue(Routines.TYPE_UDT_NAME));
 
-        this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
-        this.specificName = specificName;
+            returnValue = new DefaultParameterDefinition(this, "return_value", -1, type);
+        }
+
+        specificName = record.getValue(Routines.SPECIFIC_NAME);
     }
 
     @Override
     protected void init0() throws SQLException {
-        Result<Record> result = create().selectDistinct(
-                Parameters.PARAMETER_MODE,
+        for (Record record : create().select(
                 Parameters.PARAMETER_NAME,
                 Parameters.DATA_TYPE,
                 Parameters.NUMERIC_PRECISION,
                 Parameters.NUMERIC_SCALE,
-                Parameters.ORDINAL_POSITION)
-            .from(PARAMETERS)
-            .join(Routines.ROUTINES)
-            .on(Parameters.SPECIFIC_SCHEMA.equal(Routines.SPECIFIC_SCHEMA))
-            .and(Parameters.SPECIFIC_NAME.equal(Routines.SPECIFIC_NAME))
+                Parameters.UDT_NAME,
+                Parameters.ORDINAL_POSITION,
+                Parameters.PARAMETER_MODE)
+            .from(Parameters.PARAMETERS)
             .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
-            .and(Parameters.SPECIFIC_NAME.equal(this.specificName))
-            .orderBy(Parameters.ORDINAL_POSITION.asc()).fetch();
+            .and(Parameters.SPECIFIC_NAME.equal(specificName))
+            .orderBy(Parameters.ORDINAL_POSITION.asc())
+            .fetch()) {
 
-        for (Record record : result) {
             String inOut = record.getValue(Parameters.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
                 record.getValue(Parameters.DATA_TYPE),
                 record.getValue(Parameters.NUMERIC_PRECISION),
-                record.getValue(Parameters.NUMERIC_SCALE));
+                record.getValue(Parameters.NUMERIC_SCALE),
+                record.getValue(Parameters.UDT_NAME));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(Parameters.PARAMETER_NAME).replaceAll("@", ""),
-                record.getValueAsInteger(Parameters.ORDINAL_POSITION),
+                record.getValue(Parameters.PARAMETER_NAME),
+                record.getValue(Parameters.ORDINAL_POSITION),
                 type);
 
-            if (InOutDefinition.getFromString(inOut) == InOutDefinition.IN) {
-                inParameters.add(parameter);
-            } else {
-                // This should not happen. Return value is handled when
-                // reading functions that exist (see HSQLDBDatabase.getFunctions0)
-
-                // TODO: correctly separate functions from procedures, see also
-                // https://sourceforge.net/apps/trac/jooq/ticket/193
-                // https://sourceforge.net/apps/trac/jooq/ticket/195
-                returnValue = parameter;
-            }
+            addParameter(InOutDefinition.getFromString(inOut), parameter);
         }
     }
 }

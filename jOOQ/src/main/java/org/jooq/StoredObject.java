@@ -47,7 +47,16 @@ import org.jooq.exception.DetachedException;
  * behaviour is specific to the concrete interface
  *
  * @author Lukas Eder
+ * @deprecated - 1.6.8 [#852] - The stored procedure / stored function
+ *             distinction has been reviewed in jOOQ. The 12 currently supported
+ *             RDBMS have such a distinct idea of what is a procedure and what
+ *             is a function that it makes no longer sense to distinguish them
+ *             generally, in jOOQ. See <a
+ *             href="https://sourceforge.net/apps/trac/jooq/ticket/852"
+ *             >https://sourceforge.net/apps/trac/jooq/ticket/852</a> for more
+ *             details.
  */
+@Deprecated
 public interface StoredObject extends NamedQueryPart, SchemaProvider {
 
     /**

@@ -57,9 +57,8 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -241,50 +240,24 @@ public class HSQLDBDatabase extends AbstractDatabase {
      * {@inheritDoc}
      */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create()
-            .select(Routines.ROUTINE_NAME, Routines.SPECIFIC_NAME)
-            .from(ROUTINES)
-            .where(Routines.ROUTINE_SCHEMA.equal(getSchemaName()))
-            .and(Routines.ROUTINE_TYPE.equal("PROCEDURE"))
-            .orderBy(Routines.ROUTINE_NAME)
-            .fetch()) {
-
-            String name = record.getValue(Routines.ROUTINE_NAME);
-            String specificName = record.getValue(Routines.SPECIFIC_NAME);
-
-            HSQLDBProcedureDefinition procedure = new HSQLDBProcedureDefinition(this, null, name, specificName);
-            result.add(procedure);
-        }
-
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-        for (Record record : create()
-            .select(
-                Routines.ROUTINE_NAME,
-                Routines.SPECIFIC_NAME,
-                ElementTypes.COLLECTION_TYPE_IDENTIFIER.nvl(Routines.DATA_TYPE).as("datatype"),
-                Routines.NUMERIC_PRECISION,
-                Routines.NUMERIC_SCALE)
-            .from(ROUTINES)
-            .leftOuterJoin(ELEMENT_TYPES)
-            .on(Routines.ROUTINE_SCHEMA.equal(ElementTypes.OBJECT_SCHEMA))
-            .and(Routines.ROUTINE_NAME.equal(ElementTypes.OBJECT_NAME))
-            .and(Routines.DTD_IDENTIFIER.equal(ElementTypes.COLLECTION_TYPE_IDENTIFIER))
-            .where(Routines.ROUTINE_SCHEMA.equal(getSchemaName()))
-            .and(Routines.ROUTINE_TYPE.equal("FUNCTION"))
-            .orderBy(Routines.ROUTINE_NAME)
-            .fetch()) {
+                .select(
+                    Routines.ROUTINE_NAME,
+                    Routines.SPECIFIC_NAME,
+                    ElementTypes.COLLECTION_TYPE_IDENTIFIER.nvl(Routines.DATA_TYPE).as("datatype"),
+                    Routines.NUMERIC_PRECISION,
+                    Routines.NUMERIC_SCALE)
+                .from(ROUTINES)
+                .leftOuterJoin(ELEMENT_TYPES)
+                .on(Routines.ROUTINE_SCHEMA.equal(ElementTypes.OBJECT_SCHEMA))
+                .and(Routines.ROUTINE_NAME.equal(ElementTypes.OBJECT_NAME))
+                .and(Routines.DTD_IDENTIFIER.equal(ElementTypes.COLLECTION_TYPE_IDENTIFIER))
+                .where(Routines.ROUTINE_SCHEMA.equal(getSchemaName()))
+                .orderBy(Routines.ROUTINE_NAME)
+                .fetch()) {
 
             String name = record.getValue(Routines.ROUTINE_NAME);
             String specificName = record.getValue(Routines.SPECIFIC_NAME);
@@ -292,7 +265,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
             Long precision = record.getValue(Routines.NUMERIC_PRECISION);
             Long scale = record.getValue(Routines.NUMERIC_SCALE);
 
-            HSQLDBFunctionDefinition function = new HSQLDBFunctionDefinition(this, name, specificName, dataType, precision, scale);
+            HSQLDBRoutineDefinition function = new HSQLDBRoutineDefinition(this, name, specificName, dataType, precision, scale);
             result.add(function);
         }
 

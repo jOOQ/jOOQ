@@ -33,53 +33,54 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.db2;
 
-import java.sql.SQLException;
+package org.jooq.util;
 
-import org.jooq.util.AbstractFunctionDefinition;
-import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
-import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.DefaultParameterDefinition;
-import org.jooq.util.PackageDefinition;
-import org.jooq.util.ParameterDefinition;
+import java.util.List;
 
 /**
- * DB2 implementation of {@link AbstractFunctionDefinition}
+ * An interface defining a stored routine in a database.
  *
- * @author Espen Stromsnes
+ * @author Lukas Eder
  */
-public class DB2FunctionDefinition extends AbstractFunctionDefinition {
-
-    public DB2FunctionDefinition(Database database, PackageDefinition pkg, String name, String comment) {
-        super(database, pkg, name, comment, null);
-    }
+@SuppressWarnings("deprecation")
+public interface RoutineDefinition extends ProcedureDefinition, FunctionDefinition {
 
     /**
-     * Sets the return value of the function
-     *
-     * @param dataType the return value data type
+     * @return The routine's package. <code>null</code> if the routine is not in
+     *         a package
      */
-    public void setReturnValue(String dataType, Number precision, Number scale) {
-        DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
-        this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
-    }
-
-    /**
-     * Adds parameter to function
-     *
-     * @param paramName parameter name
-     * @param position parameter ordinal position
-     * @param paramType parameter data type
-     */
-    public void addParameter(String paramName, int position, String paramType, Number precision, Number scale) {
-        DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), paramType, precision, scale);
-        ParameterDefinition column = new DefaultParameterDefinition(this, paramName, position, type);
-
-        getInParameters().add(column);
-    }
-
     @Override
-    protected void init0() throws SQLException {}
+    PackageDefinition getPackage();
+
+    /**
+     * A list of IN or INOUT parameter column definitions
+     */
+    @Override
+    List<ParameterDefinition> getInParameters();
+
+    /**
+     * A list of OUT or INOUT parameter column definitions
+     */
+    @Override
+    List<ParameterDefinition> getOutParameters();
+
+    /**
+     * A list of all IN, OUT, and INOUT parameter column definitions
+     */
+    @Override
+    List<ParameterDefinition> getAllParameters();
+
+    /**
+     * @return The return value column definition
+     */
+    @Override
+    ParameterDefinition getReturnValue();
+
+    /**
+     * @return The return value simple Java type
+     */
+    @Override
+    DataTypeDefinition getReturnType();
+
 }

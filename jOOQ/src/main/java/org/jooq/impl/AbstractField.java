@@ -140,11 +140,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final SortField<Integer> sortAsc(List<T> sortList) {
+    public final SortField<Integer> sortAsc(Collection<T> sortList) {
         Map<T, Integer> map = new LinkedHashMap<T, Integer>();
 
-        for (int i = 0; i < sortList.size(); i++) {
-            map.put(sortList.get(i), i);
+        int i = 0;
+        for (T value : sortList) {
+            map.put(value, i++);
         }
 
         return sort(map);
@@ -156,11 +157,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final SortField<Integer> sortDesc(List<T> sortList) {
+    public final SortField<Integer> sortDesc(Collection<T> sortList) {
         Map<T, Integer> map = new LinkedHashMap<T, Integer>();
 
-        for (int i = 0; i < sortList.size(); i++) {
-            map.put(sortList.get(i), -i);
+        int i = 0;
+        for (T value : sortList) {
+            map.put(value, i--);
         }
 
         return sort(map);

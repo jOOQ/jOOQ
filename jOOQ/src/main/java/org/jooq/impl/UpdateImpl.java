@@ -37,16 +37,12 @@ package org.jooq.impl;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -60,7 +56,9 @@ import org.jooq.exception.DetachedException;
  *
  * @author Lukas Eder
  */
-final class UpdateImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
+final class UpdateImpl<R extends TableRecord<R>>
+    extends AbstractDelegatingQueryPart<UpdateQuery<R>>
+    implements
 
     // Cascading interface implementations for Update behaviour
     UpdateSetMoreStep,
@@ -71,59 +69,42 @@ final class UpdateImpl<R extends TableRecord<R>> extends AbstractQueryPart imple
      */
     private static final long    serialVersionUID = -2444876472650065331L;
 
-    private final UpdateQuery<R> delegate;
-
     UpdateImpl(Configuration configuration, Table<R> table) {
-        delegate = new UpdateQueryImpl<R>(configuration, table);
+        super(new UpdateQueryImpl<R>(configuration, table));
     }
 
     @Override
     public final int execute() throws SQLException, DetachedException {
-        return delegate.execute();
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(delegate);
-    }
-
-    @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(delegate);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(delegate);
+        return getDelegate().execute();
     }
 
     @Override
     public final UpdateSetMoreStep set(Field<?> field, Object value) {
-        delegate.addValue(field, value);
+        getDelegate().addValue(field, value);
         return this;
     }
 
     @Override
     public final UpdateSetMoreStep set(Field<?> field, Field<?> value) {
-        delegate.addValue(field, value);
+        getDelegate().addValue(field, value);
         return this;
     }
 
     @Override
     public final UpdateSetMoreStep set(Map<? extends Field<?>, ?> map) {
-        delegate.addValues(map);
+        getDelegate().addValues(map);
         return this;
     }
 
     @Override
     public final UpdateImpl<R> where(Condition... conditions) {
-        delegate.addConditions(conditions);
+        getDelegate().addConditions(conditions);
         return this;
     }
 
     @Override
     public final UpdateImpl<R> where(Collection<Condition> conditions) {
-        delegate.addConditions(conditions);
+        getDelegate().addConditions(conditions);
         return this;
     }
 
@@ -149,7 +130,7 @@ final class UpdateImpl<R extends TableRecord<R>> extends AbstractQueryPart imple
 
     @Override
     public final UpdateImpl<R> and(Condition condition) {
-        delegate.addConditions(condition);
+        getDelegate().addConditions(condition);
         return this;
     }
 
@@ -180,7 +161,7 @@ final class UpdateImpl<R extends TableRecord<R>> extends AbstractQueryPart imple
 
     @Override
     public final UpdateImpl<R> or(Condition condition) {
-        delegate.addConditions(Operator.OR, condition);
+        getDelegate().addConditions(Operator.OR, condition);
         return this;
     }
 

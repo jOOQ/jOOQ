@@ -120,7 +120,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectQuery getQuery() {
-        return (SelectQuery) query;
+        return (SelectQuery) getDelegate();
     }
 
     @Override
@@ -435,22 +435,22 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl union(Select<Record> select) {
-        return new SelectImpl(query.union(select));
+        return new SelectImpl(getDelegate().union(select));
     }
 
     @Override
     public final SelectImpl unionAll(Select<Record> select) {
-        return new SelectImpl(query.unionAll(select));
+        return new SelectImpl(getDelegate().unionAll(select));
     }
 
     @Override
     public final SelectImpl except(Select<Record> select) {
-        return new SelectImpl(query.except(select));
+        return new SelectImpl(getDelegate().except(select));
     }
 
     @Override
     public final SelectImpl intersect(Select<Record> select) {
-        return new SelectImpl(query.intersect(select));
+        return new SelectImpl(getDelegate().intersect(select));
     }
 
     @Override

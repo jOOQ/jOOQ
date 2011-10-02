@@ -37,16 +37,12 @@ package org.jooq.impl;
 
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.List;
 
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Operator;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
@@ -55,7 +51,9 @@ import org.jooq.exception.DetachedException;
 /**
  * @author Lukas Eder
  */
-class DeleteImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
+class DeleteImpl<R extends TableRecord<R>>
+    extends AbstractDelegatingQueryPart<DeleteQueryImpl<R>>
+    implements
 
     // Cascading interface implementations for Delete behaviour
     DeleteWhereStep,
@@ -66,41 +64,24 @@ class DeleteImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
      */
     private static final long        serialVersionUID = 2747566322757517382L;
 
-    private final DeleteQueryImpl<R> delegate;
-
     DeleteImpl(Configuration configuration, Table<R> table) {
-        delegate = new DeleteQueryImpl<R>(configuration, table);
+        super(new DeleteQueryImpl<R>(configuration, table));
     }
 
     @Override
     public final int execute() throws SQLException, DetachedException {
-        return delegate.execute();
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(delegate);
-    }
-
-    @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(delegate);
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(delegate);
+        return getDelegate().execute();
     }
 
     @Override
     public final DeleteImpl<R> where(Condition... conditions) {
-        delegate.addConditions(conditions);
+        getDelegate().addConditions(conditions);
         return this;
     }
 
     @Override
     public final DeleteImpl<R> where(Collection<Condition> conditions) {
-        delegate.addConditions(conditions);
+        getDelegate().addConditions(conditions);
         return this;
     }
 
@@ -126,7 +107,7 @@ class DeleteImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
 
     @Override
     public final DeleteImpl<R> and(Condition condition) {
-        delegate.addConditions(condition);
+        getDelegate().addConditions(condition);
         return this;
     }
 
@@ -157,7 +138,7 @@ class DeleteImpl<R extends TableRecord<R>> extends AbstractQueryPart implements
 
     @Override
     public final DeleteImpl<R> or(Condition condition) {
-        delegate.addConditions(Operator.OR, condition);
+        getDelegate().addConditions(Operator.OR, condition);
         return this;
     }
 

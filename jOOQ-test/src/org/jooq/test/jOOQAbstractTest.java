@@ -972,14 +972,13 @@ public abstract class jOOQAbstractTest<
         Select<?> select =
         create().select(TBook_ID(), TBook_ID().mul(6).div(2).div(3))
                 .from(TBook())
-                .orderBy(TBook_ID(), TBook_ID().div(2));
+                .orderBy(TBook_ID(), TBook_ID().mod(2));
 
         assertEquals(
             Arrays.asList(6, 2, 3, 2),
             select.getBindValues());
 
-        // [#847] TODO: Run more tests like this one to ensure that
-        // Query.getSQL() returns dialect-specific SQL
+        log.info("Executing", select.getSQL());
         PreparedStatement stmt = connection.prepareStatement(select.getSQL());
         int i = 0;
         for (Object value : select.getBindValues()) {

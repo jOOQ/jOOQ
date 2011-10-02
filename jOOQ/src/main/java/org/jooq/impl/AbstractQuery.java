@@ -53,15 +53,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     private static final long       serialVersionUID = -8046199737354507547L;
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractQuery.class);
 
-    final AttachableImpl            attachable;
-
     AbstractQuery(Configuration configuration) {
-        this.attachable = new AttachableImpl(this, configuration);
-    }
-
-    @Override
-    public final void attach(Configuration configuration) {
-        attachable.attach(configuration);
+        super(configuration);
     }
 
     @Override
@@ -70,9 +63,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             StopWatch watch = new StopWatch();
 
             // Let listeners provide a configuration to this query
-            Configuration configuration = ConfigurationRegistry.provideFor(attachable.getConfiguration());
+            Configuration configuration = ConfigurationRegistry.provideFor(getConfiguration());
             if (configuration == null) {
-                configuration = attachable.getConfiguration();
+                configuration = getConfiguration();
             }
 
             Connection connection = configuration.getConnection();

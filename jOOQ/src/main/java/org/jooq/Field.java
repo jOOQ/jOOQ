@@ -38,7 +38,6 @@ package org.jooq;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import org.jooq.impl.Factory;
@@ -56,13 +55,20 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     // ------------------------------------------------------------------------
 
     /**
-     * The name of the field
+     * The name of the field.
+     * <p>
+     * The name is any of these:
+     * <ul>
+     * <li>The formal name of the field, if it is a <i>physical table/view field</i></li>
+     * <li>The alias of an <i>aliased field</i></li>
+     * <li>A generated / unspecified value for any other <i>expression</i></li>
+     * </ul>
      */
     @Override
     String getName();
 
     /**
-     * The type of the field
+     * The Java type of the field.
      */
     @Override
     Class<? extends T> getType();
@@ -137,14 +143,14 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     // ------------------------------------------------------------------------
 
     /**
-     * Create an ascending sort field from this
+     * Create an ascending sort field from this field
      *
      * @return This field as an ascending sort field
      */
     SortField<T> asc();
 
     /**
-     * Create a descending sort field from this
+     * Create a descending sort field from this field
      *
      * @return This field as a descending sort field
      */
@@ -167,7 +173,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
-    SortField<Integer> sortAsc(List<T> sortList);
+    SortField<Integer> sortAsc(Collection<T> sortList);
 
     /**
      * Create a sort field of the form <code><pre>
@@ -205,7 +211,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
-    SortField<Integer> sortDesc(List<T> sortList);
+    SortField<Integer> sortDesc(Collection<T> sortList);
 
     /**
      * Create a sort field of the form <code><pre>

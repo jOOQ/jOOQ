@@ -6757,8 +6757,8 @@ public abstract class jOOQAbstractTest<
             assertEquals("1", "" + result.getValue(1, 0));
             assertEquals("2", "" + result.getValue(2, 0));
 
-            // Joining an array table
-            // ----------------------
+            // Joining an unnested array table
+            // -------------------------------
             array.set(2, 3);
             Table<?> table = create().table(array);
             result = create()
@@ -6774,6 +6774,8 @@ public abstract class jOOQAbstractTest<
             assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
             assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
 
+            // Joining an aliased unnested array table
+            // ---------------------------------------
             result = create()
                 .select(TBook_ID(), TBook_TITLE())
                 .from(TBook())
@@ -6855,8 +6857,8 @@ public abstract class jOOQAbstractTest<
             assertEquals(1, result.getValue(1, 0));
             assertEquals(2, result.getValue(2, 0));
 
-            // Joining an array table
-            // ----------------------
+            // Joining an unnested array table
+            // -------------------------------
             array = new Integer[] { 2, 3 };
             Table<?> table = create().table(array);
             result = create()
@@ -6872,45 +6874,48 @@ public abstract class jOOQAbstractTest<
             assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
             assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
 
-            // [#756] TODO : Error when aliasing HSQLDB and Postgres UNNESTed tables
+            // Joining an aliased unnested array table
+            // ---------------------------------------
+            result = create()
+                .select(TBook_ID(), TBook_TITLE())
+                .from(TBook())
+                .join(table.as("t"))
+                .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
+                .fetch();
+
+            assertEquals(2, result.size());
+            assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
+            assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
+            assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
+            assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
+
+            // Cross join the array table with the unnested string array value
+            // ---------------------------------------------------------------
+
             switch (getDialect()) {
-                case HSQLDB:
                 case POSTGRES:
-                    log.info("SKIPPING", "Aliasing of ARRAY TABLE tests");
+                case H2:
+                    log.info("SKIPPING", "Cross join of table with unnested array is not supported");
                     break;
 
                 default:
+                    table = create().table(TArrays_STRING()).as("t");
                     result = create()
-                        .select(TBook_ID(), TBook_TITLE())
-                        .from(TBook())
-                        .join(table.as("t"))
-                        .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
+                        .select(TArrays_ID(), table.getField(0))
+                        .from(TArrays(), table)
+                        .orderBy(TArrays_ID())
                         .fetch();
 
-                    assertEquals(2, result.size());
-                    assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
-                    assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
-                    assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
-                    assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
-//
-//
-//                    table = create().table(TArrays_STRING()).as("t");
-//                    result = create()
-//                        .select(TArrays_ID(), table.getField(0))
-//                        .from(TArrays(), table)
-//                        .orderBy(TArrays_ID())
-//                        .fetch();
-//
-//                    assertEquals(3, result.size());
-//                    assertEquals(Integer.valueOf(3), result.getValue(0, TArrays_ID()));
-//                    assertEquals(Integer.valueOf(4), result.getValue(1, TArrays_ID()));
-//                    assertEquals(Integer.valueOf(4), result.getValue(2, TArrays_ID()));
-//
-//                    assertEquals("a", result.getValue(0, 1));
-//                    assertEquals("a", result.getValue(1, 1));
-//                    assertEquals("b", result.getValue(2, 1));
-                    break;
+                    assertEquals(3, result.size());
+                    assertEquals(Integer.valueOf(3), result.getValue(0, TArrays_ID()));
+                    assertEquals(Integer.valueOf(4), result.getValue(1, TArrays_ID()));
+                    assertEquals(Integer.valueOf(4), result.getValue(2, TArrays_ID()));
+
+                    assertEquals("a", result.getValue(0, 1));
+                    assertEquals("a", result.getValue(1, 1));
+                    assertEquals("b", result.getValue(2, 1));
             }
+
 
             // Functions returning arrays
             // --------------------------

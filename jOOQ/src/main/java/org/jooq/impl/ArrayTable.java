@@ -60,8 +60,13 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
 
     private final Field<?>       array;
     private final FieldList      field;
+    private final String         alias;
 
     ArrayTable(Field<?> array) {
+        this(array, "array_table(COLUMN_VALUE)");
+    }
+
+    ArrayTable(Field<?> array, String alias) {
         super("array_table");
 
         Class<?> arrayType;
@@ -74,6 +79,7 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
         }
 
         this.array = array;
+        this.alias = alias;
         this.field = new FieldList();
         this.field.add(create().field("COLUMN_VALUE", arrayType));
     }
@@ -85,8 +91,8 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Table<R> as(String alias) {
-        return new TableAlias<R>(this, alias);
+    public final Table<R> as(String as) {
+        return new TableAlias<R>(new ArrayTable<R>(array, ""), as);
     }
 
     @Override
@@ -113,11 +119,16 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
                 break;
             }
 
+            // [#756] These dialects need special care when aliasing unnested
+            // arrays
             case HSQLDB:
             case POSTGRES: {
+                context.sql("unnest(").sql(array).sql(")");
 
-                // [#756] TODO: Handle aliasing correctly
-                context.sql("unnest(").sql(array).sql(") array_table(COLUMN_VALUE)");
+                if (!StringUtils.isBlank(alias)) {
+                    context.sql(" as ").sql(alias);
+                }
+
                 break;
             }
 

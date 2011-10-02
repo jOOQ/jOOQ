@@ -65,12 +65,16 @@ import org.jooq.Table;
  */
 abstract class AbstractQueryPart implements QueryPartInternal, AttachableInternal {
 
-    private static final long       serialVersionUID = 2078114876079493107L;
+    private static final long serialVersionUID = 2078114876079493107L;
 
-    private final AttachableImpl    attachable;
+    private final AttachableImpl      attachable;
 
     AbstractQueryPart() {
-        this.attachable = new AttachableImpl(this, DefaultConfiguration.DEFAULT_CONFIGURATION);
+        this(DefaultConfiguration.DEFAULT_CONFIGURATION);
+    }
+
+    AbstractQueryPart(Configuration configuration) {
+        this.attachable = new AttachableImpl(this, configuration);
     }
 
     @Override

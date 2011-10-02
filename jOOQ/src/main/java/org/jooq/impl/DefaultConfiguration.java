@@ -75,4 +75,13 @@ final class DefaultConfiguration implements Configuration {
      * No further instances
      */
     private DefaultConfiguration() {}
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        return new Factory(getConnection(), getDialect(), getSchemaMapping()).toString();
+    }
 }

@@ -94,7 +94,7 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
 
     @Override
     public final SimpleSelectQuery<R> getQuery() {
-        return (SimpleSelectQuery<R>) query;
+        return (SimpleSelectQuery<R>) getDelegate();
     }
 
     @Override

@@ -40,19 +40,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
-import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.Table;
 
-abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryPart
+/**
+ * @author Lukas Eder
+ */
+abstract class AbstractDelegatingSelect<R extends Record>
+    extends AbstractDelegatingQueryPart<Select<R>>
     implements Select<R> {
 
     /**
@@ -60,239 +61,222 @@ abstract class AbstractDelegatingSelect<R extends Record> extends AbstractQueryP
      */
     private static final long serialVersionUID = 3382400928803573548L;
 
-    protected final Select<R> query;
-
     AbstractDelegatingSelect(Select<R> query) {
-        this.query = query;
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(query);
+        super(query);
     }
 
     @Override
     public final Class<? extends R> getRecordType() {
-        return query.getRecordType();
+        return getDelegate().getRecordType();
     }
 
     @Override
     public final List<Field<?>> getSelect() {
-        return query.getSelect();
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(query);
-    }
-
-    @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(query);
+        return getDelegate().getSelect();
     }
 
     @Override
     public final Result<R> getResult() {
-        return query.getResult();
+        return getDelegate().getResult();
     }
 
     @Override
     public final Result<R> fetch() throws SQLException {
-        return query.fetch();
+        return getDelegate().fetch();
     }
 
     @Override
     public final Cursor<R> fetchLazy() throws SQLException {
-        return query.fetchLazy();
+        return getDelegate().fetchLazy();
     }
 
     @Override
     public final List<Result<Record>> fetchMany() throws SQLException {
-        return query.fetchMany();
+        return getDelegate().fetchMany();
     }
 
     @Override
     public final <T> List<T> fetch(Field<T> field) throws SQLException {
-        return query.fetch(field);
+        return getDelegate().fetch(field);
     }
 
     @Override
     public final List<?> fetch(int fieldIndex) throws SQLException {
-        return query.fetch(fieldIndex);
+        return getDelegate().fetch(fieldIndex);
     }
 
     @Override
     public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws SQLException {
-        return query.fetch(fieldIndex, type);
+        return getDelegate().fetch(fieldIndex, type);
     }
 
     @Override
     public final List<?> fetch(String fieldName) throws SQLException {
-        return query.fetch(fieldName);
+        return getDelegate().fetch(fieldName);
     }
 
     @Override
     public final <T> List<T> fetch(String fieldName, Class<? extends T> type) throws SQLException {
-        return query.fetch(fieldName, type);
+        return getDelegate().fetch(fieldName, type);
     }
 
     @Override
     public final <T> T fetchOne(Field<T> field) throws SQLException {
-        return query.fetchOne(field);
+        return getDelegate().fetchOne(field);
     }
 
     @Override
     public final Object fetchOne(int fieldIndex) throws SQLException {
-        return query.fetchOne(fieldIndex);
+        return getDelegate().fetchOne(fieldIndex);
     }
 
     @Override
     public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException {
-        return query.fetchOne(fieldIndex, type);
+        return getDelegate().fetchOne(fieldIndex, type);
     }
 
     @Override
     public final Object fetchOne(String fieldName) throws SQLException {
-        return query.fetchOne(fieldName);
+        return getDelegate().fetchOne(fieldName);
     }
 
     @Override
     public final <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException {
-        return query.fetchOne(fieldName, type);
+        return getDelegate().fetchOne(fieldName, type);
     }
 
     @Override
     public final R fetchOne() throws SQLException {
-        return query.fetchOne();
+        return getDelegate().fetchOne();
     }
 
     @Override
     public final R fetchAny() throws SQLException {
-        return query.fetchAny();
+        return getDelegate().fetchAny();
     }
 
     @Override
     public final <K> Map<K, R> fetchMap(Field<K> key) throws SQLException {
-        return query.fetchMap(key);
+        return getDelegate().fetchMap(key);
     }
 
     @Override
     public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws SQLException {
-        return query.fetchMap(key, value);
+        return getDelegate().fetchMap(key, value);
     }
 
     @Override
     public final List<Map<String, Object>> fetchMaps() throws SQLException {
-        return query.fetchMaps();
+        return getDelegate().fetchMaps();
     }
 
     @Override
     public final Map<String, Object> fetchOneMap() throws SQLException {
-        return query.fetchOneMap();
+        return getDelegate().fetchOneMap();
     }
 
     @Override
     public final Object[][] fetchArrays() throws SQLException {
-        return query.fetchArrays();
+        return getDelegate().fetchArrays();
     }
 
     @Override
     public final Object[] fetchArray(int fieldIndex) throws SQLException {
-        return query.fetchArray(fieldIndex);
+        return getDelegate().fetchArray(fieldIndex);
     }
 
     @Override
     public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws SQLException {
-        return query.fetchArray(fieldIndex, type);
+        return getDelegate().fetchArray(fieldIndex, type);
     }
 
     @Override
     public final Object[] fetchArray(String fieldName) throws SQLException {
-        return query.fetchArray(fieldName);
+        return getDelegate().fetchArray(fieldName);
     }
 
     @Override
     public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws SQLException {
-        return query.fetchArray(fieldName, type);
+        return getDelegate().fetchArray(fieldName, type);
     }
 
     @Override
     public final <T> T[] fetchArray(Field<T> field) throws SQLException {
-        return query.fetchArray(field);
+        return getDelegate().fetchArray(field);
     }
 
     @Override
     public final Object[] fetchOneArray() throws SQLException {
-        return query.fetchOneArray();
+        return getDelegate().fetchOneArray();
     }
 
     @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) throws SQLException {
-        return query.fetchInto(type);
+        return getDelegate().fetchInto(type);
     }
 
     @Override
     public final <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException {
-        return query.fetchInto(handler);
+        return getDelegate().fetchInto(handler);
     }
 
     @Override
     public final FutureResult<R> fetchLater() throws SQLException {
-        return query.fetchLater();
+        return getDelegate().fetchLater();
     }
 
     @Override
     public final FutureResult<R> fetchLater(ExecutorService executor) throws SQLException {
-        return query.fetchLater(executor);
+        return getDelegate().fetchLater(executor);
     }
 
     @Override
     public final int execute() throws SQLException {
-        return query.execute();
+        return getDelegate().execute();
     }
 
     @Override
     public final Table<R> asTable() {
-        return query.asTable();
+        return getDelegate().asTable();
     }
 
     @Override
     public final Table<R> asTable(String alias) {
-        return query.asTable(alias);
+        return getDelegate().asTable(alias);
     }
 
     @Override
     public final <T> Field<T> asField() {
-        return query.asField();
+        return getDelegate().asField();
     }
 
     @Override
     public final <T> Field<T> asField(String alias) {
-        return query.asField(alias);
+        return getDelegate().asField(alias);
     }
 
     @Override
     public final <T> Field<T> getField(Field<T> field) {
-        return query.asTable().getField(field);
+        return getDelegate().asTable().getField(field);
     }
 
     @Override
     public final Field<?> getField(String name) {
-        return query.asTable().getField(name);
+        return getDelegate().asTable().getField(name);
     }
 
     @Override
     public final Field<?> getField(int index) {
-        return query.asTable().getField(index);
+        return getDelegate().asTable().getField(index);
     }
 
     @Override
     public final List<Field<?>> getFields() {
-        return query.asTable().getFields();
+        return getDelegate().asTable().getFields();
     }
 
     @Override
     public final int getIndex(Field<?> field) throws IllegalArgumentException {
-        return query.asTable().getIndex(field);
+        return getDelegate().asTable().getIndex(field);
     }
 }

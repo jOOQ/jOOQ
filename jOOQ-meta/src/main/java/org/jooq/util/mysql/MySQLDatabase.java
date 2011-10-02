@@ -45,7 +45,6 @@ import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_NAME;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_SCHEMA;
 import static org.jooq.util.mysql.mysql.tables.Proc.DB;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
-import static org.jooq.util.mysql.mysql.tables.Proc.TYPE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -60,9 +59,8 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -71,7 +69,6 @@ import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.mysql.information_schema.tables.ReferentialConstraints;
 import org.jooq.util.mysql.information_schema.tables.TableConstraints;
 import org.jooq.util.mysql.information_schema.tables.Tables;
-import org.jooq.util.mysql.mysql.enums.ProcType;
 import org.jooq.util.mysql.mysql.tables.Proc;
 
 /**
@@ -79,9 +76,6 @@ import org.jooq.util.mysql.mysql.tables.Proc;
  */
 public class MySQLDatabase extends AbstractDatabase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
@@ -98,9 +92,6 @@ public class MySQLDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
@@ -139,9 +130,6 @@ public class MySQLDatabase extends AbstractDatabase {
             .fetch();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
@@ -177,18 +165,12 @@ public class MySQLDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -211,9 +193,6 @@ public class MySQLDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
@@ -251,87 +230,48 @@ public class MySQLDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<ArrayDefinition> getArrays0() throws SQLException {
         List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        for (Record record : executeProcedureQuery(ProcType.PROCEDURE)) {
-            String name = record.getValue(Proc.NAME);
-            String comment = record.getValue(Proc.COMMENT);
-            String params = new String(record.getValue(Proc.PARAM_LIST));
+        for (Record record : create().select(
+                    Proc.NAME,
+                    Proc.COMMENT,
+                    Proc.PARAM_LIST,
+                    Proc.RETURNS)
+                .from(PROC)
+                .where(DB.equal(getSchemaName()))
+                .fetch()) {
 
-            MySQLProcedureDefinition procedure = new MySQLProcedureDefinition(this, name, comment, params);
-            result.add(procedure);
-        }
-
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-        for (Record record : executeProcedureQuery(ProcType.FUNCTION)) {
             String name = record.getValue(Proc.NAME);
             String comment = record.getValue(Proc.COMMENT);
             String params = new String(record.getValue(Proc.PARAM_LIST));
             String returnValue = new String(record.getValue(Proc.RETURNS));
 
-            MySQLFunctionDefinition function = new MySQLFunctionDefinition(this, name, comment, params, returnValue);
-            result.add(function);
+            result.add(new MySQLRoutineDefinition(this, name, comment, params, returnValue));
         }
 
         return result;
     }
 
-    private Result<Record> executeProcedureQuery(ProcType type) throws SQLException {
-        return create().select(
-                Proc.NAME,
-                Proc.COMMENT,
-                Proc.PARAM_LIST,
-                Proc.RETURNS)
-            .from(PROC)
-            .where(DB.equal(getSchemaName()))
-            .and(TYPE.equal(type))
-            .fetch();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<PackageDefinition> getPackages0() throws SQLException {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Factory create() {
         return new MySQLFactory(getConnection());

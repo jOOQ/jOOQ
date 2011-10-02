@@ -56,9 +56,8 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -76,17 +75,11 @@ import org.jooq.util.ingres.ingres.tables.Iitables;
  */
 public class IngresDatabase extends AbstractDatabase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Factory create() {
         return new $ingresFactory(getConnection());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
@@ -101,9 +94,6 @@ public class IngresDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
@@ -142,9 +132,6 @@ public class IngresDatabase extends AbstractDatabase {
             .fetch();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
@@ -189,9 +176,6 @@ public class IngresDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
@@ -208,9 +192,6 @@ public class IngresDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -227,24 +208,9 @@ public class IngresDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
-
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
         return result;
     }
 

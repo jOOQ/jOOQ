@@ -37,101 +37,48 @@ package org.jooq.util.oracle;
 
 import static org.jooq.util.oracle.sys.tables.AllArguments.ALL_ARGUMENTS;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.Condition;
-import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.Table;
 import org.jooq.util.AbstractPackageDefinition;
 import org.jooq.util.Database;
-import org.jooq.util.FunctionDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.oracle.sys.tables.AllArguments;
-import org.jooq.util.oracle.sys.tables.records.AllArgumentsRecord;
 
 /**
  * @author Lukas Eder
  */
 public class OraclePackageDefinition extends AbstractPackageDefinition {
 
-    private Table<AllArgumentsRecord> o = ALL_ARGUMENTS.as("outer");
-    private Table<AllArgumentsRecord> i = ALL_ARGUMENTS.as("inner");
-    private Field<String> o_objectName = o.getField(AllArguments.OBJECT_NAME);
-    private Field<String> i_objectName = i.getField(AllArguments.OBJECT_NAME);
-    private Field<BigDecimal> o_objectID = o.getField(AllArguments.OBJECT_ID);
-    private Field<BigDecimal> i_objectID = i.getField(AllArguments.OBJECT_ID);
-    private Field<String> o_overload = o.getField(AllArguments.OVERLOAD);
-
-
     public OraclePackageDefinition(Database database, String packageName, String comment) {
         super(database, packageName, comment);
     }
 
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        for (Record record : getProcedures(true)) {
-            String name = record.getValue(o_objectName);
-            BigDecimal objectId = record.getValue(o_objectID);
-            String overload = record.getValue(o_overload);
-            result.add(new OracleProcedureDefinition(getDatabase(), this, name, "", objectId, overload));
+        for (Record record : create()
+                .selectDistinct(
+                    AllArguments.OBJECT_NAME,
+                    AllArguments.OBJECT_ID,
+                    AllArguments.OVERLOAD)
+                .from(ALL_ARGUMENTS)
+                .where(AllArguments.OWNER.equal(getSchemaName()))
+                .and(AllArguments.PACKAGE_NAME.equal(getName()))
+                .orderBy(AllArguments.OBJECT_NAME, AllArguments.OVERLOAD)
+                .fetch()) {
+
+            result.add(new OracleRoutineDefinition(getDatabase(),
+                this,
+                record.getValue(AllArguments.OBJECT_NAME),
+                "",
+                record.getValue(AllArguments.OBJECT_ID),
+                record.getValue(AllArguments.OVERLOAD)));
         }
 
         return result;
-    }
-
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-        for (Record record : getProcedures(false)) {
-            String name = record.getValue(o_objectName);
-            BigDecimal objectId = record.getValue(o_objectID);
-            String overload = record.getValue(o_overload);
-            result.add(new OracleFunctionDefinition(getDatabase(), this, name, "", objectId, overload));
-        }
-
-        return result;
-    }
-
-    private Result<Record> getProcedures(boolean procedures) throws SQLException {
-        Condition existsReturnValue = create().exists(create().selectOne()
-            .from(i)
-            .where(i.getField(AllArguments.OWNER).equal(getSchemaName()))
-            .and(i.getField(AllArguments.PACKAGE_NAME).equal(getName()))
-            .and(i_objectID.equal(o_objectID))
-            .and(i_objectName.equal(o_objectName))
-            .and(i.getField(AllArguments.POSITION).equal(BigDecimal.ZERO)));
-
-        Condition notExistsOUTParameters = create().notExists(create().selectOne()
-            .from(i)
-            .where(i.getField(AllArguments.OWNER).equal(getSchemaName()))
-            .and(i.getField(AllArguments.PACKAGE_NAME).equal(getName()))
-            .and(i_objectID.equal(o_objectID))
-            .and(i_objectName.equal(o_objectName))
-            .and(i.getField(AllArguments.POSITION).notEqual(BigDecimal.ZERO))
-            .and(i.getField(AllArguments.IN_OUT).in("OUT", "IN/OUT")));
-
-        Condition combine = existsReturnValue.and(notExistsOUTParameters);
-
-        // Invert requirements for function callables, if we're looking
-        // for procedures
-        if (procedures) {
-            combine = combine.not();
-        }
-
-        return create().selectDistinct(o_objectName, o_objectID, o_overload)
-            .from(o)
-            .where(o.getField(AllArguments.OWNER).equal(getSchemaName()))
-            .and(o.getField(AllArguments.PACKAGE_NAME).equal(getName()))
-            .and(combine)
-            .orderBy(o_objectName, o_overload)
-            .fetch();
     }
 }

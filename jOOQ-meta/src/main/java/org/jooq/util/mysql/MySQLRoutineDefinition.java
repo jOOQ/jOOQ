@@ -40,41 +40,53 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 
 import org.jooq.impl.StringUtils;
-import org.jooq.util.AbstractFunctionDefinition;
+import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
+import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
 
 /**
  * @author Lukas Eder
  */
-public class MySQLFunctionDefinition extends AbstractFunctionDefinition {
+public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
-	public MySQLFunctionDefinition(Database database, String name, String comment, String params, String returns) {
+    private final String params;
+    private final String returns;
+
+	public MySQLRoutineDefinition(Database database, String name, String comment, String params, String returns) {
 		super(database, null, name, comment, null);
 
-		init (params, returns);
+		this.params = params;
+		this.returns = returns;
 	}
 
-	private void init(String params, String returns) {
-		String[] split = params.split(",");
-		for (int i = 0; i < split.length; i++) {
-			String param = split[i];
+    @Override
+    protected void init0() throws SQLException {
+        // [#738] Avoid matching commas that appear in types, for instance DECIMAL(2, 1)
+        String[] split = params.split(",(?!\\s*\\d+\\s*\\))");
 
-			param = param.trim();
-			Matcher matcher = PARAMETER_PATTERN.matcher(param);
-			while (matcher.find()) {
-				getInParameters().add(createParameter(matcher, 3, i + 1));
-			}
-		}
+        for (int i = 0; i < split.length; i++) {
+            String param = split[i];
 
-		Matcher matcher = TYPE_PATTERN.matcher(returns);
-		if (matcher.find()) {
-			returnValue = createParameter(matcher, 0, -1);
-		}
-	}
+            // TODO [#742] : Use the INFORMATION_SCHEMA.PARAMETERS dictionary view instead.
+            // It's much more reliable, than mysql.proc pattern matching...
+
+            param = param.trim();
+            Matcher matcher = PARAMETER_PATTERN.matcher(param);
+            while (matcher.find()) {
+                InOutDefinition inOut = InOutDefinition.getFromString(matcher.group(2));
+                addParameter(inOut, createParameter(matcher, 3, i + 1));
+            }
+        }
+
+        Matcher matcher = TYPE_PATTERN.matcher(returns);
+        if (matcher.find()) {
+            returnValue = createParameter(matcher, 0, -1);
+        }
+    }
 
 	private ParameterDefinition createParameter(Matcher matcher, int group, int columnIndex) {
 		String paramName = matcher.group(group);
@@ -93,7 +105,4 @@ public class MySQLFunctionDefinition extends AbstractFunctionDefinition {
         DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), paramType, precision, scale);
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);
 	}
-
-    @Override
-    protected void init0() throws SQLException {}
 }

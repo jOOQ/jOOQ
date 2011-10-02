@@ -36,7 +36,6 @@
 
 package org.jooq.util.oracle;
 
-import static org.jooq.util.oracle.sys.tables.AllArguments.ALL_ARGUMENTS;
 import static org.jooq.util.oracle.sys.tables.AllCollTypes.ALL_COLL_TYPES;
 import static org.jooq.util.oracle.sys.tables.AllConsColumns.ALL_CONS_COLUMNS;
 import static org.jooq.util.oracle.sys.tables.AllConstraints.ALL_CONSTRAINTS;
@@ -65,14 +64,12 @@ import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.oracle.sys.SysFactory;
-import org.jooq.util.oracle.sys.tables.AllArguments;
 import org.jooq.util.oracle.sys.tables.AllCollTypes;
 import org.jooq.util.oracle.sys.tables.AllConsColumns;
 import org.jooq.util.oracle.sys.tables.AllConstraints;
@@ -275,69 +272,20 @@ public class OracleDatabase extends AbstractDatabase {
         return arrays;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
-
-        for (Record record : create().select(
-                    AllObjects.OBJECT_NAME,
-                    AllObjects.OBJECT_ID)
-                .from(ALL_OBJECTS)
-                .where(AllObjects.OWNER.equal(getSchemaName())
-                .and(AllObjects.OBJECT_TYPE.equal("PROCEDURE")))
-
-                // #378 - Oracle permits functions with OUT parameters
-                // Those functions are mapped to procedures by jOOQ
-                .or(AllObjects.OBJECT_TYPE.equal("FUNCTION")
-                .andExists(create().selectOne()
-                                   .from(ALL_ARGUMENTS)
-                                   .where(AllArguments.OWNER.equal(getSchemaName()))
-                                   .and(AllArguments.OBJECT_NAME.equal(AllObjects.OBJECT_NAME))
-                                   .and(AllArguments.OBJECT_ID.equal(AllObjects.OBJECT_ID))
-                                   .and(AllArguments.IN_OUT.in("OUT", "IN/OUT"))
-                                   .and(AllArguments.ARGUMENT_NAME.isNotNull())
-                                   .and(AllArguments.POSITION.notEqual(BigDecimal.ZERO))))
-                .orderBy(AllObjects.OBJECT_NAME, AllObjects.OBJECT_ID)
-                .fetch()) {
-
-            String objectName = record.getValue(AllObjects.OBJECT_NAME);
-            BigDecimal objectId = record.getValue(AllObjects.OBJECT_ID);
-            result.add(new OracleProcedureDefinition(this, null, objectName, "", objectId, null));
-        }
-
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create().select(AllObjects.OBJECT_NAME, AllObjects.OBJECT_ID)
                 .from(ALL_OBJECTS)
                 .where(AllObjects.OWNER.equal(getSchemaName())
-                .and(AllObjects.OBJECT_TYPE.equal("FUNCTION")))
-
-                // #378 - Oracle permits functions with OUT parameters
-                // Those functions are mapped to procedures by jOOQ
-                .andNotExists(create().selectOne()
-                                   .from(ALL_ARGUMENTS)
-                                   .where(AllArguments.OWNER.equal(getSchemaName()))
-                                   .and(AllArguments.OBJECT_NAME.equal(AllObjects.OBJECT_NAME))
-                                   .and(AllArguments.OBJECT_ID.equal(AllObjects.OBJECT_ID))
-                                   .and(AllArguments.IN_OUT.in("OUT", "IN/OUT"))
-                                   .and(AllArguments.ARGUMENT_NAME.isNotNull())
-                                   .and(AllArguments.POSITION.notEqual(BigDecimal.ZERO)))
+                .and(AllObjects.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
                 .orderBy(AllObjects.OBJECT_NAME, AllObjects.OBJECT_ID)
                 .fetch()) {
+
             String objectName = record.getValue(AllObjects.OBJECT_NAME);
             BigDecimal objectId = record.getValue(AllObjects.OBJECT_ID);
-            result.add(new OracleFunctionDefinition(this, null, objectName, "", objectId, null));
+            result.add(new OracleRoutineDefinition(this, null, objectName, "", objectId, null));
         }
 
         return result;

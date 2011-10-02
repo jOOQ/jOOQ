@@ -50,9 +50,8 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -248,34 +247,16 @@ public class SybaseDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create().select(Sysprocedure.PROC_NAME)
-            .from(Sysprocedure.SYSPROCEDURE)
-            .where(Sysprocedure.PROC_DEFN.like("create procedure%"))
-            .orderBy(Sysprocedure.PROC_NAME)
-            .fetch()) {
+                .from(Sysprocedure.SYSPROCEDURE)
+                .orderBy(Sysprocedure.PROC_NAME)
+                .fetch()) {
 
             String name = record.getValue(Sysprocedure.PROC_NAME);
-            result.add(new SybaseProcedureDefinition(this, null, name));
-        }
-
-        return result;
-    }
-
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        List<FunctionDefinition> result = new ArrayList<FunctionDefinition>();
-
-        for (Record record : create().select(Sysprocedure.PROC_NAME)
-            .from(Sysprocedure.SYSPROCEDURE)
-            .where(Sysprocedure.PROC_DEFN.like("create function%"))
-            .orderBy(Sysprocedure.PROC_NAME)
-            .fetch()) {
-
-            String name = record.getValue(Sysprocedure.PROC_NAME);
-            result.add(new SybaseFunctionDefinition(this, null, name));
+            result.add(new SybaseRoutineDefinition(this, null, name));
         }
 
         return result;

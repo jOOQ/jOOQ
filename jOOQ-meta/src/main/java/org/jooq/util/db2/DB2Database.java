@@ -36,9 +36,13 @@
 package org.jooq.util.db2;
 
 import static org.jooq.util.db2.syscat.tables.Datatypes.DATATYPES;
-import static org.jooq.util.db2.syscat.tables.Funcparms.FUNCPARMS;
+import static org.jooq.util.db2.syscat.tables.Functions.FUNCNAME;
+import static org.jooq.util.db2.syscat.tables.Functions.FUNCSCHEMA;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCTIONS;
 import static org.jooq.util.db2.syscat.tables.Keycoluse.KEYCOLUSE;
+import static org.jooq.util.db2.syscat.tables.Procedures.PROCEDURES;
+import static org.jooq.util.db2.syscat.tables.Procedures.PROCNAME;
+import static org.jooq.util.db2.syscat.tables.Procedures.PROCSCHEMA;
 import static org.jooq.util.db2.syscat.tables.References.REFERENCES;
 import static org.jooq.util.db2.syscat.tables.Sequences.SEQUENCES;
 import static org.jooq.util.db2.syscat.tables.Tabconst.TABCONST;
@@ -46,9 +50,7 @@ import static org.jooq.util.db2.syscat.tables.Tables.TABLES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jooq.Record;
 import org.jooq.SelectQuery;
@@ -59,18 +61,14 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
-import org.jooq.util.FunctionDefinition;
 import org.jooq.util.PackageDefinition;
-import org.jooq.util.ProcedureDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.db2.syscat.SyscatFactory;
 import org.jooq.util.db2.syscat.tables.Datatypes;
-import org.jooq.util.db2.syscat.tables.Funcparms;
-import org.jooq.util.db2.syscat.tables.Functions;
 import org.jooq.util.db2.syscat.tables.Keycoluse;
-import org.jooq.util.db2.syscat.tables.Procedures;
 import org.jooq.util.db2.syscat.tables.References;
 import org.jooq.util.db2.syscat.tables.Sequences;
 import org.jooq.util.db2.syscat.tables.Tabconst;
@@ -83,17 +81,11 @@ import org.jooq.util.db2.syscat.tables.Tables;
  */
 public class DB2Database extends AbstractDatabase {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Factory create() {
         return new SyscatFactory(getConnection());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
@@ -108,9 +100,6 @@ public class DB2Database extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
@@ -142,9 +131,6 @@ public class DB2Database extends AbstractDatabase {
             .fetch();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
@@ -180,9 +166,6 @@ public class DB2Database extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
@@ -199,9 +182,6 @@ public class DB2Database extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -225,69 +205,29 @@ public class DB2Database extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected List<ProcedureDefinition> getProcedures0() throws SQLException {
-        List<ProcedureDefinition> result = new ArrayList<ProcedureDefinition>();
+    protected List<RoutineDefinition> getRoutines0() throws SQLException {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        for (Record record : create().select(Procedures.PROCNAME)
-            .from(Procedures.PROCEDURES)
-            .where(Procedures.PROCSCHEMA.equal(getSchemaName()))
-            .orderBy(Procedures.PROCNAME)
-            .fetch()) {
+        for (Record record : create()
+                .select().from(create()
+                    .select(PROCNAME.as("name"), create().val(true).as("isProcedure"))
+                    .from(PROCEDURES)
+                    .where(PROCSCHEMA.equal(getSchemaName()))
+                    .unionAll(create()
+                    .select(FUNCNAME.as("name"), create().val(false).as("isProcedure"))
+                    .from(FUNCTIONS)
+                    .where(FUNCSCHEMA.equal(getSchemaName()))))
+                .orderBy(create().literal(1))
+                .fetch()) {
 
-            String name = record.getValue(Procedures.PROCNAME);
-            result.add(new DB2ProcedureDefinition(this, null, name));
+            result.add(new DB2RoutineDefinition(this,
+                record.getValueAsString("name"),
+                null,
+                record.getValueAsBoolean("isProcedure")));
         }
 
         return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected List<FunctionDefinition> getFunctions0() throws SQLException {
-        Map<String, DB2FunctionDefinition> functionMap = new HashMap<String, DB2FunctionDefinition>();
-
-        SelectQuery q = create().selectQuery();
-        q.addFrom(FUNCPARMS);
-        q.addJoin(FUNCTIONS, Funcparms.FUNCSCHEMA.equal(Functions.FUNCSCHEMA),
-            Funcparms.FUNCNAME.equal(Functions.FUNCNAME));
-        q.addConditions(Funcparms.FUNCSCHEMA.equal(getSchemaName()));
-        q.addConditions(Functions.ORIGIN.equal("Q"));
-        q.addOrderBy(Funcparms.FUNCNAME);
-        q.addOrderBy(Funcparms.ORDINAL);
-        q.execute();
-
-        for (Record record : q.getResult()) {
-            String name = record.getValue(Funcparms.FUNCNAME);
-            String rowType = record.getValue(Funcparms.ROWTYPE);
-            String dataType = record.getValue(Funcparms.TYPENAME);
-            Integer precision = record.getValue(Funcparms.LENGTH);
-            Short scale = record.getValue(Funcparms.SCALE);
-            int position = record.getValue(Funcparms.ORDINAL);
-            String paramName = record.getValue(Funcparms.PARMNAME);
-
-            DB2FunctionDefinition function = functionMap.get(name);
-            if (function == null) {
-                function = new DB2FunctionDefinition(this, null, name, null);
-                functionMap.put(name, function);
-            }
-
-            if ("C".equals(rowType)) { // result after casting
-                function.setReturnValue(dataType, precision, scale);
-            }
-            else if ("P".equals(rowType)) { // parameter
-                function.addParameter(paramName, position, dataType, precision, scale);
-            }
-            else { // result before casting
-                   // continue
-            }
-        }
-        return new ArrayList<FunctionDefinition>(functionMap.values());
     }
 
     @Override

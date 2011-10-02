@@ -13,22 +13,56 @@ package org.jooq.test.db2.generatedclasses;
 public final class Functions {
 
 	/**
-	 * Invoke F_ONE
+	 * Invoke F317
 	 *
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param p4
 	 */
-	public static java.lang.Integer fOne(org.jooq.Configuration configuration) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.functions.FOne f = new org.jooq.test.db2.generatedclasses.functions.FOne();
+	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) throws java.sql.SQLException {
+		org.jooq.test.db2.generatedclasses.functions.F317 f = new org.jooq.test.db2.generatedclasses.functions.F317();
+		f.setP1(p1);
+		f.setP2(p2);
+		f.setP3(p3);
+		f.setP4(p4);
 
 		f.execute(configuration);
 		return f.getReturnValue();
 	}
 
 	/**
-	 * Get F_ONE as a field
+	 * Get F317 as a field
 	 *
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param p4
 	 */
-	public static org.jooq.Field<java.lang.Integer> fOne() {
-		org.jooq.test.db2.generatedclasses.functions.FOne f = new org.jooq.test.db2.generatedclasses.functions.FOne();
+	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
+		org.jooq.test.db2.generatedclasses.functions.F317 f = new org.jooq.test.db2.generatedclasses.functions.F317();
+		f.setP1(p1);
+		f.setP2(p2);
+		f.setP3(p3);
+		f.setP4(p4);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F317 as a field
+	 *
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 * @param p4
+	 */
+	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
+		org.jooq.test.db2.generatedclasses.functions.F317 f = new org.jooq.test.db2.generatedclasses.functions.F317();
+		f.setP1(p1);
+		f.setP2(p2);
+		f.setP3(p3);
+		f.setP4(p4);
 
 		return f.asField();
 	}
@@ -108,56 +142,22 @@ public final class Functions {
 	}
 
 	/**
-	 * Invoke F317
+	 * Invoke F_ONE
 	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
 	 */
-	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) throws java.sql.SQLException {
-		org.jooq.test.db2.generatedclasses.functions.F317 f = new org.jooq.test.db2.generatedclasses.functions.F317();
-		f.setP1(p1);
-		f.setP2(p2);
-		f.setP3(p3);
-		f.setP4(p4);
+	public static java.lang.Integer fOne(org.jooq.Configuration configuration) throws java.sql.SQLException {
+		org.jooq.test.db2.generatedclasses.functions.FOne f = new org.jooq.test.db2.generatedclasses.functions.FOne();
 
 		f.execute(configuration);
 		return f.getReturnValue();
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get F_ONE as a field
 	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
 	 */
-	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
-		org.jooq.test.db2.generatedclasses.functions.F317 f = new org.jooq.test.db2.generatedclasses.functions.F317();
-		f.setP1(p1);
-		f.setP2(p2);
-		f.setP3(p3);
-		f.setP4(p4);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get F317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 */
-	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
-		org.jooq.test.db2.generatedclasses.functions.F317 f = new org.jooq.test.db2.generatedclasses.functions.F317();
-		f.setP1(p1);
-		f.setP2(p2);
-		f.setP3(p3);
-		f.setP4(p4);
+	public static org.jooq.Field<java.lang.Integer> fOne() {
+		org.jooq.test.db2.generatedclasses.functions.FOne f = new org.jooq.test.db2.generatedclasses.functions.FOne();
 
 		return f.asField();
 	}

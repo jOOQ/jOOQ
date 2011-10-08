@@ -43,44 +43,37 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface RoutineDefinition extends ProcedureDefinition, FunctionDefinition {
+public interface RoutineDefinition extends Definition {
 
     /**
      * @return The routine's package. <code>null</code> if the routine is not in
      *         a package
      */
-    @Override
     PackageDefinition getPackage();
 
     /**
      * A list of IN or INOUT parameter column definitions
      */
-    @Override
     List<ParameterDefinition> getInParameters();
 
     /**
      * A list of OUT or INOUT parameter column definitions
      */
-    @Override
     List<ParameterDefinition> getOutParameters();
 
     /**
      * A list of all IN, OUT, and INOUT parameter column definitions
      */
-    @Override
     List<ParameterDefinition> getAllParameters();
 
     /**
      * @return The return value column definition
      */
-    @Override
     ParameterDefinition getReturnValue();
 
     /**
      * @return The return value simple Java type
      */
-    @Override
     DataTypeDefinition getReturnType();
 
 }

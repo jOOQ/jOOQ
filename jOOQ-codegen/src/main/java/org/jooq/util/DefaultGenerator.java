@@ -1130,7 +1130,7 @@ public class DefaultGenerator implements Generator {
     		printHeader(outP, targetPackage);
     		printClassJavadoc(outP, "Convenience access to all stored procedures in " + schema.getName());
     		outP.println("public final class Procedures {");
-    		for (ProcedureDefinition procedure : database.getProcedures()) {
+    		for (RoutineDefinition procedure : database.getProcedures()) {
     		    try {
         			printProcedure(database, schema, procedure);
 
@@ -1160,7 +1160,7 @@ public class DefaultGenerator implements Generator {
             printClassJavadoc(outFn, "Convenience access to all stored functions in " + schema.getName());
             outFn.println("public final class Functions {");
 
-    		for (FunctionDefinition function : database.getFunctions()) {
+    		for (RoutineDefinition function : database.getFunctions()) {
     		    try {
         			printFunction(database, schema, function);
 
@@ -1195,7 +1195,7 @@ public class DefaultGenerator implements Generator {
                     File targetPackagePackageDir = new File(targetPackagesPackageDir, strategy.getJavaClassName(pkg).toLowerCase());
                     log.info("Generating package", targetPackagePackageDir.getCanonicalPath());
 
-                    for (ProcedureDefinition procedure : pkg.getProcedures()) {
+                    for (RoutineDefinition procedure : pkg.getProcedures()) {
                         try {
                             printProcedure(database, schema, procedure);
                         } catch (Exception e) {
@@ -1203,7 +1203,7 @@ public class DefaultGenerator implements Generator {
                         }
                     }
 
-                    for (FunctionDefinition function : pkg.getFunctions()) {
+                    for (RoutineDefinition function : pkg.getFunctions()) {
                         try {
                             printFunction(database, schema, function);
                         } catch (Exception e) {
@@ -1234,7 +1234,7 @@ public class DefaultGenerator implements Generator {
                     outPkg.print(strategy.getFullJavaClassName(pkg));
                     outPkg.println("();");
 
-                    for (ProcedureDefinition procedure : pkg.getProcedures()) {
+                    for (RoutineDefinition procedure : pkg.getProcedures()) {
                         try {
                             printConvenienceMethodProcedure(outPkg, procedure);
                         } catch (Exception e) {
@@ -1242,7 +1242,7 @@ public class DefaultGenerator implements Generator {
                         }
                     }
 
-                    for (FunctionDefinition function : pkg.getFunctions()) {
+                    for (RoutineDefinition function : pkg.getFunctions()) {
                         try {
                             printConvenienceMethodFunction(outPkg, function);
 
@@ -1369,7 +1369,7 @@ public class DefaultGenerator implements Generator {
         return result;
     }
 
-    private void printProcedure(Database database, SchemaDefinition schema, ProcedureDefinition procedure)
+    private void printProcedure(Database database, SchemaDefinition schema, RoutineDefinition procedure)
         throws FileNotFoundException, SQLException {
         strategy.getFile(procedure).getParentFile().mkdirs();
         log.info("Generating procedure", strategy.getFileName(procedure));
@@ -1486,7 +1486,7 @@ public class DefaultGenerator implements Generator {
         out.close();
     }
 
-    private void printFunction(Database database, SchemaDefinition schema, FunctionDefinition function)
+    private void printFunction(Database database, SchemaDefinition schema, RoutineDefinition function)
         throws SQLException, FileNotFoundException {
         strategy.getFile(function).getParentFile().mkdirs();
         log.info("Generating function", strategy.getFileName(function));
@@ -1608,7 +1608,7 @@ public class DefaultGenerator implements Generator {
         out.close();
     }
 
-    private void printConvenienceMethodFunctionAsField(GenerationWriter out, FunctionDefinition function, boolean parametersAsField) throws SQLException {
+    private void printConvenienceMethodFunctionAsField(GenerationWriter out, RoutineDefinition function, boolean parametersAsField) throws SQLException {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -1675,7 +1675,7 @@ public class DefaultGenerator implements Generator {
         out.println("\t}");
     }
 
-    private void printConvenienceMethodFunction(GenerationWriter out, FunctionDefinition function) throws SQLException {
+    private void printConvenienceMethodFunction(GenerationWriter out, RoutineDefinition function) throws SQLException {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -1736,7 +1736,7 @@ public class DefaultGenerator implements Generator {
         out.println("\tprivate " + javaClassName + "() {}");
     }
 
-    private void printConvenienceMethodProcedure(GenerationWriter out, ProcedureDefinition procedure) throws SQLException {
+    private void printConvenienceMethodProcedure(GenerationWriter out, RoutineDefinition procedure) throws SQLException {
         // [#281] - Java can't handle more than 255 method parameters
         if (procedure.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Procedure " + procedure + " has more than 254 in parameters. Skipping generation of convenience method.");

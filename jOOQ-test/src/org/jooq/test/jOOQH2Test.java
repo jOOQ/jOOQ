@@ -54,9 +54,8 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.impl.Factory;
-import org.jooq.test.h2.generatedclasses.Functions;
-import org.jooq.test.h2.generatedclasses.Procedures;
 import org.jooq.test.h2.generatedclasses.PublicFactory;
+import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
@@ -429,58 +428,58 @@ public class jOOQH2Test extends jOOQAbstractTest<
 
     @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
-        return Functions.fAuthorExists(authorName);
+        return Routines.fAuthorExists(authorName);
     }
 
     @Override
     protected Field<? extends Number> FOneField() {
-        return Functions.fOne();
+        return Routines.fOne();
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Number n) {
-        return Functions.fNumber((Integer) n);
+        return Routines.fNumber((Integer) n);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
-        return Functions.fNumber((Field<Integer>) n);
+        return Routines.fNumber((Field<Integer>) n);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Number n1, Number n2, Number n3, Number n4) {
-        return Functions.f317((Integer) n1, (Integer) n2, (Integer) n3, (Integer) n4);
+        return Routines.f317((Integer) n1, (Integer) n2, (Integer) n3, (Integer) n4);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {
-        return Functions.f317((Field<Integer>) n1, (Field<Integer>) n2, (Field<Integer>) n3, (Field<Integer>) n4);
+        return Routines.f317((Field<Integer>) n1, (Field<Integer>) n2, (Field<Integer>) n3, (Field<Integer>) n4);
     }
 
     @Override
     protected Field<Result<Record>> FGetOneCursorField(Integer[] array) {
-        return Functions.fGetOneCursor(array);
+        return Routines.fGetOneCursor(array);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected Field<Integer[]> FArrays1Field(Field<Integer[]> array) {
-        return (Field) Functions.fArrays1((Field) array);
+        return (Field) Routines.fArrays1((Field) array);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected Field<Long[]> FArrays2Field(Field<Long[]> array) {
-        return (Field) Functions.fArrays2((Field) array);
+        return (Field) Routines.fArrays2((Field) array);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     protected Field<String[]> FArrays3Field(Field<String[]> array) {
-        return (Field) Functions.fArrays3((Field)array);
+        return (Field) Routines.fArrays3((Field)array);
     }
 
     @Override
@@ -509,8 +508,8 @@ public class jOOQH2Test extends jOOQAbstractTest<
     }
 
     @Override
-    protected Class<?> cProcedures() {
-        return Procedures.class;
+    protected Class<?> cRoutines() {
+        return Routines.class;
     }
 
     @Override
@@ -526,11 +525,6 @@ public class jOOQH2Test extends jOOQAbstractTest<
     @Override
     protected boolean supportsRecursiveQueries() {
         return false;
-    }
-
-    @Override
-    protected Class<?> cFunctions() {
-        return Functions.class;
     }
 
     @Override

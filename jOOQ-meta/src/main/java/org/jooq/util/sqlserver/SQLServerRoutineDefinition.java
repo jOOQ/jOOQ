@@ -81,13 +81,15 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
                 Parameters.DATA_TYPE,
                 Parameters.NUMERIC_PRECISION,
                 Parameters.NUMERIC_SCALE,
-                Parameters.ORDINAL_POSITION)
+                Parameters.ORDINAL_POSITION,
+                Parameters.IS_RESULT)
             .from(PARAMETERS)
             .join(Routines.ROUTINES)
             .on(Parameters.SPECIFIC_SCHEMA.equal(Routines.SPECIFIC_SCHEMA))
             .and(Parameters.SPECIFIC_NAME.equal(Routines.SPECIFIC_NAME))
             .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
             .and(Parameters.SPECIFIC_NAME.equal(this.specificName))
+            .and(Parameters.IS_RESULT.isFalse())
             .orderBy(Parameters.ORDINAL_POSITION.asc()).fetch();
 
         for (Record record : result) {

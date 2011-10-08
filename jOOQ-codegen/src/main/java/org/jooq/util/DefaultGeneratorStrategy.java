@@ -255,11 +255,8 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
             if (routine.getPackage() != null) {
                 return "packages." + getJavaIdentifierUC(routine.getPackage()).toLowerCase();
             }
-            else if (routine.getReturnValue() != null) {
-                return "functions";
-            }
-            else if (routine.getReturnValue() == null) {
-                return "procedures";
+            else {
+                return "routines";
             }
         }
         else if (definition instanceof EnumDefinition) {

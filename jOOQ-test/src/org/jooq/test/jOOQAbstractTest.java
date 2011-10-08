@@ -6115,6 +6115,52 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIsTrue() throws Exception {
+        assertEquals(0, create().select().where(val(null).isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("asdf").isTrue()).fetch().size());
+
+        assertEquals(0, create().select().where(val(0).isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("false").isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("n").isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("no").isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("0").isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val(false).isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("disabled").isTrue()).fetch().size());
+        assertEquals(0, create().select().where(val("off").isTrue()).fetch().size());
+
+        assertEquals(1, create().select().where(val(1).isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val("true").isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val("y").isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val("yes").isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val("1").isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val(true).isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val("enabled").isTrue()).fetch().size());
+        assertEquals(1, create().select().where(val("on").isTrue()).fetch().size());
+
+
+        assertEquals(0, create().select().where(val("asdf").isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val(null).isFalse()).fetch().size());
+
+        assertEquals(1, create().select().where(val(0).isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val("false").isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val("n").isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val("no").isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val("0").isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val(false).isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val("disabled").isFalse()).fetch().size());
+        assertEquals(1, create().select().where(val("off").isFalse()).fetch().size());
+
+        assertEquals(0, create().select().where(val(1).isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val("true").isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val("y").isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val("yes").isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val("1").isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val(true).isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val("enabled").isFalse()).fetch().size());
+        assertEquals(0, create().select().where(val("on").isFalse()).fetch().size());
+    }
+
+    @Test
     public void testWindowFunctions() throws Exception {
         switch (getDialect()) {
             case ASE:

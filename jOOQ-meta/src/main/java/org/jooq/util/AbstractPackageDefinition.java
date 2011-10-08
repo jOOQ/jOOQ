@@ -44,23 +44,22 @@ import org.jooq.impl.JooqLogger;
 /**
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
 public abstract class AbstractPackageDefinition extends AbstractDefinition implements PackageDefinition {
 
-    private static final JooqLogger   log = JooqLogger.getLogger(AbstractPackageDefinition.class);
+    private static final JooqLogger log = JooqLogger.getLogger(AbstractPackageDefinition.class);
 
-    private List<ProcedureDefinition> procedures;
-    private List<FunctionDefinition>  functions;
-    private List<RoutineDefinition>   routines;
+    private List<RoutineDefinition> procedures;
+    private List<RoutineDefinition> functions;
+    private List<RoutineDefinition> routines;
 
     public AbstractPackageDefinition(Database database, String name, String comment) {
         super(database, name, comment);
     }
 
     @Override
-    public final List<ProcedureDefinition> getProcedures() {
+    public final List<RoutineDefinition> getProcedures() {
         if (procedures == null) {
-            procedures = new ArrayList<ProcedureDefinition>();
+            procedures = new ArrayList<RoutineDefinition>();
 
             for (RoutineDefinition routine : getRoutines()) {
 
@@ -76,9 +75,9 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
     }
 
     @Override
-    public final List<FunctionDefinition> getFunctions() {
+    public final List<RoutineDefinition> getFunctions() {
         if (functions == null) {
-            functions = new ArrayList<FunctionDefinition>();
+            functions = new ArrayList<RoutineDefinition>();
 
             for (RoutineDefinition routine : getRoutines()) {
 

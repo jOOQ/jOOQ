@@ -43,16 +43,16 @@ package org.jooq.util;
  * @author Lukas Eder
  */
 public class DefaultParameterDefinition
-    extends AbstractTypedElementDefinition<CallableDefinition>
+    extends AbstractTypedElementDefinition<RoutineDefinition>
     implements ParameterDefinition {
 
-    public DefaultParameterDefinition(CallableDefinition callable, String name, int position, DataTypeDefinition type) {
-        super(callable, name, position, type, null);
+    public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type) {
+        super(routine, name, position, type, null);
     }
 
     @Override
     @Deprecated
-    public final CallableDefinition getCallable() {
+    public final RoutineDefinition getCallable() {
         return getContainer();
     }
 }

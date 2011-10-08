@@ -57,7 +57,7 @@ public interface PackageDefinition extends Definition {
      *             more details.
      */
     @Deprecated
-    List<ProcedureDefinition> getProcedures();
+    List<RoutineDefinition> getProcedures();
 
     /**
      * Fetch all stored functions from the package
@@ -72,7 +72,7 @@ public interface PackageDefinition extends Definition {
      *             more details.
      */
     @Deprecated
-    List<FunctionDefinition> getFunctions();
+    List<RoutineDefinition> getFunctions();
 
     /**
      * Fetch all routines from the package

@@ -136,7 +136,7 @@ public interface Database {
      *             more details.
      */
     @Deprecated
-    List<ProcedureDefinition> getProcedures();
+    List<RoutineDefinition> getProcedures();
 
     /**
      * The stored functions contained in this database (for schema
@@ -152,7 +152,7 @@ public interface Database {
      *             more details.
      */
     @Deprecated
-    List<FunctionDefinition> getFunctions();
+    List<RoutineDefinition> getFunctions();
 
     /**
      * The packages contained in this database (for schema {@link #getSchema()})

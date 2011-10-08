@@ -1119,68 +1119,122 @@ public class DefaultGenerator implements Generator {
             watch.splitInfo("Enums generated");
         }
 
-		// ----------------------------------------------------------------------
-		// XXX Generating stored procedures
-		// ----------------------------------------------------------------------
-		if (database.getProcedures().size() > 0) {
-		    File targetProcedurePackageDir = new File(targetPackageDir, "procedures");
-		    log.info("Generating procedures", targetProcedurePackageDir.getCanonicalPath());
+        // ----------------------------------------------------------------------
+        // XXX Generating routines
+        // ----------------------------------------------------------------------
+        if (database.getRoutines().size() > 0) {
+            File targetRoutinePackageDir = new File(targetPackageDir, "routines");
+            log.info("Generating routines", targetRoutinePackageDir.getCanonicalPath());
 
-    		GenerationWriter outP = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Procedures.java")));
-    		printHeader(outP, targetPackage);
-    		printClassJavadoc(outP, "Convenience access to all stored procedures in " + schema.getName());
-    		outP.println("public final class Procedures {");
-    		for (RoutineDefinition procedure : database.getProcedures()) {
-    		    try {
-        			printProcedure(database, schema, procedure);
+            GenerationWriter outR = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Routines.java")));
+            printHeader(outR, targetPackage);
+            printClassJavadoc(outR, "Convenience access to all stored procedures and functions in " + schema.getName());
 
-        			// Static execute() convenience method
-        			printConvenienceMethodProcedure(outP, procedure);
-    		    } catch (Exception e) {
-    		        log.error("Error while generating procedure " + procedure, e);
-    		    }
+            outR.println("public final class Routines {");
+            for (RoutineDefinition routine : database.getRoutines()) {
+                try {
+                    if (routine.isProcedure()) {
+                        printProcedure(database, schema, routine);
+
+                        // Static execute() convenience method
+                        printConvenienceMethodProcedure(outR, routine);
+                    }
+                    else {
+                        printFunction(database, schema, routine);
+
+                        // Static execute() convenience method
+                        printConvenienceMethodFunction(outR, routine);
+
+                        // Static asField() convenience method
+                        printConvenienceMethodFunctionAsField(outR, routine, false);
+                        printConvenienceMethodFunctionAsField(outR, routine, true);
+                    }
+                } catch (Exception e) {
+                    log.error("Error while generating routine " + routine, e);
+                }
+            }
+
+            printPrivateConstructor(outR, "Routines");
+            outR.println("}");
+            outR.close();
+
+            watch.splitInfo("Routines generated");
+        }
+
+        // ----------------------------------------------------------------------
+        // XXX Generating stored procedures
+        // ----------------------------------------------------------------------
+        if (generateDeprecated()) {
+
+    		@SuppressWarnings("deprecation")
+            List<RoutineDefinition> procedures = database.getProcedures();
+            @SuppressWarnings("deprecation")
+            List<RoutineDefinition> functions = database.getFunctions();
+
+    		if (procedures.size() > 0 && generateDeprecated()) {
+    		    File targetProcedurePackageDir = new File(targetPackageDir, "procedures");
+    		    log.info("Generating procedures", targetProcedurePackageDir.getCanonicalPath());
+
+        		GenerationWriter outP = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Procedures.java")));
+        		printHeader(outP, targetPackage);
+        		printClassJavadoc(outP, "Convenience access to all stored procedures in " + schema.getName(),
+        		    "1.6.8 [#852] - Use {@link Routines} instead");
+
+        		outP.println("public final class Procedures {");
+        		for (RoutineDefinition procedure : procedures) {
+        		    try {
+            			printProcedure(database, schema, procedure);
+
+            			// Static execute() convenience method
+            			printConvenienceMethodProcedure(outP, procedure);
+        		    } catch (Exception e) {
+        		        log.error("Error while generating procedure " + procedure, e);
+        		    }
+        		}
+
+        		printPrivateConstructor(outP, "Procedures");
+        		outP.println("}");
+        		outP.close();
+
+        		watch.splitInfo("Procedures generated");
     		}
 
-    		printPrivateConstructor(outP, "Procedures");
-    		outP.println("}");
-    		outP.close();
+    		// ----------------------------------------------------------------------
+    		// XXX Generating stored functions
+    		// ----------------------------------------------------------------------
+            if (functions.size() > 0) {
+    		    File targetFunctionPackageDir = new File(targetPackageDir, "functions");
+    		    log.info("Generating functions", targetFunctionPackageDir.getCanonicalPath());
 
-    		watch.splitInfo("Procedures generated");
-		}
+                GenerationWriter outFn = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Functions.java")));
+                printHeader(outFn, targetPackage);
+                printClassJavadoc(outFn, "Convenience access to all stored functions in " + schema.getName(),
+                    "1.6.8 [#852] - Use {@link Routines} instead");
 
-		// ----------------------------------------------------------------------
-		// XXX Generating stored functions
-		// ----------------------------------------------------------------------
-		if (database.getFunctions().size() > 0) {
-		    File targetFunctionPackageDir = new File(targetPackageDir, "functions");
-		    log.info("Generating functions", targetFunctionPackageDir.getCanonicalPath());
+                outFn.println("public final class Functions {");
 
-            GenerationWriter outFn = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Functions.java")));
-            printHeader(outFn, targetPackage);
-            printClassJavadoc(outFn, "Convenience access to all stored functions in " + schema.getName());
-            outFn.println("public final class Functions {");
+        		for (RoutineDefinition function : functions) {
+        		    try {
+            			printFunction(database, schema, function);
 
-    		for (RoutineDefinition function : database.getFunctions()) {
-    		    try {
-        			printFunction(database, schema, function);
+                        // Static execute() convenience method
+        			    printConvenienceMethodFunction(outFn, function);
 
-                    // Static execute() convenience method
-    			    printConvenienceMethodFunction(outFn, function);
+                        // Static asField() convenience method
+                        printConvenienceMethodFunctionAsField(outFn, function, false);
+                        printConvenienceMethodFunctionAsField(outFn, function, true);
+        		    } catch (Exception e) {
+        		        log.error("Error while generating function " + function, e);
+        		    }
+        		}
 
-                    // Static asField() convenience method
-                    printConvenienceMethodFunctionAsField(outFn, function, false);
-                    printConvenienceMethodFunctionAsField(outFn, function, true);
-    		    } catch (Exception e) {
-    		        log.error("Error while generating function " + function, e);
-    		    }
+        		printPrivateConstructor(outFn, "Functions");
+                outFn.println("}");
+                outFn.close();
+
+                watch.splitInfo("Functions generated");
     		}
-
-    		printPrivateConstructor(outFn, "Functions");
-            outFn.println("}");
-            outFn.close();
-
-            watch.splitInfo("Functions generated");
-		}
+        }
 
         // ----------------------------------------------------------------------
         // XXX Generating packages
@@ -1191,23 +1245,19 @@ public class DefaultGenerator implements Generator {
 
             for (PackageDefinition pkg : database.getPackages()) {
                 try {
-                    // [#767] This is not the correct package name!
                     File targetPackagePackageDir = new File(targetPackagesPackageDir, strategy.getJavaClassName(pkg).toLowerCase());
                     log.info("Generating package", targetPackagePackageDir.getCanonicalPath());
 
-                    for (RoutineDefinition procedure : pkg.getProcedures()) {
+                    for (RoutineDefinition routine : pkg.getRoutines()) {
                         try {
-                            printProcedure(database, schema, procedure);
+                            if (routine.isProcedure()) {
+                                printProcedure(database, schema, routine);
+                            }
+                            else {
+                                printFunction(database, schema, routine);
+                            }
                         } catch (Exception e) {
-                            log.error("Error while generating procedure " + procedure, e);
-                        }
-                    }
-
-                    for (RoutineDefinition function : pkg.getFunctions()) {
-                        try {
-                            printFunction(database, schema, function);
-                        } catch (Exception e) {
-                            log.error("Error while generating function " + function, e);
+                            log.error("Error while generating routine " + routine, e);
                         }
                     }
 
@@ -1234,22 +1284,20 @@ public class DefaultGenerator implements Generator {
                     outPkg.print(strategy.getFullJavaClassName(pkg));
                     outPkg.println("();");
 
-                    for (RoutineDefinition procedure : pkg.getProcedures()) {
+                    for (RoutineDefinition routine : pkg.getRoutines()) {
                         try {
-                            printConvenienceMethodProcedure(outPkg, procedure);
-                        } catch (Exception e) {
-                            log.error("Error while generating procedure " + procedure, e);
-                        }
-                    }
+                            if (routine.isProcedure()) {
+                                printConvenienceMethodProcedure(outPkg, routine);
+                            }
+                            else {
+                                printConvenienceMethodFunction(outPkg, routine);
 
-                    for (RoutineDefinition function : pkg.getFunctions()) {
-                        try {
-                            printConvenienceMethodFunction(outPkg, function);
+                                printConvenienceMethodFunctionAsField(outPkg, routine, false);
+                                printConvenienceMethodFunctionAsField(outPkg, routine, true);
+                            }
 
-                            printConvenienceMethodFunctionAsField(outPkg, function, false);
-                            printConvenienceMethodFunctionAsField(outPkg, function, true);
                         } catch (Exception e) {
-                            log.error("Error while generating function " + function, e);
+                            log.error("Error while generating routine " + routine, e);
                         }
                     }
 

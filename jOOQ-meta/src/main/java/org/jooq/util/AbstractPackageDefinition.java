@@ -56,16 +56,14 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         super(database, name, comment);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<RoutineDefinition> getProcedures() {
         if (procedures == null) {
             procedures = new ArrayList<RoutineDefinition>();
 
             for (RoutineDefinition routine : getRoutines()) {
-
-                // [#378] Oracle supports stored functions with OUT parameters.
-                // They were mapped to procedures in jOOQ before [#852]
-                if (routine.getReturnValue() == null || !routine.getOutParameters().isEmpty()) {
+                if (routine.isProcedure()) {
                     procedures.add(routine);
                 }
             }
@@ -74,16 +72,14 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         return procedures;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<RoutineDefinition> getFunctions() {
         if (functions == null) {
             functions = new ArrayList<RoutineDefinition>();
 
             for (RoutineDefinition routine : getRoutines()) {
-
-                // [#378] Oracle supports stored functions with OUT parameters.
-                // They were mapped to procedures in jOOQ before [#852]
-                if (routine.getReturnValue() != null && routine.getOutParameters().isEmpty()) {
+                if (!routine.isProcedure()) {
                     functions.add(routine);
                 }
             }
@@ -93,7 +89,7 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
     }
 
     @Override
-    public List<RoutineDefinition> getRoutines() {
+    public final List<RoutineDefinition> getRoutines() {
         if (routines == null) {
             routines = new ArrayList<RoutineDefinition>();
 

@@ -56,12 +56,11 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
-import org.jooq.test.oracle.generatedclasses.Functions;
-import org.jooq.test.oracle.generatedclasses.Procedures;
+import org.jooq.test.oracle.generatedclasses.Routines;
 import org.jooq.test.oracle.generatedclasses.Sequences;
 import org.jooq.test.oracle.generatedclasses.TestFactory;
-import org.jooq.test.oracle.generatedclasses.functions.F377;
 import org.jooq.test.oracle.generatedclasses.packages.Library;
+import org.jooq.test.oracle.generatedclasses.routines.F377;
 import org.jooq.test.oracle.generatedclasses.tables.TArrays;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
@@ -466,42 +465,42 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
-        return Functions.fAuthorExists(authorName);
+        return Routines.fAuthorExists(authorName);
     }
 
     @Override
     protected Field<? extends Number> FOneField() {
-        return Functions.fOne();
+        return Routines.fOne();
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Number n) {
-        return Functions.fNumber(n);
+        return Routines.fNumber(n);
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
-        return Functions.fNumber(n);
+        return Routines.fNumber(n);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Number n1, Number n2, Number n3, Number n4) {
-        return Functions.f317(n1, n2, n3, n4);
+        return Routines.f317(n1, n2, n3, n4);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {
-        return Functions.f317(n1, n2, n3, n4);
+        return Routines.f317(n1, n2, n3, n4);
     }
 
     @Override
     protected Field<Result<Record>> FGetOneCursorField(Integer[] array) {
         if (array == null) {
-            return Functions.fGetOneCursor((UNumberArrayRecord) null);
+            return Routines.fGetOneCursor((UNumberArrayRecord) null);
         }
         else {
-            return Functions.fGetOneCursor(new UNumberArrayRecord(create(), array));
+            return Routines.fGetOneCursor(new UNumberArrayRecord(create(), array));
         }
     }
 
@@ -523,19 +522,19 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @SuppressWarnings("unchecked")
     @Override
     protected <T extends ArrayRecord<Integer>> Field<T> FArrays1Field_R(Field<T> array) {
-        return (Field<T>) Functions.fArrays1((Field<UNumberArrayRecord>) array);
+        return (Field<T>) Routines.fArrays1((Field<UNumberArrayRecord>) array);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected <T extends ArrayRecord<Long>> Field<T> FArrays2Field_R(Field<T> array) {
-        return (Field<T>) Functions.fArrays2((Field<UNumberLongArrayRecord>) array);
+        return (Field<T>) Routines.fArrays2((Field<UNumberLongArrayRecord>) array);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected <T extends ArrayRecord<String>> Field<T> FArrays3Field_R(Field<T> array) {
-        return (Field<T>) Functions.fArrays3((Field<UStringArrayRecord>) array);
+        return (Field<T>) Routines.fArrays3((Field<UStringArrayRecord>) array);
     }
 
     @Override
@@ -549,8 +548,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Class<?> cProcedures() {
-        return Procedures.class;
+    protected Class<?> cRoutines() {
+        return Routines.class;
     }
 
     @Override
@@ -566,11 +565,6 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected boolean supportsRecursiveQueries() {
         return true;
-    }
-
-    @Override
-    protected Class<?> cFunctions() {
-        return Functions.class;
     }
 
     @Override

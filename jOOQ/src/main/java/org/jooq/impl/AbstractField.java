@@ -833,6 +833,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition isTrue() {
+        return cast(String.class).in(TypeUtils.TRUE_VALUES);
+    }
+
+    @Override
+    public final Condition isFalse() {
+        return cast(String.class).in(TypeUtils.FALSE_VALUES);
+    }
+
+    @Override
     public final Condition like(T value) {
         return new CompareCondition<T>(this, val(value), Comparator.LIKE);
     }

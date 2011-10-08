@@ -328,6 +328,7 @@ public abstract class AbstractDatabase implements Database {
         return relations;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<RoutineDefinition> getProcedures() {
         if (procedures == null) {
@@ -337,10 +338,7 @@ public abstract class AbstractDatabase implements Database {
                 List<RoutineDefinition> r = getRoutines();
 
                 for (RoutineDefinition routine : r) {
-
-                    // [#378] Oracle supports stored functions with OUT parameters.
-                    // They were mapped to procedures in jOOQ before [#852]
-                    if (routine.getReturnValue() == null || !routine.getOutParameters().isEmpty()) {
+                    if (routine.isProcedure()) {
                         procedures.add(routine);
                     }
                 }
@@ -352,6 +350,7 @@ public abstract class AbstractDatabase implements Database {
         return procedures;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final List<RoutineDefinition> getFunctions() {
         if (functions == null) {
@@ -361,10 +360,7 @@ public abstract class AbstractDatabase implements Database {
                 List<RoutineDefinition> r = getRoutines();
 
                 for (RoutineDefinition routine : r) {
-
-                    // [#378] Oracle supports stored functions with OUT parameters.
-                    // They were mapped to procedures in jOOQ before [#852]
-                    if (routine.getReturnValue() != null && routine.getOutParameters().isEmpty()) {
+                    if (!routine.isProcedure()) {
                         functions.add(routine);
                     }
                 }

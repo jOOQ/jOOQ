@@ -39,23 +39,35 @@ package org.jooq.util;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.jooq.impl.JooqLogger;
 
 /**
  * @author Lukas Eder
  */
-public abstract class AbstractRoutineDefinition extends AbstractCallableDefinition implements RoutineDefinition {
+public abstract class AbstractRoutineDefinition extends AbstractDefinition implements RoutineDefinition {
 
-    private static final JooqLogger     log = JooqLogger.getLogger(AbstractRoutineDefinition.class);
+    private static final JooqLogger     log               = JooqLogger.getLogger(AbstractRoutineDefinition.class);
+    private static final String         INOUT             = "(?:(IN|OUT|INOUT)\\s+?)?";
+    private static final String         PARAM_NAME        = "(?:(\\S+?)\\s+?)";
+    private static final String         PARAM_TYPE        = "([^\\s\\(]+)(?:\\s*\\((\\d+)(?:\\s*,\\s*(\\d+))?\\))?";
+    private static final String         PARAMETER         = "(" + INOUT + PARAM_NAME + PARAM_TYPE + ")";
+
+    protected static final Pattern      PARAMETER_PATTERN = Pattern.compile(PARAMETER);
+    protected static final Pattern      TYPE_PATTERN      = Pattern.compile(PARAM_TYPE);
 
     protected List<ParameterDefinition> inParameters;
     protected List<ParameterDefinition> outParameters;
     protected ParameterDefinition       returnValue;
     protected List<ParameterDefinition> allParameters;
 
+    private final PackageDefinition     pkg;
+
     public AbstractRoutineDefinition(Database database, PackageDefinition pkg, String name, String comment, String overload) {
-        super(database, pkg, name, comment, overload);
+        super(database, name, comment, overload);
+
+        this.pkg = pkg;
     }
 
     private void init() {
@@ -72,6 +84,11 @@ public abstract class AbstractRoutineDefinition extends AbstractCallableDefiniti
     }
 
     protected abstract void init0() throws SQLException;
+
+    @Override
+    public final PackageDefinition getPackage() {
+        return pkg;
+    }
 
     @Override
     public final List<ParameterDefinition> getInParameters() {

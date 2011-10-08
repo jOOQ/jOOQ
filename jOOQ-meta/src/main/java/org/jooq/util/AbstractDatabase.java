@@ -67,10 +67,8 @@ public abstract class AbstractDatabase implements Database {
     private List<EnumDefinition>            enums;
     private List<UDTDefinition>             udts;
     private List<ArrayDefinition>           arrays;
-    @SuppressWarnings("deprecation")
-    private List<ProcedureDefinition>       procedures;
-    @SuppressWarnings("deprecation")
-    private List<FunctionDefinition>        functions;
+    private List<RoutineDefinition>         procedures;
+    private List<RoutineDefinition>         functions;
     private List<RoutineDefinition>         routines;
     private List<PackageDefinition>         packages;
     private Relations                       relations;
@@ -330,11 +328,10 @@ public abstract class AbstractDatabase implements Database {
         return relations;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public final List<ProcedureDefinition> getProcedures() {
+    public final List<RoutineDefinition> getProcedures() {
         if (procedures == null) {
-            procedures = new ArrayList<ProcedureDefinition>();
+            procedures = new ArrayList<RoutineDefinition>();
 
             try {
                 List<RoutineDefinition> r = getRoutines();
@@ -355,11 +352,10 @@ public abstract class AbstractDatabase implements Database {
         return procedures;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public final List<FunctionDefinition> getFunctions() {
+    public final List<RoutineDefinition> getFunctions() {
         if (functions == null) {
-            functions = new ArrayList<FunctionDefinition>();
+            functions = new ArrayList<RoutineDefinition>();
 
             try {
                 List<RoutineDefinition> r = getRoutines();

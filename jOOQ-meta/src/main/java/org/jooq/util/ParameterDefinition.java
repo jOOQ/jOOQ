@@ -40,7 +40,7 @@ package org.jooq.util;
  *
  * @author Lukas Eder
  */
-public interface ParameterDefinition extends TypedElementDefinition<CallableDefinition> {
+public interface ParameterDefinition extends TypedElementDefinition<RoutineDefinition> {
 
     /**
      * The parameter's owner callable
@@ -48,6 +48,6 @@ public interface ParameterDefinition extends TypedElementDefinition<CallableDefi
      * @deprecated - 1.6.3 - Use {@link #getContainer()} instead
      */
     @Deprecated
-    CallableDefinition getCallable();
+    RoutineDefinition getCallable();
 
 }

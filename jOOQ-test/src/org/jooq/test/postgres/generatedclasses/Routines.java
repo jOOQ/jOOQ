@@ -313,149 +313,57 @@ public final class Routines {
 	/**
 	 * Invoke P_ARRAYS
 	 *
-	 * @param inArray
+	 * @param inArray IN parameter
+	 * @param outArray OUT parameter
 	 */
 	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
-		f.setInArray(inArray);
+		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
+		p.setInArray(inArray);
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_ARRAYS as a field
-	 *
-	 * @param inArray
-	 */
-	public static org.jooq.Field<java.lang.Long[]> pArrays2(java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get P_ARRAYS as a field
-	 *
-	 * @param inArray
-	 */
-	public static org.jooq.Field<java.lang.Long[]> pArrays2(org.jooq.Field<java.lang.Long[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
-		f.setInArray(inArray);
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getOutArray();
 	}
 
 	/**
 	 * Invoke P_ARRAYS
 	 *
-	 * @param inArray
+	 * @param inArray IN parameter
+	 * @param outArray OUT parameter
 	 */
 	public static java.lang.Integer[] pArrays1(org.jooq.Configuration configuration, java.lang.Integer[] inArray) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays1();
-		f.setInArray(inArray);
+		org.jooq.test.postgres.generatedclasses.routines.PArrays1 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays1();
+		p.setInArray(inArray);
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_ARRAYS as a field
-	 *
-	 * @param inArray
-	 */
-	public static org.jooq.Field<java.lang.Integer[]> pArrays1(java.lang.Integer[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays1();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get P_ARRAYS as a field
-	 *
-	 * @param inArray
-	 */
-	public static org.jooq.Field<java.lang.Integer[]> pArrays1(org.jooq.Field<java.lang.Integer[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays1 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays1();
-		f.setInArray(inArray);
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getOutArray();
 	}
 
 	/**
 	 * Invoke P_ARRAYS
 	 *
-	 * @param inArray
+	 * @param inArray IN parameter
+	 * @param outArray OUT parameter
 	 */
 	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
-		f.setInArray(inArray);
+		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
+		p.setInArray(inArray);
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_ARRAYS as a field
-	 *
-	 * @param inArray
-	 */
-	public static org.jooq.Field<java.lang.String[]> pArrays3(java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
-		f.setInArray(inArray);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get P_ARRAYS as a field
-	 *
-	 * @param inArray
-	 */
-	public static org.jooq.Field<java.lang.String[]> pArrays3(org.jooq.Field<java.lang.String[]> inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays3 f = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
-		f.setInArray(inArray);
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getOutArray();
 	}
 
 	/**
 	 * Invoke P_AUTHOR_EXISTS
 	 *
-	 * @param authorName
+	 * @param authorName IN parameter
+	 * @param result OUT parameter
 	 */
 	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PAuthorExists f = new org.jooq.test.postgres.generatedclasses.routines.PAuthorExists();
-		f.setAuthorName(authorName);
+		org.jooq.test.postgres.generatedclasses.routines.PAuthorExists p = new org.jooq.test.postgres.generatedclasses.routines.PAuthorExists();
+		p.setAuthorName(authorName);
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_AUTHOR_EXISTS as a field
-	 *
-	 * @param authorName
-	 */
-	public static org.jooq.Field<java.lang.Integer> pAuthorExists(java.lang.String authorName) {
-		org.jooq.test.postgres.generatedclasses.routines.PAuthorExists f = new org.jooq.test.postgres.generatedclasses.routines.PAuthorExists();
-		f.setAuthorName(authorName);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get P_AUTHOR_EXISTS as a field
-	 *
-	 * @param authorName
-	 */
-	public static org.jooq.Field<java.lang.Integer> pAuthorExists(org.jooq.Field<java.lang.String> authorName) {
-		org.jooq.test.postgres.generatedclasses.routines.PAuthorExists f = new org.jooq.test.postgres.generatedclasses.routines.PAuthorExists();
-		f.setAuthorName(authorName);
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getResult();
 	}
 
 	/**
@@ -485,96 +393,40 @@ public final class Routines {
 	/**
 	 * Invoke P_ENHANCE_ADDRESS1
 	 *
-	 * @param address
+	 * @param address IN parameter
+	 * @param no OUT parameter
 	 */
 	public static java.lang.String pEnhanceAddress1(org.jooq.Configuration configuration, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1();
-		f.setAddress(address);
+		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1 p = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1();
+		p.setAddress(address);
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_ENHANCE_ADDRESS1 as a field
-	 *
-	 * @param address
-	 */
-	public static org.jooq.Field<java.lang.String> pEnhanceAddress1(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1();
-		f.setAddress(address);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get P_ENHANCE_ADDRESS1 as a field
-	 *
-	 * @param address
-	 */
-	public static org.jooq.Field<java.lang.String> pEnhanceAddress1(org.jooq.Field<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> address) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress1();
-		f.setAddress(address);
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getNo();
 	}
 
 	/**
 	 * Invoke P_ENHANCE_ADDRESS2
 	 *
+	 * @param address OUT parameter
 	 */
 	public static org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord pEnhanceAddress2(org.jooq.Configuration configuration) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2();
+		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2 p = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2();
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_ENHANCE_ADDRESS2 as a field
-	 *
-	 */
-	public static org.jooq.Field<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> pEnhanceAddress2() {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress2();
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getAddress();
 	}
 
 	/**
 	 * Invoke P_ENHANCE_ADDRESS3
 	 *
-	 * @param address
+	 * @param address IN OUT parameter
 	 */
 	public static org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord pEnhanceAddress3(org.jooq.Configuration configuration, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) throws java.sql.SQLException {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3();
-		f.setAddress(address);
+		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3 p = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3();
+		p.setAddress(address);
 
-		f.execute(configuration);
-		return f.getReturnValue();
-	}
-
-	/**
-	 * Get P_ENHANCE_ADDRESS3 as a field
-	 *
-	 * @param address
-	 */
-	public static org.jooq.Field<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> pEnhanceAddress3(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3();
-		f.setAddress(address);
-
-		return f.asField();
-	}
-
-	/**
-	 * Get P_ENHANCE_ADDRESS3 as a field
-	 *
-	 * @param address
-	 */
-	public static org.jooq.Field<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> pEnhanceAddress3(org.jooq.Field<org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> address) {
-		org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3 f = new org.jooq.test.postgres.generatedclasses.routines.PEnhanceAddress3();
-		f.setAddress(address);
-
-		return f.asField();
+		p.execute(configuration);
+		return p.getAddress();
 	}
 
 	/**

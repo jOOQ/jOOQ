@@ -136,6 +136,11 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
         }
     }
 
+    @Override
+    public final boolean isProcedure() {
+        return getReturnValue() == null || !getOutParameters().isEmpty();
+    }
+
     protected final void addParameter(InOutDefinition inOut, ParameterDefinition parameter) {
         allParameters.add(parameter);
 

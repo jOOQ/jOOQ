@@ -56,8 +56,8 @@ import org.jooq.SQLDialectNotSupportedException;
  */
 final class TypeUtils {
 
-    private static final Set<String> TRUE_VALUES;
-    private static final Set<String> FALSE_VALUES;
+    static final Set<String> TRUE_VALUES;
+    static final Set<String> FALSE_VALUES;
 
     static {
         TRUE_VALUES = new HashSet<String>();
@@ -65,17 +65,27 @@ final class TypeUtils {
 
         TRUE_VALUES.add("1");
         TRUE_VALUES.add("y");
+        TRUE_VALUES.add("Y");
         TRUE_VALUES.add("yes");
+        TRUE_VALUES.add("YES");
         TRUE_VALUES.add("true");
+        TRUE_VALUES.add("TRUE");
         TRUE_VALUES.add("on");
+        TRUE_VALUES.add("ON");
         TRUE_VALUES.add("enabled");
+        TRUE_VALUES.add("ENABLED");
 
         FALSE_VALUES.add("0");
         FALSE_VALUES.add("n");
+        FALSE_VALUES.add("N");
         FALSE_VALUES.add("no");
+        FALSE_VALUES.add("NO");
         FALSE_VALUES.add("false");
+        FALSE_VALUES.add("FALSE");
         FALSE_VALUES.add("off");
+        FALSE_VALUES.add("OFF");
         FALSE_VALUES.add("disabled");
+        FALSE_VALUES.add("DISABLED");
     }
 
     @SuppressWarnings("unchecked")

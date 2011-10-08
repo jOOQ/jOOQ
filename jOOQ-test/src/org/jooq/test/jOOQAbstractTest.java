@@ -536,8 +536,7 @@ public abstract class jOOQAbstractTest<
     protected abstract boolean supportsOUTParameters();
     protected abstract boolean supportsReferences();
     protected abstract boolean supportsRecursiveQueries();
-    protected abstract Class<?> cProcedures();
-    protected abstract Class<?> cFunctions();
+    protected abstract Class<?> cRoutines();
     protected abstract Class<?> cLibrary();
     protected abstract Class<?> cSequences();
     protected abstract DataType<?>[] getCastableDataTypes();
@@ -4650,7 +4649,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testStoredFunctions() throws Exception {
-        if (cFunctions() == null) {
+        if (cRoutines() == null) {
             log.info("SKIPPING", "functions test");
             return;
         }
@@ -4660,18 +4659,18 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // Standalone calls
         // ---------------------------------------------------------------------
-        assertEquals("0", "" + invoke(cFunctions(), "fAuthorExists", create(), null));
-        assertEquals("1", "" + invoke(cFunctions(), "fAuthorExists", create(), "Paulo"));
-        assertEquals("0", "" + invoke(cFunctions(), "fAuthorExists", create(), "Shakespeare"));
-        assertEquals("1", "" + invoke(cFunctions(), "fOne", create()));
-        assertEquals("1", "" + invoke(cFunctions(), "fNumber", create(), 1));
-        assertEquals(null, invoke(cFunctions(), "fNumber", create(), null));
-        assertEquals("1204", "" + invoke(cFunctions(), "f317", create(), 1, 2, 3, 4));
-        assertEquals("1204", "" + invoke(cFunctions(), "f317", create(), 1, 2, null, 4));
-        assertEquals("4301", "" + invoke(cFunctions(), "f317", create(), 4, 3, 2, 1));
-        assertEquals("4301", "" + invoke(cFunctions(), "f317", create(), 4, 3, null, 1));
-        assertEquals("1101", "" + invoke(cFunctions(), "f317", create(), 1, 1, 1, 1));
-        assertEquals("1101", "" + invoke(cFunctions(), "f317", create(), 1, 1, null, 1));
+        assertEquals("0", "" + invoke(cRoutines(), "fAuthorExists", create(), null));
+        assertEquals("1", "" + invoke(cRoutines(), "fAuthorExists", create(), "Paulo"));
+        assertEquals("0", "" + invoke(cRoutines(), "fAuthorExists", create(), "Shakespeare"));
+        assertEquals("1", "" + invoke(cRoutines(), "fOne", create()));
+        assertEquals("1", "" + invoke(cRoutines(), "fNumber", create(), 1));
+        assertEquals(null, invoke(cRoutines(), "fNumber", create(), null));
+        assertEquals("1204", "" + invoke(cRoutines(), "f317", create(), 1, 2, 3, 4));
+        assertEquals("1204", "" + invoke(cRoutines(), "f317", create(), 1, 2, null, 4));
+        assertEquals("4301", "" + invoke(cRoutines(), "f317", create(), 4, 3, 2, 1));
+        assertEquals("4301", "" + invoke(cRoutines(), "f317", create(), 4, 3, null, 1));
+        assertEquals("1101", "" + invoke(cRoutines(), "f317", create(), 1, 1, 1, 1));
+        assertEquals("1101", "" + invoke(cRoutines(), "f317", create(), 1, 1, null, 1));
 
         // ---------------------------------------------------------------------
         // Embedded calls
@@ -5767,7 +5766,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testARRAYProcedure() throws Exception {
-        if (cProcedures() == null) {
+        if (cRoutines() == null) {
             log.info("SKIPPING", "ARRAY procedure test (no procedure support)");
             return;
         }
@@ -5784,12 +5783,12 @@ public abstract class jOOQAbstractTest<
             ArrayRecord<Long> l;
             ArrayRecord<String> s;
 
-            assertEquals(null, invoke(cProcedures(), "pArrays1", create(), null));
-            assertEquals(null, invoke(cProcedures(), "pArrays2", create(), null));
-            assertEquals(null, invoke(cProcedures(), "pArrays3", create(), null));
-            assertEquals(null, invoke(cFunctions(), "fArrays1", create(), null));
-            assertEquals(null, invoke(cFunctions(), "fArrays2", create(), null));
-            assertEquals(null, invoke(cFunctions(), "fArrays3", create(), null));
+            assertEquals(null, invoke(cRoutines(), "pArrays1", create(), null));
+            assertEquals(null, invoke(cRoutines(), "pArrays2", create(), null));
+            assertEquals(null, invoke(cRoutines(), "pArrays3", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays1", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays2", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays3", create(), null));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
@@ -5797,22 +5796,22 @@ public abstract class jOOQAbstractTest<
 
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create(), i)).get()));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create(), l)).get()));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create(), s)).get()));
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create(), i)).get()));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create(), l)).get()));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create(), s)).get()));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
@@ -5824,22 +5823,22 @@ public abstract class jOOQAbstractTest<
 
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create(), i)).get()));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create(), l)).get()));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create(), s)).get()));
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create(), i)).get()));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create(), l)).get()));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create(), s)).get()));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
@@ -5851,100 +5850,100 @@ public abstract class jOOQAbstractTest<
 
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create(), i)).get()));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create(), l)).get()));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cProcedures(), "pArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create(), s)).get()));
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create(), i)).get()));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create(), l)).get()));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cFunctions(), "fArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create(), s)).get()));
         }
 
         if (TArrays_STRING() != null) {
             if (supportsOUTParameters()) {
-                assertEquals(null, invoke(cProcedures(), "pArrays1", create(), null));
-                assertEquals(null, invoke(cProcedures(), "pArrays2", create(), null));
-                assertEquals(null, invoke(cProcedures(), "pArrays3", create(), null));
+                assertEquals(null, invoke(cRoutines(), "pArrays1", create(), null));
+                assertEquals(null, invoke(cRoutines(), "pArrays2", create(), null));
+                assertEquals(null, invoke(cRoutines(), "pArrays3", create(), null));
             }
 
-            assertEquals(null, invoke(cFunctions(), "fArrays1", create(), null));
-            assertEquals(null, invoke(cFunctions(), "fArrays2", create(), null));
-            assertEquals(null, invoke(cFunctions(), "fArrays3", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays1", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays2", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays3", create(), null));
 
             if (supportsOUTParameters()) {
                 assertEquals(
                     Arrays.asList(new Integer[0]),
-                    Arrays.asList((Integer[]) invoke(cProcedures(), "pArrays1", create(), new Integer[0])));
+                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create(), new Integer[0])));
                 assertEquals(
                     Arrays.asList(new Long[0]),
-                    Arrays.asList((Long[]) invoke(cProcedures(), "pArrays2", create(), new Long[0])));
+                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create(), new Long[0])));
                 assertEquals(
                     Arrays.asList(new String[0]),
-                    Arrays.asList((String[]) invoke(cProcedures(), "pArrays3", create(), new String[0])));
+                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create(), new String[0])));
             }
 
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays1", create(), new Integer[0])));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create(), new Integer[0])));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays2", create(), new Long[0])));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create(), new Long[0])));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays3", create(), new String[0])));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create(), new String[0])));
 
             if (supportsOUTParameters()) {
                 assertEquals(
                     Arrays.asList((Integer) null),
-                    Arrays.asList((Integer[]) invoke(cProcedures(), "pArrays1", create(), new Integer[] { null })));
+                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create(), new Integer[] { null })));
                 assertEquals(
                     Arrays.asList((Long) null),
-                    Arrays.asList((Long[]) invoke(cProcedures(), "pArrays2", create(), new Long[] { null })));
+                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create(), new Long[] { null })));
                 assertEquals(
                     Arrays.asList((String) null),
-                    Arrays.asList((String[]) invoke(cProcedures(), "pArrays3", create(), new String[] { null })));
+                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create(), new String[] { null })));
             }
 
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays1", create(), new Integer[] { null })));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create(), new Integer[] { null })));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays2", create(), new Long[] { null })));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create(), new Long[] { null })));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays3", create(), new String[] { null })));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create(), new String[] { null })));
 
             if (supportsOUTParameters()) {
                 assertEquals(
                     Arrays.asList(1, 2),
-                    Arrays.asList((Integer[]) invoke(cProcedures(), "pArrays1", create(), new Integer[] {1, 2})));
+                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create(), new Integer[] {1, 2})));
                 assertEquals(
                     Arrays.asList(1L, 2L),
-                    Arrays.asList((Long[]) invoke(cProcedures(), "pArrays2", create(), new Long[] {1L, 2L})));
+                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create(), new Long[] {1L, 2L})));
                 assertEquals(
                     Arrays.asList("1", "2"),
-                    Arrays.asList((String[]) invoke(cProcedures(), "pArrays3", create(), new String[] {"1", "2"})));
+                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create(), new String[] {"1", "2"})));
             }
 
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays1", create(), new Integer[] {1, 2})));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create(), new Integer[] {1, 2})));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays2", create(), new Long[] {1L, 2L})));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create(), new Long[] {1L, 2L})));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList((Object[]) invoke(cFunctions(), "fArrays3", create(), new String[] {"1", "2"})));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create(), new String[] {"1", "2"})));
         }
     }
 
@@ -6014,7 +6013,7 @@ public abstract class jOOQAbstractTest<
             return;
         }
 
-        if (cProcedures() == null) {
+        if (cRoutines() == null) {
             log.info("SKIPPING", "UDT procedure test (no procedure support)");
             return;
         }
@@ -6027,11 +6026,11 @@ public abstract class jOOQAbstractTest<
         invoke(address, "setStreet", street);
 
         // First procedure
-        Object result = invoke(cProcedures(), "pEnhanceAddress1", create(), address);
+        Object result = invoke(cRoutines(), "pEnhanceAddress1", create(), address);
         assertEquals("35", result);
 
         // Second procedure
-        address = invoke(cProcedures(), "pEnhanceAddress2", create());
+        address = invoke(cRoutines(), "pEnhanceAddress2", create());
         street = invoke(address, "getStreet");
         assertEquals("Parliament Hill", invoke(street, "getStreet"));
         assertEquals("77", invoke(street, "getNo"));
@@ -6044,7 +6043,7 @@ public abstract class jOOQAbstractTest<
         }
 
         // Third procedure
-        address = (UDTRecord<?>) invoke(cProcedures(), "pEnhanceAddress3", create(), address);
+        address = (UDTRecord<?>) invoke(cRoutines(), "pEnhanceAddress3", create(), address);
         street = (UDTRecord<?>) invoke(address, "getStreet");
         assertEquals("Zwinglistrasse", invoke(street, "getStreet"));
         assertEquals("17", invoke(street, "getNo"));
@@ -6583,7 +6582,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testStoredProcedure() throws Exception {
-        if (cProcedures() == null) {
+        if (cRoutines() == null) {
             log.info("SKIPPING", "procedure test");
             return;
         }
@@ -6593,9 +6592,9 @@ public abstract class jOOQAbstractTest<
         // P_AUTHOR_EXISTS
         // ---------------------------------------------------------------------
         if (supportsOUTParameters()) {
-            assertEquals("0", "" + invoke(cProcedures(), "pAuthorExists", create(), null, DUMMY_OUT_INT));
-            assertEquals("1", "" + invoke(cProcedures(), "pAuthorExists", create(), "Paulo", DUMMY_OUT_INT));
-            assertEquals("0", "" + invoke(cProcedures(), "pAuthorExists", create(), "Shakespeare", DUMMY_OUT_INT));
+            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create(), null, DUMMY_OUT_INT));
+            assertEquals("1", "" + invoke(cRoutines(), "pAuthorExists", create(), "Paulo", DUMMY_OUT_INT));
+            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create(), "Shakespeare", DUMMY_OUT_INT));
         } else {
             log.info("SKIPPING", "procedure test for OUT parameters");
         }
@@ -6605,7 +6604,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(null, create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("William")));
-        invoke(cProcedures(), "pCreateAuthor", create());
+        invoke(cRoutines(), "pCreateAuthor", create());
         assertEquals("Shakespeare", create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("William")).getValue(TAuthor_LAST_NAME()));
@@ -6613,7 +6612,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(null, create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("Hermann")));
-        invoke(cProcedures(), "pCreateAuthorByName", create(), "Hermann", "Hesse");
+        invoke(cRoutines(), "pCreateAuthorByName", create(), "Hermann", "Hesse");
         assertEquals("Hesse", create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("Hermann")).getValue(TAuthor_LAST_NAME()));
@@ -6621,7 +6620,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(null, create().fetchOne(
             TAuthor(),
             TAuthor_LAST_NAME().equal("Kaestner")));
-        invoke(cProcedures(), "pCreateAuthorByName", create(), null, "Kaestner");
+        invoke(cRoutines(), "pCreateAuthorByName", create(), null, "Kaestner");
         assertEquals("Kaestner", create().fetchOne(
             TAuthor(),
             TAuthor_LAST_NAME().equal("Kaestner")).getValue(TAuthor_LAST_NAME()));
@@ -6634,7 +6633,7 @@ public abstract class jOOQAbstractTest<
             // TODO: [#396] MySQL seems to have a bug when passing null to IN/OUT
             // parameters. Check back on this, when this is fixed.
             if (getDialect() != SQLDialect.MYSQL) {
-                Object p391a = invoke(cProcedures(), "p391", create(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
+                Object p391a = invoke(cRoutines(), "p391", create(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
                 assertEquals(null, invoke(p391a, "getIo1"));
                 assertEquals(null, invoke(p391a, "getO1"));
                 assertEquals(null, invoke(p391a, "getIo2"));
@@ -6644,13 +6643,13 @@ public abstract class jOOQAbstractTest<
             // TODO: [#459] Sybase messes up IN/OUT parameter orders.
             // Check back on this, when this is fixed.
             if (getDialect() != SQLDialect.SYBASE) {
-                Object p391b = invoke(cProcedures(), "p391", create(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
+                Object p391b = invoke(cRoutines(), "p391", create(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
                 assertEquals(null, invoke(p391b, "getIo1"));
                 assertEquals("2", "" + invoke(p391b, "getO1"));
                 assertEquals(null, invoke(p391b, "getIo2"));
                 assertEquals("3", "" + invoke(p391b, "getO2"));
 
-                Object p391c = invoke(cProcedures(), "p391", create(), 1, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, 4);
+                Object p391c = invoke(cRoutines(), "p391", create(), 1, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, 4);
                 assertEquals("1", "" + invoke(p391c, "getIo1"));
                 assertEquals("2", "" + invoke(p391c, "getO1"));
                 assertEquals("4", "" + invoke(p391c, "getIo2"));
@@ -6664,17 +6663,17 @@ public abstract class jOOQAbstractTest<
 
             // Currently, this is only supported for oracle
             case ORACLE:
-                Object result1a = invoke(cProcedures(), "f378", create(), null, null);
+                Object result1a = invoke(cRoutines(), "f378", create(), null, null);
                 assertEquals(null, invoke(result1a, "getIo"));
                 assertEquals(null, invoke(result1a, "getO"));
                 assertEquals(null, invoke(result1a, "getReturnValue"));
 
-                Object result2a = invoke(cProcedures(), "f378", create(), null, 2);
+                Object result2a = invoke(cRoutines(), "f378", create(), null, 2);
                 assertEquals(null, invoke(result2a, "getIo"));
                 assertEquals("2", "" + invoke(result2a, "getO"));
                 assertEquals(null, invoke(result2a, "getReturnValue"));
 
-                Object result3a = invoke(cProcedures(), "f378", create(), 1, 2);
+                Object result3a = invoke(cRoutines(), "f378", create(), 1, 2);
                 assertEquals("1", "" + invoke(result3a, "getIo"));
                 assertEquals("2", "" + invoke(result3a, "getO"));
                 assertEquals("3", "" + invoke(result3a, "getReturnValue"));
@@ -6971,7 +6970,7 @@ public abstract class jOOQAbstractTest<
 
             // Get an empty cursor
             // -------------------
-            Result<Record> bFromCursor = invoke(cFunctions(), "fGetOneCursor", create(), integerArray);
+            Result<Record> bFromCursor = invoke(cRoutines(), "fGetOneCursor", create(), integerArray);
 
             assertNotNull(bFromCursor);
             assertTrue(bFromCursor.isEmpty());
@@ -6988,7 +6987,7 @@ public abstract class jOOQAbstractTest<
                 integerArray = new Integer[] { 1, 2, 4, 6 };
             }
 
-            bFromCursor = invoke(cFunctions(), "fGetOneCursor", create(), integerArray);
+            bFromCursor = invoke(cRoutines(), "fGetOneCursor", create(), integerArray);
 
             Result<B> bFromTable = create()
                 .selectFrom(TBook())
@@ -7041,7 +7040,7 @@ public abstract class jOOQAbstractTest<
 
             // Get an empty cursor
             // -------------------
-            Object result = invoke(cProcedures(), "pGetOneCursor", create(), integerArray);
+            Object result = invoke(cRoutines(), "pGetOneCursor", create(), integerArray);
 
             assertNotNull(result);
             assertEquals("0", "" + invoke(result, "getTotal"));
@@ -7061,7 +7060,7 @@ public abstract class jOOQAbstractTest<
                 integerArray = new Integer[] { 1, 2, 4, 6 };
             }
 
-            result = invoke(cProcedures(), "pGetOneCursor", create(), integerArray);
+            result = invoke(cRoutines(), "pGetOneCursor", create(), integerArray);
 
             assertEquals("3", "" + invoke(result, "getTotal"));
             bFromCursor = invoke(result, "getBooks");
@@ -7091,7 +7090,7 @@ public abstract class jOOQAbstractTest<
             log.info("SKIPPING", "UDT/Enum types returned in refcursor (see [#707])");
         }
         else if (supportsOUTParameters()) {
-            Object result = invoke(cProcedures(), "pGetTwoCursors", create());
+            Object result = invoke(cRoutines(), "pGetTwoCursors", create());
             assertNotNull(result);
 
             Result<A> aFromTable = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();

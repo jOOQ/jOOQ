@@ -56,8 +56,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.impl.Factory;
 import org.jooq.test.hsqldb.generatedclasses.Public;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
-import org.jooq.test.oracle.generatedclasses.Functions;
-import org.jooq.test.oracle.generatedclasses.Procedures;
+import org.jooq.test.oracle.generatedclasses.Routines;
 import org.jooq.test.oracle.generatedclasses.Sequences;
 import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
 import org.jooq.test.oracle.generatedclasses.tables.TBook;
@@ -426,33 +425,33 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
 
     @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
-        return Functions.fAuthorExists(authorName);
+        return Routines.fAuthorExists(authorName);
     }
 
     @Override
     protected Field<? extends Number> FOneField() {
-        return Functions.fOne();
+        return Routines.fOne();
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Number n) {
-        return Functions.fNumber(n);
+        return Routines.fNumber(n);
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
-        return Functions.fNumber(n);
+        return Routines.fNumber(n);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Number n1, Number n2, Number n3, Number n4) {
-        return Functions.f317(n1, n2, n3, n4);
+        return Routines.f317(n1, n2, n3, n4);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {
-        return Functions.f317(n1, n2, n3, n4);
+        return Routines.f317(n1, n2, n3, n4);
     }
 
     @Override
@@ -501,8 +500,8 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     }
 
     @Override
-    protected Class<?> cProcedures() {
-        return Procedures.class;
+    protected Class<?> cRoutines() {
+        return Routines.class;
     }
 
     @Override
@@ -518,11 +517,6 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     @Override
     protected boolean supportsRecursiveQueries() {
         return false;
-    }
-
-    @Override
-    protected Class<?> cFunctions() {
-        return Functions.class;
     }
 
     @Override

@@ -50,8 +50,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.impl.Factory;
 import org.jooq.test.sybase.generatedclasses.DbaFactory;
-import org.jooq.test.sybase.generatedclasses.Functions;
-import org.jooq.test.sybase.generatedclasses.Procedures;
+import org.jooq.test.sybase.generatedclasses.Routines;
 import org.jooq.test.sybase.generatedclasses.Sequences;
 import org.jooq.test.sybase.generatedclasses.tables.TAuthor;
 import org.jooq.test.sybase.generatedclasses.tables.TBook;
@@ -416,35 +415,35 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
 
     @Override
     protected Field<? extends Number> FAuthorExistsField(String authorName) {
-        return Functions.fAuthorExists(authorName);
+        return Routines.fAuthorExists(authorName);
     }
 
     @Override
     protected Field<? extends Number> FOneField() {
-        return Functions.fOne();
+        return Routines.fOne();
     }
 
     @Override
     protected Field<? extends Number> FNumberField(Number n) {
-        return Functions.fNumber((Integer) n);
+        return Routines.fNumber((Integer) n);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> FNumberField(Field<? extends Number> n) {
-        return Functions.fNumber((Field<Integer>) n);
+        return Routines.fNumber((Field<Integer>) n);
     }
 
     @Override
     protected Field<? extends Number> F317Field(Number n1, Number n2, Number n3, Number n4) {
-        return Functions.f317((Integer) n1, (Integer) n2, (Integer) n3, (Integer) n4);
+        return Routines.f317((Integer) n1, (Integer) n2, (Integer) n3, (Integer) n4);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected Field<? extends Number> F317Field(Field<? extends Number> n1, Field<? extends Number> n2,
         Field<? extends Number> n3, Field<? extends Number> n4) {
-        return Functions.f317((Field<Integer>) n1, (Field<Integer>) n2, (Field<Integer>) n3, (Field<Integer>) n4);
+        return Routines.f317((Field<Integer>) n1, (Field<Integer>) n2, (Field<Integer>) n3, (Field<Integer>) n4);
     }
 
     @Override
@@ -499,8 +498,8 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Class<?> cProcedures() {
-        return Procedures.class;
+    protected Class<?> cRoutines() {
+        return Routines.class;
     }
 
     @Override
@@ -516,11 +515,6 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     @Override
     protected boolean supportsRecursiveQueries() {
         return false;
-    }
-
-    @Override
-    protected Class<?> cFunctions() {
-        return Functions.class;
     }
 
     @Override

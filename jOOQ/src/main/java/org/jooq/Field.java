@@ -1048,6 +1048,16 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition isNotNull();
 
     /**
+     * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
+     */
+    Condition isTrue();
+
+    /**
+     * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
+     */
+    Condition isFalse();
+
+    /**
      * <code>this like value</code>
      */
     Condition like(T value);

@@ -496,7 +496,7 @@ public class jOOQIngresTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Class<?> cProcedures() {
+    protected Class<?> cRoutines() {
         return null;
     }
 
@@ -513,11 +513,6 @@ public class jOOQIngresTest extends jOOQAbstractTest<
     @Override
     protected boolean supportsRecursiveQueries() {
         return false;
-    }
-
-    @Override
-    protected Class<?> cFunctions() {
-        return null;
     }
 
     @Override

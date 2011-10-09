@@ -5123,6 +5123,29 @@ public abstract class jOOQAbstractTest<
                 break;
             }
         }
+
+        // ASCII
+        switch (getDialect()) {
+            case DERBY:
+            case INGRES: // TODO [#864]
+            case SQLITE: // TODO [#862]
+                log.info("SKIPPING", "ASCII function test");
+                break;
+
+            default:
+                record =
+                create().select(
+                    val("A").ascii(),
+                    val("a").ascii(),
+                    val("-").ascii(),
+                    val(" ").ascii()).fetchOne();
+                assertEquals((int) 'A', (int) record.getValueAsInteger(0));
+                assertEquals((int) 'a', (int) record.getValueAsInteger(1));
+                assertEquals((int) '-', (int) record.getValueAsInteger(2));
+                assertEquals((int) ' ', (int) record.getValueAsInteger(3));
+
+                break;
+        }
     }
 
     @Test

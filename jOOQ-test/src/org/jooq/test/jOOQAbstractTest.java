@@ -1942,6 +1942,7 @@ public abstract class jOOQAbstractTest<
             case DERBY:
                 log.info("SKIPPING", "most casting tests");
                 break;
+
             default:
                 if (getDialect() != SQLDialect.HSQLDB) {
                     assertEquals(true, create().select(create().cast(1, Boolean.class)).fetchOne(0));
@@ -1955,7 +1956,8 @@ public abstract class jOOQAbstractTest<
                 if (getDialect() != SQLDialect.SQLITE) {
                     assertEquals(BigInteger.ONE, create().select(create().cast("1", BigInteger.class)).fetchOne(0));
                     assertEquals(BigInteger.ONE, create().select(create().cast(1, BigInteger.class)).fetchOne(0));
-                    // Sybase applies the wrong scale when casting. Forse scale before comparing (Sybase returns 1.0000 when we expect 1)
+
+                    // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
                     if (getDialect() == SQLDialect.SYBASE) {
                         BigDecimal result = (BigDecimal)create().select(create().cast("1", BigDecimal.class)).fetchOne(0);
                         result = result.setScale(0);
@@ -4945,7 +4947,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Integer.valueOf(0), record.getValue(2));
         assertEquals(Integer.valueOf(-1), record.getValue(3));
         assertEquals(Integer.valueOf(-1), record.getValue(4));
-        
+
         // The abs function
         record = create().select(
             val(2).abs(),
@@ -4953,7 +4955,7 @@ public abstract class jOOQAbstractTest<
             val(0).abs(),
             val(-1).abs(),
             val(-2).abs()).fetchOne();
-        
+
         assertNotNull(record);
         assertEquals(Integer.valueOf(2), record.getValue(0));
         assertEquals(Integer.valueOf(1), record.getValue(1));

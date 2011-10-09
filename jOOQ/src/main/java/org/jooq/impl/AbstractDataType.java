@@ -115,14 +115,21 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         this(dialect, sqldatatype, type, typeName, typeName, hasPrecisionAndScale);
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<? extends T> type, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<? extends T> type, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
         this.dialect = dialect;
-        this.sqlDataType = sqldatatype;
+
+        // [#858] SQLDataTypes should reference themselves for more convenience
+        this.sqlDataType = (SQLDataType<T>) ((this instanceof SQLDataType) ? this : sqlDataType);
         this.type = type;
         this.typeName = typeName;
         this.castTypeName = castTypeName;
         this.hasPrecisionAndScale = hasPrecisionAndScale;
         this.arrayType = (Class<? extends T[]>) Array.newInstance(type, 0).getClass();
+
+        init();
+    }
+
+    private final void init() {
 
         // Dialect-specific data types
         if (dialect != null) {
@@ -134,8 +141,8 @@ public abstract class AbstractDataType<T> implements DataType<T> {
                 typesByType[dialect.ordinal()].put(type, this);
             }
 
-            if (typesBySQLDataType[dialect.ordinal()].get(sqldatatype) == null) {
-                typesBySQLDataType[dialect.ordinal()].put(sqldatatype, this);
+            if (typesBySQLDataType[dialect.ordinal()].get(sqlDataType) == null) {
+                typesBySQLDataType[dialect.ordinal()].put(sqlDataType, this);
             }
         }
 

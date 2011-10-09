@@ -4945,6 +4945,21 @@ public abstract class jOOQAbstractTest<
         assertEquals(Integer.valueOf(0), record.getValue(2));
         assertEquals(Integer.valueOf(-1), record.getValue(3));
         assertEquals(Integer.valueOf(-1), record.getValue(4));
+        
+        // The abs function
+        record = create().select(
+            val(2).abs(),
+            val(1).abs(),
+            val(0).abs(),
+            val(-1).abs(),
+            val(-2).abs()).fetchOne();
+        
+        assertNotNull(record);
+        assertEquals(Integer.valueOf(2), record.getValue(0));
+        assertEquals(Integer.valueOf(1), record.getValue(1));
+        assertEquals(Integer.valueOf(0), record.getValue(2));
+        assertEquals(Integer.valueOf(1), record.getValue(3));
+        assertEquals(Integer.valueOf(2), record.getValue(4));
     }
 
     @Test

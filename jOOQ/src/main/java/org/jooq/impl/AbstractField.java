@@ -670,7 +670,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<Integer> ascii() {
-        return new Function<Integer>("ascii", SQLDataType.INTEGER, this);
+        return new Ascii(this);
     }
 
     /**

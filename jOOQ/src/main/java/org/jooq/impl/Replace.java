@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.SQLDataType.VARCHAR;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -54,19 +56,39 @@ class Replace extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
+        Field<?>[] args = getArguments();
+
+        // [#861] Many dialects don't ship with a single-argument replace
+        // function:
         switch (configuration.getDialect()) {
             case ASE: {
-                if (getArguments().length == 2) {
-                    return new Function<String>("str_replace", SQLDataType.VARCHAR,
-                        getArguments()[0], getArguments()[1], val(""));
+                if (args.length == 2) {
+                    return new Function<String>("str_replace", VARCHAR, args[0], args[1], val(""));
                 }
                 else {
-                    return new Function<String>("str_replace", SQLDataType.VARCHAR, getArguments());
+                    return new Function<String>("str_replace", VARCHAR, args);
                 }
             }
 
-            default:
-                return new Function<String>("replace", SQLDataType.VARCHAR, getArguments());
+            case DB2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE: {
+                if (args.length == 2) {
+                    return new Function<String>("replace", VARCHAR, args[0], args[1], val(""));
+                }
+                else {
+                    return new Function<String>("replace", VARCHAR, args);
+                }
+            }
+
+            default: {
+                return new Function<String>("replace", VARCHAR, args);
+            }
         }
     }
 }

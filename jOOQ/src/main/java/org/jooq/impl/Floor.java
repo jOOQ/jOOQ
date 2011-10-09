@@ -62,7 +62,7 @@ class Floor<T> extends AbstractFunction<T> {
 
             // evaluate "floor" if unavailable
             case SQLITE:
-                return argument.sub(0.5).round();
+                return argument.sub(0.499999999999999).round();
 
             default:
                 return new Function<T>("floor", getDataType(), argument);

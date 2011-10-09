@@ -43,6 +43,7 @@ import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -69,6 +70,41 @@ class Cast<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
+        if (context.getDialect() == SQLDialect.DERBY) {
+
+            // [#857] Interestingly, Derby does not allow for casting numeric
+            // types directly to VARCHAR. An intermediary cast to CHAR is needed
+            if (field.getDataType().isNumeric() &&
+                SQLDataType.VARCHAR.equals(getDataType().getSQLDataType())) {
+
+                context.sql("cast(")
+                       .sql("cast(")
+                       .sql(field)
+                       .sql(" as char(38))")
+                       .sql(" as ")
+                       .sql(getDataType(context).getCastTypeName(context))
+                       .sql(")");
+
+                return;
+            }
+
+            // [#859] ... neither does casting numeric types to BOOLEAN
+            else if (field.getDataType().isNumeric() &&
+                     SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+
+                context.sql("cast(")
+                       .sql("cast(")
+                       .sql(field)
+                       .sql(" as char(1))")
+                       .sql(" as ")
+                       .sql(getDataType(context).getCastTypeName(context))
+                       .sql(")");
+
+                 return;
+            }
+        }
+
+        // Default rendering, if no special case has applied yet
         context.sql("cast(")
                .sql(field)
                .sql(" as ")

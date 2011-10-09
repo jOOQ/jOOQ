@@ -63,7 +63,7 @@ class Replace extends AbstractFunction<String> {
         switch (configuration.getDialect()) {
             case ASE: {
                 if (args.length == 2) {
-                    return new Function<String>("str_replace", VARCHAR, args[0], args[1], val(""));
+                    return new Function<String>("str_replace", VARCHAR, args[0], args[1], val(null));
                 }
                 else {
                     return new Function<String>("str_replace", VARCHAR, args);

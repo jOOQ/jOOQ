@@ -60,9 +60,9 @@ class Ceil<T> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
 
-            // evaluate "floor" if unavailable
+            // evaluate "ceil" if unavailable
             case SQLITE:
-                return argument.add(0.5).round();
+                return argument.add(0.499999999999999).round();
 
             case ASE:
             case H2:

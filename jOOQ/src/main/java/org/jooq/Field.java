@@ -257,6 +257,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Negate this field to get its negative value.
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>-[this]</pre></code>
      */
     Field<T> neg();
 
@@ -314,11 +317,21 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * An arithmetic expression getting the modulo of this divided by value
+     * <p>
+     * This renders the modulo operation where available:
+     * <code><pre>[this] % [value]</pre></code>
+     * ... or the modulo function elsewhere:
+     * <code><pre>mod([this], [value])</pre></code>
      */
     Field<T> mod(Number value);
 
     /**
      * An arithmetic expression getting the modulo of this divided by value
+     * <p>
+     * This renders the modulo operation where available:
+     * <code><pre>[this] % [value]</pre></code>
+     * ... or the modulo function elsewhere:
+     * <code><pre>mod([this], [value])</pre></code>
      */
     Field<T> mod(Field<? extends Number> value);
 
@@ -328,131 +341,239 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Get the sign of a numeric field: sign(field)
+     * <p>
+     * This renders the sign function where available:
+     * <code><pre>sign([this])</pre></code>
+     * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
+     * <code><pre>
+     * CASE WHEN [this] > 0 THEN 1
+     *      WHEN [this] < 0 THEN -1
+     *      ELSE 0
+     * END
      */
     Field<Integer> sign();
 
     /**
      * Get the absolute value of a numeric field: abs(field)
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>abs([this])</pre></code>
      */
     Field<T> abs();
 
     /**
      * Get rounded value of a numeric field: round(field)
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([this]) or
+     * round([this], 0)</pre></code>
+     * ... or simulates it elsewhere using floor and ceil
      */
     Field<T> round();
 
     /**
      * Get rounded value of a numeric field: round(field, decimals)
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([this], [decimals])</pre></code>
+     * ... or simulates it elsewhere using floor and ceil
      */
     Field<T> round(int decimals);
 
     /**
      * Get the largest integer value not greater than [this]
+     * <p>
+     * This renders the floor function where available:
+     * <code><pre>floor([this])</pre></code>
+     * ... or simulates it elsewhere using round:
+     * <code><pre>round([this] - 0.499999999999999)</pre></code>
      */
     Field<T> floor();
 
     /**
      * Get the smallest integer value not less than [this]
+     * <p>
+     * This renders the ceil or ceiling function where available:
+     * <code><pre>ceil([this]) or
+     * ceiling([this])</pre></code>
+     * ... or simulates it elsewhere using round:
+     * <code><pre>round([this] + 0.499999999999999)</pre></code>
      */
     Field<T> ceil();
 
     /**
      * Get the sqrt(field) function
+     * <p>
+     * This renders the sqrt function where available:
+     * <code><pre>sqrt([this])</pre></code> ... or simulates it elsewhere using
+     * power (which in turn may also be simulated using ln and exp functions):
+     * <code><pre>power([this], 0.5)</pre></code>
      */
     Field<BigDecimal> sqrt();
 
     /**
-     * Get the exp(field) function
+     * Get the exp(field) function, taking this field as the power of e
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>exp([this])</pre></code>
      */
     Field<BigDecimal> exp();
 
     /**
-     * Get the ln(field) function
+     * Get the ln(field) function, taking the natural logarithm of this field
+     * <p>
+     * This renders the ln or log function where available:
+     * <code><pre>ln([this]) or
+     * log([this])</pre></code>
      */
     Field<BigDecimal> ln();
 
     /**
      * Get the log(field, base) function
+     * <p>
+     * This renders the log function where available:
+     * <code><pre>log([this])</pre></code> ... or simulates it elsewhere (in
+     * most RDBMS) using the natural logarithm:
+     * <code><pre>ln([this]) / ln([base])</pre></code>
      */
     Field<BigDecimal> log(int base);
 
     /**
      * Get the power(field, exponent) function
+     * <p>
+     * This renders the power function where available:
+     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * elsewhere using ln and exp:
+     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
      */
     Field<BigDecimal> power(Number exponent);
 
     /**
      * Get the arc cosine(field) function
+     * <p>
+     * This renders the acos function where available:
+     * <code><pre>acos([this])</pre></code>
      */
     Field<BigDecimal> acos();
 
     /**
      * Get the arc sine(field) function
+     * <p>
+     * This renders the asin function where available:
+     * <code><pre>asin([this])</pre></code>
      */
     Field<BigDecimal> asin();
 
     /**
      * Get the arc tangent(field) function
+     * <p>
+     * This renders the atan function where available:
+     * <code><pre>atan([this])</pre></code>
      */
     Field<BigDecimal> atan();
 
     /**
      * Get the arc tangent 2(field, y) function
+     * <p>
+     * This renders the atan2 or atn2 function where available:
+     * <code><pre>atan2([this]) or
+     * atn2([this])</pre></code>
      */
     Field<BigDecimal> atan2(Number y);
 
     /**
      * Get the arc tangent 2(field, y) function
+     * <p>
+     * This renders the atan2 or atn2 function where available:
+     * <code><pre>atan2([this]) or
+     * atn2([this])</pre></code>
      */
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
      * Get the cosine(field) function
+     * <p>
+     * This renders the cos function where available:
+     * <code><pre>cos([this])</pre></code>
      */
     Field<BigDecimal> cos();
 
     /**
      * Get the sine(field) function
+     * <p>
+     * This renders the sin function where available:
+     * <code><pre>sin([this])</pre></code>
      */
     Field<BigDecimal> sin();
 
     /**
      * Get the tangent(field) function
+     * <p>
+     * This renders the tan function where available:
+     * <code><pre>tan([this])</pre></code>
      */
     Field<BigDecimal> tan();
 
     /**
      * Get the cotangent(field) function
+     * <p>
+     * This renders the cot function where available:
+     * <code><pre>cot([this])</pre></code> ... or simulates it elsewhere using
+     * sin and cos: <code><pre>cos([this]) / sin([this])</pre></code>
      */
     Field<BigDecimal> cot();
 
     /**
      * Get the hyperbolic sine function: sinh(field)
+     * <p>
+     * This renders the sinh function where available:
+     * <code><pre>sinh([this])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2))</pre></code>
      */
     Field<BigDecimal> sinh();
 
     /**
      * Get the hyperbolic cosine function: cosh(field)
+     * <p>
+     * This renders the cosh function where available:
+     * <code><pre>cosh([this])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2))</pre></code>
      */
     Field<BigDecimal> cosh();
 
     /**
      * Get the hyperbolic tangent function: tanh(field)
+     * <p>
+     * This renders the tanh function where available:
+     * <code><pre>tanh([this])</pre></code> ... or simulates it elsewhere using
+     * exp:
+     * <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2) + 1)</pre></code>
      */
     Field<BigDecimal> tanh();
 
     /**
      * Get the hyperbolic cotangent function: coth(field)
+     * <p>
+     * This is not supported by any RDBMS, but simulated using exp exp:
+     * <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2) - 1)</pre></code>
      */
     Field<BigDecimal> coth();
 
     /**
      * Calculate degrees from radians from this field
+     * <p>
+     * This renders the degrees function where available:
+     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[this] * 180 / PI</pre></code>
      */
     Field<BigDecimal> deg();
 
     /**
      * Calculate radians from degrees from this field
+     * <p>
+     * This renders the degrees function where available:
+     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[this] * PI / 180</pre></code>
      */
     Field<BigDecimal> rad();
 
@@ -632,115 +753,226 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * Get the upper(field) function
+     * <p>
+     * This renders the upper function in all dialects:
+     * <code><pre>upper([this])</pre></code>
      */
     Field<String> upper();
 
     /**
      * Get the lower(field) function
+     * <p>
+     * This renders the lower function in all dialects:
+     * <code><pre>lower([this])</pre></code>
      */
     Field<String> lower();
 
     /**
      * Get the trim(field) function
+     * <p>
+     * This renders the trim function where available:
+     * <code><pre>trim([this])</pre></code> ... or simulates it elsewhere using
+     * rtrim and ltrim: <code><pre>ltrim(rtrim([this]))</pre></code>
      */
     Field<String> trim();
 
     /**
      * Get the rtrim(field) function
+     * <p>
+     * This renders the rtrim function in all dialects:
+     * <code><pre>rtrim([this])</pre></code>
      */
     Field<String> rtrim();
 
     /**
      * Get the ltrim(field) function
+     * <p>
+     * This renders the ltrim function in all dialects:
+     * <code><pre>ltrim([this])</pre></code>
      */
     Field<String> ltrim();
 
     /**
      * Get the rpad(field, length) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat(' ', [length] - length([this])))</pre></code>
      */
     Field<String> rpad(Field<? extends Number> length);
 
     /**
      * Get the rpad(field, length) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat(' ', [length] - length([this])))</pre></code>
      */
     Field<String> rpad(int length);
 
     /**
-     * Get the rpad(field, length, c) function
+     * Get the rpad(field, length, character) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat([character], [length] - length([this])))</pre></code>
      */
-    Field<String> rpad(Field<? extends Number> length, Field<String> c);
+    Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
     /**
-     * Get the rpad(field, length, c) function
+     * Get the rpad(field, length, character) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat([character], [length] - length([this])))</pre></code>
      */
-    Field<String> rpad(int length, char c);
+    Field<String> rpad(int length, char character);
 
     /**
-     * Get the rpad(field, length) function
+     * Get the lpad(field, length) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat(' ', [length] - length([this])), [this])</pre></code>
      */
     Field<String> lpad(Field<? extends Number> length);
 
     /**
-     * Get the rpad(field, length) function
+     * Get the lpad(field, length) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat(' ', [length] - length([this])), [this])</pre></code>
      */
     Field<String> lpad(int length);
 
     /**
-     * Get the rpad(field, length, c) function
+     * Get the lpad(field, length, character) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat([character], [length] - length([this])), [this])</pre></code>
      */
-    Field<String> lpad(Field<? extends Number> length, Field<String> c);
+    Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
     /**
-     * Get the rpad(field, length, c) function
+     * Get the lpad(field, length, character) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat([character], [length] - length([this])), [this])</pre></code>
      */
-    Field<String> lpad(int length, char c);
+    Field<String> lpad(int length, char character);
 
     /**
      * Get the repeat(count) function
+     * <p>
+     * This renders the repeat or replicate function where available:
+     * <code><pre>repeat([this], [count]) or
+     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * using rpad and length, which may be simulated as well, depending on the
+     * RDBMS:
+     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
      */
     Field<String> repeat(Number count);
 
     /**
      * Get the repeat(field, count) function
+     * <p>
+     * This renders the repeat or replicate function where available:
+     * <code><pre>repeat([this], [count]) or
+     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * using rpad and length, which may be simulated as well, depending on the
+     * RDBMS:
+     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
      */
     Field<String> repeat(Field<? extends Number> count);
 
     /**
      * Get the replace(in, search) function
+     * <p>
+     * This renders the replace or str_replace function where available:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code> ... or simulates it elsewhere
+     * using the three-argument replace function:
+     * <code><pre>replace([this], [search], '')</pre></code>
      */
     Field<String> replace(Field<String> search);
 
     /**
      * Get the replace(in, search) function
+     * <p>
+     * This renders the replace or str_replace function where available:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code> ... or simulates it elsewhere
+     * using the three-argument replace function:
+     * <code><pre>replace([this], [search], '')</pre></code>
      */
     Field<String> replace(String search);
 
     /**
      * Get the replace(in, search, replace) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code>
      */
     Field<String> replace(Field<String> search, Field<String> replace);
 
     /**
      * Get the replace(in, search, replace) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code>
      */
     Field<String> replace(String search, String replace);
 
     /**
      * Get the position(in, search) function
      * <p>
-     * This translates into any dialect
+     * This renders the position or any equivalent function:
+     * <code><pre>position([search] in [this]) or
+     * locate([this], [search]) or
+     * locate([search], [this]) or
+     * instr([this], [search]) or
+     * charindex([search], [this])</pre></code>
      */
     Field<Integer> position(String search);
 
     /**
      * Get the position(in, search) function
      * <p>
-     * This translates into any dialect
+     * This renders the position or any equivalent function:
+     * <code><pre>position([search] in [this]) or
+     * locate([this], [search]) or
+     * locate([search], [this]) or
+     * instr([this], [search]) or
+     * charindex([search], [this])</pre></code>
      */
     Field<Integer> position(Field<String> search);
 
     /**
      * Get the ascii(field) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>ascii([this])</pre></code>
      */
     Field<Integer> ascii();
 
@@ -768,28 +1000,36 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * Get the substring(field, startingPosition) function
      * <p>
-     * This translates into any dialect
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition]) or
+     * substring([this], [startingPosition])</pre></code>
      */
     Field<String> substring(int startingPosition);
 
     /**
      * Get the substring(field, startingPosition) function
      * <p>
-     * This translates into any dialect
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition]) or
+     * substring([this], [startingPosition])</pre></code>
      */
     Field<String> substring(Field<? extends Number> startingPosition);
 
     /**
      * Get the substring(field, startingPosition, length) function
      * <p>
-     * This translates into any dialect
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition], [length]) or
+     * substring([this], [startingPosition], [length])</pre></code>
      */
     Field<String> substring(int startingPosition, int length);
 
     /**
      * Get the substring(field, startingPosition, length) function
      * <p>
-     * This translates into any dialect
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition], [length]) or
+     * substring([this], [startingPosition], [length])</pre></code>
      */
     Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length);
 

@@ -5025,10 +5025,12 @@ public abstract class jOOQAbstractTest<
             default: {
                 Field<String> x = constant.replace("b", "x");
                 Field<String> y = constant.replace("b", "y");
-                Record record = create().select(x, y).fetchOne();
+                Field<String> z = constant.replace("b");
+                Record record = create().select(x, y, z).fetchOne();
 
                 assertEquals("axc", record.getValue(x));
                 assertEquals("ayc", record.getValue(y));
+                assertEquals("ac", record.getValue(z));
             }
         }
 

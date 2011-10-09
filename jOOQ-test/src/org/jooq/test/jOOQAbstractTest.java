@@ -4832,12 +4832,23 @@ public abstract class jOOQAbstractTest<
         Field<Double> f3b = val(-1.111).floor();
         Field<Double> f4b = val(-1.111).ceil();
 
+        Field<Float> f1c = val(2.0f).round();
+        Field<Float> f2c = val(2.0f).round(2);
+        Field<Float> f3c = val(2.0f).floor();
+        Field<Float> f4c = val(2.0f).ceil();
+        Field<Double> f1d = val(-2.0).round();
+        Field<Double> f2d = val(-2.0).round(2);
+        Field<Double> f3d = val(-2.0).floor();
+        Field<Double> f4d = val(-2.0).ceil();
+
         // Some arbitrary checks on having multiple select clauses
         Record record =
         create().select(f1a)
                 .select(f2a, f3a)
                 .select(f4a)
-                .select(f1b, f2b, f3b, f4b).fetchOne();
+                .select(f1b, f2b, f3b, f4b)
+                .select(f1c, f2c, f3c, f4c)
+                .select(f1d, f2d, f3d, f4d).fetchOne();
 
         assertNotNull(record);
         assertEquals("1.0", record.getValueAsString(f1a));
@@ -4849,6 +4860,16 @@ public abstract class jOOQAbstractTest<
         assertEquals("-1.11", record.getValueAsString(f2b));
         assertEquals("-2.0", record.getValueAsString(f3b));
         assertEquals("-1.0", record.getValueAsString(f4b));
+
+        assertEquals("2.0", record.getValueAsString(f1c));
+        assertEquals("2.0", record.getValueAsString(f2c));
+        assertEquals("2.0", record.getValueAsString(f3c));
+        assertEquals("2.0", record.getValueAsString(f4c));
+
+        assertEquals("-2.0", record.getValueAsString(f1d));
+        assertEquals("-2.0", record.getValueAsString(f2d));
+        assertEquals("-2.0", record.getValueAsString(f3d));
+        assertEquals("-2.0", record.getValueAsString(f4d));
 
         // Greatest and least
         record = create().select(

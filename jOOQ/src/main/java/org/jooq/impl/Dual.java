@@ -72,15 +72,18 @@ class Dual extends AbstractTable<Record> {
     @Override
     public final void toSQL(RenderContext context) {
         switch (context.getDialect()) {
+            case ASE:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+                break;
+
             case HSQLDB:
                 context.sql("INFORMATION_SCHEMA.SYSTEM_USERS");
                 break;
 
-            case ASE:
             case INGRES:
-            case POSTGRES:
-            case SQLITE:
-            case SQLSERVER:
+                context.sql("(select 1 as dual) as dual");
                 break;
 
             case DB2:

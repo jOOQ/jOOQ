@@ -4662,6 +4662,27 @@ public abstract class jOOQAbstractTest<
 
         // Standard aggregate functions, available in all dialects:
         // --------------------------------------------------------
+        Field<BigDecimal> median = TBook_ID().median();
+
+        // Some dialects don't support a median function or a simulation thereof
+        // Use AVG instead, as in this example the values of MEDIAN and AVG
+        // are the same
+        switch (getDialect()) {
+            case ASE:
+            case DERBY:
+            case H2:
+            case INGRES:
+            case MYSQL:
+            case SQLITE:
+
+            // TODO [#871] This could be simulated
+            // case SQLSERVER:
+            // case POSTGRES:
+            // case DB2:
+                median = TBook_ID().avg();
+                break;
+        }
+
         Result<Record> result = create()
             .select(
                 TBook_AUTHOR_ID(),
@@ -4671,7 +4692,8 @@ public abstract class jOOQAbstractTest<
                 TBook_ID().sum(),
                 TBook_ID().avg(),
                 TBook_ID().min(),
-                TBook_ID().max())
+                TBook_ID().max(),
+                median)
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID())
             .orderBy(TBook_AUTHOR_ID())
@@ -4684,6 +4706,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(1.5d, result.getValueAsDouble(0, 5));
         assertEquals(1, (int) result.getValueAsInteger(0, 6));
         assertEquals(2, (int) result.getValueAsInteger(0, 7));
+        assertEquals(1.5d, result.getValueAsDouble(0, 8));
 
         assertEquals(2, (int) result.getValueAsInteger(1, 1));
         assertEquals(2, (int) result.getValueAsInteger(1, 2));
@@ -4692,6 +4715,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(3.5d, result.getValueAsDouble(1, 5));
         assertEquals(3, (int) result.getValueAsInteger(1, 6));
         assertEquals(4, (int) result.getValueAsInteger(1, 7));
+        assertEquals(3.5d, result.getValueAsDouble(1, 8));
     }
 
     @Test

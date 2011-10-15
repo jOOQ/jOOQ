@@ -402,6 +402,11 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Field<BigDecimal> median() {
+        return new Function<BigDecimal>("median", SQLDataType.NUMERIC, this);
+    }
+
+    @Override
     public final Field<Integer> sign() {
         return new Sign(this);
     }

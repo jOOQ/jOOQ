@@ -615,6 +615,18 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     Field<BigDecimal> avg();
 
+    /**
+     * Get the median over a numeric field: median(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>HSQLDB</li>
+     * <li>Oracle</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    Field<BigDecimal> median();
+
     // ------------------------------------------------------------------------
     // Analytic (or window) functions created from this field
     // ------------------------------------------------------------------------

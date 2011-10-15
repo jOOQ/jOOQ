@@ -4658,6 +4658,43 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAggregateFunctions() throws Exception {
+
+        // Standard aggregate functions, available in all dialects:
+        // --------------------------------------------------------
+        Result<Record> result = create()
+            .select(
+                TBook_AUTHOR_ID(),
+                create().count(),
+                TBook_ID().count(),
+                TBook_AUTHOR_ID().countDistinct(),
+                TBook_ID().sum(),
+                TBook_ID().avg(),
+                TBook_ID().min(),
+                TBook_ID().max())
+            .from(TBook())
+            .groupBy(TBook_AUTHOR_ID())
+            .orderBy(TBook_AUTHOR_ID())
+            .fetch();
+
+        assertEquals(2, (int) result.getValueAsInteger(0, 1));
+        assertEquals(2, (int) result.getValueAsInteger(0, 2));
+        assertEquals(1, (int) result.getValueAsInteger(0, 3));
+        assertEquals(3d, result.getValueAsDouble(0, 4));
+        assertEquals(1.5d, result.getValueAsDouble(0, 5));
+        assertEquals(1, (int) result.getValueAsInteger(0, 6));
+        assertEquals(2, (int) result.getValueAsInteger(0, 7));
+
+        assertEquals(2, (int) result.getValueAsInteger(1, 1));
+        assertEquals(2, (int) result.getValueAsInteger(1, 2));
+        assertEquals(1, (int) result.getValueAsInteger(1, 3));
+        assertEquals(7d, result.getValueAsDouble(1, 4));
+        assertEquals(3.5d, result.getValueAsDouble(1, 5));
+        assertEquals(3, (int) result.getValueAsInteger(1, 6));
+        assertEquals(4, (int) result.getValueAsInteger(1, 7));
+    }
+
+    @Test
     public void testStoredFunctions() throws Exception {
         if (cRoutines() == null) {
             log.info("SKIPPING", "functions test");

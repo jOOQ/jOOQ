@@ -435,6 +435,10 @@ public abstract class jOOQAbstractTest<
         return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset.sql";
     }
 
+    protected final <Z> Field<Z> literal(Z value) throws Exception {
+        return create().literal(value);
+    }
+
     protected final <Z> Field<Z> val(Z value) throws Exception {
         return create().val(value);
     }
@@ -1943,7 +1947,7 @@ public abstract class jOOQAbstractTest<
                 log.info("SKIPPING", "most casting tests");
                 break;
 
-            default:
+            default: {
                 if (getDialect() != SQLDialect.HSQLDB) {
                     assertEquals(true, create().select(create().cast(1, Boolean.class)).fetchOne(0));
 
@@ -1952,24 +1956,21 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
-                // Not implemented by the driver
-                if (getDialect() != SQLDialect.SQLITE) {
-                    assertEquals(BigInteger.ONE, create().select(create().cast("1", BigInteger.class)).fetchOne(0));
-                    assertEquals(BigInteger.ONE, create().select(create().cast(1, BigInteger.class)).fetchOne(0));
+                assertEquals(BigInteger.ONE, create().select(create().cast("1", BigInteger.class)).fetchOne(0));
+                assertEquals(BigInteger.ONE, create().select(create().cast(1, BigInteger.class)).fetchOne(0));
 
-                    // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
-                    if (getDialect() == SQLDialect.SYBASE) {
-                        BigDecimal result = (BigDecimal)create().select(create().cast("1", BigDecimal.class)).fetchOne(0);
-                        result = result.setScale(0);
-                        assertEquals(BigDecimal.ONE, result);
+                // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
+                if (getDialect() == SQLDialect.SYBASE) {
+                    BigDecimal result = (BigDecimal)create().select(create().cast("1", BigDecimal.class)).fetchOne(0);
+                    result = result.setScale(0);
+                    assertEquals(BigDecimal.ONE, result);
 
-                        result = (BigDecimal)create().select(create().cast(1, BigDecimal.class)).fetchOne(0);
-                        result = result.setScale(0);
-                        assertEquals(BigDecimal.ONE, result);
-                    } else {
-                        assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast("1", BigDecimal.class)).fetchOne(0)));
-                        assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast(1, BigDecimal.class)).fetchOne(0)));
-                    }
+                    result = (BigDecimal)create().select(create().cast(1, BigDecimal.class)).fetchOne(0);
+                    result = result.setScale(0);
+                    assertEquals(BigDecimal.ONE, result);
+                } else {
+                    assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast("1", BigDecimal.class)).fetchOne(0)));
+                    assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast(1, BigDecimal.class)).fetchOne(0)));
                 }
 
                 assertEquals((byte) 1, create().select(create().cast("1", Byte.class)).fetchOne(0));
@@ -1988,6 +1989,7 @@ public abstract class jOOQAbstractTest<
                 assertEquals(1.0f, create().select(create().cast(1, Float.class)).fetchOne(0));
                 assertEquals(1.0, create().select(create().cast(1, Double.class)).fetchOne(0));
                 assertEquals("1", create().select(create().cast(1, String.class)).fetchOne(0));
+            }
         }
 
         // Sybase ASE does not know null bits
@@ -2015,6 +2017,12 @@ public abstract class jOOQAbstractTest<
 
         assertEquals(1984, create()
             .select(TBook_TITLE().cast(Integer.class))
+            .from(TBook())
+            .where(TBook_ID().equal(1))
+            .fetch().getValue(0, 0));
+
+        assertEquals(1984L, create()
+            .select(TBook_TITLE().cast(Long.class))
             .from(TBook())
             .where(TBook_ID().equal(1))
             .fetch().getValue(0, 0));
@@ -6226,6 +6234,12 @@ public abstract class jOOQAbstractTest<
             assertEquals(1, create().select().where(val(true).isTrue()).fetch().size());
             assertEquals(0, create().select().where(val(true).isFalse()).fetch().size());
         }
+    }
+
+    @Test
+    public void testDual() throws Exception {
+        assertEquals(1, (int) create().selectOne().fetchOne(0, Integer.class));
+        assertEquals(1, (int) create().selectOne().where(create().one().equal(1)).fetchOne(0, Integer.class));
     }
 
     @Test

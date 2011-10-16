@@ -211,7 +211,7 @@ implements
         }
     }
 
-    private void toSQLRows(RenderContext context, Integer rows) {
+    private final void toSQLRows(RenderContext context, Integer rows) {
         if (rows == Integer.MIN_VALUE) {
             context.sql("unbounded preceding");
         }
@@ -273,7 +273,7 @@ implements
     }
 
     @Override
-    public WindowFunction<T> partitionByOne() {
+    public final WindowFunction<T> partitionByOne() {
         partitionByOne = true;
         partitionBy.add(create().one());
         return this;

@@ -6547,6 +6547,47 @@ public abstract class jOOQAbstractTest<
 
         column = 0;
 
+        // STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
+        result =
+        create().select(TBook_ID(),
+                        TBook_ID().stddevPopOver()
+                                  .partitionByOne(),
+                        TBook_ID().stddevSampOver()
+                                  .partitionByOne(),
+                        TBook_ID().varPopOver()
+                                  .partitionByOne(),
+                        TBook_ID().varSampOver()
+                                  .partitionByOne(),
+
+                        TBook_ID().stddevPopOver()
+                                  .partitionBy(TBook_AUTHOR_ID()),
+                        TBook_ID().stddevSampOver()
+                                  .partitionBy(TBook_AUTHOR_ID()),
+                        TBook_ID().varPopOver()
+                                  .partitionBy(TBook_AUTHOR_ID()),
+                        TBook_ID().varSampOver()
+                                  .partitionBy(TBook_AUTHOR_ID()))
+                .from(TBook())
+                .orderBy(TBook_ID().asc())
+                .fetch();
+
+        // Overall STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
+        assertEquals("1.118", result.getValueAsString(0, 1).substring(0, 5));
+        assertEquals(1.25, result.getValueAsDouble(0, 3));
+
+        // Partitioned STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
+        assertEquals(0.5, result.getValueAsDouble(0, 5));
+        assertEquals(0.25, result.getValueAsDouble(0, 7));
+
+        // DB2 only knows STDDEV_POP / VAR_POP
+        if (getDialect() != SQLDialect.DB2) {
+            assertEquals("1.290", result.getValueAsString(0, 2).substring(0, 5));
+            assertEquals("1.666", result.getValueAsString(0, 4).substring(0, 5));
+            assertEquals("0.707", result.getValueAsString(0, 6).substring(0, 5));
+            assertEquals(0.5, result.getValueAsDouble(0, 8));
+        }
+
+        column = 0;
         if (getDialect() == SQLDialect.SQLSERVER) {
             log.info("SKIPPING", "ROWS UNBOUNDED PRECEDING and similar tests");
             return;

@@ -47,20 +47,30 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.NamedQueryPart;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
 class Function<T> extends AbstractField<T> {
 
-    private static final long          serialVersionUID = 347252741712134044L;
+    private static final long    serialVersionUID = 347252741712134044L;
 
     private final List<Field<?>> arguments;
+    private final Term           term;
 
     Function(String name, DataType<T> type, Field<?>... arguments) {
         super(name, type);
 
         this.arguments = Arrays.asList(arguments);
+        this.term = null;
+    }
+
+    Function(Term term, DataType<T> type, Field<?>... arguments) {
+        super(term.name().toLowerCase(), type);
+
+        this.arguments = Arrays.asList(arguments);
+        this.term = term;
     }
 
     @Override
@@ -71,7 +81,7 @@ class Function<T> extends AbstractField<T> {
     @Override
     public final void toSQL(RenderContext context) {
         context.sql(getFNPrefix());
-        context.sql(getName());
+        context.sql(getFNName(context.getDialect()));
         context.sql(getArgumentListDelimiter(context, "("));
 
         String separator = "";
@@ -84,6 +94,15 @@ class Function<T> extends AbstractField<T> {
 
         context.sql(getArgumentListDelimiter(context, ")"));
         context.sql(getFNSuffix());
+    }
+
+    private final String getFNName(SQLDialect dialect) {
+        if (term != null) {
+            return term.translate(dialect);
+        }
+        else {
+            return getName();
+        }
     }
 
     /**

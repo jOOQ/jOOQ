@@ -312,7 +312,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @Override
     public final Object getValue(int index) throws IllegalArgumentException {
-        return getValues()[index].getValue();
+        return getValue(getField(index));
     }
 
     @Override

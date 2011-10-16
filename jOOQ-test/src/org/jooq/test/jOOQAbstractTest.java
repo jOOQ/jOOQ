@@ -4679,10 +4679,7 @@ public abstract class jOOQAbstractTest<
             case SQLSERVER:
             case POSTGRES:
             case DB2:
-
-                // TODO [#873] Selecting the same aggregate field twice causes
-                // Errors. Thus, aliasing is necessary
-                median = TBook_ID().avg().as("median");
+                median = TBook_ID().avg();
                 break;
         }
 
@@ -4758,6 +4755,23 @@ public abstract class jOOQAbstractTest<
                 }
             }
         }
+
+        // [#873] Duplicate functions
+        // --------------------------
+        result =
+        create().select(
+                    TBook_AUTHOR_ID(),
+                    TBook_ID().max(),
+                    TBook_ID().max())
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .orderBy(TBook_AUTHOR_ID())
+                .fetch();
+
+        assertEquals(2, (int) result.getValueAsInteger(0, 1));
+        assertEquals(2, (int) result.getValueAsInteger(0, 2));
+        assertEquals(4, (int) result.getValueAsInteger(1, 1));
+        assertEquals(4, (int) result.getValueAsInteger(1, 2));
     }
 
     @Test

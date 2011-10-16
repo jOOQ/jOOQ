@@ -551,7 +551,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             return atan2((Number) null);
         }
 
-        return new Atan2(this, y);
+        return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, this, y);
     }
 
     @Override
@@ -759,17 +759,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<Integer> charLength() {
-        return new CharLength(this);
+        return new Function<Integer>(Term.CHAR_LENGTH, SQLDataType.INTEGER, this);
     }
 
     @Override
     public final Field<Integer> bitLength() {
-        return new BitLength(this);
+        return new Function<Integer>(Term.BIT_LENGTH, SQLDataType.INTEGER, this);
     }
 
     @Override
     public final Field<Integer> octetLength() {
-        return new OctetLength(this);
+        return new Function<Integer>(Term.OCTET_LENGTH, SQLDataType.INTEGER, this);
     }
 
     @Override

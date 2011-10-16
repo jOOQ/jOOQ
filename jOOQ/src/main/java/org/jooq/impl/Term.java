@@ -45,6 +45,10 @@ import org.jooq.SQLDialect;
  */
 enum Term {
 
+    ATAN2,
+    BIT_LENGTH,
+    CHAR_LENGTH,
+    OCTET_LENGTH,
     STDDEV_POP,
     STDDEV_SAMP,
     VAR_POP,
@@ -54,45 +58,113 @@ enum Term {
 
     public final String translate(SQLDialect dialect) {
         switch (this) {
+            case ATAN2:
+                switch (dialect) {
+                    case ASE:
+                    case SQLSERVER:
+                        return "atn2";
+                }
+
+                return "atan2";
+
+            case BIT_LENGTH:
+                switch (dialect) {
+                    case ASE:
+                        return "8 * datalength";
+
+                    case DB2:
+                    case DERBY:
+                    case INGRES:
+                    case SQLITE:
+                    case SYBASE:
+                        return "8 * length";
+
+                    case SQLSERVER:
+                        return "8 * len";
+
+                    case ORACLE:
+                        return "8 * lengthb";
+                }
+
+                return "bit_length";
+
+            case CHAR_LENGTH:
+                switch (dialect) {
+                    case DB2:
+                    case DERBY:
+                    case INGRES:
+                    case ORACLE:
+                    case SQLITE:
+                    case SYBASE:
+                        return "length";
+
+                    case SQLSERVER:
+                        return "len";
+                }
+
+                return "char_length";
+
+            case OCTET_LENGTH:
+                switch (dialect) {
+                    case DB2:
+                    case DERBY:
+                    case INGRES:
+                    case SQLITE:
+                    case SYBASE:
+                        return "length";
+
+                    case SQLSERVER:
+                        return "len";
+
+                    case ORACLE:
+                        return "lengthb";
+                }
+
+                return "octet_length";
+
             case STDDEV_POP:
                 switch (dialect) {
                     case DB2:
                         return "stddev";
+
                     case SQLSERVER:
                         return "stdevp";
-                    default:
-                        return "stddev_pop";
                 }
+
+                return "stddev_pop";
 
             case STDDEV_SAMP:
                 switch (dialect) {
                     case DB2:
                         return "stddev";
+
                     case SQLSERVER:
                         return "stdev";
-                    default:
-                        return "stddev_samp";
                 }
+
+                return "stddev_samp";
 
             case VAR_POP:
                 switch (dialect) {
                     case DB2:
                         return "variance";
+
                     case SQLSERVER:
                         return "varp";
-                    default:
-                        return "var_pop";
                 }
+
+                return "var_pop";
 
             case VAR_SAMP:
                 switch (dialect) {
                     case DB2:
                         return "variance";
+
                     case SQLSERVER:
                         return "var";
-                    default:
-                        return "var_samp";
                 }
+
+                return "var_samp";
         }
 
         return null;

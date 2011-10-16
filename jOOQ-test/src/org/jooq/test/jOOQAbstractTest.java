@@ -7480,6 +7480,9 @@ public abstract class jOOQAbstractTest<
                 .ignoreRows(0)
                 .execute();
 
+        // [#812] Reset stale connection. Seems to be necessary in Postgres
+        resetLoaderConnection();
+
         assertEquals(1, loader.processed());
         assertEquals(1, loader.errors().size());
         assertNotNull(loader.errors().get(0));
@@ -7499,6 +7502,9 @@ public abstract class jOOQAbstractTest<
                 .fields(TAuthor_ID())
                 .ignoreRows(0)
                 .execute();
+
+        // [#812] Reset stale connection. Seems to be necessary in Postgres
+        resetLoaderConnection();
 
         assertEquals(2, loader.processed());
         assertEquals(2, loader.errors().size());
@@ -7523,6 +7529,9 @@ public abstract class jOOQAbstractTest<
                 .separator(';')
                 .ignoreRows(0)
                 .execute();
+
+        // [#812] Reset stale connection. Seems to be necessary in Postgres
+        resetLoaderConnection();
 
         assertEquals(1, loader.processed());
         assertEquals(1, loader.errors().size());
@@ -7657,6 +7666,9 @@ public abstract class jOOQAbstractTest<
             }
         }
 
+        // [#812] Reset stale connection. Seems to be necessary in Postgres
+        resetLoaderConnection();
+
         // Rollback on duplicate keys
         // --------------------------
         loader =
@@ -7720,7 +7732,14 @@ public abstract class jOOQAbstractTest<
         assertNull(result.getValue(2, TAuthor_FIRST_NAME()));
         assertEquals("Hesse", result.getValue(2, TAuthor_LAST_NAME()));
         assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
-        assertEquals("Orwell", result.getValue(0, TAuthor_LAST_NAME()));
+    }
+
+    private void resetLoaderConnection() throws SQLException {
+        connection.rollback();
+        connection.close();
+        connection = null;
+        connection = getConnection();
+        connection.setAutoCommit(false);
     }
 
     /**

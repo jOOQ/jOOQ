@@ -242,7 +242,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 final int size = fieldList.size();
 
                 for (int i = 0; i < size; i++) {
-                    setValue((AbstractRecord) record, fieldList.get(i), i + 1, rs);
+                    setValue((AbstractRecord) record, fieldList.get(i), i, rs);
                 }
 
                 if (log.isTraceEnabled()) {
@@ -263,7 +263,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
          * Utility method to prevent unnecessary unchecked conversions
          */
         private final <T> void setValue(AbstractRecord record, Field<T> field, int index, ResultSet rs) throws SQLException {
-            T value = FieldTypeHelper.getFromResultSet(configuration, rs, field, index);
+            T value = FieldTypeHelper.getFromResultSet(configuration, rs, field, index + 1);
             record.setValue(field, new Value<T>(value));
         }
 

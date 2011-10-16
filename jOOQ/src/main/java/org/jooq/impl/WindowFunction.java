@@ -73,6 +73,8 @@ implements
      */
     private static final long   serialVersionUID = 5505202722420252635L;
 
+    private final Term          term;
+
     private final FieldList     arguments;
     private final FieldList     partitionBy;
     private final SortFieldList orderBy;
@@ -90,6 +92,16 @@ implements
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
         this.arguments = new FieldList(Arrays.asList(arguments));
+        this.term = null;
+    }
+
+    public WindowFunction(Term term, DataType<T> type, Field<?>... arguments) {
+        super(term.name().toLowerCase(), type);
+
+        this.partitionBy = new FieldList();
+        this.orderBy = new SortFieldList();
+        this.arguments = new FieldList(Arrays.asList(arguments));
+        this.term = term;
     }
 
     // -------------------------------------------------------------------------
@@ -103,7 +115,7 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(getName());
+        context.sql(getFNName(context.getDialect()));
         context.sql("(");
 
         if (!arguments.isEmpty()) {
@@ -188,6 +200,15 @@ implements
         }
 
         context.sql(")");
+    }
+
+    private final String getFNName(SQLDialect dialect) {
+        if (term != null) {
+            return term.translate(dialect);
+        }
+        else {
+            return getName();
+        }
     }
 
     private void toSQLRows(RenderContext context, Integer rows) {

@@ -4676,10 +4676,13 @@ public abstract class jOOQAbstractTest<
             case SQLITE:
 
             // TODO [#871] This could be simulated
-            // case SQLSERVER:
-            // case POSTGRES:
-            // case DB2:
-                median = TBook_ID().avg();
+            case SQLSERVER:
+            case POSTGRES:
+            case DB2:
+
+                // TODO [#873] Selecting the same aggregate field twice causes
+                // Errors. Thus, aliasing is necessary
+                median = TBook_ID().avg().as("median");
                 break;
         }
 
@@ -4703,19 +4706,58 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, (int) result.getValueAsInteger(0, 2));
         assertEquals(1, (int) result.getValueAsInteger(0, 3));
         assertEquals(3d, result.getValueAsDouble(0, 4));
-        assertEquals(1.5d, result.getValueAsDouble(0, 5));
         assertEquals(1, (int) result.getValueAsInteger(0, 6));
         assertEquals(2, (int) result.getValueAsInteger(0, 7));
-        assertEquals(1.5d, result.getValueAsDouble(0, 8));
 
         assertEquals(2, (int) result.getValueAsInteger(1, 1));
         assertEquals(2, (int) result.getValueAsInteger(1, 2));
         assertEquals(1, (int) result.getValueAsInteger(1, 3));
         assertEquals(7d, result.getValueAsDouble(1, 4));
-        assertEquals(3.5d, result.getValueAsDouble(1, 5));
         assertEquals(3, (int) result.getValueAsInteger(1, 6));
         assertEquals(4, (int) result.getValueAsInteger(1, 7));
-        assertEquals(3.5d, result.getValueAsDouble(1, 8));
+
+        // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
+        // This may need to be corrected by jOOQ
+        assertTrue(Arrays.asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 5)));
+        assertTrue(Arrays.asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 8)));
+        assertTrue(Arrays.asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 5)));
+        assertTrue(Arrays.asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 8)));
+
+        // Statistical aggregate functions, available in some dialects:
+        // ------------------------------------------------------------
+        switch (getDialect()) {
+            case DERBY:
+            case SQLITE:
+                log.info("SKIPPING", "Statistical aggregate functions");
+                break;
+
+            default: {
+                result = create()
+                    .select(
+                        TBook_AUTHOR_ID(),
+                        TBook_ID().stddevPop(),
+                        TBook_ID().stddevSamp(),
+                        TBook_ID().varPop(),
+                        TBook_ID().varSamp())
+                    .from(TBook())
+                    .groupBy(TBook_AUTHOR_ID())
+                    .orderBy(TBook_AUTHOR_ID())
+                    .fetch();
+
+                assertEquals(0.5, result.getValueAsDouble(0, 1));
+                assertEquals(0.25, result.getValueAsDouble(0, 3));
+                assertEquals(0.5, result.getValueAsDouble(1, 1));
+                assertEquals(0.25, result.getValueAsDouble(1, 3));
+
+                // DB2 only knows STDDEV_POP / VAR_POP
+                if (getDialect() != SQLDialect.DB2) {
+                    assertEquals("0.707", result.getValueAsString(0, 2).substring(0, 5));
+                    assertEquals(0.5, result.getValueAsDouble(0, 4));
+                    assertEquals("0.707", result.getValueAsString(1, 2).substring(0, 5));
+                    assertEquals(0.5, result.getValueAsDouble(1, 4));
+                }
+            }
+        }
     }
 
     @Test

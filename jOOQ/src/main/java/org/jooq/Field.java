@@ -627,6 +627,80 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     Field<BigDecimal> median();
 
+    /**
+     * Get the population standard deviation of a numeric field: stddev_pop(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>DB2</li>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (stdev)</li>
+     * <li>Sybase ASE</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    Field<BigDecimal> stddevPop();
+
+    /**
+     * Get the sample standard deviation of a numeric field: stddev_samp(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>DB2</li>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (stdev)</li>
+     * <li>Sybase ASE</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    Field<BigDecimal> stddevSamp();
+
+    /**
+     * Get the population variance of a numeric field: var_pop(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>DB2</li>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (stdev)</li>
+     * <li>Sybase ASE</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    Field<BigDecimal> varPop();
+
+    /**
+     * Get the sample variance of a numeric field: var_samp(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (var)</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    Field<BigDecimal> varSamp();
+
     // ------------------------------------------------------------------------
     // Analytic (or window) functions created from this field
     // ------------------------------------------------------------------------

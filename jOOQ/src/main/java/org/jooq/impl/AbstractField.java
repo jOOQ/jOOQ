@@ -367,6 +367,26 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return new WindowFunction<T>("lag", getDataType(), this, literal(offset), defaultValue);
     }
 
+    @Override
+    public final WindowPartitionByStep<BigDecimal> stddevPopOver() {
+        return new WindowFunction<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, this);
+    }
+
+    @Override
+    public final WindowPartitionByStep<BigDecimal> stddevSampOver() {
+        return new WindowFunction<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, this);
+    }
+
+    @Override
+    public final WindowPartitionByStep<BigDecimal> varPopOver() {
+        return new WindowFunction<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, this);
+    }
+
+    @Override
+    public final WindowPartitionByStep<BigDecimal> varSampOver() {
+        return new WindowFunction<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, this);
+    }
+
     // ------------------------------------------------------------------------
     // Functions created from this field
     // ------------------------------------------------------------------------
@@ -408,22 +428,22 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<BigDecimal> stddevPop() {
-        return new StddevPop(this);
+        return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> stddevSamp() {
-        return new StddevSamp(this);
+        return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> varPop() {
-        return new VarPop(this);
+        return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> varSamp() {
-        return new VarSamp(this);
+        return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, this);
     }
 
     @Override

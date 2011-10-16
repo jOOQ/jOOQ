@@ -833,6 +833,38 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
+    /**
+     * The <code>stddev_pop(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    WindowPartitionByStep<BigDecimal> stddevPopOver();
+
+    /**
+     * The <code>stddev_samp(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    WindowPartitionByStep<BigDecimal> stddevSampOver();
+
+    /**
+     * The <code>var_pop(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    WindowPartitionByStep<BigDecimal> varPopOver();
+
+    /**
+     * The <code>var_samp(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    WindowPartitionByStep<BigDecimal> varSampOver();
+
     // ------------------------------------------------------------------------
     // String functions created from this field
     // ------------------------------------------------------------------------

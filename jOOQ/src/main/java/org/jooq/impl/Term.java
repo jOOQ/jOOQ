@@ -35,36 +35,66 @@
  */
 package org.jooq.impl;
 
-import java.math.BigDecimal;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.SQLDialect;
 
 /**
+ * The term dictionary enumerates standard expressions and their
+ * dialect-specific variants if applicable
+ *
  * @author Lukas Eder
  */
-class VarPop extends AbstractFunction<BigDecimal> {
+enum Term {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -7273879239726265322L;
+    STDDEV_POP,
+    STDDEV_SAMP,
+    VAR_POP,
+    VAR_SAMP
 
-    VarPop(Field<?> arg) {
-        super("var_pop", SQLDataType.NUMERIC, arg);
-    }
+    ;
 
-    @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
-            case DB2:
-                return new Function<BigDecimal>("variance", SQLDataType.NUMERIC, getArguments());
+    public final String translate(SQLDialect dialect) {
+        switch (this) {
+            case STDDEV_POP:
+                switch (dialect) {
+                    case DB2:
+                        return "stddev";
+                    case SQLSERVER:
+                        return "stdevp";
+                    default:
+                        return "stddev_pop";
+                }
 
-            case SQLSERVER:
-                return new Function<BigDecimal>("varp", SQLDataType.NUMERIC, getArguments());
+            case STDDEV_SAMP:
+                switch (dialect) {
+                    case DB2:
+                        return "stddev";
+                    case SQLSERVER:
+                        return "stdev";
+                    default:
+                        return "stddev_samp";
+                }
 
-            default:
-                return new Function<BigDecimal>("var_pop", SQLDataType.NUMERIC, getArguments());
+            case VAR_POP:
+                switch (dialect) {
+                    case DB2:
+                        return "variance";
+                    case SQLSERVER:
+                        return "varp";
+                    default:
+                        return "var_pop";
+                }
+
+            case VAR_SAMP:
+                switch (dialect) {
+                    case DB2:
+                        return "variance";
+                    case SQLSERVER:
+                        return "var";
+                    default:
+                        return "var_samp";
+                }
         }
+
+        return null;
     }
 }

@@ -407,6 +407,26 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Field<BigDecimal> stddevPop() {
+        return new StddevPop(this);
+    }
+
+    @Override
+    public final Field<BigDecimal> stddevSamp() {
+        return new StddevSamp(this);
+    }
+
+    @Override
+    public final Field<BigDecimal> varPop() {
+        return new VarPop(this);
+    }
+
+    @Override
+    public final Field<BigDecimal> varSamp() {
+        return new VarSamp(this);
+    }
+
+    @Override
     public final Field<Integer> sign() {
         return new Sign(this);
     }

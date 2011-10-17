@@ -66,14 +66,14 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
             null,
             record.getValueAsString("overload"));
 
-        if (!Arrays.asList("void", "record").contains(record.getValue(Routines.DATA_TYPE))) {
+        if (!Arrays.asList("void", "record").contains(record.getValue("data_type"))) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Routines.DATA_TYPE),
+                record.getValueAsString("data_type"),
                 record.getValue(Routines.NUMERIC_PRECISION),
                 record.getValue(Routines.NUMERIC_SCALE),
                 record.getValue(Routines.TYPE_UDT_NAME));
 
-            returnValue = new DefaultParameterDefinition(this, "return_value", -1, type);
+            returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
 
         specificName = record.getValue(Routines.SPECIFIC_NAME);

@@ -63,7 +63,16 @@ import org.jooq.UDTRecord;
  * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
+ * @deprecated - 1.6.8 [#852] - The stored procedure / stored function
+ *             distinction has been reviewed in jOOQ. The 12 currently supported
+ *             RDBMS have such a distinct idea of what is a procedure and what
+ *             is a function that it makes no longer sense to distinguish them
+ *             generally, in jOOQ. See <a
+ *             href="https://sourceforge.net/apps/trac/jooq/ticket/852"
+ *             >https://sourceforge.net/apps/trac/jooq/ticket/852</a> for more
+ *             details.
  */
+@Deprecated
 public class StoredProcedureImpl extends AbstractStoredProcedure {
 
     private static final long                serialVersionUID = -8046199737354507547L;

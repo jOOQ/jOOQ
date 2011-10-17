@@ -77,6 +77,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.JooqLogger;
@@ -86,8 +87,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.SequenceImpl;
 import org.jooq.impl.StopWatch;
-import org.jooq.impl.StoredFunctionImpl;
-import org.jooq.impl.StoredProcedureImpl;
 import org.jooq.impl.StringUtils;
 import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
@@ -97,7 +96,6 @@ import org.jooq.impl.UDTImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.impl.UpdatableTableImpl;
-import org.jooq.util.postgres.PostgresSingleUDTOutParameterProcedure;
 
 
 /**
@@ -1133,14 +1131,14 @@ public class DefaultGenerator implements Generator {
             outR.println("public final class Routines {");
             for (RoutineDefinition routine : database.getRoutines()) {
                 try {
-                    if (routine.isProcedure()) {
-                        printProcedure(database, schema, routine);
+                    printRoutine(database, schema, routine);
+
+                    if (!routine.isSQLUsable()) {
 
                         // Static execute() convenience method
                         printConvenienceMethodProcedure(outR, routine);
                     }
                     else {
-                        printFunction(database, schema, routine);
 
                         // Static execute() convenience method
                         printConvenienceMethodFunction(outR, routine);
@@ -1175,12 +1173,7 @@ public class DefaultGenerator implements Generator {
 
                     for (RoutineDefinition routine : pkg.getRoutines()) {
                         try {
-                            if (routine.isProcedure()) {
-                                printProcedure(database, schema, routine);
-                            }
-                            else {
-                                printFunction(database, schema, routine);
-                            }
+                            printRoutine(database, schema, routine);
                         } catch (Exception e) {
                             log.error("Error while generating routine " + routine, e);
                         }
@@ -1211,12 +1204,15 @@ public class DefaultGenerator implements Generator {
 
                     for (RoutineDefinition routine : pkg.getRoutines()) {
                         try {
-                            if (routine.isProcedure()) {
+                            if (!routine.isSQLUsable()) {
+                                // Static execute() convenience method
                                 printConvenienceMethodProcedure(outPkg, routine);
                             }
                             else {
+                                // Static execute() convenience method
                                 printConvenienceMethodFunction(outPkg, routine);
 
+                                // Static asField() convenience method
                                 printConvenienceMethodFunctionAsField(outPkg, routine, false);
                                 printConvenienceMethodFunctionAsField(outPkg, routine, true);
                             }
@@ -1342,70 +1338,85 @@ public class DefaultGenerator implements Generator {
         return result;
     }
 
-    private void printProcedure(Database database, SchemaDefinition schema, RoutineDefinition procedure)
+    private void printRoutine(Database database, SchemaDefinition schema, RoutineDefinition routine)
         throws FileNotFoundException, SQLException {
-        strategy.getFile(procedure).getParentFile().mkdirs();
-        log.info("Generating procedure", strategy.getFileName(procedure));
+        strategy.getFile(routine).getParentFile().mkdirs();
+        log.info("Generating routine", strategy.getFileName(routine));
 
-        GenerationWriter out = new GenerationWriter(new PrintWriter(strategy.getFile(procedure)));
-        printHeader(out, strategy.getJavaPackageName(procedure));
-        printClassJavadoc(out, procedure);
+        GenerationWriter out = new GenerationWriter(new PrintWriter(strategy.getFile(routine)));
+        printHeader(out, strategy.getJavaPackageName(routine));
+        printClassJavadoc(out, routine);
 
-        Class<?> procedureClass = StoredProcedureImpl.class;
-        if (database.getDialect() == SQLDialect.POSTGRES &&
-            procedure.getOutParameters().size() == 1 &&
-            procedure.getOutParameters().get(0).getType().isUDT()) {
-
-            procedureClass = PostgresSingleUDTOutParameterProcedure.class;
-        }
+        Class<?> procedureClass = AbstractRoutine.class;
+//        if (database.getDialect() == SQLDialect.POSTGRES &&
+//            routine.getOutParameters().size() == 1 &&
+//            routine.getOutParameters().get(0).getType().isUDT()) {
+//
+//            procedureClass = PostgresSingleUDTOutParameterProcedure.class;
+//        }
 
         out.print("public class ");
-        out.print(strategy.getJavaClassName(procedure));
+        out.print(strategy.getJavaClassName(routine));
         out.print(" extends ");
         out.print(procedureClass);
+        out.print("<");
+
+        if (routine.getReturnValue() == null) {
+            out.print(Void.class);
+        }
+        else {
+            out.print(getJavaType(routine.getReturnType()));
+        }
+
+        out.print(">");
         out.println(" {");
         out.printSerial();
         out.println();
 
-        for (ParameterDefinition parameter : procedure.getAllParameters()) {
-        	printParameter(out, parameter, procedure);
+        for (ParameterDefinition parameter : routine.getAllParameters()) {
+        	printParameter(out, parameter, routine);
         }
 
         out.println();
-        printJavadoc(out, "Create a new procedure call instance");
-        out.println("\tpublic " + strategy.getJavaClassName(procedure) + "() {");
+        printJavadoc(out, "Create a new routine call instance");
+        out.println("\tpublic " + strategy.getJavaClassName(routine) + "() {");
         out.print("\t\tsuper(");
         out.print(SQLDialect.class);
         out.print(".");
         out.print(database.getDialect().name());
         out.print(", \"");
-        out.print(procedure.getName());
+        out.print(routine.getName());
         out.print("\", ");
         out.print(strategy.getFullJavaIdentifierUC(schema));
 
-        if (procedure.getPackage() != null) {
+        if (routine.getPackage() != null) {
             out.print(", ");
-            out.print(strategy.getFullJavaClassName(procedure.getPackage()));
+            out.print(strategy.getFullJavaClassName(routine.getPackage()));
             out.print(".");
-            out.print(strategy.getJavaIdentifierUC(procedure.getPackage()));
+            out.print(strategy.getJavaIdentifierUC(routine.getPackage()));
+        }
+
+        if (routine.getReturnValue() != null) {
+            out.print(", ");
+            out.print(getJavaTypeReference(database, routine.getReturnType()));
         }
 
         out.println(");");
 
-        if (procedure.getAllParameters().size() > 0) {
+        if (routine.getAllParameters().size() > 0) {
             out.println();
         }
 
-        for (ParameterDefinition parameter : procedure.getAllParameters()) {
+        for (ParameterDefinition parameter : routine.getAllParameters()) {
         	String parameterNameUC = parameter.getName().toUpperCase();
 
         	out.print("\t\t");
 
-        	if (parameter.equals(procedure.getReturnValue())) {
+        	if (parameter.equals(routine.getReturnValue())) {
         	    out.println("setReturnParameter(" + parameterNameUC + ");");
         	}
-        	else if (procedure.getInParameters().contains(parameter)) {
-        		if (procedure.getOutParameters().contains(parameter)) {
+        	else if (routine.getInParameters().contains(parameter)) {
+        		if (routine.getOutParameters().contains(parameter)) {
         			out.println("addInOutParameter(" + parameterNameUC + ");");
         		}
         		else {
@@ -1417,14 +1428,17 @@ public class DefaultGenerator implements Generator {
         	}
         }
 
-        if (procedure.getOverload() != null) {
+        if (routine.getOverload() != null) {
             out.println("\t\tsetOverloaded(true);");
         }
 
         out.println("\t}");
 
-        for (ParameterDefinition parameter : procedure.getInParameters()) {
+        for (ParameterDefinition parameter : routine.getInParameters()) {
         	out.println();
+            out.println("\t/**");
+            out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the routine");
+            out.println("\t */");
         	out.print("\tpublic void set");
             out.print(strategy.getJavaClassName(parameter));
             out.print("(");
@@ -1442,139 +1456,50 @@ public class DefaultGenerator implements Generator {
             out.print(strategy.getJavaIdentifierUC(parameter));
             out.println(", value);");
         	out.println("\t}");
+
+        	if (routine.isSQLUsable()) {
+        	    out.println();
+                out.println("\t/**");
+                out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the function");
+                out.println("\t * <p>");
+                out.print("\t * Use this method only, if the function is called as a {@link ");
+                out.print(Field.class);
+                out.print("} in a {@link ");
+                out.print(Select.class);
+                out.println("} statement!");
+                out.println("\t */");
+                out.print("\tpublic void set");
+                out.print(strategy.getJavaClassName(parameter));
+                out.print("(");
+                out.print(Field.class);
+                out.print("<");
+                printExtendsNumberType(out, parameter.getType());
+                out.println("> field) {");
+
+                out.print("\t\tset");
+                if (parameter.getType().isGenericNumberType()) {
+                    out.print("Number");
+                }
+                else {
+                    out.print("Field");
+                }
+                out.print("(");
+                out.print(strategy.getJavaIdentifierUC(parameter));
+                out.println(", field);");
+                out.println("\t}");
+        	}
         }
 
-        for (ParameterDefinition parameter : procedure.getAllParameters()) {
-            if (parameter.equals(procedure.getReturnValue()) ||
-                procedure.getOutParameters().contains(parameter)) {
+        for (ParameterDefinition parameter : routine.getAllParameters()) {
+            boolean isReturnValue = parameter.equals(routine.getReturnValue());
+            boolean isOutParameter = routine.getOutParameters().contains(parameter);
 
+            if (isOutParameter && !isReturnValue) {
                 out.println();
                 out.println("\tpublic " + getJavaType(parameter.getType()) + " get" + strategy.getJavaClassName(parameter) + "() {");
                 out.println("\t\treturn getValue(" + strategy.getJavaIdentifierUC(parameter) + ");");
                 out.println("\t}");
             }
-        }
-
-        out.println("}");
-        out.close();
-    }
-
-    private void printFunction(Database database, SchemaDefinition schema, RoutineDefinition function)
-        throws SQLException, FileNotFoundException {
-        strategy.getFile(function).getParentFile().mkdirs();
-        log.info("Generating function", strategy.getFileName(function));
-
-        GenerationWriter out = new GenerationWriter(new PrintWriter(strategy.getFile(function)));
-        printHeader(out, strategy.getJavaPackageName(function));
-        printClassJavadoc(out, function);
-
-        out.print("public class ");
-        out.print(strategy.getJavaClassName(function));
-        out.print(" extends ");
-        out.print(StoredFunctionImpl.class);
-        out.print("<");
-        out.print(getJavaType(function.getReturnType()));
-        out.println("> {");
-        out.printSerial();
-        out.println();
-
-        for (ParameterDefinition parameter : function.getInParameters()) {
-        	printParameter(out, parameter, function);
-        }
-
-        out.println();
-        printJavadoc(out, "Create a new function call instance");
-        out.println("\tpublic " + strategy.getJavaClassName(function) + "() {");
-        out.print("\t\tsuper(");
-        out.print(SQLDialect.class);
-        out.print(".");
-        out.print(database.getDialect().name());
-        out.print(", \"");
-
-        out.print(function.getName());
-        out.print("\", ");
-
-        out.print(strategy.getFullJavaIdentifierUC(schema));
-        out.print(", ");
-
-        if (function.getPackage() != null) {
-            out.print(strategy.getFullJavaClassName(function.getPackage()));
-            out.print(".");
-            out.print(strategy.getJavaIdentifierUC(function.getPackage()));
-            out.print(", ");
-        }
-
-        out.print(getJavaTypeReference(database, function.getReturnType()));
-        out.println(");");
-
-        if (function.getInParameters().size() > 0) {
-            out.println();
-        }
-
-        for (ParameterDefinition parameter : function.getInParameters()) {
-        	String parameterNameUC = parameter.getName().toUpperCase();
-
-        	out.print("\t\t");
-        	out.println("addInParameter(" + parameterNameUC + ");");
-        }
-
-        if (function.getOverload() != null) {
-            out.println("\t\tsetOverloaded(true);");
-        }
-
-        out.println("\t}");
-
-        for (ParameterDefinition parameter : function.getInParameters()) {
-            out.println();
-            out.println("\t/**");
-            out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the function");
-            out.println("\t */");
-            out.print("\tpublic void set");
-            out.print(strategy.getJavaClassName(parameter));
-            out.print("(");
-            printNumberType(out, parameter.getType());
-            out.println(" value) {");
-
-            out.print("\t\tset");
-            if (parameter.getType().isGenericNumberType()) {
-                out.print("Number");
-            }
-            else {
-                out.print("Value");
-            }
-            out.print("(");
-            out.print(strategy.getJavaIdentifierUC(parameter));
-            out.println(", value);");
-            out.println("\t}");
-            out.println();
-            out.println("\t/**");
-            out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the function");
-            out.println("\t * <p>");
-            out.print("\t * Use this method only, if the function is called as a {@link ");
-            out.print(Field.class);
-            out.print("} in a {@link ");
-            out.print(Select.class);
-            out.println("} statement!");
-            out.println("\t */");
-            out.print("\tpublic void set");
-            out.print(strategy.getJavaClassName(parameter));
-            out.print("(");
-            out.print(Field.class);
-            out.print("<");
-            printExtendsNumberType(out, parameter.getType());
-            out.println("> field) {");
-
-            out.print("\t\tset");
-            if (parameter.getType().isGenericNumberType()) {
-                out.print("Number");
-            }
-            else {
-                out.print("Field");
-            }
-            out.print("(");
-            out.print(strategy.getJavaIdentifierUC(parameter));
-            out.println(", field);");
-            out.println("\t}");
         }
 
         out.println("}");

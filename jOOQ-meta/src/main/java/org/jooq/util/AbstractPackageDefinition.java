@@ -56,14 +56,14 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         super(database, name, comment);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
+    @Deprecated
     public final List<RoutineDefinition> getProcedures() {
         if (procedures == null) {
             procedures = new ArrayList<RoutineDefinition>();
 
             for (RoutineDefinition routine : getRoutines()) {
-                if (routine.isProcedure()) {
+                if (!routine.isSQLUsable()) {
                     procedures.add(routine);
                 }
             }
@@ -72,14 +72,14 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
         return procedures;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
+    @Deprecated
     public final List<RoutineDefinition> getFunctions() {
         if (functions == null) {
             functions = new ArrayList<RoutineDefinition>();
 
             for (RoutineDefinition routine : getRoutines()) {
-                if (!routine.isProcedure()) {
+                if (routine.isSQLUsable()) {
                     functions.add(routine);
                 }
             }

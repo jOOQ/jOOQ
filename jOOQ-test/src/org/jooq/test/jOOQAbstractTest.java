@@ -6206,6 +6206,11 @@ public abstract class jOOQAbstractTest<
             return;
         }
 
+        if (getDialect() == SQLDialect.POSTGRES) {
+            log.info("SKIPPING", "UDT procedure test (Postgres JDBC driver flaw)");
+            return;
+        }
+
         reset = false;
 
         UDTRecord<?> address = cUAddressType().newInstance();

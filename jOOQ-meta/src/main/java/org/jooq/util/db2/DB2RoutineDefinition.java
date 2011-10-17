@@ -112,7 +112,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
             // result after casting
             if ("C".equals(rowType)) {
                 DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
-                this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
+                addParameter(InOutDefinition.RETURN, new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type));
             }
 
             // parameter
@@ -120,7 +120,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                 DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
                 ParameterDefinition column = new DefaultParameterDefinition(this, paramName, position, type);
 
-                getInParameters().add(column);
+                addParameter(InOutDefinition.IN, column);
             }
 
             // result before casting

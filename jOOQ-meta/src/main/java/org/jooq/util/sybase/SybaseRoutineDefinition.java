@@ -79,21 +79,23 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                 .orderBy(Sysprocparm.PARM_ID)
                 .fetch()) {
 
-            String paramModeIn = record.getValue(Sysprocparm.PARM_MODE_IN);
-            String paramModeOut = record.getValue(Sysprocparm.PARM_MODE_OUT);
+            String paramName = record.getValue(Sysprocparm.PARM_NAME);
+            Boolean paramModeIn = record.getValueAsBoolean(Sysprocparm.PARM_MODE_IN, false);
+            Boolean paramModeOut = record.getValueAsBoolean(Sysprocparm.PARM_MODE_OUT, false);
             int parmType = record.getValue(Sysprocparm.PARM_TYPE);
 
             InOutDefinition inOutDefinition;
             if (parmType == 4) {
                 inOutDefinition = InOutDefinition.RETURN;
+                paramName = "RETURN_VALUE";
             }
-            else if ("Y".equals(paramModeIn) && "Y".equals(paramModeOut)) {
+            else if (paramModeIn && paramModeOut) {
                 inOutDefinition = InOutDefinition.INOUT;
             }
-            else if ("Y".equals(paramModeIn)) {
+            else if (paramModeIn) {
                 inOutDefinition = InOutDefinition.IN;
             }
-            else if ("Y".equals(paramModeOut)) {
+            else if (paramModeOut) {
                 inOutDefinition = InOutDefinition.OUT;
             }
             else {
@@ -106,7 +108,7 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(Sysprocparm.SCALE));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(this,
-                record.getValue(Sysprocparm.PARM_NAME),
+                paramName,
                 record.getValue(Sysprocparm.PARM_ID),
                 type);
 

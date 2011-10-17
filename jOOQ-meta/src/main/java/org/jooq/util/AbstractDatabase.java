@@ -328,8 +328,8 @@ public abstract class AbstractDatabase implements Database {
         return relations;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
+    @Deprecated
     public final List<RoutineDefinition> getProcedures() {
         if (procedures == null) {
             procedures = new ArrayList<RoutineDefinition>();
@@ -338,7 +338,7 @@ public abstract class AbstractDatabase implements Database {
                 List<RoutineDefinition> r = getRoutines();
 
                 for (RoutineDefinition routine : r) {
-                    if (routine.isProcedure()) {
+                    if (!routine.isSQLUsable()) {
                         procedures.add(routine);
                     }
                 }
@@ -350,8 +350,8 @@ public abstract class AbstractDatabase implements Database {
         return procedures;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
+    @Deprecated
     public final List<RoutineDefinition> getFunctions() {
         if (functions == null) {
             functions = new ArrayList<RoutineDefinition>();
@@ -360,7 +360,7 @@ public abstract class AbstractDatabase implements Database {
                 List<RoutineDefinition> r = getRoutines();
 
                 for (RoutineDefinition routine : r) {
-                    if (!routine.isProcedure()) {
+                    if (routine.isSQLUsable()) {
                         functions.add(routine);
                     }
                 }

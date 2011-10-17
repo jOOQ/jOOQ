@@ -77,9 +77,9 @@ public interface RoutineDefinition extends Definition {
     DataTypeDefinition getReturnType();
 
     /**
-     * @deprecated - #852. This is an intermediary refactoring step
+     * @return Whether this routine can be used in SQL (a function without OUT
+     *         parameters)
      */
-    @Deprecated
-    boolean isProcedure();
+    boolean isSQLUsable();
 
 }

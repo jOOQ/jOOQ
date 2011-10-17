@@ -76,10 +76,14 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
         allParameters = new ArrayList<ParameterDefinition>();
 
         try {
+            if (returnValue != null) {
+                addParameter(InOutDefinition.RETURN, returnValue);
+            }
+
             init0();
         }
         catch (SQLException e) {
-            log.error("Error while initialising procedure", e);
+            log.error("Error while initialising routine", e);
         }
     }
 
@@ -137,8 +141,8 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     @Override
-    public final boolean isProcedure() {
-        return getReturnValue() == null || !getOutParameters().isEmpty();
+    public final boolean isSQLUsable() {
+        return getReturnValue() != null && getOutParameters().isEmpty();
     }
 
     protected final void addParameter(InOutDefinition inOut, ParameterDefinition parameter) {

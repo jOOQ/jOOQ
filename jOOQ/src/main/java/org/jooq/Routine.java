@@ -35,6 +35,11 @@
  */
 package org.jooq;
 
+import java.sql.SQLException;
+import java.util.List;
+
+import org.jooq.exception.DetachedException;
+
 /**
  * A routine is a callable object in your RDBMS.
  * <p>
@@ -59,21 +64,76 @@ package org.jooq;
  * But there are exceptions to these rules:
  * <p>
  * <ul>
- * <li>Oracle procedures may have a return value</li>
- * <li>Postgres only knows functions (with all features combined)</li>
+ * <li>DB2, H2, and HSQLDB don't allow for JDBC escape syntax when calling
+ * functions. Functions must be used in a SELECT statement</li>
  * <li>H2 only knows functions (without OUT parameters)</li>
+ * <li>Oracle functions may have OUT parameters/li>
  * <li>Oracle knows functions that mustn't be used in SQL statements</li>
+ * <li>Postgres only knows functions (with all features combined)</li>
+ * <li>The Sybase JDBC driver doesn't handle null values correctly when using
+ * the JDBC escape syntax on functions</li>
  * <li>etc...</li>
  * </ul>
  * <p>
  * Hence, with #852, jOOQ 1.6.8, the distinction between procedures and
  * functions becomes obsolete. All stored routines are simply referred to as
- * "Routine". For backwards-compatibility, this new type extends both
- * {@link StoredProcedure} and {@link StoredFunction}
- *
+ * "Routine".
+ * 
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public interface Routine<T> extends StoredProcedure, StoredFunction<T> {
+public interface Routine<T> extends NamedQueryPart, SchemaProvider {
 
+    /**
+     * A list of OUT parameters passed to the stored procedure as argument. This
+     * list contains all parameters that are either OUT or INOUT in their
+     * respective order of appearance in {@link #getParameters()}.
+     *
+     * @return The list of out parameters
+     * @see #getParameters()
+     */
+    List<Parameter<?>> getOutParameters();
+
+    /**
+     * A list of IN parameters passed to the stored procedure as argument. This
+     * list contains all parameters that are either IN or INOUT in their
+     * respective order of appearance in {@link #getParameters()}.
+     *
+     * @return The list of in parameters
+     * @see #getParameters()
+     */
+    List<Parameter<?>> getInParameters();
+
+    /**
+     * @return The routine's return value (if it is a function)
+     */
+    T getReturnValue();
+
+    /**
+     * @return A list of parameters passed to the stored object as argument
+     */
+    List<Parameter<?>> getParameters();
+
+    /**
+     * The container package of this stored procedure or function.
+     * <p>
+     * This is only supported in the {@link SQLDialect#ORACLE} dialect.
+     *
+     * @return The container package of this object, or <code>null</code> if
+     *         there is no such container.
+     */
+    Package getPackage();
+
+    /**
+     * Execute the stored object using a {@link Configuration} object
+     */
+    int execute(Configuration configuration) throws SQLException;
+
+    /**
+     * Execute the stored object on an underlying connection
+     *
+     * @throws SQLException If anything went wrong with executing the stored
+     *             object
+     * @throws DetachedException If this stored object is not attached
+     */
+    int execute() throws SQLException, DetachedException;
 }

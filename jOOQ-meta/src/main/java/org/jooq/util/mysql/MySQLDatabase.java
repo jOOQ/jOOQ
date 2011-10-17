@@ -258,9 +258,9 @@ public class MySQLDatabase extends AbstractDatabase {
             String name = record.getValue(Proc.NAME);
             String comment = record.getValue(Proc.COMMENT);
             String params = new String(record.getValue(Proc.PARAM_LIST));
-            String returnValue = new String(record.getValue(Proc.RETURNS));
+            String returns = new String(record.getValue(Proc.RETURNS));
 
-            result.add(new MySQLRoutineDefinition(this, name, comment, params, returnValue));
+            result.add(new MySQLRoutineDefinition(this, name, comment, params, returns));
         }
 
         return result;

@@ -68,6 +68,11 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
         // [#738] Avoid matching commas that appear in types, for instance DECIMAL(2, 1)
         String[] split = params.split(",(?!\\s*\\d+\\s*\\))");
 
+        Matcher matcher = TYPE_PATTERN.matcher(returns);
+        if (matcher.find()) {
+            addParameter(InOutDefinition.RETURN, createParameter(matcher, 0, -1, "RETURN_VALUE"));
+        }
+
         for (int i = 0; i < split.length; i++) {
             String param = split[i];
 
@@ -75,21 +80,19 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             // It's much more reliable, than mysql.proc pattern matching...
 
             param = param.trim();
-            Matcher matcher = PARAMETER_PATTERN.matcher(param);
+            matcher = PARAMETER_PATTERN.matcher(param);
             while (matcher.find()) {
                 InOutDefinition inOut = InOutDefinition.getFromString(matcher.group(2));
                 addParameter(inOut, createParameter(matcher, 3, i + 1));
             }
         }
-
-        Matcher matcher = TYPE_PATTERN.matcher(returns);
-        if (matcher.find()) {
-            returnValue = createParameter(matcher, 0, -1);
-        }
     }
 
-	private ParameterDefinition createParameter(Matcher matcher, int group, int columnIndex) {
-		String paramName = matcher.group(group);
+    private ParameterDefinition createParameter(Matcher matcher, int group, int columnIndex) {
+        return createParameter(matcher, group, columnIndex, matcher.group(group));
+    }
+
+    private ParameterDefinition createParameter(Matcher matcher, int group, int columnIndex, String paramName) {
 		String paramType = matcher.group(group + 1);
 
 		Number precision = 0;

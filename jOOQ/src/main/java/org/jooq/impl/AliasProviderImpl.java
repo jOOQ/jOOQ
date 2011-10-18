@@ -43,7 +43,6 @@ import org.jooq.AliasProvider;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
-import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -113,7 +112,10 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                 case HSQLDB:
                 case POSTGRES: {
                     if (context.declareTables() && aliasProvider instanceof ArrayTable) {
-                        Table<?> table = (Table<?>) aliasProvider;
+
+                        // The javac compiler doesn't like casting of generics
+                        Object o = aliasProvider;
+                        ArrayTable<?> table = (ArrayTable<?>) o;
 
                         context.sql("(");
                         JooqUtil.toSQLNames(context, table.getFields());

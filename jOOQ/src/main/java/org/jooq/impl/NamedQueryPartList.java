@@ -38,7 +38,6 @@ package org.jooq.impl;
 import java.util.Collection;
 
 import org.jooq.NamedQueryPart;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -56,19 +55,5 @@ class NamedQueryPartList<T extends NamedQueryPart> extends QueryPartList<T> {
 
     NamedQueryPartList(Collection<? extends T> wrappedList) {
         super(wrappedList);
-    }
-
-    /**
-     * Render a list of names of the <code>NamedQueryParts</code> contained in
-     * this list.
-     */
-    final void toSQLNames(RenderContext context) {
-        String separator = "";
-
-        for (NamedQueryPart part : this) {
-            context.sql(separator).literal(part.getName());
-
-            separator = ", ";
-        }
     }
 }

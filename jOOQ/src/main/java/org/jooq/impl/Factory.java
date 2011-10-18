@@ -402,13 +402,13 @@ public class Factory implements Configuration {
      */
     public final Table<?> unnest(Field<?> cursor) {
         if (cursor == null) {
-            throw new UnsupportedOperationException();
+            throw new IllegalArgumentException();
         }
 
-        // The field is an actual CURSOR or REF CURSOR returned from a stored procedure
-        // or from a NESTED TABLE
+        // The field is an actual CURSOR or REF CURSOR returned from a stored
+        // procedure or from a NESTED TABLE
         else if (cursor.getType() == Result.class) {
-
+            return new FunctionTable<Record>(cursor);
         }
 
         // The field is an Oracle-style VARRAY constant

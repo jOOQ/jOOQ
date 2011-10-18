@@ -7243,7 +7243,7 @@ public abstract class jOOQAbstractTest<
     public void testStoredProceduresWithCursorParameters() throws Exception {
         switch (getDialect()) {
             case H2:
-//            case HSQLDB:
+            case HSQLDB:
             case ORACLE:
             case POSTGRES:
                 break;
@@ -7300,7 +7300,17 @@ public abstract class jOOQAbstractTest<
             // Get an empty cursor
             // -------------------
             Field<Result<Record>> field = FGetOneCursorField(null);
-            Result<Record> bFromCursor = create().select(field).fetchOne(field);
+            Result<Record> bFromCursor;
+
+            switch (getDialect()) {
+                case HSQLDB:
+                    bFromCursor = create().select().from(create().table(field)).fetch();
+                    break;
+
+                default:
+                    bFromCursor = create().select(field).fetchOne(field);
+                    break;
+            }
 
             assertNotNull(bFromCursor);
             assertTrue(bFromCursor.isEmpty());
@@ -7309,7 +7319,16 @@ public abstract class jOOQAbstractTest<
             // Get a filled cursor
             // -------------------
             field = FGetOneCursorField(new Integer[] { 1, 2, 4, 6 });
-            bFromCursor = create().select(field).fetchOne(field);
+
+            switch (getDialect()) {
+                case HSQLDB:
+                    bFromCursor = create().select().from(create().table(field)).fetch();
+                    break;
+
+                default:
+                    bFromCursor = create().select(field).fetchOne(field);
+                    break;
+            }
 
             Result<B> bFromTable = create()
                 .selectFrom(TBook())
@@ -7321,6 +7340,11 @@ public abstract class jOOQAbstractTest<
             assertEquals(3, bFromCursor.size());
 
             compareBookResults(bFromCursor, bFromTable);
+        }
+
+        if (getDialect() == SQLDialect.HSQLDB) {
+            log.info("SKIPPING", "Cursor OUT parameter tests");
+            return;
         }
 
         // ---------------------------------------------------------------------

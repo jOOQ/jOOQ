@@ -55,7 +55,6 @@ class SQLTable extends AbstractTable<Record> {
 
     private final String         sql;
     private final Object[]       bindings;
-    private transient FieldList  fields;
     private final AttachableImpl attachable;
 
     public SQLTable(Configuration configuration, String sql, Object[] bindings) {
@@ -100,19 +99,7 @@ class SQLTable extends AbstractTable<Record> {
     }
 
     @Override
-    protected FieldList getFieldList() {
-        if (fields == null) {
-            fields = new FieldList();
-
-            try {
-                DescribeQuery<Record> query = new DescribeQuery<Record>(attachable.getConfiguration(), this);
-                query.execute();
-            }
-            catch (SQLException e) {
-                throw new IllegalStateException(e);
-            }
-        }
-
-        return fields;
+    protected final FieldList getFieldList() {
+        return new FieldList();
     }
 }

@@ -1315,25 +1315,25 @@ public abstract class jOOQAbstractTest<
         assertEquals(4, result.size());
         assertEquals(BOOK_IDS, result.getValues(ID));
 
-        // [#271] TODO: Aliased plain SQL table
-//        result = create().select().from("(select * from t_book) b").orderBy(ID).fetch();
-//        assertEquals(4, result.size());
-//        assertEquals(
-//            Arrays.asList(1, 2, 3, 4),
-//            result.getValues(ID));
+        // [#271] Aliased plain SQL table
+        result = create().select().from("(select * from t_book) b").orderBy(ID).fetch();
+        assertEquals(4, result.size());
+        assertEquals(
+            Arrays.asList(1, 2, 3, 4),
+            result.getValues(ID));
 
         // [#836] Aliased plain SQL table
         result = create().select().from(create().table("t_book").as("b")).orderBy(ID).fetch();
         assertEquals(4, result.size());
         assertEquals(BOOK_IDS, result.getValues(ID));
 
-        // [#271] TODO: Check for aliased nested selects. The DescribeQuery does not seem to work
+        // [#271] Check for aliased nested selects. The DescribeQuery does not seem to work
         // [#836] Aliased plain SQL nested select
-//        result = create().select().from(create().table("(select * from t_book)").as("b")).orderBy(ID).fetch();
-//        assertEquals(4, result.size());
-//        assertEquals(
-//            Arrays.asList(1, 2, 3, 4),
-//            result.getValues(ID));
+        result = create().select().from(create().table("(select * from t_book)").as("b")).orderBy(ID).fetch();
+        assertEquals(4, result.size());
+        assertEquals(
+            Arrays.asList(1, 2, 3, 4),
+            result.getValues(ID));
 
 
         // Field, Table and Condition

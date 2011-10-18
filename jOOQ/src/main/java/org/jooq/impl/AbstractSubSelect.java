@@ -599,29 +599,56 @@ implements
 
     @Override
     public final FieldList getSelect() {
-        // [#109] : Don't allow empty select lists to render select *
-        // Even if select * would be useful, generated client code
-        // would be required to be in sync with the database schema
-
         if (getSelect0().isEmpty()) {
             FieldList result = new SelectFieldList();
 
-            for (TableLike<?> table : getFrom()) {
-                for (Field<?> field : table.asTable().getFields()) {
-                    result.add(field);
+            // [#109] [#489]: SELECT * is only applied when at least one table
+            // from the table source is "unknown", i.e. not generated from a
+            // physical table. Otherwise, the fields are selected explicitly
+            if (knownTableSource()) {
+                for (TableLike<?> table : getFrom()) {
+                    for (Field<?> field : table.asTable().getFields()) {
+                        result.add(field);
+                    }
+                }
+
+                for (Join j : getJoin()) {
+                    for (Field<?> field : j.getTable().asTable().getFields()) {
+                        result.add(field);
+                    }
                 }
             }
 
-            for (Join j : getJoin()) {
-                for (Field<?> field : j.getTable().asTable().getFields()) {
-                    result.add(field);
-                }
+            // The default is SELECT 1, when projections and table sources are
+            // both empty
+            if (getFrom().isEmpty()) {
+                result.add(create().literal(1));
             }
 
             return result;
         }
 
         return getSelect0();
+    }
+
+    private final boolean knownTableSource() {
+        for (Table<?> table : getFrom()) {
+            if (!knownTable(table)) {
+                return false;
+            }
+        }
+
+        for (Join j : getJoin()) {
+            if (!knownTable(j.getTable())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private final boolean knownTable(Table<?> table) {
+        return table.getFields().size() > 0;
     }
 
     @Override

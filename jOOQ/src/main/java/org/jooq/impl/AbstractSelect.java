@@ -136,10 +136,16 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
     @Override
     protected final List<Field<?>> getFields(ResultSetMetaData meta) throws SQLException {
+    	List<Field<?>> select = getSelect();
 
-        // SELECT statements should use their well-known SELECT clause, not what
-        // is provided from the result set meta data
-        return getSelect();
+    	// If no projection was specified explicitly, create fields from result
+    	// set meta data instead. This is typically the case for SELECT * ...
+    	if (select.isEmpty()) {
+            Configuration configuration = getConfiguration();
+            return new MetaDataFieldProvider(configuration, meta).getFields();
+        }
+
+        return select;
     }
 
     @Override

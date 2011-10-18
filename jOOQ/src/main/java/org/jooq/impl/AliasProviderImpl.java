@@ -43,6 +43,7 @@ import org.jooq.AliasProvider;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -112,10 +113,10 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                 case HSQLDB:
                 case POSTGRES: {
                     if (context.declareTables() && aliasProvider instanceof ArrayTable) {
-                        ArrayTable<?> table = (ArrayTable<?>) aliasProvider;
+                        Table<?> table = (Table<?>) aliasProvider;
 
                         context.sql("(");
-                        table.getFields().toSQLNames(context);
+                        JooqUtil.toSQLNames(context, table.getFields());
                         context.sql(")");
                     }
 

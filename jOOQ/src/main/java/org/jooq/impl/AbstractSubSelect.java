@@ -234,7 +234,7 @@ implements
 
             if (!forUpdateOf.isEmpty()) {
                 context.sql(" of ");
-                forUpdateOf.toSQLNames(context);
+                JooqUtil.toSQLNames(context, forUpdateOf);
             }
             else if (!forUpdateOfTables.isEmpty()) {
                 context.sql(" of ");
@@ -253,7 +253,7 @@ implements
 
                     // Render the OF [table-names] clause
                     default:
-                        forUpdateOfTables.toSQLNames(context);
+                        JooqUtil.toSQLNames(context, forUpdateOfTables);
                         break;
                 }
             }

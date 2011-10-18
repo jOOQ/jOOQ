@@ -40,6 +40,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -49,6 +50,7 @@ import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
+import org.jooq.NamedQueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -179,6 +181,20 @@ final class JooqUtil {
         context.sql("(");
         toSQLReference(context, sql, bindings);
         context.sql(")");
+    }
+
+    /**
+     * Render a list of names of the <code>NamedQueryParts</code> contained in
+     * this list.
+     */
+    static void toSQLNames(RenderContext context, Collection<? extends NamedQueryPart> list) {
+        String separator = "";
+
+        for (NamedQueryPart part : list) {
+            context.sql(separator).literal(part.getName());
+
+            separator = ", ";
+        }
     }
 
     /**

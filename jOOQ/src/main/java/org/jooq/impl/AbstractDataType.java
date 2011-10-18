@@ -457,8 +457,22 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         return type == byte[].class;
     }
 
+    // ------------------------------------------------------------------------
+    // The Object API
+    // ------------------------------------------------------------------------
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + " [" + type + ", " + typeName + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return toString().equals("" + obj);
     }
 }

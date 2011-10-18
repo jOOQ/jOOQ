@@ -51,7 +51,7 @@ class SelectFieldList extends FieldList {
 
     @Override
     protected void toSQLEmptyList(RenderContext context) {
-        context.sql("1");
+        context.sql("*");
     }
 
     @Override

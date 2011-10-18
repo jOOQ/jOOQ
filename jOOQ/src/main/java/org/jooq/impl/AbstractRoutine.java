@@ -54,6 +54,7 @@ import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
 import org.jooq.RenderContext;
+import org.jooq.Result;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -208,9 +209,20 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
+                case HSQLDB:
+                	
+                	// [#692] HSQLDB cannot SELECT f() FROM [...] when f()
+                	// returns a cursor. Instead, SELECT * FROM table(f()) works
+                    if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
+                        return executeSelectFrom();
+                    }
+
+                    // Fall through
+                    else {
+                    }
+
                 case DB2:
                 case H2:
-                case HSQLDB:
 
                 // Sybase CallableStatement.wasNull() doesn't work :-(
                 case SYBASE:
@@ -223,6 +235,13 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                     return executeCallableStatement();
             }
         }
+    }
+
+    private final int executeSelectFrom() throws SQLException, DetachedException {
+        Factory create = create(attachable);
+        Result<?> result = create.selectFrom(create.table(asField())).fetch();
+        results.put(returnParameter, result);
+        return 0;
     }
 
     private final int executeSelect() throws SQLException, DetachedException {

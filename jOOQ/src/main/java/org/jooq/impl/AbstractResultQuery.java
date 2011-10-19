@@ -108,6 +108,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         try {
             ResultSet rs = statement.executeQuery();
 
+            // Fetch a single result set
             if (!many) {
                 FieldList fields = new FieldList(getFields(rs.getMetaData()));
                 cursor = new CursorImpl<R>(configuration, fields, rs, statement, getRecordType());
@@ -117,6 +118,8 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     cursor = null;
                 }
             }
+
+            // Fetch several result sets
             else {
                 results = new ArrayList<Result<Record>>();
 

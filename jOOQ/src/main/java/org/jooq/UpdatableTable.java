@@ -48,24 +48,6 @@ import java.util.List;
 public interface UpdatableTable<R extends Record> extends Updatable<R>, Table<R> {
 
     /**
-     * Retrieve the table's <code>IDENTITY</code> information, if available.
-     * <p>
-     * With SQL:2003, the concept of <code>IDENTITY</code> columns was
-     * introduced in most RDBMS. These are special kinds of columns that have
-     * auto-increment functionality when <code>INSERT</code> statements are
-     * performed. An <code>IDENTITY</code> column must be part of the
-     * <code>PRIMARY KEY</code> or of a <code>UNIQUE KEY</code> in the table.
-     * There can only be at most one <code>IDENTITY</code> column.
-     * <p>
-     * Note: Unfortunately, this is not supported in the Oracle dialect, where
-     * identities simulated by triggers cannot be formally detected.
-     *
-     * @return The table's <code>IDENTITY</code> information, or
-     *         <code>null</code>, if no such information is available.
-     */
-    Identity<R, ? extends Number> getIdentity();
-
-    /**
      * Retrieve the table's main unique key. If there exists a
      * <code>PRIMARY KEY</code> in the table, the <code>PRIMARY KEY</code> is
      * returned. Otherwise, the most suitable <code>UNIQUE KEY</code> is

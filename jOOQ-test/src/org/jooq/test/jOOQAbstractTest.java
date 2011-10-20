@@ -1069,7 +1069,9 @@ public abstract class jOOQAbstractTest<
             }
 
             // [#624] The V_INCOMPLETE view is only available in Oracle
-            else if (getDialect() == SQLDialect.ORACLE) {
+            // [#877] The T_877 table is only available in H2
+            else if (getDialect() == SQLDialect.ORACLE ||
+                     getDialect() == SQLDialect.H2) {
                 assertEquals(tables + 2, schema.getTables().size());
             }
 

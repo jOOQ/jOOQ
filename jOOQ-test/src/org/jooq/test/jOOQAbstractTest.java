@@ -695,18 +695,24 @@ public abstract class jOOQAbstractTest<
         mapping.add(TBook(), TBook().getName());
         mapping.add(TAuthor().getSchema(), TAuthor().getSchema().getName());
 
-        Result<Record> result =
+        Select<Record> query =
         create(mapping).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
-                       .orderBy(TBook_ID().asc())
-                       .fetch();
+                       .orderBy(TBook_ID().asc());
+
+        Result<Record> result = query.fetch();
 
         assertEquals("1984", result.getValue(0, TBook_TITLE()));
         assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
         assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
         assertEquals("Brida", result.getValue(3, TBook_TITLE()));
+
+        // Check for consistency when executing SQL manually
+        String sql = query.getSQL();
+        log.info("Executing", sql);
+        assertEquals(result, create().fetch(sql, query.getBindValues().toArray()));
 
         // Schema mapping is supported in many RDBMS. But maintaining several
         // databases is non-trivial in some of them.
@@ -743,6 +749,8 @@ public abstract class jOOQAbstractTest<
 
         // Assure that schema is replaced
         assertTrue(create(mapping).render(q).contains(TAuthor().getSchema().getName() + "2"));
+        assertTrue(q.getSQL().contains(TAuthor().getSchema().getName() + "2"));
+        assertEquals(create(mapping).render(q), q.getSQL());
 
         // Assure that results are correct
         result = q.fetch();

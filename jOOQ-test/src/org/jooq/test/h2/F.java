@@ -74,6 +74,8 @@ public class F {
     public static ResultSet fGetOneCursor(Connection connection, Object[] bookIds) throws SQLException {
         PreparedStatement stmt = null;
 
+        if (bookIds == null) bookIds = new Object[0];
+
         String sql = create(connection)
             .select()
             .from(T_BOOK)
@@ -82,6 +84,11 @@ public class F {
             .getSQL();
 
         stmt = connection.prepareStatement(sql);
+        int i = 1;
+        for (Object o : bookIds) {
+            stmt.setObject(i++, o);
+        }
+
         return stmt.executeQuery();
     }
 

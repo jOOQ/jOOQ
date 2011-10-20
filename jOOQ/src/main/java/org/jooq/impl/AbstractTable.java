@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -67,6 +68,16 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     @Override
     public final Table<R> asTable(String alias) {
         return asTable().as(alias);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
+     */
+    @Override
+    public Identity<R, ? extends Number> getIdentity() {
+        return null;
     }
 
     /**

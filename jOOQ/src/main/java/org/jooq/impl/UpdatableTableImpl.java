@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -66,16 +65,6 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
 
     public UpdatableTableImpl(String name, Schema schema) {
         super(name, schema);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses should override this method
-     */
-    @Override
-    public Identity<R, ? extends Number> getIdentity() {
-        return null;
     }
 
     /**

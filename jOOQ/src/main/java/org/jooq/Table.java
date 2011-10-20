@@ -47,6 +47,27 @@ import java.util.List;
 public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>>, TableLike<R> {
 
     /**
+     * Retrieve the table's <code>IDENTITY</code> information, if available.
+     * <p>
+     * With SQL:2003, the concept of <code>IDENTITY</code> columns was
+     * introduced in most RDBMS. These are special kinds of columns that have
+     * auto-increment functionality when <code>INSERT</code> statements are
+     * performed.
+     * <p>
+     * An <code>IDENTITY</code> column is usually part of the
+     * <code>PRIMARY KEY</code> or of a <code>UNIQUE KEY</code> in the table,
+     * although in some RDBMS, this is not required. There can only be at most
+     * one <code>IDENTITY</code> column.
+     * <p>
+     * Note: Unfortunately, this is not supported in the Oracle dialect, where
+     * identities simulated by triggers cannot be formally detected.
+     *
+     * @return The table's <code>IDENTITY</code> information, or
+     *         <code>null</code>, if no such information is available.
+     */
+    Identity<R, ? extends Number> getIdentity();
+
+    /**
      * Get the list of <code>FOREIGN KEY</code>'s of this table
      *
      * @return This table's <code>FOREIGN KEY</code>'s. This is never

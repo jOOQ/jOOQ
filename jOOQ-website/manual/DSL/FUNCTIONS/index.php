@@ -68,12 +68,21 @@ Field&lt;Integer&gt; position(Field&lt;String&gt; search);</pre>
 								Field: </p>
 								
 							<pre class="prettyprint lang-java">
+// Every-day functions
 Field&lt;Integer&gt; count();
 Field&lt;Integer&gt; countDistinct();
 Field&lt;T&gt; max();
 Field&lt;T&gt; min();
 Field&lt;BigDecimal&gt; sum();
-Field&lt;BigDecimal&gt; avg();</pre>
+Field&lt;BigDecimal&gt; avg();
+
+// Statistical functions
+Field&lt;BigDecimal&gt; median();
+Field&lt;BigDecimal&lt; stddevPop();
+Field&lt;BigDecimal&lt; stddevSamp();
+Field&lt;BigDecimal&lt; varPop();
+Field&lt;BigDecimal&lt; varSamp();
+</pre>
 
 							<p>A typical example of how to use an aggregate operator is when
 								generating the next key on insertion of an ID. When you want to

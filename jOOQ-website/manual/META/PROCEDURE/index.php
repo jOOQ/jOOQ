@@ -64,7 +64,7 @@ CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT 
 							
 							<pre class="prettyprint lang-java">
 // The function has a generic type parameter &lt;T&gt; bound to its return value
-public class FAuthorExists extends StoredFunctionImpl&lt;BigDecimal&gt; {
+public class FAuthorExists extends org.jooq.impl.AbstractRoutine&lt;BigDecimal&gt; {
 
     // Much like Tables, functions have static parameter definitions
     public static final Parameter&lt;String&gt; AUTHOR_NAME = // [...]
@@ -74,7 +74,7 @@ public class FAuthorExists extends StoredFunctionImpl&lt;BigDecimal&gt; {
     public void setAuthorName(Field&lt;String&gt; value) { // [...]
 }
 
-public class PAuthorExists extends StoredProcedureImpl {
+public class PAuthorExists extends org.jooq.impl.AbstractRoutine&lt;java.lang.Void&gt; {
 
     // In procedures, IN, OUT, IN OUT parameters are all represented
     // as static parameter definitions as well
@@ -88,7 +88,7 @@ public class PAuthorExists extends StoredProcedureImpl {
     public BigDecimal getResult() { // [...]
 }
 
-public class PAuthorExists_2 extends StoredProcedureImpl {
+public class PAuthorExists_2 extends org.jooq.impl.AbstractRoutine&lt;java.lang.Void&gt; {
     public static final Parameter&lt;String&gt; AUTHOR_NAME = // [...]
     public static final Parameter&lt;BigDecimal&gt; RESULT = // [...]
     public static final Parameter&lt;BigDecimal&gt; ID = // [...]
@@ -111,8 +111,8 @@ assertEquals(BigDecimal.ONE, p.getResult());</pre>
 
 							<p>If you use the generated convenience methods, however, things are much simpler, still: </p>
 							<pre class="prettyprint lang-java">
-// Every schema has a single Functions class with convenience methods
-public final class Functions {
+// Every schema has a single Routines class with convenience methods
+public final class Routines {
 
     // Convenience method to directly call the stored function
     public static BigDecimal fAuthorExists(Configuration configuration, String authorName) { // [...]
@@ -121,10 +121,6 @@ public final class Functions {
     // Field&lt;BigDecimal&gt;, such that it can be used in SQL
     public static Field&lt;BigDecimal&gt; fAuthorExists(Field&lt;String&gt; authorName) { // [...]
     public static Field&lt;BigDecimal&gt; fAuthorExists(String authorName) { // [...]
-}
-
-// Every schema has a single Procedures class with convenience methods
-public final class Procedures {
 
     // Procedures with 0 OUT parameters create void methods
     // Procedures with 1 OUT parameter create methods as such:
@@ -142,39 +138,18 @@ assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));<
 
 							<h3>jOOQ's understanding of procedures vs functions</h3>
 							<p>
-								It might not be very clear, what defines a procedure and what
-								defines a
-								function in those RDBMS that support these objects. Most
-								often, a function
-								has a mandatory return value, whereas procedures can
-								return OUT parameters.
-								Oracle allows for mixing those concepts.
-								Postgres omits the term procedure, etc.
+								jOOQ does not formally distinguish procedures from functions.
+								jOOQ only knows about routines, which can have return values
+								and/or OUT parameters. This is the best option to handle the
+								variety of stored procedure / function support across the
+								various supported RDBMS. For more details, read on about this
+								topic, here:
 							</p>
 							<p>
-								For jOOQ, the following applies:
-							</p>
-							<ul>
 								
-<li>
-									A procedure is an object that cannot be used in SQL (because it
-									has no
-									return value). A procedure is called internally by jOOQ using a
-									<a href="http://download.oracle.com/javase/6/docs/api/java/sql/CallableStatement.html" title="External API reference: java.sql.CallableStatement">java.sql.CallableStatement</a>
-								
-</li>
-								
-<li>
-									A function is an object that can be used in SQL. There is always
-									the
-									possibility to create a
-									<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">org.jooq.Field</a>
-									to represent the function
-									embedded in SQL.
-								</li>
+<a href="http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/" title="Blog post about the difference between procedures and functions in various RDBMS">lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/</a>
 							
-</ul>
-							
+</p>
 							
 							<h3>Packages in Oracle</h3>
 							<p>

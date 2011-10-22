@@ -27,6 +27,10 @@ public class JOOQTest extends HttpServlet {
 			Connection c = DriverManager
 					.getConnection("jdbc:google:rdbms://jooq-integration-test:jooq-integration-test/test", "root", "");
 			
+			resp.getWriter().println("<style>" +
+					"body { font-family: 'Courier New'; } " +
+					"th { text-align: left; padding-bottom: 10px; padding-right: 10px; } " +
+					"table, pre { margin-left: 20px; }</style>");
 			resp.getWriter().println("<h1>Some INFORMATION_SCHEMA meta data</h1>");
 			
 			MySQLFactory create = new MySQLFactory(c);

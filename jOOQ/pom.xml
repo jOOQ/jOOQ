@@ -10,7 +10,7 @@
 
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq</artifactId>
-	<version>1.6.8-SNAPSHOT</version>
+	<version>1.6.8</version>
 	<packaging>jar</packaging>
 
 	<name>jOOQ</name>

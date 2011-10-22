@@ -78,10 +78,10 @@ Field&lt;BigDecimal&gt; avg();
 
 // Statistical functions
 Field&lt;BigDecimal&gt; median();
-Field&lt;BigDecimal&lt; stddevPop();
-Field&lt;BigDecimal&lt; stddevSamp();
-Field&lt;BigDecimal&lt; varPop();
-Field&lt;BigDecimal&lt; varSamp();
+Field&lt;BigDecimal&gt; stddevPop();
+Field&lt;BigDecimal&gt; stddevSamp();
+Field&lt;BigDecimal&gt; varPop();
+Field&lt;BigDecimal&gt; varSamp();
 </pre>
 
 							<p>A typical example of how to use an aggregate operator is when

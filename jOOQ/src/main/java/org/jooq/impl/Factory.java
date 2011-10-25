@@ -1301,6 +1301,10 @@ public class Factory implements Configuration {
         return new DeleteImpl<R>(this, table);
     }
 
+    // -------------------------------------------------------------------------
+    // DDL Statements
+    // -------------------------------------------------------------------------
+
     /**
      * Create a new DSL truncate statement.
      * <p>

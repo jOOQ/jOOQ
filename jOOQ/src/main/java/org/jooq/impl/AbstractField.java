@@ -877,14 +877,42 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return notEqual((T) null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Condition isTrue() {
-        return cast(String.class).in(TypeUtils.TRUE_VALUES);
+        Class<?> type = getType();
+
+        if (type == String.class) {
+            return ((Field<String>) this).in(TypeUtils.TRUE_VALUES);
+        }
+        else if (Number.class.isAssignableFrom(type)) {
+            return ((Field<Number>) this).equal((Number) getDataType().convert(1));
+        }
+        else if (Boolean.class.isAssignableFrom(type)) {
+            return ((Field<Boolean>) this).equal(true);
+        }
+        else {
+            return cast(String.class).in(TypeUtils.TRUE_VALUES);
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final Condition isFalse() {
-        return cast(String.class).in(TypeUtils.FALSE_VALUES);
+        Class<?> type = getType();
+
+        if (type == String.class) {
+            return ((Field<String>) this).in(TypeUtils.FALSE_VALUES);
+        }
+        else if (Number.class.isAssignableFrom(type)) {
+            return ((Field<Number>) this).equal((Number) getDataType().convert(0));
+        }
+        else if (Boolean.class.isAssignableFrom(type)) {
+            return ((Field<Boolean>) this).equal(false);
+        }
+        else {
+            return cast(String.class).in(TypeUtils.FALSE_VALUES);
+        }
     }
 
     @Override

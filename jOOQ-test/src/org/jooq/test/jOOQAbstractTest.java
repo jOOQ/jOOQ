@@ -7501,6 +7501,71 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchSingle() throws Exception {
+        reset = false;
+
+        int[] result = create().batch(create().insertInto(TAuthor())
+                                              .set(TAuthor_ID(), 8)
+                                              .set(TAuthor_LAST_NAME(), "Gamma"))
+                               .bind(8, "Gamma")
+                               .bind(9, "Helm")
+                               .bind(10, "Johnson")
+                               .execute();
+
+        assertEquals(3, result.length);
+        testBatchAuthors();
+    }
+
+    @Test
+    public void testBatchMultiple() throws Exception {
+        reset = false;
+
+        int[] result = create().batch(
+            create().insertInto(TAuthor())
+                    .set(TAuthor_ID(), 8)
+                    .set(TAuthor_LAST_NAME(), "Gamma"),
+
+            create().insertInto(TAuthor())
+                    .set(TAuthor_ID(), 9)
+                    .set(TAuthor_LAST_NAME(), "Helm"),
+
+            create().insertInto(TBook())
+                    .set(TBook_ID(), 6)
+                    .set(TBook_AUTHOR_ID(), 8)
+                    .set(TBook_PUBLISHED_IN(), 1994)
+                    .set(TBook_LANGUAGE_ID(), 1)
+                    .set(TBook_CONTENT_TEXT(), "Design Patterns are awesome")
+                    .set(TBook_TITLE(), "Design Patterns"),
+
+            create().insertInto(TAuthor())
+                    .set(TAuthor_ID(), 10)
+                    .set(TAuthor_LAST_NAME(), "Johnson")).execute();
+
+        assertEquals(4, result.length);
+        assertEquals(5, create().fetch(TBook()).size());
+        assertEquals(1, create().fetch(TBook(), TBook_AUTHOR_ID().equal(8)).size());
+        testBatchAuthors();
+    }
+
+    private void testBatchAuthors() throws Exception {
+        assertEquals(5, create().fetch(TAuthor()).size());
+
+        assertEquals(Arrays.asList(8, 9, 10),
+             create().select(TAuthor_ID())
+                     .from(TAuthor())
+                     .where(TAuthor_ID().in(8, 9, 10))
+                     .orderBy(TAuthor_ID())
+                     .fetch(TAuthor_ID()));
+
+        assertEquals(Arrays.asList("Gamma", "Helm", "Johnson"),
+            create().select(TAuthor_LAST_NAME())
+                    .from(TAuthor())
+                    .where(TAuthor_ID().in(8, 9, 10))
+                    .orderBy(TAuthor_ID())
+                    .fetch(TAuthor_LAST_NAME()));
+    }
+
+    @Test
     public void testLoader() throws Exception {
         reset = false;
         connection.setAutoCommit(false);

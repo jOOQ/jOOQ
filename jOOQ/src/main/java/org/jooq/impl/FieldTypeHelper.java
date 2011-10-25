@@ -121,6 +121,8 @@ public final class FieldTypeHelper {
                 context.sql("null");
             }
             else if (type == Blob.class) {
+
+                // blob's are treated as byte[] by jOOQ
                 context.sql("[BLOB]");
             }
             else if (type == Boolean.class) {
@@ -141,7 +143,9 @@ public final class FieldTypeHelper {
                        .sql("'");
             }
             else if (type == Clob.class) {
-                context.sql("[BLOB]");
+
+                // clob's are treated as String by jOOQ
+                context.sql("[CLOB]");
             }
             else if (type == Date.class) {
                 context.sql("'").sql(value.toString()).sql("'");

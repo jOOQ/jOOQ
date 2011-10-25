@@ -47,6 +47,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -56,6 +57,8 @@ import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
+import org.jooq.Batch;
+import org.jooq.BatchBindStep;
 import org.jooq.BindContext;
 import org.jooq.Case;
 import org.jooq.Condition;
@@ -1299,6 +1302,55 @@ public class Factory implements Configuration {
      */
     public final <R extends TableRecord<R>> DeleteWhereStep delete(Table<R> table) {
         return new DeleteImpl<R>(this, table);
+    }
+
+    /**
+     * Execute a set of queries in batch mode (without bind values).
+     * <p>
+     * This essentially runs the following logic: <code><pre>
+     * Statement s = connection.createStatement();
+     *
+     * for (Query query : queries) {
+     *     s.addBatch(renderInlined(query));
+     * }
+     *
+     * s.execute();
+     * </pre></code>
+     *
+     * @see Statement#executeBatch()
+     */
+    public final Batch batch(Query... queries) {
+        return new BatchMultiple(this, queries);
+    }
+
+    /**
+     * Execute a set of queries in batch mode (with bind values).
+     * <p>
+     * When running <code><pre>
+     * create.batch(query)
+     *       .bind(valueA1, valueA2)
+     *       .bind(valueB1, valueB2)
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * This essentially runs the following logic: <code><pre>
+     * Statement s = connection.prepareStatement(render(query));
+     *
+     * for (Object[] bindValues : allBindValues) {
+     *     for (Object bindValue : bindValues) {
+     *         s.setXXX(bindValue);
+     *     }
+     *
+     *     s.addBatch();
+     * }
+     *
+     * s.execute();
+     * </pre></code>
+     *
+     * @see Statement#executeBatch()
+     */
+    public final BatchBindStep batch(Query query) {
+        return new BatchSingle(this, query);
     }
 
     // -------------------------------------------------------------------------

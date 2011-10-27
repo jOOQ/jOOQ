@@ -67,13 +67,6 @@ class Extract extends AbstractFunction<Integer> {
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
-            case INGRES:   // No break
-            case MYSQL:    // No break
-            case POSTGRES: // No break
-            case HSQLDB:   // No break
-            case H2:
-                return new SQLExtract();
-
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
@@ -149,8 +142,15 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
+            case INGRES:   // No break
+            case MYSQL:    // No break
+            case POSTGRES: // No break
+            case HSQLDB:   // No break
+            case H2:
+
+            // A default implementation is necessary for hashCode() and toString()
             default:
-                throw new SQLDialectNotSupportedException("extract not supported");
+                return new SQLExtract();
         }
     }
 

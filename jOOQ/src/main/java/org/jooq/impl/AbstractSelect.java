@@ -122,16 +122,14 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
     @Override
     public final Table<R> asTable() {
-        Table<R> table = new SelectQueryAsTable<R>(this);
-
         // Its usually better to alias nested selects that are used in
         // the FROM clause of a query
-        return table.as("alias_" + Math.abs(table.hashCode()));
+        return new SelectQueryAsTable<R>(this).as("alias_" + Math.abs(hashCode()));
     }
 
     @Override
     public final Table<R> asTable(String alias) {
-        return asTable().as(alias);
+        return new SelectQueryAsTable<R>(this).as(alias);
     }
 
     @Override

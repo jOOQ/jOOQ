@@ -4951,6 +4951,39 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testExtractInSubselect() throws Exception {
+        Field<Timestamp> now = create().currentTimestamp();
+
+        Field<Integer> year = now.extract(DatePart.YEAR).as("y");
+        Field<Integer> month = now.extract(DatePart.MONTH).as("m");
+        Field<Integer> day = now.extract(DatePart.DAY).as("d");
+
+        Select<?> sub = create().select(year, month, day);
+        Table<?> subTable = sub.asTable("subselect");
+
+        Record reference = sub.fetchOne();
+        Record result;
+
+        result = create().select().from(sub).fetchOne();
+        assertEquals(reference, result);
+
+        result = create().select().from(subTable).fetchOne();
+        assertEquals(reference, result);
+
+        result = create().select(
+            sub.getField("y"),
+            sub.getField("m"),
+            sub.getField("d")).from(sub).fetchOne();
+        assertEquals(reference, result);
+
+        result = create().select(
+            subTable.getField("y"),
+            subTable.getField("m"),
+            subTable.getField("d")).from(subTable).fetchOne();
+        assertEquals(reference, result);
+    }
+
+    @Test
     public void testFunctionsOnNumbers() throws Exception {
 
         // The random function

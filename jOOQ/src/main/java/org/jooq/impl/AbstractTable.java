@@ -67,7 +67,7 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
 
     @Override
     public final Table<R> asTable(String alias) {
-        return asTable().as(alias);
+        return as(alias);
     }
 
     /**

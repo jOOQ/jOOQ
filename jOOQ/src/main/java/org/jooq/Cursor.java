@@ -39,6 +39,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Cursors allow for lazy, sequential access to an underlying JDBC
@@ -128,6 +129,19 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @return Convenience result, returning the parameter handler itself
      */
     RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException;
+
+    /**
+     * Map resulting records onto a custom type.
+     * <p>
+     * This is the same as calling <code>fetch().into(type)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     */
+    <E> List<E> fetchInto(Class<? extends E> type) throws SQLException;
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and

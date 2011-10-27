@@ -121,7 +121,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    @Deprecated
     public final Result<R> fetch() throws SQLException {
         return fetch(Integer.MAX_VALUE);
     }
@@ -171,6 +170,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         }
 
         return handler;
+    }
+
+    @Override
+    public final <E> List<E> fetchInto(Class<? extends E> clazz) throws SQLException {
+        return fetch().into(clazz);
     }
 
     @Override

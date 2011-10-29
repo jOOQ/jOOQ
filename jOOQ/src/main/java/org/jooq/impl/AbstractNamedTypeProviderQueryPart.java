@@ -60,6 +60,10 @@ abstract class AbstractNamedTypeProviderQueryPart<T> extends AbstractNamedQueryP
         return type;
     }
 
+    protected final SQLDataType<T> getSQLDataType() {
+        return type.getSQLDataType();
+    }
+
     @Override
     public final DataType<T> getDataType(Configuration configuration) {
         return type.getDataType(configuration);

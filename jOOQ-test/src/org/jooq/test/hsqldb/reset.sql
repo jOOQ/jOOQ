@@ -29,19 +29,13 @@ INSERT INTO t_658_22 VALUES (1, 1), (2, 2), (3, 3)/
 INSERT INTO t_658_32 VALUES (1, 1), (2, 2), (3, 3)/
 INSERT INTO t_658_ref VALUES ('A', 1, 1, 'B', 2, 2)/
 
-INSERT INTO t_author VALUES (next value for s_author_id, 'George', 'Orwell', '1903-06-25', 1903, null);
-/
-INSERT INTO t_author VALUES (next value for s_author_id, 'Paulo', 'Coelho', '1947-08-24', 1947, null);
-/
+INSERT INTO t_author VALUES (next value for s_author_id, 'George', 'Orwell', '1903-06-25', 1903, null)/
+INSERT INTO t_author VALUES (next value for s_author_id, 'Paulo', 'Coelho', '1947-08-24', 1947, null)/
 
-INSERT INTO t_book VALUES (1, 1, null, null, '1984', 1948, 1, 'To know and not to know, to be conscious of complete truthfulness while telling carefully constructed lies, to hold simultaneously two opinions which cancelled out, knowing them to be contradictory and believing in both of them, to use logic against logic, to repudiate morality while laying claim to it, to believe that democracy was impossible and that the Party was the guardian of democracy, to forget, whatever it was necessary to forget, then to draw it back into memory again at the moment when it was needed, and then promptly to forget it again, and above all, to apply the same process to the process itself -- that was the ultimate subtlety; consciously to induce unconsciousness, and then, once again, to become unconscious of the act of hypnosis you had just performed. Even to understand the word ''doublethink'' involved the use of doublethink..', null);
-/
-INSERT INTO t_book VALUES (2, 1, null, null, 'Animal Farm', 1945, 1, null, null);
-/
-INSERT INTO t_book VALUES (3, 2, null, null, 'O Alquimista', 1988, 4, null, null);
-/
-INSERT INTO t_book VALUES (4, 2, null, null, 'Brida', 1990, 2, null, null);
-/
+INSERT INTO t_book VALUES (1, 1, null, null, '1984', 1948, 1, 'To know and not to know, to be conscious of complete truthfulness while telling carefully constructed lies, to hold simultaneously two opinions which cancelled out, knowing them to be contradictory and believing in both of them, to use logic against logic, to repudiate morality while laying claim to it, to believe that democracy was impossible and that the Party was the guardian of democracy, to forget, whatever it was necessary to forget, then to draw it back into memory again at the moment when it was needed, and then promptly to forget it again, and above all, to apply the same process to the process itself -- that was the ultimate subtlety; consciously to induce unconsciousness, and then, once again, to become unconscious of the act of hypnosis you had just performed. Even to understand the word ''doublethink'' involved the use of doublethink..', null)/
+INSERT INTO t_book VALUES (2, 1, null, null, 'Animal Farm', 1945, 1, null, null)/
+INSERT INTO t_book VALUES (3, 2, null, null, 'O Alquimista', 1988, 4, null, null)/
+INSERT INTO t_book VALUES (4, 2, null, null, 'Brida', 1990, 2, null, null)/
 
 INSERT INTO t_book_store (name) VALUES 
 	('Orell Füssli'),
@@ -59,11 +53,7 @@ INSERT INTO t_book_to_book_store VALUES
 /
 
 
-INSERT INTO t_arrays VALUES (1, null, null, null)
-/
-INSERT INTO t_arrays VALUES (2, ARRAY[], ARRAY[], ARRAY[])
-/
-INSERT INTO t_arrays VALUES (3, ARRAY['a'], ARRAY[1], ARRAY['1981-07-10'])
-/
-INSERT INTO t_arrays VALUES (4, ARRAY['a', 'b'], ARRAY[1, 2], ARRAY['1981-07-10', '2000-01-01'])
-/
+INSERT INTO t_arrays VALUES (1, null, null, null)/
+INSERT INTO t_arrays VALUES (2, ARRAY[], ARRAY[], ARRAY[])/
+INSERT INTO t_arrays VALUES (3, ARRAY['a'], ARRAY[1], ARRAY['1981-07-10'])/
+INSERT INTO t_arrays VALUES (4, ARRAY['a', 'b'], ARRAY[1, 2], ARRAY['1981-07-10', '2000-01-01'])/

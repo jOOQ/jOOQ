@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -77,4 +78,19 @@ public interface InsertSetStep {
      * <code>Field&lt;T&gt;</code>
      */
     InsertSetMoreStep set(Map<? extends Field<?>, ?> map);
+
+    /**
+     * Add values to the insert statement with implicit field names
+     */
+    InsertValuesStep values(Object... values);
+
+    /**
+     * Add values to the insert statement with implicit field names
+     */
+    InsertValuesStep values(Field<?>... values);
+
+    /**
+     * Add values to the insert statement with implicit field names
+     */
+    InsertValuesStep values(Collection<?> values);
 }

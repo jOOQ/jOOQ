@@ -35,6 +35,13 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.DOUBLE;
+import static org.jooq.impl.SQLDataType.FLOAT;
+import static org.jooq.impl.SQLDataType.REAL;
+import static org.jooq.impl.SQLDataType.VARCHAR;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -69,6 +76,7 @@ class Cast<T> extends AbstractField<T> {
         return getAttachables(field);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final void toSQL(RenderContext context) {
         if (context.getDialect() == SQLDialect.DERBY) {
@@ -76,12 +84,27 @@ class Cast<T> extends AbstractField<T> {
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
             if (field.getDataType().isNumeric() &&
-                SQLDataType.VARCHAR.equals(getDataType().getSQLDataType())) {
+                VARCHAR.equals(getSQLDataType())) {
+
+                context.sql("trim(cast(")
+                       .sql("cast(")
+                       .sql(field)
+                       .sql(" as char(38))")
+                       .sql(" as ")
+                       .sql(getDataType(context).getCastTypeName(context))
+                       .sql("))");
+
+                return;
+            }
+
+            // [#888] ... neither does casting character types to FLOAT (and similar)
+            else if (field.getDataType().isString() &&
+                     asList(FLOAT, DOUBLE, REAL).contains(getSQLDataType())) {
 
                 context.sql("cast(")
                        .sql("cast(")
                        .sql(field)
-                       .sql(" as char(38))")
+                       .sql(" as decimal)")
                        .sql(" as ")
                        .sql(getDataType(context).getCastTypeName(context))
                        .sql(")");
@@ -91,19 +114,17 @@ class Cast<T> extends AbstractField<T> {
 
             // [#859] ... neither does casting numeric types to BOOLEAN
             else if (field.getDataType().isNumeric() &&
-                     SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+                     BOOLEAN.equals(getSQLDataType())) {
 
                 context.sql(asDecodeNumberToBoolean(context));
-
                 return;
             }
 
             // [#859] ... neither does casting character types to BOOLEAN
             else if (field.getDataType().isString() &&
-                     SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+                     BOOLEAN.equals(getSQLDataType())) {
 
                 context.sql(asDecodeVarcharToBoolean(context));
-
                 return;
             }
         }
@@ -129,14 +150,14 @@ class Cast<T> extends AbstractField<T> {
 
     @SuppressWarnings("unchecked")
     private Field<Boolean> asDecodeVarcharToBoolean(Configuration configuration) {
+        Field<String> s = (Field<String>) field;
 
         // [#859] '0', 'f', 'false' => false, null => null, all else is true
         return create(configuration).decode()
-                                    .value((Field<String>) field)
-                                    .when(literal("'0'"), literal(false))
-                                    .when(literal("'false'"), literal(false))
-                                    .when(literal("'f'"), literal(false))
-                                    .when(literal((String) null), literal((Boolean) null))
+                                    .when(s.equal(literal("'0'")), literal(false))
+                                    .when(s.lower().equal(literal("'false'")), literal(false))
+                                    .when(s.lower().equal(literal("'f'")), literal(false))
+                                    .when(s.isNull(), literal((Boolean) null))
                                     .otherwise(literal(true));
     }
 
@@ -146,7 +167,7 @@ class Cast<T> extends AbstractField<T> {
 
             // [#859] casting numeric types to BOOLEAN
             if (field.getDataType().isNumeric() &&
-                SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+                BOOLEAN.equals(getSQLDataType())) {
 
                 context.bind(asDecodeNumberToBoolean(context));
                 return;
@@ -154,7 +175,7 @@ class Cast<T> extends AbstractField<T> {
 
             // [#859] casting character types to BOOLEAN
             else if (field.getDataType().isString() &&
-                     SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+                     BOOLEAN.equals(getSQLDataType())) {
 
                 context.bind(asDecodeVarcharToBoolean(context));
                 return;

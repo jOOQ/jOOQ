@@ -121,7 +121,7 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
 <ul>
     <li>DB2 9.7</li>
     <li>Derby 10.8</li>
-    <li>H2 1.3.155</li>
+    <li>H2 1.3.161</li>
     <li>HSQLDB 2.2.5</li>
     <li>Ingres 10.1.0</li>
     <li>MySQL 5.1.41 and 5.5.8</li>

@@ -95,4 +95,11 @@ public interface SelectOrderByStep extends SelectLimitStep {
      * Add an <code>ORDER BY</code> clause to the query
      */
     SelectLimitStep orderBy(Collection<SortField<?>> fields);
+
+    /**
+     * Add an <code>ORDER BY</code> clause to the query
+     * <p>
+     * Indexes start at <code>1</code> in SQL!
+     */
+    SelectLimitStep orderBy(int... fieldIndexes);
 }

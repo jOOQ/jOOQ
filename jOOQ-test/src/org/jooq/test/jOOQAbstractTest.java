@@ -4285,6 +4285,32 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testOrderByIndexes() throws Exception {
+        assertEquals(Arrays.asList(1, 2, 3, 4),
+            create().selectFrom(TBook())
+                    .orderBy(1)
+                    .fetch(TBook_ID()));
+
+        assertEquals(Arrays.asList(1, 2, 3, 4),
+            create().select(TBook_ID(), TBook_TITLE())
+                    .from(TBook())
+                    .orderBy(1)
+                    .fetch(TBook_ID()));
+
+        assertEquals(Arrays.asList(1, 2, 3, 4),
+            create().select(TBook_TITLE(), TBook_ID())
+                    .from(TBook())
+                    .orderBy(2)
+                    .fetch(TBook_ID()));
+
+        assertEquals(Arrays.asList(1, 1, 2, 2),
+            create().select(TBook_AUTHOR_ID(), TBook_ID())
+                    .from(TBook())
+                    .orderBy(2, 1)
+                    .fetch(TBook_AUTHOR_ID()));
+    }
+
+    @Test
     public void testOrderByIndirection() throws Exception {
         assertEquals(BOOK_IDS,
             create().selectFrom(TBook())

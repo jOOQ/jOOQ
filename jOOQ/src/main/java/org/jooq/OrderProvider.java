@@ -66,6 +66,15 @@ public interface OrderProvider {
     void addOrderBy(Collection<SortField<?>> fields);
 
     /**
+     * Adds ordering fields
+     * <p>
+     * Indexes start at <code>1</code> in SQL!
+     *
+     * @param fields The ordering fields
+     */
+    void addOrderBy(int... fieldIndexes);
+
+    /**
      * Limit the results of this select
      * <p>
      * This is the same as calling {@link #addLimit(int, int)} with offset = 0

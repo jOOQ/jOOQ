@@ -728,6 +728,17 @@ implements
     }
 
     @Override
+    public final void addOrderBy(int... fieldIndexes) {
+        Field<?>[] fields = new Field[fieldIndexes.length];
+
+        for (int i = 0; i < fieldIndexes.length; i++) {
+            fields[i] = literal(fieldIndexes[i]);
+        }
+
+        addOrderBy(fields);
+    }
+
+    @Override
     public final void addConditions(Condition... conditions) {
         condition.addConditions(conditions);
     }

@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -92,15 +93,18 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isNumeric() &&
                      SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
 
-                context.sql("cast(")
-                       .sql("cast(")
-                       .sql(field)
-                       .sql(" as char(1))")
-                       .sql(" as ")
-                       .sql(getDataType(context).getCastTypeName(context))
-                       .sql(")");
+                context.sql(asDecodeNumberToBoolean(context));
 
-                 return;
+                return;
+            }
+
+            // [#859] ... neither does casting character types to BOOLEAN
+            else if (field.getDataType().isString() &&
+                     SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+
+                context.sql(asDecodeVarcharToBoolean(context));
+
+                return;
             }
         }
 
@@ -112,8 +116,51 @@ class Cast<T> extends AbstractField<T> {
                .sql(")");
     }
 
+    @SuppressWarnings("unchecked")
+    private Field<Boolean> asDecodeNumberToBoolean(Configuration configuration) {
+
+        // [#859] 0 => false, null => null, all else is true
+        return create(configuration).decode()
+                                    .value((Field<Integer>) field)
+                                    .when(literal(0), literal(false))
+                                    .when(literal((Integer) null), literal((Boolean) null))
+                                    .otherwise(literal(true));
+    }
+
+    @SuppressWarnings("unchecked")
+    private Field<Boolean> asDecodeVarcharToBoolean(Configuration configuration) {
+
+        // [#859] '0', 'f', 'false' => false, null => null, all else is true
+        return create(configuration).decode()
+                                    .value((Field<String>) field)
+                                    .when(literal("'0'"), literal(false))
+                                    .when(literal("'false'"), literal(false))
+                                    .when(literal("'f'"), literal(false))
+                                    .when(literal((String) null), literal((Boolean) null))
+                                    .otherwise(literal(true));
+    }
+
     @Override
     public final void bind(BindContext context) throws SQLException {
+        if (context.getDialect() == SQLDialect.DERBY) {
+
+            // [#859] casting numeric types to BOOLEAN
+            if (field.getDataType().isNumeric() &&
+                SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+
+                context.bind(asDecodeNumberToBoolean(context));
+                return;
+            }
+
+            // [#859] casting character types to BOOLEAN
+            else if (field.getDataType().isString() &&
+                     SQLDataType.BOOLEAN.equals(getDataType().getSQLDataType())) {
+
+                context.bind(asDecodeVarcharToBoolean(context));
+                return;
+            }
+        }
+
         context.bind(field);
     }
 

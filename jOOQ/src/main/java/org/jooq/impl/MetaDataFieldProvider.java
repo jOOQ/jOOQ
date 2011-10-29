@@ -101,37 +101,20 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
                 String name = meta.getColumnLabel(i);
                 int precision = meta.getPrecision(i);
                 int scale = meta.getScale(i);
-
                 DataType<?> dataType = SQLDataType.OTHER;
 
-                switch (configuration.getDialect()) {
-                    // [#748] TODO: H2 has a regression in 1.3.158, where
-                    // DatabaseMetaData.getColumnTypeName(int) is no longer implemented for cursors
-                    // returned from stored functions. This code should become obsolete again with
-                    // the fix of http://code.google.com/p/h2database/issues/detail?id=333
-                    case H2:
-                        dataType = FieldTypeHelper.getDataType(
-                            configuration.getDialect(),
-                            FieldTypeHelper.getClass(meta.getColumnType(i), precision, scale));
-                        break;
+                // TODO: [#650] Find a more intelligent way to strip the
+                // schema from Oracle UDT names!
+                String type = meta.getColumnTypeName(i).replaceAll(".*\\.", "");
 
-                    default:
+                try {
+                    dataType = FieldTypeHelper.getDialectDataType(configuration.getDialect(), type, precision, scale);
+                }
 
-                        // TODO: [#650] Find a more intelligent way to strip the
-                        // schema from Oracle UDT names!
-                        String type = meta.getColumnTypeName(i).replaceAll(".*\\.", "");
-
-                        try {
-                            dataType = FieldTypeHelper.getDialectDataType(configuration.getDialect(), type, precision, scale);
-                        }
-
-                        // [#650, #667] TODO This should not happen. All types
-                        // should be known at this point
-                        catch (SQLDialectNotSupportedException ignore) {
-                            log.warn("Not supported by dialect", ignore.getMessage());
-                        }
-
-                        break;
+                // [#650, #667] TODO This should not happen. All types
+                // should be known at this point
+                catch (SQLDialectNotSupportedException ignore) {
+                    log.warn("Not supported by dialect", ignore.getMessage());
                 }
 
                 fields.add(create.field(name, dataType));

@@ -367,6 +367,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
+    public final SelectImpl orderBy(int... fieldIndexes) {
+        getQuery().addOrderBy(fieldIndexes);
+        return this;
+    }
+
+    @Override
     public final SelectImpl limit(int numberOfRows) {
         this.limit = numberOfRows;
         getQuery().addLimit(numberOfRows);

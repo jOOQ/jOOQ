@@ -210,6 +210,12 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     }
 
     @Override
+    public final SimpleSelectImpl<R> orderBy(int... fieldIndexes) {
+        getQuery().addOrderBy(fieldIndexes);
+        return this;
+    }
+
+    @Override
     public final SimpleSelectImpl<R> limit(int numberOfRows) {
         this.limit = numberOfRows;
         getQuery().addLimit(numberOfRows);

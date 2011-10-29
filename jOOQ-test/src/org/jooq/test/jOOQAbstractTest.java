@@ -3066,6 +3066,28 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertImplicit() throws Exception {
+        reset = false;
+
+        assertEquals(1,
+        create().insertInto(TAuthor())
+                .values(
+                    37,
+                    "Erich",
+                    "Kästner",
+                    null,
+                    null,
+                    null)
+                .execute());
+
+        A author = create().selectFrom(TAuthor()).where(TAuthor_ID().equal(37)).fetchOne();
+        assertNotNull(author);
+        assertEquals(37, (int) author.getValue(TAuthor_ID()));
+        assertEquals("Erich", author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Kästner", author.getValue(TAuthor_LAST_NAME()));
+    }
+
+    @Test
     public void testInsertMultiple() throws Exception {
         reset = false;
 

@@ -74,10 +74,13 @@ class InsertImpl<R extends TableRecord<R>>
     private static final long    serialVersionUID = 4222898879771679107L;
 
     private final List<Field<?>> fields;
+    private final Table<R>       into;
     private boolean              onDuplicateKeyUpdate;
 
     InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
         super(new InsertQueryImpl<R>(configuration, into));
+
+        this.into = into;
         this.fields = new ArrayList<Field<?>>(fields);
     }
 
@@ -110,6 +113,13 @@ class InsertImpl<R extends TableRecord<R>>
     }
 
     private final InsertImpl<R> values0(List<Field<?>> values) {
+
+        // [#885] If this insert is called with an implicit field name set, take
+        // the fields from the underlying table.
+        if (fields.size() == 0) {
+            fields.addAll(into.getFields());
+        }
+
         if (fields.size() != values.size()) {
             throw new IllegalArgumentException("The number of values must match the number of fields");
         }

@@ -1950,57 +1950,47 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testCastingToJavaClass() throws Exception {
-        switch (getDialect()) {
-            // DERBY's cast support is very restrictive
-            // http://db.apache.org/derby/docs/10.7/ref/rrefsqlj33562.html
-            case DERBY:
-                log.info("SKIPPING", "most casting tests");
-                break;
+        if (getDialect() != SQLDialect.HSQLDB) {
+            assertEquals(true, create().select(create().cast(1, Boolean.class)).fetchOne(0));
 
-            default: {
-                if (getDialect() != SQLDialect.HSQLDB) {
-                    assertEquals(true, create().select(create().cast(1, Boolean.class)).fetchOne(0));
-
-                    if (getDialect() != SQLDialect.INGRES) {
-                        assertEquals(true, create().select(create().cast("1", Boolean.class)).fetchOne(0));
-                    }
-                }
-
-                assertEquals(BigInteger.ONE, create().select(create().cast("1", BigInteger.class)).fetchOne(0));
-                assertEquals(BigInteger.ONE, create().select(create().cast(1, BigInteger.class)).fetchOne(0));
-
-                // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
-                if (getDialect() == SQLDialect.SYBASE) {
-                    BigDecimal result = (BigDecimal)create().select(create().cast("1", BigDecimal.class)).fetchOne(0);
-                    result = result.setScale(0);
-                    assertEquals(BigDecimal.ONE, result);
-
-                    result = (BigDecimal)create().select(create().cast(1, BigDecimal.class)).fetchOne(0);
-                    result = result.setScale(0);
-                    assertEquals(BigDecimal.ONE, result);
-                } else {
-                    assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast("1", BigDecimal.class)).fetchOne(0)));
-                    assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast(1, BigDecimal.class)).fetchOne(0)));
-                }
-
-                assertEquals((byte) 1, create().select(create().cast("1", Byte.class)).fetchOne(0));
-                assertEquals((short) 1, create().select(create().cast("1", Short.class)).fetchOne(0));
-                assertEquals(1, create().select(create().cast("1", Integer.class)).fetchOne(0));
-                assertEquals(1L, create().select(create().cast("1", Long.class)).fetchOne(0));
-
-                assertEquals(1.0f, create().select(create().cast("1", Float.class)).fetchOne(0));
-                assertEquals(1.0, create().select(create().cast("1", Double.class)).fetchOne(0));
-                assertEquals("1", create().select(create().cast("1", String.class)).fetchOne(0));
-
-                assertEquals((byte) 1, create().select(create().cast(1, Byte.class)).fetchOne(0));
-                assertEquals((short) 1, create().select(create().cast(1, Short.class)).fetchOne(0));
-                assertEquals(1, create().select(create().cast(1, Integer.class)).fetchOne(0));
-                assertEquals(1L, create().select(create().cast(1, Long.class)).fetchOne(0));
-                assertEquals(1.0f, create().select(create().cast(1, Float.class)).fetchOne(0));
-                assertEquals(1.0, create().select(create().cast(1, Double.class)).fetchOne(0));
-                assertEquals("1", create().select(create().cast(1, String.class)).fetchOne(0));
+            if (getDialect() != SQLDialect.INGRES) {
+                assertEquals(true, create().select(create().cast("1", Boolean.class)).fetchOne(0));
             }
         }
+
+        assertEquals(BigInteger.ONE, create().select(create().cast("1", BigInteger.class)).fetchOne(0));
+        assertEquals(BigInteger.ONE, create().select(create().cast(1, BigInteger.class)).fetchOne(0));
+
+        // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
+        if (getDialect() == SQLDialect.SYBASE) {
+            BigDecimal result = (BigDecimal)create().select(create().cast("1", BigDecimal.class)).fetchOne(0);
+            result = result.setScale(0);
+            assertEquals(BigDecimal.ONE, result);
+
+            result = (BigDecimal)create().select(create().cast(1, BigDecimal.class)).fetchOne(0);
+            result = result.setScale(0);
+            assertEquals(BigDecimal.ONE, result);
+        } else {
+            assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast("1", BigDecimal.class)).fetchOne(0)));
+            assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast(1, BigDecimal.class)).fetchOne(0)));
+        }
+
+        assertEquals((byte) 1, create().select(create().cast("1", Byte.class)).fetchOne(0));
+        assertEquals((short) 1, create().select(create().cast("1", Short.class)).fetchOne(0));
+        assertEquals(1, create().select(create().cast("1", Integer.class)).fetchOne(0));
+        assertEquals(1L, create().select(create().cast("1", Long.class)).fetchOne(0));
+
+        assertEquals(1.0f, create().select(create().cast("1", Float.class)).fetchOne(0));
+        assertEquals(1.0, create().select(create().cast("1", Double.class)).fetchOne(0));
+        assertEquals("1", create().select(create().cast("1", String.class)).fetchOne(0));
+
+        assertEquals((byte) 1, create().select(create().cast(1, Byte.class)).fetchOne(0));
+        assertEquals((short) 1, create().select(create().cast(1, Short.class)).fetchOne(0));
+        assertEquals(1, create().select(create().cast(1, Integer.class)).fetchOne(0));
+        assertEquals(1L, create().select(create().cast(1, Long.class)).fetchOne(0));
+        assertEquals(1.0f, create().select(create().cast(1, Float.class)).fetchOne(0));
+        assertEquals(1.0, create().select(create().cast(1, Double.class)).fetchOne(0));
+        assertEquals("1", create().select(create().cast(1, String.class)).fetchOne(0));
 
         // Sybase ASE does not know null bits
         if (getDialect() != SQLDialect.ASE) {

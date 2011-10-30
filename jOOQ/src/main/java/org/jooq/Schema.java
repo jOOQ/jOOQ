@@ -72,5 +72,5 @@ public interface Schema extends NamedQueryPart {
     /**
      * List all sequences contained in this schema
      */
-    List<Sequence> getSequences();
+    List<Sequence<?>> getSequences();
 }

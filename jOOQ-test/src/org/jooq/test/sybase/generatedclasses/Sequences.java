@@ -13,9 +13,9 @@ package org.jooq.test.sybase.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence s_author_id
+	 * The sequence dba.dba.s_author_id
 	 */
-	public static final org.jooq.Sequence S_AUTHOR_ID = new org.jooq.impl.SequenceImpl("s_author_id", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+	public static final org.jooq.Sequence<java.math.BigInteger> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("s_author_id", org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
 
 	/**
 	 * No instances

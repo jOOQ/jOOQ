@@ -300,10 +300,16 @@ public class DefaultGenerator implements Generator {
 
                 out.print("\tpublic static final ");
                 out.print(Sequence.class);
+                out.print("<");
+                out.print(getJavaType(sequence.getType()));
+                out.print(">");
                 out.print(" ");
                 out.print(strategy.getJavaIdentifierUC(sequence));
                 out.print(" = new ");
                 out.print(SequenceImpl.class);
+                out.print("<");
+                out.print(getJavaType(sequence.getType()));
+                out.print(">");
                 out.print("(\"");
                 out.print(sequence.getName());
                 out.print("\"");
@@ -315,6 +321,9 @@ public class DefaultGenerator implements Generator {
                     out.print(", null");
                 }
 
+                out.print(", ");
+                out.print(getJavaTypeReference(sequence.getDatabase(), sequence.getType()));
+
                 out.println(");");
             }
 
@@ -322,7 +331,7 @@ public class DefaultGenerator implements Generator {
             out.println("}");
             out.close();
 
-            registerInSchema(outS, database.getSequences(), Sequence.class, false);
+            registerInSchema(outS, database.getSequences(), Sequence.class, true);
             watch.splitInfo("Sequences generated");
 		}
 

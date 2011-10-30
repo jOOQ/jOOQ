@@ -56,6 +56,8 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
@@ -193,15 +195,22 @@ public class DerbyDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        for (String name : create().select(Syssequences.SEQUENCENAME)
-            .from(SYSSEQUENCES)
-            .join(SYSSCHEMAS)
-            .on(Sysschemas.SCHEMAID.equal(Syssequences.SCHEMAID))
-            .where(Sysschemas.SCHEMANAME.equal(getSchemaName()))
-            .orderBy(Syssequences.SEQUENCENAME)
-            .fetch(Syssequences.SEQUENCENAME)) {
+        for (Record record : create().select(
+                    Syssequences.SEQUENCENAME,
+                    Syssequences.SEQUENCEDATATYPE)
+                .from(SYSSEQUENCES)
+                .join(SYSSCHEMAS)
+                .on(Sysschemas.SCHEMAID.equal(Syssequences.SCHEMAID))
+                .where(Sysschemas.SCHEMANAME.equal(getSchemaName()))
+                .orderBy(Syssequences.SEQUENCENAME)
+                .fetch()) {
 
-            result.add(new DefaultSequenceDefinition(this, name));
+            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                record.getValue(Syssequences.SEQUENCEDATATYPE),
+                0, 0);
+
+            result.add(new DefaultSequenceDefinition(
+                getSchema(), record.getValueAsString(Syssequences.SEQUENCENAME), type));
         }
 
         return result;

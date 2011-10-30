@@ -59,6 +59,8 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
@@ -171,13 +173,25 @@ public class DB2Database extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        for (String name : create().select(Sequences.SEQNAME)
-            .from(SEQUENCES)
-            .where(Sequences.SEQSCHEMA.equal(getSchemaName()))
-            .orderBy(Sequences.SEQNAME)
-            .fetch(Sequences.SEQNAME)) {
+        for (Record record : create().select(
+                    Sequences.SEQNAME,
+                    Sequences.SEQTYPE,
+                    Datatypes.TYPENAME,
+                    Sequences.PRECISION)
+                .from(SEQUENCES)
+                .join(DATATYPES)
+                .on(Sequences.DATATYPEID.equal(Datatypes.TYPEID.cast(Integer.class)))
+                .where(Sequences.SEQSCHEMA.equal(getSchemaName()))
+                .orderBy(Sequences.SEQNAME)
+                .fetch()) {
 
-            result.add(new DefaultSequenceDefinition(this, name));
+            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                record.getValue(Datatypes.TYPENAME),
+                record.getValue(Sequences.PRECISION),
+                0);
+
+            result.add(new DefaultSequenceDefinition(getSchema(),
+                record.getValue(Sequences.SEQNAME), type));
         }
 
         return result;

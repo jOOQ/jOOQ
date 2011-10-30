@@ -13,9 +13,9 @@ package org.jooq.test.oracle.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence S_AUTHOR_ID
+	 * The sequence TEST.TEST.S_AUTHOR_ID
 	 */
-	public static final org.jooq.Sequence S_AUTHOR_ID = new org.jooq.impl.SequenceImpl("S_AUTHOR_ID", org.jooq.test.oracle.generatedclasses.Test.TEST);
+	public static final org.jooq.Sequence<java.math.BigInteger> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("S_AUTHOR_ID", org.jooq.test.oracle.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
 
 	/**
 	 * No instances

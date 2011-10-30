@@ -37,8 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
 
-import java.math.BigInteger;
-
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -47,44 +45,44 @@ import org.jooq.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-class SequenceFunction extends AbstractFunction<BigInteger> {
+class SequenceFunction<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID
      */
-    private static final long  serialVersionUID = 2292275568395094887L;
+    private static final long     serialVersionUID = 2292275568395094887L;
 
-    private final SequenceImpl sequence;
-    private final String       method;
+    private final SequenceImpl<T> sequence;
+    private final String          method;
 
-    SequenceFunction(SequenceImpl sequence, String method) {
-        super(method, SQLDataType.DECIMAL_INTEGER);
+    SequenceFunction(SequenceImpl<T> sequence, String method) {
+        super(method, sequence.type);
 
         this.sequence = sequence;
         this.method = method;
     }
 
     @Override
-    final Field<BigInteger> getFunction0(Configuration configuration) {
+    final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case DB2:    // No break
             case INGRES: // No break
             case ORACLE: // No break
             case SYBASE: {
                 String field = getQualifiedName(configuration) + "." + method;
-                return field(field, BigInteger.class);
+                return field(field, getDataType());
             }
             case H2: // No break
             case POSTGRES: {
                 String field = method + "('" + getQualifiedName(configuration) + "')";
-                return field(field, BigInteger.class);
+                return field(field, getDataType());
             }
 
             case DERBY: // No break
             case HSQLDB: {
                 if ("nextval".equals(method)) {
                     String field = "next value for " + getQualifiedName(configuration);
-                    return field(field, BigInteger.class);
+                    return field(field, getDataType());
                 }
                 else {
                     throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + configuration.getDialect() + " dialect.");
@@ -94,7 +92,7 @@ class SequenceFunction extends AbstractFunction<BigInteger> {
             // Default is needed for hashCode() and toString()
             default: {
                 String field = getQualifiedName(configuration) + "." + method;
-                return field(field, BigInteger.class);
+                return field(field, getDataType());
             }
         }
     }

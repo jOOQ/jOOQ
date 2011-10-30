@@ -35,8 +35,7 @@
  */
 package org.jooq.impl;
 
-import java.math.BigInteger;
-
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -48,27 +47,29 @@ import org.jooq.Sequence;
  *
  * @author Lukas Eder
  */
-public class SequenceImpl implements Sequence {
+public class SequenceImpl<T extends Number> implements Sequence<T> {
 
     final String name;
     final Schema schema;
+    final DataType<T> type;
 
-    public SequenceImpl(String name, Schema schema) {
+    public SequenceImpl(String name, Schema schema, DataType<T> type) {
         this.name = name;
         this.schema = schema;
+        this.type = type;
     }
 
     @Override
-    public Field<BigInteger> currval() {
+    public Field<T> currval() {
         return getSequence("currval");
     }
 
     @Override
-    public Field<BigInteger> nextval() {
+    public Field<T> nextval() {
         return getSequence("nextval");
     }
 
-    private Field<BigInteger> getSequence(final String sequence) {
-        return new SequenceFunction(this, sequence);
+    private Field<T> getSequence(final String sequence) {
+        return new SequenceFunction<T>(this, sequence);
     }
 }

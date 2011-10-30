@@ -2117,9 +2117,10 @@ public abstract class jOOQAbstractTest<
 
         reset = false;
 
-        Sequence sequence = (Sequence) cSequences().getField("S_AUTHOR_ID").get(cSequences());
-        Field<BigInteger> nextval = sequence.nextval();
-        Field<BigInteger> currval = null;
+        @SuppressWarnings("unchecked")
+        Sequence<? extends Number> sequence = (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());
+        Field<? extends Number> nextval = sequence.nextval();
+        Field<? extends Number> currval = null;
 
         assertEquals("3", "" + create().select(nextval).fetchOne(nextval));
         assertEquals("4", "" + create().select(nextval).fetchOne(nextval));
@@ -2142,15 +2143,15 @@ public abstract class jOOQAbstractTest<
                 assertEquals("5", "" + create().select(currval).fetchOne(currval));
                 assertEquals("5", "" + create().select(currval).fetchOne(currval));
 
-                assertEquals(new BigInteger("5"), create().currval(sequence));
-                assertEquals(new BigInteger("5"), create().currval(sequence));
+                assertEquals(5, create().currval(sequence).intValue());
+                assertEquals(5, create().currval(sequence).intValue());
         }
 
         assertEquals("6", "" + create().select(nextval).fetchOne(nextval));
 
         // Test convenience syntax
-        assertEquals(new BigInteger("7"), create().nextval(sequence));
-        assertEquals(new BigInteger("8"), create().nextval(sequence));
+        assertEquals(7, create().nextval(sequence).intValue());
+        assertEquals(8, create().nextval(sequence).intValue());
     }
 
     @Test

@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -65,7 +67,7 @@ class Floor<T> extends AbstractFunction<T> {
                 return argument.sub(0.499999999999999).round();
 
             default:
-                return new Function<T>("floor", getDataType(), argument);
+                return function("floor", getDataType(), argument);
         }
     }
 }

@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -195,8 +197,8 @@ class Limit extends AbstractQueryPart {
             // ----------------------------------------------------------
             case MYSQL:
             case DERBY: {
-                context.bind(create(context).val(getOffset()));
-                context.bind(create(context).val(getNumberOfRows()));
+                context.bind(val(getOffset()));
+                context.bind(val(getNumberOfRows()));
                 break;
             }
 
@@ -206,8 +208,8 @@ class Limit extends AbstractQueryPart {
             case H2:
             case POSTGRES:
             case SQLITE: {
-                context.bind(create(context).val(getNumberOfRows()));
-                context.bind(create(context).val(getOffset()));
+                context.bind(val(getNumberOfRows()));
+                context.bind(val(getOffset()));
                 break;
             }
 
@@ -238,8 +240,8 @@ class Limit extends AbstractQueryPart {
             // Also, with simulated OFFSETs, the previous dialects fall through
             // -----------------------------------------------------------------
             case ORACLE: {
-                context.bind(create(context).val(getLowerRownum()));
-                context.bind(create(context).val(getUpperRownum()));
+                context.bind(val(getLowerRownum()));
+                context.bind(val(getUpperRownum()));
                 break;
             }
         }

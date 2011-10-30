@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -144,7 +146,7 @@ abstract class AbstractStoredObject extends AbstractSchemaProviderQueryPart impl
     }
 
     protected final void setValue(Parameter<?> parameter, Object value) {
-        setField(parameter, val(value, parameter));
+        setField(parameter, val(value, parameter.getDataType()));
     }
 
     /*
@@ -153,7 +155,7 @@ abstract class AbstractStoredObject extends AbstractSchemaProviderQueryPart impl
     protected final void setField(Parameter<?> parameter, Field<?> value) {
         // Be sure null is correctly represented as a null field
         if (value == null) {
-            setField(parameter, this.val(null, parameter));
+            setField(parameter, val(null, parameter.getDataType()));
         }
 
         // Add the field to the in-values
@@ -170,7 +172,7 @@ abstract class AbstractStoredObject extends AbstractSchemaProviderQueryPart impl
         inParameters.add(parameter);
 
         // IN parameters are initialised with null by default
-        inValues.put(parameter, val(null, parameter));
+        inValues.put(parameter, val(null, parameter.getDataType()));
     }
 
     protected final void setOverloaded(boolean overloaded) {

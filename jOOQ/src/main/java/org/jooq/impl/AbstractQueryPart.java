@@ -48,9 +48,6 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.Parameter;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -275,45 +272,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
         else {
             return table;
         }
-    }
-
-    final <T> Field<T> literal(T value) {
-        return create().literal(value);
-    }
-
-    /**
-     * Internal convenience method
-     */
-    final <T> Field<T> val(T value) {
-        return create().val(value);
-    }
-
-    /**
-     * Internal convenience method
-     */
-    final <T> Field<T> val(Object value, Field<T> field) {
-        return create().val(value, field);
-    }
-
-    /**
-     * Internal convenience method
-     */
-    final <T> Field<T> val(Object value, Parameter<T> parameter) {
-        return create().val(value, parameter.getDataType());
-    }
-
-    /**
-     * Internal convenience method
-     */
-    final <T> Field<T> val(Object value, DataType<T> type) {
-        return create().val(value, type);
-    }
-
-    /**
-     * Internal convenience method
-     */
-    final List<Field<?>> vals(Object... value) {
-        return create().vals(value);
     }
 
     /**

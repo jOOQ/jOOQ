@@ -37,6 +37,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
+import static org.jooq.impl.Factory.castAll;
+import static org.jooq.impl.Factory.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -60,7 +62,7 @@ class Concat extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
 
         // [#461] Type cast the concat expression, if this isn't a VARCHAR field
-        Field<String>[] cast = create(configuration).castAll(String.class, getArguments());
+        Field<String>[] cast = castAll(String.class, getArguments());
 
         // If there is only one argument, return it immediately
         if (cast.length == 1) {
@@ -73,7 +75,7 @@ class Concat extends AbstractFunction<String> {
 
         switch (configuration.getDialect()) {
             case MYSQL:
-                return new Function<String>("concat", SQLDataType.VARCHAR, cast);
+                return function("concat", SQLDataType.VARCHAR, cast);
 
             case SQLSERVER:
                 return new Expression<String>(ADD, first, others);

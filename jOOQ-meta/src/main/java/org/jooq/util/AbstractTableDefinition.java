@@ -36,6 +36,8 @@
 
 package org.jooq.util;
 
+import static org.jooq.impl.Factory.table;
+
 import java.util.List;
 
 import org.jooq.Record;
@@ -124,7 +126,7 @@ implements TableDefinition {
 
     @Override
     public final Table<Record> getTable() {
-        return create().table(getQualifiedName());
+        return table(getQualifiedName());
     }
 
     @Override

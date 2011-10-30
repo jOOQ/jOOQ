@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.vals;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +101,7 @@ class InsertImpl<R extends TableRecord<R>>
 
     @Override
     public final InsertImpl<R> values(Object... values) {
-        return values0(create().vals(values));
+        return values0(vals(values));
     }
 
     @Override
@@ -109,7 +111,7 @@ class InsertImpl<R extends TableRecord<R>>
 
     @Override
     public final InsertImpl<R> values(Collection<?> values) {
-        return values0(create().vals(values.toArray()));
+        return values0(vals(values.toArray()));
     }
 
     private final InsertImpl<R> values0(List<Field<?>> values) {

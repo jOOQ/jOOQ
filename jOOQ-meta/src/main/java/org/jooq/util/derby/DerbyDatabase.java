@@ -36,6 +36,7 @@
 
 package org.jooq.util.derby;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.util.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
 import static org.jooq.util.derby.sys.tables.Sysconstraints.SYSCONSTRAINTS;
 import static org.jooq.util.derby.sys.tables.Syskeys.SYSKEYS;
@@ -130,10 +131,10 @@ public class DerbyDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-	    Field<String> foreignKey = create().field("fc.constraintname", String.class);
-	    Field<String> foreignKeyTable = create().field("ft.tablename", String.class);
-	    Field<?> foreignKeyDescriptor = create().field("fg.descriptor");
-	    Field<String> uniqueKey = create().field("pc.constraintname", String.class);
+        Field<String> foreignKey = field("fc.constraintname", String.class);
+	    Field<String> foreignKeyTable = field("ft.tablename", String.class);
+	    Field<?> foreignKeyDescriptor = field("fg.descriptor");
+	    Field<String> uniqueKey = field("pc.constraintname", String.class);
 
 	    for (Record record : create().select(
 	            foreignKey,

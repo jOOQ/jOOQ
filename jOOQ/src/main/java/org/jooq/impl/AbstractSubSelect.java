@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.one;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -622,7 +624,7 @@ implements
             // The default is SELECT 1, when projections and table sources are
             // both empty
             if (getFrom().isEmpty()) {
-                result.add(create().literal(1));
+                result.add(one());
             }
 
             return result;

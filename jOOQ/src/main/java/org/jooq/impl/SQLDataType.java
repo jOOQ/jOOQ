@@ -265,6 +265,7 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
 
     static {
         // Load all dialect-specific data types
+        // TODO [#650] Make this more reliable using a data type registry
 
         try {
             Class.forName(ASEDataType.class.getName());

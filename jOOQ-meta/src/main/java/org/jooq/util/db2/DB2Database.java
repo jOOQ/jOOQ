@@ -35,6 +35,7 @@
  */
 package org.jooq.util.db2;
 
+import static org.jooq.impl.Factory.val;
 import static org.jooq.util.db2.syscat.tables.Datatypes.DATATYPES;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCNAME;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCSCHEMA;
@@ -211,14 +212,14 @@ public class DB2Database extends AbstractDatabase {
 
         for (Record record : create()
                 .select().from(create()
-                    .select(PROCNAME.as("name"), create().val(true).as("isProcedure"))
+                    .select(PROCNAME.as("name"), val(true).as("isProcedure"))
                     .from(PROCEDURES)
                     .where(PROCSCHEMA.equal(getSchemaName()))
                     .unionAll(create()
-                    .select(FUNCNAME.as("name"), create().val(false).as("isProcedure"))
+                    .select(FUNCNAME.as("name"), val(false).as("isProcedure"))
                     .from(FUNCTIONS)
                     .where(FUNCSCHEMA.equal(getSchemaName()))))
-                .orderBy(create().literal(1))
+                .orderBy(Factory.literal(1))
                 .fetch()) {
 
             result.add(new DB2RoutineDefinition(this,

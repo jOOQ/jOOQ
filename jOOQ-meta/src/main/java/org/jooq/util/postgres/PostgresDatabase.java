@@ -36,6 +36,10 @@
 
 package org.jooq.util.postgres;
 
+import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.decode;
+import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.util.postgres.information_schema.tables.Attributes.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.tables.Attributes.UDT_NAME;
 import static org.jooq.util.postgres.information_schema.tables.Attributes.UDT_SCHEMA;
@@ -261,27 +265,27 @@ public class PostgresDatabase extends AbstractDatabase {
                 r1.getField(Routines.SPECIFIC_NAME),
 
                 // Ignore the data type when there is at least one out parameter
-                create().decode()
-                    .when(create().exists(create()
+                decode()
+                    .when(exists(create()
                         .selectOne()
                         .from(PARAMETERS)
                         .where(Parameters.SPECIFIC_SCHEMA.equal(r1.getField(Routines.SPECIFIC_SCHEMA)))
                         .and(Parameters.SPECIFIC_NAME.equal(r1.getField(Routines.SPECIFIC_NAME)))
-                        .and(Parameters.PARAMETER_MODE.upper().notEqual("IN"))), create().val("void"))
+                        .and(Parameters.PARAMETER_MODE.upper().notEqual("IN"))), val("void"))
                     .otherwise(r1.getField(Routines.DATA_TYPE)).as("data_type"),
                 r1.getField(Routines.NUMERIC_PRECISION),
                 r1.getField(Routines.NUMERIC_SCALE),
                 r1.getField(Routines.TYPE_UDT_NAME),
 
                 // Calculate overload index if applicable
-                create().decode().when(
-                create().exists(
+                decode().when(
+                exists(
                     create().selectOne()
                         .from(r2)
                         .where(r2.getField(Routines.ROUTINE_SCHEMA).equal(getSchemaName()))
                         .and(r2.getField(Routines.ROUTINE_NAME).equal(r1.getField(Routines.ROUTINE_NAME)))
                         .and(r2.getField(Routines.SPECIFIC_NAME).notEqual(r1.getField(Routines.SPECIFIC_NAME)))),
-                    create().select(create().count())
+                    create().select(count())
                         .from(r2)
                         .where(r2.getField(Routines.ROUTINE_SCHEMA).equal(getSchemaName()))
                         .and(r2.getField(Routines.ROUTINE_NAME).equal(r1.getField(Routines.ROUTINE_NAME)))

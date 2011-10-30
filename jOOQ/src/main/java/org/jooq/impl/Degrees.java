@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.pi;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -63,13 +67,10 @@ class Degrees extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
-                return argument
-                    .cast(BigDecimal.class)
-                    .mul(180)
-                    .div(create(configuration).pi());
+                return argument.cast(BigDecimal.class).mul(literal(180)).div(pi());
 
             default:
-                return new Function<BigDecimal>("degrees", SQLDataType.NUMERIC, argument);
+                return function("degrees", SQLDataType.NUMERIC, argument);
         }
     }
 }

@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -71,15 +74,13 @@ class Ln extends AbstractFunction<BigDecimal> {
                 case ASE:
                 case H2:
                 case SQLSERVER:
-                    return new Function<BigDecimal>("log", SQLDataType.NUMERIC, argument);
+                    return function("log", SQLDataType.NUMERIC, argument);
 
                 default:
-                    return new Function<BigDecimal>("ln", SQLDataType.NUMERIC, argument);
+                    return function("ln", SQLDataType.NUMERIC, argument);
             }
         }
         else {
-            Field<Integer> baseField = create(configuration).literal(base);
-
             switch (configuration.getDialect()) {
                 case ASE:
                 case DB2:
@@ -89,10 +90,10 @@ class Ln extends AbstractFunction<BigDecimal> {
                 case INGRES:
                 case SQLSERVER:
                 case SYBASE:
-                    return argument.ln().div(baseField.ln());
+                    return argument.ln().div(literal(base).ln());
 
                 default:
-                    return new Function<BigDecimal>("log", SQLDataType.NUMERIC, baseField, argument);
+                    return function("log", SQLDataType.NUMERIC, literal(base), argument);
             }
         }
     }

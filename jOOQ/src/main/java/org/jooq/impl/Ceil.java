@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -67,10 +69,10 @@ class Ceil<T> extends AbstractFunction<T> {
             case ASE:
             case H2:
             case SQLSERVER:
-                return new Function<T>("ceiling", getDataType(), argument);
+                return function("ceiling", getDataType(), argument);
 
             default:
-                return new Function<T>("ceil", getDataType(), argument);
+                return function("ceil", getDataType(), argument);
         }
     }
 }

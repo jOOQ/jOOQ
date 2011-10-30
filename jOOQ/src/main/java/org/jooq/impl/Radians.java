@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.pi;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -63,13 +67,10 @@ class Radians extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
-                return argument
-                    .cast(BigDecimal.class)
-                    .mul(create(configuration).pi())
-                    .div(180);
+                return argument.cast(BigDecimal.class).mul(pi()).div(literal(180));
 
             default:
-                return new Function<BigDecimal>("radians", SQLDataType.NUMERIC, argument);
+                return function("radians", SQLDataType.NUMERIC, argument);
         }
     }
 }

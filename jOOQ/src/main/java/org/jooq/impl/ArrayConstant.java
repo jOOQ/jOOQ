@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +79,7 @@ class ArrayConstant<T> extends AbstractField<T> {
             String separator = "";
             for (Object object : array.get()) {
                 context.sql(separator);
-                context.sql(create(context).val(object));
+                context.sql(val(object));
 
                 separator = ", ";
             }

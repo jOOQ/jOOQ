@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.Factory.val;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -151,7 +155,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     protected final void setValue(Parameter<?> parameter, Object value) {
-        setField(parameter, val(value, parameter));
+        setField(parameter, val(value, parameter.getDataType()));
     }
 
     /*
@@ -160,7 +164,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     protected final void setField(Parameter<?> parameter, Field<?> value) {
         // Be sure null is correctly represented as a null field
         if (value == null) {
-            setField(parameter, this.val(null, parameter));
+            setField(parameter, val(null, parameter.getDataType()));
         }
 
         // Add the field to the in-values
@@ -210,7 +214,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
                 case HSQLDB:
-                	
+
                 	// [#692] HSQLDB cannot SELECT f() FROM [...] when f()
                 	// returns a cursor. Instead, SELECT * FROM table(f()) works
                     if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
@@ -239,7 +243,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     private final int executeSelectFrom() throws SQLException, DetachedException {
         Factory create = create(attachable);
-        Result<?> result = create.selectFrom(create.table(asField())).fetch();
+        Result<?> result = create.selectFrom(table(asField())).fetch();
         results.put(returnParameter, result);
         return 0;
     }
@@ -505,7 +509,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
         allParameters.add(parameter);
 
         // IN parameters are initialised with null by default
-        inValues.put(parameter, val(null, parameter));
+        inValues.put(parameter, val(null, parameter.getDataType()));
     }
 
     protected final void addInOutParameter(Parameter<?> parameter) {
@@ -544,7 +548,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             RenderContext local = create(attachable).renderContext();
             toSQLQualifiedName(local);
 
-            function = new Function<T>(local.render(), type, array);
+            function = function(local.render(), type, array);
         }
 
         return function;

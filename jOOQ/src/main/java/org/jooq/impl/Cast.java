@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
@@ -47,7 +48,6 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -116,7 +116,7 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isNumeric() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.sql(asDecodeNumberToBoolean(context));
+                context.sql(asDecodeNumberToBoolean());
                 return;
             }
 
@@ -124,7 +124,7 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isString() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.sql(asDecodeVarcharToBoolean(context));
+                context.sql(asDecodeVarcharToBoolean());
                 return;
             }
         }
@@ -138,27 +138,25 @@ class Cast<T> extends AbstractField<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private Field<Boolean> asDecodeNumberToBoolean(Configuration configuration) {
+    private Field<Boolean> asDecodeNumberToBoolean() {
 
         // [#859] 0 => false, null => null, all else is true
-        return create(configuration).decode()
-                                    .value((Field<Integer>) field)
-                                    .when(literal(0), literal(false))
-                                    .when(literal((Integer) null), literal((Boolean) null))
-                                    .otherwise(literal(true));
+        return Factory.decode().value((Field<Integer>) field)
+                               .when(literal(0), literal(false))
+                               .when(literal((Integer) null), literal((Boolean) null))
+                               .otherwise(literal(true));
     }
 
     @SuppressWarnings("unchecked")
-    private Field<Boolean> asDecodeVarcharToBoolean(Configuration configuration) {
+    private Field<Boolean> asDecodeVarcharToBoolean() {
         Field<String> s = (Field<String>) field;
 
         // [#859] '0', 'f', 'false' => false, null => null, all else is true
-        return create(configuration).decode()
-                                    .when(s.equal(literal("'0'")), literal(false))
-                                    .when(s.lower().equal(literal("'false'")), literal(false))
-                                    .when(s.lower().equal(literal("'f'")), literal(false))
-                                    .when(s.isNull(), literal((Boolean) null))
-                                    .otherwise(literal(true));
+        return Factory.decode().when(s.equal(literal("'0'")), literal(false))
+                               .when(s.lower().equal(literal("'false'")), literal(false))
+                               .when(s.lower().equal(literal("'f'")), literal(false))
+                               .when(s.isNull(), literal((Boolean) null))
+                               .otherwise(literal(true));
     }
 
     @Override
@@ -169,7 +167,7 @@ class Cast<T> extends AbstractField<T> {
             if (field.getDataType().isNumeric() &&
                 BOOLEAN.equals(getSQLDataType())) {
 
-                context.bind(asDecodeNumberToBoolean(context));
+                context.bind(asDecodeNumberToBoolean());
                 return;
             }
 
@@ -177,7 +175,7 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isString() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.bind(asDecodeVarcharToBoolean(context));
+                context.bind(asDecodeVarcharToBoolean());
                 return;
             }
         }

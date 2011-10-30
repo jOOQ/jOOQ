@@ -36,6 +36,7 @@
 
 package org.jooq.util.sqlserver;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.util.sqlserver.information_schema.tables.Columns.COLUMNS;
 
 import java.sql.SQLException;
@@ -64,7 +65,7 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
 	@Override
 	public List<ColumnDefinition> getElements0() throws SQLException {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
-		Field<Integer> identity = create().field("c.is_identity", Integer.class);
+        Field<Integer> identity = field("c.is_identity", Integer.class);
 
         for (Record record : create().select(
                 Columns.COLUMN_NAME,
@@ -76,10 +77,10 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
             .from(COLUMNS)
             .join("sys.objects o")
             .on("o.type in ('U', 'V')")
-            .and(Columns.TABLE_NAME.equal(create().field("o.name", String.class)))
+            .and(Columns.TABLE_NAME.equal(field("o.name", String.class)))
             .join("sys.columns c")
             .on("c.object_id = o.object_id")
-            .and(Columns.COLUMN_NAME.equal(create().field("c.name", String.class)))
+            .and(Columns.COLUMN_NAME.equal(field("c.name", String.class)))
             .where(Columns.TABLE_SCHEMA.equal(getSchemaName()))
             .and(Columns.TABLE_NAME.equal(getName()))
             .orderBy(Columns.ORDINAL_POSITION)

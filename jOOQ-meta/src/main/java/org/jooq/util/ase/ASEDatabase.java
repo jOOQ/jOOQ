@@ -35,6 +35,7 @@
  */
 package org.jooq.util.ase;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.util.ase.sys.tables.Sysindexes.SYSINDEXES;
 
 import java.sql.SQLException;
@@ -121,16 +122,16 @@ public class ASEDatabase extends AbstractDatabase {
      */
     private List<Record> fetchKeys(int incl, int excl) throws SQLException {
         return create().select(
-                    create().field("name", String.class),
-                    create().field("object_name(id)", String.class),
-                    create().field("index_col(object_name(id), indid, 1)", String.class),
-                    create().field("index_col(object_name(id), indid, 2)", String.class),
-                    create().field("index_col(object_name(id), indid, 3)", String.class),
-                    create().field("index_col(object_name(id), indid, 4)", String.class),
-                    create().field("index_col(object_name(id), indid, 5)", String.class),
-                    create().field("index_col(object_name(id), indid, 6)", String.class),
-                    create().field("index_col(object_name(id), indid, 7)", String.class),
-                    create().field("index_col(object_name(id), indid, 8)", String.class))
+                    field("name", String.class),
+                    field("object_name(id)", String.class),
+                    field("index_col(object_name(id), indid, 1)", String.class),
+                    field("index_col(object_name(id), indid, 2)", String.class),
+                    field("index_col(object_name(id), indid, 3)", String.class),
+                    field("index_col(object_name(id), indid, 4)", String.class),
+                    field("index_col(object_name(id), indid, 5)", String.class),
+                    field("index_col(object_name(id), indid, 6)", String.class),
+                    field("index_col(object_name(id), indid, 7)", String.class),
+                    field("index_col(object_name(id), indid, 8)", String.class))
             .from(SYSINDEXES)
             .where("status & ? = 0", excl)
             .and("status & ? <> 0", incl)
@@ -141,25 +142,25 @@ public class ASEDatabase extends AbstractDatabase {
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                create().field("object_name(tableid)", String.class).as("fk_table"),
-                create().field("object_name(constrid)", String.class).as("fk"),
-                create().field("index_name(pmrydbid, reftabid, indexid)", String.class).as("pk"),
-                create().field("col_name(tableid, fokey1)", String.class),
-                create().field("col_name(tableid, fokey2)", String.class),
-                create().field("col_name(tableid, fokey3)", String.class),
-                create().field("col_name(tableid, fokey4)", String.class),
-                create().field("col_name(tableid, fokey5)", String.class),
-                create().field("col_name(tableid, fokey6)", String.class),
-                create().field("col_name(tableid, fokey7)", String.class),
-                create().field("col_name(tableid, fokey8)", String.class),
-                create().field("col_name(tableid, fokey9)", String.class),
-                create().field("col_name(tableid, fokey10)", String.class),
-                create().field("col_name(tableid, fokey11)", String.class),
-                create().field("col_name(tableid, fokey12)", String.class),
-                create().field("col_name(tableid, fokey13)", String.class),
-                create().field("col_name(tableid, fokey14)", String.class),
-                create().field("col_name(tableid, fokey15)", String.class),
-                create().field("col_name(tableid, fokey16)", String.class))
+                field("object_name(tableid)", String.class).as("fk_table"),
+                field("object_name(constrid)", String.class).as("fk"),
+                field("index_name(pmrydbid, reftabid, indexid)", String.class).as("pk"),
+                field("col_name(tableid, fokey1)", String.class),
+                field("col_name(tableid, fokey2)", String.class),
+                field("col_name(tableid, fokey3)", String.class),
+                field("col_name(tableid, fokey4)", String.class),
+                field("col_name(tableid, fokey5)", String.class),
+                field("col_name(tableid, fokey6)", String.class),
+                field("col_name(tableid, fokey7)", String.class),
+                field("col_name(tableid, fokey8)", String.class),
+                field("col_name(tableid, fokey9)", String.class),
+                field("col_name(tableid, fokey10)", String.class),
+                field("col_name(tableid, fokey11)", String.class),
+                field("col_name(tableid, fokey12)", String.class),
+                field("col_name(tableid, fokey13)", String.class),
+                field("col_name(tableid, fokey14)", String.class),
+                field("col_name(tableid, fokey15)", String.class),
+                field("col_name(tableid, fokey16)", String.class))
             .from(Sysreferences.SYSREFERENCES)
             .fetch()) {
 

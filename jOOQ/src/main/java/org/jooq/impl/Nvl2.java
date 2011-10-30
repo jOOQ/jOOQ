@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -66,10 +68,10 @@ class Nvl2<T> extends AbstractFunction<T> {
             case H2:
             case INGRES:
             case ORACLE:
-                return new Function<T>("nvl2", getDataType(), getArguments());
+                return function("nvl2", getDataType(), getArguments());
 
             default:
-                return create(configuration).decode().when(arg1.isNotNull(), arg2).otherwise(arg3);
+                return Factory.decode().when(arg1.isNotNull(), arg2).otherwise(arg3);
         }
     }
 }

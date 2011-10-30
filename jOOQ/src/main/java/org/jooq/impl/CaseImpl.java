@@ -35,22 +35,20 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.Condition;
 import org.jooq.Field;
 
+/**
+ * @author Lukas Eder
+ */
 class CaseImpl implements Case {
 
-    private final Factory factory;
-
-    CaseImpl(Factory factory) {
-        this.factory = factory;
-    }
-
-    private <Z> Field<Z> val(Z value) {
-        return factory.val(value);
+    CaseImpl() {
     }
 
     @Override
@@ -60,7 +58,7 @@ class CaseImpl implements Case {
 
     @Override
     public final <V> CaseValueStep<V> value(Field<V> value) {
-        return new CaseValueStepImpl<V>(factory, value);
+        return new CaseValueStepImpl<V>(value);
     }
 
     @Override

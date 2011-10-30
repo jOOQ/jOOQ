@@ -2177,6 +2177,12 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testSelectCountQuery() throws Exception {
+        assertEquals(4, create().selectCount().from(TBook()).fetchOne(0));
+        assertEquals(2, create().selectCount().from(TAuthor()).fetchOne(0));
+    }
+
+    @Test
     public void testSelectQuery() throws Exception {
         SelectQuery q = create().selectQuery();
         q.addFrom(TAuthor());

@@ -202,12 +202,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     // ------------------------------------------------------------------------
-    // Arithmetic expressions
+    // Arithmetic operations
     // ------------------------------------------------------------------------
 
     @Override
     public final Field<T> neg() {
-        return new Neg<T>(this);
+        return new Neg<T>(this, ExpressionOperator.SUBTRACT);
     }
 
     @Override
@@ -284,6 +284,100 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Field<T> mod(Field<? extends Number> value) {
         return new Mod<T>(this, value);
+    }
+
+    // ------------------------------------------------------------------------
+    // Bitwise operations
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Field<Integer> bitCount() {
+        return new BitCount(this);
+    }
+
+    @Override
+    public final Field<T> bitNot() {
+        return new Neg<T>(this, ExpressionOperator.BIT_NOT);
+    }
+
+    @Override
+    public final Field<T> bitAnd(Number value) {
+        return bitAnd(val(value));
+    }
+
+    @Override
+    public final Field<T> bitAnd(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.BIT_AND, this, value);
+    }
+
+    @Override
+    public final Field<T> bitNand(Number value) {
+        return bitNand(val(value));
+    }
+
+    @Override
+    public final Field<T> bitNand(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.BIT_NAND, this, value);
+    }
+
+    @Override
+    public final Field<T> bitOr(Number value) {
+        return bitOr(val(value));
+    }
+
+    @Override
+    public final Field<T> bitOr(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.BIT_OR, this, value);
+    }
+
+    @Override
+    public final Field<T> bitNor(Number value) {
+        return bitNor(val(value));
+    }
+
+    @Override
+    public final Field<T> bitNor(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.BIT_NOR, this, value);
+    }
+
+    @Override
+    public final Field<T> bitXor(Number value) {
+        return bitXor(val(value));
+    }
+
+    @Override
+    public final Field<T> bitXor(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.BIT_XOR, this, value);
+    }
+
+    @Override
+    public final Field<T> bitXNor(Number value) {
+        return bitXNor(val(value));
+    }
+
+    @Override
+    public final Field<T> bitXNor(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.BIT_XNOR, this, value);
+    }
+
+    @Override
+    public final Field<T> shl(Number value) {
+        return shl(val(value));
+    }
+
+    @Override
+    public final Field<T> shl(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.SHL, this, value);
+    }
+
+    @Override
+    public final Field<T> shr(Number value) {
+        return shr(val(value));
+    }
+
+    @Override
+    public final Field<T> shr(Field<? extends Number> value) {
+        return new Expression<T>(ExpressionOperator.SHR, this, value);
     }
 
     // ------------------------------------------------------------------------
@@ -528,6 +622,11 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<BigDecimal> power(Number exponent) {
+        return power(val(exponent));
+    }
+
+    @Override
+    public Field<BigDecimal> power(Field<? extends Number> exponent) {
         return new Power(this, exponent);
     }
 

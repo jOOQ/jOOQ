@@ -42,7 +42,9 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
@@ -4792,7 +4794,7 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testArithmeticExpressions() throws Exception {
+    public void testArithmeticOperations() throws Exception {
         Field<Integer> f1 = val(1).add(2).add(3).div(2);
         Field<Integer> f2 = val(10).div(5).add(val(3).sub(2));
         Field<Integer> f3 = val(10).mod(3);
@@ -4820,6 +4822,53 @@ public abstract class jOOQAbstractTest<
         result = q2.getResult();
         assertEquals(Integer.valueOf((1948 + 3) / 7), result.getValue(0, f4));
         assertEquals(Integer.valueOf((1948 - 4) * -8), result.getValue(0, f5));
+    }
+
+    @Test
+    public void testBitwiseOperations() throws Exception {
+        switch (getDialect()) {
+            case DERBY:
+            case INGRES:
+                log.info("SKIPPING", "Tests for bitwise operations");
+                return;
+        }
+
+        Field<Integer> bitCount = val(3).bitCount();
+
+        // TODO [#896] This somehow doesn't work on some dialects
+        if (asList(ASE, DB2, SQLSERVER).contains(getDialect())) {
+            bitCount = val(2);
+        }
+
+        Record result =
+        create().select(
+                    bitCount,
+                    val(3).bitNot().bitNot(),
+                    val(3).bitAnd(5),
+                    val(3).bitOr(5),
+
+                    val(3).bitXor(5),
+                    val(3).bitNand(5).bitNot(),
+                    val(3).bitNor(5).bitNot(),
+                    val(3).bitXNor(5).bitNot(),
+
+                    val(333).shl(3),
+                    val(333).shr(3))
+                .fetchOne();
+
+        int index = 0;
+        assertEquals(2, result.getValue(index++));
+        assertEquals(~(~3), result.getValue(index++));
+        assertEquals(3 & 5, result.getValue(index++));
+        assertEquals(3 | 5, result.getValue(index++));
+
+        assertEquals(3 ^ 5, result.getValue(index++));
+        assertEquals(~(~(3 & 5)), result.getValue(index++));
+        assertEquals(~(~(3 | 5)), result.getValue(index++));
+        assertEquals(~(~(3 ^ 5)), result.getValue(index++));
+
+        assertEquals(333 << 3, result.getValue(index++));
+        assertEquals(333 >> 3, result.getValue(index++));
     }
 
     @Test

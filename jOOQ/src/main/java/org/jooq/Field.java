@@ -252,7 +252,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     <Z> SortField<Z> sort(Map<T, Z> sortMap);
 
     // ------------------------------------------------------------------------
-    // Arithmetic expressions
+    // Arithmetic operations
     // ------------------------------------------------------------------------
 
     /**
@@ -334,6 +334,233 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <code><pre>mod([this], [value])</pre></code>
      */
     Field<T> mod(Field<? extends Number> value);
+
+    // ------------------------------------------------------------------------
+    // Bitwise operations
+    // ------------------------------------------------------------------------
+
+    /**
+     * The MySQL <code>BIT_COUNT(field)</code> function, counting the number of
+     * bits that are set in this number.
+     * <p>
+     * This function is simulated in most other databases like this (for a
+     * TINYINT field): <code><pre>
+     * (my_field &   1) +
+     * (my_field &   2) >> 1 +
+     * (my_field &   4) >> 2 +
+     * (my_field &   8) >> 3 +
+     * (my_field &  16) >> 4 +
+     *  ...
+     * (my_field & 128) >> 7
+     * </pre></code>
+     * <p>
+     * More efficient algorithms are very welcome
+     */
+    Field<Integer> bitCount();
+
+    /**
+     * The bitwise not operator.
+     * <p>
+     * Most dialects natively support this using <code>~[this]</code>. jOOQ
+     * simulates this operator in some dialects using <code>-[this] - 1</code>
+     */
+    Field<T> bitNot();
+
+    /**
+     * The bitwise and operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the and operation where available:
+     * <code><pre>[this] & [value]</pre></code>
+     * ... or the and function elsewhere:
+     * <code><pre>bitand([this], [value])</pre></code>
+     */
+    Field<T> bitAnd(Number value);
+
+    /**
+     * The bitwise and operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the and operation where available:
+     * <code><pre>[this] & [value]</pre></code>
+     * ... or the and function elsewhere:
+     * <code><pre>bitand([this], [value])</pre></code>
+     */
+    Field<T> bitAnd(Field<? extends Number> value);
+
+    /**
+     * The bitwise not and operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the not and operation where available:
+     * <code><pre>~([this] & [value])</pre></code>
+     * ... or the not and function elsewhere:
+     * <code><pre>bitnot(bitand([this], [value]))</pre></code>
+     *
+     * @see #bitNot()
+     */
+    Field<T> bitNand(Number value);
+
+    /**
+     * The bitwise not and operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the not and operation where available:
+     * <code><pre>~([this] & [value])</pre></code>
+     * ... or the not and function elsewhere:
+     * <code><pre>bitnot(bitand([this], [value]))</pre></code>
+     *
+     * @see #bitNot()
+     */
+    Field<T> bitNand(Field<? extends Number> value);
+
+    /**
+     * The bitwise or operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>[this] | [value]</pre></code>
+     * ... or the or function elsewhere:
+     * <code><pre>bitor([this], [value])</pre></code>
+     */
+    Field<T> bitOr(Number value);
+
+    /**
+     * The bitwise or operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>[this] | [value]</pre></code>
+     * ... or the or function elsewhere:
+     * <code><pre>bitor([this], [value])</pre></code>
+     */
+    Field<T> bitOr(Field<? extends Number> value);
+
+    /**
+     * The bitwise not or operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the not or operation where available:
+     * <code><pre>~([this] | [value])</pre></code>
+     * ... or the not or function elsewhere:
+     * <code><pre>bitnot(bitor([this], [value]))</pre></code>
+     *
+     * @see #bitNot()
+     */
+    Field<T> bitNor(Number value);
+
+    /**
+     * The bitwise not or operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the not or operation where available:
+     * <code><pre>~([this] | [value])</pre></code>
+     * ... or the not or function elsewhere:
+     * <code><pre>bitnot(bitor([this], [value]))</pre></code>
+     *
+     * @see #bitNot()
+     */
+    Field<T> bitNor(Field<? extends Number> value);
+
+    /**
+     * The bitwise xor operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>[this] ^ [value]</pre></code>
+     * ... or the xor function elsewhere:
+     * <code><pre>bitxor([this], [value])</pre></code>
+     */
+    Field<T> bitXor(Number value);
+
+    /**
+     * The bitwise xor operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>[this] ^ [value]</pre></code>
+     * ... or the xor function elsewhere:
+     * <code><pre>bitxor([this], [value])</pre></code>
+     */
+    Field<T> bitXor(Field<? extends Number> value);
+
+    /**
+     * The bitwise not xor operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>~([this] ^ [value])</pre></code>
+     * ... or the not xor function elsewhere:
+     * <code><pre>bitnot(bitxor([this], [value]))</pre></code>
+     */
+    Field<T> bitXNor(Number value);
+
+    /**
+     * The bitwise not xor operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>~([this] ^ [value])</pre></code>
+     * ... or the not xor function elsewhere:
+     * <code><pre>bitnot(bitxor([this], [value]))</pre></code>
+     */
+    Field<T> bitXNor(Field<? extends Number> value);
+
+    /**
+     * The bitwise left shift operator.
+     * <p>
+     * Some dialects natively support this using <code>[this] << [value]</code>.
+     * jOOQ simulates this operator in some dialects using
+     * <code>[this] * power(2, [value])</code>, where power might also be simulated.
+     *
+     * @see #power(Field)
+     */
+    Field<T> shl(Number value);
+
+    /**
+     * The bitwise left shift operator.
+     * <p>
+     * Some dialects natively support this using <code>[this] << [value]</code>.
+     * jOOQ simulates this operator in some dialects using
+     * <code>[this] * power(2, [value])</code>, where power might also be simulated.
+     *
+     * @see #power(Field)
+     */
+    Field<T> shl(Field<? extends Number> value);
+
+    /**
+     * The bitwise right shift operator.
+     * <p>
+     * Some dialects natively support this using <code>[this] >> [value]</code>.
+     * jOOQ simulates this operator in some dialects using
+     * <code>[this] / power(2, [value])</code>, where power might also be simulated.
+     *
+     * @see #power(Field)
+     */
+    Field<T> shr(Number value);
+
+    /**
+     * The bitwise right shift operator.
+     * <p>
+     * Some dialects natively support this using <code>[this] >> [value]</code>.
+     * jOOQ simulates this operator in some dialects using
+     * <code>[this] / power(2, [value])</code>, where power might also be simulated.
+     *
+     * @see #power(Field)
+     */
+    Field<T> shr(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
     // Mathematical functions created from this field
@@ -447,6 +674,16 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <code><pre>exp(ln([this]) * [exponent])</pre></code>
      */
     Field<BigDecimal> power(Number exponent);
+
+    /**
+     * Get the power(field, exponent) function
+     * <p>
+     * This renders the power function where available:
+     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * elsewhere using ln and exp:
+     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     */
+    Field<BigDecimal> power(Field<? extends Number> exponent);
 
     /**
      * Get the arc cosine(field) function

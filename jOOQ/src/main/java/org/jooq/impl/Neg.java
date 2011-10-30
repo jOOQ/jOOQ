@@ -35,6 +35,14 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.impl.ExpressionOperator.BIT_NOT;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -42,6 +50,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -51,13 +60,15 @@ class Neg<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7624782102883057433L;
+    private static final long        serialVersionUID = 7624782102883057433L;
 
-    private final Field<T>    field;
+    private final ExpressionOperator operator;
+    private final Field<T>           field;
 
-    Neg(Field<T> field) {
-        super("-" + field.getName(), field.getDataType());
+    Neg(Field<T> field, ExpressionOperator operator) {
+        super(operator.toSQL() + field.getName(), field.getDataType());
 
+        this.operator = operator;
         this.field = field;
     }
 
@@ -68,7 +79,24 @@ class Neg<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("-").sql(field);
+        SQLDialect dialect = context.getDialect();
+
+        if (operator == BIT_NOT && asList(H2, HSQLDB, INGRES, ORACLE).contains(dialect)) {
+            context.sql("(0 -")
+                   .sql(field)
+                   .sql(" - 1)");
+        }
+        else if (operator == BIT_NOT && dialect == DB2) {
+            context.sql("bitnot(")
+                   .sql(field)
+                   .sql(")");
+        }
+        else {
+            context.sql(operator.toSQL())
+                   .sql("(")
+                   .sql(field)
+                   .sql(")");
+        }
     }
 
     @Override

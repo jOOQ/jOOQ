@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
 
 import java.math.BigDecimal;
 
@@ -53,11 +52,11 @@ class Power extends AbstractFunction<BigDecimal> {
      */
     private static final long serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>    arg1;
-    private final Number      arg2;
+    private final Field<?>                arg1;
+    private final Field<? extends Number> arg2;
 
-    Power(Field<?> arg1, Number arg2) {
-        super("ceil", SQLDataType.NUMERIC, arg1);
+    Power(Field<?> arg1, Field<? extends Number> arg2) {
+        super("ceil", SQLDataType.NUMERIC, arg1, arg2);
 
         this.arg1 = arg1;
         this.arg2 = arg2;
@@ -68,10 +67,10 @@ class Power extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case DERBY:
             case SQLITE:
-                return arg1.ln().mul(literal(arg2)).exp();
+                return arg1.ln().mul(arg2).exp();
 
             default:
-                return function("power", SQLDataType.NUMERIC, arg1, literal(arg2));
+                return function("power", SQLDataType.NUMERIC, getArguments());
         }
     }
 }

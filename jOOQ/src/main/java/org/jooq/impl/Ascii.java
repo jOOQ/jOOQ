@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -65,7 +67,7 @@ class Ascii extends AbstractFunction<Integer> {
             case SQLITE:
 
             default:
-                return new Function<Integer>("ascii", SQLDataType.INTEGER, string);
+                return function("ascii", SQLDataType.INTEGER, string);
         }
     }
 }

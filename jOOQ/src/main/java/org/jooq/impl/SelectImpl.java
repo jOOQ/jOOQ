@@ -35,6 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.condition;
+import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.notExists;
+import static org.jooq.impl.Factory.table;
+
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -155,12 +160,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl from(String sql) {
-        return from(create().table(sql));
+        return from(table(sql));
     }
 
     @Override
     public final SelectImpl from(String sql, Object... bindings) {
-        return from(create().table(sql, bindings));
+        return from(table(sql, bindings));
     }
 
     @Override
@@ -179,12 +184,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl where(String sql) {
-        return where(create().condition(sql));
+        return where(condition(sql));
     }
 
     @Override
     public final SelectImpl where(String sql, Object... bindings) {
-        return where(create().condition(sql, bindings));
+        return where(condition(sql, bindings));
     }
 
     @Override
@@ -221,12 +226,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl and(String sql) {
-        return and(create().condition(sql));
+        return and(condition(sql));
     }
 
     @Override
     public final SelectImpl and(String sql, Object... bindings) {
-        return and(create().condition(sql, bindings));
+        return and(condition(sql, bindings));
     }
 
     @Override
@@ -236,12 +241,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl andExists(Select<?> select) {
-        return and(create().exists(select));
+        return and(exists(select));
     }
 
     @Override
     public final SelectImpl andNotExists(Select<?> select) {
-        return and(create().notExists(select));
+        return and(notExists(select));
     }
 
     @Override
@@ -265,12 +270,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl or(String sql) {
-        return or(create().condition(sql));
+        return or(condition(sql));
     }
 
     @Override
     public final SelectImpl or(String sql, Object... bindings) {
-        return or(create().condition(sql, bindings));
+        return or(condition(sql, bindings));
     }
 
     @Override
@@ -280,12 +285,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl orExists(Select<?> select) {
-        return or(create().exists(select));
+        return or(exists(select));
     }
 
     @Override
     public final SelectImpl orNotExists(Select<?> select) {
-        return or(create().notExists(select));
+        return or(notExists(select));
     }
 
     @Override
@@ -296,12 +301,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl connectBy(String sql) {
-        return connectBy(create().condition(sql));
+        return connectBy(condition(sql));
     }
 
     @Override
     public final SelectImpl connectBy(String sql, Object... bindings) {
-        return connectBy(create().condition(sql, bindings));
+        return connectBy(condition(sql, bindings));
     }
 
     @Override
@@ -312,12 +317,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl connectByNoCycle(String sql) {
-        return connectByNoCycle(create().condition(sql));
+        return connectByNoCycle(condition(sql));
     }
 
     @Override
     public final SelectImpl connectByNoCycle(String sql, Object... bindings) {
-        return connectByNoCycle(create().condition(sql, bindings));
+        return connectByNoCycle(condition(sql, bindings));
     }
 
     @Override
@@ -328,12 +333,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl startWith(String sql) {
-        return startWith(create().condition(sql));
+        return startWith(condition(sql));
     }
 
     @Override
     public final SelectImpl startWith(String sql, Object... bindings) {
-        return startWith(create().condition(sql, bindings));
+        return startWith(condition(sql, bindings));
     }
 
     @Override
@@ -475,12 +480,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl having(String sql) {
-        return having(create().condition(sql));
+        return having(condition(sql));
     }
 
     @Override
     public final SelectImpl having(String sql, Object... bindings) {
-        return having(create().condition(sql, bindings));
+        return having(condition(sql, bindings));
     }
 
     @Override
@@ -496,12 +501,12 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl on(String sql) {
-        return on(create().condition(sql));
+        return on(condition(sql));
     }
 
     @Override
     public final SelectImpl on(String sql, Object... bindings) {
-        return on(create().condition(sql, bindings));
+        return on(condition(sql, bindings));
     }
 
     @Override
@@ -574,82 +579,82 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl join(String sql) {
-        return join(create().table(sql));
+        return join(table(sql));
     }
 
     @Override
     public final SelectImpl join(String sql, Object... bindings) {
-        return join(create().table(sql, bindings));
+        return join(table(sql, bindings));
     }
 
     @Override
     public final SelectImpl leftOuterJoin(String sql) {
-        return leftOuterJoin(create().table(sql));
+        return leftOuterJoin(table(sql));
     }
 
     @Override
     public final SelectImpl leftOuterJoin(String sql, Object... bindings) {
-        return leftOuterJoin(create().table(sql, bindings));
+        return leftOuterJoin(table(sql, bindings));
     }
 
     @Override
     public final SelectImpl rightOuterJoin(String sql) {
-        return rightOuterJoin(create().table(sql));
+        return rightOuterJoin(table(sql));
     }
 
     @Override
     public final SelectImpl rightOuterJoin(String sql, Object... bindings) {
-        return rightOuterJoin(create().table(sql, bindings));
+        return rightOuterJoin(table(sql, bindings));
     }
 
     @Override
     public final SelectOnStep fullOuterJoin(String sql) {
-        return fullOuterJoin(create().table(sql));
+        return fullOuterJoin(table(sql));
     }
 
     @Override
     public final SelectOnStep fullOuterJoin(String sql, Object... bindings) {
-        return fullOuterJoin(create().table(sql, bindings));
+        return fullOuterJoin(table(sql, bindings));
     }
 
     @Override
     public final SelectJoinStep crossJoin(String sql) {
-        return crossJoin(create().table(sql));
+        return crossJoin(table(sql));
     }
 
     @Override
     public final SelectJoinStep crossJoin(String sql, Object... bindings) {
-        return crossJoin(create().table(sql, bindings));
+        return crossJoin(table(sql, bindings));
     }
 
     @Override
     public final SelectImpl naturalJoin(String sql) {
-        return naturalJoin(create().table(sql));
+        return naturalJoin(table(sql));
     }
 
     @Override
     public final SelectImpl naturalJoin(String sql, Object... bindings) {
-        return naturalJoin(create().table(sql, bindings));
+        return naturalJoin(table(sql, bindings));
     }
 
     @Override
     public final SelectImpl naturalLeftOuterJoin(String sql) {
-        return naturalLeftOuterJoin(create().table(sql));
+        return naturalLeftOuterJoin(table(sql));
     }
 
     @Override
     public final SelectImpl naturalLeftOuterJoin(String sql, Object... bindings) {
-        return naturalLeftOuterJoin(create().table(sql, bindings));
+        return naturalLeftOuterJoin(table(sql, bindings));
     }
 
     @Override
     public final SelectImpl naturalRightOuterJoin(String sql) {
-        return naturalRightOuterJoin(create().table(sql));
+        return naturalRightOuterJoin(table(sql));
     }
 
     @Override
     public final SelectImpl naturalRightOuterJoin(String sql, Object... bindings) {
-        return naturalRightOuterJoin(create().table(sql, bindings));
+        return naturalRightOuterJoin(table(sql, bindings));
     }
 
     /**

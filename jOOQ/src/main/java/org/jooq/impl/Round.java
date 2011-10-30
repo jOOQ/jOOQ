@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.val;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -72,16 +75,16 @@ class Round<T> extends AbstractFunction<T> {
             // evaluate "round" if unavailable
             case DERBY: {
                 if (decimals == 0) {
-                    return create(configuration).decode()
+                    return Factory.decode()
                         .when(argument.sub((Field<? extends Number>) argument.floor())
                         .lessThan((T) Double.valueOf(0.5)), argument.floor())
                         .otherwise(argument.ceil());
                 }
                 else {
-                    Field<BigDecimal> factor = create(configuration).val(BigDecimal.ONE.movePointRight(decimals));
+                    Field<BigDecimal> factor = Factory.val(BigDecimal.ONE.movePointRight(decimals));
                     Field<T> mul = argument.mul(factor);
 
-                    return create(configuration).decode()
+                    return Factory.decode()
                         .when(mul.sub((Field<? extends Number>) mul.floor())
                         .lessThan((T) Double.valueOf(0.5)), mul.floor().div(factor))
                         .otherwise(mul.ceil().div(factor));
@@ -93,26 +96,26 @@ class Round<T> extends AbstractFunction<T> {
             case INGRES:
             case SQLSERVER:
             case SYBASE: {
-                return new Function<T>("round", getDataType(), argument, val(decimals));
+                return function("round", getDataType(), argument, val(decimals));
             }
 
             // There's no function round(double precision, integer) in Postgres
             case POSTGRES: {
                 if (decimals == 0) {
-                    return new Function<T>("round", getDataType(), argument);
+                    return function("round", getDataType(), argument);
                 }
                 else {
-                    return new Function<T>("round", getDataType(), argument.cast(BigDecimal.class), val(decimals));
+                    return function("round", getDataType(), argument.cast(BigDecimal.class), val(decimals));
                 }
             }
 
             // This is the optimal implementation by most RDBMS
             default: {
                 if (decimals == 0) {
-                    return new Function<T>("round", getDataType(), argument);
+                    return function("round", getDataType(), argument);
                 }
                 else {
-                    return new Function<T>("round", getDataType(), argument, val(decimals));
+                    return function("round", getDataType(), argument, val(decimals));
                 }
             }
         }

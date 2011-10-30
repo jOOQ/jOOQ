@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.zero;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -112,11 +115,8 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                 case SQLSERVER:
                 case SYBASE: {
                     if (!inAnalyticClause) {
-                        Field<Integer> zero = create(context).zero();
-                        Field<Integer> one = create(context).one();
-
-                        Field<Integer> ifNull = nullsFirst ? zero : one;
-                        Field<Integer> ifNotNull = nullsFirst ? one : zero;
+                        Field<Integer> ifNull = nullsFirst ? zero() : one();
+                        Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
                         context.sql(field.nvl2(ifNotNull, ifNull));
                         context.sql(", ");

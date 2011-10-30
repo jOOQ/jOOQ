@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.ExpressionOperator.MODULO;
+import static org.jooq.impl.Factory.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -69,6 +70,6 @@ class Mod<T> extends AbstractFunction<T> {
                 return new Expression<T>(MODULO, arg1, arg2);
         }
 
-        return new Function<T>("mod", getDataType(), arg1, arg2);
+        return function("mod", getDataType(), arg1, arg2);
     }
 }

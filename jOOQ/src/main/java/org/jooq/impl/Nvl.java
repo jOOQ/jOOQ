@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -66,18 +68,18 @@ class Nvl<T> extends AbstractFunction<T> {
             case HSQLDB: // No break
             case INGRES: // No break
             case ORACLE:
-                return new Function<T>("nvl", getDataType(), getArguments());
+                return function("nvl", getDataType(), getArguments());
 
             case DERBY:  // No break
             case POSTGRES:
-                return new Function<T>("coalesce", getDataType(), getArguments());
+                return function("coalesce", getDataType(), getArguments());
 
             case MYSQL:  // No break
             case SQLITE: // No break
-                return new Function<T>("ifnull", getDataType(), getArguments());
+                return function("ifnull", getDataType(), getArguments());
 
             default:
-                return create(configuration).decode().when(arg1.isNotNull(), arg1).otherwise(arg2);
+                return Factory.decode().when(arg1.isNotNull(), arg1).otherwise(arg2);
         }
     }
 }

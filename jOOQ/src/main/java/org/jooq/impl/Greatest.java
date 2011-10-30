@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -77,13 +79,13 @@ class Greatest<T> extends AbstractFunction<T> {
                     Field<?>[] remaining = new Field<?>[getArguments().length - 2];
                     System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
 
-                    return create(configuration).decode()
+                    return Factory.decode()
                         .when(first.greaterThan(other),
                               first.greatest(remaining))
                         .otherwise(other.greatest(remaining));
                 }
                 else {
-                    return create(configuration).decode()
+                    return Factory.decode()
                         .when(first.greaterThan(other),
                               first)
                         .otherwise(other);
@@ -91,10 +93,10 @@ class Greatest<T> extends AbstractFunction<T> {
             }
 
             case SQLITE:
-                return new Function<T>("max", getDataType(), getArguments());
+                return function("max", getDataType(), getArguments());
 
             default:
-                return new Function<T>("greatest", getDataType(), getArguments());
+                return function("greatest", getDataType(), getArguments());
         }
     }
 }

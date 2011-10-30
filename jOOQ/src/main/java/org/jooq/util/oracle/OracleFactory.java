@@ -87,14 +87,14 @@ public class OracleFactory extends Factory {
     /**
      * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field
      */
-    public final Field<Integer> rownum() {
+    public static Field<Integer> rownum() {
         return field("rownum", Integer.class);
     }
 
     /**
      * Retrieve the Oracle-specific <code>ROWID</code> pseudo-field
      */
-    public final Field<String> rowid() {
+    public static Field<String> rowid() {
         return field("rowid", String.class);
     }
 
@@ -106,7 +106,7 @@ public class OracleFactory extends Factory {
      * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
      * along with <code>CONNECT BY</code> clauses)
      */
-    public final Field<Integer> level() {
+    public static Field<Integer> level() {
         return field("level", Integer.class);
     }
 
@@ -114,7 +114,7 @@ public class OracleFactory extends Factory {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
      * (to be used along with <code>CONNECT BY</code> clauses)
      */
-    public final Field<Boolean> connectByIsCycle() {
+    public static Field<Boolean> connectByIsCycle() {
         return field("connect_by_iscycle", Boolean.class);
     }
 
@@ -122,7 +122,7 @@ public class OracleFactory extends Factory {
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
      * (to be used along with <code>CONNECT BY</code> clauses)
      */
-    public final Field<Boolean> connectByIsLeaf() {
+    public static Field<Boolean> connectByIsLeaf() {
         return field("connect_by_isleaf", Boolean.class);
     }
 
@@ -131,7 +131,7 @@ public class OracleFactory extends Factory {
      * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
      * along with <code>CONNECT BY</code> clauses).
      */
-    public final Field<String> sysConnectByPath(Field<?> field, String separator) {
+    public static Field<String> sysConnectByPath(Field<?> field, String separator) {
         String escaped = "'" + separator.replace("'", "''") + "'";
         return function("sys_connect_by_path", String.class, field, literal(escaped));
     }
@@ -140,7 +140,7 @@ public class OracleFactory extends Factory {
      * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
      * (to be used along with <code>CONNECT BY</code> clauses)
      */
-    public final <T> Field<T> prior(Field<T> field) {
+    public static <T> Field<T> prior(Field<T> field) {
         return new Prior<T>(field);
     }
 

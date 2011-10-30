@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.one;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -68,14 +72,14 @@ class Euler extends AbstractFunction<BigDecimal> {
             case POSTGRES:
             case SQLSERVER:
             case SYBASE:
-                return create(configuration).one().exp();
+                return one().exp();
 
             case SQLITE:
-                return create(configuration).literal(Math.E, BigDecimal.class);
+                return literal(Math.E, BigDecimal.class);
 
             // The Euler number doesn't seem to exist in any dialect...
             default:
-                return new Function<BigDecimal>("e", getDataType());
+                return function("e", getDataType());
         }
     }
 }

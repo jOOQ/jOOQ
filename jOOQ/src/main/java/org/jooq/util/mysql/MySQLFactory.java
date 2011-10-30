@@ -85,7 +85,7 @@ public class MySQLFactory extends Factory {
      * <p>
      * Don't mix this up with the various {@link Factory#decode()} methods!
      */
-    public final Field<String> decode(String cryptString, String keyString) {
+    public static Field<String> decode(String cryptString, String keyString) {
         return decode(val(cryptString), val(keyString));
     }
 
@@ -94,203 +94,203 @@ public class MySQLFactory extends Factory {
      * <p>
      * Don't mix this up with the various {@link Factory#decode()} methods!
      */
-    public final Field<String> decode(Field<String> cryptString, Field<String> keyString) {
+    public static Field<String> decode(Field<String> cryptString, Field<String> keyString) {
         return function("decode", String.class, cryptString, keyString);
     }
 
     /**
      * Get the MySQL-specific <code>ENCODE()</code> function
      */
-    public final Field<String> encode(String string, String keyString) {
+    public static Field<String> encode(String string, String keyString) {
         return encode(val(string), val(keyString));
     }
 
     /**
      * Get the MySQL-specific <code>ENCODE()</code> function
      */
-    public final Field<String> encode(Field<String> string, Field<String> keyString) {
+    public static Field<String> encode(Field<String> string, Field<String> keyString) {
         return function("encode", String.class, string, keyString);
     }
 
     /**
      * Get the MySQL-specific <code>AES_DECRYPT()</code> function
      */
-    public final Field<String> aesDecrypt(String cryptString, String keyString) {
+    public static Field<String> aesDecrypt(String cryptString, String keyString) {
         return aesDecrypt(val(cryptString), val(keyString));
     }
 
     /**
      * Get the MySQL-specific <code>AES_DECRYPT()</code> function
      */
-    public final Field<String> aesDecrypt(Field<String> cryptString, Field<String> keyString) {
+    public static Field<String> aesDecrypt(Field<String> cryptString, Field<String> keyString) {
         return function("aes_decrypt", String.class, cryptString, keyString);
     }
 
     /**
      * Get the MySQL-specific <code>AES_ENCRYPT()</code> function
      */
-    public final Field<String> aesEncrypt(String string, String keyString) {
+    public static Field<String> aesEncrypt(String string, String keyString) {
         return aesEncrypt(val(string), val(keyString));
     }
 
     /**
      * Get the MySQL-specific <code>AES_ENCRYPT()</code> function
      */
-    public final Field<String> aesEncrypt(Field<String> string, Field<String> keyString) {
+    public static Field<String> aesEncrypt(Field<String> string, Field<String> keyString) {
         return function("aes_encrypt", String.class, string, keyString);
     }
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function
      */
-    public final Field<String> desDecrypt(String cryptString) {
+    public static Field<String> desDecrypt(String cryptString) {
         return desDecrypt(val(cryptString));
     }
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function
      */
-    public final Field<String> desDecrypt(Field<String> cryptString) {
+    public static Field<String> desDecrypt(Field<String> cryptString) {
         return function("des_decrypt", String.class, cryptString);
     }
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function
      */
-    public final Field<String> desDecrypt(String cryptString, String keyString) {
+    public static Field<String> desDecrypt(String cryptString, String keyString) {
         return desDecrypt(val(cryptString), val(keyString));
     }
 
     /**
      * Get the MySQL-specific <code>DES_DECRYPT()</code> function
      */
-    public final Field<String> desDecrypt(Field<String> cryptString, Field<String> keyString) {
+    public static Field<String> desDecrypt(Field<String> cryptString, Field<String> keyString) {
         return function("des_decrypt", String.class, cryptString, keyString);
     }
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
      */
-    public final Field<String> desEncrypt(String string) {
+    public static Field<String> desEncrypt(String string) {
         return desEncrypt(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
      */
-    public final Field<String> desEncrypt(Field<String> string) {
+    public static Field<String> desEncrypt(Field<String> string) {
         return function("des_encrypt", String.class, string);
     }
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
      */
-    public final Field<String> desEncrypt(String string, String keyString) {
+    public static Field<String> desEncrypt(String string, String keyString) {
         return desEncrypt(val(string), val(keyString));
     }
 
     /**
      * Get the MySQL-specific <code>DES_ENCRYPT()</code> function
      */
-    public final Field<String> desEncrypt(Field<String> string, Field<String> keyString) {
+    public static Field<String> desEncrypt(Field<String> string, Field<String> keyString) {
         return function("des_encrypt", String.class, string, keyString);
     }
 
     /**
      * Get the MySQL-specific <code>COMPRESS()</code> function
      */
-    public final Field<String> compress(String string) {
+    public static Field<String> compress(String string) {
         return compress(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>COMPRESS()</code> function
      */
-    public final Field<String> compress(Field<String> string) {
+    public static Field<String> compress(Field<String> string) {
         return function("compress", String.class, string);
     }
 
     /**
      * Get the MySQL-specific <code>UNCOMPRESS()</code> function
      */
-    public final Field<String> uncompress(String string) {
+    public static Field<String> uncompress(String string) {
         return uncompress(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>UNCOMPRESS()</code> function
      */
-    public final Field<String> uncompress(Field<String> string) {
+    public static Field<String> uncompress(Field<String> string) {
         return function("uncompress", String.class, string);
     }
 
     /**
      * Get the MySQL-specific <code>UNCOMPRESSED_LENGTH()</code> function
      */
-    public final Field<Integer> uncompressedLength(String string) {
+    public static Field<Integer> uncompressedLength(String string) {
         return uncompressedLength(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>UNCOMPRESSED_LENGTH()</code> function
      */
-    public final Field<Integer> uncompressedLength(Field<String> string) {
+    public static Field<Integer> uncompressedLength(Field<String> string) {
         return function("uncompressed_length", Integer.class, string);
     }
 
     /**
      * Get the MySQL-specific <code>MD5()</code> function
      */
-    public final Field<String> md5(String string) {
+    public static Field<String> md5(String string) {
         return md5(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>MD5()</code> function
      */
-    public final Field<String> md5(Field<String> string) {
+    public static Field<String> md5(Field<String> string) {
         return function("md5", String.class, string);
     }
 
     /**
      * Get the MySQL-specific <code>SHA1()</code> function
      */
-    public final Field<String> sha1(String string) {
+    public static Field<String> sha1(String string) {
         return sha1(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>SHA1()</code> function
      */
-    public final Field<String> sha1(Field<String> string) {
+    public static Field<String> sha1(Field<String> string) {
         return function("sha1", String.class, string);
     }
 
     /**
      * Get the MySQL-specific <code>SHA2()</code> function
      */
-    public final Field<String> sha2(String string, int hashLength) {
+    public static Field<String> sha2(String string, int hashLength) {
         return sha2(val(string), val(hashLength));
     }
 
     /**
      * Get the MySQL-specific <code>SHA2()</code> function
      */
-    public final Field<String> sha2(Field<String> string, Field<Integer> hashLength) {
+    public static Field<String> sha2(Field<String> string, Field<Integer> hashLength) {
         return function("sha2", String.class, string, hashLength);
     }
 
     /**
      * Get the MySQL-specific <code>PASSWORD()</code> function
      */
-    public final Field<String> password(String string) {
+    public static Field<String> password(String string) {
         return password(val(string));
     }
 
     /**
      * Get the MySQL-specific <code>PASSWORD()</code> function
      */
-    public final Field<String> password(Field<String> string) {
+    public static Field<String> password(Field<String> string) {
         return function("password", String.class, string);
     }
 }

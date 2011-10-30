@@ -35,6 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.two;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -59,13 +64,13 @@ class Pi extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case DB2:
             case ORACLE:
-                return create(configuration).one().asin().mul(create(configuration).two());
+                return one().asin().mul(two());
 
             case SQLITE:
-                return create(configuration).literal(Math.PI, BigDecimal.class);
+                return literal(Math.PI, BigDecimal.class);
 
             default:
-                return new Function<BigDecimal>("pi", getDataType());
+                return function("pi", getDataType());
         }
     }
 }

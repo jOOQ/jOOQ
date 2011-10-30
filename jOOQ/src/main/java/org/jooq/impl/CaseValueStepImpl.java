@@ -35,22 +35,21 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Field;
 
+/**
+ * @author Lukas Eder
+ */
 class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
-    private final Factory  factory;
     private final Field<V> value;
 
-    CaseValueStepImpl(Factory factory, Field<V> value) {
-        this.factory = factory;
+    CaseValueStepImpl(Field<V> value) {
         this.value = value;
-    }
-
-    private <Z> Field<Z> val(Z constant) {
-        return factory.val(constant);
     }
 
     @Override

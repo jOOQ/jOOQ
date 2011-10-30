@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.condition;
+import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.notExists;
+
 import java.util.Arrays;
 
 import org.jooq.Condition;
@@ -66,22 +70,22 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
     @Override
     public final Condition and(String sql) {
-        return and(create().condition(sql));
+        return and(condition(sql));
     }
 
     @Override
     public final Condition and(String sql, Object... bindings) {
-        return and(create().condition(sql, bindings));
+        return and(condition(sql, bindings));
     }
 
     @Override
     public final Condition or(String sql) {
-        return or(create().condition(sql));
+        return or(condition(sql));
     }
 
     @Override
     public final Condition or(String sql, Object... bindings) {
-        return or(create().condition(sql, bindings));
+        return or(condition(sql, bindings));
     }
 
     @Override
@@ -96,22 +100,22 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
 
     @Override
     public final Condition andExists(Select<?> select) {
-        return and(create().exists(select));
+        return and(exists(select));
     }
 
     @Override
     public final Condition andNotExists(Select<?> select) {
-        return and(create().notExists(select));
+        return and(notExists(select));
     }
 
     @Override
     public final Condition orExists(Select<?> select) {
-        return or(create().exists(select));
+        return or(exists(select));
     }
 
     @Override
     public final Condition orNotExists(Select<?> select) {
-        return or(create().notExists(select));
+        return or(notExists(select));
     }
 
     @Override

@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.two;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -67,15 +71,11 @@ class Cosh extends AbstractFunction<BigDecimal> {
             case MYSQL:
             case POSTGRES:
             case SQLSERVER:
-            case SYBASE: {
-                Field<Integer> one = create(configuration).one();
-                Field<Integer> two = create(configuration).two();
-
-                return argument.mul(two).exp().add(one).div(argument.exp().mul(two));
-            }
+            case SYBASE:
+                return argument.mul(two()).exp().add(one()).div(argument.exp().mul(two()));
 
             default:
-                return new Function<BigDecimal>("cosh", SQLDataType.NUMERIC, argument);
+                return function("cosh", SQLDataType.NUMERIC, argument);
         }
     }
 }

@@ -35,6 +35,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.condition;
+import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.notExists;
+import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.vals;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -117,12 +123,12 @@ implements
 
     @Override
     public final MergeOnConditionStep on(String sql) {
-        return on(create().condition(sql));
+        return on(condition(sql));
     }
 
     @Override
     public final MergeOnConditionStep on(String sql, Object... bindings) {
-        return on(create().condition(sql, bindings));
+        return on(condition(sql, bindings));
     }
 
     @Override
@@ -133,12 +139,12 @@ implements
 
     @Override
     public final MergeImpl<R> and(String sql) {
-        return and(create().condition(sql));
+        return and(condition(sql));
     }
 
     @Override
     public final MergeImpl<R> and(String sql, Object... bindings) {
-        return and(create().condition(sql, bindings));
+        return and(condition(sql, bindings));
     }
 
     @Override
@@ -148,12 +154,12 @@ implements
 
     @Override
     public final MergeImpl<R> andExists(Select<?> select) {
-        return and(create().exists(select));
+        return and(exists(select));
     }
 
     @Override
     public final MergeImpl<R> andNotExists(Select<?> select) {
-        return and(create().notExists(select));
+        return and(notExists(select));
     }
 
     @Override
@@ -164,12 +170,12 @@ implements
 
     @Override
     public final MergeImpl<R> or(String sql) {
-        return or(create().condition(sql));
+        return or(condition(sql));
     }
 
     @Override
     public final MergeImpl<R> or(String sql, Object... bindings) {
-        return or(create().condition(sql, bindings));
+        return or(condition(sql, bindings));
     }
 
     @Override
@@ -179,12 +185,12 @@ implements
 
     @Override
     public final MergeImpl<R> orExists(Select<?> select) {
-        return or(create().exists(select));
+        return or(exists(select));
     }
 
     @Override
     public final MergeImpl<R> orNotExists(Select<?> select) {
-        return or(create().notExists(select));
+        return or(notExists(select));
     }
 
     @Override

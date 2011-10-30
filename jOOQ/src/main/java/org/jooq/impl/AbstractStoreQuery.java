@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -95,7 +97,7 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     @Override
     public final void addValue(Field<?> field, Field<?> value) {
         if (value == null) {
-            getValues().put(field, create().val(null, field));
+            getValues().put(field, val(null, field));
         }
         else {
             getValues().put(field, value);
@@ -105,7 +107,7 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     @Override
     public final <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, T... value) {
         if (value == null) {
-            getValues().put(field, create().val(null, field));
+            getValues().put(field, val(null, field));
         }
         else {
             addValueAsArray(field, Arrays.asList(value));
@@ -115,7 +117,7 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
     @Override
     public final <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, List<T> value) {
         if (value == null) {
-            getValues().put(field, create().val(null, field));
+            getValues().put(field, val(null, field));
         }
         else {
             try {

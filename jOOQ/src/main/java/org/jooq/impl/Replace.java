@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Configuration;
@@ -63,10 +65,10 @@ class Replace extends AbstractFunction<String> {
         switch (configuration.getDialect()) {
             case ASE: {
                 if (args.length == 2) {
-                    return new Function<String>("str_replace", VARCHAR, args[0], args[1], val(null));
+                    return function("str_replace", VARCHAR, args[0], args[1], val(null));
                 }
                 else {
-                    return new Function<String>("str_replace", VARCHAR, args);
+                    return function("str_replace", VARCHAR, args);
                 }
             }
 
@@ -79,15 +81,15 @@ class Replace extends AbstractFunction<String> {
             case SQLSERVER:
             case SYBASE: {
                 if (args.length == 2) {
-                    return new Function<String>("replace", VARCHAR, args[0], args[1], val(""));
+                    return function("replace", VARCHAR, args[0], args[1], val(""));
                 }
                 else {
-                    return new Function<String>("replace", VARCHAR, args);
+                    return function("replace", VARCHAR, args);
                 }
             }
 
             default: {
-                return new Function<String>("replace", VARCHAR, args);
+                return function("replace", VARCHAR, args);
             }
         }
     }

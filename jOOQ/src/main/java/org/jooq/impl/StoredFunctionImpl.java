@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -126,7 +128,7 @@ public class StoredFunctionImpl<T> extends AbstractStoredObject implements Store
             RenderContext local = create(attachable).renderContext();
             toSQLQualifiedName(local);
 
-            function = new Function<T>(local.render(), type, array);
+            function = function(local.render(), type, array);
         }
 
         return function;

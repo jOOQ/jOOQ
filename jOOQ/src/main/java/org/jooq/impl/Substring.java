@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -61,9 +64,10 @@ class Substring extends AbstractFunction<String> {
             case ASE:
             case SQLSERVER: {
                 if (getArguments().length == 2) {
-                    return new Function<String>(functionName, SQLDataType.VARCHAR, getArguments()[0],
+                    return function(functionName,
+                        SQLDataType.VARCHAR, getArguments()[0],
                         getArguments()[1],
-                        create(configuration).literal(Integer.MAX_VALUE));
+                        literal(Integer.MAX_VALUE));
                 }
 
                 // Default behaviour
@@ -80,6 +84,6 @@ class Substring extends AbstractFunction<String> {
                 break;
         }
 
-        return new Function<String>(functionName, SQLDataType.VARCHAR, getArguments());
+        return function(functionName, SQLDataType.VARCHAR, getArguments());
     }
 }

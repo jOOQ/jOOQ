@@ -38,6 +38,14 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.impl.Factory.condition;
+import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.decode;
+import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.test.Data.FIELD_DATE1;
 import static org.jooq.test.Data.FIELD_ID1;
 import static org.jooq.test.Data.FIELD_ID2;
@@ -206,12 +214,12 @@ public class jOOQTest {
             oneOf(statement).setInt(1, 4);
         }});
 
-        int f1 = b_ref().bind(create.val(1).as("c1")).peekIndex();
-        int f2 = b_decF().bind(create.val(2).as("c2")).peekIndex();
-        int f3 = b_decT().bind(create.val(2).as("c2")).peekIndex();
-        int t1 = b_ref().bind(create.select(create.val(3)).asTable("t1")).peekIndex();
-        int t2 = b_decF().bind(create.select(create.val(4)).asTable("t2")).peekIndex();
-        int t3 = b_decT().bind(create.select(create.val(4)).asTable("t2")).peekIndex();
+        int f1 = b_ref().bind(val(1).as("c1")).peekIndex();
+        int f2 = b_decF().bind(val(2).as("c2")).peekIndex();
+        int f3 = b_decT().bind(val(2).as("c2")).peekIndex();
+        int t1 = b_ref().bind(create.select(val(3)).asTable("t1")).peekIndex();
+        int t2 = b_decF().bind(create.select(val(4)).asTable("t2")).peekIndex();
+        int t3 = b_decT().bind(create.select(val(4)).asTable("t2")).peekIndex();
 
         assertEquals(1, f1);
         assertEquals(2, f2);
@@ -280,10 +288,10 @@ public class jOOQTest {
     @Test
     public final void testInCondition() throws Exception {
         Condition c = FIELD_ID1.in(new Integer[0]);
-        assertEquals(create.falseCondition(), c);
+        assertEquals(falseCondition(), c);
 
         c = FIELD_ID1.notIn(new Integer[0]);
-        assertEquals(create.trueCondition(), c);
+        assertEquals(trueCondition(), c);
 
         c = FIELD_ID1.in(1, 10);
         assertEquals("\"TABLE1\".\"ID1\" in (1, 10)", r_refI().render(c));
@@ -357,8 +365,8 @@ public class jOOQTest {
 
     @Test
     public final void testPlainSQLCondition() throws Exception {
-        Condition c1 = create.condition("TABLE1.ID = 10");
-        Condition c2 = create.condition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
+        Condition c1 = condition("TABLE1.ID = 10");
+        Condition c2 = condition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");
 
         assertEquals("(TABLE1.ID = 10)", r_refI().render(c1));
         assertEquals("(TABLE1.ID = 10)", r_ref().render(c1));
@@ -414,8 +422,8 @@ public class jOOQTest {
 
     @Test
     public final void testPlainSQLField() throws Exception {
-        Field<?> f1 = create.field("DECODE(TABLE1.ID, 1, 'a', 'b')");
-        Field<?> f2 = create.field("DECODE(TABLE1.ID, 1, ?, ?)", "a", "b");
+        Field<?> f1 = field("DECODE(TABLE1.ID, 1, 'a', 'b')");
+        Field<?> f2 = field("DECODE(TABLE1.ID, 1, ?, ?)", "a", "b");
 
         assertEquals("DECODE(TABLE1.ID, 1, 'a', 'b')", r_refI().render(f1));
         assertEquals("DECODE(TABLE1.ID, 1, 'a', 'b')", r_ref().render(f1));
@@ -486,7 +494,7 @@ public class jOOQTest {
 
     @Test
     public final void testCaseValueFunction() throws Exception {
-        Case decode = create.decode();
+        Case decode = decode();
         CaseValueStep<Integer> value = decode.value(FIELD_ID1);
         CaseWhenStep<Integer, String> c = value.when(1, "one");
 
@@ -525,7 +533,7 @@ public class jOOQTest {
 
     @Test
     public final void testCaseConditionFunction() throws Exception {
-        Case decode = create.decode();
+        Case decode = decode();
         CaseConditionStep<String> c = decode.when(FIELD_ID1.equal(1), "one");
 
         assertEquals("case when \"TABLE1\".\"ID1\" = 1 then 'one' end", r_refI().render(c));
@@ -563,7 +571,7 @@ public class jOOQTest {
 
     @Test
     public final void testNullFunction() throws Exception {
-        Field<?> f = create.val((Object) null);
+        Field<?> f = val((Object) null);
         assertEquals("null", r_refI().render(f));
         assertEquals("null", r_ref().render(f));
 
@@ -573,21 +581,21 @@ public class jOOQTest {
 
     @Test
     public final void testConstantFunction() throws Exception {
-        Field<Integer> f1 = create.val(Integer.valueOf(1));
+        Field<Integer> f1 = val(Integer.valueOf(1));
         assertEquals(Integer.class, f1.getType());
         assertEquals("1", r_refI().render(f1));
         assertEquals("?", r_ref().render(f1));
         assertEquals("1", r_decI().render(f1));
         assertEquals("?", r_dec().render(f1));
 
-        Field<String> f2 = create.val("test's");
+        Field<String> f2 = val("test's");
         assertEquals(String.class, f2.getType());
         assertEquals("'test''s'", r_refI().render(f2));
         assertEquals("?", r_ref().render(f2));
         assertEquals("'test''s'", r_decI().render(f2));
         assertEquals("?", r_dec().render(f2));
 
-        Field<Integer> f3 = create.val(Integer.valueOf(1)).as("value");
+        Field<Integer> f3 = val(Integer.valueOf(1)).as("value");
         assertEquals(Integer.class, f3.getType());
         assertEquals("\"value\"", r_refI().render(f3));
         assertEquals("\"value\"", r_ref().render(f3));
@@ -742,7 +750,7 @@ public class jOOQTest {
         assertEquals("((\"TABLE1\".\"ID1\" + 1 + 2) - 3)", r_refI().render(f));
         assertEquals("((\"TABLE1\".\"ID1\" + ? + ?) - ?)", r_ref().render(f));
 
-        f = FIELD_ID1.add(1).sub(create.val(2).add(3));
+        f = FIELD_ID1.add(1).sub(val(2).add(3));
         assertEquals("((\"TABLE1\".\"ID1\" + 1) - (2 + 3))", r_refI().render(f));
         assertEquals("((\"TABLE1\".\"ID1\" + ?) - (? + ?))", r_ref().render(f));
 
@@ -754,7 +762,7 @@ public class jOOQTest {
         assertEquals("((\"TABLE1\".\"ID1\" * 1 * 2) / 3)", r_refI().render(f));
         assertEquals("((\"TABLE1\".\"ID1\" * ? * ?) / ?)", r_ref().render(f));
 
-        f = FIELD_ID1.mul(1).div(create.val(2).mul(3));
+        f = FIELD_ID1.mul(1).div(val(2).mul(3));
         assertEquals("((\"TABLE1\".\"ID1\" * 1) / (2 * 3))", r_refI().render(f));
         assertEquals("((\"TABLE1\".\"ID1\" * ?) / (? * ?))", r_ref().render(f));
     }
@@ -825,7 +833,7 @@ public class jOOQTest {
         assertEquals("max(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(max2));
         assertEquals(1, b_ref().bind(max2).peekIndex());
 
-        Field<Integer> count1 = create.count();
+        Field<Integer> count1 = count();
         assertEquals(Integer.class, count1.getType());
         assertEquals("count(*)", r_refI().render(count1));
         assertEquals("count(*)", r_ref().render(count1));
@@ -833,7 +841,7 @@ public class jOOQTest {
         assertEquals("count(*)", r_dec().render(count1));
         assertEquals(1, b_ref().bind(count1).peekIndex());
 
-        Field<Integer> count1a = create.count().as("cnt");
+        Field<Integer> count1a = count().as("cnt");
         assertEquals(Integer.class, count1a.getType());
         assertEquals("\"cnt\"", r_refI().render(count1a));
         assertEquals("\"cnt\"", r_ref().render(count1a));
@@ -922,7 +930,7 @@ public class jOOQTest {
     public final void testInsertSelect1() throws Exception {
         InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
 
-        q.addValue(FIELD_ID1, create.val(10).round());
+        q.addValue(FIELD_ID1, val(10).round());
         q.addValue(FIELD_NAME1, create.select(FIELD_NAME1).from(TABLE1).where(FIELD_ID1.equal(1)).<String> asField());
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") values (round(10), (select \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = 1))", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") values (round(?), (select \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?))", r_ref().render(q));
@@ -945,7 +953,7 @@ public class jOOQTest {
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_ref().render(q));
 
-        q = create.insertInto(TABLE1, create.select(create.val(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")));
+        q = create.insertInto(TABLE1, create.select(val(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")));
 
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1, \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = 'abc'", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select ?, \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = ?", r_ref().render(q));
@@ -1128,10 +1136,10 @@ public class jOOQTest {
     public final void testDeleteQuery2() throws Exception {
         DeleteQuery<Table1Record> q = create.deleteQuery(TABLE1);
 
-        q.addConditions(create.falseCondition());
+        q.addConditions(falseCondition());
         assertEquals("delete from \"TABLE1\" where 1 = 0", r_refI().render(q));
         assertEquals("delete from \"TABLE1\" where 1 = 0", r_ref().render(q));
-        assertEquals(q, create.delete(TABLE1).where(create.falseCondition()));
+        assertEquals(q, create.delete(TABLE1).where(falseCondition()));
     }
 
     @Test
@@ -1197,21 +1205,21 @@ public class jOOQTest {
     public final void testConditionalSelectQuery2() throws Exception {
         SelectQuery q = create.selectQuery();
 
-        q.addConditions(create.falseCondition());
+        q.addConditions(falseCondition());
         assertEquals("select 1 from dual where 1 = 0", r_refI().render(q));
         assertEquals("select 1 from dual where 1 = 0", r_ref().render(q));
-        assertEquals(q, create.select().where(create.falseCondition()));
+        assertEquals(q, create.select().where(falseCondition()));
     }
 
     @Test
     public final void testConditionalSelectQuery3() throws Exception {
         SelectQuery q = create.selectQuery();
 
-        q.addConditions(create.falseCondition());
-        q.addConditions(create.trueCondition());
+        q.addConditions(falseCondition());
+        q.addConditions(trueCondition());
         assertEquals("select 1 from dual where (1 = 0 and 1 = 1)", r_refI().render(q));
         assertEquals("select 1 from dual where (1 = 0 and 1 = 1)", r_ref().render(q));
-        assertEquals(q, create.select().where(create.falseCondition().and(create.trueCondition())));
+        assertEquals(q, create.select().where(falseCondition().and(trueCondition())));
     }
 
     @Test
@@ -1243,8 +1251,8 @@ public class jOOQTest {
     @Test
     public final void testConditionalSelectQuery5() throws Exception {
         SelectQuery q = create.selectQuery();
-        Condition c1 = create.condition("\"TABLE1\".\"ID1\" = ?", "10");
-        Condition c2 = create.condition("\"TABLE2\".\"ID2\" = 20 or \"TABLE2\".\"ID2\" = ?", 30);
+        Condition c1 = condition("\"TABLE1\".\"ID1\" = ?", "10");
+        Condition c2 = condition("\"TABLE2\".\"ID2\" = 20 or \"TABLE2\".\"ID2\" = ?", 30);
 
         q.addConditions(c1);
         q.addConditions(c2);
@@ -1672,7 +1680,7 @@ public class jOOQTest {
         q2.addFrom(TABLE2);
 
         q2.addSelect(FIELD_ID2);
-        q1.addConditions(create.exists(q2));
+        q1.addConditions(exists(q2));
 
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where exists (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_refI().render(q1));
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" where exists (select \"TABLE2\".\"ID2\" from \"TABLE2\")", r_ref().render(q1));

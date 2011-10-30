@@ -37,8 +37,22 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.tables.VBook.V_BOOK;
+import static org.jooq.util.mysql.MySQLFactory.aesDecrypt;
+import static org.jooq.util.mysql.MySQLFactory.aesEncrypt;
+import static org.jooq.util.mysql.MySQLFactory.compress;
+import static org.jooq.util.mysql.MySQLFactory.decode;
+import static org.jooq.util.mysql.MySQLFactory.desDecrypt;
+import static org.jooq.util.mysql.MySQLFactory.desEncrypt;
+import static org.jooq.util.mysql.MySQLFactory.encode;
+import static org.jooq.util.mysql.MySQLFactory.md5;
+import static org.jooq.util.mysql.MySQLFactory.password;
+import static org.jooq.util.mysql.MySQLFactory.sha1;
+import static org.jooq.util.mysql.MySQLFactory.sha2;
+import static org.jooq.util.mysql.MySQLFactory.uncompress;
+import static org.jooq.util.mysql.MySQLFactory.uncompressedLength;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
@@ -570,15 +584,15 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
     public void testMySQLEncryptionFunctions() throws Exception {
         MySQLFactory create = (MySQLFactory) create();
 
-        assertNotNull(create.select(create.password("abc")).fetchOne(0));
-        assertNotNull(create.select(create.md5("abc")).fetchOne(0));
-        assertNotNull(create.select(create.sha1("abc")).fetchOne(0));
-        assertNotNull(create.select(create.sha2("abc", 256)).fetchOne(0));
-        assertEquals("abc", create.select(create.decode(create.encode("abc", "pw"), val("pw"))).fetchOne(0));
-        assertEquals("abc", create.select(create.aesDecrypt(create.aesEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
-        assertEquals("abc", create.select(create.desDecrypt(create.desEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
-        assertEquals("abc", create.select(create.desDecrypt(create.desEncrypt("abc"))).fetchOne(0));
-        assertEquals("abc", create.select(create.uncompress(create.compress("abc"))).fetchOne(0));
-        assertEquals(3, create.select(create.uncompressedLength(create.compress("abc"))).fetchOne(0));
+        assertNotNull(create.select(password("abc")).fetchOne(0));
+        assertNotNull(create.select(md5("abc")).fetchOne(0));
+        assertNotNull(create.select(sha1("abc")).fetchOne(0));
+        assertNotNull(create.select(sha2("abc", 256)).fetchOne(0));
+        assertEquals("abc", create.select(decode(encode("abc", "pw"), val("pw"))).fetchOne(0));
+        assertEquals("abc", create.select(aesDecrypt(aesEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
+        assertEquals("abc", create.select(desDecrypt(desEncrypt("abc", "pw"), val("pw"))).fetchOne(0));
+        assertEquals("abc", create.select(desDecrypt(desEncrypt("abc"))).fetchOne(0));
+        assertEquals("abc", create.select(uncompress(compress("abc"))).fetchOne(0));
+        assertEquals(3, create.select(uncompressedLength(compress("abc"))).fetchOne(0));
     }
 }

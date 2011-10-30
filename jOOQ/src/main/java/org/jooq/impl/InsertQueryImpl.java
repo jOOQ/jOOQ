@@ -36,6 +36,9 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+import static org.jooq.util.sqlite.SQLiteFactory.rowid;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -369,12 +372,10 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                     result = statement.executeUpdate();
 
                     SQLiteFactory create = new SQLiteFactory(configuration.getConnection());
-                    Field<Long> rowid = create.rowid();
-
                     for (Record untyped : create
                             .select(returning)
                             .from(getInto())
-                            .where(rowid.equal(rowid.getDataType().convert(create.lastID())))
+                            .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
                             .fetch()) {
 
                         R typed = JooqUtil.newRecord(getInto(), configuration);

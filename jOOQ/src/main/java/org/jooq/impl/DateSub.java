@@ -35,6 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.val;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -62,39 +67,34 @@ class DateSub<T> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        Factory create = create(configuration);
-
         switch (configuration.getDialect()) {
             case ASE:
-                return new Function<T>("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
+                return function("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
 
             case DB2:
             case HSQLDB:
-                return field.sub(create.field("? day", BigDecimal.class, value));
+                return field.sub(field("? day", BigDecimal.class, value));
 
             case DERBY:
                 return new FnPrefixFunction<T>("timestampadd", getDataType(),
-                    create.field("SQL_TSI_DAY"),
-                    create.val(-value.intValue()),
+                    field("SQL_TSI_DAY"),
+                    val(-value.intValue()),
                     field);
 
             case INGRES:
-                return field.sub(create.field("date('" + value + " days')", BigDecimal.class));
+                return field.sub(field("date('" + value + " days')", BigDecimal.class));
 
             case MYSQL:
-                return new Function<T>("timestampadd", getDataType(),
-                    create.field("day"),
-                    create.val(-value.intValue()),
-                    field);
+                return function("timestampadd", getDataType(), field("day"), val(-value.intValue()), field);
 
             case POSTGRES:
-                return field.sub(create.field("interval '" + value + " days'", BigDecimal.class));
+                return field.sub(field("interval '" + value + " days'", BigDecimal.class));
 
             case SQLITE:
-                return new Function<T>("datetime", getDataType(), field, create.val("-" + value + " day"));
+                return function("datetime", getDataType(), field, val("-" + value + " day"));
 
             default:
-                return field.sub(create.val(value));
+                return field.sub(val(value));
         }
     }
 }

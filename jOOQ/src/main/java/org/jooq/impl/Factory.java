@@ -1029,6 +1029,26 @@ public class Factory implements Configuration {
     }
 
     /**
+     * Create a new DSL select statement for <code>COUNT(*)</code>
+     * <p>
+     * Example: <code><pre>
+     * Factory create = new Factory();
+     *
+     * create.selectCount()
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2)
+     *       .execute();
+     * </pre></code>
+     *
+     * @see #one()
+     */
+    public final SelectSelectStep selectCount() {
+        return new SelectImpl(this).select(count());
+    }
+
+    /**
      * Create a new DSL select statement.
      * <p>
      * Example: <code><pre>

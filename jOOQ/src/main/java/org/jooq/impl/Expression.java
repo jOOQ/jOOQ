@@ -35,17 +35,41 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.ExpressionOperator.BIT_AND;
+import static org.jooq.impl.ExpressionOperator.BIT_NAND;
+import static org.jooq.impl.ExpressionOperator.BIT_NOR;
+import static org.jooq.impl.ExpressionOperator.BIT_OR;
+import static org.jooq.impl.ExpressionOperator.BIT_XNOR;
+import static org.jooq.impl.ExpressionOperator.BIT_XOR;
+import static org.jooq.impl.ExpressionOperator.SHL;
+import static org.jooq.impl.ExpressionOperator.SHR;
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
-class Expression<T> extends AbstractField<T> {
+class Expression<T> extends AbstractFunction<T> {
 
     /**
      * Generated UID
@@ -56,17 +80,12 @@ class Expression<T> extends AbstractField<T> {
     private final ExpressionOperator operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
-        super(operator.toSQL(), lhs.getDataType());
+        super(operator.toSQL(), lhs.getDataType(), JooqUtil.combine(lhs, rhs));
 
         this.operator = operator;
         this.lhs = lhs;
         this.rhs = new FieldList();
         this.rhs.addAll(Arrays.asList(rhs));
-    }
-
-    @Override
-    public final List<Attachable> getAttachables() {
-        return getAttachables(lhs, rhs);
     }
 
     @Override
@@ -90,27 +109,117 @@ class Expression<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.sql("(");
-        context.sql(lhs);
+    final Field<T> getFunction0(Configuration configuration) {
+        SQLDialect dialect = configuration.getDialect();
 
-        for (Field<?> field : rhs) {
-            context.sql(" ")
-                   .sql(operator.toSQL())
-                   .sql(" ")
-                   .sql(field);
+        // DB2, H2 and HSQLDB know functions, instead of operators
+        if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(dialect)) {
+            return function("bitand", getDataType(), getArguments());
+        }
+        else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB).contains(dialect)) {
+            return function("bitxor", getDataType(), getArguments());
+        }
+        else if (BIT_OR == operator && asList(DB2, H2, HSQLDB).contains(dialect)) {
+            return function("bitor", getDataType(), getArguments());
         }
 
-        context.sql(")");
+        // Oracle has to simulate or/xor
+        else if (BIT_OR == operator && ORACLE == dialect) {
+            return lhs.sub(lhsAsNumber().bitAnd(rhsAsNumber())).add(rhsAsNumber());
+        }
+
+        // ~(a & b) & (a | b)
+        else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(dialect)) {
+            return lhs.bitAnd(rhsAsNumber()).bitNot().bitAnd(
+                   lhsAsNumber().bitOr(rhsAsNumber()));
+        }
+
+        // Many dialects don't support shifts. Use multiplication/division instead
+        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
+            return lhs.mul(literal(2).power(rhsAsNumber()));
+        }
+        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
+            return lhs.div(literal(2).power(rhsAsNumber()));
+        }
+
+        // These operators are not supported in any dialect
+        else if (BIT_NAND == operator) {
+            return lhs.bitAnd(rhsAsNumber()).bitNot();
+        }
+        else if (BIT_NOR == operator) {
+            return lhs.bitOr(rhsAsNumber()).bitNot();
+        }
+        else if (BIT_XNOR == operator) {
+            return lhs.bitXor(rhsAsNumber()).bitNot();
+        }
+
+        // Use the default operator expression
+        else {
+            return new DefaultExpression();
+        }
     }
 
-    @Override
-    public final void bind(BindContext context) throws SQLException {
-        context.bind(lhs).bind((QueryPart) rhs);
+    /**
+     * In some expressions, the lhs can be safely assumed to be a single number
+     */
+    @SuppressWarnings("unchecked")
+    private final Field<? extends Number> lhsAsNumber() {
+        return (Field<? extends Number>) lhs;
     }
 
-    @Override
-    public final boolean isNullLiteral() {
-        return false;
+    /**
+     * In some expressions, the rhs can be safely assumed to be a single number
+     */
+    @SuppressWarnings("unchecked")
+    private final Field<? extends Number> rhsAsNumber() {
+        return (Field<? extends Number>) rhs.get(0);
+    }
+
+    private class DefaultExpression extends AbstractField<T> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -5105004317793995419L;
+
+        private DefaultExpression() {
+            super(operator.toSQL(), lhs.getDataType());
+        }
+
+        @Override
+        public final List<Attachable> getAttachables() {
+            return Expression.this.getAttachables();
+        }
+
+        @Override
+        public final void toSQL(RenderContext context) {
+            String op = operator.toSQL();
+
+            if (operator == BIT_XOR && context.getDialect() == POSTGRES) {
+                op = "#";
+            }
+
+            context.sql("(");
+            context.sql(lhs);
+
+            for (Field<?> field : rhs) {
+                context.sql(" ")
+                       .sql(op)
+                       .sql(" ")
+                       .sql(field);
+            }
+
+            context.sql(")");
+        }
+
+        @Override
+        public final void bind(BindContext context) throws SQLException {
+            context.bind(lhs).bind((QueryPart) rhs);
+        }
+
+        @Override
+        public final boolean isNullLiteral() {
+            return false;
+        }
     }
 }

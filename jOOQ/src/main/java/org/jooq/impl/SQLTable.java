@@ -41,7 +41,6 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -55,26 +54,17 @@ class SQLTable extends AbstractTable<Record> {
 
     private final String         sql;
     private final Object[]       bindings;
-    private final AttachableImpl attachable;
 
-    public SQLTable(Configuration configuration, String sql, Object[] bindings) {
+    public SQLTable(String sql, Object[] bindings) {
         super("sql");
 
         this.sql = sql;
         this.bindings = (bindings == null) ? new Object[0] : bindings;
-        this.attachable = new AttachableImpl(this, configuration);
     }
 
     @Override
     public final List<Attachable> getAttachables0() {
         return Collections.emptyList();
-    }
-
-    @Override
-    public void attach(Configuration configuration) {
-        super.attach(configuration);
-
-        attachable.attach(configuration);
     }
 
     @SuppressWarnings("deprecation")

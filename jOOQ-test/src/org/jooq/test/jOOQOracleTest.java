@@ -37,8 +37,15 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.impl.Factory.one;
 import static org.jooq.test.oracle.generatedclasses.tables.VAuthor.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.tables.VBook.V_BOOK;
+import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
+import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
+import static org.jooq.util.oracle.OracleFactory.level;
+import static org.jooq.util.oracle.OracleFactory.prior;
+import static org.jooq.util.oracle.OracleFactory.rownum;
+import static org.jooq.util.oracle.OracleFactory.sysConnectByPath;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -609,43 +616,43 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         OracleFactory ora = new OracleFactory(create().getConnection(), create().getSchemaMapping());
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(ora.rownum())
-               .connectBy(ora.level().lessThan(10))
-               .fetch(ora.rownum()));
+            ora.select(rownum())
+               .connectBy(level().lessThan(10))
+               .fetch(rownum()));
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(ora.rownum())
-               .connectByNoCycle(ora.level().lessThan(10))
-               .fetch(ora.rownum()));
+            ora.select(rownum())
+               .connectByNoCycle(level().lessThan(10))
+               .fetch(rownum()));
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(ora.rownum())
-               .connectBy(ora.level().lessThan(10))
+            ora.select(rownum())
+               .connectBy(level().lessThan(10))
                .and("1 = ?", 1)
                .startWith("? = ?", 1, 1)
-               .fetch(ora.rownum()));
+               .fetch(rownum()));
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(ora.rownum())
-               .connectByNoCycle(ora.level().lessThan(10))
+            ora.select(rownum())
+               .connectByNoCycle(level().lessThan(10))
                .and("1 = ?", 1)
                .startWith("? = ?", 1, 1)
-               .fetch(ora.rownum()));
+               .fetch(rownum()));
 
         Result<Record> result =
-        ora.select(ora.rownum(), ora.connectByIsCycle(), ora.connectByIsLeaf())
-           .connectByNoCycle(ora.level().lessThan(4))
+        ora.select(rownum(), connectByIsCycle(), connectByIsLeaf())
+           .connectByNoCycle(level().lessThan(4))
            .fetch();
 
-        assertEquals(Integer.valueOf(1), result.getValue(0, ora.rownum()));
-        assertEquals(Integer.valueOf(2), result.getValue(1, ora.rownum()));
-        assertEquals(Integer.valueOf(3), result.getValue(2, ora.rownum()));
+        assertEquals(Integer.valueOf(1), result.getValue(0, rownum()));
+        assertEquals(Integer.valueOf(2), result.getValue(1, rownum()));
+        assertEquals(Integer.valueOf(3), result.getValue(2, rownum()));
 
-        assertEquals(Boolean.FALSE, result.getValue(0, ora.connectByIsLeaf()));
-        assertEquals(Boolean.FALSE, result.getValue(1, ora.connectByIsLeaf()));
-        assertEquals(Boolean.TRUE, result.getValue(2, ora.connectByIsLeaf()));
+        assertEquals(Boolean.FALSE, result.getValue(0, connectByIsLeaf()));
+        assertEquals(Boolean.FALSE, result.getValue(1, connectByIsLeaf()));
+        assertEquals(Boolean.TRUE, result.getValue(2, connectByIsLeaf()));
 
-        assertEquals(Boolean.FALSE, result.getValue(0, ora.connectByIsCycle()));
-        assertEquals(Boolean.FALSE, result.getValue(1, ora.connectByIsCycle()));
-        assertEquals(Boolean.FALSE, result.getValue(2, ora.connectByIsCycle()));
+        assertEquals(Boolean.FALSE, result.getValue(0, connectByIsCycle()));
+        assertEquals(Boolean.FALSE, result.getValue(1, connectByIsCycle()));
+        assertEquals(Boolean.FALSE, result.getValue(2, connectByIsCycle()));
     }
 
     @Test
@@ -653,11 +660,11 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         OracleFactory ora = new OracleFactory(create().getConnection(), create().getSchemaMapping());
 
         List<?> paths =
-        ora.select(ora.sysConnectByPath(TDirectory_NAME(), "/").substring(2))
+        ora.select(sysConnectByPath(TDirectory_NAME(), "/").substring(2))
            .from(TDirectory())
-           .connectBy(ora.prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
+           .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
            .startWith(TDirectory_PARENT_ID().isNull())
-           .orderBy(ora.literal(1))
+           .orderBy(one())
            .fetch(0);
 
         assertEquals(26, paths.size());

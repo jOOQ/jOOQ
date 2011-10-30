@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.zero;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -61,16 +65,13 @@ class Sign extends AbstractFunction<Integer> {
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case SQLITE:
-                Field<Integer> zero = create(configuration).zero();
-                Field<Integer> one = create(configuration).one();
-
-                return create(configuration).decode()
-                    .when(((Field<Integer>) argument).greaterThan(zero), one)
-                    .when(((Field<Integer>) argument).lessThan(zero), one.neg())
-                    .otherwise(zero);
+                return Factory.decode()
+                    .when(((Field<Integer>) argument).greaterThan(zero()), one())
+                    .when(((Field<Integer>) argument).lessThan(zero()), one().neg())
+                    .otherwise(zero());
 
             default:
-                return new Function<Integer>("sign", getDataType(), argument);
+                return function("sign", getDataType(), argument);
         }
     }
 }

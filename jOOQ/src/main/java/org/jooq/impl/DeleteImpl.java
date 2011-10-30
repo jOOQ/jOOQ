@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.condition;
+import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.notExists;
+
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -87,12 +91,12 @@ class DeleteImpl<R extends TableRecord<R>>
 
     @Override
     public final DeleteImpl<R> where(String sql) {
-        return where(create().condition(sql));
+        return where(condition(sql));
     }
 
     @Override
     public final DeleteImpl<R> where(String sql, Object... bindings) {
-        return where(create().condition(sql, bindings));
+        return where(condition(sql, bindings));
     }
 
     @Override
@@ -113,12 +117,12 @@ class DeleteImpl<R extends TableRecord<R>>
 
     @Override
     public final DeleteImpl<R> and(String sql) {
-        return and(create().condition(sql));
+        return and(condition(sql));
     }
 
     @Override
     public final DeleteImpl<R> and(String sql, Object... bindings) {
-        return and(create().condition(sql, bindings));
+        return and(condition(sql, bindings));
     }
 
     @Override
@@ -128,12 +132,12 @@ class DeleteImpl<R extends TableRecord<R>>
 
     @Override
     public final DeleteImpl<R> andExists(Select<?> select) {
-        return and(create().exists(select));
+        return and(exists(select));
     }
 
     @Override
     public final DeleteImpl<R> andNotExists(Select<?> select) {
-        return and(create().notExists(select));
+        return and(notExists(select));
     }
 
     @Override
@@ -144,12 +148,12 @@ class DeleteImpl<R extends TableRecord<R>>
 
     @Override
     public final DeleteImpl<R> or(String sql) {
-        return or(create().condition(sql));
+        return or(condition(sql));
     }
 
     @Override
     public final DeleteImpl<R> or(String sql, Object... bindings) {
-        return or(create().condition(sql, bindings));
+        return or(condition(sql, bindings));
     }
 
     @Override
@@ -159,11 +163,11 @@ class DeleteImpl<R extends TableRecord<R>>
 
     @Override
     public final DeleteImpl<R> orExists(Select<?> select) {
-        return or(create().exists(select));
+        return or(exists(select));
     }
 
     @Override
     public final DeleteImpl<R> orNotExists(Select<?> select) {
-        return or(create().notExists(select));
+        return or(notExists(select));
     }
 }

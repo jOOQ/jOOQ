@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -67,18 +69,18 @@ class Position extends AbstractFunction<Integer> {
         switch (configuration.getDialect()) {
             case DB2:    // No break
             case DERBY:
-                return new Function<Integer>("locate", SQLDataType.INTEGER, search, in);
+                return function("locate", SQLDataType.INTEGER, search, in);
 
             case INGRES: // No break
             case SYBASE:
-                return new Function<Integer>("locate", SQLDataType.INTEGER, in, search);
+                return function("locate", SQLDataType.INTEGER, in, search);
 
             case ORACLE:
-                return new Function<Integer>("instr", SQLDataType.INTEGER, in, search);
+                return function("instr", SQLDataType.INTEGER, in, search);
 
             case ASE:
             case SQLSERVER:
-                return new Function<Integer>("charindex", SQLDataType.INTEGER, search, in);
+                return function("charindex", SQLDataType.INTEGER, search, in);
 
             default:
                 return new SQLPosition();

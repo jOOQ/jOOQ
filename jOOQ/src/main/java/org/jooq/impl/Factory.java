@@ -319,7 +319,7 @@ public class Factory implements Configuration {
      *
      * @see #unnest(List)
      */
-    public final Table<?> table(List<?> list) {
+    public static Table<?> table(List<?> list) {
         return table(list.toArray());
     }
 
@@ -328,7 +328,7 @@ public class Factory implements Configuration {
      *
      * @see #unnest(Object[])
      */
-    public final Table<?> table(Object[] array) {
+    public static Table<?> table(Object[] array) {
         return table(val(array));
     }
 
@@ -337,7 +337,7 @@ public class Factory implements Configuration {
      *
      * @see #unnest(ArrayRecord)
      */
-    public final Table<?> table(ArrayRecord<?> array) {
+    public static Table<?> table(ArrayRecord<?> array) {
         return table(val(array));
     }
 
@@ -346,7 +346,7 @@ public class Factory implements Configuration {
      *
      * @see #unnest(Field)
      */
-    public final Table<?> table(Field<?> cursor) {
+    public static Table<?> table(Field<?> cursor) {
         return unnest(cursor);
     }
 
@@ -359,7 +359,7 @@ public class Factory implements Configuration {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      */
-    public final Table<?> unnest(List<?> list) {
+    public static Table<?> unnest(List<?> list) {
         return table(list.toArray());
     }
 
@@ -372,7 +372,7 @@ public class Factory implements Configuration {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      */
-    public final Table<?> unnest(Object[] array) {
+    public static Table<?> unnest(Object[] array) {
         return table(val(array));
     }
 
@@ -382,7 +382,7 @@ public class Factory implements Configuration {
      * This wraps the argument array in a <code>TABLE</code> function for
      * Oracle. Currently, only Oracle knows typed arrays
      */
-    public final Table<?> unnest(ArrayRecord<?> array) {
+    public static Table<?> unnest(ArrayRecord<?> array) {
         return table(val(array));
     }
 
@@ -403,7 +403,7 @@ public class Factory implements Configuration {
      * involved with stored functions can only be of type <code>Object[]</code>.
      * Such arrays are converted into <code>VARCHAR</code> arrays by jOOQ.
      */
-    public final Table<?> unnest(Field<?> cursor) {
+    public static Table<?> unnest(Field<?> cursor) {
         if (cursor == null) {
             throw new IllegalArgumentException();
         }
@@ -461,7 +461,7 @@ public class Factory implements Configuration {
      * @param sql The SQL
      * @return A table wrapping the plain SQL
      */
-    public final Table<Record> table(String sql) {
+    public static Table<Record> table(String sql) {
         return table(sql, new Object[0]);
     }
 
@@ -492,8 +492,8 @@ public class Factory implements Configuration {
      * @param sql The SQL
      * @return A table wrapping the plain SQL
      */
-    public final Table<Record> table(String sql, Object... bindings) {
-        return new SQLTable(this, sql, bindings);
+    public static Table<Record> table(String sql, Object... bindings) {
+        return new SQLTable(sql, bindings);
     }
 
     /**
@@ -516,7 +516,7 @@ public class Factory implements Configuration {
      * @param sql The SQL
      * @return A field wrapping the plain SQL
      */
-    public final Field<?> field(String sql) {
+    public static Field<?> field(String sql) {
         return field(sql, new Object[0]);
     }
 
@@ -541,7 +541,7 @@ public class Factory implements Configuration {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
-    public final Field<?> field(String sql, Object... bindings) {
+    public static Field<?> field(String sql, Object... bindings) {
         return field(sql, Object.class, bindings);
     }
 
@@ -566,7 +566,7 @@ public class Factory implements Configuration {
      * @param type The field type
      * @return A field wrapping the plain SQL
      */
-    public final <T> Field<T> field(String sql, Class<T> type) {
+    public static <T> Field<T> field(String sql, Class<T> type) {
         return field(sql, type, new Object[0]);
     }
 
@@ -592,7 +592,7 @@ public class Factory implements Configuration {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
-    public final <T> Field<T> field(String sql, Class<T> type, Object... bindings) {
+    public static <T> Field<T> field(String sql, Class<T> type, Object... bindings) {
         return field(sql, getDataType(type), bindings);
     }
 
@@ -617,7 +617,7 @@ public class Factory implements Configuration {
      * @param type The field type
      * @return A field wrapping the plain SQL
      */
-    public final <T> Field<T> field(String sql, DataType<T> type) {
+    public static <T> Field<T> field(String sql, DataType<T> type) {
         return field(sql, type, new Object[0]);
     }
 
@@ -643,7 +643,7 @@ public class Factory implements Configuration {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
-    public final <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
+    public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
         return new SQLField<T>(sql, type, bindings);
     }
 
@@ -656,7 +656,7 @@ public class Factory implements Configuration {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
-    public final <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
+    public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
         return function(name, getDataType(type), arguments);
     }
 
@@ -669,7 +669,7 @@ public class Factory implements Configuration {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
-    public final <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
+    public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
         return new Function<T>(name, type, arguments);
     }
 
@@ -690,7 +690,7 @@ public class Factory implements Configuration {
      * @param sql The SQL
      * @return A condition wrapping the plain SQL
      */
-    public final Condition condition(String sql) {
+    public static Condition condition(String sql) {
         return condition(sql, new Object[0]);
     }
 
@@ -713,7 +713,7 @@ public class Factory implements Configuration {
      * @param bindings The bindings
      * @return A condition wrapping the plain SQL
      */
-    public final Condition condition(String sql, Object... bindings) {
+    public static Condition condition(String sql, Object... bindings) {
         return new SQLCondition(sql, bindings);
     }
 
@@ -926,14 +926,14 @@ public class Factory implements Configuration {
     /**
      * Return a <code>Condition</code> that will always evaluate to true
      */
-    public final Condition trueCondition() {
+    public static Condition trueCondition() {
         return new TrueCondition();
     }
 
     /**
      * Return a <code>Condition</code> that will always evaluate to false
      */
-    public final Condition falseCondition() {
+    public static Condition falseCondition() {
         return new FalseCondition();
     }
 
@@ -942,7 +942,7 @@ public class Factory implements Configuration {
      * <p>
      * <code>EXISTS ([query])</code>
      */
-    public final Condition exists(Select<?> query) {
+    public static Condition exists(Select<?> query) {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.EXISTS);
     }
 
@@ -951,7 +951,7 @@ public class Factory implements Configuration {
      * <p>
      * <code>NOT EXISTS ([query])</code>
      */
-    public final Condition notExists(Select<?> query) {
+    public static Condition notExists(Select<?> query) {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.NOT_EXISTS);
     }
 
@@ -1599,8 +1599,8 @@ public class Factory implements Configuration {
      *
      * @see Case
      */
-    public final Case decode() {
-        return new CaseImpl(this);
+    public static Case decode() {
+        return new CaseImpl();
     }
 
     /**
@@ -1610,7 +1610,7 @@ public class Factory implements Configuration {
      *
      * @see Field#decode(Field, Field, Field[])
      */
-    public final <Z, T> Field<Z> decode(T value, T search, Z result) {
+    public static <Z, T> Field<Z> decode(T value, T search, Z result) {
         return val(value).decode(search, result);
     }
 
@@ -1621,7 +1621,7 @@ public class Factory implements Configuration {
      *
      * @see Field#decode(Field, Field, Field[])
      */
-    public final <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
+    public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
         return val(value).decode(search, result, more);
     }
 
@@ -1632,7 +1632,7 @@ public class Factory implements Configuration {
      *
      * @see Field#decode(Field, Field, Field[])
      */
-    public final <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
+    public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
         return value.decode(search, result);
     }
 
@@ -1643,7 +1643,7 @@ public class Factory implements Configuration {
      *
      * @see Field#decode(Field, Field, Field[])
      */
-    public final <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
+    public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
         return value.decode(search, result, more);
     }
 
@@ -1655,7 +1655,7 @@ public class Factory implements Configuration {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
-    public final <T> Field<T> cast(Object value, Field<T> as) {
+    public static <T> Field<T> cast(Object value, Field<T> as) {
         return val(value).cast(as);
     }
 
@@ -1666,7 +1666,7 @@ public class Factory implements Configuration {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
-    public final <T> Field<T> castNull(Field<T> as) {
+    public static <T> Field<T> castNull(Field<T> as) {
         return NULL().cast(as);
     }
 
@@ -1678,7 +1678,7 @@ public class Factory implements Configuration {
      * @param type The type that is used for the cast
      * @return The cast field
      */
-    public final <T> Field<T> cast(Object value, Class<? extends T> type) {
+    public static <T> Field<T> cast(Object value, Class<? extends T> type) {
         return val(value).cast(type);
     }
 
@@ -1689,7 +1689,7 @@ public class Factory implements Configuration {
      * @param type The type that is used for the cast
      * @return The cast field
      */
-    public final <T> Field<T> castNull(DataType<T> type) {
+    public static <T> Field<T> castNull(DataType<T> type) {
         return NULL().cast(type);
     }
 
@@ -1701,7 +1701,7 @@ public class Factory implements Configuration {
      * @param type The type that is used for the cast
      * @return The cast field
      */
-    public final <T> Field<T> cast(Object value, DataType<T> type) {
+    public static <T> Field<T> cast(Object value, DataType<T> type) {
         return val(value).cast(type);
     }
 
@@ -1712,7 +1712,7 @@ public class Factory implements Configuration {
      * @param type The type that is used for the cast
      * @return The cast field
      */
-    public final <T> Field<T> castNull(Class<? extends T> type) {
+    public static <T> Field<T> castNull(Class<? extends T> type) {
         return NULL().cast(type);
     }
 
@@ -1725,7 +1725,7 @@ public class Factory implements Configuration {
      * @return The cast fields
      */
     @SuppressWarnings("unchecked")
-    final <T> Field<T>[] castAll(Class<? extends T> type, Field<?>... fields) {
+    static <T> Field<T>[] castAll(Class<? extends T> type, Field<?>... fields) {
         Field<?>[] castFields = new Field<?>[fields.length];
 
         for (int i = 0; i < fields.length; i++) {
@@ -1757,7 +1757,7 @@ public class Factory implements Configuration {
      * @deprecated - 1.6.3 [#757] - Use {@link #val(Object)} instead.
      */
     @Deprecated
-    public final <T> Field<T> constant(T value) {
+    public static <T> Field<T> constant(T value) {
         return val(value);
     }
 
@@ -1775,7 +1775,7 @@ public class Factory implements Configuration {
      * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, Class)} instead.
      */
     @Deprecated
-    public final <T> Field<T> constant(Object value, Class<? extends T> type) {
+    public static <T> Field<T> constant(Object value, Class<? extends T> type) {
         return val(value, type);
     }
 
@@ -1793,7 +1793,7 @@ public class Factory implements Configuration {
      * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, Field)} instead.
      */
     @Deprecated
-    public final <T> Field<T> constant(Object value, Field<T> field) {
+    public static <T> Field<T> constant(Object value, Field<T> field) {
         return val(value, field);
     }
 
@@ -1815,7 +1815,7 @@ public class Factory implements Configuration {
      * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, DataType)} instead.
      */
     @Deprecated
-    public final <T> Field<T> constant(Object value, DataType<T> type) {
+    public static <T> Field<T> constant(Object value, DataType<T> type) {
         return val(value, type);
     }
 
@@ -1826,7 +1826,7 @@ public class Factory implements Configuration {
      *             {@link #constants(Object...)} instead
      */
     @Deprecated
-    public final List<Field<?>> constant(Object... values) {
+    public static List<Field<?>> constant(Object... values) {
         return constants(values);
     }
 
@@ -1835,7 +1835,7 @@ public class Factory implements Configuration {
      * @deprecated - 1.6.3 [#757] - Use {@link #vals(Object...)} instead.
      */
     @Deprecated
-    public final List<Field<?>> constants(Object... values) {
+    public static List<Field<?>> constants(Object... values) {
         return vals(values);
     }
 
@@ -1857,7 +1857,7 @@ public class Factory implements Configuration {
      * @return A field representing the constant value
      */
     @SuppressWarnings("unchecked")
-    public final <T> Field<T> val(T value) {
+    public static <T> Field<T> val(T value) {
 
         // null is intercepted immediately
         if (value == null) {
@@ -1884,7 +1884,7 @@ public class Factory implements Configuration {
      * @return A field representing the constant value
      * @see #constant(Object, DataType)
      */
-    public final <T> Field<T> val(Object value, Class<? extends T> type) {
+    public static <T> Field<T> val(Object value, Class<? extends T> type) {
         return val(value, getDataType(type));
     }
 
@@ -1897,7 +1897,7 @@ public class Factory implements Configuration {
      * @return A field representing the constant value
      * @see #constant(Object, DataType)
      */
-    public final <T> Field<T> val(Object value, Field<T> field) {
+    public static <T> Field<T> val(Object value, Field<T> field) {
         return val(value, field.getDataType());
     }
 
@@ -1915,7 +1915,7 @@ public class Factory implements Configuration {
      * @return A field representing the constant value
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public final <T> Field<T> val(Object value, DataType<T> type) {
+    public static <T> Field<T> val(Object value, DataType<T> type) {
 
         // Prevent errors due to type erasure and unchecked invocation
         if (value instanceof Field<?>) {
@@ -1939,7 +1939,7 @@ public class Factory implements Configuration {
     /**
      * Get a list of values and fields
      */
-    public final List<Field<?>> vals(Object... values) {
+    public static List<Field<?>> vals(Object... values) {
         if (values == null) {
             throw new IllegalArgumentException("Cannot create a list of constants for null");
         }
@@ -1981,7 +1981,7 @@ public class Factory implements Configuration {
      * @return The literal as a field
      */
     @SuppressWarnings("unchecked")
-    public final <T> Field<T> literal(T literal) {
+    public static <T> Field<T> literal(T literal) {
         if (literal == null) {
             return (Field<T>) NULL();
         }
@@ -2006,7 +2006,7 @@ public class Factory implements Configuration {
      * @param type The literal's data type
      * @return The literal as a field
      */
-    public final <T> Field<T> literal(Object literal, Class<T> type) {
+    public static <T> Field<T> literal(Object literal, Class<T> type) {
         return literal(literal, getDataType(type));
     }
 
@@ -2027,7 +2027,7 @@ public class Factory implements Configuration {
      * @return The literal as a field
      */
     @SuppressWarnings("unchecked")
-    public final <T> Field<T> literal(Object literal, DataType<T> type) {
+    public static <T> Field<T> literal(Object literal, DataType<T> type) {
         if (literal == null) {
             return (Field<T>) NULL();
         }
@@ -2039,7 +2039,7 @@ public class Factory implements Configuration {
     /**
      * Get the null field
      */
-    final Field<?> NULL() {
+    static Field<?> NULL() {
         return field("null");
     }
 
@@ -2053,7 +2053,7 @@ public class Factory implements Configuration {
      *
      * @return A <code>0</code> literal as a <code>Field</code>
      */
-    public final Field<Integer> zero() {
+    public static Field<Integer> zero() {
         return literal(0);
     }
 
@@ -2067,7 +2067,7 @@ public class Factory implements Configuration {
      *
      * @return A <code>1</code> literal as a <code>Field</code>
      */
-    public final Field<Integer> one() {
+    public static Field<Integer> one() {
         return literal(1);
     }
 
@@ -2079,7 +2079,7 @@ public class Factory implements Configuration {
      *
      * @return A <code>2</code> literal as a <code>Field</code>
      */
-    public final Field<Integer> two() {
+    public static Field<Integer> two() {
         return literal(2);
     }
 
@@ -2092,7 +2092,7 @@ public class Factory implements Configuration {
      * <li>{@link Math#PI}</li>
      * </ul>
      */
-    public final Field<BigDecimal> pi() {
+    public static Field<BigDecimal> pi() {
         return new Pi();
     }
 
@@ -2105,7 +2105,7 @@ public class Factory implements Configuration {
      * <li>{@link Math#E}</li>
      * </ul>
      */
-    public final Field<BigDecimal> e() {
+    public static Field<BigDecimal> e() {
         return new Euler();
     }
 
@@ -2119,7 +2119,7 @@ public class Factory implements Configuration {
      * @see Field#count()
      * @see Field#countDistinct()
      */
-    public final Field<Integer> count() {
+    public static Field<Integer> count() {
         return field("*", Integer.class).count();
     }
 
@@ -2131,7 +2131,7 @@ public class Factory implements Configuration {
      *
      * @see Field#countOver()
      */
-    public final WindowPartitionByStep<Integer> countOver() {
+    public static WindowPartitionByStep<Integer> countOver() {
         return field("*", Integer.class).countOver();
     }
 
@@ -2141,7 +2141,7 @@ public class Factory implements Configuration {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public final WindowPartitionByStep<Integer> rowNumberOver() {
+    public static WindowPartitionByStep<Integer> rowNumberOver() {
         return new WindowFunction<Integer>("row_number", SQLDataType.INTEGER);
     }
 
@@ -2151,7 +2151,7 @@ public class Factory implements Configuration {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public final WindowPartitionByStep<Integer> rankOver() {
+    public static WindowPartitionByStep<Integer> rankOver() {
         return new WindowFunction<Integer>("rank", SQLDataType.INTEGER);
     }
 
@@ -2161,7 +2161,7 @@ public class Factory implements Configuration {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public final WindowPartitionByStep<Integer> denseRankOver() {
+    public static WindowPartitionByStep<Integer> denseRankOver() {
         return new WindowFunction<Integer>("dense_rank", SQLDataType.INTEGER);
     }
 
@@ -2171,7 +2171,7 @@ public class Factory implements Configuration {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public final WindowPartitionByStep<BigDecimal> percentRankOver() {
+    public static WindowPartitionByStep<BigDecimal> percentRankOver() {
         return new WindowFunction<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
 
@@ -2181,7 +2181,7 @@ public class Factory implements Configuration {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public final WindowPartitionByStep<BigDecimal> cumeDistOver() {
+    public static WindowPartitionByStep<BigDecimal> cumeDistOver() {
         return new WindowFunction<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
 
@@ -2191,7 +2191,7 @@ public class Factory implements Configuration {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public final WindowPartitionByStep<BigDecimal> ntile(int number) {
+    public static WindowPartitionByStep<BigDecimal> ntile(int number) {
         return new WindowFunction<BigDecimal>("ntile", SQLDataType.NUMERIC, field("" + number, Integer.class));
     }
 
@@ -2204,26 +2204,8 @@ public class Factory implements Configuration {
      * <p>
      * This translates into any dialect
      */
-    public final Field<Date> currentDate() throws SQLDialectNotSupportedException {
-        switch (getDialect()) {
-            case ORACLE:
-                return new Function<Date>("sysdate", SQLDataType.DATE);
-
-            case DERBY:    // No break
-            case HSQLDB:   // No break
-            case INGRES:   // No break
-            case POSTGRES: // No break
-            case SQLITE:   // No break
-                return field("current_date", Date.class);
-
-            case SQLSERVER:
-                return field("convert(date, current_timestamp)", Date.class);
-
-            case SYBASE:
-                return field("current date", Date.class);
-        }
-
-        return new Function<Date>("current_date", SQLDataType.DATE);
+    public static Field<Date> currentDate() {
+        return new CurrentDate();
     }
 
     /**
@@ -2231,26 +2213,8 @@ public class Factory implements Configuration {
      * <p>
      * This translates into any dialect
      */
-    public final Field<Time> currentTime() throws SQLDialectNotSupportedException {
-        switch (getDialect()) {
-            case ORACLE:
-                return new Function<Time>("sysdate", SQLDataType.TIME);
-
-            case DERBY:    // No break
-            case HSQLDB:   // No break
-            case INGRES:   // No break
-            case POSTGRES: // No break
-            case SQLITE:   // No break
-                return field("current_time", Time.class);
-
-            case SQLSERVER:
-                return field("convert(time, current_timestamp)", Time.class);
-
-            case SYBASE:
-                return field("current time", Time.class);
-        }
-
-        return new Function<Time>("current_time", SQLDataType.TIME);
+    public static Field<Time> currentTime() {
+        return new CurrentTime();
     }
 
     /**
@@ -2258,27 +2222,8 @@ public class Factory implements Configuration {
      * <p>
      * This translates into any dialect
      */
-    public final Field<Timestamp> currentTimestamp() {
-        switch (getDialect()) {
-            case ASE:
-                return new Function<Timestamp>("current_bigdatetime", SQLDataType.TIMESTAMP);
-
-            case ORACLE:
-                return new Function<Timestamp>("sysdate", SQLDataType.TIMESTAMP);
-
-            case DERBY:    // No break
-            case HSQLDB:   // No break
-            case INGRES:   // No break
-            case POSTGRES: // No break
-            case SQLITE:   // No break
-            case SQLSERVER:
-                return field("current_timestamp", Timestamp.class);
-
-            case SYBASE:
-                return field("current timestamp", Timestamp.class);
-        }
-
-        return new Function<Timestamp>("current_timestamp", SQLDataType.TIMESTAMP);
+    public static Field<Timestamp> currentTimestamp() {
+        return new CurrentTimestamp();
     }
 
     /**
@@ -2286,43 +2231,15 @@ public class Factory implements Configuration {
      * <p>
      * This translates into any dialect
      */
-    public final Field<String> currentUser() {
-        switch (getDialect()) {
-            case ASE:
-                return field("user", SQLDataType.VARCHAR);
-
-            case ORACLE:
-                return new Function<String>("user", SQLDataType.VARCHAR);
-
-            case DERBY:     // No break
-            case HSQLDB:    // No break
-            case INGRES:    // No break
-            case POSTGRES:  // No break
-            case SQLSERVER: // No break
-            case SQLITE:    // No break
-            case SYBASE:
-                return field("current_user", String.class);
-        }
-
-        return new Function<String>("current_user", SQLDataType.VARCHAR);
+    public static Field<String> currentUser() {
+        return new CurrentUser();
     }
 
     /**
      * Get the rand() function
      */
-    public final Field<BigDecimal> rand() {
-        switch (getDialect()) {
-            case DERBY:
-            case INGRES:
-            case POSTGRES:
-            case SQLITE:
-                return new Function<BigDecimal>("random", SQLDataType.NUMERIC);
-
-            case ORACLE:
-                return field("dbms_random.random", BigDecimal.class);
-        }
-
-        return new Function<BigDecimal>("rand", SQLDataType.NUMERIC);
+    public static Field<BigDecimal> rand() {
+        return new Rand();
     }
 
     // -------------------------------------------------------------------------
@@ -2493,23 +2410,36 @@ public class Factory implements Configuration {
      * @param type The Java type
      * @return The <code>Factory</code>'s underlying default data type.
      */
-    public final <T> DataType<T> getDataType(Class<? extends T> type) {
-        return FieldTypeHelper.getDataType(getDialect(), type);
+    public static <T> DataType<T> getDataType(Class<? extends T> type) {
+        return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
+    }
+
+    // -------------------------------------------------------------------------
+    // Static initialisation of dialect-specific data types
+    // -------------------------------------------------------------------------
+
+    static {
+        // Load all dialect-specific data types
+        // TODO [#650] Make this more reliable using a data type registry
+
+        try {
+            Class.forName(SQLDataType.class.getName());
+        } catch (Exception ignore) {}
     }
 
     // -------------------------------------------------------------------------
     // Internals
     // -------------------------------------------------------------------------
 
-    private int filterDeleteOne(int i) throws SQLException {
+    private static int filterDeleteOne(int i) throws SQLException {
         return filterOne(i, "deleted");
     }
 
-    private int filterUpdateOne(int i) throws SQLException {
+    private static int filterUpdateOne(int i) throws SQLException {
         return filterOne(i, "updated");
     }
 
-    private int filterOne(int i, String action) throws SQLException {
+    private static int filterOne(int i, String action) throws SQLException {
         if (i <= 1) {
             return i;
         }
@@ -2518,7 +2448,7 @@ public class Factory implements Configuration {
         }
     }
 
-    private <R extends Record> R filterOne(List<R> list) throws SQLException {
+    private static <R extends Record> R filterOne(List<R> list) throws SQLException {
         if (list.size() == 0) {
             return null;
         }

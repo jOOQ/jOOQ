@@ -35,6 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.val;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -62,39 +67,34 @@ class DateAdd<T> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        Factory create = create(configuration);
-
         switch (configuration.getDialect()) {
             case ASE:
-                return new Function<T>("dateadd", getDataType(), literal("day"), val(value), field);
+                return function("dateadd", getDataType(), literal("day"), val(value), field);
 
             case DB2:
             case HSQLDB:
-                return field.add(create.field("? day", BigDecimal.class, value));
+                return field.add(field("? day", BigDecimal.class, value));
 
             case DERBY:
                 return new FnPrefixFunction<T>("timestampadd", getDataType(),
-                    create.field("SQL_TSI_DAY"),
-                    create.val(value.intValue()),
+                    field("SQL_TSI_DAY"),
+                    val(value.intValue()),
                     field);
 
             case INGRES:
-                return field.add(create.field("date('" + value + " days')", BigDecimal.class));
+                return field.add(field("date('" + value + " days')", BigDecimal.class));
 
             case MYSQL:
-                return new Function<T>("timestampadd", getDataType(),
-                    create.field("day"),
-                    create.val(value),
-                    field);
+                return function("timestampadd", getDataType(), field("day"), val(value), field);
 
             case POSTGRES:
-                return field.add(create.field("interval '" + value + " days'", BigDecimal.class));
+                return field.add(field("interval '" + value + " days'", BigDecimal.class));
 
             case SQLITE:
-                return new Function<T>("datetime", getDataType(), field, create.val("+" + value + " day"));
+                return function("datetime", getDataType(), field, val("+" + value + " day"));
 
             default:
-                return field.add(create.val(value));
+                return field.add(val(value));
         }
     }
 }

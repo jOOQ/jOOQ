@@ -35,6 +35,8 @@
  */
 package org.jooq.util;
 
+import static org.jooq.impl.Factory.field;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -98,7 +100,7 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
             try {
                 data = create().select()
                                .from(delegate.getTable())
-                               .orderBy(create().field(getPrimaryKeyColumn().getName()))
+                               .orderBy(field(getPrimaryKeyColumn().getName()))
                                .fetch();
             }
             catch (SQLException e) {

@@ -88,7 +88,7 @@ public class SQLiteFactory extends Factory {
      * @see <a
      *      href="http://www.sqlite.org/lang_createtable.html#rowid">http://www.sqlite.org/lang_createtable.html#rowid</a>
      */
-    public final Field<Long> rowid() {
+    public static Field<Long> rowid() {
         return field("_rowid_", Long.class);
     }
 }

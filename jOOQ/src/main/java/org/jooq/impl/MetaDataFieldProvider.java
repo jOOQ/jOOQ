@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
+
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -81,8 +83,6 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
     }
 
     private final void init() {
-        Factory create = Factory.getNewFactory(configuration);
-
         int columnCount = 0;
 
         try {
@@ -93,7 +93,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
         // procedures / functions
         catch (SQLException e) {
             log.warn("Cannot fetch column count for cursor : " + e.getMessage());
-            fields.add(create.field("dummy", SQLDataType.OTHER));
+            fields.add(field("dummy", SQLDataType.OTHER));
         }
 
         try {
@@ -117,7 +117,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
                     log.warn("Not supported by dialect", ignore.getMessage());
                 }
 
-                fields.add(create.field(name, dataType));
+                fields.add(field(name, dataType));
             }
         }
         catch (SQLException e) {

@@ -35,65 +35,45 @@
  */
 package org.jooq.impl;
 
-import org.jooq.CaseConditionStep;
+import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
  */
-class Decode<T, Z> extends AbstractFunction<Z> {
+class CurrentUser extends AbstractFunction<String> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -7273879239726265322L;
 
-    private final Field<T>    field;
-    private final Field<T>    search;
-    private final Field<Z>    result;
-    private final Field<?>[]  more;
-
-    public Decode(Field<T> field, Field<T> search, Field<Z> result, Field<?>[] more) {
-        super("decode", result.getDataType(), JooqUtil.combine(field, search, result, more));
-
-        this.field = field;
-        this.search = search;
-        this.result = result;
-        this.more = more;
+    CurrentUser() {
+        super("current_user", SQLDataType.VARCHAR);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    final Field<Z> getFunction0(Configuration configuration) {
+    final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case ASE:
+                return field("user", SQLDataType.VARCHAR);
 
-            // Oracle actually has this function
-            case ORACLE: {
-                return new Function<Z>("decode", getDataType(), getArguments());
-            }
+            case ORACLE:
+                return function("user", SQLDataType.VARCHAR);
 
-            // Other dialects simulate it with a CASE ... WHEN expression
-            default: {
-                CaseConditionStep<Z> when = Factory
-                    .decode()
-                    .when(field.equal(search), result);
-
-                for (int i = 0; i < more.length; i += 2) {
-
-                    // search/result pair
-                    if (i + 1 < more.length) {
-                        when = when.when(field.equal((Field<T>) more[i]), (Field<Z>) more[i + 1]);
-                    }
-
-                    // trailing default value
-                    else {
-                        return when.otherwise((Field<Z>) more[i]);
-                    }
-                }
-
-                return when;
-            }
+            case DERBY:     // No break
+            case HSQLDB:    // No break
+            case INGRES:    // No break
+            case POSTGRES:  // No break
+            case SQLSERVER: // No break
+            case SQLITE:    // No break
+            case SYBASE:
+                return field("current_user", String.class);
         }
+
+        return function("current_user", SQLDataType.VARCHAR);
     }
 }

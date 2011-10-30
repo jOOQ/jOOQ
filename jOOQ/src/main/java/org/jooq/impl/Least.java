@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -77,13 +79,13 @@ class Least<T> extends AbstractFunction<T> {
                     Field<?>[] remaining = new Field<?>[getArguments().length - 2];
                     System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
 
-                    return create(configuration).decode()
+                    return Factory.decode()
                         .when(first.lessThan(other),
                               first.least(remaining))
                         .otherwise(other.least(remaining));
                 }
                 else {
-                    return create(configuration).decode()
+                    return Factory.decode()
                         .when(first.lessThan(other),
                               first)
                         .otherwise(other);
@@ -91,10 +93,10 @@ class Least<T> extends AbstractFunction<T> {
             }
 
             case SQLITE:
-                return new Function<T>("min", getDataType(), getArguments());
+                return function("min", getDataType(), getArguments());
 
             default:
-                return new Function<T>("least", getDataType(), getArguments());
+                return function("least", getDataType(), getArguments());
         }
     }
 }

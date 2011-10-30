@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -68,10 +70,10 @@ class Repeat extends AbstractFunction<String> {
 
             case ASE:
             case SQLSERVER:
-                return new Function<String>("replicate", SQLDataType.VARCHAR, string, count);
+                return function("replicate", SQLDataType.VARCHAR, string, count);
 
             default:
-                return new Function<String>("repeat", SQLDataType.VARCHAR, string, count);
+                return function("repeat", SQLDataType.VARCHAR, string, count);
         }
     }
 }

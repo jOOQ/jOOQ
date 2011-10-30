@@ -41,6 +41,33 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.impl.Factory.cast;
+import static org.jooq.impl.Factory.castNull;
+import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.countOver;
+import static org.jooq.impl.Factory.cumeDistOver;
+import static org.jooq.impl.Factory.currentDate;
+import static org.jooq.impl.Factory.currentTime;
+import static org.jooq.impl.Factory.currentTimestamp;
+import static org.jooq.impl.Factory.currentUser;
+import static org.jooq.impl.Factory.decode;
+import static org.jooq.impl.Factory.denseRankOver;
+import static org.jooq.impl.Factory.e;
+import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.percentRankOver;
+import static org.jooq.impl.Factory.pi;
+import static org.jooq.impl.Factory.rand;
+import static org.jooq.impl.Factory.rankOver;
+import static org.jooq.impl.Factory.rowNumberOver;
+import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.two;
+import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.vals;
+import static org.jooq.impl.Factory.zero;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -435,18 +462,6 @@ public abstract class jOOQAbstractTest<
         return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset.sql";
     }
 
-    protected final <Z> Field<Z> literal(Z value) throws Exception {
-        return create().literal(value);
-    }
-
-    protected final <Z> Field<Z> val(Z value) throws Exception {
-        return create().val(value);
-    }
-
-    protected final List<Field<?>> vals(Object... value) throws Exception {
-        return create().vals(value);
-    }
-
     protected abstract Table<T658> T658();
     protected abstract Table<T725> T725();
     protected abstract TableField<T725, Integer> T725_ID();
@@ -639,22 +654,22 @@ public abstract class jOOQAbstractTest<
         factory.use(schema().getName());
 
         Result<?> result =
-        factory.select(TBook_AUTHOR_ID(), factory.count())
+        factory.select(TBook_AUTHOR_ID(), count())
                .from(TBook())
                .join(TAuthor())
                .on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                .where(TAuthor_YEAR_OF_BIRTH().greaterOrEqual(TAuthor_ID()))
                .groupBy(TBook_AUTHOR_ID())
-               .having(factory.count().greaterOrEqual(1))
+               .having(count().greaterOrEqual(1))
                .orderBy(TBook_AUTHOR_ID().desc())
                .fetch();
 
         assertEquals(Arrays.asList(2, 1), result.getValues(TBook_AUTHOR_ID()));
-        assertEquals(Arrays.asList(2, 2), result.getValues(create().count()));
+        assertEquals(Arrays.asList(2, 2), result.getValues(count()));
     }
 
     @Test
-    public void testTableMapping() throws Exception {
+    public void testableMapping() throws Exception {
         SchemaMapping mapping = new SchemaMapping();
         mapping.add(TAuthor(), VAuthor());
         mapping.add(TBook(), VBook().getName());
@@ -794,7 +809,7 @@ public abstract class jOOQAbstractTest<
             return;
         }
 
-        Field<?> user = create().currentUser().lower().trim();
+        Field<?> user = currentUser().lower().trim();
         Record record = create().select(user).fetchOne();
 
         assertTrue(Arrays.asList("test", "db2admin", "sa", "root@localhost", "postgres", "dbo", "dba")
@@ -1026,8 +1041,8 @@ public abstract class jOOQAbstractTest<
 
         // This is being tested with an unreferenced table as some RDBMS don't
         // Allow this
-        create().truncate((Table) create().table("t_book_to_book_store")).execute();
-        assertEquals(0, create().fetch(create().table("t_book_to_book_store")).size());
+        create().truncate((Table) table("t_book_to_book_store")).execute();
+        assertEquals(0, create().fetch(table("t_book_to_book_store")).size());
     }
 
     @Test
@@ -1292,13 +1307,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLiterals() throws Exception {
-        Record record = create().select(
-            create().zero(),
-            create().one(),
-            create().two(),
-            create().pi(),
-            create().e()
-        ).fetchOne();
+        Record record = create().select(zero(), one(), two(), pi(), e()).fetchOne();
 
         assertEquals(0, record.getValue(0));
         assertEquals(1, record.getValue(1));
@@ -1313,7 +1322,7 @@ public abstract class jOOQAbstractTest<
 
         // Field and Table
         // ---------------
-        Field<Integer> ID = create().field(TBook_ID().getName(), Integer.class);
+        Field<Integer> ID = field(TBook_ID().getName(), Integer.class);
         Result<Record> result = create().select().from("t_book").orderBy(ID).fetch();
 
         assertEquals(4, result.size());
@@ -1333,13 +1342,13 @@ public abstract class jOOQAbstractTest<
             result.getValues(ID));
 
         // [#836] Aliased plain SQL table
-        result = create().select().from(create().table("t_book").as("b")).orderBy(ID).fetch();
+        result = create().select().from(table("t_book").as("b")).orderBy(ID).fetch();
         assertEquals(4, result.size());
         assertEquals(BOOK_IDS, result.getValues(ID));
 
         // [#271] Check for aliased nested selects. The DescribeQuery does not seem to work
         // [#836] Aliased plain SQL nested select
-        result = create().select().from(create().table("(select * from t_book)").as("b")).orderBy(ID).fetch();
+        result = create().select().from(table("(select * from t_book)").as("b")).orderBy(ID).fetch();
         assertEquals(4, result.size());
         assertEquals(
             Arrays.asList(1, 2, 3, 4),
@@ -1348,9 +1357,9 @@ public abstract class jOOQAbstractTest<
 
         // Field, Table and Condition
         // --------------------------
-        Field<?> LAST_NAME = create().field(TAuthor_LAST_NAME().getName());
-        Field<?> COUNT1 = create().field("count(*) x");
-        Field<?> COUNT2 = create().field("count(*) y", Integer.class);
+        Field<?> LAST_NAME = field(TAuthor_LAST_NAME().getName());
+        Field<?> COUNT1 = field("count(*) x");
+        Field<?> COUNT2 = field("count(*) y", Integer.class);
 
         result = create()
             .select(LAST_NAME, COUNT1, COUNT2)
@@ -1424,8 +1433,8 @@ public abstract class jOOQAbstractTest<
 
         // Function
         // --------
-        assertEquals("ABC", create().select(create().function("upper", String.class, val("aBc"))).fetchOne(0));
-        assertEquals("abc", create().select(create().function("lower", SQLDataType.VARCHAR, val("aBc"))).fetchOne(0));
+        assertEquals("ABC", create().select(function("upper", String.class, val("aBc"))).fetchOne(0));
+        assertEquals("abc", create().select(function("lower", SQLDataType.VARCHAR, val("aBc"))).fetchOne(0));
 
         // Fetch
         // -----
@@ -1951,69 +1960,69 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCastingToJavaClass() throws Exception {
         if (getDialect() != SQLDialect.HSQLDB) {
-            assertEquals(true, create().select(create().cast(1, Boolean.class)).fetchOne(0));
+            assertEquals(true, create().select(cast(1, Boolean.class)).fetchOne(0));
 
             if (getDialect() != SQLDialect.INGRES) {
-                assertEquals(true, create().select(create().cast("1", Boolean.class)).fetchOne(0));
+                assertEquals(true, create().select(cast("1", Boolean.class)).fetchOne(0));
             }
         }
 
-        assertEquals(BigInteger.ONE, create().select(create().cast("1", BigInteger.class)).fetchOne(0));
-        assertEquals(BigInteger.ONE, create().select(create().cast(1, BigInteger.class)).fetchOne(0));
+        assertEquals(BigInteger.ONE, create().select(cast("1", BigInteger.class)).fetchOne(0));
+        assertEquals(BigInteger.ONE, create().select(cast(1, BigInteger.class)).fetchOne(0));
 
         // Sybase applies the wrong scale when casting. Force scale before comparing (Sybase returns 1.0000 when we expect 1)
         if (getDialect() == SQLDialect.SYBASE) {
-            BigDecimal result = (BigDecimal)create().select(create().cast("1", BigDecimal.class)).fetchOne(0);
+            BigDecimal result = (BigDecimal)create().select(cast("1", BigDecimal.class)).fetchOne(0);
             result = result.setScale(0);
             assertEquals(BigDecimal.ONE, result);
 
-            result = (BigDecimal)create().select(create().cast(1, BigDecimal.class)).fetchOne(0);
+            result = (BigDecimal)create().select(cast(1, BigDecimal.class)).fetchOne(0);
             result = result.setScale(0);
             assertEquals(BigDecimal.ONE, result);
         } else {
-            assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast("1", BigDecimal.class)).fetchOne(0)));
-            assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(create().cast(1, BigDecimal.class)).fetchOne(0)));
+            assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(cast("1", BigDecimal.class)).fetchOne(0)));
+            assertEquals(0, BigDecimal.ONE.compareTo((BigDecimal) create().select(cast(1, BigDecimal.class)).fetchOne(0)));
         }
 
-        assertEquals((byte) 1, create().select(create().cast("1", Byte.class)).fetchOne(0));
-        assertEquals((short) 1, create().select(create().cast("1", Short.class)).fetchOne(0));
-        assertEquals(1, create().select(create().cast("1", Integer.class)).fetchOne(0));
-        assertEquals(1L, create().select(create().cast("1", Long.class)).fetchOne(0));
+        assertEquals((byte) 1, create().select(cast("1", Byte.class)).fetchOne(0));
+        assertEquals((short) 1, create().select(cast("1", Short.class)).fetchOne(0));
+        assertEquals(1, create().select(cast("1", Integer.class)).fetchOne(0));
+        assertEquals(1L, create().select(cast("1", Long.class)).fetchOne(0));
 
-        assertEquals(1.0f, create().select(create().cast("1", Float.class)).fetchOne(0));
-        assertEquals(1.0, create().select(create().cast("1", Double.class)).fetchOne(0));
-        assertEquals("1", create().select(create().cast("1", String.class)).fetchOne(0));
+        assertEquals(1.0f, create().select(cast("1", Float.class)).fetchOne(0));
+        assertEquals(1.0, create().select(cast("1", Double.class)).fetchOne(0));
+        assertEquals("1", create().select(cast("1", String.class)).fetchOne(0));
 
-        assertEquals((byte) 1, create().select(create().cast(1, Byte.class)).fetchOne(0));
-        assertEquals((short) 1, create().select(create().cast(1, Short.class)).fetchOne(0));
-        assertEquals(1, create().select(create().cast(1, Integer.class)).fetchOne(0));
-        assertEquals(1L, create().select(create().cast(1, Long.class)).fetchOne(0));
-        assertEquals(1.0f, create().select(create().cast(1, Float.class)).fetchOne(0));
-        assertEquals(1.0, create().select(create().cast(1, Double.class)).fetchOne(0));
-        assertEquals("1", create().select(create().cast(1, String.class)).fetchOne(0));
+        assertEquals((byte) 1, create().select(cast(1, Byte.class)).fetchOne(0));
+        assertEquals((short) 1, create().select(cast(1, Short.class)).fetchOne(0));
+        assertEquals(1, create().select(cast(1, Integer.class)).fetchOne(0));
+        assertEquals(1L, create().select(cast(1, Long.class)).fetchOne(0));
+        assertEquals(1.0f, create().select(cast(1, Float.class)).fetchOne(0));
+        assertEquals(1.0, create().select(cast(1, Double.class)).fetchOne(0));
+        assertEquals("1", create().select(cast(1, String.class)).fetchOne(0));
 
         // Sybase ASE does not know null bits
         if (getDialect() != SQLDialect.ASE) {
-            assertEquals(null, create().select(create().castNull(Boolean.class)).fetchOne(0));
+            assertEquals(null, create().select(castNull(Boolean.class)).fetchOne(0));
         }
 
-        assertEquals(null, create().select(create().castNull(Byte.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Short.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Integer.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Long.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Byte.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Short.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Integer.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Long.class)).fetchOne(0));
 
         // Not implemented by the driver
         if (getDialect() != SQLDialect.SQLITE) {
-            assertEquals(null, create().select(create().castNull(BigInteger.class)).fetchOne(0));
-            assertEquals(null, create().select(create().castNull(BigDecimal.class)).fetchOne(0));
+            assertEquals(null, create().select(castNull(BigInteger.class)).fetchOne(0));
+            assertEquals(null, create().select(castNull(BigDecimal.class)).fetchOne(0));
         }
 
-        assertEquals(null, create().select(create().castNull(Float.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Double.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(String.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Date.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Time.class)).fetchOne(0));
-        assertEquals(null, create().select(create().castNull(Timestamp.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Float.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Double.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(String.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Date.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Time.class)).fetchOne(0));
+        assertEquals(null, create().select(castNull(Timestamp.class)).fetchOne(0));
 
         assertEquals(1984, create()
             .select(TBook_TITLE().cast(Integer.class))
@@ -2192,7 +2201,7 @@ public abstract class jOOQAbstractTest<
                 .getQuery();
 
         query.addGroupBy(TBook_ID());
-        query.addHaving(create().count().greaterOrEqual(1));
+        query.addHaving(count().greaterOrEqual(1));
         query.addOrderBy(TBook_ID());
         query.execute();
 
@@ -2267,7 +2276,7 @@ public abstract class jOOQAbstractTest<
             .limit(2).asTable("nested");
 
         Field<Integer> nestedID = nested.getField(TBook_AUTHOR_ID());
-        Record record = create().select(nestedID, create().count())
+        Record record = create().select(nestedID, count())
             .from(nested)
             .groupBy(nestedID)
             .orderBy(nestedID)
@@ -2276,7 +2285,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Integer.valueOf(2), record.getValue(nestedID));
         assertEquals(Integer.valueOf(2), record.getValue(1));
 
-        Result<Record> result = create().select(nestedID, create().count())
+        Result<Record> result = create().select(nestedID, count())
             .from(create().selectFrom(TBook())
                           .orderBy(TBook_ID().desc())
                           .limit(1, 2).asTable("nested"))
@@ -2345,7 +2354,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testConditionalSelect() throws Exception {
-        Condition c = create().trueCondition();
+        Condition c = trueCondition();
 
         assertEquals(4, create().selectFrom(TBook()).where(c).execute());
 
@@ -2370,7 +2379,7 @@ public abstract class jOOQAbstractTest<
 
         assertEquals(Arrays.asList(3, 4), create().select()
             .from(TBook())
-            .where(create().val(3).between(TBook_AUTHOR_ID(), TBook_ID()))
+            .where(val(3).between(TBook_AUTHOR_ID(), TBook_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
 
         // The IN clause
@@ -2392,7 +2401,7 @@ public abstract class jOOQAbstractTest<
 
         assertEquals(Arrays.asList(2, 3, 4), create().select()
             .from(TBook())
-            .where(create().val(2).in(TBook_ID(), TBook_AUTHOR_ID()))
+            .where(val(2).in(TBook_ID(), TBook_AUTHOR_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
 
         // = { ALL | ANY | SOME }
@@ -2465,7 +2474,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLargeINCondition() throws Exception {
-        Field<Integer> count = create().count();
+        Field<Integer> count = count();
         assertEquals(1, (int) create().select(count)
                                       .from(TBook())
                                       .where(TBook_ID().in(Collections.nCopies(999, 1)))
@@ -2534,7 +2543,7 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // Testing selecting from a select
         // ---------------------------------------------------------------------
-        Table<Record> nested = create().select(TBook_AUTHOR_ID(), create().count().as("books"))
+        Table<Record> nested = create().select(TBook_AUTHOR_ID(), count().as("books"))
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID()).asTable("nested");
 
@@ -2548,7 +2557,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField(TBook_AUTHOR_ID())));
         assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField("books")));
 
-        Field<Object> books = create().select(create().count())
+        Field<Object> books = create().select(count())
                 .from(TBook())
                 .where(TBook_AUTHOR_ID().equal(TAuthor_ID())).asField("books");
 
@@ -2830,7 +2839,7 @@ public abstract class jOOQAbstractTest<
         authorIDs.addAll(Arrays.asList(1, 2));
         count.addAll(Arrays.asList(2, 2));
 
-        create().select(TBook_AUTHOR_ID(), create().count())
+        create().select(TBook_AUTHOR_ID(), count())
                 .from(TBook())
                 .groupBy(TBook_AUTHOR_ID())
                 .orderBy(TBook_AUTHOR_ID())
@@ -2838,7 +2847,7 @@ public abstract class jOOQAbstractTest<
                     @Override
                     public void next(Record record) {
                         assertEquals(authorIDs.poll(), record.getValue(TBook_AUTHOR_ID()));
-                        assertEquals(count.poll(), record.getValue(create().count()));
+                        assertEquals(count.poll(), record.getValue(count()));
                     }
                 });
     }
@@ -2889,7 +2898,7 @@ public abstract class jOOQAbstractTest<
     public void testGrouping() throws Exception {
 
         // Test a simple group by query
-        Field<Integer> count = create().count().as("c");
+        Field<Integer> count = count().as("c");
         Result<Record> result = create()
             .select(TBook_AUTHOR_ID(), count)
             .from(TBook())
@@ -2906,7 +2915,7 @@ public abstract class jOOQAbstractTest<
             .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
             .where(TBook_TITLE().notEqual("1984"))
             .groupBy(TAuthor_LAST_NAME())
-            .having(create().count().equal(2))
+            .having(count().equal(2))
             .fetch();
 
         assertEquals(1, result.size());
@@ -2920,8 +2929,8 @@ public abstract class jOOQAbstractTest<
             .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
             .where(TBook_TITLE().notEqual("1984"))
             .groupBy(TAuthor_LAST_NAME())
-            .having(create().count().equal(2))
-            .or(create().count().greaterOrEqual(2))
+            .having(count().equal(2))
+            .or(count().greaterOrEqual(2))
             .andExists(create().selectOne())
             .fetch();
 
@@ -2958,13 +2967,13 @@ public abstract class jOOQAbstractTest<
                 .selectOne()
                 .from(TBook())
                 .where(TBook_AUTHOR_ID().equal(1))
-                .having(create().count().greaterOrEqual(2))
+                .having(count().greaterOrEqual(2))
                 .fetchOne(0));
             assertEquals(null, create()
                 .selectOne()
                 .from(TBook())
                 .where(TBook_AUTHOR_ID().equal(1))
-                .having(create().count().greaterOrEqual(3))
+                .having(count().greaterOrEqual(3))
                 .fetchOne(0));
         }
         catch (SQLException e) {
@@ -3143,10 +3152,10 @@ public abstract class jOOQAbstractTest<
             case ORACLE:
             case POSTGRES:
                 // TODO: cast this to the UDT type
-                nullField = create().cast(null, TAuthor_ADDRESS());
+                nullField = cast(null, TAuthor_ADDRESS());
                 break;
             default:
-                nullField = create().castNull(String.class);
+                nullField = castNull(String.class);
                 break;
         }
 
@@ -3158,7 +3167,7 @@ public abstract class jOOQAbstractTest<
             .select(vals(
                 "Eder",
                 val(new Date(363589200000L)),
-                create().castNull(Integer.class),
+                castNull(Integer.class),
                 nullField)));
 
         i.execute();
@@ -3239,7 +3248,7 @@ public abstract class jOOQAbstractTest<
         u.addValue(f1, create().select(f3.max()).from(a2).where(f1.equal(f2)).<String> asField());
         u.execute();
 
-        Field<Integer> c = create().count();
+        Field<Integer> c = count();
         assertEquals(Integer.valueOf(2), create().select(c)
             .from(TAuthor())
             .where(TAuthor_FIRST_NAME().equal(TAuthor_LAST_NAME()))
@@ -3270,7 +3279,7 @@ public abstract class jOOQAbstractTest<
         create().fetchOne(TAuthor(), TAuthor_ID().equal(3));
         assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
         assertEquals("Koontz", author.getValue(TAuthor_LAST_NAME()));
-        assertEquals(Integer.valueOf(3), create().select(create().count()).from(TAuthor()).fetchOne(0));
+        assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
 
         create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
                 .values(3, "Rose")
@@ -3281,7 +3290,7 @@ public abstract class jOOQAbstractTest<
         create().fetchOne(TAuthor(), TAuthor_ID().equal(3));
         assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
         assertEquals("Christie", author.getValue(TAuthor_LAST_NAME()));
-        assertEquals(Integer.valueOf(3), create().select(create().count()).from(TAuthor()).fetchOne(0));
+        assertEquals(Integer.valueOf(3), create().select(count()).from(TAuthor()).fetchOne(0));
     }
 
     @Test
@@ -3627,7 +3636,7 @@ public abstract class jOOQAbstractTest<
 
         // No ON DELETE CASCADE constraints for Sybase ASE
         if (getDialect() == SQLDialect.ASE) {
-            create().truncate((Table) create().table("t_book_to_book_store")).execute();
+            create().truncate((Table) table("t_book_to_book_store")).execute();
         }
 
         // Delete the modified record
@@ -3706,7 +3715,7 @@ public abstract class jOOQAbstractTest<
         author.setValue(TAuthor_FIRST_NAME(), "Arthur");
         assertEquals(1, author.store()); // This should produce an UPDATE
         assertEquals(1, create()
-            .select(create().count())
+            .select(count())
             .from(TAuthor())
             .where(TAuthor_FIRST_NAME().equal("Arthur"))
             .and(TAuthor_LAST_NAME().equal("Cohen"))
@@ -4402,10 +4411,10 @@ public abstract class jOOQAbstractTest<
                 .from(TAuthor())
                 .join(TBook())
                 .on(TAuthor_ID().equal(TBook_AUTHOR_ID())
-                .and(TBook_LANGUAGE_ID().in(create().select(create().field("id"))
+                .and(TBook_LANGUAGE_ID().in(create().select(field("id"))
                                                     .from("t_language")
                                                     .where("upper(cd) in (?, ?)", "DE", "EN")))
-                .orExists(create().selectOne().from(TAuthor()).where(create().falseCondition())))
+                .orExists(create().selectOne().from(TAuthor()).where(falseCondition())))
                 .orderBy(TBook_ID()).fetch();
 
             assertEquals(3, result.size());
@@ -4420,10 +4429,10 @@ public abstract class jOOQAbstractTest<
                 .from(author)
                 .join(TBook())
                 .on(author.getField(TAuthor_ID()).equal(TBook_AUTHOR_ID()))
-                .and(TBook_LANGUAGE_ID().in(create().select(create().field("id"))
+                .and(TBook_LANGUAGE_ID().in(create().select(field("id"))
                                                     .from("t_language")
                                                     .where("upper(cd) in (?, ?)", "DE", "EN")))
-                .orExists(create().selectOne().where(create().falseCondition()))
+                .orExists(create().selectOne().where(falseCondition()))
                 .orderBy(TBook_ID()).fetch();
 
             assertEquals(3, result.size());
@@ -4436,10 +4445,10 @@ public abstract class jOOQAbstractTest<
                 .from(TAuthor())
                 .join(book)
                 .on(TAuthor_ID().equal(book.getField(TBook_AUTHOR_ID())))
-                .and(book.getField(TBook_LANGUAGE_ID()).in(create().select(create().field("id"))
+                .and(book.getField(TBook_LANGUAGE_ID()).in(create().select(field("id"))
                                                     .from("t_language")
                                                     .where("upper(cd) in (?, ?)", "DE", "EN")))
-                .orExists(create().selectOne().where(create().falseCondition()))
+                .orExists(create().selectOne().where(falseCondition()))
                 .orderBy(book.getField(TBook_ID())).fetch();
 
             assertEquals(3, result.size());
@@ -4456,7 +4465,7 @@ public abstract class jOOQAbstractTest<
 
         // Using the CROSS JOIN clause
         assertEquals(Integer.valueOf(8),
-        create().select(create().count())
+        create().select(count())
                 .from(TAuthor())
                 .crossJoin(TBook())
                 .fetchOne(0));
@@ -4476,7 +4485,7 @@ public abstract class jOOQAbstractTest<
 
         // [#772] Using the FROM clause for regular cartesian products
         assertEquals(Integer.valueOf(8),
-        create().select(create().count())
+        create().select(count())
                 .from(TAuthor(), TBook())
                 .fetchOne(0));
 
@@ -4510,7 +4519,7 @@ public abstract class jOOQAbstractTest<
                 .from(TBook())
                 .naturalJoin(TAuthor())
                 .orderBy(getDialect() == SQLDialect.ORACLE
-                        ? create().field("id")
+                        ? field("id")
                         : TBook_ID())
                 .fetch();
 
@@ -4535,7 +4544,7 @@ public abstract class jOOQAbstractTest<
                         .from(TBook())
                         .naturalLeftOuterJoin(TAuthor())
                         .orderBy(getDialect() == SQLDialect.ORACLE
-                            ? create().field("id")
+                            ? field("id")
                             : TBook_ID())
                         .fetch();
 
@@ -4574,7 +4583,7 @@ public abstract class jOOQAbstractTest<
                 .join(TBook())
                 .using(TAuthor_ID())
                 .orderBy(getDialect() == SQLDialect.ORACLE
-                        ? create().field("id")
+                        ? field("id")
                         : TBook_ID())
                 .fetch();
 
@@ -4593,7 +4602,7 @@ public abstract class jOOQAbstractTest<
                 .leftOuterJoin(TAuthor())
                 .using(TAuthor_ID())
                 .orderBy(getDialect() == SQLDialect.ORACLE
-                    ? create().field("id")
+                    ? field("id")
                     : TBook_ID())
                 .fetch();
 
@@ -4734,7 +4743,7 @@ public abstract class jOOQAbstractTest<
         Result<Record> result = create()
             .select(
                 TBook_AUTHOR_ID(),
-                create().count(),
+                count(),
                 TBook_ID().count(),
                 TBook_AUTHOR_ID().countDistinct(),
                 TBook_ID().sum(),
@@ -4939,10 +4948,10 @@ public abstract class jOOQAbstractTest<
         // Some checks on current_timestamp functions
         // ------------------------------------------
         SelectQuery q1 = create().selectQuery();
-        Field<Timestamp> now = create().currentTimestamp();
+        Field<Timestamp> now = currentTimestamp();
         Field<Timestamp> ts = now.as("ts");
-        Field<Date> date = create().currentDate().as("d");
-        Field<Time> time = create().currentTime().as("t");
+        Field<Date> date = currentDate().as("d");
+        Field<Time> time = currentTime().as("t");
 
         // ... and the extract function
         // ----------------------------
@@ -4984,13 +4993,13 @@ public abstract class jOOQAbstractTest<
         // Ingres truncates milliseconds. Ignore this fact
         assertEquals(24 * 60 * 60,
             (record.getValue(ts).getTime() / 1000 - record.getValue(yesterday).getTime() / 1000));
-        assertEquals(24 * 60 * 60,
+        assertEquals(24 * 60 * 60 + 60 * 60,
             (record.getValue(tomorrow).getTime() / 1000 - record.getValue(ts).getTime() / 1000));
     }
 
     @Test
     public void testExtractInSubselect() throws Exception {
-        Field<Timestamp> now = create().currentTimestamp();
+        Field<Timestamp> now = currentTimestamp();
 
         Field<Integer> year = now.extract(DatePart.YEAR).as("y");
         Field<Integer> month = now.extract(DatePart.MONTH).as("m");
@@ -5025,7 +5034,7 @@ public abstract class jOOQAbstractTest<
     public void testFunctionsOnNumbers() throws Exception {
 
         // The random function
-        BigDecimal rand = create().select(create().rand()).fetchOne(create().rand());
+        BigDecimal rand = create().select(rand()).fetchOne(rand());
         assertNotNull(rand);
 
         // Some rounding functions
@@ -5370,7 +5379,7 @@ public abstract class jOOQAbstractTest<
         q.addSelect(position);
 
         // https://issues.apache.org/jira/browse/DERBY-5005
-        q.addOrderBy(create().field(VLibrary_AUTHOR().getName()));
+        q.addOrderBy(field(VLibrary_AUTHOR().getName()));
 
         q.execute();
         Record r1 = q.getResult().get(1); // George Orwell
@@ -5386,8 +5395,8 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testFunctionsLikeDecode() throws Exception {
-        Field<String> sNull = create().castNull(String.class);
-        Field<Integer> iNull = create().castNull(Integer.class);
+        Field<String> sNull = castNull(String.class);
+        Field<Integer> iNull = castNull(Integer.class);
 
         // ---------------------------------------------------------------------
         // NULLIF
@@ -5519,25 +5528,25 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testCaseStatement() throws Exception {
-        Field<String> case1 = create().decode()
+        Field<String> case1 = decode()
             .value(TBook_PUBLISHED_IN())
             .when(0, "ancient book")
             .as("case1");
 
         // Ingres does not allow sub selects in CASE expressions
         Field<?> case2 = getDialect() == SQLDialect.INGRES
-            ? create().decode()
+            ? decode()
                 .value(TBook_AUTHOR_ID())
                 .when(1, "Orwell")
                 .otherwise("unknown")
-            : create().decode()
+            : decode()
                 .value(TBook_AUTHOR_ID())
                 .when(1, create().select(TAuthor_LAST_NAME())
                     .from(TAuthor())
                     .where(TAuthor_ID().equal(TBook_AUTHOR_ID())).asField())
                 .otherwise("unknown");
 
-        Field<?> case3 = create().decode()
+        Field<?> case3 = decode()
             .value(1)
             .when(1, "A")
             .when(2, "B")
@@ -5565,7 +5574,7 @@ public abstract class jOOQAbstractTest<
         assertEquals("A", result.getValue(2, case3));
         assertEquals("A", result.getValue(3, case3));
 
-        Field<String> case4 = create().decode()
+        Field<String> case4 = decode()
             .when(TBook_PUBLISHED_IN().equal(1948), "probably orwell")
             .when(TBook_PUBLISHED_IN().equal(1988), "probably coelho")
             .otherwise("don't know").as("case3");
@@ -6367,7 +6376,7 @@ public abstract class jOOQAbstractTest<
     public void testNULL() throws Exception {
         reset = false;
 
-        Field<Integer> n = create().castNull(Integer.class);
+        Field<Integer> n = castNull(Integer.class);
         Field<Integer> c = val(1);
 
         assertEquals(null, create().select(n).fetchOne(n));
@@ -6442,7 +6451,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testDual() throws Exception {
         assertEquals(1, (int) create().selectOne().fetchOne(0, Integer.class));
-        assertEquals(1, (int) create().selectOne().where(create().one().equal(1)).fetchOne(0, Integer.class));
+        assertEquals(1, (int) create().selectOne().where(one().equal(1)).fetchOne(0, Integer.class));
     }
 
     @Test
@@ -6464,10 +6473,10 @@ public abstract class jOOQAbstractTest<
         // ROW_NUMBER()
         Result<Record> result =
         create().select(TBook_ID(),
-                        create().rowNumberOver()
+                        rowNumberOver()
                                 .partitionByOne()
                                 .orderBy(TBook_ID().desc()),
-                        create().rowNumberOver()
+                        rowNumberOver()
                                 .partitionBy(TBook_AUTHOR_ID())
                                 .orderBy(TBook_ID().desc()))
                 .from(TBook())
@@ -6493,8 +6502,8 @@ public abstract class jOOQAbstractTest<
         // COUNT()
         result =
         create().select(TBook_ID(),
-                        create().countOver(),
-                        create().countOver()
+                        countOver(),
+                        countOver()
                                 .partitionBy(TBook_AUTHOR_ID()))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
@@ -6518,14 +6527,14 @@ public abstract class jOOQAbstractTest<
         // RANK(), DENSE_RANK()
         result =
         create().select(TBook_ID(),
-                        create().rankOver()
+                        rankOver()
                                 .orderBy(TBook_ID().desc()),
-                        create().rankOver()
+                        rankOver()
                                 .partitionBy(TBook_AUTHOR_ID())
                                 .orderBy(TBook_ID().desc()),
-                        create().denseRankOver()
+                        denseRankOver()
                                 .orderBy(TBook_ID().desc()),
-                        create().denseRankOver()
+                        denseRankOver()
                                 .partitionBy(TBook_AUTHOR_ID())
                                 .orderBy(TBook_ID().desc()))
                 .from(TBook())
@@ -6572,14 +6581,14 @@ public abstract class jOOQAbstractTest<
                 // PERCENT_RANK() and CUME_DIST()
                 result =
                 create().select(TBook_ID(),
-                                create().percentRankOver()
+                                percentRankOver()
                                         .orderBy(TBook_ID().desc()),
-                                create().percentRankOver()
+                                percentRankOver()
                                         .partitionBy(TBook_AUTHOR_ID())
                                         .orderBy(TBook_ID().desc()),
-                                create().cumeDistOver()
+                                cumeDistOver()
                                         .orderBy(TBook_ID().desc()),
-                                create().cumeDistOver()
+                                cumeDistOver()
                                         .partitionBy(TBook_AUTHOR_ID())
                                         .orderBy(TBook_ID().desc()))
                         .from(TBook())
@@ -7088,7 +7097,7 @@ public abstract class jOOQAbstractTest<
             // An empty array
             // --------------
             ArrayRecord<Integer> array = newNUMBER_R();
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(0, result.size());
             assertEquals(1, result.getFields().size());
@@ -7098,7 +7107,7 @@ public abstract class jOOQAbstractTest<
             // An array containing null
             // ------------------------
             array.set((Integer) null);
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(1, result.size());
             assertEquals(1, result.getFields().size());
@@ -7108,7 +7117,7 @@ public abstract class jOOQAbstractTest<
             // An array containing two values
             // ------------------------------
             array.set((Integer) null, 1);
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(2, result.size());
             assertEquals(1, result.getFields().size());
@@ -7119,7 +7128,7 @@ public abstract class jOOQAbstractTest<
             // An array containing three values
             // --------------------------------
             array.set((Integer) null, 1, 2);
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(3, result.size());
             assertEquals(1, result.getFields().size());
@@ -7131,7 +7140,7 @@ public abstract class jOOQAbstractTest<
             // Joining an unnested array table
             // -------------------------------
             array.set(2, 3);
-            Table<?> table = create().table(array);
+            Table<?> table = table(array);
             result = create()
                 .select(TBook_ID(), TBook_TITLE())
                 .from(TBook())
@@ -7162,24 +7171,24 @@ public abstract class jOOQAbstractTest<
 
             // Functions returning arrays
             // --------------------------
-            result = create().select().from(create().table(FArrays1Field_R(null))).fetch();
+            result = create().select().from(table(FArrays1Field_R(null))).fetch();
             assertEquals(0, result.size());
             assertEquals(1, result.getFields().size());
 
             array = newNUMBER_R();
-            result = create().select().from(create().table(FArrays1Field_R(val(array)))).fetch();
+            result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(0, result.size());
             assertEquals(1, result.getFields().size());
 
             array.set(null, 1);
-            result = create().select().from(create().table(FArrays1Field_R(val(array)))).fetch();
+            result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(2, result.size());
             assertEquals(1, result.getFields().size());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
 
             array.set(null, 1, null, 2);
-            result = create().select().from(create().table(FArrays1Field_R(val(array)))).fetch();
+            result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(4, result.size());
             assertEquals(1, result.getFields().size());
             assertEquals(null, result.getValue(0, 0));
@@ -7193,7 +7202,7 @@ public abstract class jOOQAbstractTest<
             // An empty array
             // --------------
             Integer[] array = new Integer[0];
-            result = create().select().from(create().table(new Integer[0])).fetch();
+            result = create().select().from(table(new Integer[0])).fetch();
 
             assertEquals(0, result.size());
             assertEquals(1, result.getFields().size());
@@ -7201,7 +7210,7 @@ public abstract class jOOQAbstractTest<
             // An array containing null
             // ------------------------
             array = new Integer[] { null };
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(1, result.size());
             assertEquals(1, result.getFields().size());
@@ -7210,7 +7219,7 @@ public abstract class jOOQAbstractTest<
             // An array containing two values
             // ------------------------------
             array = new Integer[] { null, 1 };
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(2, result.size());
             assertEquals(1, result.getFields().size());
@@ -7220,7 +7229,7 @@ public abstract class jOOQAbstractTest<
             // An array containing three values
             // --------------------------------
             array = new Integer[] { null, 1, 2 };
-            result = create().select().from(create().table(array)).fetch();
+            result = create().select().from(table(array)).fetch();
 
             assertEquals(3, result.size());
             assertEquals(1, result.getFields().size());
@@ -7231,7 +7240,7 @@ public abstract class jOOQAbstractTest<
             // Joining an unnested array table
             // -------------------------------
             array = new Integer[] { 2, 3 };
-            Table<?> table = create().table(array);
+            Table<?> table = table(array);
             result = create()
                 .select(TBook_ID(), TBook_TITLE())
                 .from(TBook())
@@ -7270,7 +7279,7 @@ public abstract class jOOQAbstractTest<
                     break;
 
                 default:
-                    table = create().table(TArrays_STRING()).as("t");
+                    table = table(TArrays_STRING()).as("t");
                     result = create()
                         .select(TArrays_ID(), table.getField(0))
                         .from(TArrays(), table)
@@ -7290,24 +7299,24 @@ public abstract class jOOQAbstractTest<
 
             // Functions returning arrays
             // --------------------------
-            result = create().select().from(create().table(FArrays1Field(null))).fetch();
+            result = create().select().from(table(FArrays1Field(null))).fetch();
             assertEquals(0, result.size());
             assertEquals(1, result.getFields().size());
 
             array = new Integer[0];
-            result = create().select().from(create().table(FArrays1Field(val(array)))).fetch();
+            result = create().select().from(table(FArrays1Field(val(array)))).fetch();
             assertEquals(0, result.size());
             assertEquals(1, result.getFields().size());
 
             array = new Integer[] { null, 1 };
-            result = create().select().from(create().table(FArrays1Field(val(array)))).fetch();
+            result = create().select().from(table(FArrays1Field(val(array)))).fetch();
             assertEquals(2, result.size());
             assertEquals(1, result.getFields().size());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
 
             array = new Integer[] { null, 1, null, 2 };
-            result = create().select().from(create().table(FArrays1Field(val(array)))).fetch();
+            result = create().select().from(table(FArrays1Field(val(array)))).fetch();
             assertEquals(4, result.size());
             assertEquals(1, result.getFields().size());
             assertEquals(null, result.getValue(0, 0));
@@ -7385,7 +7394,7 @@ public abstract class jOOQAbstractTest<
 
             switch (getDialect()) {
                 case HSQLDB:
-                    bFromCursor = create().select().from(create().table(field)).fetch();
+                    bFromCursor = create().select().from(table(field)).fetch();
                     break;
 
                 default:
@@ -7403,7 +7412,7 @@ public abstract class jOOQAbstractTest<
 
             switch (getDialect()) {
                 case HSQLDB:
-                    bFromCursor = create().select().from(create().table(field)).fetch();
+                    bFromCursor = create().select().from(table(field)).fetch();
                     break;
 
                 default:
@@ -7641,7 +7650,7 @@ public abstract class jOOQAbstractTest<
         reset = false;
         connection.setAutoCommit(false);
 
-        Field<Integer> count = create().count();
+        Field<Integer> count = count();
 
         // Empty CSV file
         // --------------

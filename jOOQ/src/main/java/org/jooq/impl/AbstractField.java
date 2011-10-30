@@ -39,6 +39,12 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.vals;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -175,7 +181,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        CaseValueStep<T> decode = create().decode().value(this);
+        CaseValueStep<T> decode = Factory.decode().value(this);
         CaseWhenStep<T, Z> result = null;
 
         for (Entry<T, Z> entry : sortMap.entrySet()) {
@@ -403,27 +409,27 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> max() {
-        return new Function<T>("max", getDataType(), this);
+        return function("max", getDataType(), this);
     }
 
     @Override
     public final Field<T> min() {
-        return new Function<T>("min", getDataType(), this);
+        return function("min", getDataType(), this);
     }
 
     @Override
     public final Field<BigDecimal> sum() {
-        return new Function<BigDecimal>("sum", SQLDataType.NUMERIC, this);
+        return function("sum", SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> avg() {
-        return new Function<BigDecimal>("avg", SQLDataType.NUMERIC, this);
+        return function("avg", SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> median() {
-        return new Function<BigDecimal>("median", SQLDataType.NUMERIC, this);
+        return function("median", SQLDataType.NUMERIC, this);
     }
 
     @Override
@@ -453,7 +459,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> abs() {
-        return new Function<T>("abs", getDataType(), this);
+        return function("abs", getDataType(), this);
     }
 
     @Override
@@ -507,7 +513,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<BigDecimal> exp() {
-        return new Function<BigDecimal>("exp", SQLDataType.NUMERIC, this);
+        return function("exp", SQLDataType.NUMERIC, this);
     }
 
     @Override
@@ -527,17 +533,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<BigDecimal> acos() {
-        return new Function<BigDecimal>("acos", SQLDataType.NUMERIC, this);
+        return function("acos", SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> asin() {
-        return new Function<BigDecimal>("asin", SQLDataType.NUMERIC, this);
+        return function("asin", SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> atan() {
-        return new Function<BigDecimal>("atan", SQLDataType.NUMERIC, this);
+        return function("atan", SQLDataType.NUMERIC, this);
     }
 
     @Override
@@ -556,17 +562,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<BigDecimal> cos() {
-        return new Function<BigDecimal>("cos", SQLDataType.NUMERIC, this);
+        return function("cos", SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> sin() {
-        return new Function<BigDecimal>("sin", SQLDataType.NUMERIC, this);
+        return function("sin", SQLDataType.NUMERIC, this);
     }
 
     @Override
     public final Field<BigDecimal> tan() {
-        return new Function<BigDecimal>("tan", SQLDataType.NUMERIC, this);
+        return function("tan", SQLDataType.NUMERIC, this);
     }
 
     @Override
@@ -610,12 +616,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> upper() {
-        return new Function<String>("upper", SQLDataType.VARCHAR, this);
+        return function("upper", SQLDataType.VARCHAR, this);
     }
 
     @Override
     public final Field<String> lower() {
-        return new Function<String>("lower", SQLDataType.VARCHAR, this);
+        return function("lower", SQLDataType.VARCHAR, this);
     }
 
     @Override
@@ -625,12 +631,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> rtrim() {
-        return new Function<String>("rtrim", SQLDataType.VARCHAR, this);
+        return function("rtrim", SQLDataType.VARCHAR, this);
     }
 
     @Override
     public final Field<String> ltrim() {
-        return new Function<String>("ltrim", SQLDataType.VARCHAR, this);
+        return function("ltrim", SQLDataType.VARCHAR, this);
     }
 
     @Override
@@ -729,7 +735,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> concat(String... values) {
-        return concat(create().vals((Object[]) values).toArray(new Field[0]));
+        return concat(vals((Object[]) values).toArray(new Field[0]));
     }
 
     @Override
@@ -813,7 +819,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> nullif(Field<T> other) {
-        return new Function<T>("nullif", getDataType(), this, other);
+        return function("nullif", getDataType(), this, other);
     }
 
     @Override
@@ -860,7 +866,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         arguments[0] = this;
         arguments[1] = option;
         System.arraycopy(options, 0, arguments, 2, options.length);
-        return new Function<T>("coalesce", getDataType(), arguments);
+        return function("coalesce", getDataType(), arguments);
     }
 
     // ------------------------------------------------------------------------
@@ -933,7 +939,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition in(Field<?>... values) {
         if (values == null || values.length == 0) {
-            return create().falseCondition();
+            return falseCondition();
         }
         else {
             return new InCondition<T>(this, values, InOperator.IN);
@@ -959,7 +965,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition notIn(T... values) {
         if (values == null || values.length == 0) {
-            return create().trueCondition();
+            return trueCondition();
         }
         else {
             return notIn(vals(values).toArray(new Field<?>[0]));

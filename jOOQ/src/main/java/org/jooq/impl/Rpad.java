@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.val;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -75,20 +78,21 @@ class Rpad extends AbstractFunction<String> {
                 }
             }
 
-            default:
+            default: {
 
                 // MySQL only knows the 3 parameter version
                 if (character == null) {
                     if (configuration.getDialect() == SQLDialect.MYSQL) {
-                        return new Function<String>("rpad", SQLDataType.VARCHAR, field, length, val(" "));
+                        return function("rpad", SQLDataType.VARCHAR, field, length, val(" "));
                     }
                     else {
-                        return new Function<String>("rpad", SQLDataType.VARCHAR, field, length);
+                        return function("rpad", SQLDataType.VARCHAR, field, length);
                     }
                 }
                 else {
-                    return new Function<String>("rpad", SQLDataType.VARCHAR, field, length, character);
+                    return function("rpad", SQLDataType.VARCHAR, field, length, character);
                 }
+            }
         }
     }
 }

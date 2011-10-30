@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.Configuration;
 import org.jooq.Field;
 
@@ -65,7 +67,7 @@ class Trim extends AbstractFunction<String> {
                 return argument.rtrim().ltrim();
 
             default:
-                return new Function<String>("trim", SQLDataType.VARCHAR, argument);
+                return function("trim", SQLDataType.VARCHAR, argument);
         }
     }
 }

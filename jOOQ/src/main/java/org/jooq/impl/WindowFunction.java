@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.one;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -275,7 +277,7 @@ implements
     @Override
     public final WindowFunction<T> partitionByOne() {
         partitionByOne = true;
-        partitionBy.add(create().one());
+        partitionBy.add(one());
         return this;
     }
 

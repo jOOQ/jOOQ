@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
+
 import java.math.BigInteger;
 
 import org.jooq.Configuration;
@@ -70,19 +72,19 @@ class SequenceFunction extends AbstractFunction<BigInteger> {
             case ORACLE: // No break
             case SYBASE: {
                 String field = getQualifiedName(configuration) + "." + method;
-                return create(configuration).field(field, BigInteger.class);
+                return field(field, BigInteger.class);
             }
             case H2: // No break
             case POSTGRES: {
                 String field = method + "('" + getQualifiedName(configuration) + "')";
-                return create(configuration).field(field, BigInteger.class);
+                return field(field, BigInteger.class);
             }
 
             case DERBY: // No break
             case HSQLDB: {
                 if ("nextval".equals(method)) {
                     String field = "next value for " + getQualifiedName(configuration);
-                    return create(configuration).field(field, BigInteger.class);
+                    return field(field, BigInteger.class);
                 }
                 else {
                     throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + configuration.getDialect() + " dialect.");
@@ -92,7 +94,7 @@ class SequenceFunction extends AbstractFunction<BigInteger> {
             // Default is needed for hashCode() and toString()
             default: {
                 String field = getQualifiedName(configuration) + "." + method;
-                return create(configuration).field(field, BigInteger.class);
+                return field(field, BigInteger.class);
             }
         }
     }

@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import java.math.BigDecimal;
 
 import org.jooq.Configuration;
@@ -65,7 +67,7 @@ class Sqrt extends AbstractFunction<BigDecimal> {
                 return argument.power(0.5);
 
             default:
-                return new Function<BigDecimal>("sqrt", SQLDataType.NUMERIC, argument);
+                return function("sqrt", SQLDataType.NUMERIC, argument);
         }
     }
 }

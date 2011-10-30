@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
+
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
@@ -81,7 +83,7 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
         this.array = array;
         this.alias = alias;
         this.field = new FieldList();
-        this.field.add(create().field("COLUMN_VALUE", arrayType));
+        this.field.add(field("COLUMN_VALUE", arrayType));
     }
 
     @SuppressWarnings({ "unchecked", "deprecation" })

@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -99,12 +101,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
 
                 String separator = "..";
                 for (Field<?> field : record.getFields()) {
-                    Field<?> value = create(context).val(record.getValue(field));
-
                     context.sql(separator);
                     context.sql(field.getName());
                     context.sql("(");
-                    context.sql(value);
+                    context.sql(val(record.getValue(field)));
                     context.sql(")");
                 }
 
@@ -121,10 +121,8 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
 
         String separator = "";
         for (Field<?> field : record.getFields()) {
-            Field<?> value = create(context).val(record.getValue(field));
-
             context.sql(separator);
-            context.sql(value);
+            context.sql(val(record.getValue(field)));
             separator = ", ";
         }
 
@@ -169,7 +167,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
                 for (Field<?> field : record.getFields()) {
-                    context.bind(create(context).val(record.getValue(field)));
+                    context.bind(val(record.getValue(field)));
                 }
 
                 break;

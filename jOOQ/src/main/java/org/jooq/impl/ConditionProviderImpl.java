@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.trueCondition;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -63,7 +65,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
     final Condition getWhere() {
         if (condition == null) {
-            return create().trueCondition();
+            return trueCondition();
         }
 
         return condition;

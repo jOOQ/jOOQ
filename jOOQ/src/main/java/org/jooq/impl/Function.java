@@ -44,8 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.NamedQueryPart;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 
@@ -54,19 +53,19 @@ import org.jooq.SQLDialect;
  */
 class Function<T> extends AbstractField<T> {
 
-    private static final long    serialVersionUID = 347252741712134044L;
+    private static final long     serialVersionUID = 347252741712134044L;
 
-    private final List<Field<?>> arguments;
-    private final Term           term;
+    private final List<QueryPart> arguments;
+    private final Term            term;
 
-    Function(String name, DataType<T> type, Field<?>... arguments) {
+    Function(String name, DataType<T> type, QueryPart... arguments) {
         super(name, type);
 
         this.arguments = Arrays.asList(arguments);
         this.term = null;
     }
 
-    Function(Term term, DataType<T> type, Field<?>... arguments) {
+    Function(Term term, DataType<T> type, QueryPart... arguments) {
         super(term.name().toLowerCase(), type);
 
         this.arguments = Arrays.asList(arguments);
@@ -85,7 +84,7 @@ class Function<T> extends AbstractField<T> {
         context.sql(getArgumentListDelimiter(context, "("));
 
         String separator = "";
-        for (NamedQueryPart field : arguments) {
+        for (QueryPart field : arguments) {
             context.sql(separator);
             toSQLField(context, field);
 
@@ -154,7 +153,7 @@ class Function<T> extends AbstractField<T> {
      * Subclasses may override this method, if needed (e.g. to render
      * count(distinct [field])
      */
-    protected void toSQLField(RenderContext context, NamedQueryPart field) {
+    protected void toSQLField(RenderContext context, QueryPart field) {
         context.sql(field);
     }
 

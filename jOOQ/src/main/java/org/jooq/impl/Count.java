@@ -37,7 +37,7 @@
 package org.jooq.impl;
 
 import org.jooq.Field;
-import org.jooq.NamedQueryPart;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
 /**
@@ -56,7 +56,7 @@ class Count extends Function<Integer> {
     }
 
     @Override
-    protected final void toSQLField(RenderContext context, NamedQueryPart field) {
+    protected final void toSQLField(RenderContext context, QueryPart field) {
         if (distinct) {
             context.sql("distinct ");
         }

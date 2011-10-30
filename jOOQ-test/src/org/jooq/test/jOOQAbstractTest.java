@@ -45,6 +45,7 @@ import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.countOver;
+import static org.jooq.impl.Factory.cube;
 import static org.jooq.impl.Factory.cumeDistOver;
 import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.currentTime;
@@ -61,6 +62,7 @@ import static org.jooq.impl.Factory.percentRankOver;
 import static org.jooq.impl.Factory.pi;
 import static org.jooq.impl.Factory.rand;
 import static org.jooq.impl.Factory.rankOver;
+import static org.jooq.impl.Factory.rollup;
 import static org.jooq.impl.Factory.rowNumberOver;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
@@ -2967,6 +2969,108 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testGroupByCubeRollup() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+                log.info("SKIPPING", "Group by CUBE / ROLLUP tests");
+                return;
+        }
+
+        Result<Record> result;
+
+        result = create().select(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID())
+                .from(TBook())
+                .groupBy(cube(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID()))
+                .orderBy(
+                    TBook_ID().asc().nullsFirst(),
+                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
+
+        assertEquals(11, result.size());
+        assertNull(result.getValue(0, 0));
+        assertNull(result.getValue(0, 1));
+
+        assertNull(result.getValue(1, 0));
+        assertEquals(1, result.getValue(1, 1));
+
+        assertNull(result.getValue(2, 0));
+        assertEquals(2, result.getValue(2, 1));
+
+        assertEquals(1, result.getValue(3, 0));
+        assertNull(result.getValue(3, 1));
+
+        assertEquals(1, result.getValue(4, 0));
+        assertEquals(1, result.getValue(4, 1));
+
+        assertEquals(2, result.getValue(5, 0));
+        assertNull(result.getValue(5, 1));
+
+        assertEquals(2, result.getValue(6, 0));
+        assertEquals(1, result.getValue(6, 1));
+
+        assertEquals(3, result.getValue(7, 0));
+        assertNull(result.getValue(7, 1));
+
+        assertEquals(3, result.getValue(8, 0));
+        assertEquals(2, result.getValue(8, 1));
+
+        assertEquals(4, result.getValue(9, 0));
+        assertNull(result.getValue(9, 1));
+
+        assertEquals(4, result.getValue(10, 0));
+        assertEquals(2, result.getValue(10, 1));
+
+        result = create().select(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID())
+                .from(TBook())
+                .groupBy(rollup(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID()))
+                .orderBy(
+                    TBook_ID().asc().nullsFirst(),
+                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
+
+        assertEquals(9, result.size());
+        assertNull(result.getValue(0, 0));
+        assertNull(result.getValue(0, 1));
+
+        assertEquals(1, result.getValue(1, 0));
+        assertNull(result.getValue(1, 1));
+
+        assertEquals(1, result.getValue(2, 1));
+        assertEquals(1, result.getValue(2, 1));
+
+        assertEquals(2, result.getValue(3, 0));
+        assertNull(result.getValue(3, 1));
+
+        assertEquals(2, result.getValue(4, 0));
+        assertEquals(1, result.getValue(4, 1));
+
+        assertEquals(3, result.getValue(5, 0));
+        assertNull(result.getValue(5, 1));
+
+        assertEquals(3, result.getValue(6, 0));
+        assertEquals(2, result.getValue(6, 1));
+
+        assertEquals(4, result.getValue(7, 0));
+        assertNull(result.getValue(7, 1));
+
+        assertEquals(4, result.getValue(8, 0));
+        assertEquals(2, result.getValue(8, 1));
+    }
+
+    @Test
     public void testHavingWithoutGrouping() throws Exception {
         try {
             assertEquals(Integer.valueOf(1), create()
@@ -4997,9 +5101,9 @@ public abstract class jOOQAbstractTest<
         record = create().select(tomorrow, ts, yesterday).fetchOne();
 
         // Ingres truncates milliseconds. Ignore this fact
-        assertEquals(24 * 60 * 60,
-            (record.getValue(ts).getTime() / 1000 - record.getValue(yesterday).getTime() / 1000));
         assertEquals(24 * 60 * 60 + 60 * 60,
+            (record.getValue(ts).getTime() / 1000 - record.getValue(yesterday).getTime() / 1000));
+        assertEquals(24 * 60 * 60,
             (record.getValue(tomorrow).getTime() / 1000 - record.getValue(ts).getTime() / 1000));
     }
 

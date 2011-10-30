@@ -53,6 +53,8 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
@@ -180,13 +182,19 @@ public class IngresDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        for (Record record : create().select(Iisequences.SEQ_NAME.trim())
+        for (Record record : create().select(
+                    Iisequences.SEQ_NAME.trim(),
+                    Iisequences.DATA_TYPE.trim())
                 .from(IISEQUENCES)
                 .where(Iisequences.SEQ_OWNER.equal(getSchemaName()))
                 .orderBy(Iisequences.SEQ_NAME)
                 .fetch()) {
 
-            result.add(new DefaultSequenceDefinition(this, record.getValue(Iisequences.SEQ_NAME.trim())));
+            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                record.getValue(Iisequences.DATA_TYPE.trim()), 0, 0);
+
+            result.add(new DefaultSequenceDefinition(
+                getSchema(), record.getValue(Iisequences.SEQ_NAME.trim()), type));
         }
 
         return result;

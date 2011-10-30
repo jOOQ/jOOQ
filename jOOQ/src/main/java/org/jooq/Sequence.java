@@ -35,22 +35,21 @@
  */
 package org.jooq;
 
-import java.math.BigInteger;
 
 /**
  * A type representing sequences in databases that support this.
  *
  * @author Lukas Eder
  */
-public interface Sequence {
+public interface Sequence<T extends Number> {
 
     /**
      * Get the current value of this sequence
      */
-    Field<BigInteger> currval();
+    Field<T> currval();
 
     /**
      * Increment the sequence and get the next value
      */
-    Field<BigInteger> nextval();
+    Field<T> nextval();
 }

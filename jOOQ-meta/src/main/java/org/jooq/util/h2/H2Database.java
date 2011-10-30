@@ -51,6 +51,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
@@ -163,12 +164,15 @@ public class H2Database extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (String name : create().select(Sequences.SEQUENCE_NAME)
-            .from(SEQUENCES)
-            .where(Sequences.SEQUENCE_SCHEMA.equal(getSchemaName()))
-            .orderBy(Sequences.SEQUENCE_NAME)
-            .fetch(Sequences.SEQUENCE_NAME)) {
+                .from(SEQUENCES)
+                .where(Sequences.SEQUENCE_SCHEMA.equal(getSchemaName()))
+                .orderBy(Sequences.SEQUENCE_NAME)
+                .fetch(Sequences.SEQUENCE_NAME)) {
 
-            result.add(new DefaultSequenceDefinition(this, name));
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                H2DataType.BIGINT.getTypeName(), 0, 0);
+
+            result.add(new DefaultSequenceDefinition(getSchema(), name, type));
         }
 
         return result;

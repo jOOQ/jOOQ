@@ -1483,8 +1483,8 @@ public class Factory implements Configuration {
      * Convenience method to fetch the NEXTVAL for a sequence directly from this
      * {@link Factory}'s underlying JDBC {@link Connection}
      */
-    public final BigInteger nextval(Sequence sequence) throws SQLException {
-        Field<BigInteger> nextval = sequence.nextval();
+    public final <T extends Number> T nextval(Sequence<T> sequence) throws SQLException {
+        Field<T> nextval = sequence.nextval();
         return select(nextval).fetchOne(nextval);
     }
 
@@ -1492,8 +1492,8 @@ public class Factory implements Configuration {
      * Convenience method to fetch the CURRVAL for a sequence directly from this
      * {@link Factory}'s underlying JDBC {@link Connection}
      */
-    public final BigInteger currval(Sequence sequence) throws SQLException {
-        Field<BigInteger> currval = sequence.currval();
+    public final <T extends Number> T currval(Sequence<T> sequence) throws SQLException {
+        Field<T> currval = sequence.currval();
         return select(currval).fetchOne(currval);
     }
 

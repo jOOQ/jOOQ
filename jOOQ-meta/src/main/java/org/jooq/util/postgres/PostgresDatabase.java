@@ -64,6 +64,8 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
@@ -195,13 +197,24 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        for (String name : create().select(Sequences.SEQUENCE_NAME)
-            .from(SEQUENCES)
-            .where(Sequences.SEQUENCE_SCHEMA.equal(getSchemaName()))
-            .orderBy(Sequences.SEQUENCE_NAME)
-            .fetch(Sequences.SEQUENCE_NAME)) {
+        for (Record record : create()
+                .select(
+                    Sequences.SEQUENCE_NAME,
+                    Sequences.DATA_TYPE,
+                    Sequences.NUMERIC_PRECISION,
+                    Sequences.NUMERIC_SCALE)
+                .from(SEQUENCES)
+                .where(Sequences.SEQUENCE_SCHEMA.equal(getSchemaName()))
+                .orderBy(Sequences.SEQUENCE_NAME)
+                .fetch()) {
 
-            result.add(new DefaultSequenceDefinition(this, name));
+            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                record.getValue(Sequences.DATA_TYPE),
+                record.getValue(Sequences.NUMERIC_PRECISION),
+                record.getValue(Sequences.NUMERIC_SCALE));
+
+            result.add(new DefaultSequenceDefinition(
+                getSchema(), record.getValue(Sequences.SEQUENCE_NAME), type));
         }
 
         return result;

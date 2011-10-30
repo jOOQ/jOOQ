@@ -70,7 +70,54 @@ enum ExpressionOperator {
     /**
      * Modulo
      */
-    MODULO("%");
+    MODULO("%"),
+
+    /**
+     * Bitwise not
+     */
+    BIT_NOT("~"),
+
+    /**
+     * Bitwise and
+     */
+    BIT_AND("&"),
+
+    /**
+     * Bitwise or
+     */
+    BIT_OR("|"),
+
+    /**
+     * Bitwise xor
+     */
+    BIT_XOR("^"),
+
+    /**
+     * Bitwise and
+     */
+    BIT_NAND("~&"),
+
+    /**
+     * Bitwise or
+     */
+    BIT_NOR("~|"),
+
+    /**
+     * Bitwise xor
+     */
+    BIT_XNOR("~^"),
+
+    /**
+     * Bitwise shift left
+     */
+    SHL("<<"),
+
+    /**
+     * Bitwise shift right
+     */
+    SHR(">>"),
+
+    ;
 
     private final String sql;
 

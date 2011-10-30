@@ -57,6 +57,8 @@ import static org.jooq.impl.Factory.e;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.grouping;
+import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.percentRankOver;
 import static org.jooq.impl.Factory.pi;
@@ -2985,9 +2987,13 @@ public abstract class jOOQAbstractTest<
 
         Result<Record> result;
 
+        // CUBE clause
+        // -----------
         result = create().select(
                     TBook_ID(),
-                    TBook_AUTHOR_ID())
+                    TBook_AUTHOR_ID(),
+                    grouping(TBook_ID()),
+                    groupingId(TBook_ID(), TBook_AUTHOR_ID()))
                 .from(TBook())
                 .groupBy(cube(
                     TBook_ID(),
@@ -2997,42 +3003,18 @@ public abstract class jOOQAbstractTest<
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
         assertEquals(11, result.size());
-        assertNull(result.getValue(0, 0));
-        assertNull(result.getValue(0, 1));
+        assertEquals(Arrays.asList(null, null, null, 1, 1, 2, 2, 3, 3, 4, 4), result.getValues(0));
+        assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result.getValues(1));
+        assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result.getValues(2));
+        assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
 
-        assertNull(result.getValue(1, 0));
-        assertEquals(1, result.getValue(1, 1));
-
-        assertNull(result.getValue(2, 0));
-        assertEquals(2, result.getValue(2, 1));
-
-        assertEquals(1, result.getValue(3, 0));
-        assertNull(result.getValue(3, 1));
-
-        assertEquals(1, result.getValue(4, 0));
-        assertEquals(1, result.getValue(4, 1));
-
-        assertEquals(2, result.getValue(5, 0));
-        assertNull(result.getValue(5, 1));
-
-        assertEquals(2, result.getValue(6, 0));
-        assertEquals(1, result.getValue(6, 1));
-
-        assertEquals(3, result.getValue(7, 0));
-        assertNull(result.getValue(7, 1));
-
-        assertEquals(3, result.getValue(8, 0));
-        assertEquals(2, result.getValue(8, 1));
-
-        assertEquals(4, result.getValue(9, 0));
-        assertNull(result.getValue(9, 1));
-
-        assertEquals(4, result.getValue(10, 0));
-        assertEquals(2, result.getValue(10, 1));
-
+        // ROLLUP clause
+        // -------------
         result = create().select(
                     TBook_ID(),
-                    TBook_AUTHOR_ID())
+                    TBook_AUTHOR_ID(),
+                    grouping(TBook_ID()),
+                    groupingId(TBook_ID(), TBook_AUTHOR_ID()))
                 .from(TBook())
                 .groupBy(rollup(
                     TBook_ID(),
@@ -3042,32 +3024,10 @@ public abstract class jOOQAbstractTest<
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
         assertEquals(9, result.size());
-        assertNull(result.getValue(0, 0));
-        assertNull(result.getValue(0, 1));
-
-        assertEquals(1, result.getValue(1, 0));
-        assertNull(result.getValue(1, 1));
-
-        assertEquals(1, result.getValue(2, 1));
-        assertEquals(1, result.getValue(2, 1));
-
-        assertEquals(2, result.getValue(3, 0));
-        assertNull(result.getValue(3, 1));
-
-        assertEquals(2, result.getValue(4, 0));
-        assertEquals(1, result.getValue(4, 1));
-
-        assertEquals(3, result.getValue(5, 0));
-        assertNull(result.getValue(5, 1));
-
-        assertEquals(3, result.getValue(6, 0));
-        assertEquals(2, result.getValue(6, 1));
-
-        assertEquals(4, result.getValue(7, 0));
-        assertNull(result.getValue(7, 1));
-
-        assertEquals(4, result.getValue(8, 0));
-        assertEquals(2, result.getValue(8, 1));
+        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result.getValues(0));
+        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result.getValues(1));
+        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result.getValues(2));
+        assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
     }
 
     @Test

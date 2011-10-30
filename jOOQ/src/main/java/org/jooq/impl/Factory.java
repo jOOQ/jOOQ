@@ -1760,7 +1760,7 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Create a ROLLUP(fiel1, field2, .., fieldn) grouping field
+     * Create a ROLLUP(field1, field2, .., fieldn) grouping field
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -1785,7 +1785,7 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Create a CUBE(fiel1, field2, .., fieldn) grouping field
+     * Create a CUBE(field1, field2, .., fieldn) grouping field
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -1807,6 +1807,34 @@ public class Factory implements Configuration {
      */
     public static Field<?> cube(Field<?>... fields) {
         return function("cube", Object.class, fields);
+    }
+
+    /**
+     * Create a GROUPING(field) aggregation field to be used along with
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * groupings
+     *
+     * @param field The function argument
+     * @return The <code>GROUPING</code> aggregation field
+     * @see #cube(Field...)
+     * @see #rollup(Field...)
+     */
+    public static Field<Integer> grouping(Field<?> field) {
+        return function("grouping", Integer.class, field);
+    }
+
+    /**
+     * Create a GROUPING_ID(field1, field2, .., fieldn) aggregation field to be
+     * used along with <code>CUBE</code>, <code>ROLLUP</code>, and
+     * <code>GROUPING SETS</code> groupings
+     *
+     * @param fields The function arguments
+     * @return The <code>GROUPING_ID</code> aggregation field
+     * @see #cube(Field...)
+     * @see #rollup(Field...)
+     */
+    public static Field<Integer> groupingId(Field<?>... fields) {
+        return function("grouping_id", Integer.class, fields);
     }
 
     // -------------------------------------------------------------------------

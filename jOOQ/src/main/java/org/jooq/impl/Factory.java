@@ -203,18 +203,6 @@ public class Factory implements Configuration {
     }
 
     // -------------------------------------------------------------------------
-    // Access to the loader API
-    // -------------------------------------------------------------------------
-
-    /**
-     * Create a new <code>Loader</code> object to load data from a CSV or XML
-     * source
-     */
-    public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
-        return new LoaderImpl<R>(this, table);
-    }
-
-    // -------------------------------------------------------------------------
     // RenderContext and BindContext accessors
     // -------------------------------------------------------------------------
 
@@ -308,6 +296,18 @@ public class Factory implements Configuration {
         for (Attachable attachable : attachables) {
             attachable.attach(this);
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // Access to the loader API
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new <code>Loader</code> object to load data from a CSV or XML
+     * source
+     */
+    public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
+        return new LoaderImpl<R>(this, table);
     }
 
     // -------------------------------------------------------------------------
@@ -905,6 +905,10 @@ public class Factory implements Configuration {
     public final Record fetchOne(String sql, Object... bindings) throws SQLException {
         return new SQLResultQuery(this, sql, bindings).fetchOne();
     }
+
+    // -------------------------------------------------------------------------
+    // JDBC convenience methods
+    // -------------------------------------------------------------------------
 
     /**
      * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
@@ -1610,7 +1614,7 @@ public class Factory implements Configuration {
     }
 
     // -------------------------------------------------------------------------
-    // Global Field factory
+    // Global Field and Function factory
     // -------------------------------------------------------------------------
 
     /**
@@ -1754,6 +1758,146 @@ public class Factory implements Configuration {
 
         return (Field<T>[]) castFields;
     }
+
+    /**
+     * Create a ROLLUP(fiel1, field2, .., fieldn) grouping field
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fields The fields that are part of the <code>ROLLUP</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    public static Field<?> rollup(Field<?>... fields) {
+        return function("rollup", Object.class, fields);
+    }
+
+    /**
+     * Create a CUBE(fiel1, field2, .., fieldn) grouping field
+     * <p>
+     * This has been observed to work with the following databases:
+     * <ul>
+     * <li>DB2</li>
+     * <li>Oracle</li>
+     * <li>SQL Server</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     * <p>
+     * Please check the SQL Server documentation for a very nice explanation of
+     * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
+     * clauses in grouping contexts: <a
+     * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
+     * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
+     *
+     * @param fields The fields that are part of the <code>CUBE</code>
+     *            function
+     * @return A field to be used in a <code>GROUP BY</code> clause
+     */
+    public static Field<?> cube(Field<?>... fields) {
+        return function("cube", Object.class, fields);
+    }
+
+    // -------------------------------------------------------------------------
+    // Aggregate and window functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the count(*) function
+     *
+     * @see Field#count()
+     * @see Field#countDistinct()
+     */
+    public static Field<Integer> count() {
+        return field("*", Integer.class).count();
+    }
+
+    /**
+     * The <code>count(*) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     *
+     * @see Field#countOver()
+     */
+    public static WindowPartitionByStep<Integer> countOver() {
+        return field("*", Integer.class).countOver();
+    }
+
+    /**
+     * The <code>row_number() over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static WindowPartitionByStep<Integer> rowNumberOver() {
+        return new WindowFunction<Integer>("row_number", SQLDataType.INTEGER);
+    }
+
+    /**
+     * The <code>rank_over() over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static WindowPartitionByStep<Integer> rankOver() {
+        return new WindowFunction<Integer>("rank", SQLDataType.INTEGER);
+    }
+
+    /**
+     * The <code>dense_rank() over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static WindowPartitionByStep<Integer> denseRankOver() {
+        return new WindowFunction<Integer>("dense_rank", SQLDataType.INTEGER);
+    }
+
+    /**
+     * The <code>precent_rank() over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static WindowPartitionByStep<BigDecimal> percentRankOver() {
+        return new WindowFunction<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
+    }
+
+    /**
+     * The <code>cume_dist() over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static WindowPartitionByStep<BigDecimal> cumeDistOver() {
+        return new WindowFunction<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
+    }
+
+    /**
+     * The <code>ntile([number]) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static WindowPartitionByStep<BigDecimal> ntile(int number) {
+        return new WindowFunction<BigDecimal>("ntile", SQLDataType.NUMERIC, field("" + number, Integer.class));
+    }
+
+    // -------------------------------------------------------------------------
+    // Bind values
+    // -------------------------------------------------------------------------
 
     /**
      * Get a constant value
@@ -2127,92 +2271,6 @@ public class Factory implements Configuration {
      */
     public static Field<BigDecimal> e() {
         return new Euler();
-    }
-
-    // -------------------------------------------------------------------------
-    // Aggregate and window functions
-    // -------------------------------------------------------------------------
-
-    /**
-     * Get the count(*) function
-     *
-     * @see Field#count()
-     * @see Field#countDistinct()
-     */
-    public static Field<Integer> count() {
-        return field("*", Integer.class).count();
-    }
-
-    /**
-     * The <code>count(*) over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     *
-     * @see Field#countOver()
-     */
-    public static WindowPartitionByStep<Integer> countOver() {
-        return field("*", Integer.class).countOver();
-    }
-
-    /**
-     * The <code>row_number() over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     */
-    public static WindowPartitionByStep<Integer> rowNumberOver() {
-        return new WindowFunction<Integer>("row_number", SQLDataType.INTEGER);
-    }
-
-    /**
-     * The <code>rank_over() over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     */
-    public static WindowPartitionByStep<Integer> rankOver() {
-        return new WindowFunction<Integer>("rank", SQLDataType.INTEGER);
-    }
-
-    /**
-     * The <code>dense_rank() over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     */
-    public static WindowPartitionByStep<Integer> denseRankOver() {
-        return new WindowFunction<Integer>("dense_rank", SQLDataType.INTEGER);
-    }
-
-    /**
-     * The <code>precent_rank() over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     */
-    public static WindowPartitionByStep<BigDecimal> percentRankOver() {
-        return new WindowFunction<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
-    }
-
-    /**
-     * The <code>cume_dist() over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     */
-    public static WindowPartitionByStep<BigDecimal> cumeDistOver() {
-        return new WindowFunction<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
-    }
-
-    /**
-     * The <code>ntile([number]) over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     */
-    public static WindowPartitionByStep<BigDecimal> ntile(int number) {
-        return new WindowFunction<BigDecimal>("ntile", SQLDataType.NUMERIC, field("" + number, Integer.class));
     }
 
     // -------------------------------------------------------------------------

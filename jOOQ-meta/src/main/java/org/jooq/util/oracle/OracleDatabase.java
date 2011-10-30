@@ -59,6 +59,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultArrayDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
@@ -181,7 +182,10 @@ public class OracleDatabase extends AbstractDatabase {
             .orderBy(SEQUENCE_NAME)
             .fetch(SEQUENCE_NAME)) {
 
-            result.add(new DefaultSequenceDefinition(this, name));
+            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                OracleDataType.NUMBER.getTypeName(), 38, 0);
+
+            result.add(new DefaultSequenceDefinition(getSchema(), name, type));
         }
 
         return result;

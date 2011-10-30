@@ -38,9 +38,11 @@ package org.jooq.util;
 /**
  * @author Lukas Eder
  */
-public class DefaultSequenceDefinition extends AbstractDefinition implements SequenceDefinition {
+public class DefaultSequenceDefinition
+    extends AbstractTypedElementDefinition<SchemaDefinition>
+    implements SequenceDefinition {
 
-    public DefaultSequenceDefinition(Database database, String name) {
-        super(database, name, null);
+    public DefaultSequenceDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
+        super(schema, name, -1, type, null);
     }
 }

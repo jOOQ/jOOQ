@@ -117,7 +117,7 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
      * Subclasses should override this method
      */
     @Override
-    public List<Sequence> getSequences() {
+    public List<Sequence<?>> getSequences() {
         return Collections.emptyList();
     }
 }

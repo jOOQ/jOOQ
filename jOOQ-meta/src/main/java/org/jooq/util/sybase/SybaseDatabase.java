@@ -47,6 +47,8 @@ import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
@@ -203,8 +205,12 @@ public class SybaseDatabase extends AbstractDatabase {
             .orderBy(Syssequence.SEQUENCE_NAME)
             .fetch(Syssequence.SEQUENCE_NAME)) {
 
-            result.add(new DefaultSequenceDefinition(this, name));
+            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+                SybaseDataType.NUMERIC.getTypeName(), 38, 0);
+
+            result.add(new DefaultSequenceDefinition(getSchema(), name, type));
         }
+
         return result;
     }
 

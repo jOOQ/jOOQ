@@ -13,14 +13,14 @@ package org.jooq.test.h2.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence S_AUTHOR_ID
+	 * The sequence PUBLIC.PUBLIC.S_AUTHOR_ID
 	 */
-	public static final org.jooq.Sequence S_AUTHOR_ID = new org.jooq.impl.SequenceImpl("S_AUTHOR_ID", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("S_AUTHOR_ID", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence S_TRIGGERS_SEQUENCE
+	 * The sequence PUBLIC.PUBLIC.S_TRIGGERS_SEQUENCE
 	 */
-	public static final org.jooq.Sequence S_TRIGGERS_SEQUENCE = new org.jooq.impl.SequenceImpl("S_TRIGGERS_SEQUENCE", org.jooq.test.h2.generatedclasses.Public.PUBLIC);
+	public static final org.jooq.Sequence<java.lang.Long> S_TRIGGERS_SEQUENCE = new org.jooq.impl.SequenceImpl<java.lang.Long>("S_TRIGGERS_SEQUENCE", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
 	 * No instances

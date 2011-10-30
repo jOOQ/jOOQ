@@ -40,6 +40,6 @@ package org.jooq.util;
  *
  * @author Lukas Eder
  */
-public interface SequenceDefinition extends Definition {
+public interface SequenceDefinition extends TypedElementDefinition<SchemaDefinition> {
 
 }

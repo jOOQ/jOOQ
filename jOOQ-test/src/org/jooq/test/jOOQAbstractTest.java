@@ -5148,7 +5148,7 @@ public abstract class jOOQAbstractTest<
         record = create().select(tomorrow, ts, yesterday).fetchOne();
 
         // Ingres truncates milliseconds. Ignore this fact
-        assertEquals(24 * 60 * 60 + 60 * 60,
+        assertEquals(24 * 60 * 60,
             (record.getValue(ts).getTime() / 1000 - record.getValue(yesterday).getTime() / 1000));
         assertEquals(24 * 60 * 60,
             (record.getValue(tomorrow).getTime() / 1000 - record.getValue(ts).getTime() / 1000));

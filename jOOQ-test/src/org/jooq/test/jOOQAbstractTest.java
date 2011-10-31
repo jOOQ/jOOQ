@@ -44,6 +44,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
@@ -2985,7 +2986,6 @@ public abstract class jOOQAbstractTest<
             case H2:
             case HSQLDB:
             case INGRES:
-            case MYSQL:
             case POSTGRES:
             case SQLITE:
                 log.info("SKIPPING", "Group by CUBE / ROLLUP tests");
@@ -2993,10 +2993,61 @@ public abstract class jOOQAbstractTest<
         }
 
         Result<Record> result;
-        Field<Integer> groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
 
+        // Simple ROLLUP clause
+        // --------------------
+        result = create().select(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID())
+                .from(TBook())
+                .groupBy(rollup(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID()))
+                .fetch();
+
+        System.out.println(result.format());
+        assertEquals(9, result.size());
+
+        if (getDialect() == DB2) {
+            assertEquals(Arrays.asList(null, 1, 2, 3, 4, 1, 2, 3, 4), result.getValues(0));
+            assertEquals(Arrays.asList(null, null, null, null, null, 1, 1, 2, 2), result.getValues(1));
+        }
+        else {
+            assertEquals(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, null), result.getValues(0));
+            assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));
+        }
+
+        if (getDialect() == MYSQL) {
+            log.info("SKIPPING", "CUBE and GROUPING SETS tests");
+            return;
+        }
+
+        // ROLLUP clause
+        // -------------
+        Field<Integer> groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
         if (asList(DB2, SYBASE).contains(getDialect()))
             groupingId = one();
+
+        result = create().select(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID(),
+                    grouping(TBook_ID()),
+                    groupingId)
+                .from(TBook())
+                .groupBy(rollup(
+                    TBook_ID(),
+                    TBook_AUTHOR_ID()))
+                .orderBy(
+                    TBook_ID().asc().nullsFirst(),
+                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
+
+        assertEquals(9, result.size());
+        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result.getValues(0));
+        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result.getValues(1));
+        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result.getValues(2));
+
+        if (!asList(DB2, SYBASE).contains(getDialect()))
+            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
 
         // CUBE clause
         // -----------
@@ -3020,29 +3071,6 @@ public abstract class jOOQAbstractTest<
 
         if (!asList(DB2, SYBASE).contains(getDialect()))
             assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
-
-        // ROLLUP clause
-        // -------------
-        result = create().select(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID(),
-                    grouping(TBook_ID()),
-                    groupingId)
-                .from(TBook())
-                .groupBy(rollup(
-                    TBook_ID(),
-                    TBook_AUTHOR_ID()))
-                .orderBy(
-                    TBook_ID().asc().nullsFirst(),
-                    TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
-
-        assertEquals(9, result.size());
-        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result.getValues(0));
-        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result.getValues(1));
-        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result.getValues(2));
-
-        if (!asList(DB2, SYBASE).contains(getDialect()))
-            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
 
         // GROUPING SETS clause
         // --------------------

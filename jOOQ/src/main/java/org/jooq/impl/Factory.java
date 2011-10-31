@@ -1765,6 +1765,7 @@ public class Factory implements Configuration {
      * This has been observed to work with the following databases:
      * <ul>
      * <li>DB2</li>
+     * <li>MySQL (simulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>Oracle</li>
      * <li>SQL Server</li>
      * <li>Sybase SQL Anywhere</li>
@@ -1781,7 +1782,7 @@ public class Factory implements Configuration {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     public static Field<?> rollup(Field<?>... fields) {
-        return function("rollup", Object.class, fields);
+        return new Rollup(fields);
     }
 
     /**

@@ -1476,7 +1476,7 @@ public class Factory implements Configuration {
      */
     @Deprecated
     public final <T extends Number> T lastID(Identity<?, T> identity) throws SQLException {
-        return select(identity.getField().max()).from(identity.getTable()).fetchOne(identity.getField().max());
+        return select(max(identity.getField())).from(identity.getTable()).fetchOne(max(identity.getField()));
     }
 
     /**
@@ -1951,18 +1951,157 @@ public class Factory implements Configuration {
     }
 
     // -------------------------------------------------------------------------
-    // Aggregate and window functions
+    // Aggregate functions
     // -------------------------------------------------------------------------
 
     /**
      * Get the count(*) function
-     *
-     * @see Field#count()
-     * @see Field#countDistinct()
      */
     public static Field<Integer> count() {
-        return field("*", Integer.class).count();
+        return new Count(field("*", Integer.class), false);
     }
+
+    /**
+     * Get the count(field) function
+     */
+    public static Field<Integer> count(Field<?> field) {
+        return new Count(field, false);
+    }
+
+    /**
+     * Get the count(distinct field) function
+     */
+    public static Field<Integer> countDistinct(Field<?> field) {
+        return new Count(field, true);
+    }
+
+    /**
+     * Get the max value over a field: max(field)
+     */
+    public static <T> Field<T> max(Field<T> field) {
+        return function("max", field.getDataType(), field);
+    }
+
+    /**
+     * Get the min value over a field: min(field)
+     */
+    public static <T> Field<T> min(Field<T> field) {
+        return function("min", field.getDataType(), field);
+    }
+
+    /**
+     * Get the sum over a numeric field: sum(field)
+     */
+    public static Field<BigDecimal> sum(Field<?> field) {
+        return function("sum", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the average over a numeric field: avg(field)
+     */
+    public static Field<BigDecimal> avg(Field<?> field) {
+        return function("avg", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the median over a numeric field: median(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>HSQLDB</li>
+     * <li>Oracle</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    public static Field<BigDecimal> median(Field<?> field) {
+        return function("median", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the population standard deviation of a numeric field: stddev_pop(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>DB2</li>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (stdev)</li>
+     * <li>Sybase ASE</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    public static Field<BigDecimal> stddevPop(Field<?> field) {
+        return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the sample standard deviation of a numeric field: stddev_samp(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>DB2</li>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (stdev)</li>
+     * <li>Sybase ASE</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    public static Field<BigDecimal> stddevSamp(Field<?> field) {
+        return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the population variance of a numeric field: var_pop(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>DB2</li>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (stdev)</li>
+     * <li>Sybase ASE</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    public static Field<BigDecimal> varPop(Field<?> field) {
+        return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the sample variance of a numeric field: var_samp(field)
+     * <p>
+     * This is known to be supported in any of these RDBMS:
+     * <ul>
+     * <li>H2</li>
+     * <li>HSQLDB</li>
+     * <li>Ingres</li>
+     * <li>MySQL</li>
+     * <li>Oracle</li>
+     * <li>Postgres</li>
+     * <li>SQL Server (var)</li>
+     * <li>Sybase SQL Anywhere</li>
+     * </ul>
+     */
+    public static Field<BigDecimal> varSamp(Field<?> field) {
+        return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, field);
+    }
+
+    // -------------------------------------------------------------------------
+    // Window functions
+    // -------------------------------------------------------------------------
 
     /**
      * The <code>count(*) over ([analytic clause])</code> function.

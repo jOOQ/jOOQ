@@ -47,9 +47,11 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.impl.Factory.countOver;
 import static org.jooq.impl.Factory.cube;
 import static org.jooq.impl.Factory.cumeDistOver;
@@ -66,6 +68,9 @@ import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.grouping;
 import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.groupingSets;
+import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.median;
+import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.percentRankOver;
 import static org.jooq.impl.Factory.pi;
@@ -73,11 +78,16 @@ import static org.jooq.impl.Factory.rand;
 import static org.jooq.impl.Factory.rankOver;
 import static org.jooq.impl.Factory.rollup;
 import static org.jooq.impl.Factory.rowNumberOver;
+import static org.jooq.impl.Factory.stddevPop;
+import static org.jooq.impl.Factory.stddevSamp;
+import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
+import static org.jooq.impl.Factory.varPop;
+import static org.jooq.impl.Factory.varSamp;
 import static org.jooq.impl.Factory.zero;
 
 import java.io.ByteArrayInputStream;
@@ -2598,7 +2608,7 @@ public abstract class jOOQAbstractTest<
         create().select(TAuthor_LAST_NAME())
                 .from(TAuthor())
                 .where(val(0).equal(create()
-                             .select(TBook_ID().count())
+                             .select(count(TBook_ID()))
                              .from(TBook())
                              .where(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                              .and(TBook_TITLE().equal("1984"))))
@@ -2619,7 +2629,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Integer.valueOf(2), result.get(1).getValue(TBook_AUTHOR_ID()));
 
         assertEquals(2, create()
-            .select(TBook_AUTHOR_ID().countDistinct())
+            .select(countDistinct(TBook_AUTHOR_ID()))
             .from(TBook())
             .fetchOne(0));
         assertEquals(2, create()
@@ -3334,10 +3344,10 @@ public abstract class jOOQAbstractTest<
                 break;
             default:
                 ID3 = create()
-                    .select(TAuthor_ID().max().add(1))
+                    .select(max(TAuthor_ID()).add(1))
                     .from(TAuthor()).asField();
                 ID4 = create()
-                    .select(TAuthor_ID().max().add(1))
+                    .select(max(TAuthor_ID()).add(1))
                     .from(TAuthor()).asField();
                 break;
         }
@@ -3383,7 +3393,7 @@ public abstract class jOOQAbstractTest<
         Field<String> f3 = a2.getField(TAuthor_LAST_NAME());
 
         UpdateQuery<A> u = create().updateQuery(a1);
-        u.addValue(f1, create().select(f3.max()).from(a2).where(f1.equal(f2)).<String> asField());
+        u.addValue(f1, create().select(max(f3)).from(a2).where(f1.equal(f2)).<String> asField());
         u.execute();
 
         Field<Integer> c = count();
@@ -4904,7 +4914,7 @@ public abstract class jOOQAbstractTest<
 
         // Standard aggregate functions, available in all dialects:
         // --------------------------------------------------------
-        Field<BigDecimal> median = TBook_ID().median();
+        Field<BigDecimal> median = median(TBook_ID());
 
         // Some dialects don't support a median function or a simulation thereof
         // Use AVG instead, as in this example the values of MEDIAN and AVG
@@ -4921,7 +4931,7 @@ public abstract class jOOQAbstractTest<
             case SQLSERVER:
             case POSTGRES:
             case DB2:
-                median = TBook_ID().avg();
+                median = avg(TBook_ID());
                 break;
         }
 
@@ -4929,12 +4939,12 @@ public abstract class jOOQAbstractTest<
             .select(
                 TBook_AUTHOR_ID(),
                 count(),
-                TBook_ID().count(),
-                TBook_AUTHOR_ID().countDistinct(),
-                TBook_ID().sum(),
-                TBook_ID().avg(),
-                TBook_ID().min(),
-                TBook_ID().max(),
+                count(TBook_ID()),
+                countDistinct(TBook_AUTHOR_ID()),
+                sum(TBook_ID()),
+                avg(TBook_ID()),
+                min(TBook_ID()),
+                max(TBook_ID()),
                 median)
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID())
@@ -4974,10 +4984,10 @@ public abstract class jOOQAbstractTest<
                 result = create()
                     .select(
                         TBook_AUTHOR_ID(),
-                        TBook_ID().stddevPop(),
-                        TBook_ID().stddevSamp(),
-                        TBook_ID().varPop(),
-                        TBook_ID().varSamp())
+                        stddevPop(TBook_ID()),
+                        stddevSamp(TBook_ID()),
+                        varPop(TBook_ID()),
+                        varSamp(TBook_ID()))
                     .from(TBook())
                     .groupBy(TBook_AUTHOR_ID())
                     .orderBy(TBook_AUTHOR_ID())
@@ -5003,8 +5013,8 @@ public abstract class jOOQAbstractTest<
         result =
         create().select(
                     TBook_AUTHOR_ID(),
-                    TBook_ID().max(),
-                    TBook_ID().max())
+                    max(TBook_ID()),
+                    max(TBook_ID()))
                 .from(TBook())
                 .groupBy(TBook_AUTHOR_ID())
                 .orderBy(TBook_AUTHOR_ID())

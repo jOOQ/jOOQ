@@ -492,61 +492,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     // ------------------------------------------------------------------------
 
     @Override
-    public final Field<Integer> count() {
-        return new Count(this, false);
-    }
-
-    @Override
-    public final Field<Integer> countDistinct() {
-        return new Count(this, true);
-    }
-
-    @Override
-    public final Field<T> max() {
-        return function("max", getDataType(), this);
-    }
-
-    @Override
-    public final Field<T> min() {
-        return function("min", getDataType(), this);
-    }
-
-    @Override
-    public final Field<BigDecimal> sum() {
-        return function("sum", SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final Field<BigDecimal> avg() {
-        return function("avg", SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final Field<BigDecimal> median() {
-        return function("median", SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final Field<BigDecimal> stddevPop() {
-        return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final Field<BigDecimal> stddevSamp() {
-        return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final Field<BigDecimal> varPop() {
-        return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final Field<BigDecimal> varSamp() {
-        return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
     public final Field<Integer> sign() {
         return new Sign(this);
     }

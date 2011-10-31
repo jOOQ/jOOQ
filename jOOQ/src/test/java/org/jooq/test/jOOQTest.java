@@ -38,12 +38,17 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.min;
+import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.Data.FIELD_DATE1;
@@ -769,7 +774,7 @@ public class jOOQTest {
 
     @Test
     public final void testArithmeticFunctions() throws Exception {
-        Field<BigDecimal> sum1 = FIELD_ID1.sum();
+        Field<BigDecimal> sum1 = sum(FIELD_ID1);
         assertEquals(BigDecimal.class, sum1.getType());
         assertEquals("sum(\"TABLE1\".\"ID1\")", r_refI().render(sum1));
         assertEquals("sum(\"TABLE1\".\"ID1\")", r_ref().render(sum1));
@@ -777,7 +782,7 @@ public class jOOQTest {
         assertEquals("sum(\"TABLE1\".\"ID1\")", r_dec().render(sum1));
         assertEquals(1, b_ref().bind(sum1).peekIndex());
 
-        Field<BigDecimal> sum2 = FIELD_ID1.sum().as("value");
+        Field<BigDecimal> sum2 = sum(FIELD_ID1).as("value");
         assertEquals(BigDecimal.class, sum2.getType());
         assertEquals("\"value\"", r_refI().render(sum2));
         assertEquals("\"value\"", r_ref().render(sum2));
@@ -785,7 +790,7 @@ public class jOOQTest {
         assertEquals("sum(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(sum2));
         assertEquals(1, b_ref().bind(sum2).peekIndex());
 
-        Field<BigDecimal> avg1 = FIELD_ID1.avg();
+        Field<BigDecimal> avg1 = avg(FIELD_ID1);
         assertEquals(BigDecimal.class, avg1.getType());
         assertEquals("avg(\"TABLE1\".\"ID1\")", r_refI().render(avg1));
         assertEquals("avg(\"TABLE1\".\"ID1\")", r_ref().render(avg1));
@@ -793,7 +798,7 @@ public class jOOQTest {
         assertEquals("avg(\"TABLE1\".\"ID1\")", r_dec().render(avg1));
         assertEquals(1, b_ref().bind(avg1).peekIndex());
 
-        Field<BigDecimal> avg2 = FIELD_ID1.avg().as("value");
+        Field<BigDecimal> avg2 = avg(FIELD_ID1).as("value");
         assertEquals(BigDecimal.class, avg2.getType());
         assertEquals("\"value\"", r_refI().render(avg2));
         assertEquals("\"value\"", r_ref().render(avg2));
@@ -801,7 +806,7 @@ public class jOOQTest {
         assertEquals("avg(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(avg2));
         assertEquals(1, b_ref().bind(avg2).peekIndex());
 
-        Field<Integer> min1 = FIELD_ID1.min();
+        Field<Integer> min1 = min(FIELD_ID1);
         assertEquals(Integer.class, min1.getType());
         assertEquals("min(\"TABLE1\".\"ID1\")", r_refI().render(min1));
         assertEquals("min(\"TABLE1\".\"ID1\")", r_ref().render(min1));
@@ -809,7 +814,7 @@ public class jOOQTest {
         assertEquals("min(\"TABLE1\".\"ID1\")", r_dec().render(min1));
         assertEquals(1, b_ref().bind(min1).peekIndex());
 
-        Field<Integer> min2 = FIELD_ID1.min().as("value");
+        Field<Integer> min2 = min(FIELD_ID1).as("value");
         assertEquals(Integer.class, min2.getType());
         assertEquals("\"value\"", r_refI().render(min2));
         assertEquals("\"value\"", r_ref().render(min2));
@@ -817,7 +822,7 @@ public class jOOQTest {
         assertEquals("min(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(min2));
         assertEquals(1, b_ref().bind(min2).peekIndex());
 
-        Field<Integer> max1 = FIELD_ID1.max();
+        Field<Integer> max1 = max(FIELD_ID1);
         assertEquals(Integer.class, max1.getType());
         assertEquals("max(\"TABLE1\".\"ID1\")", r_refI().render(max1));
         assertEquals("max(\"TABLE1\".\"ID1\")", r_ref().render(max1));
@@ -825,7 +830,7 @@ public class jOOQTest {
         assertEquals("max(\"TABLE1\".\"ID1\")", r_dec().render(max1));
         assertEquals(1, b_ref().bind(max1).peekIndex());
 
-        Field<Integer> max2 = FIELD_ID1.max().as("value");
+        Field<Integer> max2 = max(FIELD_ID1).as("value");
         assertEquals(Integer.class, max2.getType());
         assertEquals("\"value\"", r_refI().render(max2));
         assertEquals("\"value\"", r_ref().render(max2));
@@ -849,7 +854,7 @@ public class jOOQTest {
         assertEquals("count(*) \"cnt\"", r_dec().render(count1a));
         assertEquals(1, b_ref().bind(count1a).peekIndex());
 
-        Field<Integer> count2 = FIELD_ID1.count();
+        Field<Integer> count2 = count(FIELD_ID1);
         assertEquals(Integer.class, count2.getType());
         assertEquals("count(\"TABLE1\".\"ID1\")", r_refI().render(count2));
         assertEquals("count(\"TABLE1\".\"ID1\")", r_ref().render(count2));
@@ -857,7 +862,7 @@ public class jOOQTest {
         assertEquals("count(\"TABLE1\".\"ID1\")", r_dec().render(count2));
         assertEquals(1, b_ref().bind(count2).peekIndex());
 
-        Field<Integer> count2a = FIELD_ID1.count().as("cnt");
+        Field<Integer> count2a = count(FIELD_ID1).as("cnt");
         assertEquals(Integer.class, count2a.getType());
         assertEquals("\"cnt\"", r_refI().render(count2a));
         assertEquals("\"cnt\"", r_ref().render(count2a));
@@ -865,7 +870,7 @@ public class jOOQTest {
         assertEquals("count(\"TABLE1\".\"ID1\") \"cnt\"", r_dec().render(count2a));
         assertEquals(1, b_ref().bind(count2a).peekIndex());
 
-        Field<Integer> count3 = FIELD_ID1.countDistinct();
+        Field<Integer> count3 = countDistinct(FIELD_ID1);
         assertEquals(Integer.class, count3.getType());
         assertEquals("count(distinct \"TABLE1\".\"ID1\")", r_refI().render(count3));
         assertEquals("count(distinct \"TABLE1\".\"ID1\")", r_ref().render(count3));
@@ -873,7 +878,7 @@ public class jOOQTest {
         assertEquals("count(distinct \"TABLE1\".\"ID1\")", r_dec().render(count3));
         assertEquals(1, b_ref().bind(count3).peekIndex());
 
-        Field<Integer> count3a = FIELD_ID1.countDistinct().as("cnt");
+        Field<Integer> count3a = countDistinct(FIELD_ID1).as("cnt");
         assertEquals(Integer.class, count3a.getType());
         assertEquals("\"cnt\"", r_refI().render(count3a));
         assertEquals("\"cnt\"", r_ref().render(count3a));

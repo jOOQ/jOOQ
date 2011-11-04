@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.exp;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.two;
@@ -52,11 +53,11 @@ class Tanh extends AbstractFunction<BigDecimal> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long             serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>    argument;
+    private final Field<? extends Number> argument;
 
-    Tanh(Field<?> argument) {
+    Tanh(Field<? extends Number> argument) {
         super("tanh", SQLDataType.NUMERIC, argument);
 
         this.argument = argument;
@@ -72,7 +73,7 @@ class Tanh extends AbstractFunction<BigDecimal> {
             case POSTGRES:
             case SQLSERVER:
             case SYBASE:
-                return argument.mul(two()).exp().sub(one()).div(argument.mul(two()).exp().add(one()));
+                return exp(argument.mul(two())).sub(one()).div(exp(argument.mul(two())).add(one()));
 
             default:
                 return function("tanh", SQLDataType.NUMERIC, argument);

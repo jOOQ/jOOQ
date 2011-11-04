@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -190,7 +189,7 @@ class Limit extends AbstractQueryPart {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         switch (context.getDialect()) {
 
             // OFFSET .. LIMIT support provided by the following dialects

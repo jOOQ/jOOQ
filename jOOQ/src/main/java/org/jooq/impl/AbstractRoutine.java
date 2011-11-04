@@ -63,7 +63,6 @@ import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTRecord;
-import org.jooq.exception.DetachedException;
 
 /**
  * A common base class for stored procedures
@@ -195,7 +194,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     @Override
-    public final int execute(Configuration configuration) throws SQLException {
+    public final int execute(Configuration configuration) {
 
         // Ensure that all depending Attachables are attached
         attach(configuration);
@@ -203,7 +202,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     @Override
-    public final int execute() throws SQLException, DetachedException {
+    public final int execute() {
         // Procedures (no return value) are always executed as CallableStatement
         if (type == null) {
             return executeCallableStatement();
@@ -241,28 +240,29 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
         }
     }
 
-    private final int executeSelectFrom() throws SQLException, DetachedException {
+    private final int executeSelectFrom() {
         Factory create = create(attachable);
         Result<?> result = create.selectFrom(table(asField())).fetch();
         results.put(returnParameter, result);
         return 0;
     }
 
-    private final int executeSelect() throws SQLException, DetachedException {
+    private final int executeSelect() {
         final Field<T> field = asField();
         results.put(returnParameter, create(attachable).select(field).fetchOne(field));
         return 0;
     }
 
-    private final int executeCallableStatement() throws SQLException, DetachedException {
+    private final int executeCallableStatement() {
         StopWatch watch = new StopWatch();
 
+        Configuration configuration = attachable.getConfiguration();
         CallableStatement statement = null;
+        String sql = null;
         try {
-            Configuration configuration = attachable.getConfiguration();
             Connection connection = configuration.getConnection();
 
-            String sql = create(configuration).render(this);
+            sql = create(configuration).render(this);
             watch.splitTrace("SQL rendered");
 
             if (log.isDebugEnabled())
@@ -299,6 +299,9 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
             return 0;
         }
+        catch (SQLException exc) {
+            throw translate("AbstractRoutine.executeCallableStatement", sql, exc);
+        }
         finally {
             JooqUtil.safeClose(statement);
             watch.splitDebug("Routine executed");
@@ -306,7 +309,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         for (Parameter<?> parameter : getParameters()) {
             int index = context.peekIndex();
             parameterIndexes.put(parameter, index);

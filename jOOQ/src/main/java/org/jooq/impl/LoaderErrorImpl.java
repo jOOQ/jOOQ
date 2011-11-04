@@ -35,22 +35,21 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
-
 import org.jooq.LoaderError;
 import org.jooq.Query;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
  */
 class LoaderErrorImpl implements LoaderError {
 
-    private final SQLException exception;
-    private final int rowIndex;
-    private final String[] row;
-    private final Query query;
+    private final DataAccessException exception;
+    private final int                 rowIndex;
+    private final String[]            row;
+    private final Query               query;
 
-    LoaderErrorImpl(SQLException exception, String[] row, int rowIndex, Query query) {
+    LoaderErrorImpl(DataAccessException exception, String[] row, int rowIndex, Query query) {
         this.exception = exception;
         this.row = row;
         this.rowIndex = rowIndex;
@@ -58,7 +57,7 @@ class LoaderErrorImpl implements LoaderError {
     }
 
     @Override
-    public SQLException exception() {
+    public DataAccessException exception() {
         return exception;
     }
 

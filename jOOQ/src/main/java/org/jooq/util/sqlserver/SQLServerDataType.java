@@ -122,14 +122,6 @@ public class SQLServerDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.SQLSERVER, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    /**
-     * @deprecated - 1.6.3 - Do not reuse
-     */
-    @Deprecated
-    public static DataType<?> getDataType(String typeName) {
-        return getDataType(SQLDialect.SQLSERVER, typeName);
-    }
-
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.SQLSERVER, type);
     }

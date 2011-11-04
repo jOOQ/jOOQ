@@ -38,7 +38,6 @@ package org.jooq.impl;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.zero;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -172,7 +171,7 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(field);
     }
 }

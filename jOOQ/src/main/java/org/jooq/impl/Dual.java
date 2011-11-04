@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,7 +57,6 @@ class Dual extends AbstractTable<Record> {
         super("dual", (Schema) null);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
@@ -105,7 +103,7 @@ class Dual extends AbstractTable<Record> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {}
+    public final void bind(BindContext context) {}
 
     @Override
     protected final FieldList getFieldList() {

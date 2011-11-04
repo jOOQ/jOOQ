@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,7 +51,7 @@ class FalseCondition extends AbstractCondition {
     private static final long serialVersionUID = -3972466479081463547L;
 
     @Override
-    public void bind(BindContext context) throws SQLException {}
+    public void bind(BindContext context) {}
 
     @Override
     public final void toSQL(RenderContext context) {

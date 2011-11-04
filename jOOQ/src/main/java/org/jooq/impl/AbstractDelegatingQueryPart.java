@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -66,7 +65,7 @@ abstract class AbstractDelegatingQueryPart<Q extends QueryPart> extends Abstract
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(delegate);
     }
 

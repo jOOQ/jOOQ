@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +116,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         switch (context.getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause

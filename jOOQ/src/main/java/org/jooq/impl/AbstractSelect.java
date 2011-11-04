@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Configuration;
@@ -133,7 +132,7 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
     }
 
     @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) throws SQLException {
+    protected final List<Field<?>> getFields(ResultSetMetaData meta) {
     	List<Field<?>> select = getSelect();
 
     	// If no projection was specified explicitly, create fields from result

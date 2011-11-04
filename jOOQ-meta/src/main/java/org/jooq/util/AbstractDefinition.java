@@ -84,18 +84,6 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
-    @Deprecated
-    public final String getNameUC() {
-        return name.toUpperCase();
-    }
-
-    @Override
-    @Deprecated
-    public final String getNameLC() {
-        return name.toLowerCase();
-    }
-
-    @Override
     public final String getComment() {
         return comment;
     }

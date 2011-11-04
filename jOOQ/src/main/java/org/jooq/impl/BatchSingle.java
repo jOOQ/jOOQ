@@ -65,20 +65,21 @@ class BatchSingle implements BatchBindStep {
     }
 
     @Override
-    public final BatchSingle bind(Object... bindValues) throws SQLException {
+    public final BatchSingle bind(Object... bindValues) {
         allBindValues.add(bindValues);
         return this;
     }
 
     @Override
-    public final int[] execute() throws SQLException {
+    public final int[] execute() {
         StopWatch watch = new StopWatch();
         Connection connection = create.getConnection();
         PreparedStatement statement = null;
+        String sql = null;
 
         try {
 
-            String sql = create.render(query);
+            sql = create.render(query);
             watch.splitTrace("SQL rendered");
 
             if (log.isDebugEnabled())
@@ -99,6 +100,9 @@ class BatchSingle implements BatchBindStep {
             watch.splitTrace("Statement executed");
 
             return result;
+        }
+        catch (SQLException e) {
+            throw JooqUtil.translate("BatchSingle.execute", sql, e);
         }
         finally {
             JooqUtil.safeClose(statement);

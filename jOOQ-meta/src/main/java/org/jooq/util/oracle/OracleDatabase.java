@@ -116,7 +116,7 @@ public class OracleDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) throws SQLException {
+    private List<Record> fetchKeys(String constraintType) {
         return create().select(
                 AllConsColumns.CONSTRAINT_NAME,
                 AllConsColumns.TABLE_NAME,

@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.trueCondition;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -121,7 +120,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(getWhere());
     }
 

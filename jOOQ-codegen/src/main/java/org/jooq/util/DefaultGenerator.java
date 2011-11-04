@@ -76,6 +76,7 @@ import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
@@ -840,31 +841,6 @@ public class DefaultGenerator implements Generator {
                     out.print(strategy.getFullJavaIdentifierUC(table));
                     out.println(");");
                     out.println("\t}");
-
-        			if (generateDeprecated()) {
-        	            out.println();
-
-        	            out.println("\t/**");
-        	            out.println("\t * Create an attached " + strategy.getJavaClassName(table, "Record"));
-    	                out.println("\t * @deprecated - 1.6.4 [#363, #789] - use the other constructor instead for unattached");
-    	                out.println("\t * records, or {@link org.jooq.impl.Factory#newRecord(org.jooq.Table)} for attached ones");
-
-        	            out.println("\t */");
-                        out.println("\t@Deprecated");
-
-    	                out.print("\tpublic ");
-    	                out.print(strategy.getJavaClassName(table, "Record"));
-    	                out.print("(");
-    	                out.print(Configuration.class);
-    	                out.println(" configuration) {");
-
-    	                out.print("\t\tsuper(");
-    	                out.print(strategy.getFullJavaIdentifierUC(table));
-    	                out.println(", configuration);");
-
-    	                out.println("\t}");
-        			}
-
         			out.println("}");
         			out.close();
     		    } catch (Exception e) {
@@ -1598,6 +1574,7 @@ public class DefaultGenerator implements Generator {
             out.println("\t * @param " + strategy.getJavaClassNameLC(parameter));
         }
 
+        printThrowsDataAccessException(out);
         out.println("\t */");
 
         out.print("\tpublic static ");
@@ -1615,9 +1592,7 @@ public class DefaultGenerator implements Generator {
             out.print(strategy.getJavaClassNameLC(parameter));
         }
 
-        out.print(") throws ");
-        out.print(SQLException.class);
-        out.println(" {");
+        out.println(") {");
         out.print("\t\t");
         out.print(strategy.getFullJavaClassName(function));
         out.print(" f = new ");
@@ -1633,6 +1608,13 @@ public class DefaultGenerator implements Generator {
         out.println("\t\tf.execute(configuration);");
         out.println("\t\treturn f.getReturnValue();");
         out.println("\t}");
+    }
+
+    private void printThrowsDataAccessException(GenerationWriter out) {
+        out.print("\t * @throws ");
+        out.print(DataAccessException.class);
+        out.print(" if something went wrong executing the query");
+        out.println();
     }
 
     private void printPrivateConstructor(GenerationWriter out, String javaClassName) {
@@ -1669,6 +1651,7 @@ public class DefaultGenerator implements Generator {
             }
         }
 
+        printThrowsDataAccessException(out);
         out.println("\t */");
         out.print("\tpublic static ");
 
@@ -1695,9 +1678,7 @@ public class DefaultGenerator implements Generator {
             out.print(strategy.getJavaClassNameLC(parameter));
         }
 
-        out.print(") throws ");
-        out.print(SQLException.class);
-        out.println(" {");
+        out.println(") {");
         out.print("\t\t");
         out.print(strategy.getFullJavaClassName(procedure));
         out.print(" p = new ");
@@ -1866,10 +1847,7 @@ public class DefaultGenerator implements Generator {
                             out.print(strategy.getJavaClassName(foreignKey.getKeyColumns().get(0)));
                         }
 
-                        out.print("() throws ");
-                        out.print(SQLException.class);
-                        out.println(" {");
-
+                        out.println("() {");
                         out.println("\t\treturn create()");
                         out.print("\t\t\t.selectFrom(");
                         out.print(strategy.getFullJavaIdentifierUC(referencing));
@@ -1941,10 +1919,7 @@ public class DefaultGenerator implements Generator {
                         out.print(strategy.getJavaClassName(column));
                     }
 
-                    out.print("() throws ");
-                    out.print(SQLException.class);
-                    out.println(" {");
-
+                    out.println("() {");
                     out.println("\t\treturn create()");
                     out.print("\t\t\t.selectFrom(");
                     out.print(strategy.getFullJavaIdentifierUC(referenced));
@@ -2174,7 +2149,7 @@ public class DefaultGenerator implements Generator {
                 version = properties.getProperty("version");
 	        }
 	        catch (Exception e) {
-	            version = "1.6.8";
+	            version = "unknown";
             }
 	    }
 

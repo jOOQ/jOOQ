@@ -148,14 +148,6 @@ public class PostgresDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.POSTGRES, sqlDataType, sqlDataType.getType(), typeName);
     }
 
-    /**
-     * @deprecated - 1.6.3 - Do not reuse
-     */
-    @Deprecated
-    public static DataType<?> getDataType(String typeName) {
-        return getDataType(SQLDialect.POSTGRES, typeName);
-    }
-
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.POSTGRES, type);
     }

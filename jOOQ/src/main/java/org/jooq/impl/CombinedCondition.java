@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.trueCondition;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -101,7 +100,7 @@ class CombinedCondition extends AbstractCondition {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(conditions);
     }
 

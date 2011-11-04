@@ -35,12 +35,10 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.ConditionProvider;
-import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
@@ -50,6 +48,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A record implementation for a record originating from a single table
@@ -69,16 +68,6 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         super(table);
     }
 
-    /**
-     * @deprecated - 1.6.4 [#789] - Create attached records using
-     *             {@link Factory#newRecord(Table)} instead. Detached records
-     *             can be created using {@link #TableRecordImpl(Table)}
-     */
-    @Deprecated
-    public TableRecordImpl(Table<R> table, Configuration configuration) {
-        super(table, configuration);
-    }
-
     /*
      * This method is overridden covariantly by UpdatableRecordImpl
      */
@@ -88,7 +77,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     }
 
     @Override
-    public final int storeUsing(TableField<R, ?>... keys) throws SQLException {
+    public final int storeUsing(TableField<R, ?>... keys) {
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : keys) {
@@ -122,7 +111,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     }
 
     @SuppressWarnings("unchecked")
-    private final int storeInsert() throws SQLException {
+    private final int storeInsert() {
         InsertQuery<R> insert = create().insertQuery(getTable());
 
         for (Field<?> field : getFields()) {
@@ -156,7 +145,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     }
 
     @SuppressWarnings("unchecked")
-    private final int storeUpdate(TableField<R, ?>... keys) throws SQLException {
+    private final int storeUpdate(TableField<R, ?>... keys) {
         UpdateQuery<R> update = create().updateQuery(getTable());
 
         for (Field<?> field : getFields()) {
@@ -173,7 +162,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     }
 
     @Override
-    public final int deleteUsing(TableField<R, ?>... keys) throws SQLException {
+    public final int deleteUsing(TableField<R, ?>... keys) {
         try {
             DeleteQuery<R> delete = create().deleteQuery(getTable());
 
@@ -194,7 +183,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     }
 
     @Override
-    public final void refreshUsing(TableField<R, ?>... keys) throws SQLException {
+    public final void refreshUsing(TableField<R, ?>... keys) {
         SimpleSelectQuery<R> select = create().selectQuery(getTable());
 
         for (Field<?> field : keys) {
@@ -209,7 +198,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             }
         }
         else {
-            throw new SQLException("Exactly one row expected for refresh. Record does not exist in database.");
+            throw new DataAccessException("Exactly one row expected for refresh. Record does not exist in database.");
         }
     }
 

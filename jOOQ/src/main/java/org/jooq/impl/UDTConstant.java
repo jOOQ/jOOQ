@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -151,7 +150,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         switch (context.getDialect()) {
 
             // Oracle supports java.sql.SQLData, hence the record can be bound

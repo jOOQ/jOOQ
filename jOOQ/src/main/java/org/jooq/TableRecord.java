@@ -35,11 +35,11 @@
  */
 package org.jooq;
 
-import java.sql.SQLException;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A record originating from a single table
- * 
+ *
  * @param <R> The record type
  * @author Lukas Eder
  */
@@ -87,16 +87,16 @@ public interface TableRecord<R extends Record> extends Record {
      * SET [modified fields = modified values, excluding keys]
      * WHERE [key fields = key values]</pre></code></li>
      * </ul>
-     * 
+     *
      * @param keys The key fields used for deciding whether to execute an
      *            <code>INSERT</code> or <code>UPDATE</code> statement. If an
      *            <code>UPDATE</code> statement is executed, they are also the
      *            key fields for the <code>UPDATE</code> statement's
      *            <code>WHERE</code> clause.
      * @return The number of stored records.
-     * @throws SQLException
+     * @throws DataAccessException if something went wrong executing the query
      */
-    int storeUsing(TableField<R, ?>... keys) throws SQLException;
+    int storeUsing(TableField<R, ?>... keys) throws DataAccessException;
 
     /**
      * Deletes this record from the database, based on the value of the provided
@@ -105,13 +105,13 @@ public interface TableRecord<R extends Record> extends Record {
      * The executed statement is <code><pre>
      * DELETE FROM [table]
      * WHERE [key fields = key values]</pre></code>
-     * 
+     *
      * @param keys The key fields for the <code>DELETE</code> statement's
      *            <code>WHERE</code> clause.
      * @return The number of deleted records.
-     * @throws SQLException
+     * @throws DataAccessException if something went wrong executing the query
      */
-    int deleteUsing(TableField<R, ?>... keys) throws SQLException;
+    int deleteUsing(TableField<R, ?>... keys) throws DataAccessException;
 
     /**
      * Refresh this record from the database, based on the value of the provided
@@ -120,12 +120,15 @@ public interface TableRecord<R extends Record> extends Record {
      * The executed statement is <code><pre>
      * SELECT * FROM [table]
      * WHERE [key fields = key values]</pre></code>
-     * 
+     *
      * @param keys The key fields for the <code>SELECT</code> statement's
      *            <code>WHERE</code> clause.
-     * @throws SQLException - If there is an underlying {@link SQLException} or
-     *             if the record does not exist anymore in the database, or if
-     *             the provided keys return several records.
+     * @throws DataAccessException This exception is thrown if
+     *             <ul>
+     *             <li>something went wrong executing the query</li> <li>the
+     *             record does not exist anymore in the database</li> <li>the
+     *             provided keys return several records.</li>
+     *             </ul>
      */
-    void refreshUsing(TableField<R, ?>... keys) throws SQLException;
+    void refreshUsing(TableField<R, ?>... keys) throws DataAccessException;
 }

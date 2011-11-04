@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,7 +94,7 @@ class Rollup extends AbstractFunction<Object> {
         }
 
         @Override
-        public final void bind(BindContext context) throws SQLException {
+        public final void bind(BindContext context) {
             context.bind(getArguments());
         }
 

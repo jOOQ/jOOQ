@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.one;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -234,7 +233,7 @@ implements
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind((QueryPart) arguments)
                .bind((QueryPart) partitionBy)
                .bind((QueryPart) orderBy);

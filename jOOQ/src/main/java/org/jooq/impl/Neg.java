@@ -43,7 +43,6 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.ExpressionOperator.BIT_NOT;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -100,7 +99,7 @@ class Neg<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(field);
     }
 

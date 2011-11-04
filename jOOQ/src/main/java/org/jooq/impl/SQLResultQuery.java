@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,7 +74,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bindValues(bindings);
     }
 
@@ -84,14 +83,13 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
         return Collections.emptyList();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }
 
     @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) throws SQLException {
+    protected final List<Field<?>> getFields(ResultSetMetaData meta) {
         Configuration configuration = getConfiguration();
         return new MetaDataFieldProvider(configuration, meta).getFields();
     }

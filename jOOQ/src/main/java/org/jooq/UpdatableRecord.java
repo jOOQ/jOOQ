@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import java.sql.SQLException;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A common interface for records that can be stored back to the database again.
@@ -99,8 +99,7 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      * been explicitly set by client code, in order to allow for
      * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
      * fields were modified, neither an <code>UPDATE</code> nor an
-     * <code>INSERT</code> will be executed.
-     * Possible statements are
+     * <code>INSERT</code> will be executed. Possible statements are
      * <ul>
      * <li>
      * <code><pre>
@@ -118,17 +117,16 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
-     * @throws SQLException
+     * @throws DataAccessException if something went wrong executing the query
      * @see #storeUsing(TableField...)
      */
-    int store() throws SQLException;
+    int store() throws DataAccessException;
 
     /**
      * Deletes this record from the database, based on the value of the primary
      * key or main unique key.
      * <p>
-     * The executed statement is
-     * <code><pre>
+     * The executed statement is <code><pre>
      * DELETE FROM [table]
      * WHERE [main key fields = main key values]</pre></code>
      * <p>
@@ -137,10 +135,10 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      *
      * @return <code>1</code> if the record was deleted from the database.
      *         <code>0</code> if deletion was not necessary.
-     * @throws SQLException
+     * @throws DataAccessException if something went wrong executing the query
      * @see #deleteUsing(TableField...)
      */
-    int delete() throws SQLException;
+    int delete() throws DataAccessException;
 
     /**
      * Refresh this record from the database, based on the value of the primary
@@ -149,16 +147,18 @@ public interface UpdatableRecord<R extends Record> extends Updatable<R>, TableRe
      * This is in fact the same as calling
      * <code>refresh(getTable().getMainKey().getFieldsArray())</code>
      * <p>
-     * The executed statement is
-     * <code><pre>
+     * The executed statement is <code><pre>
      * SELECT * FROM [table]
      * WHERE [main key fields = main key values]</pre></code>
      *
-     * @throws SQLException - If there is an underlying {@link SQLException} or
-     *             if the record does not exist anymore in the database.
+     * @throws DataAccessException This exception is thrown if
+     *             <ul>
+     *             <li>something went wrong executing the query</li> <li>the
+     *             record does not exist anymore in the database</li>
+     *             </ul>
      * @see #refreshUsing(TableField...)
      */
-    void refresh() throws SQLException;
+    void refresh() throws DataAccessException;
 
     /**
      * Duplicate this record (in memory) and reset all fields from the primary

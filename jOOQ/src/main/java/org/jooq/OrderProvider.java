@@ -70,7 +70,7 @@ public interface OrderProvider {
      * <p>
      * Indexes start at <code>1</code> in SQL!
      *
-     * @param fields The ordering fields
+     * @param fieldIndexes The ordering fields
      */
     void addOrderBy(int... fieldIndexes);
 

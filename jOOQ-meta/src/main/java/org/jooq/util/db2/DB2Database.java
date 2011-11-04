@@ -117,7 +117,7 @@ public class DB2Database extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) throws SQLException {
+    private List<Record> fetchKeys(String constraintType) {
         return create().select(
                 Keycoluse.CONSTNAME,
                 Keycoluse.TABNAME,

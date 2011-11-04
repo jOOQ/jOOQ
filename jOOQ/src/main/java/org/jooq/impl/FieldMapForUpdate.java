@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 import org.jooq.BindContext;
@@ -77,7 +76,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         for (Entry<Field<?>, Field<?>> entry : entrySet()) {
             context.bind(entry.getKey());
             context.bind(entry.getValue());

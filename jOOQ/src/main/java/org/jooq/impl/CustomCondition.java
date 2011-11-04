@@ -40,7 +40,6 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 
 /**
  * A base class for custom {@link Condition} implementations in client code.
@@ -50,16 +49,11 @@ import org.jooq.Configuration;
  * interface are already implemented. Only these two methods need further
  * implementation:
  * <ul>
- * <li>{@link #toSQLReference(Configuration, boolean)}</li>
- * <li>{@link #bind(Configuration, java.sql.PreparedStatement, int)}</li>
+ * <li>{@link #toSQL(org.jooq.RenderContext)}</li>
+ * <li>{@link #bind(org.jooq.BindContext)}</li>
  * </ul>
  * Refer to those method's Javadoc for further details about their expected
- * behaviour. Note that, optionally, an additional implementation for
- * <ul>
- * <li>{@link #toSQLDeclaration(Configuration, boolean)}</li>
- * </ul>
- * may also be provided, if the default behaviour thereof needs to be
- * overridden.
+ * behaviour.
  *
  * @author Lukas Eder
  */

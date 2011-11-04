@@ -1,38 +1,38 @@
 /**
- * Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
- * All rights reserved.
- *
- * This software is licensed to you under the Apache License, Version 2.0
- * (the "License"); You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * . Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
- *
- * . Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
- *
- * . Neither the name "jOOQ" nor the names of its contributors may be
- *   used to endorse or promote products derived from this software without
- *   specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
+* Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
+* All rights reserved.
+*
+* This software is licensed to you under the Apache License, Version 2.0
+* (the "License"); You may obtain a copy of the License at
+*
+*   http://www.apache.org/licenses/LICENSE-2.0
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*
+* . Redistributions of source code must retain the above copyright notice, this
+*   list of conditions and the following disclaimer.
+*
+* . Redistributions in binary form must reproduce the above copyright notice,
+*   this list of conditions and the following disclaimer in the documentation
+*   and/or other materials provided with the distribution.
+*
+* . Neither the name "jOOQ" nor the names of its contributors may be
+*   used to endorse or promote products derived from this software without
+*   specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+* CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+* POSSIBILITY OF SUCH DAMAGE.
+*/
 package org.jooq.impl;
 
 import java.io.BufferedReader;
@@ -62,6 +62,7 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.exception.DataAccessException;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
 import org.xml.sax.InputSource;
@@ -376,7 +377,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                             continue rowloop;
                         }
                     }
-                    catch (SQLException e) {
+                    catch (DataAccessException e) {
                         errors.add(new LoaderErrorImpl(e, row, processed - 1, select));
                     }
                 }
@@ -395,7 +396,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                         }
                     }
                 }
-                catch (SQLException e) {
+                catch (DataAccessException e) {
                     errors.add(new LoaderErrorImpl(e, row, processed - 1, insert));
                     ignored++;
 
@@ -424,9 +425,15 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     }
                 }
             }
-            catch (SQLException e) {
+            catch (DataAccessException e) {
                 errors.add(new LoaderErrorImpl(e, null, processed - 1, null));
             }
+        }
+
+        // SQLExceptions originating from rollbacks or commits are always fatal
+        // They are propagated, and not swallowed
+        catch (SQLException e) {
+            throw JooqUtil.translate("LoaderImpl.executeCSV", null, e);
         }
         finally {
             reader.close();

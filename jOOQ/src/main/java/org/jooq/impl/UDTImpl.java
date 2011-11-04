@@ -122,7 +122,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         throw new UnsupportedOperationException("UDTImpl cannot be used as a true QueryPart");
     }
 }

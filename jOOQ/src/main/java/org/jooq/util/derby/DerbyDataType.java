@@ -135,14 +135,6 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.DERBY, sqlDataType, sqlDataType.getType(), typeName, castName);
     }
 
-    /**
-     * @deprecated - 1.6.3 - Do not reuse
-     */
-    @Deprecated
-    public static DataType<?> getDataType(String typeName) {
-        return getDataType(SQLDialect.DERBY, typeName);
-    }
-
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.DERBY, type);
     }

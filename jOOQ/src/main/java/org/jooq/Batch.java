@@ -35,8 +35,9 @@
  */
 package org.jooq;
 
-import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.jooq.exception.DataAccessException;
 
 /**
  * A wrapper for a JDBC batch operation. It has two modes:
@@ -55,7 +56,7 @@ import java.sql.Statement;
  *       .execute();
  * </pre></code></li>
  * </ol>
- *
+ * 
  * @author Lukas Eder
  * @see Statement#executeBatch()
  */
@@ -63,8 +64,9 @@ public interface Batch {
 
     /**
      * Execute the batch operation.
-     *
+     * 
      * @see Statement#executeBatch()
+     * @throws DataAccessException if something went wrong executing the query
      */
-    int[] execute() throws SQLException;
+    int[] execute() throws DataAccessException;
 }

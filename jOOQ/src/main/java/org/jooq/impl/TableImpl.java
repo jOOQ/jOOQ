@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -74,7 +73,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {}
+    public final void bind(BindContext context) {}
 
     @Override
     protected final FieldList getFieldList() {
@@ -100,7 +99,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
      * Subclasses must override this method if they use the generic type
      * parameter <R> for other types than {@link Record}
      */
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @SuppressWarnings("unchecked")
     @Override
     public Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;

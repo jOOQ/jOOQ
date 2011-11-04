@@ -67,8 +67,6 @@ public abstract class AbstractDatabase implements Database {
     private List<EnumDefinition>            enums;
     private List<UDTDefinition>             udts;
     private List<ArrayDefinition>           arrays;
-    private List<RoutineDefinition>         procedures;
-    private List<RoutineDefinition>         functions;
     private List<RoutineDefinition>         routines;
     private List<PackageDefinition>         packages;
     private Relations                       relations;
@@ -326,50 +324,6 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return relations;
-    }
-
-    @Override
-    @Deprecated
-    public final List<RoutineDefinition> getProcedures() {
-        if (procedures == null) {
-            procedures = new ArrayList<RoutineDefinition>();
-
-            try {
-                List<RoutineDefinition> r = getRoutines();
-
-                for (RoutineDefinition routine : r) {
-                    if (!routine.isSQLUsable()) {
-                        procedures.add(routine);
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Error while fetching procedures", e);
-            }
-        }
-
-        return procedures;
-    }
-
-    @Override
-    @Deprecated
-    public final List<RoutineDefinition> getFunctions() {
-        if (functions == null) {
-            functions = new ArrayList<RoutineDefinition>();
-
-            try {
-                List<RoutineDefinition> r = getRoutines();
-
-                for (RoutineDefinition routine : r) {
-                    if (routine.isSQLUsable()) {
-                        functions.add(routine);
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Error while fetching functions", e);
-            }
-        }
-
-        return functions;
     }
 
     @Override

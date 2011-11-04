@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -82,7 +81,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {

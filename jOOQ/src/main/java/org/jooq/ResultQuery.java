@@ -38,10 +38,11 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+
+import org.jooq.exception.DataAccessException;
 
 /**
  * A query that can return results. Mostly, this is a {@link Select} query used
@@ -75,8 +76,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * {@link #getResult()}
      *
      * @return The result.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Result<R> fetch() throws SQLException;
+    Result<R> fetch() throws DataAccessException;
 
     /**
      * Execute the query and return the generated result
@@ -89,12 +91,12 @@ public interface ResultQuery<R extends Record> extends Query {
      * Client code is responsible for closing the cursor after use.
      *
      * @return The resulting cursor.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Cursor<R> fetchLazy() throws SQLException;
+    Cursor<R> fetchLazy() throws DataAccessException;
 
     /**
-     * Execute a query, possibly returning several result
-     * sets.
+     * Execute a query, possibly returning several result sets.
      * <p>
      * Example (Sybase ASE):
      * <p>
@@ -102,8 +104,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * String sql = "sp_help 'my_table'";</pre></code>
      *
      * @return The resulting records
+     * @throws DataAccessException if something went wrong executing the query
      */
-    List<Result<Record>> fetchMany() throws SQLException;
+    List<Result<Record>> fetchMany() throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -113,8 +116,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * {@link Result#getValues(Field)}
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <T> List<T> fetch(Field<T> field) throws SQLException;
+    <T> List<T> fetch(Field<T> field) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -124,8 +128,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * {@link Result#getValues(int)}
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    List<?> fetch(int fieldIndex) throws SQLException;
+    List<?> fetch(int fieldIndex) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -135,8 +140,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * {@link Result#getValues(int, Class)}
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws SQLException;
+    <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -146,8 +152,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * {@link Result#getValues(String)}
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    List<?> fetch(String fieldName) throws SQLException;
+    List<?> fetch(String fieldName) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -157,8 +164,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * {@link Result#getValues(String, Class)}
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <T> List<T> fetch(String fieldName, Class<? extends T> type) throws SQLException;
+    <T> List<T> fetch(String fieldName, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -169,13 +177,13 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the query returned more than one value</li>
      *             </ul>
      */
-    <T> T fetchOne(Field<T> field) throws SQLException;
+    <T> T fetchOne(Field<T> field) throws DataAccessException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -186,13 +194,13 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the query returned more than one value</li>
      *             </ul>
      */
-    Object fetchOne(int fieldIndex) throws SQLException;
+    Object fetchOne(int fieldIndex) throws DataAccessException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -203,13 +211,13 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the query returned more than one value</li>
      *             </ul>
      */
-    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException;
+    <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -220,13 +228,13 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the query returned more than one value</li>
      *             </ul>
      */
-    Object fetchOne(String fieldName) throws SQLException;
+    Object fetchOne(String fieldName) throws DataAccessException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -237,47 +245,48 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting value or <code>null</code> if the query returned no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the query returned more than one value</li>
      *             </ul>
      */
-    <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException;
+    <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record.
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li>
      *             <li>if the query returned more than one record</li>
      *             </ul>
      */
-    R fetchOne() throws SQLException;
+    R fetchOne() throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record.
      *
      * @return The first resulting record or <code>null</code> if the query
      *         returns no records.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    R fetchAny() throws SQLException;
+    R fetchAny() throws DataAccessException;
 
     /**
      * Execute the query and return the generated result as a list of name/value
      * maps.
      *
      * @return The result.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li>
      *             <li>if several fields share the same name</li>
      *             </ul>
      */
-    List<Map<String, Object>> fetchMaps() throws SQLException;
+    List<Map<String, Object>> fetchMaps() throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record as a name/value
@@ -285,14 +294,14 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li>
      *             <li>if the query returned more than one record</li>
      *             <li>if several fields share the same name</li>
      *             </ul>
      */
-    Map<String, Object> fetchOneMap() throws SQLException;
+    Map<String, Object> fetchOneMap() throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
@@ -305,14 +314,14 @@ public interface ResultQuery<R extends Record> extends Query {
      * @param key The key field. Client code must assure that this field is
      *            unique in the result set.
      * @return A Map containing the results
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the key field returned two or more equal values from the
      *             result set.</li>
      *             </ul>
      */
-    <K> Map<K, R> fetchMap(Field<K> key) throws SQLException;
+    <K> Map<K, R> fetchMap(Field<K> key) throws DataAccessException;
 
     /**
      * Execute the query and return a {@link Map} with one of the result's
@@ -327,14 +336,14 @@ public interface ResultQuery<R extends Record> extends Query {
      *            unique in the result set.
      * @param value The value field
      * @return A Map containing the results
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the key field returned two or more equal values from the
      *             result set.</li>
      *             </ul>
      */
-    <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws SQLException;
+    <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws DataAccessException;
 
     /**
      * Execute the query and return the generated result as an Object matrix
@@ -343,8 +352,21 @@ public interface ResultQuery<R extends Record> extends Query {
      * <code><pre>query.fetchArray()[recordIndex][fieldIndex]</pre></code>
      *
      * @return The result.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Object[][] fetchArrays() throws SQLException;
+    Object[][] fetchArrays() throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    Object[] fetchArray(int fieldIndex) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -355,18 +377,7 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting values.
      */
-    Object[] fetchArray(int fieldIndex) throws SQLException;
-
-    /**
-     * Execute the query and return all values for a field index from the
-     * generated result.
-     * <p>
-     * You can access data like this
-     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
-     *
-     * @return The resulting values.
-     */
-    <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws SQLException;
+    <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -376,8 +387,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Object[] fetchArray(String fieldName) throws SQLException;
+    Object[] fetchArray(String fieldName) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -387,8 +399,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws SQLException;
+    <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field from the generated
@@ -398,8 +411,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
      *
      * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <T> T[] fetchArray(Field<T> field) throws SQLException;
+    <T> T[] fetchArray(Field<T> field) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record as an array
@@ -409,13 +423,13 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return The resulting record or <code>null</code> if the query returns no
      *         records.
-     * @throws SQLException This exception is thrown
+     * @throws DataAccessException This exception is thrown
      *             <ul>
      *             <li>if something went wrong executing the query</li> <li>if
      *             the query returned more than one record</li>
      *             </ul>
      */
-    Object[] fetchOneArray() throws SQLException;
+    Object[] fetchOneArray() throws DataAccessException;
 
     /**
      * Map resulting records onto a custom type.
@@ -427,16 +441,18 @@ public interface ResultQuery<R extends Record> extends Query {
      * @param type The entity type.
      * @see Record#into(Class)
      * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws SQLException;
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException;
 
     /**
      * Fetch results into a custom handler callback
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException;
+    <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
      * Fetch results asynchronously.
@@ -459,8 +475,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * your executing threads.
      *
      * @return A future result
+     * @throws DataAccessException if something went wrong executing the query
      */
-    FutureResult<R> fetchLater() throws SQLException;
+    FutureResult<R> fetchLater() throws DataAccessException;
 
     /**
      * Fetch results asynchronously.
@@ -483,8 +500,9 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @param executor A custom executor
      * @return A future result
+     * @throws DataAccessException if something went wrong executing the query
      */
-    FutureResult<R> fetchLater(ExecutorService executor) throws SQLException;
+    FutureResult<R> fetchLater(ExecutorService executor) throws DataAccessException;
 
     /**
      * The record type produced by this query

@@ -49,7 +49,7 @@ public interface AliasProvider<Z extends AliasProvider<Z>> extends QueryPart {
      * follows:
      * <ul>
      * <li>In declarative query sections : [
-     * {@link QueryPartInternal#toSQLReference(Configuration)} &lt;alias&gt;]</li>
+     * {@link FactoryOperations#render(QueryPart)} &lt;alias&gt;]</li>
      * <li>In referencial query sections : [&lt;alias&gt;]</li>
      * </ul>
      *

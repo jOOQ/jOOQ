@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> impl
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {}
+    public final void bind(BindContext context) {}
 
     @Override
     public final void toSQL(RenderContext context) {

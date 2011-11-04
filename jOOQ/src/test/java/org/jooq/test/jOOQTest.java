@@ -48,6 +48,7 @@ import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.min;
+import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
@@ -935,7 +936,7 @@ public class jOOQTest {
     public final void testInsertSelect1() throws Exception {
         InsertQuery<Table1Record> q = create.insertQuery(TABLE1);
 
-        q.addValue(FIELD_ID1, val(10).round());
+        q.addValue(FIELD_ID1, round(val(10)));
         q.addValue(FIELD_NAME1, create.select(FIELD_NAME1).from(TABLE1).where(FIELD_ID1.equal(1)).<String> asField());
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") values (round(10), (select \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = 1))", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") values (round(?), (select \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?))", r_ref().render(q));

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.exp;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.two;
@@ -52,11 +53,11 @@ class Cosh extends AbstractFunction<BigDecimal> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long             serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>    argument;
+    private final Field<? extends Number> argument;
 
-    Cosh(Field<?> argument) {
+    Cosh(Field<? extends Number> argument) {
         super("cosh", SQLDataType.NUMERIC, argument);
 
         this.argument = argument;
@@ -72,7 +73,7 @@ class Cosh extends AbstractFunction<BigDecimal> {
             case POSTGRES:
             case SQLSERVER:
             case SYBASE:
-                return argument.mul(two()).exp().add(one()).div(argument.exp().mul(two()));
+                return exp(argument.mul(two())).add(one()).div(exp(argument).mul(two()));
 
             default:
                 return function("cosh", SQLDataType.NUMERIC, argument);

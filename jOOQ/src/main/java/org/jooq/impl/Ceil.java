@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.round;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -43,7 +44,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Ceil<T> extends AbstractFunction<T> {
+class Ceil<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID
@@ -64,7 +65,7 @@ class Ceil<T> extends AbstractFunction<T> {
 
             // evaluate "ceil" if unavailable
             case SQLITE:
-                return argument.add(0.499999999999999).round();
+                return round(argument.add(0.499999999999999));
 
             case ASE:
             case H2:

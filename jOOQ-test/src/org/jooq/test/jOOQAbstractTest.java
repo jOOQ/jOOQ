@@ -47,9 +47,19 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.abs;
+import static org.jooq.impl.Factory.acos;
+import static org.jooq.impl.Factory.asin;
+import static org.jooq.impl.Factory.atan;
+import static org.jooq.impl.Factory.atan2;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
+import static org.jooq.impl.Factory.ceil;
+import static org.jooq.impl.Factory.cos;
+import static org.jooq.impl.Factory.cosh;
+import static org.jooq.impl.Factory.cot;
+import static org.jooq.impl.Factory.coth;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.impl.Factory.countOver;
@@ -60,28 +70,42 @@ import static org.jooq.impl.Factory.currentTime;
 import static org.jooq.impl.Factory.currentTimestamp;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.decode;
+import static org.jooq.impl.Factory.deg;
 import static org.jooq.impl.Factory.denseRankOver;
 import static org.jooq.impl.Factory.e;
+import static org.jooq.impl.Factory.exp;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.floor;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.grouping;
 import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.groupingSets;
+import static org.jooq.impl.Factory.ln;
+import static org.jooq.impl.Factory.log;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.median;
 import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.percentRankOver;
 import static org.jooq.impl.Factory.pi;
+import static org.jooq.impl.Factory.power;
+import static org.jooq.impl.Factory.rad;
 import static org.jooq.impl.Factory.rand;
 import static org.jooq.impl.Factory.rankOver;
 import static org.jooq.impl.Factory.rollup;
+import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.rowNumberOver;
+import static org.jooq.impl.Factory.sign;
+import static org.jooq.impl.Factory.sin;
+import static org.jooq.impl.Factory.sinh;
+import static org.jooq.impl.Factory.sqrt;
 import static org.jooq.impl.Factory.stddevPop;
 import static org.jooq.impl.Factory.stddevSamp;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.Factory.tan;
+import static org.jooq.impl.Factory.tanh;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
@@ -5233,23 +5257,23 @@ public abstract class jOOQAbstractTest<
         assertNotNull(rand);
 
         // Some rounding functions
-        Field<Float> f1a = val(1.111f).round();
-        Field<Float> f2a = val(1.111f).round(2);
-        Field<Float> f3a = val(1.111f).floor();
-        Field<Float> f4a = val(1.111f).ceil();
-        Field<Double> f1b = val(-1.111).round();
-        Field<Double> f2b = val(-1.111).round(2);
-        Field<Double> f3b = val(-1.111).floor();
-        Field<Double> f4b = val(-1.111).ceil();
+        Field<Float> f1a = round(1.111f);
+        Field<Float> f2a = round(1.111f, 2);
+        Field<Float> f3a = floor(1.111f);
+        Field<Float> f4a = ceil(1.111f);
+        Field<Double> f1b = round(-1.111);
+        Field<Double> f2b = round(-1.111, 2);
+        Field<Double> f3b = floor(-1.111);
+        Field<Double> f4b = ceil(-1.111);
 
-        Field<Float> f1c = val(2.0f).round();
-        Field<Float> f2c = val(2.0f).round(2);
-        Field<Float> f3c = val(2.0f).floor();
-        Field<Float> f4c = val(2.0f).ceil();
-        Field<Double> f1d = val(-2.0).round();
-        Field<Double> f2d = val(-2.0).round(2);
-        Field<Double> f3d = val(-2.0).floor();
-        Field<Double> f4d = val(-2.0).ceil();
+        Field<Float> f1c = round(2.0f);
+        Field<Float> f2c = round(2.0f, 2);
+        Field<Float> f3c = floor(2.0f);
+        Field<Float> f4c = ceil(2.0f);
+        Field<Double> f1d = round(-2.0);
+        Field<Double> f2d = round(-2.0, 2);
+        Field<Double> f3d = floor(-2.0);
+        Field<Double> f4d = ceil(-2.0);
 
         // Some arbitrary checks on having multiple select clauses
         Record record =
@@ -5302,15 +5326,15 @@ public abstract class jOOQAbstractTest<
             default: {
                 // Exponentials, logarithms and roots
                 // ----------------------------------
-                Field<BigDecimal> m1 = val(2).sqrt();
-                Field<BigDecimal> m2 = val(4).sqrt().round();
-                Field<BigDecimal> m3 = val(2).exp();
-                Field<BigDecimal> m4 = val(0).exp().round();
-                Field<BigDecimal> m5 = val(-2).exp();
-                Field<BigDecimal> m6 = val(2).ln();
-                Field<BigDecimal> m7 = val(16).log(4).round();
-                Field<BigDecimal> m8 = val(2).power(4).round();
-                Field<BigDecimal> m9 = val(2).sqrt().power(2).sqrt().power(2).round();
+                Field<BigDecimal> m1 = sqrt(2);
+                Field<BigDecimal> m2 = round(sqrt(4));
+                Field<BigDecimal> m3 = exp(2);
+                Field<BigDecimal> m4 = round(exp(0));
+                Field<BigDecimal> m5 = exp(-2);
+                Field<BigDecimal> m6 = ln(2);
+                Field<BigDecimal> m7 = round(log(16, 4));
+                Field<BigDecimal> m8 = round(power(2, 4));
+                Field<BigDecimal> m9 = round(power(sqrt(power(sqrt(2), 2)), 2));
 
                 record = create().select(m1, m2, m3, m4, m5, m6, m7, m8, m9).fetchOne();
 
@@ -5328,22 +5352,22 @@ public abstract class jOOQAbstractTest<
 
                 // Trigonometry
                 // ------------
-                Field<BigDecimal> t1 = val(Math.PI / 6 + 0.00001).sin();
-                Field<BigDecimal> t2 = val(Math.PI / 6).cos();
-                Field<BigDecimal> t3 = val(Math.PI / 6).tan();
-                Field<BigDecimal> t4 = val(Math.PI / 6).cot();
-                Field<BigDecimal> t6 = val(1.1).deg().rad();
-                Field<BigDecimal> t7 = val(Math.PI / 6).asin();
-                Field<BigDecimal> t8 = val(Math.PI / 6).acos();
-                Field<BigDecimal> t9 = val(Math.PI / 6).atan();
-                Field<BigDecimal> ta = val(1).atan2(1).deg().round();
+                Field<BigDecimal> t1 = sin(Math.PI / 6 + 0.00001);
+                Field<BigDecimal> t2 = cos(Math.PI / 6);
+                Field<BigDecimal> t3 = tan(Math.PI / 6);
+                Field<BigDecimal> t4 = cot(Math.PI / 6);
+                Field<BigDecimal> t6 = rad(deg(1.1));
+                Field<BigDecimal> t7 = asin(Math.PI / 6);
+                Field<BigDecimal> t8 = acos(Math.PI / 6);
+                Field<BigDecimal> t9 = atan(Math.PI / 6);
+                Field<BigDecimal> ta = round(deg(atan2(1, 1)));
 
                 // Hyperbolic functions
                 // --------------------
-                Field<BigDecimal> tb = val(1.0).sinh()
-                    .div(val(1.0).cosh())
-                    .mul(val(1.0).tanh())
-                    .mul(val(1.0).coth().power(2).add(0.1));
+                Field<BigDecimal> tb = sinh(1.0)
+                    .div(cosh(1.0))
+                    .mul(tanh(1.0))
+                    .mul(power(coth(1.0), 2).add(0.1));
 
                 record = create().select(t1, t2, t3, t4, t6, t7, t8, t9, ta, tb).fetchOne();
 
@@ -5366,11 +5390,11 @@ public abstract class jOOQAbstractTest<
 
         // The sign function
         record = create().select(
-            val(2).sign(),
-            val(1).sign(),
-            val(0).sign(),
-            val(-1).sign(),
-            val(-2).sign()).fetchOne();
+            sign(2),
+            sign(1),
+            sign(0),
+            sign(-1),
+            sign(-2)).fetchOne();
 
         assertNotNull(record);
         assertEquals(Integer.valueOf(1), record.getValue(0));
@@ -5381,11 +5405,11 @@ public abstract class jOOQAbstractTest<
 
         // The abs function
         record = create().select(
-            val(2).abs(),
-            val(1).abs(),
-            val(0).abs(),
-            val(-1).abs(),
-            val(-2).abs()).fetchOne();
+            abs(2),
+            abs(1),
+            abs(0),
+            abs(-1),
+            abs(-2)).fetchOne();
 
         assertNotNull(record);
         assertEquals(Integer.valueOf(2), record.getValue(0));

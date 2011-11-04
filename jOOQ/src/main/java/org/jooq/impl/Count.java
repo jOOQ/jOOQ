@@ -43,7 +43,7 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
-class Count extends Function<Integer> {
+class Count extends AggregateFunctionImpl<Integer> {
 
     private static final long serialVersionUID = 4685583105296376461L;
 

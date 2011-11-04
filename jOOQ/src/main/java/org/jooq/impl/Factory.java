@@ -54,6 +54,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.Batch;
@@ -2107,50 +2108,50 @@ public class Factory implements FactoryOperations {
     /**
      * Get the count(*) function
      */
-    public static Field<Integer> count() {
+    public static AggregateFunction<Integer> count() {
         return new Count(field("*", Integer.class), false);
     }
 
     /**
      * Get the count(field) function
      */
-    public static Field<Integer> count(Field<?> field) {
+    public static AggregateFunction<Integer> count(Field<?> field) {
         return new Count(field, false);
     }
 
     /**
      * Get the count(distinct field) function
      */
-    public static Field<Integer> countDistinct(Field<?> field) {
+    public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Count(field, true);
     }
 
     /**
      * Get the max value over a field: max(field)
      */
-    public static <T> Field<T> max(Field<T> field) {
-        return function("max", field.getDataType(), field);
+    public static <T> AggregateFunction<T> max(Field<T> field) {
+        return new AggregateFunctionImpl<T>("max", field.getDataType(), field);
     }
 
     /**
      * Get the min value over a field: min(field)
      */
-    public static <T> Field<T> min(Field<T> field) {
-        return function("min", field.getDataType(), field);
+    public static <T> AggregateFunction<T> min(Field<T> field) {
+        return new AggregateFunctionImpl<T>("min", field.getDataType(), field);
     }
 
     /**
      * Get the sum over a numeric field: sum(field)
      */
-    public static Field<BigDecimal> sum(Field<? extends Number> field) {
-        return function("sum", SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>("sum", SQLDataType.NUMERIC, field);
     }
 
     /**
      * Get the average over a numeric field: avg(field)
      */
-    public static Field<BigDecimal> avg(Field<? extends Number> field) {
-        return function("avg", SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>("avg", SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -2163,8 +2164,8 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> median(Field<? extends Number> field) {
-        return function("median", SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>("median", SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -2184,8 +2185,8 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> stddevPop(Field<? extends Number> field) {
-        return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -2205,8 +2206,8 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> stddevSamp(Field<? extends Number> field) {
-        return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -2226,8 +2227,8 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> varPop(Field<? extends Number> field) {
-        return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, field);
     }
 
     /**
@@ -2245,8 +2246,8 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> varSamp(Field<? extends Number> field) {
-        return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, field);
+    public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, field);
     }
 
     // -------------------------------------------------------------------------

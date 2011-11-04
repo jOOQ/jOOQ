@@ -41,7 +41,6 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
@@ -382,89 +381,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     // ------------------------------------------------------------------------
     // Window functions created from this field
     // ------------------------------------------------------------------------
-
-    @Override
-    public final WindowPartitionByStep<Integer> countOver() {
-        return new WindowFunction<Integer>("count", SQLDataType.INTEGER, this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<T> maxOver() {
-        return new WindowFunction<T>("max", getDataType(), this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<T> minOver() {
-        return new WindowFunction<T>("min", getDataType(), this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<BigDecimal> sumOver() {
-        return new WindowFunction<BigDecimal>("sum", SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<BigDecimal> avgOver() {
-        return new WindowFunction<BigDecimal>("avg", SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final WindowFunction<T> firstValue() {
-        return new WindowFunction<T>("first_value", getDataType(), this);
-    }
-
-    @Override
-    public final WindowFunction<T> lastValue() {
-        return new WindowFunction<T>("last_value", getDataType(), this);
-    }
-
-    @Override
-    public final WindowFunction<T> lead() {
-        return new WindowFunction<T>("lead", getDataType(), this);
-    }
-
-    @Override
-    public final WindowFunction<T> lead(int offset) {
-        return new WindowFunction<T>("lead", getDataType(), this, literal(offset));
-    }
-
-    @Override
-    public final WindowFunction<T> lead(int offset, T defaultValue) {
-        return lead(offset, val(defaultValue));
-    }
-
-    @Override
-    public final WindowFunction<T> lead(int offset, Field<T> defaultValue) {
-        if (defaultValue == null) {
-            return lead(offset, (T) null);
-        }
-
-        return new WindowFunction<T>("lead", getDataType(), this, literal(offset), defaultValue);
-    }
-
-    @Override
-    public final WindowFunction<T> lag() {
-        return new WindowFunction<T>("lag", getDataType(), this);
-    }
-
-    @Override
-    public final WindowFunction<T> lag(int offset) {
-        return new WindowFunction<T>("lag", getDataType(), this, literal(offset));
-    }
-
-    @Override
-    public final WindowFunction<T> lag(int offset, T defaultValue) {
-        return lead(offset, val(defaultValue));
-    }
-
-    @Override
-    public final WindowFunction<T> lag(int offset, Field<T> defaultValue) {
-        if (defaultValue == null) {
-            return lead(offset, (T) null);
-        }
-
-        return new WindowFunction<T>("lag", getDataType(), this, literal(offset), defaultValue);
-    }
 
     @Override
     public final WindowPartitionByStep<BigDecimal> stddevPopOver() {

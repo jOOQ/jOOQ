@@ -72,36 +72,35 @@ implements
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 5505202722420252635L;
+    private static final long      serialVersionUID = 5505202722420252635L;
 
-    private final Term          term;
+    private final Term             term;
 
-    private final FieldList     arguments;
-    private final FieldList     partitionBy;
-    private final SortFieldList orderBy;
+    private final QueryPartList<?> arguments;
+    private final FieldList        partitionBy;
+    private final SortFieldList    orderBy;
 
-    private boolean             partitionByOne;
-    private boolean             ignoreNulls;
-    private boolean             respectNulls;
-    private Integer             rowsStart;
-    private Integer             rowsEnd;
+    private boolean                partitionByOne;
+    private boolean                ignoreNulls;
+    private boolean                respectNulls;
+    private Integer                rowsStart;
+    private Integer                rowsEnd;
 
-
-    public WindowFunction(String name, DataType<T> type, Field<?>... arguments) {
+    public WindowFunction(String name, DataType<T> type, QueryPart... arguments) {
         super(name, type);
 
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
-        this.arguments = new FieldList(Arrays.asList(arguments));
+        this.arguments = new QueryPartList<QueryPart>(Arrays.asList(arguments));
         this.term = null;
     }
 
-    public WindowFunction(Term term, DataType<T> type, Field<?>... arguments) {
+    public WindowFunction(Term term, DataType<T> type, QueryPart... arguments) {
         super(term.name().toLowerCase(), type);
 
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
-        this.arguments = new FieldList(Arrays.asList(arguments));
+        this.arguments = new QueryPartList<QueryPart>(Arrays.asList(arguments));
         this.term = term;
     }
 

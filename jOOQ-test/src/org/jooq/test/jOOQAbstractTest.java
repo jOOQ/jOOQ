@@ -62,40 +62,42 @@ import static org.jooq.impl.Factory.cot;
 import static org.jooq.impl.Factory.coth;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.countDistinct;
-import static org.jooq.impl.Factory.countOver;
 import static org.jooq.impl.Factory.cube;
-import static org.jooq.impl.Factory.cumeDistOver;
+import static org.jooq.impl.Factory.cumeDist;
 import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.currentTime;
 import static org.jooq.impl.Factory.currentTimestamp;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.deg;
-import static org.jooq.impl.Factory.denseRankOver;
+import static org.jooq.impl.Factory.denseRank;
 import static org.jooq.impl.Factory.e;
 import static org.jooq.impl.Factory.exp;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.firstValue;
 import static org.jooq.impl.Factory.floor;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.grouping;
 import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.groupingSets;
+import static org.jooq.impl.Factory.lag;
+import static org.jooq.impl.Factory.lead;
 import static org.jooq.impl.Factory.ln;
 import static org.jooq.impl.Factory.log;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.median;
 import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.percentRankOver;
+import static org.jooq.impl.Factory.percentRank;
 import static org.jooq.impl.Factory.pi;
 import static org.jooq.impl.Factory.power;
 import static org.jooq.impl.Factory.rad;
 import static org.jooq.impl.Factory.rand;
-import static org.jooq.impl.Factory.rankOver;
+import static org.jooq.impl.Factory.rank;
 import static org.jooq.impl.Factory.rollup;
 import static org.jooq.impl.Factory.round;
-import static org.jooq.impl.Factory.rowNumberOver;
+import static org.jooq.impl.Factory.rowNumber;
 import static org.jooq.impl.Factory.sign;
 import static org.jooq.impl.Factory.sin;
 import static org.jooq.impl.Factory.sinh;
@@ -6702,12 +6704,12 @@ public abstract class jOOQAbstractTest<
         // ROW_NUMBER()
         Result<Record> result =
         create().select(TBook_ID(),
-                        rowNumberOver()
-                                .partitionByOne()
-                                .orderBy(TBook_ID().desc()),
-                        rowNumberOver()
-                                .partitionBy(TBook_AUTHOR_ID())
-                                .orderBy(TBook_ID().desc()))
+                        rowNumber().over()
+                                   .partitionByOne()
+                                   .orderBy(TBook_ID().desc()),
+                        rowNumber().over()
+                                   .partitionBy(TBook_AUTHOR_ID())
+                                   .orderBy(TBook_ID().desc()))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
@@ -6731,9 +6733,8 @@ public abstract class jOOQAbstractTest<
         // COUNT()
         result =
         create().select(TBook_ID(),
-                        countOver(),
-                        countOver()
-                                .partitionBy(TBook_AUTHOR_ID()))
+                        count().over(),
+                        count().over().partitionBy(TBook_AUTHOR_ID()))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
@@ -6756,16 +6757,12 @@ public abstract class jOOQAbstractTest<
         // RANK(), DENSE_RANK()
         result =
         create().select(TBook_ID(),
-                        rankOver()
-                                .orderBy(TBook_ID().desc()),
-                        rankOver()
-                                .partitionBy(TBook_AUTHOR_ID())
-                                .orderBy(TBook_ID().desc()),
-                        denseRankOver()
-                                .orderBy(TBook_ID().desc()),
-                        denseRankOver()
-                                .partitionBy(TBook_AUTHOR_ID())
-                                .orderBy(TBook_ID().desc()))
+                        rank().over().orderBy(TBook_ID().desc()),
+                        rank().over().partitionBy(TBook_AUTHOR_ID())
+                                     .orderBy(TBook_ID().desc()),
+                        denseRank().over().orderBy(TBook_ID().desc()),
+                        denseRank().over().partitionBy(TBook_AUTHOR_ID())
+                                          .orderBy(TBook_ID().desc()))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
@@ -6810,16 +6807,12 @@ public abstract class jOOQAbstractTest<
                 // PERCENT_RANK() and CUME_DIST()
                 result =
                 create().select(TBook_ID(),
-                                percentRankOver()
-                                        .orderBy(TBook_ID().desc()),
-                                percentRankOver()
-                                        .partitionBy(TBook_AUTHOR_ID())
-                                        .orderBy(TBook_ID().desc()),
-                                cumeDistOver()
-                                        .orderBy(TBook_ID().desc()),
-                                cumeDistOver()
-                                        .partitionBy(TBook_AUTHOR_ID())
-                                        .orderBy(TBook_ID().desc()))
+                                percentRank().over().orderBy(TBook_ID().desc()),
+                                percentRank().over().partitionBy(TBook_AUTHOR_ID())
+                                                    .orderBy(TBook_ID().desc()),
+                                cumeDist().over().orderBy(TBook_ID().desc()),
+                                cumeDist().over().partitionBy(TBook_AUTHOR_ID())
+                                                 .orderBy(TBook_ID().desc()))
                         .from(TBook())
                         .orderBy(TBook_ID().asc())
                         .fetch();
@@ -6861,10 +6854,10 @@ public abstract class jOOQAbstractTest<
         // MAX()
         result =
         create().select(TBook_ID(),
-                        TBook_ID().maxOver()
-                                  .partitionByOne(),
-                        TBook_ID().maxOver()
-                                  .partitionBy(TBook_AUTHOR_ID()))
+                        max(TBook_ID()).over()
+                                       .partitionByOne(),
+                        max(TBook_ID()).over()
+                                       .partitionBy(TBook_AUTHOR_ID()))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
@@ -6934,14 +6927,11 @@ public abstract class jOOQAbstractTest<
         // SUM()
         result =
         create().select(TBook_ID(),
-                        TBook_ID().sumOver()
-                                  .partitionByOne(),
-                        TBook_ID().sumOver()
-                                  .partitionBy(TBook_AUTHOR_ID()),
-                        TBook_ID().sumOver()
-                                  .orderBy(TBook_ID().asc())
-                                  .rowsBetweenUnboundedPreceding()
-                                  .andPreceding(1))
+                        sum(TBook_ID()).over().partitionByOne(),
+                        sum(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()),
+                        sum(TBook_ID()).over().orderBy(TBook_ID().asc())
+                                              .rowsBetweenUnboundedPreceding()
+                                              .andPreceding(1))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
@@ -6972,12 +6962,11 @@ public abstract class jOOQAbstractTest<
         // FIRST_VALUE()
         result =
         create().select(TBook_ID(),
-                        TBook_ID().firstValue()
-                                  .over()
-                                  .partitionBy(TBook_AUTHOR_ID())
-                                  .orderBy(TBook_PUBLISHED_IN().asc())
-                                  .rowsBetweenUnboundedPreceding()
-                                  .andUnboundedFollowing())
+                        firstValue(TBook_ID()).over()
+                                              .partitionBy(TBook_AUTHOR_ID())
+                                              .orderBy(TBook_PUBLISHED_IN().asc())
+                                              .rowsBetweenUnboundedPreceding()
+                                              .andUnboundedFollowing())
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();
@@ -6999,13 +6988,12 @@ public abstract class jOOQAbstractTest<
 
                 // FIRST_VALUE(... IGNORE NULLS)
                 result = create().select(TBook_ID(),
-                                         TBook_ID().firstValue()
-                                                   .ignoreNulls()
-                                                   .over()
-                                                   .partitionBy(TBook_AUTHOR_ID())
-                                                   .orderBy(TBook_PUBLISHED_IN().asc())
-                                                   .rowsBetweenUnboundedPreceding()
-                                                   .andUnboundedFollowing())
+                                         firstValue(TBook_ID()).ignoreNulls()
+                                                               .over()
+                                                               .partitionBy(TBook_AUTHOR_ID())
+                                                               .orderBy(TBook_PUBLISHED_IN().asc())
+                                                               .rowsBetweenUnboundedPreceding()
+                                                               .andUnboundedFollowing())
                                  .from(TBook())
                                  .orderBy(TBook_ID().asc())
                                  .fetch();
@@ -7032,55 +7020,43 @@ public abstract class jOOQAbstractTest<
                 // LEAD() and LAG()
                 result =
                 create().select(TBook_ID(),
-                                TBook_ID().lead()
-                                          .over()
-                                          .partitionByOne()
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lead()
-                                          .over()
-                                          .partitionBy(TBook_AUTHOR_ID())
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lead(2)
-                                          .over()
-                                          .partitionByOne()
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lead(2)
-                                          .over()
-                                          .partitionBy(TBook_AUTHOR_ID())
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lead(2, 55)
-                                          .over()
-                                          .partitionByOne()
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lead(2, 55)
-                                          .over()
-                                          .partitionBy(TBook_AUTHOR_ID())
-                                          .orderBy(TBook_ID().asc()),
+                                lead(TBook_ID()).over()
+                                                .partitionByOne()
+                                                .orderBy(TBook_ID().asc()),
+                                lead(TBook_ID()).over()
+                                                .partitionBy(TBook_AUTHOR_ID())
+                                                .orderBy(TBook_ID().asc()),
+                                lead(TBook_ID(), 2).over()
+                                                   .partitionByOne()
+                                                   .orderBy(TBook_ID().asc()),
+                                lead(TBook_ID(), 2).over()
+                                                   .partitionBy(TBook_AUTHOR_ID())
+                                                   .orderBy(TBook_ID().asc()),
+                                lead(TBook_ID(), 2, 55).over()
+                                                       .partitionByOne()
+                                                       .orderBy(TBook_ID().asc()),
+                                lead(TBook_ID(), 2, 55).over()
+                                                       .partitionBy(TBook_AUTHOR_ID())
+                                                       .orderBy(TBook_ID().asc()),
 
-                                TBook_ID().lag()
-                                          .over()
-                                          .partitionByOne()
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lag()
-                                          .over()
-                                          .partitionBy(TBook_AUTHOR_ID())
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lag(2)
-                                          .over()
-                                          .partitionByOne()
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lag(2)
-                                          .over()
-                                          .partitionBy(TBook_AUTHOR_ID())
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lag(2, val(55))
-                                          .over()
-                                          .partitionByOne()
-                                          .orderBy(TBook_ID().asc()),
-                                TBook_ID().lag(2, val(55))
-                                          .over()
-                                          .partitionBy(TBook_AUTHOR_ID())
-                                          .orderBy(TBook_ID().asc()))
+                                lag(TBook_ID()).over()
+                                               .partitionByOne()
+                                               .orderBy(TBook_ID().asc()),
+                                lag(TBook_ID()).over()
+                                               .partitionBy(TBook_AUTHOR_ID())
+                                               .orderBy(TBook_ID().asc()),
+                                lag(TBook_ID(), 2).over()
+                                                  .partitionByOne()
+                                                  .orderBy(TBook_ID().asc()),
+                                lag(TBook_ID(), 2).over()
+                                                  .partitionBy(TBook_AUTHOR_ID())
+                                                  .orderBy(TBook_ID().asc()),
+                                lag(TBook_ID(), 2, val(55)).over()
+                                                           .partitionByOne()
+                                                           .orderBy(TBook_ID().asc()),
+                                lag(TBook_ID(), 2, val(55)).over()
+                                                           .partitionBy(TBook_AUTHOR_ID())
+                                                           .orderBy(TBook_ID().asc()))
                         .from(TBook())
                         .orderBy(TBook_ID().asc())
                         .fetch();

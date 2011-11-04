@@ -37,7 +37,7 @@ package org.jooq.impl;
 
 import org.jooq.AggregateFunction;
 import org.jooq.DataType;
-import org.jooq.QueryPart;
+import org.jooq.Field;
 
 class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<T> {
 
@@ -46,11 +46,16 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
      */
     private static final long serialVersionUID = 1952351506930280715L;
 
-    AggregateFunctionImpl(String name, DataType<T> type, QueryPart... arguments) {
+    AggregateFunctionImpl(String name, DataType<T> type, Field<?>... arguments) {
         super(name, type, arguments);
     }
 
-    AggregateFunctionImpl(Term term, DataType<T> type, QueryPart... arguments) {
+    AggregateFunctionImpl(Term term, DataType<T> type, Field<?>... arguments) {
         super(term, type, arguments);
+    }
+
+    @Override
+    public final WindowFunction<T> over() {
+        return new WindowFunction<T>(getName(), getDataType(), getArguments());
     }
 }

@@ -102,6 +102,10 @@ class Function<T> extends AbstractField<T> {
         }
     }
 
+    final Term getTerm() {
+        return term;
+    }
+
     /**
      * Subclasses may override this method to add an additional prefix in the
      * function SQL string

@@ -6881,23 +6881,15 @@ public abstract class jOOQAbstractTest<
         // STDDEV_POP(), STDDEV_SAMP(), VAR_POP(), VAR_SAMP()
         result =
         create().select(TBook_ID(),
-                        TBook_ID().stddevPopOver()
-                                  .partitionByOne(),
-                        TBook_ID().stddevSampOver()
-                                  .partitionByOne(),
-                        TBook_ID().varPopOver()
-                                  .partitionByOne(),
-                        TBook_ID().varSampOver()
-                                  .partitionByOne(),
+                        stddevPop(TBook_ID()).over().partitionByOne(),
+                        stddevSamp(TBook_ID()).over().partitionByOne(),
+                        varPop(TBook_ID()).over().partitionByOne(),
+                        varSamp(TBook_ID()).over().partitionByOne(),
 
-                        TBook_ID().stddevPopOver()
-                                  .partitionBy(TBook_AUTHOR_ID()),
-                        TBook_ID().stddevSampOver()
-                                  .partitionBy(TBook_AUTHOR_ID()),
-                        TBook_ID().varPopOver()
-                                  .partitionBy(TBook_AUTHOR_ID()),
-                        TBook_ID().varSampOver()
-                                  .partitionBy(TBook_AUTHOR_ID()))
+                        stddevPop(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()),
+                        stddevSamp(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()),
+                        varPop(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()),
+                        varSamp(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()))
                 .from(TBook())
                 .orderBy(TBook_ID().asc())
                 .fetch();

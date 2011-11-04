@@ -45,7 +45,6 @@ import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -67,7 +66,6 @@ import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
-import org.jooq.WindowPartitionByStep;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
@@ -376,30 +374,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Field<T> shr(Field<? extends Number> value) {
         return new Expression<T>(ExpressionOperator.SHR, this, value);
-    }
-
-    // ------------------------------------------------------------------------
-    // Window functions created from this field
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final WindowPartitionByStep<BigDecimal> stddevPopOver() {
-        return new WindowFunction<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<BigDecimal> stddevSampOver() {
-        return new WindowFunction<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<BigDecimal> varPopOver() {
-        return new WindowFunction<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, this);
-    }
-
-    @Override
-    public final WindowPartitionByStep<BigDecimal> varSampOver() {
-        return new WindowFunction<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, this);
     }
 
     // ------------------------------------------------------------------------

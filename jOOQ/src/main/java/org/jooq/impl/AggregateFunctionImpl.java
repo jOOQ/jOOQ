@@ -56,6 +56,11 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
 
     @Override
     public final WindowFunction<T> over() {
-        return new WindowFunction<T>(getName(), getDataType(), getArguments());
+        if (getTerm() != null) {
+            return new WindowFunction<T>(getTerm(), getDataType(), getArguments());
+        }
+        else {
+            return new WindowFunction<T>(getName(), getDataType(), getArguments());
+        }
     }
 }

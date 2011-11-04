@@ -98,7 +98,8 @@ import org.jooq.Truncate;
 import org.jooq.UDTRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
-import org.jooq.WindowPartitionByStep;
+import org.jooq.WindowIgnoreNullsStep;
+import org.jooq.WindowOverStep;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -2255,24 +2256,12 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
-     * The <code>count(*) over ([analytic clause])</code> function.
-     * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
-     *
-     * @see Field#countOver()
-     */
-    public static WindowPartitionByStep<Integer> countOver() {
-        return field("*", Integer.class).countOver();
-    }
-
-    /**
      * The <code>row_number() over ([analytic clause])</code> function.
      * <p>
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public static WindowPartitionByStep<Integer> rowNumberOver() {
+    public static WindowOverStep<Integer> rowNumber() {
         return new WindowFunction<Integer>("row_number", SQLDataType.INTEGER);
     }
 
@@ -2282,7 +2271,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public static WindowPartitionByStep<Integer> rankOver() {
+    public static WindowOverStep<Integer> rank() {
         return new WindowFunction<Integer>("rank", SQLDataType.INTEGER);
     }
 
@@ -2292,7 +2281,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public static WindowPartitionByStep<Integer> denseRankOver() {
+    public static WindowOverStep<Integer> denseRank() {
         return new WindowFunction<Integer>("dense_rank", SQLDataType.INTEGER);
     }
 
@@ -2302,7 +2291,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public static WindowPartitionByStep<BigDecimal> percentRankOver() {
+    public static WindowOverStep<BigDecimal> percentRank() {
         return new WindowFunction<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
 
@@ -2312,7 +2301,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public static WindowPartitionByStep<BigDecimal> cumeDistOver() {
+    public static WindowOverStep<BigDecimal> cumeDist() {
         return new WindowFunction<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
 
@@ -2322,8 +2311,124 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    public static WindowPartitionByStep<BigDecimal> ntile(int number) {
+    public static WindowOverStep<BigDecimal> ntile(int number) {
         return new WindowFunction<BigDecimal>("ntile", SQLDataType.NUMERIC, field("" + number, Integer.class));
+    }
+
+    /**
+     * The <code>first_value(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
+        return new WindowFunction<T>("first_value", field.getDataType(), field);
+    }
+
+    /**
+     * The <code>last_value(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
+        return new WindowFunction<T>("last_value", field.getDataType(), field);
+    }
+
+    /**
+     * The <code>lead(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
+        return new WindowFunction<T>("lead", field.getDataType(), field);
+    }
+
+    /**
+     * The <code>lead(field, offset) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
+        return new WindowFunction<T>("lead", field.getDataType(), field, literal(offset));
+    }
+
+    /**
+     * The
+     * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
+        return lead(field, offset, val(defaultValue));
+    }
+
+    /**
+     * The
+     * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
+        if (defaultValue == null) {
+            return lead(field, offset, (T) null);
+        }
+
+        return new WindowFunction<T>("lead", field.getDataType(), field, literal(offset), defaultValue);
+    }
+
+    /**
+     * The <code>lag(field) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
+        return new WindowFunction<T>("lag", field.getDataType(), field);
+    }
+
+    /**
+     * The <code>lag(field, offset) over ([analytic clause])</code> function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
+        return new WindowFunction<T>("lag", field.getDataType(), field, literal(offset));
+    }
+
+    /**
+     * The
+     * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
+        return lag(field, offset, val(defaultValue));
+    }
+
+    /**
+     * The
+     * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
+     * function.
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
+        if (defaultValue == null) {
+            return lag(field, offset, (T) null);
+        }
+
+        return new WindowFunction<T>("lag", field.getDataType(), field, literal(offset), defaultValue);
     }
 
     // -------------------------------------------------------------------------

@@ -42,6 +42,18 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface AggregateFunction<T> extends Field<T> {
+public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
 
+    /**
+     * Turn this aggregate function into a window function, for example
+     * <p>
+     * <code><pre>
+     * MAX(ID) OVER (PARTITION BY 1)
+     * </code></pre>
+     * <p>
+     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
+     * Sybase.
+     */
+    @Override
+    WindowPartitionByStep<T> over();
 }

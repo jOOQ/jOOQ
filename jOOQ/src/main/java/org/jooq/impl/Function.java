@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -52,22 +51,22 @@ import org.jooq.SQLDialect;
  */
 class Function<T> extends AbstractField<T> {
 
-    private static final long     serialVersionUID = 347252741712134044L;
+    private static final long serialVersionUID = 347252741712134044L;
 
-    private final List<QueryPart> arguments;
-    private final Term            term;
+    private final QueryPart[] arguments;
+    private final Term        term;
 
     Function(String name, DataType<T> type, QueryPart... arguments) {
         super(name, type);
 
-        this.arguments = Arrays.asList(arguments);
+        this.arguments = arguments;
         this.term = null;
     }
 
     Function(Term term, DataType<T> type, QueryPart... arguments) {
         super(term.name().toLowerCase(), type);
 
-        this.arguments = Arrays.asList(arguments);
+        this.arguments = arguments;
         this.term = term;
     }
 
@@ -125,7 +124,7 @@ class Function<T> extends AbstractField<T> {
             case DB2:      // No break
 
                 // Empty argument lists do not have parentheses ()
-                if (arguments.isEmpty()) {
+                if (arguments.length == 0) {
                     return "";
                 } else {
                     return delimiter;
@@ -164,5 +163,9 @@ class Function<T> extends AbstractField<T> {
     @Override
     public final boolean isNullLiteral() {
         return false;
+    }
+
+    final QueryPart[] getArguments() {
+        return arguments;
     }
 }

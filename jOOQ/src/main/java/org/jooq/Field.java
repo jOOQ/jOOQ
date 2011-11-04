@@ -40,6 +40,8 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jooq.impl.Factory;
+
 /**
  * A field used in tables and conditions
  *
@@ -105,7 +107,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * Cast this field to the type of another field.
      * <p>
      * This results in the same as casting this field to
-     * {@link Field#getCastTypeName()}
+     * {@link DataType#getCastTypeName()}
      *
      * @param <Z> The generic type of the cast field
      * @param field The field whose type is used for the cast
@@ -523,7 +525,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * jOOQ simulates this operator in some dialects using
      * <code>[this] * power(2, [value])</code>, where power might also be simulated.
      *
-     * @see #power(Field)
+     * @see Factory#power(Field, Number)
      */
     Field<T> shl(Number value);
 
@@ -534,7 +536,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * jOOQ simulates this operator in some dialects using
      * <code>[this] * power(2, [value])</code>, where power might also be simulated.
      *
-     * @see #power(Field)
+     * @see Factory#power(Field, Field)
      */
     Field<T> shl(Field<? extends Number> value);
 
@@ -545,7 +547,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * jOOQ simulates this operator in some dialects using
      * <code>[this] / power(2, [value])</code>, where power might also be simulated.
      *
-     * @see #power(Field)
+     * @see Factory#power(Field, Number)
      */
     Field<T> shr(Number value);
 
@@ -556,7 +558,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * jOOQ simulates this operator in some dialects using
      * <code>[this] / power(2, [value])</code>, where power might also be simulated.
      *
-     * @see #power(Field)
+     * @see Factory#power(Field, Field)
      */
     Field<T> shr(Field<? extends Number> value);
 
@@ -1453,30 +1455,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <code>this <= all (Select<?> ...)</code>
      */
     Condition lessOrEqualAll(Select<?> query);
-
-    /**
-     * <code>this <= any (Select<?> ...)</code>
-     *
-     * @deprecated - 1.6.3 [#732] - use {@link #lessOrEqualAny(Select)} instead
-     */
-    @Deprecated
-    Condition lessOrEqualToAny(Select<?> query);
-
-    /**
-     * <code>this <= some (Select<?> ...)</code>
-     *
-     * @deprecated - 1.6.3 [#732] - use {@link #lessOrEqualSome(Select)} instead
-     */
-    @Deprecated
-    Condition lessOrEqualToSome(Select<?> query);
-
-    /**
-     * <code>this <= all (Select<?> ...)</code>
-     *
-     * @deprecated - 1.6.3 [#732] - use {@link #lessOrEqualAll(Select)} instead
-     */
-    @Deprecated
-    Condition lessOrEqualToAll(Select<?> query);
 
     /**
      * <code>this > value</code>

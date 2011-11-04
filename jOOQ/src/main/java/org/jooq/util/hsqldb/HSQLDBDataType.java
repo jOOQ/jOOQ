@@ -131,14 +131,6 @@ public class HSQLDBDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.HSQLDB, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    /**
-     * @deprecated - 1.6.3 - Do not reuse
-     */
-    @Deprecated
-    public static DataType<?> getDataType(String typeName) {
-        return getDataType(SQLDialect.HSQLDB, typeName);
-    }
-
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.HSQLDB, type);
     }

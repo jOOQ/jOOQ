@@ -73,16 +73,4 @@ abstract class AbstractNamedTypeProviderQueryPart<T> extends AbstractNamedQueryP
     public final Class<? extends T> getType() {
         return type.getType();
     }
-
-    @Override
-    @Deprecated
-    public final String getTypeName() {
-        return type.getTypeName();
-    }
-
-    @Override
-    @Deprecated
-    public final String getCastTypeName() {
-        return type.getCastTypeName();
-    }
 }

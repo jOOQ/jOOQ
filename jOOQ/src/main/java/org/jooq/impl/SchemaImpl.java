@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +74,7 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {}
+    public final void bind(BindContext context) {}
 
     @Override
     public final void toSQL(RenderContext context) {
@@ -83,7 +82,7 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     }
 
     @Override
-    public final Map<String, Class<?>> getTypeMapping() throws SQLException {
+    public final Map<String, Class<?>> getTypeMapping() {
         return Collections.unmodifiableMap(typeMapping);
     }
 

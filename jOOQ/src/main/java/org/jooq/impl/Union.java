@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +116,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(queries);
     }
 }

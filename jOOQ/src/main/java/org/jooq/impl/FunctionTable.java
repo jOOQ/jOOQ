@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,7 +64,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
         this.function = function;
     }
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @SuppressWarnings("unchecked")
     @Override
     public final Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
@@ -90,7 +89,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         switch (context.getDialect()) {
             case HSQLDB:
                 context.bind(function);

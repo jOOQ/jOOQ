@@ -62,6 +62,7 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A query that returns a {@link Result}
@@ -160,13 +161,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     abstract boolean isSelectingRefCursor();
 
     @Override
-    public final Result<R> fetch() throws SQLException {
+    public final Result<R> fetch() {
         execute();
         return result;
     }
 
     @Override
-    public final Cursor<R> fetchLazy() throws SQLException {
+    public final Cursor<R> fetchLazy() {
         lazy = true;
         execute();
         lazy = false;
@@ -175,7 +176,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final List<Result<Record>> fetchMany() throws SQLException {
+    public final List<Result<Record>> fetchMany() {
         many = true;
         execute();
         many = false;
@@ -184,74 +185,74 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> List<T> fetch(Field<T> field) throws SQLException {
+    public final <T> List<T> fetch(Field<T> field) {
         return fetch().getValues(field);
     }
 
     @Override
-    public final List<?> fetch(int fieldIndex) throws SQLException {
+    public final List<?> fetch(int fieldIndex) {
         return fetch().getValues(fieldIndex);
     }
 
     @Override
-    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws SQLException {
+    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) {
         return fetch().getValues(fieldIndex, type);
     }
 
     @Override
-    public final List<?> fetch(String fieldName) throws SQLException {
+    public final List<?> fetch(String fieldName) {
         return fetch().getValues(fieldName);
     }
 
     @Override
-    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) throws SQLException {
+    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) {
         return fetch().getValues(fieldName, type);
     }
 
     @Override
-    public final <T> T fetchOne(Field<T> field) throws SQLException {
+    public final <T> T fetchOne(Field<T> field) {
         R record = fetchOne();
         return record == null ? null : record.getValue(field);
     }
 
     @Override
-    public final Object fetchOne(int fieldIndex) throws SQLException {
+    public final Object fetchOne(int fieldIndex) {
         R record = fetchOne();
         return record == null ? null : record.getValue(fieldIndex);
     }
 
     @Override
-    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException {
+    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) {
         return TypeUtils.convert(fetchOne(fieldIndex), type);
     }
 
     @Override
-    public final Object fetchOne(String fieldName) throws SQLException {
+    public final Object fetchOne(String fieldName) {
         R record = fetchOne();
         return record == null ? null : record.getValue(fieldName);
     }
 
     @Override
-    public final <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException {
+    public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
         return TypeUtils.convert(fetchOne(fieldName), type);
     }
 
     @Override
-    public final R fetchOne() throws SQLException {
+    public final R fetchOne() {
         Result<R> r = fetch();
 
         if (r.size() == 1) {
             return r.get(0);
         }
         else if (r.size() > 1) {
-            throw new SQLException("Query returned more than one result");
+            throw new DataAccessException("Query returned more than one result");
         }
 
         return null;
     }
 
     @Override
-    public final R fetchAny() throws SQLException {
+    public final R fetchAny() {
         Cursor<R> c = fetchLazy();
 
         try {
@@ -263,12 +264,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <K> Map<K, R> fetchMap(Field<K> key) throws SQLException {
+    public final <K> Map<K, R> fetchMap(Field<K> key) {
         Map<K, R> map = new LinkedHashMap<K, R>();
 
         for (R record : fetch()) {
             if (map.put(record.getValue(key), record) != null) {
-                throw new SQLException("Key " + key + " is not unique in Result for " + this);
+                throw new DataAccessException("Key " + key + " is not unique in Result for " + this);
             }
         }
 
@@ -276,7 +277,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws SQLException {
+    public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
         Map<K, V> map = new LinkedHashMap<K, V>();
 
         for (Map.Entry<K, R> entry : fetchMap(key).entrySet()) {
@@ -287,7 +288,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final List<Map<String, Object>> fetchMaps() throws SQLException {
+    public final List<Map<String, Object>> fetchMaps() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
         for (R record : fetch()) {
@@ -298,16 +299,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Map<String, Object> fetchOneMap() throws SQLException {
+    public final Map<String, Object> fetchOneMap() {
         return convertToMap(fetchOne());
     }
 
-    private final Map<String, Object> convertToMap(R record) throws SQLException {
+    private final Map<String, Object> convertToMap(R record) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
         for (Field<?> field : record.getFields()) {
             if (map.put(field.getName(), record.getValue(field)) != null) {
-                throw new SQLException("Field " + field.getName() + " is not unique in Record for " + this);
+                throw new DataAccessException("Field " + field.getName() + " is not unique in Record for " + this);
             }
         }
 
@@ -315,7 +316,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Object[][] fetchArrays() throws SQLException {
+    public final Object[][] fetchArrays() {
         Result<R> fetch = fetch();
         Object[][] array = new Object[fetch.size()][];
 
@@ -327,57 +328,57 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Object[] fetchArray(int fieldIndex) throws SQLException {
+    public final Object[] fetchArray(int fieldIndex) {
         return fetch(fieldIndex).toArray();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws SQLException {
+    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
         return (T[]) TypeUtils.convertArray(fetchArray(fieldIndex), type);
     }
 
     @Override
-    public final Object[] fetchArray(String fieldName) throws SQLException {
+    public final Object[] fetchArray(String fieldName) {
         return fetch(fieldName).toArray();
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws SQLException {
+    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
         return (T[]) TypeUtils.convertArray(fetchArray(fieldName), type);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <T> T[] fetchArray(Field<T> field) throws SQLException {
+    public final <T> T[] fetchArray(Field<T> field) {
         return fetch(field).toArray((T[]) Array.newInstance(field.getType(), 0));
     }
 
     @Override
-    public final Object[] fetchOneArray() throws SQLException {
+    public final Object[] fetchOneArray() {
         return convertToArray(fetchOne());
     }
 
     @Override
-    public final <T> List<T> fetchInto(Class<? extends T> type) throws SQLException {
+    public final <T> List<T> fetchInto(Class<? extends T> type) {
         return fetch().into(type);
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException {
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
         return fetch().into(handler);
     }
 
     @Override
-    public final FutureResult<R> fetchLater() throws SQLException {
+    public final FutureResult<R> fetchLater() {
         ExecutorService executor = newSingleThreadExecutor();
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
         return new FutureResultImpl<R>(future, executor);
     }
 
     @Override
-    public final FutureResult<R> fetchLater(ExecutorService executor) throws SQLException {
+    public final FutureResult<R> fetchLater(ExecutorService executor) {
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
         return new FutureResultImpl<R>(future);
     }

@@ -36,8 +36,9 @@
 package org.jooq;
 
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Collection;
+
+import org.jooq.exception.DataAccessException;
 
 /**
  * The bind context is used for binding {@link QueryPart}'s and their contained
@@ -46,7 +47,7 @@ import java.util.Collection;
  * will then pass the same context to their components
  * <p>
  * This interface is for JOOQ INTERNAL USE only. Do not reference directly
- *
+ * 
  * @author Lukas Eder
  * @see RenderContext
  */
@@ -73,29 +74,44 @@ public interface BindContext extends Context<BindContext> {
     /**
      * Bind values from a {@link QueryPart}. This will also increment the
      * internal counter.
+     * 
+     * @throws DataAccessException If something went wrong while binding a
+     *             variable
      */
-    BindContext bind(QueryPart part) throws SQLException;
+    BindContext bind(QueryPart part) throws DataAccessException;
 
     /**
      * Bind values from several {@link QueryPart}'s. This will also increment
      * the internal counter.
+     * 
+     * @throws DataAccessException If something went wrong while binding a
+     *             variable
      */
-    BindContext bind(Collection<? extends QueryPart> parts) throws SQLException;
+    BindContext bind(Collection<? extends QueryPart> parts) throws DataAccessException;
 
     /**
      * Bind values from several {@link QueryPart}'s. This will also increment
      * the internal counter.
+     * 
+     * @throws DataAccessException If something went wrong while binding a
+     *             variable
      */
-    BindContext bind(QueryPart[] parts) throws SQLException;
+    BindContext bind(QueryPart[] parts) throws DataAccessException;
 
     /**
      * Bind a value using a specific type. This will also increment the internal
      * counter.
+     * 
+     * @throws DataAccessException If something went wrong while binding a
+     *             variable
      */
-    BindContext bindValue(Object value, Class<?> type) throws SQLException;
+    BindContext bindValue(Object value, Class<?> type) throws DataAccessException;
 
     /**
      * Bind several values. This will also increment the internal counter.
+     * 
+     * @throws DataAccessException If something went wrong while binding a
+     *             variable
      */
-    BindContext bindValues(Object... values) throws SQLException;
+    BindContext bindValues(Object... values) throws DataAccessException;
 }

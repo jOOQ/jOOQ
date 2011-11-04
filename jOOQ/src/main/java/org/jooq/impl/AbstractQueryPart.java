@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,16 +45,16 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Schema;
 import org.jooq.Store;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -106,97 +105,18 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
         return getConfiguration().getDialect();
     }
 
-
-    @Override
+    /**
+     * This method is also declared as {@link Query#getSQL()}
+     */
     public final String getSQL() {
-        return toSQLReference(getConfiguration());
+        return create().render(this);
     }
 
     @Override
     public final List<Object> getBindValues() {
         BindValueCollector collector = new BindValueCollector();
-
-        try {
-            create(getConfiguration()).bind(this, collector);
-        }
-        catch (SQLException ignore) {
-        }
-
+        create(getConfiguration()).bind(this, collector);
         return collector.result;
-    }
-
-    @Override
-    @Deprecated
-    public final String toSQLReference(Configuration configuration) {
-        return toSQLReference(configuration, false);
-    }
-
-    @Override
-    @Deprecated
-    public final String toSQLReference(Configuration configuration, boolean inlineParameters) {
-        RenderContext context = new DefaultRenderContext(configuration);
-        context.inline(inlineParameters);
-        toSQL(context);
-        return context.render();
-    }
-
-    @Override
-    @Deprecated
-    public final String toSQLDeclaration(Configuration configuration) {
-        return toSQLDeclaration(configuration, false);
-    }
-
-    @Override
-    @Deprecated
-    public final String toSQLDeclaration(Configuration configuration, boolean inlineParameters) {
-        RenderContext context = new DefaultRenderContext(configuration);
-        context.inline(inlineParameters);
-        context.declareFields(true);
-        context.declareTables(true);
-        toSQL(context);
-        return context.render();
-    }
-
-    @Override
-    @Deprecated
-    public final int bind(Configuration configuration, PreparedStatement stmt) throws SQLException {
-        return bind(configuration, stmt, 1);
-    }
-
-    @Override
-    @Deprecated
-    public final int bind(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        return bindReference(configuration, stmt, 1);
-    }
-
-    @Override
-    @Deprecated
-    public final int bindReference(Configuration configuration, PreparedStatement stmt) throws SQLException {
-        return bindReference(configuration, stmt, 1);
-    }
-
-    @Override
-    @Deprecated
-    public final int bindReference(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        BindContext context = new DefaultBindContext(configuration, stmt);
-        bind(context);
-        return context.peekIndex();
-    }
-
-    @Override
-    @Deprecated
-    public final int bindDeclaration(Configuration configuration, PreparedStatement stmt) throws SQLException {
-        return bindDeclaration(configuration, stmt, 1);
-    }
-
-    @Override
-    @Deprecated
-    public final int bindDeclaration(Configuration configuration, PreparedStatement stmt, int initialIndex) throws SQLException {
-        BindContext context = new DefaultBindContext(configuration, stmt);
-        context.declareFields(true);
-        context.declareTables(true);
-        bind(context);
-        return context.peekIndex();
     }
 
     /**
@@ -350,5 +270,12 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
      */
     final Factory create(AttachableImpl a) {
         return create(a.getConfiguration());
+    }
+
+    /**
+     * Internal convenience method
+     */
+    protected final DataAccessException translate(String task, String sql, SQLException e) {
+        return JooqUtil.translate(task, sql, e);
     }
 }

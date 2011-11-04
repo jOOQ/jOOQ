@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
-import org.jooq.Table;
 import org.jooq.Type;
 
 abstract class TypeRecord<T extends Type<?>> extends AbstractRecord {
@@ -48,16 +46,6 @@ abstract class TypeRecord<T extends Type<?>> extends AbstractRecord {
 
     public TypeRecord(T table) {
         super(table);
-    }
-
-    /**
-     * @deprecated - 1.6.4 [#789] - Create attached records using
-     *             {@link Factory#newRecord(Table)} instead. Detached records
-     *             can be created using {@link #TableRecordImpl(Table)}
-     */
-    @Deprecated
-    public TypeRecord(T table, Configuration configuration) {
-        super(table, configuration);
     }
 
     @SuppressWarnings("unchecked")

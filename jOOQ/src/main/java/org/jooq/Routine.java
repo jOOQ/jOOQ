@@ -35,10 +35,9 @@
  */
 package org.jooq;
 
-import java.sql.SQLException;
 import java.util.List;
 
-import org.jooq.exception.DetachedException;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A routine is a callable object in your RDBMS.
@@ -78,7 +77,7 @@ import org.jooq.exception.DetachedException;
  * Hence, with #852, jOOQ 1.6.8, the distinction between procedures and
  * functions becomes obsolete. All stored routines are simply referred to as
  * "Routine".
- * 
+ *
  * @author Lukas Eder
  */
 public interface Routine<T> extends NamedQueryPart, SchemaProvider {
@@ -125,15 +124,15 @@ public interface Routine<T> extends NamedQueryPart, SchemaProvider {
 
     /**
      * Execute the stored object using a {@link Configuration} object
+     *
+     * @throws DataAccessException if something went wrong executing the query
      */
-    int execute(Configuration configuration) throws SQLException;
+    int execute(Configuration configuration) throws DataAccessException;
 
     /**
      * Execute the stored object on an underlying connection
      *
-     * @throws SQLException If anything went wrong with executing the stored
-     *             object
-     * @throws DetachedException If this stored object is not attached
+     * @throws DataAccessException if something went wrong executing the query
      */
-    int execute() throws SQLException, DetachedException;
+    int execute() throws DataAccessException;
 }

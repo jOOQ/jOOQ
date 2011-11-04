@@ -43,7 +43,6 @@ import static org.jooq.impl.SQLDataType.FLOAT;
 import static org.jooq.impl.SQLDataType.REAL;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -160,7 +159,7 @@ class Cast<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         if (context.getDialect() == SQLDialect.DERBY) {
 
             // [#859] casting numeric types to BOOLEAN

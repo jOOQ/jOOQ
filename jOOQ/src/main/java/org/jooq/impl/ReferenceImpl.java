@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Record;
 import org.jooq.ForeignKey;
+import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;

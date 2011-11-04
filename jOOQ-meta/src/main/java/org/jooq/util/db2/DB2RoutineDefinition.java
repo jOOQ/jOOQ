@@ -79,7 +79,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
         }
     }
 
-    private void initF() throws SQLException {
+    private void initF() {
         for (Record record : create()
                 .select(
                     Funcparms.ROWTYPE,
@@ -129,7 +129,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
         }
     }
 
-    private void initP() throws SQLException {
+    private void initP() {
         for (Record record : create().select(
                     Procparms.PARMNAME,
                     Procparms.TYPENAME,

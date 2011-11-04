@@ -37,7 +37,6 @@
 package org.jooq;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ public interface Schema extends NamedQueryPart {
      *
      * @see UDT#getTypeMapping() for a UDT-specific type mapping
      */
-    Map<String, Class<?>> getTypeMapping() throws SQLException;
+    Map<String, Class<?>> getTypeMapping();
 
     /**
      * List all tables contained in this schema

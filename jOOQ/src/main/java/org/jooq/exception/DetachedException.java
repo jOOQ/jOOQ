@@ -35,8 +35,6 @@
  */
 package org.jooq.exception;
 
-import java.sql.SQLException;
-
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.UpdatableRecord;
@@ -47,26 +45,18 @@ import org.jooq.UpdatableRecord;
  *
  * @author Lukas Eder
  */
-public class DetachedException extends SQLException {
+public class DetachedException extends DataAccessException {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -6460945824599280420L;
 
-    public DetachedException() {
-        super();
+    public DetachedException(String message) {
+        super(message);
     }
 
-    public DetachedException(String reason, Throwable cause) {
-        super(reason, cause);
-    }
-
-    public DetachedException(String reason) {
-        super(reason);
-    }
-
-    public DetachedException(Throwable cause) {
-        super(cause);
+    public DetachedException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

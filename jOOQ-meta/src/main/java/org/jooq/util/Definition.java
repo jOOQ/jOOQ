@@ -61,20 +61,6 @@ public interface Definition {
     String getName();
 
     /**
-     * @return The name of this object in upper case letters, e.g. [MY_TABLE]
-     * @deprecated - Use jooq-meta's GeneratorStrategy instead
-     */
-    @Deprecated
-    String getNameUC();
-
-    /**
-     * @return The name of this object in lower case letters, e.g. [my_table]
-     * @deprecated - Use jooq-meta's GeneratorStrategy instead
-     */
-    @Deprecated
-    String getNameLC();
-
-    /**
      * @return The comment of this object
      */
     String getComment();

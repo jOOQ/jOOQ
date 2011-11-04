@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -123,7 +122,7 @@ class Position extends AbstractFunction<Integer> {
         }
 
         @Override
-        public final void bind(BindContext context) throws SQLException {
+        public final void bind(BindContext context) {
             context.bind(search).bind(in);
         }
     }

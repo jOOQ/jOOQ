@@ -41,7 +41,6 @@ import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -305,7 +304,7 @@ implements
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.declareTables(true)
                .bind(table)
                .bind(using)

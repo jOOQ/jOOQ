@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -81,157 +80,157 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final Result<R> fetch() throws SQLException {
+    public final Result<R> fetch() {
         return getDelegate().fetch();
     }
 
     @Override
-    public final Cursor<R> fetchLazy() throws SQLException {
+    public final Cursor<R> fetchLazy() {
         return getDelegate().fetchLazy();
     }
 
     @Override
-    public final List<Result<Record>> fetchMany() throws SQLException {
+    public final List<Result<Record>> fetchMany() {
         return getDelegate().fetchMany();
     }
 
     @Override
-    public final <T> List<T> fetch(Field<T> field) throws SQLException {
+    public final <T> List<T> fetch(Field<T> field) {
         return getDelegate().fetch(field);
     }
 
     @Override
-    public final List<?> fetch(int fieldIndex) throws SQLException {
+    public final List<?> fetch(int fieldIndex) {
         return getDelegate().fetch(fieldIndex);
     }
 
     @Override
-    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws SQLException {
+    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) {
         return getDelegate().fetch(fieldIndex, type);
     }
 
     @Override
-    public final List<?> fetch(String fieldName) throws SQLException {
+    public final List<?> fetch(String fieldName) {
         return getDelegate().fetch(fieldName);
     }
 
     @Override
-    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) throws SQLException {
+    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) {
         return getDelegate().fetch(fieldName, type);
     }
 
     @Override
-    public final <T> T fetchOne(Field<T> field) throws SQLException {
+    public final <T> T fetchOne(Field<T> field) {
         return getDelegate().fetchOne(field);
     }
 
     @Override
-    public final Object fetchOne(int fieldIndex) throws SQLException {
+    public final Object fetchOne(int fieldIndex) {
         return getDelegate().fetchOne(fieldIndex);
     }
 
     @Override
-    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) throws SQLException {
+    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) {
         return getDelegate().fetchOne(fieldIndex, type);
     }
 
     @Override
-    public final Object fetchOne(String fieldName) throws SQLException {
+    public final Object fetchOne(String fieldName) {
         return getDelegate().fetchOne(fieldName);
     }
 
     @Override
-    public final <T> T fetchOne(String fieldName, Class<? extends T> type) throws SQLException {
+    public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
         return getDelegate().fetchOne(fieldName, type);
     }
 
     @Override
-    public final R fetchOne() throws SQLException {
+    public final R fetchOne() {
         return getDelegate().fetchOne();
     }
 
     @Override
-    public final R fetchAny() throws SQLException {
+    public final R fetchAny() {
         return getDelegate().fetchAny();
     }
 
     @Override
-    public final <K> Map<K, R> fetchMap(Field<K> key) throws SQLException {
+    public final <K> Map<K, R> fetchMap(Field<K> key) {
         return getDelegate().fetchMap(key);
     }
 
     @Override
-    public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) throws SQLException {
+    public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
         return getDelegate().fetchMap(key, value);
     }
 
     @Override
-    public final List<Map<String, Object>> fetchMaps() throws SQLException {
+    public final List<Map<String, Object>> fetchMaps() {
         return getDelegate().fetchMaps();
     }
 
     @Override
-    public final Map<String, Object> fetchOneMap() throws SQLException {
+    public final Map<String, Object> fetchOneMap() {
         return getDelegate().fetchOneMap();
     }
 
     @Override
-    public final Object[][] fetchArrays() throws SQLException {
+    public final Object[][] fetchArrays() {
         return getDelegate().fetchArrays();
     }
 
     @Override
-    public final Object[] fetchArray(int fieldIndex) throws SQLException {
+    public final Object[] fetchArray(int fieldIndex) {
         return getDelegate().fetchArray(fieldIndex);
     }
 
     @Override
-    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws SQLException {
+    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
         return getDelegate().fetchArray(fieldIndex, type);
     }
 
     @Override
-    public final Object[] fetchArray(String fieldName) throws SQLException {
+    public final Object[] fetchArray(String fieldName) {
         return getDelegate().fetchArray(fieldName);
     }
 
     @Override
-    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) throws SQLException {
+    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
         return getDelegate().fetchArray(fieldName, type);
     }
 
     @Override
-    public final <T> T[] fetchArray(Field<T> field) throws SQLException {
+    public final <T> T[] fetchArray(Field<T> field) {
         return getDelegate().fetchArray(field);
     }
 
     @Override
-    public final Object[] fetchOneArray() throws SQLException {
+    public final Object[] fetchOneArray() {
         return getDelegate().fetchOneArray();
     }
 
     @Override
-    public final <T> List<T> fetchInto(Class<? extends T> type) throws SQLException {
+    public final <T> List<T> fetchInto(Class<? extends T> type) {
         return getDelegate().fetchInto(type);
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchInto(H handler) throws SQLException {
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
         return getDelegate().fetchInto(handler);
     }
 
     @Override
-    public final FutureResult<R> fetchLater() throws SQLException {
+    public final FutureResult<R> fetchLater() {
         return getDelegate().fetchLater();
     }
 
     @Override
-    public final FutureResult<R> fetchLater(ExecutorService executor) throws SQLException {
+    public final FutureResult<R> fetchLater(ExecutorService executor) {
         return getDelegate().fetchLater(executor);
     }
 
     @Override
-    public final int execute() throws SQLException {
+    public final int execute() {
         return getDelegate().execute();
     }
 

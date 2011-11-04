@@ -35,19 +35,14 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Configuration;
 import org.jooq.FieldProvider;
-import org.jooq.Table;
 
 /**
  * A general purpose record, typically used for ad-hoc types.
  *
  * @author Lukas Eder
- * @deprecated - 1.6.4 [#789] - This type will become part of the internal API
- *             in a future release. Do not reference directly.
  */
-@Deprecated
-public class RecordImpl extends AbstractRecord {
+class RecordImpl extends AbstractRecord {
 
     /**
      * Generated UID
@@ -55,20 +50,8 @@ public class RecordImpl extends AbstractRecord {
     private static final long serialVersionUID = -2201346180421463830L;
 
     /**
-     * @deprecated - 1.6.4 [#789] - Create attached records using
-     *             {@link Factory#newRecord(Table)} instead. Detached records
-     *             can be created using {@link #RecordImpl(FieldProvider)}
+     * Create a new general purpos record
      */
-    @Deprecated
-    public RecordImpl(FieldProvider fields, Configuration configuration) {
-        super(fields, configuration);
-    }
-
-    /**
-     * @deprecated - 1.6.4 [#789] - This type will become part of the internal
-     *             API in a future release. Do not reference directly.
-     */
-    @Deprecated
     public RecordImpl(FieldProvider fields) {
         super(fields);
     }

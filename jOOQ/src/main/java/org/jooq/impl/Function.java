@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -158,7 +157,7 @@ class Function<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(arguments);
     }
 

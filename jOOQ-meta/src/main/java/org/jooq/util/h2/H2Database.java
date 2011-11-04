@@ -116,7 +116,7 @@ public class H2Database extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) throws SQLException {
+    private List<Record> fetchKeys(String constraintType) {
         return create().select(
                 Constraints.TABLE_NAME,
                 Constraints.COLUMN_LIST,

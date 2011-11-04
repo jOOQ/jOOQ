@@ -37,9 +37,10 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+
+import org.jooq.exception.DataAccessException;
 
 /**
  * Cursors allow for lazy, sequential access to an underlying JDBC
@@ -60,16 +61,20 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     *
+     * @throws DataAccessException if something went wrong executing the query
      */
-    boolean hasNext() throws SQLException;
+    boolean hasNext() throws DataAccessException;
 
     /**
      * Fetch all remaining records as a result.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
+     *
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Result<R> fetch() throws SQLException;
+    Result<R> fetch() throws DataAccessException;
 
     /**
      * Fetch the next couple of records from the cursor.
@@ -81,8 +86,9 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      *            or negative an empty list is returned, the cursor is
      *            untouched. If this is greater than the number of remaining
      *            records, then all remaining records are returned.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Result<R> fetch(int number) throws SQLException;
+    Result<R> fetch(int number) throws DataAccessException;
 
     /**
      * Fetch the next record from the cursor
@@ -92,43 +98,18 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      *
      * @return The next record from the cursor, or <code>null</code> if there is
      *         no next record.
+     * @throws DataAccessException if something went wrong executing the query
      */
-    R fetchOne() throws SQLException;
-
-    /**
-     * Fetch all remaining records as a result.
-     * <p>
-     * This will conveniently close the <code>Cursor</code>, after the last
-     * <code>Record</code> was fetched.
-     *
-     * @deprecated - 1.6.8 [#849] - Use {@link #fetch()} instead
-     */
-    @Deprecated
-    Result<R> fetchResult() throws SQLException;
-
-    /**
-     * Fetch some records as a result
-     * <p>
-     * This will conveniently close the <code>Cursor</code>, if the last
-     * <code>Record</code> was fetched.
-     *
-     * @param number The number of records to fetch. If this is <code>0</code>
-     *            or negative an empty result is returned, the cursor is
-     *            untouched. If this is greater than the number of remaining
-     *            records, then all remaining records are returned.
-     *
-     * @deprecated - 1.6.8 [#849] - Use {@link #fetch(int)} instead
-     */
-    @Deprecated
-    Result<R> fetchResult(int number) throws SQLException;
+    R fetchOne() throws DataAccessException;
 
     /**
      * Fetch results into a custom handler callback
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
+     * @throws DataAccessException if something went wrong executing the query
      */
-    RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException;
+    RecordHandler<R> fetchInto(RecordHandler<R> handler) throws DataAccessException;
 
     /**
      * Map resulting records onto a custom type.
@@ -140,8 +121,9 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @param type The entity type.
      * @see Record#into(Class)
      * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws SQLException;
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException;
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and
@@ -150,8 +132,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * If you fetch all records from the underlying {@link ResultSet}, jOOQ
      * <code>Cursor</code> implementations will close themselves for you.
      * Calling <code>close()</code> again will have no effect.
+     *
+     * @throws DataAccessException if something went wrong executing the query
      */
-    void close() throws SQLException;
+    void close() throws DataAccessException;
 
     /**
      * Check whether this <code>Cursor</code> has been explicitly or

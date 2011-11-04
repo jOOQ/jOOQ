@@ -61,16 +61,17 @@ class BatchMultiple implements Batch {
     }
 
     @Override
-    public final int[] execute() throws SQLException {
+    public final int[] execute() {
         StopWatch watch = new StopWatch();
         Connection connection = create.getConnection();
         Statement statement = null;
+        String sql = null;
 
         try {
             statement = connection.createStatement();
 
             for (Query query : queries) {
-                String sql = create.renderInlined(query);
+                sql = create.renderInlined(query);
                 watch.splitTrace("SQL rendered");
 
                 if (log.isDebugEnabled())
@@ -83,6 +84,9 @@ class BatchMultiple implements Batch {
             watch.splitTrace("Statement executed");
 
             return result;
+        }
+        catch (SQLException e) {
+            throw JooqUtil.translate("BatchMultiple.execute", sql, e);
         }
         finally {
             JooqUtil.safeClose(statement);

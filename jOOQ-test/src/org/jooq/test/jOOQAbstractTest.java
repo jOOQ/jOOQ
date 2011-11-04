@@ -194,6 +194,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
@@ -627,7 +628,6 @@ public abstract class jOOQAbstractTest<
     }
 
     // IMPORTANT! Make this the first test, to prevent side-effects
-    @SuppressWarnings("deprecation")
     @Test
     public void testInsertIdentity() throws Exception {
         switch (getDialect()) {
@@ -654,8 +654,8 @@ public abstract class jOOQAbstractTest<
         create().insertInto(TBookStore(), TBookStore_NAME())
                 .values("Amazon")
                 .execute();
-        assertEquals(5, create().lastID(TBookStore().getIdentity()));
-        assertEquals(5, create().lastID(TBookStore().getIdentity()));
+        assertEquals(5, create().lastID().intValue());
+        assertEquals(5, create().lastID().intValue());
 
 
         // No new identity should be received. But unfortunately, dialects show
@@ -950,7 +950,7 @@ public abstract class jOOQAbstractTest<
         try {
             create().selectFrom(TBook()).orderBy(TBook_ID()).fetchMap(TBook_AUTHOR_ID());
             fail();
-        } catch (SQLException expected) {}
+        } catch (DataAccessException expected) {}
 
         // Key -> Record Map
         // -----------------
@@ -1508,8 +1508,13 @@ public abstract class jOOQAbstractTest<
             }
 
             @Override
-            public void bind(BindContext context) throws SQLException {
-                context.statement().setInt(context.nextIndex(), 2);
+            public void bind(BindContext context) {
+                try {
+                    context.statement().setInt(context.nextIndex(), 2);
+                }
+                catch (SQLException e) {
+                    throw translate("CustomCondition.bind", getSQL(), e);
+                }
             }
         };
 
@@ -1530,9 +1535,14 @@ public abstract class jOOQAbstractTest<
             }
 
             @Override
-            public void bind(BindContext context) throws SQLException {
-                context.bind(IDx2);
-                context.statement().setInt(context.nextIndex(), 3);
+            public void bind(BindContext context) {
+                try {
+                    context.bind(IDx2);
+                    context.statement().setInt(context.nextIndex(), 3);
+                }
+                catch (SQLException e) {
+                    throw translate("CustomCondition.bind", getSQL(), e);
+                }
             }
         };
 
@@ -3148,7 +3158,7 @@ public abstract class jOOQAbstractTest<
                 .having(count().greaterOrEqual(3))
                 .fetchOne(0));
         }
-        catch (SQLException e) {
+        catch (DataAccessException e) {
 
             // HAVING without GROUP BY is not supported by some dialects,
             // So this exception is OK
@@ -3768,7 +3778,7 @@ public abstract class jOOQAbstractTest<
         try {
             book.refresh();
         }
-        catch (SQLException expected) {}
+        catch (DataAccessException expected) {}
 
         // Fetch the original record
         B book1 = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
@@ -3840,10 +3850,10 @@ public abstract class jOOQAbstractTest<
         // Can't store the copies yet, as the primary key is null
         try {
             book1.store();
-        } catch (SQLException expected) {}
+        } catch (DataAccessException expected) {}
         try {
             book2.store();
-        } catch (SQLException expected) {}
+        } catch (DataAccessException expected) {}
 
         book1.setValue(TBook_ID(), 11);
         book2.setValue(TBook_ID(), 12);
@@ -3902,7 +3912,7 @@ public abstract class jOOQAbstractTest<
         try {
             store.refresh();
         }
-        catch (SQLException expected) {}
+        catch (DataAccessException expected) {}
 
         store.setValue(TBookStore_NAME(), "Rösslitor");
         assertEquals(1, store.store());
@@ -4004,7 +4014,7 @@ public abstract class jOOQAbstractTest<
             record.refreshUsing(T785_VALUE());
             fail();
         }
-        catch (SQLException expected) {}
+        catch (DataAccessException expected) {}
 
 
         // Don't allow refreshing on inexistent results
@@ -4014,7 +4024,7 @@ public abstract class jOOQAbstractTest<
             record.refreshUsing(T785_ID());
             fail();
         }
-        catch (SQLException expected) {}
+        catch (DataAccessException expected) {}
 
         // Delete records again
         record = create().newRecord(T785());

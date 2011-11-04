@@ -59,12 +59,11 @@ import org.jooq.util.h2.H2Factory;
  */
 public class F {
 
-    public static void pCreateAuthor(Connection connection) throws SQLException {
+    public static void pCreateAuthor(Connection connection) {
         Routines.pCreateAuthorByName(create(connection), "William", "Shakespeare");
     }
 
-    public static void pCreateAuthorByName(Connection connection, String firstName, String lastName)
-        throws SQLException {
+    public static void pCreateAuthorByName(Connection connection, String firstName, String lastName) {
         H2Factory create = create(connection);
 
         create.insertInto(T_AUTHOR)
@@ -95,7 +94,7 @@ public class F {
         return stmt.executeQuery();
     }
 
-    public static Integer fAuthorExists(Connection connection, String authorName) throws SQLException {
+    public static Integer fAuthorExists(Connection connection, String authorName) {
         H2Factory create = create(connection);
 
         Integer result =

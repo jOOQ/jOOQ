@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -74,7 +73,7 @@ implements Map<K, V> {
     public abstract void toSQL(RenderContext context);
 
     @Override
-    public abstract void bind(BindContext context) throws SQLException;
+    public abstract void bind(BindContext context);
 
     @Override
     public final List<Attachable> getAttachables() {

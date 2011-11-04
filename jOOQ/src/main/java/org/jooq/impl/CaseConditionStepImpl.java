@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +104,7 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         for (int i = 0; i < conditions.size(); i++) {
             context.bind(conditions.get(i));
             context.bind(results.get(i));

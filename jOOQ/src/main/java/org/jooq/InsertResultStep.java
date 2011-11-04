@@ -35,14 +35,14 @@
  */
 package org.jooq;
 
-import java.sql.SQLException;
+import org.jooq.exception.DataAccessException;
 
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
- *
+ * 
  * TableRecord<?> record =
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
@@ -65,7 +65,7 @@ import java.sql.SQLException;
  * fields are requested, a second statement is issued. Client code must assure
  * transactional integrity between the two statements.</li>
  * </ul>
- *
+ * 
  * @author Lukas Eder
  */
 public interface InsertResultStep extends Insert {
@@ -75,12 +75,16 @@ public interface InsertResultStep extends Insert {
      * {@link InsertReturningStep}
      * <p>
      * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
+     * 
+     * @throws DataAccessException if something went wrong executing the query
      */
-    Result<?> fetch() throws SQLException;
+    Result<?> fetch() throws DataAccessException;
 
     /**
      * The record holding returned values as specified by the
      * {@link InsertReturningStep}
+     * 
+     * @throws DataAccessException if something went wrong executing the query
      */
-    TableRecord<?> fetchOne() throws SQLException;
+    TableRecord<?> fetchOne() throws DataAccessException;
 }

@@ -36,11 +36,12 @@
 package org.jooq;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
+import org.jooq.exception.DataAccessException;
 
 /**
  * An error that occurred during loading. Errors are only handled when they were
- * caused by {@link SQLException}'s. {@link IOException}'s and other problems
+ * caused by {@link DataAccessException}'s. {@link IOException}'s and other problems
  * will abort loading fatally.
  *
  * @author Lukas Eder
@@ -48,9 +49,9 @@ import java.sql.SQLException;
 public interface LoaderError {
 
     /**
-     * The underlying {@link SQLException} that caused the error
+     * The underlying {@link DataAccessException} that caused the error
      */
-    SQLException exception();
+    DataAccessException exception();
 
     /**
      * The processed row index starting with <code>0</code> that caused the error

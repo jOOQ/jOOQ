@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,7 +84,7 @@ public class TableFieldImpl<R extends Record, T> extends AbstractField<T> implem
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {}
+    public final void bind(BindContext context) {}
 
     @Override
     public final boolean isNullLiteral() {

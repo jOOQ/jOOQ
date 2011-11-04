@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.ln;
 
 import java.math.BigDecimal;
 
@@ -51,16 +52,16 @@ class Ln extends AbstractFunction<BigDecimal> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long             serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>    argument;
-    private final Integer     base;
+    private final Field<? extends Number> argument;
+    private final Integer                 base;
 
-    Ln(Field<?> argument) {
+    Ln(Field<? extends Number> argument) {
         this(argument, null);
     }
 
-    Ln(Field<?> argument, Integer base) {
+    Ln(Field<? extends Number> argument, Integer base) {
         super("ln", SQLDataType.NUMERIC, argument);
 
         this.argument = argument;
@@ -90,7 +91,7 @@ class Ln extends AbstractFunction<BigDecimal> {
                 case INGRES:
                 case SQLSERVER:
                 case SYBASE:
-                    return argument.ln().div(literal(base).ln());
+                    return ln(argument).div(ln(literal(base)));
 
                 default:
                     return function("log", SQLDataType.NUMERIC, literal(base), argument);

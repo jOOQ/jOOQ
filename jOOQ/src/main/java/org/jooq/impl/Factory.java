@@ -1759,6 +1759,10 @@ public class Factory implements Configuration {
         return (Field<T>[]) castFields;
     }
 
+    // ------------------------------------------------------------------------
+    // Construction of special grouping functions
+    // ------------------------------------------------------------------------
+
     /**
      * Create a ROLLUP(field1, field2, .., fieldn) grouping field
      * <p>
@@ -1950,6 +1954,619 @@ public class Factory implements Configuration {
         return function("grouping_id", Integer.class, fields);
     }
 
+    // ------------------------------------------------------------------------
+    // Mathematical functions
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the sign of a numeric field: sign(field)
+     * <p>
+     * This renders the sign function where available:
+     * <code><pre>sign([this])</pre></code>
+     * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
+     * <code><pre>
+     * CASE WHEN [this] > 0 THEN 1
+     *      WHEN [this] < 0 THEN -1
+     *      ELSE 0
+     * END
+     */
+    public static Field<Integer> sign(Number value) {
+        return sign(val(value));
+    }
+
+    /**
+     * Get the sign of a numeric field: sign(field)
+     * <p>
+     * This renders the sign function where available:
+     * <code><pre>sign([this])</pre></code>
+     * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
+     * <code><pre>
+     * CASE WHEN [this] > 0 THEN 1
+     *      WHEN [this] < 0 THEN -1
+     *      ELSE 0
+     * END
+     */
+    public static Field<Integer> sign(Field<? extends Number> field) {
+        return new Sign(field);
+    }
+
+    /**
+     * Get the absolute value of a numeric field: abs(field)
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>abs([this])</pre></code>
+     */
+    public static <T extends Number> Field<T> abs(T value) {
+        return abs(val(value));
+    }
+
+    /**
+     * Get the absolute value of a numeric field: abs(field)
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>abs([this])</pre></code>
+     */
+    public static <T extends Number> Field<T> abs(Field<T> field) {
+        return function("abs", field.getDataType(), field);
+    }
+
+    /**
+     * Get rounded value of a numeric field: round(field)
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([this]) or
+     * round([this], 0)</pre></code>
+     * ... or simulates it elsewhere using floor and ceil
+     */
+    public static <T extends Number> Field<T> round(T value) {
+        return round(val(value));
+    }
+
+    /**
+     * Get rounded value of a numeric field: round(field)
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([this]) or
+     * round([this], 0)</pre></code>
+     * ... or simulates it elsewhere using floor and ceil
+     */
+    public static <T extends Number> Field<T> round(Field<T> field) {
+        return new Round<T>(field);
+    }
+
+    /**
+     * Get rounded value of a numeric field: round(field, decimals)
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([this], [decimals])</pre></code>
+     * ... or simulates it elsewhere using floor and ceil
+     */
+    public static <T extends Number> Field<T> round(T value, int decimals) {
+        return round(val(value), decimals);
+    }
+
+    /**
+     * Get rounded value of a numeric field: round(field, decimals)
+     * <p>
+     * This renders the round function where available:
+     * <code><pre>round([this], [decimals])</pre></code>
+     * ... or simulates it elsewhere using floor and ceil
+     */
+    public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
+        return new Round<T>(field, decimals);
+    }
+
+    /**
+     * Get the largest integer value not greater than [this]
+     * <p>
+     * This renders the floor function where available:
+     * <code><pre>floor([this])</pre></code>
+     * ... or simulates it elsewhere using round:
+     * <code><pre>round([this] - 0.499999999999999)</pre></code>
+     */
+    public static <T extends Number> Field<T> floor(T value) {
+        return floor(val(value));
+    }
+
+    /**
+     * Get the largest integer value not greater than [this]
+     * <p>
+     * This renders the floor function where available:
+     * <code><pre>floor([this])</pre></code>
+     * ... or simulates it elsewhere using round:
+     * <code><pre>round([this] - 0.499999999999999)</pre></code>
+     */
+    public static <T extends Number> Field<T> floor(Field<T> field) {
+        return new Floor<T>(field);
+    }
+
+    /**
+     * Get the smallest integer value not less than [this]
+     * <p>
+     * This renders the ceil or ceiling function where available:
+     * <code><pre>ceil([this]) or
+     * ceiling([this])</pre></code>
+     * ... or simulates it elsewhere using round:
+     * <code><pre>round([this] + 0.499999999999999)</pre></code>
+     */
+    public static <T extends Number> Field<T> ceil(T value) {
+        return ceil(val(value));
+    }
+
+    /**
+     * Get the smallest integer value not less than [this]
+     * <p>
+     * This renders the ceil or ceiling function where available:
+     * <code><pre>ceil([this]) or
+     * ceiling([this])</pre></code>
+     * ... or simulates it elsewhere using round:
+     * <code><pre>round([this] + 0.499999999999999)</pre></code>
+     */
+    public static <T extends Number> Field<T> ceil(Field<T> field) {
+        return new Ceil<T>(field);
+    }
+
+    /**
+     * Get the sqrt(field) function
+     * <p>
+     * This renders the sqrt function where available:
+     * <code><pre>sqrt([this])</pre></code> ... or simulates it elsewhere using
+     * power (which in turn may also be simulated using ln and exp functions):
+     * <code><pre>power([this], 0.5)</pre></code>
+     */
+    public static Field<BigDecimal> sqrt(Number value) {
+        return sqrt(val(value));
+    }
+
+    /**
+     * Get the sqrt(field) function
+     * <p>
+     * This renders the sqrt function where available:
+     * <code><pre>sqrt([this])</pre></code> ... or simulates it elsewhere using
+     * power (which in turn may also be simulated using ln and exp functions):
+     * <code><pre>power([this], 0.5)</pre></code>
+     */
+    public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
+        return new Sqrt(field);
+    }
+
+    /**
+     * Get the exp(field) function, taking this field as the power of e
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>exp([this])</pre></code>
+     */
+    public static Field<BigDecimal> exp(Number value) {
+        return exp(val(value));
+    }
+
+    /**
+     * Get the exp(field) function, taking this field as the power of e
+     * <p>
+     * This renders the same on all dialects:
+     * <code><pre>exp([this])</pre></code>
+     */
+    public static Field<BigDecimal> exp(Field<? extends Number> field) {
+        return function("exp", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the ln(field) function, taking the natural logarithm of this field
+     * <p>
+     * This renders the ln or log function where available:
+     * <code><pre>ln([this]) or
+     * log([this])</pre></code>
+     */
+    public static Field<BigDecimal> ln(Number value) {
+        return ln(val(value));
+    }
+
+    /**
+     * Get the ln(field) function, taking the natural logarithm of this field
+     * <p>
+     * This renders the ln or log function where available:
+     * <code><pre>ln([this]) or
+     * log([this])</pre></code>
+     */
+    public static Field<BigDecimal> ln(Field<? extends Number> field) {
+        return new Ln(field);
+    }
+
+    /**
+     * Get the log(field, base) function
+     * <p>
+     * This renders the log function where available:
+     * <code><pre>log([this])</pre></code> ... or simulates it elsewhere (in
+     * most RDBMS) using the natural logarithm:
+     * <code><pre>ln([this]) / ln([base])</pre></code>
+     */
+    public static Field<BigDecimal> log(Number value, int base) {
+        return log(val(value), base);
+    }
+
+    /**
+     * Get the log(field, base) function
+     * <p>
+     * This renders the log function where available:
+     * <code><pre>log([this])</pre></code> ... or simulates it elsewhere (in
+     * most RDBMS) using the natural logarithm:
+     * <code><pre>ln([this]) / ln([base])</pre></code>
+     */
+    public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
+        return new Ln(field, base);
+    }
+
+    /**
+     * Get the power(field, exponent) function
+     * <p>
+     * This renders the power function where available:
+     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * elsewhere using ln and exp:
+     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     */
+    public static Field<BigDecimal> power(Number value, Number exponent) {
+        return power(val(value), val(exponent));
+    }
+
+    /**
+     * Get the power(field, exponent) function
+     * <p>
+     * This renders the power function where available:
+     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * elsewhere using ln and exp:
+     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     */
+    public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
+        return power(field, val(exponent));
+    }
+
+    /**
+     * Get the power(field, exponent) function
+     * <p>
+     * This renders the power function where available:
+     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * elsewhere using ln and exp:
+     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     */
+    public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
+        return power(val(value), exponent);
+    }
+
+    /**
+     * Get the power(field, exponent) function
+     * <p>
+     * This renders the power function where available:
+     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * elsewhere using ln and exp:
+     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     */
+    public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
+        return new Power(field, exponent);
+    }
+
+    /**
+     * Get the arc cosine(field) function
+     * <p>
+     * This renders the acos function where available:
+     * <code><pre>acos([this])</pre></code>
+     */
+    public static Field<BigDecimal> acos(Number value) {
+        return acos(val(value));
+    }
+
+    /**
+     * Get the arc cosine(field) function
+     * <p>
+     * This renders the acos function where available:
+     * <code><pre>acos([this])</pre></code>
+     */
+    public static Field<BigDecimal> acos(Field<? extends Number> field) {
+        return function("acos", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the arc sine(field) function
+     * <p>
+     * This renders the asin function where available:
+     * <code><pre>asin([this])</pre></code>
+     */
+    public static Field<BigDecimal> asin(Number value) {
+        return asin(val(value));
+    }
+
+    /**
+     * Get the arc sine(field) function
+     * <p>
+     * This renders the asin function where available:
+     * <code><pre>asin([this])</pre></code>
+     */
+    public static Field<BigDecimal> asin(Field<? extends Number> field) {
+        return function("asin", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the arc tangent(field) function
+     * <p>
+     * This renders the atan function where available:
+     * <code><pre>atan([this])</pre></code>
+     */
+    public static Field<BigDecimal> atan(Number value) {
+        return atan(val(value));
+    }
+
+    /**
+     * Get the arc tangent(field) function
+     * <p>
+     * This renders the atan function where available:
+     * <code><pre>atan([this])</pre></code>
+     */
+    public static Field<BigDecimal> atan(Field<? extends Number> field) {
+        return function("atan", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the arc tangent 2(field, y) function
+     * <p>
+     * This renders the atan2 or atn2 function where available:
+     * <code><pre>atan2([this]) or
+     * atn2([this])</pre></code>
+     */
+    public static Field<BigDecimal> atan2(Number x, Number y) {
+        return atan2(val(x), val(y));
+    }
+
+    /**
+     * Get the arc tangent 2(field, y) function
+     * <p>
+     * This renders the atan2 or atn2 function where available:
+     * <code><pre>atan2([this]) or
+     * atn2([this])</pre></code>
+     */
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
+        return atan2(x, val(y));
+    }
+
+    /**
+     * Get the arc tangent 2(field, y) function
+     * <p>
+     * This renders the atan2 or atn2 function where available:
+     * <code><pre>atan2([this]) or
+     * atn2([this])</pre></code>
+     */
+    public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
+        return atan2(val(x), y);
+    }
+
+    /**
+     * Get the arc tangent 2(field, y) function
+     * <p>
+     * This renders the atan2 or atn2 function where available:
+     * <code><pre>atan2([this]) or
+     * atn2([this])</pre></code>
+     */
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
+        if (y == null) {
+            return atan2(x, (Number) null);
+        }
+
+        return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, x, y);
+    }
+
+    /**
+     * Get the cosine(field) function
+     * <p>
+     * This renders the cos function where available:
+     * <code><pre>cos([this])</pre></code>
+     */
+    public static Field<BigDecimal> cos(Number value) {
+        return cos(val(value));
+    }
+
+    /**
+     * Get the cosine(field) function
+     * <p>
+     * This renders the cos function where available:
+     * <code><pre>cos([this])</pre></code>
+     */
+    public static Field<BigDecimal> cos(Field<? extends Number> field) {
+        return function("cos", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the sine(field) function
+     * <p>
+     * This renders the sin function where available:
+     * <code><pre>sin([this])</pre></code>
+     */
+    public static Field<BigDecimal> sin(Number value) {
+        return sin(val(value));
+    }
+
+    /**
+     * Get the sine(field) function
+     * <p>
+     * This renders the sin function where available:
+     * <code><pre>sin([this])</pre></code>
+     */
+    public static Field<BigDecimal> sin(Field<? extends Number> field) {
+        return function("sin", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the tangent(field) function
+     * <p>
+     * This renders the tan function where available:
+     * <code><pre>tan([this])</pre></code>
+     */
+    public static Field<BigDecimal> tan(Number value) {
+        return tan(val(value));
+    }
+
+    /**
+     * Get the tangent(field) function
+     * <p>
+     * This renders the tan function where available:
+     * <code><pre>tan([this])</pre></code>
+     */
+    public static Field<BigDecimal> tan(Field<? extends Number> field) {
+        return function("tan", SQLDataType.NUMERIC, field);
+    }
+
+    /**
+     * Get the cotangent(field) function
+     * <p>
+     * This renders the cot function where available:
+     * <code><pre>cot([this])</pre></code> ... or simulates it elsewhere using
+     * sin and cos: <code><pre>cos([this]) / sin([this])</pre></code>
+     */
+    public static Field<BigDecimal> cot(Number value) {
+        return cot(val(value));
+    }
+
+    /**
+     * Get the cotangent(field) function
+     * <p>
+     * This renders the cot function where available:
+     * <code><pre>cot([this])</pre></code> ... or simulates it elsewhere using
+     * sin and cos: <code><pre>cos([this]) / sin([this])</pre></code>
+     */
+    public static Field<BigDecimal> cot(Field<? extends Number> field) {
+        return new Cot(field);
+    }
+
+    /**
+     * Get the hyperbolic sine function: sinh(field)
+     * <p>
+     * This renders the sinh function where available:
+     * <code><pre>sinh([this])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2))</pre></code>
+     */
+    public static Field<BigDecimal> sinh(Number value) {
+        return sinh(val(value));
+    }
+
+    /**
+     * Get the hyperbolic sine function: sinh(field)
+     * <p>
+     * This renders the sinh function where available:
+     * <code><pre>sinh([this])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2))</pre></code>
+     */
+    public static Field<BigDecimal> sinh(Field<? extends Number> field) {
+        return new Sinh(field);
+    }
+
+    /**
+     * Get the hyperbolic cosine function: cosh(field)
+     * <p>
+     * This renders the cosh function where available:
+     * <code><pre>cosh([this])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2))</pre></code>
+     */
+    public static Field<BigDecimal> cosh(Number value) {
+        return cosh(val(value));
+    }
+
+    /**
+     * Get the hyperbolic cosine function: cosh(field)
+     * <p>
+     * This renders the cosh function where available:
+     * <code><pre>cosh([this])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2))</pre></code>
+     */
+    public static Field<BigDecimal> cosh(Field<? extends Number> field) {
+        return new Cosh(field);
+    }
+
+    /**
+     * Get the hyperbolic tangent function: tanh(field)
+     * <p>
+     * This renders the tanh function where available:
+     * <code><pre>tanh([this])</pre></code> ... or simulates it elsewhere using
+     * exp:
+     * <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2) + 1)</pre></code>
+     */
+    public static Field<BigDecimal> tanh(Number value) {
+        return tanh(val(value));
+    }
+
+    /**
+     * Get the hyperbolic tangent function: tanh(field)
+     * <p>
+     * This renders the tanh function where available:
+     * <code><pre>tanh([this])</pre></code> ... or simulates it elsewhere using
+     * exp:
+     * <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2) + 1)</pre></code>
+     */
+    public static Field<BigDecimal> tanh(Field<? extends Number> field) {
+        return new Tanh(field);
+    }
+
+    /**
+     * Get the hyperbolic cotangent function: coth(field)
+     * <p>
+     * This is not supported by any RDBMS, but simulated using exp exp:
+     * <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2) - 1)</pre></code>
+     */
+    public static Field<BigDecimal> coth(Number value) {
+        return coth(val(value));
+    }
+
+    /**
+     * Get the hyperbolic cotangent function: coth(field)
+     * <p>
+     * This is not supported by any RDBMS, but simulated using exp exp:
+     * <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2) - 1)</pre></code>
+     */
+    public static Field<BigDecimal> coth(Field<? extends Number> field) {
+        return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));
+    }
+
+    /**
+     * Calculate degrees from radians from this field
+     * <p>
+     * This renders the degrees function where available:
+     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[this] * 180 / PI</pre></code>
+     */
+    public static Field<BigDecimal> deg(Number value) {
+        return deg(val(value));
+    }
+
+    /**
+     * Calculate degrees from radians from this field
+     * <p>
+     * This renders the degrees function where available:
+     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[this] * 180 / PI</pre></code>
+     */
+    public static Field<BigDecimal> deg(Field<? extends Number> field) {
+        return new Degrees(field);
+    }
+
+    /**
+     * Calculate radians from degrees from this field
+     * <p>
+     * This renders the degrees function where available:
+     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[this] * PI / 180</pre></code>
+     */
+    public static Field<BigDecimal> rad(Number value) {
+        return rad(val(value));
+    }
+
+    /**
+     * Calculate radians from degrees from this field
+     * <p>
+     * This renders the degrees function where available:
+     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[this] * PI / 180</pre></code>
+     */
+    public static Field<BigDecimal> rad(Field<? extends Number> field) {
+        return new Radians(field);
+    }
+
+
     // -------------------------------------------------------------------------
     // Aggregate functions
     // -------------------------------------------------------------------------
@@ -1992,14 +2609,14 @@ public class Factory implements Configuration {
     /**
      * Get the sum over a numeric field: sum(field)
      */
-    public static Field<BigDecimal> sum(Field<?> field) {
+    public static Field<BigDecimal> sum(Field<? extends Number> field) {
         return function("sum", SQLDataType.NUMERIC, field);
     }
 
     /**
      * Get the average over a numeric field: avg(field)
      */
-    public static Field<BigDecimal> avg(Field<?> field) {
+    public static Field<BigDecimal> avg(Field<? extends Number> field) {
         return function("avg", SQLDataType.NUMERIC, field);
     }
 
@@ -2013,7 +2630,7 @@ public class Factory implements Configuration {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> median(Field<?> field) {
+    public static Field<BigDecimal> median(Field<? extends Number> field) {
         return function("median", SQLDataType.NUMERIC, field);
     }
 
@@ -2034,7 +2651,7 @@ public class Factory implements Configuration {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> stddevPop(Field<?> field) {
+    public static Field<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, field);
     }
 
@@ -2055,7 +2672,7 @@ public class Factory implements Configuration {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> stddevSamp(Field<?> field) {
+    public static Field<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, field);
     }
 
@@ -2076,7 +2693,7 @@ public class Factory implements Configuration {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> varPop(Field<?> field) {
+    public static Field<BigDecimal> varPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, field);
     }
 
@@ -2095,7 +2712,7 @@ public class Factory implements Configuration {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
-    public static Field<BigDecimal> varSamp(Field<?> field) {
+    public static Field<BigDecimal> varSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, field);
     }
 

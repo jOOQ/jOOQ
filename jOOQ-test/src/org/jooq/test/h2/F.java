@@ -37,6 +37,7 @@ package org.jooq.test.h2;
 
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.sign;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
@@ -98,7 +99,7 @@ public class F {
         H2Factory create = create(connection);
 
         Integer result =
-        create.select(count().sign())
+        create.select(sign(count()))
               .from(T_AUTHOR)
               .where(TAuthor.FIRST_NAME.equal(authorName))
               .or(TAuthor.LAST_NAME.equal(authorName))

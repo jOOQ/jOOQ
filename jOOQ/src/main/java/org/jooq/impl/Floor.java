@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.round;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -43,7 +44,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Floor<T> extends AbstractFunction<T> {
+class Floor<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID
@@ -64,7 +65,7 @@ class Floor<T> extends AbstractFunction<T> {
 
             // evaluate "floor" if unavailable
             case SQLITE:
-                return argument.sub(0.499999999999999).round();
+                return round(argument.sub(0.499999999999999));
 
             default:
                 return function("floor", getDataType(), argument);

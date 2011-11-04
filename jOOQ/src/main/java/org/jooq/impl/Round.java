@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.ceil;
+import static org.jooq.impl.Factory.floor;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.val;
 
@@ -46,7 +48,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-class Round<T> extends AbstractFunction<T> {
+class Round<T extends Number> extends AbstractFunction<T> {
 
     /**
      * Generated UID
@@ -76,18 +78,18 @@ class Round<T> extends AbstractFunction<T> {
             case DERBY: {
                 if (decimals == 0) {
                     return Factory.decode()
-                        .when(argument.sub((Field<? extends Number>) argument.floor())
-                        .lessThan((T) Double.valueOf(0.5)), argument.floor())
-                        .otherwise(argument.ceil());
+                        .when(argument.sub(floor(argument))
+                        .lessThan((T) Double.valueOf(0.5)), floor(argument))
+                        .otherwise(ceil(argument));
                 }
                 else {
                     Field<BigDecimal> factor = Factory.val(BigDecimal.ONE.movePointRight(decimals));
                     Field<T> mul = argument.mul(factor);
 
                     return Factory.decode()
-                        .when(mul.sub((Field<? extends Number>) mul.floor())
-                        .lessThan((T) Double.valueOf(0.5)), mul.floor().div(factor))
-                        .otherwise(mul.ceil().div(factor));
+                        .when(mul.sub(floor(mul))
+                        .lessThan((T) Double.valueOf(0.5)), floor(mul).div(factor))
+                        .otherwise(ceil(mul).div(factor));
                 }
             }
 

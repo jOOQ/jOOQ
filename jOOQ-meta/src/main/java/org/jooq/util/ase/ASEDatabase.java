@@ -120,7 +120,7 @@ public class ASEDatabase extends AbstractDatabase {
      * >http://www.dbforums.com/sybase/1625012-sysindexes-question-testing-
      * unique-clustered-indexes.html</a>
      */
-    private List<Record> fetchKeys(int incl, int excl) throws SQLException {
+    private List<Record> fetchKeys(int incl, int excl) {
         return create().select(
                     field("name", String.class),
                     field("object_name(id)", String.class),
@@ -199,7 +199,7 @@ public class ASEDatabase extends AbstractDatabase {
         return result;
     }
 
-    private List<String> fetchTableNames() throws SQLException {
+    private List<String> fetchTableNames() {
         List<String> result = new ArrayList<String>();
 
         for (Record record : create().fetch("sp_help")) {

@@ -114,7 +114,7 @@ public class DerbyDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) throws SQLException {
+    private List<Record> fetchKeys(String constraintType) {
         return create().select(
 	            Systables.TABLENAME,
 	            Systables.TABLEID,

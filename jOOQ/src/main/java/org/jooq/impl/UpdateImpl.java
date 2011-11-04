@@ -39,7 +39,6 @@ import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Map;
 
@@ -53,7 +52,6 @@ import org.jooq.TableRecord;
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetMoreStep;
-import org.jooq.exception.DetachedException;
 
 /**
  * A wrapper for an {@link UpdateQuery}
@@ -78,7 +76,7 @@ final class UpdateImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final int execute() throws SQLException, DetachedException {
+    public final int execute() {
         return getDelegate().execute();
     }
 

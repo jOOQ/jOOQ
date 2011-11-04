@@ -37,12 +37,12 @@ package org.jooq.util;
 
 import static org.jooq.impl.Factory.field;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.JooqLogger;
 
 public class DefaultMasterDataTableDefinition extends AbstractDefinition implements MasterDataTableDefinition {
@@ -103,7 +103,7 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
                                .orderBy(field(getPrimaryKeyColumn().getName()))
                                .fetch();
             }
-            catch (SQLException e) {
+            catch (DataAccessException e) {
                 log.error("Error while initialising master data", e);
             }
         }

@@ -35,14 +35,15 @@
  */
 package org.jooq;
 
-import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.jooq.exception.DataAccessException;
 
 /**
  * This type is used for the {@link Batch}'s DSL API.
  * <p>
  * Use it to add bind values to a single operation in the batch statement.
- *
+ * 
  * @author Lukas Eder
  * @see Batch
  * @see Statement#executeBatch()
@@ -51,6 +52,8 @@ public interface BatchBindStep extends Batch {
 
     /**
      * Set bind values on the batch statement
+     * 
+     * @throws DataAccessException if something went wrong executing the query
      */
-    BatchBindStep bind(Object... bindValues) throws SQLException;
+    BatchBindStep bind(Object... bindValues) throws DataAccessException;
 }

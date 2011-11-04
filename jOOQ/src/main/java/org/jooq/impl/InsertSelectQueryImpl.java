@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -87,7 +86,7 @@ class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery impl
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(into);
         context.bind(into.getFields());
         context.bind(select);

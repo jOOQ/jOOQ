@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.vals;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -55,7 +54,6 @@ import org.jooq.InsertValuesStep;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableRecord;
-import org.jooq.exception.DetachedException;
 
 /**
  * @author Lukas Eder
@@ -91,7 +89,7 @@ class InsertImpl<R extends TableRecord<R>>
     // -------------------------------------------------------------------------
 
     @Override
-    public final int execute() throws SQLException, DetachedException {
+    public final int execute() {
         return getDelegate().execute();
     }
 
@@ -202,13 +200,13 @@ class InsertImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final Result<?> fetch() throws SQLException {
+    public final Result<?> fetch() {
         getDelegate().execute();
         return getDelegate().getReturnedRecords();
     }
 
     @Override
-    public final TableRecord<?> fetchOne() throws SQLException {
+    public final TableRecord<?> fetchOne() {
         getDelegate().execute();
         return getDelegate().getReturnedRecord();
     }

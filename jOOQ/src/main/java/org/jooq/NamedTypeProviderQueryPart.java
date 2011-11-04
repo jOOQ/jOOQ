@@ -59,20 +59,4 @@ public interface NamedTypeProviderQueryPart<T> extends NamedQueryPart {
      */
     DataType<T> getDataType(Configuration configuration);
 
-    /**
-     * The type name of this object (might not be dialect-specific)
-     *
-     * @deprecated - Use {@link #getDataType()} and {@link #getDataType(Configuration)} instead
-     */
-    @Deprecated
-    String getTypeName();
-
-    /**
-     * The dialect-specific type name of this object, used for casts
-     *
-     * @deprecated - Use {@link #getDataType()} and {@link #getDataType(Configuration)} instead
-     */
-    @Deprecated
-    String getCastTypeName();
-
 }

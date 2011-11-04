@@ -121,14 +121,6 @@ public class SQLiteDataType<T> extends AbstractDataType<T> {
         super(SQLDialect.SQLITE, sqlDataType, sqlDataType.getType(), typeName);
     }
 
-    /**
-     * @deprecated - 1.6.3 - Do not reuse
-     */
-    @Deprecated
-    public static DataType<?> getDataType(String typeName) {
-        return getDataType(SQLDialect.SQLITE, typeName);
-    }
-
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return getDataType(SQLDialect.SQLITE, type);
     }

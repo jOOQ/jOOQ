@@ -39,7 +39,6 @@ package org.jooq;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
@@ -54,28 +53,6 @@ import org.w3c.dom.Document;
  * @see SelectQuery#getResult()
  */
 public interface Result<R extends Record> extends FieldProvider, List<R>, Attachable {
-
-    /**
-     * The resulting records
-     *
-     * @deprecated - 1.6.2 [#699] - Result now implements {@link List}, hence
-     *             this method is no longer necessary.
-     */
-    @Deprecated
-    List<R> getRecords();
-
-    /**
-     * Returns a record at a given index
-     *
-     * @param index The record's index
-     * @return The Record
-     * @throws IndexOutOfBoundsException
-     * @deprecated - 1.6.2 [#699] - Result now implements {@link List}, hence
-     *             this method is no longer necessary. Use {@link #get(int)}
-     *             instead
-     */
-    @Deprecated
-    R getRecord(int index) throws IndexOutOfBoundsException;
 
     /**
      * Convenience method to fetch a value at a given position in the result.
@@ -1633,16 +1610,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     List<Timestamp> getValuesAsTimestamp(String fieldName);
 
     /**
-     * The number of resulting records
-     *
-     * @deprecated - 1.6.2 [#699] - Result now implements {@link List}, hence
-     *             this method is no longer necessary. Use {@link #size()}
-     *             instead
-     */
-    @Deprecated
-    int getNumberOfRecords();
-
-    /**
      * Whether there are any records contained in this <code>Result</code>
      */
     @Override
@@ -1768,6 +1735,6 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      */
-    <H extends RecordHandler<R>> H into(H handler) throws SQLException;
+    <H extends RecordHandler<R>> H into(H handler);
 
 }

@@ -110,7 +110,7 @@ public class IngresDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) throws SQLException {
+    private List<Record> fetchKeys(String constraintType) {
         return create().select(
                 Iiconstraints.TABLE_NAME.trim(),
                 Iiconstraints.CONSTRAINT_NAME.trim(),

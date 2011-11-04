@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,7 +72,7 @@ public class PackageImpl extends AbstractSchemaProviderQueryPart implements Pack
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {}
+    public final void bind(BindContext context) {}
 
     @Override
     protected List<Attachable> getAttachables0() {

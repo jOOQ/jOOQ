@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -86,7 +85,7 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
         this.field.add(field("COLUMN_VALUE", arrayType));
     }
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @SuppressWarnings("unchecked")
     @Override
     public final Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
@@ -140,7 +139,7 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         switch (context.getDialect()) {
             case ORACLE:
             case H2:

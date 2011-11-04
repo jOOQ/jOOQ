@@ -48,44 +48,10 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
 
     private static final JooqLogger log = JooqLogger.getLogger(AbstractPackageDefinition.class);
 
-    private List<RoutineDefinition> procedures;
-    private List<RoutineDefinition> functions;
     private List<RoutineDefinition> routines;
 
     public AbstractPackageDefinition(Database database, String name, String comment) {
         super(database, name, comment);
-    }
-
-    @Override
-    @Deprecated
-    public final List<RoutineDefinition> getProcedures() {
-        if (procedures == null) {
-            procedures = new ArrayList<RoutineDefinition>();
-
-            for (RoutineDefinition routine : getRoutines()) {
-                if (!routine.isSQLUsable()) {
-                    procedures.add(routine);
-                }
-            }
-        }
-
-        return procedures;
-    }
-
-    @Override
-    @Deprecated
-    public final List<RoutineDefinition> getFunctions() {
-        if (functions == null) {
-            functions = new ArrayList<RoutineDefinition>();
-
-            for (RoutineDefinition routine : getRoutines()) {
-                if (routine.isSQLUsable()) {
-                    functions.add(routine);
-                }
-            }
-        }
-
-        return functions;
     }
 
     @Override

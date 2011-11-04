@@ -125,7 +125,7 @@ public class PostgresDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) throws SQLException {
+    private List<Record> fetchKeys(String constraintType) {
         return create()
             .select(KeyColumnUsage.CONSTRAINT_NAME, KeyColumnUsage.TABLE_NAME, KeyColumnUsage.COLUMN_NAME)
             .from(TABLE_CONSTRAINTS)

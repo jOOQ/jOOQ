@@ -36,7 +36,6 @@
 package org.jooq.util.oracle;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import org.jooq.BindContext;
 import org.jooq.Field;
@@ -165,7 +164,7 @@ public class OracleFactory extends Factory {
         }
 
         @Override
-        public final void bind(BindContext context) throws SQLException {
+        public final void bind(BindContext context) {
             context.bind(field);
         }
     }

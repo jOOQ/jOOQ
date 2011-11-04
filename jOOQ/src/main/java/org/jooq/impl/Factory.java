@@ -47,7 +47,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -67,9 +66,9 @@ import org.jooq.ConfigurationRegistry;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
+import org.jooq.FactoryOperations;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
-import org.jooq.Identity;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
@@ -78,7 +77,6 @@ import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Query;
 import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
@@ -100,7 +98,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowPartitionByStep;
-import org.jooq.exception.DetachedException;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
@@ -111,7 +109,7 @@ import org.jooq.exception.DetachedException;
  * representing a constant value, you can write:
  * <p>
  * <code><pre>
- * Field&lt;String&gt; field = new Factory().val("Hello World")
+ * Field&lt;String&gt; field = Factory.val("Hello World")
  * </pre></code>
  * <p>
  * Also, some SQL clauses cannot be expressed easily with DSL, for instance the
@@ -119,7 +117,7 @@ import org.jooq.exception.DetachedException;
  * should write
  * <p>
  * <code><pre>
- * Condition condition = new Factory().exists(new Factory().select(...));
+ * Condition condition = Factory.exists(new Factory().select(...));
  * </pre></code>
  * <p>
  * A <code>Factory</code> holds a reference to a JDBC {@link Connection} and
@@ -128,8 +126,7 @@ import org.jooq.exception.DetachedException;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("deprecation")
-public class Factory implements Configuration {
+public class Factory implements FactoryOperations {
 
     /**
      * Generated UID
@@ -223,27 +220,17 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Render a QueryPart in the context of this factory
-     * <p>
-     * This is the same as calling <code>renderContext().render(part)</code>
-     *
-     * @param part The {@link QueryPart} to be rendered
-     * @return The rendered SQL
+     * {@inheritDoc}
      */
+    @Override
     public final String render(QueryPart part) {
         return renderContext().render(part);
     }
 
     /**
-     * Render a QueryPart in the context of this factory, inlining all bind
-     * variables.
-     * <p>
-     * This is the same as calling
-     * <code>renderContext().inline(true).render(part)</code>
-     *
-     * @param part The {@link QueryPart} to be rendered
-     * @return The rendered SQL
+     * {@inheritDoc}
      */
+    @Override
     public final String renderInlined(QueryPart part) {
         return renderContext().inline(true).render(part);
     }
@@ -274,7 +261,7 @@ public class Factory implements Configuration {
      * <p>
      * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
      */
-    public final int bind(QueryPart part, PreparedStatement stmt) throws SQLException {
+    public final int bind(QueryPart part, PreparedStatement stmt) {
         return bindContext(stmt).bind(part).peekIndex();
     }
 
@@ -283,15 +270,17 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Attach this <code>Factory</code> to some attachables
+     * {@inheritDoc}
      */
+    @Override
     public final void attach(Attachable... attachables) {
         attach(Arrays.asList(attachables));
     }
 
     /**
-     * Attach this <code>Factory</code> to some attachables
+     * {@inheritDoc}
      */
+    @Override
     public final void attach(Collection<Attachable> attachables) {
         for (Attachable attachable : attachables) {
             attachable.attach(this);
@@ -303,9 +292,9 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new <code>Loader</code> object to load data from a CSV or XML
-     * source
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
         return new LoaderImpl<R>(this, table);
     }
@@ -718,191 +707,66 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Create a new query holding plain SQL. There must not be any binding
-     * variables contained in the SQL
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return A query wrapping the plain SQL
+     * {@inheritDoc}
      */
+    @Override
     public final Query query(String sql) {
         return query(sql, new Object[0]);
     }
 
     /**
-     * Create a new query holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * String sql = "SET SCHEMA 'abc'";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @param bindings The bindings
-     * @return A query wrapping the plain SQL
+     * {@inheritDoc}
      */
+    @Override
     public final Query query(String sql, Object... bindings) {
         return new SQLQuery(this, sql, bindings);
     }
 
     /**
-     * Execute a new query holding plain SQL.
-     * <p>
-     * Example (Postgres):
-     * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code>
-     * Example (SQLite):
-     * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return The results from the executed query
+     * {@inheritDoc}
      */
-    public final Result<Record> fetch(String sql) throws SQLException {
+    @Override
+    public final Result<Record> fetch(String sql) {
         return fetch(sql, new Object[0]);
     }
 
     /**
-     * Execute a new query holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example (Postgres):
-     * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code>
-     * Example (SQLite):
-     * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @param bindings The bindings
-     * @return A query wrapping the plain SQL
+     * {@inheritDoc}
      */
-    public final Result<Record> fetch(String sql, Object... bindings) throws SQLException {
+    @Override
+    public final Result<Record> fetch(String sql, Object... bindings) {
         return new SQLResultQuery(this, sql, bindings).fetch();
     }
 
     /**
-     * Execute a new query holding plain SQL, possibly returning several result
-     * sets
-     * <p>
-     * Example (Sybase ASE):
-     * <p>
-     * <code><pre>
-     * String sql = "sp_help 'my_table'";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return The results from the executed query
+     * {@inheritDoc}
      */
-    public final List<Result<Record>> fetchMany(String sql) throws SQLException {
+    @Override
+    public final List<Result<Record>> fetchMany(String sql) {
         return fetchMany(sql, new Object[0]);
     }
 
     /**
-     * Execute a new query holding plain SQL, possibly returning several result
-     * sets. There must be as many binding variables contained in the SQL, as
-     * passed in the bindings parameter
-     * <p>
-     * Example (Sybase ASE):
-     * <p>
-     * <code><pre>
-     * String sql = "sp_help 'my_table'";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @param bindings The bindings
-     * @return A query wrapping the plain SQL
+     * {@inheritDoc}
      */
-    public final List<Result<Record>> fetchMany(String sql, Object... bindings) throws SQLException {
+    @Override
+    public final List<Result<Record>> fetchMany(String sql, Object... bindings) {
         return new SQLResultQuery(this, sql, bindings).fetchMany();
     }
 
     /**
-     * Execute a new query holding plain SQL.
-     * <p>
-     * Example (Postgres):
-     * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code>
-     * Example (SQLite):
-     * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return The results from the executed query
-     * @throws SQLException if more than one record was found
+     * {@inheritDoc}
      */
-    public final Record fetchOne(String sql) throws SQLException {
+    @Override
+    public final Record fetchOne(String sql) {
         return fetchOne(sql, new Object[0]);
     }
 
     /**
-     * Execute a new query holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
-     * <p>
-     * Example (Postgres):
-     * <p>
-     * <code><pre>
-     * String sql = "FETCH ALL IN \"<unnamed cursor 1>\"";</pre></code>
-     * Example (SQLite):
-     * <p>
-     * <code><pre>
-     * String sql = "pragma table_info('my_table')";</pre></code>
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @param bindings The bindings
-     * @return A query wrapping the plain SQL
-     * @throws SQLException if more than one record was found
+     * {@inheritDoc}
      */
-    public final Record fetchOne(String sql, Object... bindings) throws SQLException {
+    @Override
+    public final Record fetchOne(String sql, Object... bindings) {
         return new SQLResultQuery(this, sql, bindings).fetchOne();
     }
 
@@ -918,9 +782,15 @@ public class Factory implements Configuration {
      * @param rs The JDBC ResultSet to fetch data from
      * @return The resulting jOOQ Result
      */
-    public final Result<Record> fetch(ResultSet rs) throws SQLException {
-        FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
-        return new CursorImpl<Record>(this, fields, rs).fetchResult();
+    @Override
+    public final Result<Record> fetch(ResultSet rs) {
+        try {
+            FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
+            return new CursorImpl<Record>(this, fields, rs).fetch();
+        }
+        catch (SQLException e) {
+            throw JooqUtil.translate("Factory.fetch", null, e);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -964,415 +834,177 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new DSL select statement
-     * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends Record> SimpleSelectWhereStep<R> selectFrom(Table<R> table) {
         return new SimpleSelectImpl<R>(this, table);
     }
 
     /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.select(field1, field2)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep select(Field<?>... fields) {
         return new SelectImpl(this).select(fields);
     }
 
     /**
-     * Create a new DSL select statement for constant <code>0</code> literal
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectZero()
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
-     * </pre></code>
-     *
-     * @see #zero()
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep selectZero() {
         return new SelectImpl(this).select(zero());
     }
 
     /**
-     * Create a new DSL select statement for constant <code>1</code> literal
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectOne()
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
-     * </pre></code>
-     *
-     * @see #one()
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep selectOne() {
         return new SelectImpl(this).select(one());
     }
 
     /**
-     * Create a new DSL select statement for <code>COUNT(*)</code>
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectCount()
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
-     * </pre></code>
-     *
-     * @see #one()
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep selectCount() {
         return new SelectImpl(this).select(count());
     }
 
     /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectDistinct(field1, field2)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep selectDistinct(Field<?>... fields) {
         return new SelectImpl(this, true).select(fields);
     }
 
     /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.select(fields)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep select(Collection<? extends Field<?>> fields) {
         return new SelectImpl(this).select(fields);
     }
 
     /**
-     * Create a new DSL select statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.selectDistinct(fields)
-     *       .from(table1)
-     *       .join(table2).on(field1.equal(field2))
-     *       .where(field1.greaterThan(100))
-     *       .orderBy(field2);
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields) {
         return new SelectImpl(this, true).select(fields);
     }
 
     /**
-     * Create a new {@link SelectQuery}
+     * {@inheritDoc}
      */
+    @Override
     public final SelectQuery selectQuery() {
         return new SelectQueryImpl(this);
     }
 
     /**
-     * Create a new {@link SelectQuery}
-     *
-     * @param table The table to select data from
-     * @return The new {@link SelectQuery}
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends Record> SimpleSelectQuery<R> selectQuery(TableLike<R> table) {
         return new SimpleSelectQueryImpl<R>(this, table);
     }
 
     /**
-     * Create a new {@link InsertQuery}
-     *
-     * @param into The table to insert data into
-     * @return The new {@link InsertQuery}
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into) {
         return new InsertQueryImpl<R>(this, into);
     }
 
     /**
-     * Create a new DSL insert statement. This type of insert may feel more
-     * convenient to some users, as it uses the <code>UPDATE</code> statement's
-     * <code>SET a = b</code> syntax.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.insertInto(table)
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .newRecord()
-     *       .set(field1, value3)
-     *       .set(field2, value4)
-     *       .onDuplicateKeyUpdate()
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> InsertSetStep insertInto(Table<R> into) {
         return new InsertImpl<R>(this, into, Collections.<Field<?>>emptyList());
     }
 
     /**
-     * Create a new DSL insert statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.insertInto(table, field1, field2)
-     *       .values(value1, value2)
-     *       .values(value3, value4)
-     *       .onDuplicateKeyUpdate()
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Field<?>... fields) {
         return new InsertImpl<R>(this, into, Arrays.asList(fields));
     }
 
     /**
-     * Create a new DSL insert statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.insertInto(table, field1, field2)
-     *       .values(value1, value2)
-     *       .values(value3, value4)
-     *       .onDuplicateKeyUpdate()
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return new InsertImpl<R>(this, into, fields);
     }
 
     /**
-     * Create a new DSL insert statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.insertInto(table, create.select(1))
-     *       .onDuplicateKeyUpdate()
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> Insert insertInto(Table<R> into, Select<?> select) {
         return new InsertSelectQueryImpl<R>(this, into, select);
     }
 
     /**
-     * Create a new {@link UpdateQuery}
-     *
-     * @param table The table to update data into
-     * @return The new {@link UpdateQuery}
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> UpdateQuery<R> updateQuery(Table<R> table) {
         return new UpdateQueryImpl<R>(this, table);
     }
 
     /**
-     * Create a new DSL update statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.update(table)
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .where(field1.greaterThan(100))
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> UpdateSetStep update(Table<R> table) {
         return new UpdateImpl<R>(this, table);
     }
 
     /**
-     * Create a new DSL merge statement.
-     * <p>
-     * This statement is available from DSL syntax only. It is known to be
-     * supported in some way by any of these dialects:
-     * <table border="1">
-     * <tr>
-     * <th>dialect</th>
-     * <th>support type</th>
-     * <th>documentation</th>
-     * </tr>
-     * <tr>
-     * <td>DB2</td>
-     * <td>SQL:2008 standard and major enhancements</td>
-     * <td><a href=
-     * "http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.admin.doc/doc/r0010873.htm"
-     * >http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.
-     * ibm.db2.udb.admin.doc/doc/r0010873.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>HSQLDB</td>
-     * <td>SQL:2008 standard</td>
-     * <td><a
-     * href="http://hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N129BA"
-     * >http://hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N129BA</a></td>
-     * </tr>
-     * <tr>
-     * <td>Oracle</td>
-     * <td>SQL:2008 standard and minor enhancements</td>
-     * <td><a href=
-     * "http://download.oracle.com/docs/cd/B28359_01/server.111/b28286/statements_9016.htm"
-     * >http://download.oracle.com/docs/cd/B28359_01/server.111/b28286/
-     * statements_9016.htm</a></td>
-     * </tr>
-     * <tr>
-     * <td>SQL Server</td>
-     * <td>Similar to SQL:2008 standard with some major enhancements</td>
-     * <td><a href= "http://msdn.microsoft.com/de-de/library/bb510625.aspx"
-     * >http://msdn.microsoft.com/de-de/library/bb510625.aspx</a></td>
-     * </tr>
-     * <tr>
-     * <td>Sybase</td>
-     * <td>Similar to SQL:2008 standard with some major enhancements</td>
-     * <td><a href=
-     * "http://dcx.sybase.com/1100/en/dbreference_en11/merge-statement.html"
-     * >http://dcx.sybase.com/1100/en/dbreference_en11/merge-statement.html</a></td>
-     * </tr>
-     * </table>
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.mergeInto(table)
-     *       .using(select)
-     *       .on(condition)
-     *       .whenMatchedThenUpdate()
-     *       .set(field1, value1)
-     *       .set(field2, value2)
-     *       .whenNotMatchedThenInsert(field1, field2)
-     *       .values(value1, value2)
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> MergeUsingStep mergeInto(Table<R> table) {
         return new MergeImpl<R>(this, table);
     }
 
     /**
-     * Create a new {@link DeleteQuery}
-     *
-     * @param table The table to delete data from
-     * @return The new {@link DeleteQuery}
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
         return new DeleteQueryImpl<R>(this, table);
     }
 
     /**
-     * Create a new DSL delete statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.delete(table)
-     *       .where(field1.greaterThan(100))
-     *       .execute();
-     * </pre></code>
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> DeleteWhereStep delete(Table<R> table) {
         return new DeleteImpl<R>(this, table);
     }
 
     /**
-     * Execute a set of queries in batch mode (without bind values).
-     * <p>
-     * This essentially runs the following logic: <code><pre>
-     * Statement s = connection.createStatement();
-     *
-     * for (Query query : queries) {
-     *     s.addBatch(renderInlined(query));
-     * }
-     *
-     * s.execute();
-     * </pre></code>
-     *
-     * @see Statement#executeBatch()
+     * {@inheritDoc}
      */
+    @Override
     public final Batch batch(Query... queries) {
         return new BatchMultiple(this, queries);
     }
 
     /**
-     * Execute a set of queries in batch mode (with bind values).
-     * <p>
-     * When running <code><pre>
-     * create.batch(query)
-     *       .bind(valueA1, valueA2)
-     *       .bind(valueB1, valueB2)
-     *       .execute();
-     * </pre></code>
-     * <p>
-     * This essentially runs the following logic: <code><pre>
-     * Statement s = connection.prepareStatement(render(query));
-     *
-     * for (Object[] bindValues : allBindValues) {
-     *     for (Object bindValue : bindValues) {
-     *         s.setXXX(bindValue);
-     *     }
-     *
-     *     s.addBatch();
-     * }
-     *
-     * s.execute();
-     * </pre></code>
-     *
-     * @see Statement#executeBatch()
+     * {@inheritDoc}
      */
+    @Override
     public final BatchBindStep batch(Query query) {
         return new BatchSingle(this, query);
     }
@@ -1382,18 +1014,9 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new DSL truncate statement.
-     * <p>
-     * Example: <code><pre>
-     * Factory create = new Factory();
-     *
-     * create.truncate(table)
-     *       .execute();
-     * </pre></code>
-     * <p>
-     * Note, this statement is only supported in DSL mode. Immediate execution
-     * is omitted for future extensibility of this command.
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>> Truncate truncate(Table<R> table) {
         return new TruncateImpl<R>(this, table);
     }
@@ -1403,17 +1026,10 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Retrieve the last inserted ID.
-     * <p>
-     * This is poorly supported by {@link SQLDialect#SQLITE}<br/>
-     * This is NOT supported by {@link SQLDialect#POSTGRES} and
-     * {@link SQLDialect#ORACLE}
-     *
-     * @return The last inserted ID. This may be <code>null</code> in some
-     *         dialects, if no such number is available.
-     * @see #lastID(Identity)
+     * {@inheritDoc}
      */
-    public final BigInteger lastID() throws SQLException {
+    @Override
+    public final BigInteger lastID() {
         switch (getDialect()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
@@ -1454,110 +1070,33 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Retrieve the last inserted ID for a given {@link Identity}
-     * <p>
-     * This executes <code>SELECT max([id.field]) FROM [id.table]</code>
-     * <p>
-     * This is NOT supported by {@link SQLDialect#ORACLE}
-     *
-     * @return The last inserted ID. This may be <code>null</code> in some
-     *         dialects, if no such number is available.
-     * @deprecated - 1.6.6 - This is not a precise way of fetching generated
-     *             identity values, because it assumes that:
-     *             <ul>
-     *             <li>identity values are increased by one</li> <li>
-     *             transactional integrity is given (no race conditions
-     *             occurred)</li>
-     *             </ul>
-     *             <p>
-     *             Use <code>INSERT .. RETURNING</code> instead, in
-     *             {@link InsertQuery#getReturned()}, or {@link #lastID()} if
-     *             your RDBMS supports such a clause.
+     * {@inheritDoc}
      */
-    @Deprecated
-    public final <T extends Number> T lastID(Identity<?, T> identity) throws SQLException {
-        return select(max(identity.getField())).from(identity.getTable()).fetchOne(max(identity.getField()));
-    }
-
-    /**
-     * Convenience method to fetch the NEXTVAL for a sequence directly from this
-     * {@link Factory}'s underlying JDBC {@link Connection}
-     */
-    public final <T extends Number> T nextval(Sequence<T> sequence) throws SQLException {
+    @Override
+    public final <T extends Number> T nextval(Sequence<T> sequence) {
         Field<T> nextval = sequence.nextval();
         return select(nextval).fetchOne(nextval);
     }
 
     /**
-     * Convenience method to fetch the CURRVAL for a sequence directly from this
-     * {@link Factory}'s underlying JDBC {@link Connection}
+     * {@inheritDoc}
      */
-    public final <T extends Number> T currval(Sequence<T> sequence) throws SQLException {
+    @Override
+    public final <T extends Number> T currval(Sequence<T> sequence) {
         Field<T> currval = sequence.currval();
         return select(currval).fetchOne(currval);
     }
 
     /**
-     * Use a schema as the default schema of the underlying connection.
-     * <p>
-     * This has two effects.
-     * <ol>
-     * <li>The <code>USE [schema]</code> statement is executed on those RDBMS
-     * that support this</li>
-     * <li>The supplied {@link Schema} is used as the default schema resulting
-     * in omitting that schema in rendered SQL.</li>
-     * </ol>
-     * <p>
-     * The <code>USE [schema]</code> statement translates to the various
-     * dialects as follows:
-     * <table>
-     * <tr>
-     * <th>Dialect</th>
-     * <th>Command</th>
-     * </tr>
-     * <tr>
-     * <td>DB2</td>
-     * <td><code>SET SCHEMA [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>Derby:</td>
-     * <td><code>SET SCHEMA [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>H2:</td>
-     * <td><code>SET SCHEMA [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>HSQLDB:</td>
-     * <td><code>SET SCHEMA [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>MySQL:</td>
-     * <td><code>USE [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>Oracle:</td>
-     * <td><code>ALTER SESSION SET CURRENT_SCHEMA = [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>Postgres:</td>
-     * <td><code>SET SEARCH_PATH = [schema]</code></td>
-     * </tr>
-     * <tr>
-     * <td>Sybase:</td>
-     * <td><code>USE [schema]</code></td>
-     * </tr>
-     * </table>
-     *
-     * @throws SQLException
-     * @throws DetachedException
+     * {@inheritDoc}
      */
-    public final int use(Schema schema) throws DetachedException, SQLException {
+    @Override
+    public final int use(Schema schema) {
         int result = 0;
 
         // SQL Server does not support such a syntax
         try {
-            String schemaName = schema.internalAPI(QueryPartInternal.class).toSQLReference(this, false);
+            String schemaName = render(schema);
 
             switch (dialect) {
                 case DB2:
@@ -1589,11 +1128,10 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Use a schema as the default schema of the underlying connection.
-     *
-     * @see #use(Schema)
+     * {@inheritDoc}
      */
-    public final int use(String schema) throws DetachedException, SQLException {
+    @Override
+    public final int use(String schema) {
         return use(new SchemaImpl(schema));
     }
 
@@ -1602,13 +1140,9 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new {@link Record} that can be inserted into the corresponding
-     * table.
-     *
-     * @param <R> The generic record type
-     * @param table The table holding records of type <R>
-     * @return The new record
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends Record> R newRecord(Table<R> table) {
         return JooqUtil.newRecord(table, this);
     }
@@ -1865,7 +1399,7 @@ public class Factory implements Configuration {
      * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
      * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
      *
-     * @param fields The fields that are part of the <code>GROUPING SETS</code>
+     * @param fieldSets The fields that are part of the <code>GROUPING SETS</code>
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
@@ -1898,7 +1432,7 @@ public class Factory implements Configuration {
      * href="http://msdn.microsoft.com/en-US/library/bb522495.aspx"
      * >http://msdn.microsoft.com/en-US/library/bb522495.aspx</a>
      *
-     * @param fields The fields that are part of the <code>GROUPING SETS</code>
+     * @param fieldSets The fields that are part of the <code>GROUPING SETS</code>
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
@@ -2566,7 +2100,6 @@ public class Factory implements Configuration {
         return new Radians(field);
     }
 
-
     // -------------------------------------------------------------------------
     // Aggregate functions
     // -------------------------------------------------------------------------
@@ -2797,110 +2330,6 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a constant value
-     * <p>
-     * This will be deprecated in the near future, for its verbosity. Use
-     * {@link #val(Object, DataType)} instead.
-     * <p>
-     * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java
-     * type <code>&lt;T&gt;</code>. This may not always be accurate, which can
-     * lead to problems in some strongly typed RDMBS (namely:
-     * {@link SQLDialect#DERBY}, {@link SQLDialect#DB2}, {@link SQLDialect#H2},
-     * {@link SQLDialect#HSQLDB}), especially when value is <code>null</code>.
-     * <p>
-     * If you need more type-safety, please use
-     * {@link #constant(Object, DataType)} instead, and provide the precise
-     * RDMBS-specific data type, that is needed.
-     *
-     * @param <T> The generic value type
-     * @param value The constant value
-     * @return A field representing the constant value
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object)} instead.
-     */
-    @Deprecated
-    public static <T> Field<T> constant(T value) {
-        return val(value);
-    }
-
-    /**
-     * Get a constant value with an associated type, taken from a field
-     * <p>
-     * This will be deprecated in the near future, for its verbosity. Use
-     * {@link #val(Object, DataType)} instead.
-     *
-     * @param <T> The generic value type
-     * @param value The constant value
-     * @param type The data type to enforce upon the value
-     * @return A field representing the constant value
-     * @see #constant(Object, DataType)
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, Class)} instead.
-     */
-    @Deprecated
-    public static <T> Field<T> constant(Object value, Class<? extends T> type) {
-        return val(value, type);
-    }
-
-    /**
-     * Get a constant value with an associated type, taken from a field
-     * <p>
-     * This will be deprecated in the near future, for its verbosity. Use
-     * {@link #val(Object, DataType)} instead.
-     *
-     * @param <T> The generic value type
-     * @param value The constant value
-     * @param field The field whose data type to enforce upon the value
-     * @return A field representing the constant value
-     * @see #constant(Object, DataType)
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, Field)} instead.
-     */
-    @Deprecated
-    public static <T> Field<T> constant(Object value, Field<T> field) {
-        return val(value, field);
-    }
-
-    /**
-     * Get a constant value with an associated type
-     * <p>
-     * This will be deprecated in the near future, for its verbosity. Use
-     * {@link #val(Object, DataType)} instead.
-     * <p>
-     * This will try to bind <code>value</code> as <code>type</code> in a
-     * <code>PreparedStatement</code>. If <code>value</code> and
-     * <code>type</code> are not compatible, jOOQ will first try to convert and
-     * then to cast <code>value</code> to <code>type</code>.
-     *
-     * @param <T> The generic value type
-     * @param value The constant value
-     * @param type The data type to enforce upon the value
-     * @return A field representing the constant value
-     * @deprecated - 1.6.3 [#757] - Use {@link #val(Object, DataType)} instead.
-     */
-    @Deprecated
-    public static <T> Field<T> constant(Object value, DataType<T> type) {
-        return val(value, type);
-    }
-
-    /**
-     * Get a list of constant values and fields
-     *
-     * @deprecated - 1.6.3 - This method causes issues when overloading. Use
-     *             {@link #constants(Object...)} instead
-     */
-    @Deprecated
-    public static List<Field<?>> constant(Object... values) {
-        return constants(values);
-    }
-
-    /**
-     * Get a list of constant values and fields
-     * @deprecated - 1.6.3 [#757] - Use {@link #vals(Object...)} instead.
-     */
-    @Deprecated
-    public static List<Field<?>> constants(Object... values) {
-        return vals(values);
-    }
-
-    /**
      * Get a value
      * <p>
      * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java
@@ -2910,7 +2339,7 @@ public class Factory implements Configuration {
      * {@link SQLDialect#HSQLDB}), especially when value is <code>null</code>.
      * <p>
      * If you need more type-safety, please use
-     * {@link #constant(Object, DataType)} instead, and provide the precise
+     * {@link #val(Object, DataType)} instead, and provide the precise
      * RDMBS-specific data type, that is needed.
      *
      * @param <T> The generic value type
@@ -2943,7 +2372,7 @@ public class Factory implements Configuration {
      * @param value The constant value
      * @param type The data type to enforce upon the value
      * @return A field representing the constant value
-     * @see #constant(Object, DataType)
+     * @see #val(Object, DataType)
      */
     public static <T> Field<T> val(Object value, Class<? extends T> type) {
         return val(value, getDataType(type));
@@ -2956,7 +2385,7 @@ public class Factory implements Configuration {
      * @param value The constant value
      * @param field The field whose data type to enforce upon the value
      * @return A field representing the constant value
-     * @see #constant(Object, DataType)
+     * @see #val(Object, DataType)
      */
     public static <T> Field<T> val(Object value, Field<T> field) {
         return val(value, field.getDataType());
@@ -3222,83 +2651,68 @@ public class Factory implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Execute and return all records for
-     * <code><pre>SELECT * FROM [table]</pre></code>
+     * {@inheritDoc}
      */
-    public final <R extends Record> Result<R> fetch(Table<R> table) throws SQLException {
+    @Override
+    public final <R extends Record> Result<R> fetch(Table<R> table) {
         return fetch(table, trueCondition());
     }
 
     /**
-     * Execute and return all records for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * {@inheritDoc}
      */
-    public final <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws SQLException {
+    @Override
+    public final <R extends Record> Result<R> fetch(Table<R> table, Condition condition) {
         return selectFrom(table).where(condition).fetch();
     }
 
     /**
-     * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table]</pre></code>
-     *
-     * @return The record or <code>null</code> if no record was returned
-     * @throws SQLException if more than one record was found
+     * {@inheritDoc}
      */
-    public final <R extends Record> R fetchOne(Table<R> table) throws SQLException {
+    @Override
+    public final <R extends Record> R fetchOne(Table<R> table) {
         return filterOne(fetch(table));
     }
 
     /**
-     * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
-     *
-     * @return The record or <code>null</code> if no record was returned
-     * @throws SQLException if more than one record was found
+     * {@inheritDoc}
      */
-    public final <R extends Record> R fetchOne(Table<R> table, Condition condition) throws SQLException {
+    @Override
+    public final <R extends Record> R fetchOne(Table<R> table, Condition condition) {
         return filterOne(fetch(table, condition));
     }
 
     /**
-     * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] LIMIT 1</pre></code>
-     *
-     * @return The record or <code>null</code> if no record was returned
+     * {@inheritDoc}
      */
-    public final <R extends Record> R fetchAny(Table<R> table) throws SQLException {
+    @Override
+    public final <R extends Record> R fetchAny(Table<R> table) {
         return filterOne(selectFrom(table).limit(1).fetch());
     }
 
     /**
-     * Insert one record
-     * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
-     *
-     * @return The number of inserted records
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) {
         InsertQuery<R> insert = insertQuery(table);
         insert.setRecord(record);
         return insert.execute();
     }
 
     /**
-     * Update a table
-     * <code><pre>UPDATE [table] SET [modified values in record] </pre></code>
-     *
-     * @return The number of updated records
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) {
         return executeUpdate(table, record, trueCondition());
     }
 
     /**
-     * Update a table
-     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
-     *
-     * @return The number of updated records
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition)
-        throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition) {
         UpdateQuery<R> update = updateQuery(table);
         update.addConditions(condition);
         update.setRecord(record);
@@ -3306,69 +2720,53 @@ public class Factory implements Configuration {
     }
 
     /**
-     * Update one record in a table
-     * <code><pre>UPDATE [table] SET [modified values in record]</pre></code>
-     *
-     * @return The number of updated records
-     * @throws SQLException if more than one record was updated
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) {
         return filterUpdateOne(executeUpdate(table, record));
     }
 
     /**
-     * Update one record in a table
-     * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
-     *
-     * @return The number of updated records
-     * @throws SQLException if more than one record was updated
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition)
-        throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition) {
         return filterUpdateOne(executeUpdate(table, record, condition));
     }
 
     /**
-     * Delete records from a table <code><pre>DELETE FROM [table]</pre></code>
-     *
-     * @return The number of deleted records
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>> int executeDelete(Table<R> table) throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>> int executeDelete(Table<R> table) {
         return executeDelete(table, trueCondition());
     }
 
     /**
-     * Delete records from a table
-     * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
-     *
-     * @return The number of deleted records
+     * {@inheritDoc}
      */
+    @Override
     public final <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition)
-        throws SQLException {
+        {
         DeleteQuery<R> delete = deleteQuery(table);
         delete.addConditions(condition);
         return delete.execute();
     }
 
     /**
-     * Delete one record in a table <code><pre>DELETE FROM [table]</pre></code>
-     *
-     * @return The number of deleted records
-     * @throws SQLException if more than one record was deleted
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) {
         return executeDeleteOne(table, trueCondition());
     }
 
     /**
-     * Delete one record in a table
-     * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
-     *
-     * @return The number of deleted records
-     * @throws SQLException if more than one record was deleted
+     * {@inheritDoc}
      */
-    public final <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition)
-        throws SQLException {
+    @Override
+    public final <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) {
         DeleteQuery<R> delete = deleteQuery(table);
         delete.addConditions(condition);
         return filterDeleteOne(delete.execute());
@@ -3385,6 +2783,7 @@ public class Factory implements Configuration {
      * @param type The Java type
      * @return The <code>Factory</code>'s underlying default data type.
      */
+    @SuppressWarnings("deprecation")
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
     }
@@ -3406,24 +2805,24 @@ public class Factory implements Configuration {
     // Internals
     // -------------------------------------------------------------------------
 
-    private static int filterDeleteOne(int i) throws SQLException {
+    private static int filterDeleteOne(int i) {
         return filterOne(i, "deleted");
     }
 
-    private static int filterUpdateOne(int i) throws SQLException {
+    private static int filterUpdateOne(int i) {
         return filterOne(i, "updated");
     }
 
-    private static int filterOne(int i, String action) throws SQLException {
+    private static int filterOne(int i, String action) {
         if (i <= 1) {
             return i;
         }
         else {
-            throw new SQLException("Too many rows " + action + " : " + i);
+            throw new DataAccessException("Too many rows " + action + " : " + i);
         }
     }
 
-    private static <R extends Record> R filterOne(List<R> list) throws SQLException {
+    private static <R extends Record> R filterOne(List<R> list) {
         if (list.size() == 0) {
             return null;
         }
@@ -3431,7 +2830,7 @@ public class Factory implements Configuration {
             return list.get(0);
         }
         else {
-            throw new SQLException("Too many rows returned : " + list.size());
+            throw new DataAccessException("Too many rows returned : " + list.size());
         }
     }
 

@@ -101,7 +101,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     }
 
     @Override
-    public final BindContext bind(QueryPart part) throws SQLException {
+    public final BindContext bind(QueryPart part) {
         QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
 
         // If this is supposed to be a declaration section and the part isn't
@@ -130,7 +130,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     }
 
     @Override
-    public final BindContext bind(Collection<? extends QueryPart> parts) throws SQLException {
+    public final BindContext bind(Collection<? extends QueryPart> parts) {
         for (QueryPart part : parts) {
             bind(part);
         }
@@ -139,13 +139,13 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     }
 
     @Override
-    public final BindContext bind(QueryPart[] parts) throws SQLException {
+    public final BindContext bind(QueryPart[] parts) {
         bind(Arrays.asList(parts));
         return this;
     }
 
     @Override
-    public final BindContext bindValues(Object... values) throws SQLException {
+    public final BindContext bindValues(Object... values) {
 
         // [#724] When values is null, this is probably due to API-misuse
         // The user probably meant new Object[] { null }
@@ -162,9 +162,18 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public final BindContext bindValue(Object value, Class<?> type) throws SQLException {
+    public final BindContext bindValue(Object value, Class<?> type) {
+        try {
+            return bindValue0(value, type);
+        }
+        catch (SQLException e) {
+            throw JooqUtil.translate("DefaultBindContext.bindValue", null, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.getDialect();
 
         if (log.isTraceEnabled()) {

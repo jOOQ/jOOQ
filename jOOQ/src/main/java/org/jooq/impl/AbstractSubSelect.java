@@ -39,7 +39,6 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.one;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -144,7 +143,7 @@ implements
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.declareFields(true)
                .bind((QueryPart) getSelect0())
                .declareFields(false)
@@ -653,8 +652,8 @@ implements
         return table.getFields().size() > 0;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    @SuppressWarnings({ "unchecked", "deprecation" })
     public final Class<? extends R> getRecordType() {
         // Generated record classes only come into play, when the select is
         // - on a single table

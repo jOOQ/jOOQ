@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -95,7 +94,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(keySet()).bind(values());
     }
 

@@ -38,6 +38,7 @@ package org.jooq.impl;
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +55,7 @@ import org.jooq.NamedQueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 
 /**
  * General jooq utilities
@@ -114,7 +116,7 @@ final class JooqUtil {
     /**
      * Create a new record
      */
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @SuppressWarnings("unchecked")
     static <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
         try {
             R result;
@@ -228,6 +230,14 @@ final class JooqUtil {
         result[2] = field3;
         System.arraycopy(fields, 0, result, 3, fields.length);
         return result;
+    }
+
+    /**
+     * Translate a {@link SQLException} to a {@link DataAccessException}
+     */
+    static DataAccessException translate(String task, String sql, SQLException e) {
+        String message = task + "; SQL [" + sql + "]; " + e.getMessage();
+        return new DataAccessException(message, e);
     }
 
     /**

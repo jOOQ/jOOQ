@@ -46,14 +46,6 @@ import java.util.List;
 public interface ColumnDefinition extends TypedElementDefinition<TableDefinition> {
 
     /**
-     * The column's owner table
-     *
-     * @deprecated - 1.6.3 - Use {@link #getContainer()} instead
-     */
-    @Deprecated
-    TableDefinition getTable();
-
-    /**
      * The column position in the table
      */
     int getPosition();

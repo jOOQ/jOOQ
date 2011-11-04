@@ -121,7 +121,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
             }
         }
         catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw JooqUtil.translate("MetaFieldProvider.init", null, e);
         }
 
         meta = null;

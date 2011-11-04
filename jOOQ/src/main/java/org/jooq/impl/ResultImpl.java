@@ -45,7 +45,6 @@ import static org.jooq.impl.StringUtils.rightPad;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -158,26 +157,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    @Deprecated
-    public final int getNumberOfRecords() {
-        return size();
-    }
-
-    @Override
     public final boolean isEmpty() {
         return records.isEmpty();
-    }
-
-    @Override
-    @Deprecated
-    public final List<R> getRecords() {
-        return this;
-    }
-
-    @Override
-    @Deprecated
-    public final R getRecord(int index) throws IndexOutOfBoundsException {
-        return get(index);
     }
 
     @Override
@@ -1253,7 +1234,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H into(H handler) throws SQLException {
+    public final <H extends RecordHandler<R>> H into(H handler) {
         for (R record : this) {
             handler.next(record);
         }

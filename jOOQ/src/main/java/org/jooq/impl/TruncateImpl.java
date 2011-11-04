@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Attachable;
@@ -91,7 +90,7 @@ class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Tr
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         context.bind(table);
     }
 

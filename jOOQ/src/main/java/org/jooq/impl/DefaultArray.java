@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import java.sql.Array;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Map;
 
 import org.jooq.SQLDialect;
@@ -56,56 +55,56 @@ class DefaultArray implements Array {
     }
 
     @Override
-    public String getBaseTypeName() throws SQLException {
+    public String getBaseTypeName() {
         return FieldTypeHelper.getDataType(dialect, type.getComponentType()).getTypeName();
     }
 
     @Override
-    public int getBaseType() throws SQLException {
+    public int getBaseType() {
         throw new SQLDialectNotSupportedException("Array.getBaseType()");
     }
 
     @Override
-    public Object getArray() throws SQLException {
+    public Object getArray() {
         return array;
     }
 
     @Override
-    public Object getArray(Map<String, Class<?>> map) throws SQLException {
+    public Object getArray(Map<String, Class<?>> map) {
         return array;
     }
 
     @Override
-    public Object getArray(long index, int count) throws SQLException {
+    public Object getArray(long index, int count) {
         throw new SQLDialectNotSupportedException("Array.getArray(long, int)");
     }
 
     @Override
-    public Object getArray(long index, int count, Map<String, Class<?>> map) throws SQLException {
+    public Object getArray(long index, int count, Map<String, Class<?>> map) {
         throw new SQLDialectNotSupportedException("Array.getArray(long, int, Map)");
     }
 
     @Override
-    public ResultSet getResultSet() throws SQLException {
+    public ResultSet getResultSet() {
         throw new SQLDialectNotSupportedException("Array.getResultSet()");
     }
 
     @Override
-    public ResultSet getResultSet(Map<String, Class<?>> map) throws SQLException {
+    public ResultSet getResultSet(Map<String, Class<?>> map) {
         throw new SQLDialectNotSupportedException("Array.getResultSet(Map)");
     }
 
     @Override
-    public ResultSet getResultSet(long index, int count) throws SQLException {
+    public ResultSet getResultSet(long index, int count) {
         throw new SQLDialectNotSupportedException("Array.getResultSet(long, int)");
     }
 
     @Override
-    public ResultSet getResultSet(long index, int count, Map<String, Class<?>> map) throws SQLException {
+    public ResultSet getResultSet(long index, int count, Map<String, Class<?>> map) {
         throw new SQLDialectNotSupportedException("Array.getResultSet(long, int, Map)");
     }
 
     @Override
-    public void free() throws SQLException {
+    public void free() {
     }
 }

@@ -58,7 +58,6 @@ import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.power;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -214,7 +213,7 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         @Override
-        public final void bind(BindContext context) throws SQLException {
+        public final void bind(BindContext context) {
             context.bind(lhs).bind((QueryPart) rhs);
         }
 

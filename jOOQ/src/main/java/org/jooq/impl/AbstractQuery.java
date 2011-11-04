@@ -58,7 +58,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     }
 
     @Override
-    public final int execute() throws SQLException, DetachedException {
+    public final int execute() {
         if (isExecutable()) {
             StopWatch watch = new StopWatch();
 
@@ -78,9 +78,10 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             watch.splitTrace("Parts attached");
 
             PreparedStatement statement = null;
+            String sql = null;
             int result = 0;
             try {
-                String sql = create(configuration).render(this);
+                sql = create(configuration).render(this);
                 watch.splitTrace("SQL rendered");
 
                 if (log.isDebugEnabled())
@@ -98,6 +99,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 watch.splitTrace("Statement executed");
 
                 return result;
+            }
+            catch (SQLException e) {
+                throw JooqUtil.translate("AbstractQuery.execute", sql, e);
             }
             finally {
                 if (!keepStatementOpen()) {

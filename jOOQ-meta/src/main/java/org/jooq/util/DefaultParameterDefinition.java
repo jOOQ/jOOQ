@@ -49,10 +49,4 @@ public class DefaultParameterDefinition
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type) {
         super(routine, name, position, type, null);
     }
-
-    @Override
-    @Deprecated
-    public final RoutineDefinition getCallable() {
-        return getContainer();
-    }
 }

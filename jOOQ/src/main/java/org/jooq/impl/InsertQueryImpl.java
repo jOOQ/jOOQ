@@ -191,7 +191,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    public final void bind(BindContext context) throws SQLException {
+    public final void bind(BindContext context) {
         if (!onDuplicateKeyUpdate) {
             bindInsert(context);
         }
@@ -248,7 +248,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
         }
     }
 
-    private final void bindInsert(BindContext context) throws SQLException {
+    private final void bindInsert(BindContext context) {
         context.bind(getInto())
                .bind(insertMaps)
                .bind(updateMap);
@@ -445,7 +445,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
             }
 
             CursorImpl<R> cursor = new CursorImpl<R>(configuration, returning, rs, statement, getInto().getRecordType());
-            returned = cursor.fetchResult();
+            returned = cursor.fetch();
             return result;
         }
     }
@@ -455,7 +455,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
      * arbitrary fields from JDBC's {@link Statement#getGeneratedKeys()} method.
      */
     @SuppressWarnings("unchecked")
-    private final void selectReturning(Configuration configuration, Object... values) throws SQLException {
+    private final void selectReturning(Configuration configuration, Object... values) {
         if (getInto() instanceof UpdatableTable) {
             UpdatableTable<R> updatable = (UpdatableTable<R>) getInto();
 
@@ -525,12 +525,6 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     public final void setReturning(Collection<? extends Field<?>> fields) {
         returning.clear();
         returning.addAll(fields);
-    }
-
-    @Override
-    @Deprecated
-    public final R getReturned() {
-        return getReturnedRecord();
     }
 
     @Override

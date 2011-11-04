@@ -51,9 +51,9 @@ final class DefaultConfiguration implements Configuration {
     /**
      * Generated UID
      */
-    private static final long         serialVersionUID      = -5746537675969065088L;
+    private static final long           serialVersionUID             = -5746537675969065088L;
 
-    static final Configuration DEFAULT_CONFIGURATION = new DefaultConfiguration();
+    static final Configuration          DEFAULT_CONFIGURATION        = new DefaultConfiguration();
 
     @SuppressWarnings("deprecation")
     @Override

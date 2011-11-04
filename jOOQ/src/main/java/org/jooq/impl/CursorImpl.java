@@ -68,7 +68,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient ResultSet         rs;
     private transient Iterator<R>       iterator;
 
-    @SuppressWarnings({ "unchecked", "deprecation" })
+    @SuppressWarnings("unchecked")
     CursorImpl(Configuration configuration, FieldProvider fields, ResultSet rs) {
         this(configuration, fields, rs, null, (Class<? extends R>) RecordImpl.class);
     }
@@ -116,32 +116,22 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final boolean hasNext() throws SQLException {
+    public final boolean hasNext() {
         return iterator().hasNext();
     }
 
     @Override
-    public final Result<R> fetch() throws SQLException {
+    public final Result<R> fetch() {
         return fetch(Integer.MAX_VALUE);
     }
 
     @Override
-    public final R fetchOne() throws SQLException {
+    public final R fetchOne() {
         return iterator().next();
     }
 
     @Override
-    public final Result<R> fetch(int number) throws SQLException {
-        return fetchResult(number);
-    }
-
-    @Override
-    public final Result<R> fetchResult() throws SQLException {
-        return fetchResult(Integer.MAX_VALUE);
-    }
-
-    @Override
-    public final Result<R> fetchResult(int number) throws SQLException {
+    public final Result<R> fetch(int number) {
         ResultImpl<R> result = new ResultImpl<R>(configuration, fields);
         R record = null;
 
@@ -162,7 +152,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final RecordHandler<R> fetchInto(RecordHandler<R> handler) throws SQLException {
+    public final RecordHandler<R> fetchInto(RecordHandler<R> handler) {
         R record = null;
 
         while ((record = fetchOne()) != null) {
@@ -173,12 +163,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <E> List<E> fetchInto(Class<? extends E> clazz) throws SQLException {
+    public final <E> List<E> fetchInto(Class<? extends E> clazz) {
         return fetch().into(clazz);
     }
 
     @Override
-    public final void close() throws SQLException {
+    public final void close() {
         JooqUtil.safeClose(rs, stmt);
         rs = null;
         stmt = null;
@@ -210,12 +200,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         @Override
         public final boolean hasNext() {
             if (hasNext == null) {
-                try {
-                    next = fetch();
-                    hasNext = (next != null);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                next = fetch();
+                hasNext = (next != null);
             }
 
             return hasNext;
@@ -224,11 +210,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         @Override
         public final R next() {
             if (hasNext == null) {
-                try {
-                    return fetch();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+                return fetch();
             }
 
             R result = next;
@@ -237,21 +219,26 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             return result;
         }
 
-        private final R fetch() throws SQLException {
+        private final R fetch() {
             R record = null;
 
-            if (!isClosed && rs.next()) {
-                record = JooqUtil.newRecord(type, fields, configuration);
-                final List<Field<?>> fieldList = fields.getFields();
-                final int size = fieldList.size();
+            try {
+                if (!isClosed && rs.next()) {
+                    record = JooqUtil.newRecord(type, fields, configuration);
+                    final List<Field<?>> fieldList = fields.getFields();
+                    final int size = fieldList.size();
 
-                for (int i = 0; i < size; i++) {
-                    setValue((AbstractRecord) record, fieldList.get(i), i, rs);
-                }
+                    for (int i = 0; i < size; i++) {
+                        setValue((AbstractRecord) record, fieldList.get(i), i, rs);
+                    }
 
-                if (log.isTraceEnabled()) {
-                    log.trace("Fetching record", record);
+                    if (log.isTraceEnabled()) {
+                        log.trace("Fetching record", record);
+                    }
                 }
+            }
+            catch (SQLException e) {
+                throw JooqUtil.translate("Cursor.fetch", null, e);
             }
 
             // Conveniently close cursors and underlying objects after the last

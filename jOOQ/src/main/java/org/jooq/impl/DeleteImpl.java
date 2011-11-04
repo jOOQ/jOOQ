@@ -39,7 +39,6 @@ import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
 import org.jooq.Condition;
@@ -50,7 +49,6 @@ import org.jooq.Operator;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
-import org.jooq.exception.DetachedException;
 
 /**
  * @author Lukas Eder
@@ -73,7 +71,7 @@ class DeleteImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final int execute() throws SQLException, DetachedException {
+    public final int execute() {
         return getDelegate().execute();
     }
 

@@ -225,6 +225,18 @@ public class SchemaMapping implements Serializable {
         return generatedTable;
     }
 
+    public void setDefaultSchema(String schema) {
+        use(schema);
+    }
+
+    public void setSchemaMapping(Map<String, String> schemaMap) {
+        for (String generatedSchemaName : schemaMap.keySet()) {
+            String configuredSchemaName = schemaMap.get(generatedSchemaName);
+            add(new SchemaImpl(generatedSchemaName),
+                new SchemaImpl(configuredSchemaName));
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

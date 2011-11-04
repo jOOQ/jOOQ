@@ -75,11 +75,6 @@ public class DefaultColumnDefinition
     }
 
     @Override
-    public final TableDefinition getTable() {
-        return getContainer();
-    }
-
-    @Override
     public final DataTypeDefinition getType() {
 
         // Lazy initialise

@@ -47,7 +47,6 @@ import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -90,7 +89,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     public abstract void toSQL(RenderContext context);
 
     @Override
-    public abstract void bind(BindContext context) throws SQLException;
+    public abstract void bind(BindContext context);
 
     @Override
     public abstract boolean isNullLiteral();
@@ -1023,24 +1022,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition lessOrEqualAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL_ALL);
-    }
-
-    @Override
-    @Deprecated
-    public final Condition lessOrEqualToAny(Select<?> query) {
-        return lessOrEqualAny(query);
-    }
-
-    @Override
-    @Deprecated
-    public final Condition lessOrEqualToSome(Select<?> query) {
-        return lessOrEqualSome(query);
-    }
-
-    @Override
-    @Deprecated
-    public final Condition lessOrEqualToAll(Select<?> query) {
-        return lessOrEqualAll(query);
     }
 
     @Override

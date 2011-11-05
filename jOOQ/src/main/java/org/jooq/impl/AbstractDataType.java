@@ -54,8 +54,8 @@ import org.jooq.EnumType;
 import org.jooq.MasterDataType;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.UDTRecord;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * A common base class for data types.

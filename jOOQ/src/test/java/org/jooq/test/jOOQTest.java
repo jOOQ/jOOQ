@@ -69,8 +69,6 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.jooq.BindContext;
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
@@ -96,6 +94,9 @@ import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
 import org.jooq.test.Data.Table1Record;
 import org.jooq.util.oracle.OracleDataType;
+
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;

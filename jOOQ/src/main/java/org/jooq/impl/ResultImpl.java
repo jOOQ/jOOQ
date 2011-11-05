@@ -72,6 +72,7 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.tools.json.JSONObject;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

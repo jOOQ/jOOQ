@@ -135,6 +135,7 @@ import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -197,6 +198,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
+import org.jooq.exception.FetchIntoException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
@@ -2782,6 +2784,22 @@ public abstract class jOOQAbstractTest<
         assertEquals("Orwell", result.get(1).lastName2);
         assertEquals("Coelho", result.get(2).lastName2);
         assertEquals("Coelho", result.get(3).lastName2);
+
+        try {
+            // Cannot instanciate an abstract class
+            create().selectFrom(TAuthor())
+                    .fetchInto(AbstractList.class);
+            fail();
+        }
+        catch (FetchIntoException expected) {}
+
+        try {
+            // Cannot a class without default constructor
+            create().selectFrom(TAuthor())
+                    .fetchInto(Math.class);
+            fail();
+        }
+        catch (FetchIntoException expected) {}
     }
 
     @Test

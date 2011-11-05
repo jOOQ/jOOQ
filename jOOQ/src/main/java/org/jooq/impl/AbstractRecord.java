@@ -52,6 +52,7 @@ import org.jooq.Attachable;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.exception.FetchIntoException;
 
 /**
  * @author Lukas Eder
@@ -515,7 +516,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
         // All reflection exceptions are intercepted
         catch (Exception e) {
-            throw new IllegalStateException("An error ocurred when mapping record to " + type, e);
+            throw new FetchIntoException("An error ocurred when mapping record to " + type, e);
         }
     }
 

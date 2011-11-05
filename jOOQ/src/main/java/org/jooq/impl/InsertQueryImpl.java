@@ -63,10 +63,10 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.sqlite.SQLiteFactory;
 
 /**

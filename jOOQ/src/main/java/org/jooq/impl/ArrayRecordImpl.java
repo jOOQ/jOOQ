@@ -48,7 +48,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.oracle.OracleUtils;
 
 /**

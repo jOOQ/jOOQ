@@ -56,7 +56,7 @@ import org.jooq.MasterDataType;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder

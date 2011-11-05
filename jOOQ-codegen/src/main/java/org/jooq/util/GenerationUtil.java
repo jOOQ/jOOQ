@@ -38,7 +38,7 @@ package org.jooq.util;
 
 
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.h2.H2DataType;
 
 class GenerationUtil {

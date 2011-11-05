@@ -40,7 +40,7 @@ import java.sql.ResultSet;
 import java.util.Map;
 
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 class DefaultArray implements Array {
 

@@ -40,7 +40,7 @@ import static org.jooq.impl.Factory.field;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder

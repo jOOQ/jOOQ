@@ -43,7 +43,7 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialectNotSupportedException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder

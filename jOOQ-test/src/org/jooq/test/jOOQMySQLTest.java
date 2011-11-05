@@ -36,7 +36,6 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.tables.VBook.V_BOOK;
@@ -53,6 +52,7 @@ import static org.jooq.util.mysql.MySQLFactory.sha1;
 import static org.jooq.util.mysql.MySQLFactory.sha2;
 import static org.jooq.util.mysql.MySQLFactory.uncompress;
 import static org.jooq.util.mysql.MySQLFactory.uncompressedLength;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
@@ -92,6 +92,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.mysql.MySQLFactory;
+
 import org.junit.Test;
 
 

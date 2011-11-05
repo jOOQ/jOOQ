@@ -105,6 +105,7 @@ import org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.oracle.OracleFactory;
+
 import org.junit.Test;
 
 

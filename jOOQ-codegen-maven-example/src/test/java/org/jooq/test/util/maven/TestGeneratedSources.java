@@ -46,6 +46,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.util.maven.example.PublicFactory;
 import org.jooq.util.maven.example.tables.TBook;
+
 import org.junit.Test;
 
 /**

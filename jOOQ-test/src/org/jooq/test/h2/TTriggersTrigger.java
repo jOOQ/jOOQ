@@ -38,9 +38,10 @@ package org.jooq.test.h2;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.h2.api.Trigger;
 import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.util.h2.H2Factory;
+
+import org.h2.api.Trigger;
 
 /**
  * A sample trigger for H2

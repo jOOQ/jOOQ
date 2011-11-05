@@ -157,7 +157,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.apache.commons.io.FileUtils;
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Condition;
@@ -207,6 +206,8 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.StopWatch;
 import org.jooq.impl.StringUtils;
 import org.jooq.util.GenerationTool;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

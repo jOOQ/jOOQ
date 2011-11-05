@@ -41,8 +41,6 @@ import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.postgres.information_schema.tables.Attributes.ATTRIBUTES;
-import static org.jooq.util.postgres.information_schema.tables.Attributes.UDT_NAME;
-import static org.jooq.util.postgres.information_schema.tables.Attributes.UDT_SCHEMA;
 import static org.jooq.util.postgres.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.tables.Parameters.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
@@ -77,6 +75,7 @@ import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
 import org.jooq.util.postgres.information_schema.InformationSchemaFactory;
+import org.jooq.util.postgres.information_schema.tables.Attributes;
 import org.jooq.util.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.postgres.information_schema.tables.Parameters;
 import org.jooq.util.postgres.information_schema.tables.ReferentialConstraints;
@@ -249,10 +248,11 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
 
-        for (String name : create().selectDistinct(UDT_NAME)
-            .from(ATTRIBUTES)
-            .where(UDT_SCHEMA.equal(getSchemaName()))
-            .orderBy(UDT_NAME).fetch(UDT_NAME)) {
+        for (String name : create().selectDistinct(Attributes.UDT_NAME)
+                .from(ATTRIBUTES)
+                .where(Attributes.UDT_SCHEMA.equal(getSchemaName()))
+                .orderBy(Attributes.UDT_NAME)
+                .fetch(Attributes.UDT_NAME)) {
 
             result.add(new PostgresUDTDefinition(this, name, null));
         }

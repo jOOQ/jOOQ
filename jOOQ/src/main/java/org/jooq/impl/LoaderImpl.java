@@ -65,6 +65,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
+
 import org.xml.sax.InputSource;
 
 /**

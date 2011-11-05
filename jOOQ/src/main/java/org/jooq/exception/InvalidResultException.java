@@ -36,16 +36,31 @@
 package org.jooq.exception;
 
 import org.jooq.Query;
-import org.jooq.QueryPart;
+import org.jooq.ResultQuery;
+import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 
 /**
- * An operation was invoked on a detached object ({@link Query},
- * {@link QueryPart}, or {@link UpdatableRecord}).
+ * An unexpected result was encountered after executing a {@link Query}. This
+ * exception indicates wrong usage of jOOQ's various fetch methods, or an
+ * integrity problem in your data.
+ * <p>
+ * This is typically the case in the following situations:
+ * <ul>
+ * <li>When you call methods such as {@link ResultQuery#fetchOne()} and the
+ * database returns more than one record.</li>
+ * <li>When you call methods such as
+ * {@link ResultQuery#fetchMap(org.jooq.Field)} and the database returns several
+ * records per key.</li>
+ * <li>When you refresh a {@link TableRecord} using
+ * {@link TableRecord#refreshUsing(org.jooq.TableField...)}, or
+ * {@link UpdatableRecord#refresh()}, and the record does not exist anymore in
+ * the database.</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
-public class DetachedException extends DataAccessException {
+public class InvalidResultException extends DataAccessException {
 
     /**
      * Generated UID
@@ -57,7 +72,7 @@ public class DetachedException extends DataAccessException {
      *
      * @param message the detail message
      */
-    public DetachedException(String message) {
+    public InvalidResultException(String message) {
         super(message);
     }
 
@@ -68,7 +83,7 @@ public class DetachedException extends DataAccessException {
      * @param cause the root cause (usually from using a underlying data access
      *            API such as JDBC)
      */
-    public DetachedException(String message, Throwable cause) {
+    public InvalidResultException(String message, Throwable cause) {
         super(message, cause);
     }
 }

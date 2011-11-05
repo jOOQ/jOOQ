@@ -62,7 +62,7 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
-import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 
 /**
  * A query that returns a {@link Result}
@@ -245,7 +245,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             return r.get(0);
         }
         else if (r.size() > 1) {
-            throw new DataAccessException("Query returned more than one result");
+            throw new InvalidResultException("Query returned more than one result");
         }
 
         return null;
@@ -269,7 +269,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         for (R record : fetch()) {
             if (map.put(record.getValue(key), record) != null) {
-                throw new DataAccessException("Key " + key + " is not unique in Result for " + this);
+                throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
             }
         }
 
@@ -308,7 +308,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         for (Field<?> field : record.getFields()) {
             if (map.put(field.getName(), record.getValue(field)) != null) {
-                throw new DataAccessException("Field " + field.getName() + " is not unique in Record for " + this);
+                throw new InvalidResultException("Field " + field.getName() + " is not unique in Record for " + this);
             }
         }
 

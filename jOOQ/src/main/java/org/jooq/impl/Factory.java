@@ -100,7 +100,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
-import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
@@ -2924,20 +2924,16 @@ public class Factory implements FactoryOperations {
             return i;
         }
         else {
-            throw new DataAccessException("Too many rows " + action + " : " + i);
+            throw new InvalidResultException("Too many rows " + action + " : " + i);
         }
     }
 
     private static <R extends Record> R filterOne(List<R> list) {
-        if (list.size() == 0) {
-            return null;
-        }
-        else if (list.size() == 1) {
+        if (filterOne(list.size(), "selected") == 1) {
             return list.get(0);
         }
-        else {
-            throw new DataAccessException("Too many rows returned : " + list.size());
-        }
+
+        return null;
     }
 
     @Override

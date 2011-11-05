@@ -44,9 +44,9 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder

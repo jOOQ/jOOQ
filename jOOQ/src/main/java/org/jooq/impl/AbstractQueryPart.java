@@ -50,11 +50,11 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Schema;
 import org.jooq.Store;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder

@@ -62,10 +62,10 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 

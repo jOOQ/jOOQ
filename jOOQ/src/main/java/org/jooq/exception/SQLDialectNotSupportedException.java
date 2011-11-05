@@ -34,8 +34,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq;
+package org.jooq.exception;
 
+import org.jooq.Configuration;
 import org.jooq.impl.JooqLogger;
 
 /**

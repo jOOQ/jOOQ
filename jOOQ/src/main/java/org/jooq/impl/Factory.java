@@ -82,7 +82,6 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectNotSupportedException;
 import org.jooq.Schema;
 import org.jooq.SchemaMapping;
 import org.jooq.Select;
@@ -101,6 +100,7 @@ import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.exception.InvalidResultException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * A factory providing implementations to the org.jooq interfaces

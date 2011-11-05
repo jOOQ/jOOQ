@@ -1114,7 +1114,17 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this like value</code>
      */
+    Condition like(Field<T> value);
+
+    /**
+     * <code>this like value</code>
+     */
     Condition like(T value);
+
+    /**
+     * <code>this not like value</code>
+     */
+    Condition notLike(Field<T> value);
 
     /**
      * <code>this not like value</code>

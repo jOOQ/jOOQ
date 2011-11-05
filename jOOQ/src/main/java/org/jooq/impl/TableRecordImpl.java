@@ -48,7 +48,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UpdateQuery;
-import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 
 /**
  * A record implementation for a record originating from a single table
@@ -198,7 +198,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
             }
         }
         else {
-            throw new DataAccessException("Exactly one row expected for refresh. Record does not exist in database.");
+            throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
         }
     }
 

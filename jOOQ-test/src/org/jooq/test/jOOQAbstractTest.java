@@ -198,6 +198,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
@@ -952,7 +953,7 @@ public abstract class jOOQAbstractTest<
         try {
             create().selectFrom(TBook()).orderBy(TBook_ID()).fetchMap(TBook_AUTHOR_ID());
             fail();
-        } catch (DataAccessException expected) {}
+        } catch (InvalidResultException expected) {}
 
         // Key -> Record Map
         // -----------------
@@ -996,13 +997,13 @@ public abstract class jOOQAbstractTest<
             create().select(val("a"), val("a")).fetchMaps();
             fail();
         }
-        catch (Exception expected) {}
+        catch (InvalidResultException expected) {}
 
         try {
             create().select(val("a"), val("a")).fetchOneMap();
             fail();
         }
-        catch (Exception expected) {}
+        catch (InvalidResultException expected) {}
     }
 
     @Test
@@ -2692,7 +2693,7 @@ public abstract class jOOQAbstractTest<
             q.fetchOne();
             fail();
         }
-        catch (Exception expected) {}
+        catch (InvalidResultException expected) {}
 
         Record record = q.fetchAny();
         assertEquals("Coelho", record.getValue(TAuthor_LAST_NAME()));
@@ -3682,7 +3683,7 @@ public abstract class jOOQAbstractTest<
             create().fetchOne(TAuthor());
             fail();
         }
-        catch (Exception expected) {}
+        catch (InvalidResultException expected) {}
 
         A selectOne = create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Paulo"));
         assertEquals("Paulo", selectOne.getValue(TAuthor_FIRST_NAME()));
@@ -3780,7 +3781,7 @@ public abstract class jOOQAbstractTest<
         try {
             book.refresh();
         }
-        catch (DataAccessException expected) {}
+        catch (InvalidResultException expected) {}
 
         // Fetch the original record
         B book1 = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
@@ -3914,7 +3915,7 @@ public abstract class jOOQAbstractTest<
         try {
             store.refresh();
         }
-        catch (DataAccessException expected) {}
+        catch (InvalidResultException expected) {}
 
         store.setValue(TBookStore_NAME(), "Rösslitor");
         assertEquals(1, store.store());
@@ -4016,7 +4017,7 @@ public abstract class jOOQAbstractTest<
             record.refreshUsing(T785_VALUE());
             fail();
         }
-        catch (DataAccessException expected) {}
+        catch (InvalidResultException expected) {}
 
 
         // Don't allow refreshing on inexistent results
@@ -4026,7 +4027,7 @@ public abstract class jOOQAbstractTest<
             record.refreshUsing(T785_ID());
             fail();
         }
-        catch (DataAccessException expected) {}
+        catch (InvalidResultException expected) {}
 
         // Delete records again
         record = create().newRecord(T785());

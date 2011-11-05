@@ -49,13 +49,17 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.abs;
 import static org.jooq.impl.Factory.acos;
+import static org.jooq.impl.Factory.ascii;
 import static org.jooq.impl.Factory.asin;
 import static org.jooq.impl.Factory.atan;
 import static org.jooq.impl.Factory.atan2;
 import static org.jooq.impl.Factory.avg;
+import static org.jooq.impl.Factory.bitLength;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.ceil;
+import static org.jooq.impl.Factory.charLength;
+import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.cos;
 import static org.jooq.impl.Factory.cosh;
 import static org.jooq.impl.Factory.cot;
@@ -83,34 +87,44 @@ import static org.jooq.impl.Factory.groupingId;
 import static org.jooq.impl.Factory.groupingSets;
 import static org.jooq.impl.Factory.lag;
 import static org.jooq.impl.Factory.lead;
+import static org.jooq.impl.Factory.length;
 import static org.jooq.impl.Factory.ln;
 import static org.jooq.impl.Factory.log;
+import static org.jooq.impl.Factory.lower;
+import static org.jooq.impl.Factory.lpad;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.median;
 import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.nullif;
 import static org.jooq.impl.Factory.nvl;
 import static org.jooq.impl.Factory.nvl2;
+import static org.jooq.impl.Factory.octetLength;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.percentRank;
 import static org.jooq.impl.Factory.pi;
+import static org.jooq.impl.Factory.position;
 import static org.jooq.impl.Factory.power;
 import static org.jooq.impl.Factory.rad;
 import static org.jooq.impl.Factory.rand;
 import static org.jooq.impl.Factory.rank;
+import static org.jooq.impl.Factory.repeat;
+import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.rollup;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.rowNumber;
+import static org.jooq.impl.Factory.rpad;
 import static org.jooq.impl.Factory.sign;
 import static org.jooq.impl.Factory.sin;
 import static org.jooq.impl.Factory.sinh;
 import static org.jooq.impl.Factory.sqrt;
 import static org.jooq.impl.Factory.stddevPop;
 import static org.jooq.impl.Factory.stddevSamp;
+import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.tan;
 import static org.jooq.impl.Factory.tanh;
+import static org.jooq.impl.Factory.trim;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
@@ -863,7 +877,7 @@ public abstract class jOOQAbstractTest<
             return;
         }
 
-        Field<?> user = currentUser().lower().trim();
+        Field<?> user = trim(lower(currentUser()));
         Record record = create().select(user).fetchOne();
 
         assertTrue(Arrays.asList("test", "db2admin", "sa", "root@localhost", "postgres", "dbo", "dba")
@@ -4586,7 +4600,7 @@ public abstract class jOOQAbstractTest<
         q2.addFrom(a);
         q2.addJoin(b, b_authorID.equal(a_authorID));
         q2.addConditions(b_title.notEqual("1984"));
-        q2.addOrderBy(b_title.lower());
+        q2.addOrderBy(lower(b_title));
 
         int rows1 = q1.execute();
         int rows2 = q2.execute();
@@ -4852,8 +4866,8 @@ public abstract class jOOQAbstractTest<
                     create().select(val(2)),
                     create().select(val(3).add(4)),
                     create().select(val(3).add(4)),
-                    create().select(val(" test ").trim()),
-                    create().select(val(" test ").trim()))
+                    create().select(trim(" test ")),
+                    create().select(trim(" test ")))
                 .fetch();
 
         assertEquals(1, result.size());
@@ -4863,7 +4877,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(Integer.valueOf(2), result.getValue(0, 3));
         assertEquals(Integer.valueOf(7), result.getValue(0, val(3).add(4)));
         assertEquals(Integer.valueOf(7), result.getValue(0, 5));
-        assertEquals("test", result.getValue(0, val(" test ").trim()));
+        assertEquals("test", result.getValue(0, trim(" test ")));
         assertEquals("test", result.getValue(0, 7));
 
         result =
@@ -4874,8 +4888,8 @@ public abstract class jOOQAbstractTest<
                     create().select(val(2)).asField(),
                     create().select(val(3).add(4)).asField(),
                     create().select(val(3).add(4)).asField(),
-                    create().select(val(" test ").trim()).asField(),
-                    create().select(val(" test ").trim()).asField())
+                    create().select(trim(" test ")).asField(),
+                    create().select(trim(" test ")).asField())
                 .fetch();
 
         assertEquals(1, result.size());
@@ -5458,26 +5472,19 @@ public abstract class jOOQAbstractTest<
     public void testFunctionsOnStrings() throws Exception {
 
         // Trimming
-        assertEquals("abc", create().select(val("abc").trim()).fetchOne(0));
-        assertEquals("abc", create().select(val("abc  ").trim()).fetchOne(0));
-        assertEquals("abc", create().select(val("  abc").trim()).fetchOne(0));
-        assertEquals("abc", create().select(val("  abc  ").trim()).fetchOne(0));
+        assertEquals("abc", create().select(trim("abc")).fetchOne(0));
+        assertEquals("abc", create().select(trim("abc  ")).fetchOne(0));
+        assertEquals("abc", create().select(trim("  abc")).fetchOne(0));
+        assertEquals("abc", create().select(trim("  abc  ")).fetchOne(0));
 
         // String concatenation
-        assertEquals("abc", create().select(val("a").concat("b", "c")).fetchOne(0));
+        assertEquals("abc", create().select(concat("a", "b", "c")).fetchOne(0));
         assertEquals("George Orwell", create()
-            .select(TAuthor_FIRST_NAME().concat(" ").concat(TAuthor_LAST_NAME()))
+            .select(concat(TAuthor_FIRST_NAME(), val(" "), TAuthor_LAST_NAME()))
             .from(TAuthor())
             .where(TAuthor_FIRST_NAME().equal("George")).fetchOne(0));
 
-        // Derby cannot easily cast numbers to strings...
-        if (getDialect() != SQLDialect.DERBY) {
-            assertEquals("1ab45", create().select(val(1).concat("ab", "45")).fetchOne(0));
-            assertEquals("1ab45", create().select(val(1).concat(val("ab"), val(45))).fetchOne(0));
-        }
-        else {
-            log.info("SKIPPING", "Concatenation with numbers");
-        }
+        assertEquals("1ab45", create().select(concat(val(1), val("ab"), val(45))).fetchOne(0));
 
         // Standard String functions
         SelectQuery q = create().selectQuery();
@@ -5492,9 +5499,9 @@ public abstract class jOOQAbstractTest<
 
             // These two tests will validate #154
             default: {
-                Field<String> x = constant.replace("b", "x");
-                Field<String> y = constant.replace("b", "y");
-                Field<String> z = constant.replace("b");
+                Field<String> x = replace(constant, "b", "x");
+                Field<String> y = replace(constant, "b", "y");
+                Field<String> z = replace(constant, "b");
                 Record record = create().select(x, y, z).fetchOne();
 
                 assertEquals("axc", record.getValue(x));
@@ -5503,10 +5510,10 @@ public abstract class jOOQAbstractTest<
             }
         }
 
-        Field<Integer> length = constant.length();
-        Field<Integer> charLength = constant.charLength();
-        Field<Integer> bitLength = constant.bitLength();
-        Field<Integer> octetLength = constant.octetLength();
+        Field<Integer> length = length(constant);
+        Field<Integer> charLength = charLength(constant);
+        Field<Integer> bitLength = bitLength(constant);
+        Field<Integer> octetLength = octetLength(constant);
         q.addSelect(length, charLength, bitLength, octetLength);
         q.execute();
 
@@ -5537,10 +5544,10 @@ public abstract class jOOQAbstractTest<
 
             default: {
                 Record result = create().select(
-                    val("aa").rpad(4),
-                    val("aa").rpad(4, '-'),
-                    val("aa").lpad(4),
-                    val("aa").lpad(4, '-')).fetchOne();
+                    rpad(val("aa"), 4),
+                    rpad(val("aa"), 4, "-"),
+                    lpad(val("aa"), 4),
+                    lpad(val("aa"), 4, "-")).fetchOne();
 
                 assertEquals("aa  ", result.getValue(0));
                 assertEquals("aa--", result.getValue(1));
@@ -5553,10 +5560,10 @@ public abstract class jOOQAbstractTest<
 
         // SUBSTRING
         Record result = create().select(
-            val("abcde").substring(1),
-            val("abcde").substring(1, 2),
-            val("abcde").substring(3),
-            val("abcde").substring(3, 2)).fetchOne();
+            substring(val("abcde"), 1),
+            substring(val("abcde"), 1, 2),
+            substring(val("abcde"), 3),
+            substring(val("abcde"), 3, 2)).fetchOne();
 
         assertEquals("abcde", result.getValue(0));
         assertEquals("ab", result.getValue(1));
@@ -5565,14 +5572,14 @@ public abstract class jOOQAbstractTest<
 
         result =
         create().select(
-                    TAuthor_FIRST_NAME().substring(2),
-                    TAuthor_FIRST_NAME().substring(2, 2))
+                    substring(TAuthor_FIRST_NAME(), 2),
+                    substring(TAuthor_FIRST_NAME(), 2, 2))
                 .from(TAuthor())
                 .where(TAuthor_ID().equal(1))
                 .fetchOne();
 
-        assertEquals("eorge", result.getValue(TAuthor_FIRST_NAME().substring(2)));
-        assertEquals("eo", result.getValue(TAuthor_FIRST_NAME().substring(2, 2)));
+        assertEquals("eorge", result.getValue(substring(TAuthor_FIRST_NAME(), 2)));
+        assertEquals("eo", result.getValue(substring(TAuthor_FIRST_NAME(), 2, 2)));
 
         // REPEAT
         switch (getDialect()) {
@@ -5583,9 +5590,9 @@ public abstract class jOOQAbstractTest<
 
             default: {
                 result = create().select(
-                    val("a").repeat(1),
-                    val("ab").repeat(2),
-                    val("abc").repeat(3)).fetchOne();
+                    repeat("a", 1),
+                    repeat("ab", 2),
+                    repeat("abc", 3)).fetchOne();
                 assertEquals("a", result.getValue(0));
                 assertEquals("abab", result.getValue(1));
                 assertEquals("abcabcabc", result.getValue(2));
@@ -5604,10 +5611,10 @@ public abstract class jOOQAbstractTest<
             default:
                 record =
                 create().select(
-                    val("A").ascii(),
-                    val("a").ascii(),
-                    val("-").ascii(),
-                    val(" ").ascii()).fetchOne();
+                    ascii("A"),
+                    ascii("a"),
+                    ascii("-"),
+                    ascii(" ")).fetchOne();
                 assertEquals((int) 'A', (int) record.getValueAsInteger(0));
                 assertEquals((int) 'a', (int) record.getValueAsInteger(1));
                 assertEquals((int) '-', (int) record.getValueAsInteger(2));
@@ -5628,7 +5635,7 @@ public abstract class jOOQAbstractTest<
         SelectQuery q = create().selectQuery();
         q.addFrom(VLibrary());
 
-        Field<Integer> position = VLibrary_AUTHOR().position("o").as("p");
+        Field<Integer> position = position(VLibrary_AUTHOR(), "o").as("p");
         q.addSelect(VLibrary_AUTHOR());
         q.addSelect(position);
 
@@ -7785,7 +7792,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny(),
                      create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny());
         assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny(),
-                     create().select(TBook_ID(), TBook_TITLE().trim()).from(TBook()).fetchAny());
+                     create().select(TBook_ID(), trim(TBook_TITLE())).from(TBook()).fetchAny());
 
         assertFalse(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetchAny().equals(
                     create().select(TBook_TITLE(), TBook_ID()).from(TBook()).fetchAny()));
@@ -7802,7 +7809,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch(),
                      create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch());
         assertEquals(create().select(TBook_ID(), TBook_TITLE()).from(TBook()).fetch(),
-                     create().select(TBook_ID(), TBook_TITLE().trim()).from(TBook()).fetch());
+                     create().select(TBook_ID(), trim(TBook_TITLE())).from(TBook()).fetch());
 
         assertFalse(create().selectFrom(TBook()).orderBy(TBook_ID().asc()).fetch().equals(
                     create().selectFrom(TBook()).orderBy(TBook_ID().desc()).fetch()));

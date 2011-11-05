@@ -259,15 +259,6 @@ public class jOOQTest {
             FIELD_ID1.notIn((Integer) null),
             FIELD_ID1.notIn((Field<Integer>) null));
         assertEquals(
-            FIELD_ID1.nullif((Integer) null),
-            FIELD_ID1.nullif((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.nvl((Integer) null),
-            FIELD_ID1.nvl((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.nvl2((Integer) null, null),
-            FIELD_ID1.nvl2((Field<Integer>) null, null));
-        assertEquals(
             FIELD_ID1.position((String) null),
             FIELD_ID1.position((Field<String>) null));
         assertEquals(
@@ -351,6 +342,33 @@ public class jOOQTest {
         assertEquals(
             Factory.log((Integer) null, 2),
             Factory.log((Field<Integer>) null, 2));
+        assertEquals(
+            Factory.nullif((Integer) null, (Integer) null),
+            Factory.nullif((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.nullif((Integer) null, (Integer) null),
+            Factory.nullif((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.nullif((Integer) null, (Integer) null),
+            Factory.nullif((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.nvl((Integer) null, (Integer) null),
+            Factory.nvl((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.nvl((Integer) null, (Integer) null),
+            Factory.nvl((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.nvl((Integer) null, (Integer) null),
+            Factory.nvl((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
+            Factory.nvl2((Field<Integer>) null, (Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
+            Factory.nvl2((Field<Integer>) null, (Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
+            Factory.nvl2((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
             Factory.power((Integer) null, (Integer) null),
             Factory.power((Field<Integer>) null, (Field<Integer>) null));

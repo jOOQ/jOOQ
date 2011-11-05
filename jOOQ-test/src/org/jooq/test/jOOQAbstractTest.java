@@ -6700,6 +6700,17 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLike() throws Exception {
+        Result<B> books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().like("%a%"))
+                .and(TBook_TITLE().notLike(TBook_PUBLISHED_IN().cast(String.class)))
+                .fetch();
+
+        assertEquals(3, books.size());
+    }
+
+    @Test
     public void testDual() throws Exception {
         assertEquals(1, (int) create().selectOne().fetchOne(0, Integer.class));
         assertEquals(1, (int) create().selectOne().where(one().equal(1)).fetchOne(0, Integer.class));

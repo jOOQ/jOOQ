@@ -183,6 +183,213 @@ public class jOOQTest {
     }
 
     @Test
+    public final void testNullPointerExceptionSafety() throws Exception {
+        // Functions created from a field
+        // ------------------------------
+        assertEquals(
+            FIELD_ID1.add((Integer) null),
+            FIELD_ID1.add((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.between((Integer) null, null),
+            FIELD_ID1.between((Field<Integer>) null, null));
+        assertEquals(
+            FIELD_ID1.bitAnd((Integer) null),
+            FIELD_ID1.bitAnd((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.bitNand((Integer) null),
+            FIELD_ID1.bitNand((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.bitNor((Integer) null),
+            FIELD_ID1.bitNor((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.bitOr((Integer) null),
+            FIELD_ID1.bitOr((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.bitXNor((Integer) null),
+            FIELD_ID1.bitXNor((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.bitXor((Integer) null),
+            FIELD_ID1.bitXor((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.coalesce((Integer) null),
+            FIELD_ID1.coalesce((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.concat((String) null),
+            FIELD_ID1.concat((Field<String>) null));
+        assertEquals(
+            FIELD_ID1.decode((Integer) null, null),
+            FIELD_ID1.decode((Field<Integer>) null, null));
+        assertEquals(
+            FIELD_ID1.div((Integer) null),
+            FIELD_ID1.div((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.equal((Integer) null),
+            FIELD_ID1.equal((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.greaterOrEqual((Integer) null),
+            FIELD_ID1.greaterOrEqual((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.greaterThan((Integer) null),
+            FIELD_ID1.greaterThan((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.greatest((Integer) null),
+            FIELD_ID1.greatest((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.in((Integer) null),
+            FIELD_ID1.in((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.least((Integer) null),
+            FIELD_ID1.least((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.lessOrEqual((Integer) null),
+            FIELD_ID1.lessOrEqual((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.lessThan((Integer) null),
+            FIELD_ID1.lessThan((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.mod((Integer) null),
+            FIELD_ID1.mod((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.mul((Integer) null),
+            FIELD_ID1.mul((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.notEqual((Integer) null),
+            FIELD_ID1.notEqual((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.notIn((Integer) null),
+            FIELD_ID1.notIn((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.nullif((Integer) null),
+            FIELD_ID1.nullif((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.nvl((Integer) null),
+            FIELD_ID1.nvl((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.nvl2((Integer) null, null),
+            FIELD_ID1.nvl2((Field<Integer>) null, null));
+        assertEquals(
+            FIELD_ID1.position((String) null),
+            FIELD_ID1.position((Field<String>) null));
+        assertEquals(
+            FIELD_ID1.repeat((Integer) null),
+            FIELD_ID1.repeat((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.replace((String) null),
+            FIELD_ID1.replace((Field<String>) null));
+        assertEquals(
+            FIELD_ID1.replace((String) null, null),
+            FIELD_ID1.replace((Field<String>) null, null));
+        assertEquals(
+            FIELD_ID1.shl((Integer) null),
+            FIELD_ID1.shl((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.shr((Integer) null),
+            FIELD_ID1.shr((Field<Integer>) null));
+        assertEquals(
+            FIELD_ID1.sub((Integer) null),
+            FIELD_ID1.sub((Field<Integer>) null));
+
+        // Standalone functions created from the factory
+        // ---------------------------------------------
+        assertEquals(
+            Factory.abs((Integer) null),
+            Factory.abs((Field<Integer>) null));
+        assertEquals(
+            Factory.acos((Integer) null),
+            Factory.acos((Field<Integer>) null));
+        assertEquals(
+            Factory.asin((Integer) null),
+            Factory.asin((Field<Integer>) null));
+        assertEquals(
+            Factory.atan((Integer) null),
+            Factory.atan((Field<Integer>) null));
+        assertEquals(
+            Factory.atan2((Integer) null, (Integer) null),
+            Factory.atan2((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.atan2((Integer) null, (Integer) null),
+            Factory.atan2((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.atan2((Integer) null, (Integer) null),
+            Factory.atan2((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.ceil((Integer) null),
+            Factory.ceil((Field<Integer>) null));
+        assertEquals(
+            Factory.cos((Integer) null),
+            Factory.cos((Field<Integer>) null));
+        assertEquals(
+            Factory.cosh((Integer) null),
+            Factory.cosh((Field<Integer>) null));
+        assertEquals(
+            Factory.cot((Integer) null),
+            Factory.cot((Field<Integer>) null));
+        assertEquals(
+            Factory.coth((Integer) null),
+            Factory.coth((Field<Integer>) null));
+        assertEquals(
+            Factory.decode((Integer) null, null, null),
+            Factory.decode((Field<Integer>) null, null, null));
+        assertEquals(
+            Factory.deg((Integer) null),
+            Factory.deg((Field<Integer>) null));
+        assertEquals(
+            Factory.exp((Integer) null),
+            Factory.exp((Field<Integer>) null));
+        assertEquals(
+            Factory.floor((Integer) null),
+            Factory.floor((Field<Integer>) null));
+        assertEquals(
+            Factory.lag((Field<Integer>) null, 1, (Integer) null),
+            Factory.lag((Field<Integer>) null, 1, (Field<Integer>) null));
+        assertEquals(
+            Factory.lead((Field<Integer>) null, 1, (Integer) null),
+            Factory.lead((Field<Integer>) null, 1, (Field<Integer>) null));
+        assertEquals(
+            Factory.ln((Integer) null),
+            Factory.ln((Field<Integer>) null));
+        assertEquals(
+            Factory.log((Integer) null, 2),
+            Factory.log((Field<Integer>) null, 2));
+        assertEquals(
+            Factory.power((Integer) null, (Integer) null),
+            Factory.power((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.power((Integer) null, (Integer) null),
+            Factory.power((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.power((Integer) null, (Integer) null),
+            Factory.power((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.rad((Integer) null),
+            Factory.rad((Field<Integer>) null));
+        assertEquals(
+            Factory.round((Integer) null),
+            Factory.round((Field<Integer>) null));
+        assertEquals(
+            Factory.round((Integer) null, 1),
+            Factory.round((Field<Integer>) null, 1));
+        assertEquals(
+            Factory.sign((Integer) null),
+            Factory.sign((Field<Integer>) null));
+        assertEquals(
+            Factory.sin((Integer) null),
+            Factory.sin((Field<Integer>) null));
+        assertEquals(
+            Factory.sinh((Integer) null),
+            Factory.sinh((Field<Integer>) null));
+        assertEquals(
+            Factory.sqrt((Integer) null),
+            Factory.sqrt((Field<Integer>) null));
+        assertEquals(
+            Factory.tan((Integer) null),
+            Factory.tan((Field<Integer>) null));
+        assertEquals(
+            Factory.tanh((Integer) null),
+            Factory.tanh((Field<Integer>) null));
+    }
+
+    @Test
     public final void testTruncate() throws Exception {
         Truncate t = create.truncate(TABLE1);
 

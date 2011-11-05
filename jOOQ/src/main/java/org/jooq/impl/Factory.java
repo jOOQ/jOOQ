@@ -648,7 +648,7 @@ public class Factory implements FactoryOperations {
      * escape literals when concatenated into SQL clauses!
      */
     public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
-        return function(name, getDataType(type), arguments);
+        return function(name, getDataType(type), nullSafe(arguments));
     }
 
     /**
@@ -661,7 +661,7 @@ public class Factory implements FactoryOperations {
      * escape literals when concatenated into SQL clauses!
      */
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
-        return new Function<T>(name, type, arguments);
+        return new Function<T>(name, type, nullSafe(arguments));
     }
 
     /**
@@ -1193,7 +1193,7 @@ public class Factory implements FactoryOperations {
      * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
-        return value.decode(search, result);
+        return nullSafe(value).decode(nullSafe(search), nullSafe(result));
     }
 
     /**
@@ -1204,7 +1204,7 @@ public class Factory implements FactoryOperations {
      * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
-        return value.decode(search, result, more);
+        return nullSafe(value).decode(nullSafe(search), nullSafe(result), nullSafe(more));
     }
 
     /**
@@ -1322,7 +1322,7 @@ public class Factory implements FactoryOperations {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     public static Field<?> rollup(Field<?>... fields) {
-        return new Rollup(fields);
+        return new Rollup(nullSafe(fields));
     }
 
     /**
@@ -1347,7 +1347,7 @@ public class Factory implements FactoryOperations {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     public static Field<?> cube(Field<?>... fields) {
-        return function("cube", Object.class, fields);
+        return function("cube", Object.class, nullSafe(fields));
     }
 
     /**
@@ -1467,7 +1467,7 @@ public class Factory implements FactoryOperations {
      * @see #rollup(Field...)
      */
     public static Field<Integer> grouping(Field<?> field) {
-        return function("grouping", Integer.class, field);
+        return function("grouping", Integer.class, nullSafe(field));
     }
 
     /**
@@ -1487,7 +1487,7 @@ public class Factory implements FactoryOperations {
      * @see #rollup(Field...)
      */
     public static Field<Integer> groupingId(Field<?>... fields) {
-        return function("grouping_id", Integer.class, fields);
+        return function("grouping_id", Integer.class, nullSafe(fields));
     }
 
     // ------------------------------------------------------------------------
@@ -1523,7 +1523,7 @@ public class Factory implements FactoryOperations {
      * END
      */
     public static Field<Integer> sign(Field<? extends Number> field) {
-        return new Sign(field);
+        return new Sign(nullSafe(field));
     }
 
     /**
@@ -1543,7 +1543,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>abs([this])</pre></code>
      */
     public static <T extends Number> Field<T> abs(Field<T> field) {
-        return function("abs", field.getDataType(), field);
+        return function("abs", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -1567,7 +1567,7 @@ public class Factory implements FactoryOperations {
      * ... or simulates it elsewhere using floor and ceil
      */
     public static <T extends Number> Field<T> round(Field<T> field) {
-        return new Round<T>(field);
+        return new Round<T>(nullSafe(field));
     }
 
     /**
@@ -1589,7 +1589,7 @@ public class Factory implements FactoryOperations {
      * ... or simulates it elsewhere using floor and ceil
      */
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
-        return new Round<T>(field, decimals);
+        return new Round<T>(nullSafe(field), decimals);
     }
 
     /**
@@ -1613,7 +1613,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>round([this] - 0.499999999999999)</pre></code>
      */
     public static <T extends Number> Field<T> floor(Field<T> field) {
-        return new Floor<T>(field);
+        return new Floor<T>(nullSafe(field));
     }
 
     /**
@@ -1639,7 +1639,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>round([this] + 0.499999999999999)</pre></code>
      */
     public static <T extends Number> Field<T> ceil(Field<T> field) {
-        return new Ceil<T>(field);
+        return new Ceil<T>(nullSafe(field));
     }
 
     /**
@@ -1663,7 +1663,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>power([this], 0.5)</pre></code>
      */
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
-        return new Sqrt(field);
+        return new Sqrt(nullSafe(field));
     }
 
     /**
@@ -1683,7 +1683,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>exp([this])</pre></code>
      */
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
-        return function("exp", SQLDataType.NUMERIC, field);
+        return function("exp", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1705,7 +1705,7 @@ public class Factory implements FactoryOperations {
      * log([this])</pre></code>
      */
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
-        return new Ln(field);
+        return new Ln(nullSafe(field));
     }
 
     /**
@@ -1729,7 +1729,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>ln([this]) / ln([base])</pre></code>
      */
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
-        return new Ln(field, base);
+        return new Ln(nullSafe(field), base);
     }
 
     /**
@@ -1753,7 +1753,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>exp(ln([this]) * [exponent])</pre></code>
      */
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
-        return power(field, val(exponent));
+        return power(nullSafe(field), val(exponent));
     }
 
     /**
@@ -1765,7 +1765,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>exp(ln([this]) * [exponent])</pre></code>
      */
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
-        return power(val(value), exponent);
+        return power(val(value), nullSafe(exponent));
     }
 
     /**
@@ -1777,7 +1777,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>exp(ln([this]) * [exponent])</pre></code>
      */
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
-        return new Power(field, exponent);
+        return new Power(nullSafe(field), nullSafe(exponent));
     }
 
     /**
@@ -1797,7 +1797,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>acos([this])</pre></code>
      */
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
-        return function("acos", SQLDataType.NUMERIC, field);
+        return function("acos", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1817,7 +1817,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>asin([this])</pre></code>
      */
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
-        return function("asin", SQLDataType.NUMERIC, field);
+        return function("asin", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1837,7 +1837,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>atan([this])</pre></code>
      */
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
-        return function("atan", SQLDataType.NUMERIC, field);
+        return function("atan", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1859,7 +1859,7 @@ public class Factory implements FactoryOperations {
      * atn2([this])</pre></code>
      */
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return atan2(x, val(y));
+        return atan2(nullSafe(x), val(y));
     }
 
     /**
@@ -1870,7 +1870,7 @@ public class Factory implements FactoryOperations {
      * atn2([this])</pre></code>
      */
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
-        return atan2(val(x), y);
+        return atan2(val(x), nullSafe(y));
     }
 
     /**
@@ -1881,11 +1881,7 @@ public class Factory implements FactoryOperations {
      * atn2([this])</pre></code>
      */
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
-        if (y == null) {
-            return atan2(x, (Number) null);
-        }
-
-        return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, x, y);
+        return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
     }
 
     /**
@@ -1905,7 +1901,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>cos([this])</pre></code>
      */
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
-        return function("cos", SQLDataType.NUMERIC, field);
+        return function("cos", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1925,7 +1921,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>sin([this])</pre></code>
      */
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
-        return function("sin", SQLDataType.NUMERIC, field);
+        return function("sin", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1945,7 +1941,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>tan([this])</pre></code>
      */
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
-        return function("tan", SQLDataType.NUMERIC, field);
+        return function("tan", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -1967,7 +1963,7 @@ public class Factory implements FactoryOperations {
      * sin and cos: <code><pre>cos([this]) / sin([this])</pre></code>
      */
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
-        return new Cot(field);
+        return new Cot(nullSafe(field));
     }
 
     /**
@@ -1989,7 +1985,7 @@ public class Factory implements FactoryOperations {
      * exp: <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2))</pre></code>
      */
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
-        return new Sinh(field);
+        return new Sinh(nullSafe(field));
     }
 
     /**
@@ -2011,7 +2007,7 @@ public class Factory implements FactoryOperations {
      * exp: <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2))</pre></code>
      */
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
-        return new Cosh(field);
+        return new Cosh(nullSafe(field));
     }
 
     /**
@@ -2035,7 +2031,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2) + 1)</pre></code>
      */
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
-        return new Tanh(field);
+        return new Tanh(nullSafe(field));
     }
 
     /**
@@ -2055,6 +2051,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2) - 1)</pre></code>
      */
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
+        field = nullSafe(field);
         return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));
     }
 
@@ -2077,7 +2074,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>[this] * 180 / PI</pre></code>
      */
     public static Field<BigDecimal> deg(Field<? extends Number> field) {
-        return new Degrees(field);
+        return new Degrees(nullSafe(field));
     }
 
     /**
@@ -2099,7 +2096,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>[this] * PI / 180</pre></code>
      */
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
-        return new Radians(field);
+        return new Radians(nullSafe(field));
     }
 
     // -------------------------------------------------------------------------
@@ -2117,42 +2114,42 @@ public class Factory implements FactoryOperations {
      * Get the count(field) function
      */
     public static AggregateFunction<Integer> count(Field<?> field) {
-        return new Count(field, false);
+        return new Count(nullSafe(field), false);
     }
 
     /**
      * Get the count(distinct field) function
      */
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new Count(field, true);
+        return new Count(nullSafe(field), true);
     }
 
     /**
      * Get the max value over a field: max(field)
      */
     public static <T> AggregateFunction<T> max(Field<T> field) {
-        return new AggregateFunctionImpl<T>("max", field.getDataType(), field);
+        return new AggregateFunctionImpl<T>("max", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
      * Get the min value over a field: min(field)
      */
     public static <T> AggregateFunction<T> min(Field<T> field) {
-        return new AggregateFunctionImpl<T>("min", field.getDataType(), field);
+        return new AggregateFunctionImpl<T>("min", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
      * Get the sum over a numeric field: sum(field)
      */
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("sum", SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>("sum", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
      * Get the average over a numeric field: avg(field)
      */
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("avg", SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -2166,7 +2163,7 @@ public class Factory implements FactoryOperations {
      * </ul>
      */
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("median", SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>("median", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -2187,7 +2184,7 @@ public class Factory implements FactoryOperations {
      * </ul>
      */
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -2208,7 +2205,7 @@ public class Factory implements FactoryOperations {
      * </ul>
      */
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -2229,7 +2226,7 @@ public class Factory implements FactoryOperations {
      * </ul>
      */
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -2248,7 +2245,7 @@ public class Factory implements FactoryOperations {
      * </ul>
      */
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, field);
+        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     // -------------------------------------------------------------------------
@@ -2322,7 +2319,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
-        return new WindowFunction<T>("first_value", field.getDataType(), field);
+        return new WindowFunction<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -2332,7 +2329,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
-        return new WindowFunction<T>("last_value", field.getDataType(), field);
+        return new WindowFunction<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -2342,7 +2339,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
-        return new WindowFunction<T>("lead", field.getDataType(), field);
+        return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -2352,7 +2349,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
-        return new WindowFunction<T>("lead", field.getDataType(), field, literal(offset));
+        return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset));
     }
 
     /**
@@ -2364,7 +2361,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
-        return lead(field, offset, val(defaultValue));
+        return lead(nullSafe(field), offset, val(defaultValue));
     }
 
     /**
@@ -2376,11 +2373,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
-        if (defaultValue == null) {
-            return lead(field, offset, (T) null);
-        }
-
-        return new WindowFunction<T>("lead", field.getDataType(), field, literal(offset), defaultValue);
+        return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
     }
 
     /**
@@ -2390,7 +2383,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
-        return new WindowFunction<T>("lag", field.getDataType(), field);
+        return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -2400,7 +2393,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
-        return new WindowFunction<T>("lag", field.getDataType(), field, literal(offset));
+        return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset));
     }
 
     /**
@@ -2412,7 +2405,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
-        return lag(field, offset, val(defaultValue));
+        return lag(nullSafe(field), offset, val(defaultValue));
     }
 
     /**
@@ -2424,11 +2417,7 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
-        if (defaultValue == null) {
-            return lag(field, offset, (T) null);
-        }
-
-        return new WindowFunction<T>("lag", field.getDataType(), field, literal(offset), defaultValue);
+        return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------
@@ -2494,7 +2483,7 @@ public class Factory implements FactoryOperations {
      * @see #val(Object, DataType)
      */
     public static <T> Field<T> val(Object value, Field<T> field) {
-        return val(value, field.getDataType());
+        return val(value, nullSafeDataType(field));
     }
 
     /**
@@ -2637,6 +2626,34 @@ public class Factory implements FactoryOperations {
      */
     static Field<?> NULL() {
         return field("null");
+    }
+
+    /**
+     * Null-safety of a field
+     */
+    static <T> Field<T> nullSafe(Field<T> field) {
+        return field == null ? val((T) null) : field;
+    }
+
+    /**
+     * Null-safety of a field
+     */
+    static Field<?>[] nullSafe(Field<?>... fields) {
+        Field<?>[] result = new Field<?>[fields.length];
+
+        for (int i = 0; i < fields.length; i++) {
+            result[i] = nullSafe(fields[i]);
+        }
+
+        return result;
+    }
+
+    /**
+     * Get a default data type if a field is null
+     */
+    @SuppressWarnings("unchecked")
+    static <T> DataType<T> nullSafeDataType(Field<T> field) {
+        return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
     }
 
     /**

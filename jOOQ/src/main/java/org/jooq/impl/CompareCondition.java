@@ -80,20 +80,16 @@ class CompareCondition<T> extends AbstractCondition {
             switch (comparator) {
                 case EQUALS:
                     context.sql("is null");
-                    break;
+                    return;
 
                 case NOT_EQUALS:
                     context.sql("is not null");
-                    break;
-
-                default:
-                    throw new IllegalStateException("Cannot compare null with " + comparator);
+                    return;
             }
         }
-        else {
-            context.sql(comparator.toSQL())
-                   .sql(" ")
-                   .sql(field2);
-        }
+
+        context.sql(comparator.toSQL())
+               .sql(" ")
+               .sql(field2);
     }
 }

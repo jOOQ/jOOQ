@@ -39,10 +39,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.jooq.util.GenerationTool;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-import org.jooq.util.GenerationTool;
 
 /**
  * @goal generate

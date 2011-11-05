@@ -44,9 +44,6 @@ import static org.jooq.util.oracle.sys.tables.AllSequences.ALL_SEQUENCES;
 import static org.jooq.util.oracle.sys.tables.AllSequences.SEQUENCE_NAME;
 import static org.jooq.util.oracle.sys.tables.AllSequences.SEQUENCE_OWNER;
 import static org.jooq.util.oracle.sys.tables.AllTabComments.ALL_TAB_COMMENTS;
-import static org.jooq.util.oracle.sys.tables.AllTabComments.COMMENTS;
-import static org.jooq.util.oracle.sys.tables.AllTabComments.OWNER;
-import static org.jooq.util.oracle.sys.tables.AllTabComments.TABLE_NAME;
 import static org.jooq.util.oracle.sys.tables.AllTypes.ALL_TYPES;
 
 import java.math.BigDecimal;
@@ -75,6 +72,7 @@ import org.jooq.util.oracle.sys.tables.AllCollTypes;
 import org.jooq.util.oracle.sys.tables.AllConsColumns;
 import org.jooq.util.oracle.sys.tables.AllConstraints;
 import org.jooq.util.oracle.sys.tables.AllObjects;
+import org.jooq.util.oracle.sys.tables.AllTabComments;
 import org.jooq.util.oracle.sys.tables.AllTypes;
 
 /**
@@ -198,15 +196,17 @@ public class OracleDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (Record record : create().select(TABLE_NAME, COMMENTS)
+        for (Record record : create().select(
+                AllTabComments.TABLE_NAME,
+                AllTabComments.COMMENTS)
             .from(ALL_TAB_COMMENTS)
-            .where(OWNER.equal(getSchemaName()))
-            .and(TABLE_NAME.notLike("%$%"))
-            .orderBy(TABLE_NAME)
+            .where(AllTabComments.OWNER.equal(getSchemaName()))
+            .and(AllTabComments.TABLE_NAME.notLike("%$%"))
+            .orderBy(AllTabComments.TABLE_NAME)
             .fetch()) {
 
-            String name = record.getValue(TABLE_NAME);
-            String comment = record.getValue(COMMENTS);
+            String name = record.getValue(AllTabComments.TABLE_NAME);
+            String comment = record.getValue(AllTabComments.COMMENTS);
 
             OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
             result.add(table);

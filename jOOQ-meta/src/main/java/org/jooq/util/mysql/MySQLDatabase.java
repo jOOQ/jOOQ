@@ -41,8 +41,6 @@ import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_C
 import static org.jooq.util.mysql.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.mysql.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
 import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
-import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_NAME;
-import static org.jooq.util.mysql.information_schema.tables.Tables.TABLE_SCHEMA;
 import static org.jooq.util.mysql.mysql.tables.Proc.DB;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
 
@@ -179,8 +177,8 @@ public class MySQLDatabase extends AbstractDatabase {
                 Tables.TABLE_NAME,
                 Tables.TABLE_COMMENT)
             .from(TABLES)
-            .where(TABLE_SCHEMA.equal(getSchemaName()))
-            .orderBy(TABLE_NAME)
+            .where(Tables.TABLE_SCHEMA.equal(getSchemaName()))
+            .orderBy(Tables.TABLE_NAME)
             .fetch()) {
 
             String name = record.getValue(Tables.TABLE_NAME);

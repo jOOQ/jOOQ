@@ -1295,6 +1295,149 @@ public class Factory implements FactoryOperations {
         return (Field<T>[]) castFields;
     }
 
+    /**
+     * Gets the Oracle-style NVL(value, defaultValue) function
+     *
+     * @see #nvl(Field, Field)
+     */
+    public static <T> Field<T> nvl(T value, T defaultValue) {
+        return nvl(val(value), val(defaultValue));
+    }
+
+    /**
+     * Gets the Oracle-style NVL(value, defaultValue) function
+     *
+     * @see #nvl(Field, Field)
+     */
+    public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
+        return nvl(val(value), nullSafe(defaultValue));
+    }
+
+    /**
+     * Gets the Oracle-style NVL(value, defaultValue) function
+     *
+     * @see #nvl(Field, Field)
+     */
+    public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
+        return nvl(nullSafe(value), val(defaultValue));
+    }
+
+    /**
+     * Gets the Oracle-style NVL(value, defaultValue) function
+     * <p>
+     * Returns the dialect's equivalent to NVL:
+     * <ul>
+     * <li>DB2 <a href=
+     * "http://publib.boulder.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=/com.ibm.db2.luw.sql.ref.doc/doc/r0052627.html"
+     * >NVL</a></li>
+     * <li>Derby <a
+     * href="http://db.apache.org/derby/docs/10.7/ref/rreffunccoalesce.html"
+     * >COALESCE</a></li>
+     * <li>H2 <a
+     * href="http://www.h2database.com/html/functions.html#ifnull">IFNULL</a></li>
+     * <li>HSQLDB <a
+     * href="http://hsqldb.org/doc/2.0/guide/builtinfunctions-chapt.html"
+     * >NVL</a></li>
+     * <li>MySQL <a href=
+     * "http://dev.mysql.com/doc/refman/5.0/en/control-flow-functions.html"
+     * >IFNULL</a></li>
+     * <li>Oracle <a
+     * href="http://www.techonthenet.com/oracle/functions/nvl.php">NVL</a></li>
+     * <li>Postgres <a href=
+     * "http://www.postgresql.org/docs/8.1/static/functions-conditional.html"
+     * >COALESCE</a></li>
+     * <li>SQLite <a
+     * href="http://www.sqlite.org/lang_corefunc.html#ifnull">IFNULL</a></li>
+     * </ul>
+     */
+    public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
+        return new Nvl<T>(nullSafe(value), nullSafe(defaultValue));
+    }
+
+    /**
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     *
+     * @see #nvl2(Field, Field)
+     */
+    public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
+        return nvl2(nullSafe(value), val(valueIfNotNull), val(valueIfNull));
+    }
+
+    /**
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     *
+     * @see #nvl2(Field, Field)
+     */
+    public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
+        return nvl2(nullSafe(value), val(valueIfNotNull), nullSafe(valueIfNull));
+    }
+
+    /**
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     *
+     * @see #nvl2(Field, Field)
+     */
+    public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
+        return nvl2(nullSafe(value), nullSafe(valueIfNotNull), val(valueIfNull));
+    }
+
+    /**
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     * <p>
+     * Returns the dialect's equivalent to NVL2:
+     * <ul>
+     * <li>Oracle <a
+     * href="http://www.techonthenet.com/oracle/functions/nvl2.php">NVL2</a></li>
+     * </ul>
+     * <p>
+     * Other dialects:
+     * <code>CASE WHEN [value] IS NULL THEN [valueIfNull] ELSE [valueIfNotNull] END</code>
+     */
+    public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
+        return new Nvl2<Z>(nullSafe(value), nullSafe(valueIfNotNull), nullSafe(valueIfNull));
+    }
+
+    /**
+     * Gets the Oracle-style NULLIF(value, other) function
+     * <p>
+     * @see #nullif(Field)
+     */
+    public static <T> Field<T> nullif(T value, T other) {
+        return nullif(val(value), val(other));
+    }
+
+    /**
+     * Gets the Oracle-style NULLIF(value, other) function
+     * <p>
+     * @see #nullif(Field)
+     */
+    public static <T> Field<T> nullif(T value, Field<T> other) {
+        return nullif(val(value), nullSafe(other));
+    }
+
+    /**
+     * Gets the Oracle-style NULLIF(value, other) function
+     * <p>
+     * @see #nullif(Field)
+     */
+    public static <T> Field<T> nullif(Field<T> value, T other) {
+        return nullif(nullSafe(value), val(other));
+    }
+
+    /**
+     * Gets the Oracle-style NULLIF(value, other) function
+     * <p>
+     * Returns the dialect's equivalent to NULLIF:
+     * <ul>
+     * <li>Oracle <a
+     * href="http://www.techonthenet.com/oracle/functions/nullif.php">NULLIF</a></li>
+     * </ul>
+     * <p>
+     */
+    public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
+        return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
+    }
+
     // ------------------------------------------------------------------------
     // Construction of special grouping functions
     // ------------------------------------------------------------------------

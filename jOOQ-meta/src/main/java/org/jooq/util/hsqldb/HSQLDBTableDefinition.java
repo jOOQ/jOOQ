@@ -36,6 +36,7 @@
 
 package org.jooq.util.hsqldb;
 
+import static org.jooq.impl.Factory.nvl;
 import static org.jooq.util.hsqldb.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
 
@@ -69,7 +70,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
         for (Record record : create().select(
                 Columns.COLUMN_NAME,
                 Columns.ORDINAL_POSITION,
-                ElementTypes.COLLECTION_TYPE_IDENTIFIER.nvl(Columns.DATA_TYPE).as("datatype"),
+                nvl(ElementTypes.COLLECTION_TYPE_IDENTIFIER, Columns.DATA_TYPE).as("datatype"),
                 Columns.IDENTITY_GENERATION,
                 Columns.COLUMN_DEFAULT,
                 Columns.NUMERIC_PRECISION,

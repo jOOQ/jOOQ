@@ -88,6 +88,9 @@ import static org.jooq.impl.Factory.log;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.median;
 import static org.jooq.impl.Factory.min;
+import static org.jooq.impl.Factory.nullif;
+import static org.jooq.impl.Factory.nvl;
+import static org.jooq.impl.Factory.nvl2;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.percentRank;
 import static org.jooq.impl.Factory.pi;
@@ -5652,28 +5655,28 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // NULLIF
         // ---------------------------------------------------------------------
-        assertEquals("1", create().select(val("1").nullif("2")).fetchOne(0));
-        assertEquals(null, create().select(val("1").nullif("1")).fetchOne(0));
-        assertEquals("1", "" + create().select(val(1).nullif(2)).fetchOne(0));
-        assertEquals(null, create().select(val(1).nullif(1)).fetchOne(0));
+        assertEquals("1", create().select(nullif("1", "2")).fetchOne(0));
+        assertEquals(null, create().select(nullif("1", "1")).fetchOne(0));
+        assertEquals("1", "" + create().select(nullif(1, 2)).fetchOne(0));
+        assertEquals(null, create().select(nullif(1, 1)).fetchOne(0));
 
         // ---------------------------------------------------------------------
         // NVL
         // ---------------------------------------------------------------------
-        assertEquals(null, create().select(sNull.nvl(sNull)).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.nvl(1)).fetchOne(0));
-        assertEquals("1", create().select(sNull.nvl("1")).fetchOne(0));
-        assertEquals(Integer.valueOf(2), create().select(val(2).nvl(1)).fetchOne(0));
-        assertEquals("2", create().select(val("2").nvl("1")).fetchOne(0));
+        assertEquals(null, create().select(nvl(sNull, sNull)).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(nvl(iNull, 1)).fetchOne(0));
+        assertEquals("1", create().select(nvl(sNull, "1")).fetchOne(0));
+        assertEquals(Integer.valueOf(2), create().select(nvl(2, 1)).fetchOne(0));
+        assertEquals("2", create().select(nvl("2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
         if (getDialect() != SQLDialect.ASE) {
             assertTrue(("" + create()
-                .select(TBook_CONTENT_TEXT().nvl("abc"))
+                .select(nvl(TBook_CONTENT_TEXT(), "abc"))
                 .from(TBook())
                 .where(TBook_ID().equal(1)).fetchOne(0)).startsWith("To know and"));
             assertEquals("abc", create()
-                .select(TBook_CONTENT_TEXT().nvl("abc"))
+                .select(nvl(TBook_CONTENT_TEXT(), "abc"))
                 .from(TBook())
                 .where(TBook_ID().equal(2)).fetchOne(0));
         }
@@ -5681,20 +5684,20 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // NVL2
         // ---------------------------------------------------------------------
-        assertEquals(null, create().select(sNull.nvl2(sNull, sNull)).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.nvl2(2, 1)).fetchOne(0));
-        assertEquals("1", create().select(sNull.nvl2("2", "1")).fetchOne(0));
-        assertEquals(Integer.valueOf(2), create().select(val(2).nvl2(2, 1)).fetchOne(0));
-        assertEquals("2", create().select(val("2").nvl2("2", "1")).fetchOne(0));
+        assertEquals(null, create().select(nvl2(sNull, sNull, sNull)).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(nvl2(iNull, 2, 1)).fetchOne(0));
+        assertEquals("1", create().select(nvl2(sNull, "2", "1")).fetchOne(0));
+        assertEquals(Integer.valueOf(2), create().select(nvl2(val(2), 2, 1)).fetchOne(0));
+        assertEquals("2", create().select(nvl2(val("2"), "2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
         if (getDialect() != SQLDialect.ASE) {
             assertEquals("abc", create()
-                .select(TBook_CONTENT_TEXT().nvl2("abc", "xyz"))
+                .select(nvl2(TBook_CONTENT_TEXT(), "abc", "xyz"))
                 .from(TBook())
                 .where(TBook_ID().equal(1)).fetchOne(0));
             assertEquals("xyz", create()
-                .select(TBook_CONTENT_TEXT().nvl2("abc", "xyz"))
+                .select(nvl2(TBook_CONTENT_TEXT(), "abc", "xyz"))
                 .from(TBook())
                 .where(TBook_ID().equal(2)).fetchOne(0));
         }

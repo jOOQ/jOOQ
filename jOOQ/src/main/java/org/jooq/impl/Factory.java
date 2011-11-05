@@ -1438,6 +1438,524 @@ public class Factory implements FactoryOperations {
         return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
     }
 
+    // -------------------------------------------------------------------------
+    // String function factory
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the upper(field) function
+     * <p>
+     * This renders the upper function in all dialects:
+     * <code><pre>upper([this])</pre></code>
+     */
+    public static Field<String> upper(String value) {
+        return upper(val(value));
+    }
+
+    /**
+     * Get the upper(field) function
+     * <p>
+     * This renders the upper function in all dialects:
+     * <code><pre>upper([this])</pre></code>
+     */
+    public static Field<String> upper(Field<String> field) {
+        return function("upper", SQLDataType.VARCHAR, nullSafe(field));
+    }
+
+    /**
+     * Get the lower(field) function
+     * <p>
+     * This renders the lower function in all dialects:
+     * <code><pre>lower([this])</pre></code>
+     */
+    public static Field<String> lower(String value) {
+        return lower(val(value));
+    }
+
+    /**
+     * Get the lower(field) function
+     * <p>
+     * This renders the lower function in all dialects:
+     * <code><pre>lower([this])</pre></code>
+     */
+    public static Field<String> lower(Field<String> value) {
+        return function("lower", SQLDataType.VARCHAR, nullSafe(value));
+    }
+
+    /**
+     * Get the trim(field) function
+     * <p>
+     * This renders the trim function where available:
+     * <code><pre>trim([this])</pre></code> ... or simulates it elsewhere using
+     * rtrim and ltrim: <code><pre>ltrim(rtrim([this]))</pre></code>
+     */
+    public static Field<String> trim(String value) {
+        return trim(val(value));
+    }
+
+    /**
+     * Get the trim(field) function
+     * <p>
+     * This renders the trim function where available:
+     * <code><pre>trim([this])</pre></code> ... or simulates it elsewhere using
+     * rtrim and ltrim: <code><pre>ltrim(rtrim([this]))</pre></code>
+     */
+    public static Field<String> trim(Field<String> field) {
+        return new Trim(nullSafe(field));
+    }
+
+    /**
+     * Get the rtrim(field) function
+     * <p>
+     * This renders the rtrim function in all dialects:
+     * <code><pre>rtrim([this])</pre></code>
+     */
+    public static Field<String> rtrim(String value) {
+        return rtrim(val(value));
+    }
+
+    /**
+     * Get the rtrim(field) function
+     * <p>
+     * This renders the rtrim function in all dialects:
+     * <code><pre>rtrim([this])</pre></code>
+     */
+    public static Field<String> rtrim(Field<String> field) {
+        return function("rtrim", SQLDataType.VARCHAR, nullSafe(field));
+    }
+
+    /**
+     * Get the ltrim(field) function
+     * <p>
+     * This renders the ltrim function in all dialects:
+     * <code><pre>ltrim([this])</pre></code>
+     */
+    public static Field<String> ltrim(String value) {
+        return ltrim(val(value));
+    }
+
+    /**
+     * Get the ltrim(field) function
+     * <p>
+     * This renders the ltrim function in all dialects:
+     * <code><pre>ltrim([this])</pre></code>
+     */
+    public static Field<String> ltrim(Field<String> value) {
+        return function("ltrim", SQLDataType.VARCHAR, nullSafe(value));
+    }
+
+    /**
+     * Get the rpad(field, length) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat(' ', [length] - length([this])))</pre></code>
+     */
+    public static Field<String> rpad(Field<String> field, int length) {
+        return rpad(nullSafe(field), val(length));
+    }
+
+    /**
+     * Get the rpad(field, length) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat(' ', [length] - length([this])))</pre></code>
+     */
+    public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
+        return new Rpad(nullSafe(field), nullSafe(length));
+    }
+
+    /**
+     * Get the rpad(field, length, character) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat([character], [length] - length([this])))</pre></code>
+     */
+    public static Field<String> rpad(Field<String> field, int length, String character) {
+        return rpad(nullSafe(field), val(length), val(character));
+    }
+
+    /**
+     * Get the rpad(field, length, character) function
+     * <p>
+     * This renders the rpad function where available:
+     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat([this], repeat([character], [length] - length([this])))</pre></code>
+     */
+    public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
+        return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
+    }
+
+    /**
+     * Get the lpad(field, length) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat(' ', [length] - length([this])), [this])</pre></code>
+     */
+    public static Field<String> lpad(Field<String> field, int length) {
+        return lpad(nullSafe(field), val(length));
+    }
+
+    /**
+     * Get the lpad(field, length) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat(' ', [length] - length([this])), [this])</pre></code>
+     */
+    public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
+        return new Lpad(nullSafe(field), nullSafe(length));
+    }
+
+    /**
+     * Get the lpad(field, length, character) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat([character], [length] - length([this])), [this])</pre></code>
+     */
+    public static Field<String> lpad(Field<String> field, int length, String character) {
+        return lpad(nullSafe(field), val(length), val(character));
+    }
+
+    /**
+     * Get the lpad(field, length, character) function
+     * <p>
+     * This renders the lpad function where available:
+     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * elsewhere using concat, repeat, and length, which may be simulated as
+     * well, depending on the RDBMS:
+     * <code><pre>concat(repeat([character], [length] - length([this])), [this])</pre></code>
+     */
+    public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
+        return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
+    }
+
+    /**
+     * Get the repeat(count) function
+     * <p>
+     * This renders the repeat or replicate function where available:
+     * <code><pre>repeat([this], [count]) or
+     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * using rpad and length, which may be simulated as well, depending on the
+     * RDBMS:
+     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     */
+    public static Field<String> repeat(String field, int count) {
+        return repeat(val(field), val(count));
+    }
+
+    /**
+     * Get the repeat(count) function
+     * <p>
+     * This renders the repeat or replicate function where available:
+     * <code><pre>repeat([this], [count]) or
+     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * using rpad and length, which may be simulated as well, depending on the
+     * RDBMS:
+     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     */
+    public static Field<String> repeat(String field, Field<? extends Number> count) {
+        return repeat(val(field), nullSafe(count));
+    }
+
+    /**
+     * Get the repeat(count) function
+     * <p>
+     * This renders the repeat or replicate function where available:
+     * <code><pre>repeat([this], [count]) or
+     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * using rpad and length, which may be simulated as well, depending on the
+     * RDBMS:
+     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     */
+    public static Field<String> repeat(Field<String> field, int count) {
+        return repeat(nullSafe(field), val(count));
+    }
+
+    /**
+     * Get the repeat(field, count) function
+     * <p>
+     * This renders the repeat or replicate function where available:
+     * <code><pre>repeat([this], [count]) or
+     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * using rpad and length, which may be simulated as well, depending on the
+     * RDBMS:
+     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     */
+    public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
+        return new Repeat(nullSafe(field), nullSafe(count));
+    }
+
+    /**
+     * Get the replace(in, search) function
+     * <p>
+     * This renders the replace or str_replace function where available:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code> ... or simulates it elsewhere
+     * using the three-argument replace function:
+     * <code><pre>replace([this], [search], '')</pre></code>
+     */
+    public static Field<String> replace(Field<String> field, String search) {
+        return replace(nullSafe(field), val(search));
+    }
+
+    /**
+     * Get the replace(in, search) function
+     * <p>
+     * This renders the replace or str_replace function where available:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code> ... or simulates it elsewhere
+     * using the three-argument replace function:
+     * <code><pre>replace([this], [search], '')</pre></code>
+     */
+    public static Field<String> replace(Field<String> field, Field<String> search) {
+        return new Replace(nullSafe(field), nullSafe(search));
+    }
+
+    /**
+     * Get the replace(in, search, replace) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code>
+     */
+    public static Field<String> replace(Field<String> field, String search, String replace) {
+        return replace(nullSafe(field), val(search), val(replace));
+    }
+
+    /**
+     * Get the replace(in, search, replace) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>replace([this], [search]) or
+     * str_replace([this], [search])</pre></code>
+     */
+    public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
+        return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
+    }
+
+    /**
+     * Get the position(in, search) function
+     *
+     * @see #position(Field, Field)
+     */
+    public static Field<Integer> position(String in, String search) {
+        return position(val(in), val(search));
+    }
+
+    /**
+     * Get the position(in, search) function
+     *
+     * @see #position(Field, Field)
+     */
+    public static Field<Integer> position(String in, Field<String> search) {
+        return position(val(in), nullSafe(search));
+    }
+
+    /**
+     * Get the position(in, search) function
+     *
+     * @see #position(Field, Field)
+     */
+    public static Field<Integer> position(Field<String> in, String search) {
+        return position(nullSafe(in), val(search));
+    }
+
+    /**
+     * Get the position(in, search) function
+     * <p>
+     * This renders the position or any equivalent function:
+     * <code><pre>position([search] in [in]) or
+     * locate([in], [search]) or
+     * locate([search], [in]) or
+     * instr([in], [search]) or
+     * charindex([search], [in])</pre></code>
+     */
+    public static Field<Integer> position(Field<String> in, Field<String> search) {
+        return new Position(nullSafe(search), nullSafe(in));
+    }
+
+    /**
+     * Get the ascii(field) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>ascii([this])</pre></code>
+     */
+    public static Field<Integer> ascii(String field) {
+        return ascii(val(field));
+    }
+
+    /**
+     * Get the ascii(field) function
+     * <p>
+     * This renders the replace or str_replace function:
+     * <code><pre>ascii([this])</pre></code>
+     */
+    public static Field<Integer> ascii(Field<String> field) {
+        return new Ascii(nullSafe(field));
+    }
+
+    /**
+     * Get the concat(value[, value, ...]) function
+     * <p>
+     * This creates <code>this || fields[0] || fields[1] || ...</code> as an
+     * expression, or <code>concat(this, fields[0], fields[1], ...)</code>,
+     * depending on the dialect.
+     */
+    public static Field<String> concat(String... values) {
+        return concat(vals((Object[]) values).toArray(new Field[0]));
+    }
+
+    /**
+     * Get the concat(field[, field, ...]) function
+     * <p>
+     * This creates <code>this || fields[0] || fields[1] || ...</code> as an
+     * expression, or <code>concat(this, fields[0], fields[1], ...)</code>,
+     * depending on the dialect.
+     * <p>
+     * If any of the given fields is not a {@link String} field, they are cast
+     * to <code>Field&lt;String&gt;</code> first using {@link #cast(Class)}
+     */
+    public static Field<String> concat(Field<?>... fields) {
+        return new Concat(nullSafe(fields));
+    }
+
+    /**
+     * Get the substring(field, startingPosition) function
+     * <p>
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition]) or
+     * substring([this], [startingPosition])</pre></code>
+     */
+    public static Field<String> substring(Field<String> field, int startingPosition) {
+        return substring(nullSafe(field), val(startingPosition));
+    }
+
+    /**
+     * Get the substring(field, startingPosition) function
+     * <p>
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition]) or
+     * substring([this], [startingPosition])</pre></code>
+     */
+    public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition) {
+        return new Substring(nullSafe(field), nullSafe(startingPosition));
+    }
+
+    /**
+     * Get the substring(field, startingPosition, length) function
+     * <p>
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition], [length]) or
+     * substring([this], [startingPosition], [length])</pre></code>
+     */
+    public static Field<String> substring(Field<String> field, int startingPosition, int length) {
+        return substring(nullSafe(field), val(startingPosition), val(length));
+    }
+
+    /**
+     * Get the substring(field, startingPosition, length) function
+     * <p>
+     * This renders the substr or substring function:
+     * <code><pre>substr([this], [startingPosition], [length]) or
+     * substring([this], [startingPosition], [length])</pre></code>
+     */
+    public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return new Substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
+    }
+
+    /**
+     * Get the length of a <code>VARCHAR</code> type. This is a synonym for
+     * {@link #charLength()}
+     *
+     * @see #charLength()
+     */
+    public static Field<Integer> length(String value) {
+        return length(val(value));
+    }
+
+    /**
+     * Get the length of a <code>VARCHAR</code> type. This is a synonym for
+     * {@link #charLength()}
+     *
+     * @see #charLength()
+     */
+    public static Field<Integer> length(Field<String> field) {
+        return charLength(field);
+    }
+
+    /**
+     * Get the char_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> charLength(String value) {
+        return charLength(val(value));
+    }
+
+    /**
+     * Get the char_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> charLength(Field<String> field) {
+        return new Function<Integer>(Term.CHAR_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+    }
+
+    /**
+     * Get the bit_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> bitLength(String value) {
+        return bitLength(val(value));
+    }
+
+    /**
+     * Get the bit_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> bitLength(Field<String> field) {
+        return new Function<Integer>(Term.BIT_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+    }
+
+    /**
+     * Get the octet_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> octetLength(String value) {
+        return octetLength(val(value));
+    }
+
+    /**
+     * Get the octet_length(field) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> octetLength(Field<String> field) {
+        return new Function<Integer>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+    }
+
     // ------------------------------------------------------------------------
     // Construction of special grouping functions
     // ------------------------------------------------------------------------

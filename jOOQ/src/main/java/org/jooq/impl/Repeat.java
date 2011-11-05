@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.length;
+import static org.jooq.impl.Factory.rpad;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -50,23 +52,22 @@ class Repeat extends AbstractFunction<String> {
      */
     private static final long             serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>                string;
+    private final Field<String>           string;
     private final Field<? extends Number> count;
 
-    Repeat(Field<?> string, Field<? extends Number> count) {
+    Repeat(Field<String> string, Field<? extends Number> count) {
         super("rpad", SQLDataType.VARCHAR, string, count);
 
         this.string = string;
         this.count = count;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
-                return string.rpad(string.length().mul(count), (Field<String>) string);
+                return rpad(string, length(string).mul(count), string);
 
             case ASE:
             case SQLSERVER:

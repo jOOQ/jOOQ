@@ -35,6 +35,7 @@
  */
 package org.jooq.util.ingres;
 
+import static org.jooq.impl.Factory.trim;
 import static org.jooq.util.ingres.ingres.tables.Iicolumns.IICOLUMNS;
 
 import java.sql.SQLException;
@@ -65,19 +66,19 @@ public class IngresTableDefinition extends AbstractTableDefinition {
 
         for (Record record : create().select(
                     Iicolumns.COLUMN_SEQUENCE,
-                    Iicolumns.COLUMN_NAME.trim(),
-                    Iicolumns.COLUMN_DATATYPE.trim(),
+                    trim(Iicolumns.COLUMN_NAME),
+                    trim(Iicolumns.COLUMN_DATATYPE),
                     Iicolumns.COLUMN_LENGTH,
                     Iicolumns.COLUMN_SCALE,
                     Iicolumns.COLUMN_ALWAYS_IDENT,
                     Iicolumns.COLUMN_BYDEFAULT_IDENT)
                 .from(IICOLUMNS)
                 .where(Iicolumns.TABLE_OWNER.equal(getSchemaName()))
-                .and(Iicolumns.TABLE_NAME.trim().equal(getName()))
+                .and(trim(Iicolumns.TABLE_NAME).equal(getName()))
                 .orderBy(Iicolumns.COLUMN_SEQUENCE)
                 .fetch()) {
 
-            String typeName = record.getValue(Iicolumns.COLUMN_DATATYPE.trim());
+            String typeName = record.getValue(trim(Iicolumns.COLUMN_DATATYPE));
 
             // [#664] INTEGER types come with a COLUMN_LENGTH in bytes
             // This is important to distinguish BIGINT, INT, SMALLINT, TINYINT
@@ -114,7 +115,7 @@ public class IngresTableDefinition extends AbstractTableDefinition {
 
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getName()),
-                record.getValue(Iicolumns.COLUMN_NAME.trim()),
+                record.getValue(trim(Iicolumns.COLUMN_NAME)),
                 record.getValue(Iicolumns.COLUMN_SEQUENCE),
                 type,
                 record.getValueAsBoolean(Iicolumns.COLUMN_ALWAYS_IDENT, false) ||

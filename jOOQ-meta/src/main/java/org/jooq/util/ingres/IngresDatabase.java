@@ -35,6 +35,7 @@
  */
 package org.jooq.util.ingres;
 
+import static org.jooq.impl.Factory.trim;
 import static org.jooq.util.ingres.ingres.tables.IiconstraintIndexes.IICONSTRAINT_INDEXES;
 import static org.jooq.util.ingres.ingres.tables.Iiconstraints.IICONSTRAINTS;
 import static org.jooq.util.ingres.ingres.tables.IiindexColumns.IIINDEX_COLUMNS;
@@ -85,9 +86,9 @@ public class IngresDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
-            String key = record.getValue(Iiconstraints.CONSTRAINT_NAME.trim());
-            String tableName = record.getValue(Iiconstraints.TABLE_NAME.trim());
-            String columnName = record.getValue(IiindexColumns.COLUMN_NAME.trim());
+            String key = record.getValue(trim(Iiconstraints.CONSTRAINT_NAME));
+            String tableName = record.getValue(trim(Iiconstraints.TABLE_NAME));
+            String columnName = record.getValue(trim(IiindexColumns.COLUMN_NAME));
 
             TableDefinition table = getTable(tableName);
             if (table != null) {
@@ -99,9 +100,9 @@ public class IngresDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
-            String key = record.getValue(Iiconstraints.CONSTRAINT_NAME.trim());
-            String tableName = record.getValue(Iiconstraints.TABLE_NAME.trim());
-            String columnName = record.getValue(IiindexColumns.COLUMN_NAME.trim());
+            String key = record.getValue(trim(Iiconstraints.CONSTRAINT_NAME));
+            String tableName = record.getValue(trim(Iiconstraints.TABLE_NAME));
+            String columnName = record.getValue(trim(IiindexColumns.COLUMN_NAME));
 
             TableDefinition table = getTable(tableName);
             if (table != null) {
@@ -112,9 +113,9 @@ public class IngresDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create().select(
-                Iiconstraints.TABLE_NAME.trim(),
-                Iiconstraints.CONSTRAINT_NAME.trim(),
-                IiindexColumns.COLUMN_NAME.trim())
+                trim(Iiconstraints.TABLE_NAME),
+                trim(Iiconstraints.CONSTRAINT_NAME),
+                trim(IiindexColumns.COLUMN_NAME))
             .from(IICONSTRAINTS)
             .join(IICONSTRAINT_INDEXES)
             .on(Iiconstraints.CONSTRAINT_NAME.equal(IiconstraintIndexes.CONSTRAINT_NAME))
@@ -138,10 +139,10 @@ public class IngresDatabase extends AbstractDatabase {
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
             .select(
-                IirefConstraints.REF_CONSTRAINT_NAME.trim(),
-                IirefConstraints.UNIQUE_CONSTRAINT_NAME.trim(),
-                IirefConstraints.REF_TABLE_NAME.trim(),
-                IiindexColumns.COLUMN_NAME.trim())
+                trim(IirefConstraints.REF_CONSTRAINT_NAME),
+                trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME),
+                trim(IirefConstraints.REF_TABLE_NAME),
+                trim(IiindexColumns.COLUMN_NAME))
             .from(IICONSTRAINTS)
             .join(IIREF_CONSTRAINTS)
             .on(Iiconstraints.CONSTRAINT_NAME.equal(IirefConstraints.REF_CONSTRAINT_NAME))
@@ -164,10 +165,10 @@ public class IngresDatabase extends AbstractDatabase {
             .fetch();
 
         for (Record record : result) {
-            String foreignKey = record.getValue(IirefConstraints.REF_CONSTRAINT_NAME.trim());
-            String foreignKeyTable = record.getValue(IirefConstraints.REF_TABLE_NAME.trim());
-            String foreignKeyColumn = record.getValue(IiindexColumns.COLUMN_NAME.trim());
-            String uniqueKey = record.getValue(IirefConstraints.UNIQUE_CONSTRAINT_NAME.trim());
+            String foreignKey = record.getValue(trim(IirefConstraints.REF_CONSTRAINT_NAME));
+            String foreignKeyTable = record.getValue(trim(IirefConstraints.REF_TABLE_NAME));
+            String foreignKeyColumn = record.getValue(trim(IiindexColumns.COLUMN_NAME));
+            String uniqueKey = record.getValue(trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME));
 
             TableDefinition referencingTable = getTable(foreignKeyTable);
 
@@ -183,18 +184,18 @@ public class IngresDatabase extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (Record record : create().select(
-                    Iisequences.SEQ_NAME.trim(),
-                    Iisequences.DATA_TYPE.trim())
+                    trim(Iisequences.SEQ_NAME),
+                    trim(Iisequences.DATA_TYPE))
                 .from(IISEQUENCES)
                 .where(Iisequences.SEQ_OWNER.equal(getSchemaName()))
                 .orderBy(Iisequences.SEQ_NAME)
                 .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(this,
-                record.getValue(Iisequences.DATA_TYPE.trim()), 0, 0);
+                record.getValue(trim(Iisequences.DATA_TYPE)), 0, 0);
 
             result.add(new DefaultSequenceDefinition(
-                getSchema(), record.getValue(Iisequences.SEQ_NAME.trim()), type));
+                getSchema(), record.getValue(trim(Iisequences.SEQ_NAME)), type));
         }
 
         return result;
@@ -204,13 +205,13 @@ public class IngresDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (Record record : create().select(Iitables.TABLE_NAME.trim())
+        for (Record record : create().select(trim(Iitables.TABLE_NAME))
                 .from(IITABLES)
                 .where(Iitables.TABLE_OWNER.equal(getSchemaName()))
-                .orderBy(Iitables.TABLE_NAME.trim())
+                .orderBy(trim(Iitables.TABLE_NAME))
                 .fetch()) {
 
-            result.add(new IngresTableDefinition(this, record.getValue(Iitables.TABLE_NAME.trim())));
+            result.add(new IngresTableDefinition(this, record.getValue(trim(Iitables.TABLE_NAME))));
         }
 
         return result;

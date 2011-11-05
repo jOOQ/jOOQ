@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.nvl2;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.zero;
 
@@ -117,7 +118,7 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                         Field<Integer> ifNull = nullsFirst ? zero() : one();
                         Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
-                        context.sql(field.nvl2(ifNotNull, ifNull));
+                        context.sql(nvl2(field, ifNotNull, ifNull));
                         context.sql(", ");
 
                         toSQLReference1(context, inAnalyticClause);

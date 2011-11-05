@@ -36,6 +36,7 @@
 
 package org.jooq.util.hsqldb;
 
+import static org.jooq.impl.Factory.nvl;
 import static org.jooq.util.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
 import static org.jooq.util.hsqldb.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
 import static org.jooq.util.hsqldb.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
@@ -255,7 +256,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .select(
                     Routines.ROUTINE_NAME,
                     Routines.SPECIFIC_NAME,
-                    ElementTypes.COLLECTION_TYPE_IDENTIFIER.nvl(Routines.DATA_TYPE).as("datatype"),
+                    nvl(ElementTypes.COLLECTION_TYPE_IDENTIFIER, Routines.DATA_TYPE).as("datatype"),
                     Routines.NUMERIC_PRECISION,
                     Routines.NUMERIC_SCALE)
                 .from(ROUTINES)

@@ -576,36 +576,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Field<T> nvl(Field<T> defaultValue) {
-        return new Nvl<T>(this, nullSafe(defaultValue));
-    }
-
-    @Override
-    public final Field<T> nvl(T defaultValue) {
-        return nvl(val(defaultValue));
-    }
-
-    @Override
-    public final <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
-        return new Nvl2<Z>(this, nullSafe(valueIfNotNull), nullSafe(valueIfNull));
-    }
-
-    @Override
-    public final <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull) {
-        return nvl2(val(valueIfNotNull), val(valueIfNull));
-    }
-
-    @Override
-    public final Field<T> nullif(T other) {
-        return nullif(val(other));
-    }
-
-    @Override
-    public final Field<T> nullif(Field<T> other) {
-        return function("nullif", getDataType(), this, nullSafe(other));
-    }
-
-    @Override
     public final <Z> Field<Z> decode(T search, Z result) {
         return decode(search, result, new Object[0]);
     }

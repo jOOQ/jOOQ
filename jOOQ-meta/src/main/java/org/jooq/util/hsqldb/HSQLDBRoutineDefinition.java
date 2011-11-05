@@ -35,6 +35,7 @@
  */
 package org.jooq.util.hsqldb;
 
+import static org.jooq.impl.Factory.nvl;
 import static org.jooq.util.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
 import static org.jooq.util.hsqldb.information_schema.tables.Parameters.PARAMETERS;
 
@@ -80,7 +81,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
         Result<Record> result = create().select(
                 Parameters.PARAMETER_MODE,
                 Parameters.PARAMETER_NAME,
-                ElementTypes.COLLECTION_TYPE_IDENTIFIER.nvl(Parameters.DATA_TYPE).as("datatype"),
+                nvl(ElementTypes.COLLECTION_TYPE_IDENTIFIER, Parameters.DATA_TYPE).as("datatype"),
                 Parameters.NUMERIC_PRECISION,
                 Parameters.NUMERIC_SCALE,
                 Parameters.ORDINAL_POSITION)

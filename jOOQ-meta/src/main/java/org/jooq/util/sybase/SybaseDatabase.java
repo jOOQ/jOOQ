@@ -30,6 +30,8 @@
  */
 package org.jooq.util.sybase;
 
+import static org.jooq.impl.Factory.concat;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.util.sybase.sys.tables.Sysfkey.SYSFKEY;
 import static org.jooq.util.sybase.sys.tables.Sysidx.SYSIDX;
 import static org.jooq.util.sybase.sys.tables.Sysidxcol.SYSIDXCOL;
@@ -81,7 +83,7 @@ public class SybaseDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                Systable.TABLE_NAME.concat("_").concat(Sysidx.INDEX_NAME).as("indexName"),
+                concat(Systable.TABLE_NAME, val("_"), Sysidx.INDEX_NAME).as("indexName"),
                 Systable.TABLE_NAME,
                 Systabcol.COLUMN_NAME)
             .from(SYSIDX)
@@ -112,7 +114,7 @@ public class SybaseDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
         for (Record record : create().select(
-                Systable.TABLE_NAME.concat("_").concat(Sysidx.INDEX_NAME).as("indexName"),
+                concat(Systable.TABLE_NAME, val("_"), Sysidx.INDEX_NAME).as("indexName"),
                 Systable.TABLE_NAME,
                 Systabcol.COLUMN_NAME)
             .from(SYSIDX)
@@ -149,16 +151,16 @@ public class SybaseDatabase extends AbstractDatabase {
         Table<SystableRecord> ukTable = SYSTABLE.as("ukTable");
 
         for (Record record : create().select(
-                fkTable.getField(Systable.TABLE_NAME)
-                    .concat("_")
-                    .concat(fkIndex.getField(Sysidx.INDEX_NAME))
-                    .as("fkIndexName"),
+                concat(
+                    fkTable.getField(Systable.TABLE_NAME),
+                    val("_"),
+                    fkIndex.getField(Sysidx.INDEX_NAME)).as("fkIndexName"),
                 fkTable.getField(Systable.TABLE_NAME),
                 Systabcol.COLUMN_NAME,
-                ukTable.getField(Systable.TABLE_NAME)
-                    .concat("_")
-                    .concat(ukIndex.getField(Sysidx.INDEX_NAME))
-                    .as("ukIndexName"))
+                concat(
+                    ukTable.getField(Systable.TABLE_NAME),
+                    val("_"),
+                    ukIndex.getField(Sysidx.INDEX_NAME)).as("ukIndexName"))
             .from(SYSFKEY)
             .join(fkIndex)
             .on(Sysfkey.FOREIGN_INDEX_ID.equal(fkIndex.getField(Sysidx.INDEX_ID)))

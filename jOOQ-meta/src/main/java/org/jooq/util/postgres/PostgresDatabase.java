@@ -39,6 +39,7 @@ package org.jooq.util.postgres;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.exists;
+import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.postgres.information_schema.tables.Attributes.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
@@ -284,7 +285,7 @@ public class PostgresDatabase extends AbstractDatabase {
                         .from(PARAMETERS)
                         .where(Parameters.SPECIFIC_SCHEMA.equal(r1.getField(Routines.SPECIFIC_SCHEMA)))
                         .and(Parameters.SPECIFIC_NAME.equal(r1.getField(Routines.SPECIFIC_NAME)))
-                        .and(Parameters.PARAMETER_MODE.upper().notEqual("IN"))), val("void"))
+                        .and(upper(Parameters.PARAMETER_MODE).notEqual("IN"))), val("void"))
                     .otherwise(r1.getField(Routines.DATA_TYPE)).as("data_type"),
                 r1.getField(Routines.NUMERIC_PRECISION),
                 r1.getField(Routines.NUMERIC_SCALE),

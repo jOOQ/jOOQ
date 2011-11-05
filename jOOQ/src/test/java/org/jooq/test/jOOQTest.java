@@ -48,6 +48,7 @@ import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.min;
+import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.trueCondition;
@@ -214,9 +215,6 @@ public class jOOQTest {
             FIELD_ID1.coalesce((Integer) null),
             FIELD_ID1.coalesce((Field<Integer>) null));
         assertEquals(
-            FIELD_ID1.concat((String) null),
-            FIELD_ID1.concat((Field<String>) null));
-        assertEquals(
             FIELD_ID1.decode((Integer) null, null),
             FIELD_ID1.decode((Field<Integer>) null, null));
         assertEquals(
@@ -259,18 +257,6 @@ public class jOOQTest {
             FIELD_ID1.notIn((Integer) null),
             FIELD_ID1.notIn((Field<Integer>) null));
         assertEquals(
-            FIELD_ID1.position((String) null),
-            FIELD_ID1.position((Field<String>) null));
-        assertEquals(
-            FIELD_ID1.repeat((Integer) null),
-            FIELD_ID1.repeat((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.replace((String) null),
-            FIELD_ID1.replace((Field<String>) null));
-        assertEquals(
-            FIELD_ID1.replace((String) null, null),
-            FIELD_ID1.replace((Field<String>) null, null));
-        assertEquals(
             FIELD_ID1.shl((Integer) null),
             FIELD_ID1.shl((Field<Integer>) null));
         assertEquals(
@@ -304,8 +290,17 @@ public class jOOQTest {
             Factory.atan2((Integer) null, (Integer) null),
             Factory.atan2((Integer) null, (Field<Integer>) null));
         assertEquals(
+            Factory.bitLength((String) null),
+            Factory.bitLength((Field<String>) null));
+        assertEquals(
             Factory.ceil((Integer) null),
             Factory.ceil((Field<Integer>) null));
+        assertEquals(
+            Factory.charLength((String) null),
+            Factory.charLength((Field<String>) null));
+        assertEquals(
+            Factory.concat((String) null, (String) null),
+            Factory.concat((Field<String>) null, (Field<String>) null));
         assertEquals(
             Factory.cos((Integer) null),
             Factory.cos((Field<Integer>) null));
@@ -337,11 +332,20 @@ public class jOOQTest {
             Factory.lead((Field<Integer>) null, 1, (Integer) null),
             Factory.lead((Field<Integer>) null, 1, (Field<Integer>) null));
         assertEquals(
+            Factory.length((String) null),
+            Factory.length((Field<String>) null));
+        assertEquals(
             Factory.ln((Integer) null),
             Factory.ln((Field<Integer>) null));
         assertEquals(
             Factory.log((Integer) null, 2),
             Factory.log((Field<Integer>) null, 2));
+        assertEquals(
+            Factory.lower((String) null),
+            Factory.lower((Field<String>) null));
+        assertEquals(
+            Factory.ltrim((String) null),
+            Factory.ltrim((Field<String>) null));
         assertEquals(
             Factory.nullif((Integer) null, (Integer) null),
             Factory.nullif((Field<Integer>) null, (Integer) null));
@@ -370,6 +374,18 @@ public class jOOQTest {
             Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
             Factory.nvl2((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
+            Factory.octetLength((String) null),
+            Factory.octetLength((Field<String>) null));
+        assertEquals(
+            Factory.position((String) null, (String) null),
+            Factory.position((String) null, (Field<String>) null));
+        assertEquals(
+            Factory.position((String) null, (String) null),
+            Factory.position((Field<String>) null, (String) null));
+        assertEquals(
+            Factory.position((String) null, (String) null),
+            Factory.position((Field<String>) null, (Field<String>) null));
+        assertEquals(
             Factory.power((Integer) null, (Integer) null),
             Factory.power((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
@@ -382,11 +398,23 @@ public class jOOQTest {
             Factory.rad((Integer) null),
             Factory.rad((Field<Integer>) null));
         assertEquals(
+            Factory.repeat((String) null, (Field<Integer>) null),
+            Factory.repeat((Field<String>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.replace((Field<String>) null, (String) null),
+            Factory.replace((Field<String>) null, (Field<String>) null));
+        assertEquals(
+            Factory.replace((Field<String>) null, (String) null, (String) null),
+            Factory.replace((Field<String>) null, (Field<String>) null, (Field<String>) null));
+        assertEquals(
             Factory.round((Integer) null),
             Factory.round((Field<Integer>) null));
         assertEquals(
             Factory.round((Integer) null, 1),
             Factory.round((Field<Integer>) null, 1));
+        assertEquals(
+            Factory.rtrim((String) null),
+            Factory.rtrim((Field<String>) null));
         assertEquals(
             Factory.sign((Integer) null),
             Factory.sign((Field<Integer>) null));
@@ -405,6 +433,12 @@ public class jOOQTest {
         assertEquals(
             Factory.tanh((Integer) null),
             Factory.tanh((Field<Integer>) null));
+        assertEquals(
+            Factory.trim((String) null),
+            Factory.trim((Field<String>) null));
+        assertEquals(
+            Factory.upper((String) null),
+            Factory.upper((Field<String>) null));
     }
 
     @Test
@@ -968,7 +1002,7 @@ public class jOOQTest {
 
     @Test
     public final void testFunctions() {
-        Field<String> f = FIELD_NAME1.replace("a", "b");
+        Field<String> f = replace(FIELD_NAME1, "a", "b");
         assertEquals("replace(\"TABLE1\".\"NAME1\", 'a', 'b')", r_refI().render(f));
         assertEquals("replace(\"TABLE1\".\"NAME1\", ?, ?)", r_ref().render(f));
     }

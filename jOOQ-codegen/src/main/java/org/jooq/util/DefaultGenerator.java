@@ -2149,7 +2149,7 @@ public class DefaultGenerator implements Generator {
                 version = properties.getProperty("version");
 	        }
 	        catch (Exception e) {
-	            version = "unknown";
+	            version = "2.0.0";
             }
 	    }
 

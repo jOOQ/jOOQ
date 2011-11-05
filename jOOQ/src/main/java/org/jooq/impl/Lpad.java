@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.length;
+import static org.jooq.impl.Factory.repeat;
 import static org.jooq.impl.Factory.val;
 
 import org.jooq.Configuration;
@@ -52,11 +55,15 @@ class Lpad extends AbstractFunction<String> {
      */
     private static final long             serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>                field;
+    private final Field<String>           field;
     private final Field<? extends Number> length;
     private final Field<String>           character;
 
-    Lpad(Field<?> field, Field<? extends Number> length, Field<String> character) {
+    Lpad(Field<String> field, Field<? extends Number> length) {
+        this(field, length, null);
+    }
+
+    Lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         super("lpad", SQLDataType.VARCHAR, field, length, character);
 
         this.field = field;
@@ -71,10 +78,10 @@ class Lpad extends AbstractFunction<String> {
             case SQLSERVER:
             case SYBASE: {
                 if (character == null) {
-                    return val(" ").repeat(length.sub(field.length())).concat(field);
+                    return concat(repeat(" ", length.sub(length(field))), field);
                 }
                 else {
-                    return character.repeat(length.sub(field.length())).concat(field);
+                    return concat(repeat(character, length.sub(length(field))), field);
                 }
             }
 

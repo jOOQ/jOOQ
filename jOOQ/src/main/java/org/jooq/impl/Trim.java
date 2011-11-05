@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.ltrim;
+import static org.jooq.impl.Factory.rtrim;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -48,11 +50,11 @@ class Trim extends AbstractFunction<String> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7273879239726265322L;
+    private static final long   serialVersionUID = -7273879239726265322L;
 
-    private final Field<?>    argument;
+    private final Field<String> argument;
 
-    Trim(Field<?> argument) {
+    Trim(Field<String> argument) {
         super("trim", SQLDataType.VARCHAR, argument);
 
         this.argument = argument;
@@ -64,7 +66,7 @@ class Trim extends AbstractFunction<String> {
             case ASE:
             case INGRES:
             case SQLSERVER:
-                return argument.rtrim().ltrim();
+                return ltrim(rtrim(argument));
 
             default:
                 return function("trim", SQLDataType.VARCHAR, argument);

@@ -41,9 +41,11 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
+import static org.jooq.impl.JooqUtil.combine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -226,7 +228,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
      */
     @Override
     public Field<T> add(Field<? extends Number> value) {
-        return new Expression<T>(ADD, this, value);
+        return new Expression<T>(ADD, this, nullSafe(value));
     }
 
     @Override
@@ -245,7 +247,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> sub(Field<? extends Number> value) {
-        return new Expression<T>(SUBTRACT, this, value);
+        return new Expression<T>(SUBTRACT, this, nullSafe(value));
     }
 
     @Override
@@ -259,7 +261,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
      */
     @Override
     public Field<T> mul(Field<? extends Number> value) {
-        return new Expression<T>(MULTIPLY, this, value);
+        return new Expression<T>(MULTIPLY, this, nullSafe(value));
     }
 
     @Override
@@ -269,7 +271,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> div(Field<? extends Number> value) {
-        return new Expression<T>(DIVIDE, this, value);
+        return new Expression<T>(DIVIDE, this, nullSafe(value));
     }
 
     @Override
@@ -279,7 +281,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> mod(Field<? extends Number> value) {
-        return new Mod<T>(this, value);
+        return new Mod<T>(this, nullSafe(value));
     }
 
     // ------------------------------------------------------------------------
@@ -303,7 +305,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> bitAnd(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.BIT_AND, this, value);
+        return new Expression<T>(ExpressionOperator.BIT_AND, this, nullSafe(value));
     }
 
     @Override
@@ -313,7 +315,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> bitNand(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.BIT_NAND, this, value);
+        return new Expression<T>(ExpressionOperator.BIT_NAND, this, nullSafe(value));
     }
 
     @Override
@@ -323,7 +325,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> bitOr(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.BIT_OR, this, value);
+        return new Expression<T>(ExpressionOperator.BIT_OR, this, nullSafe(value));
     }
 
     @Override
@@ -333,7 +335,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> bitNor(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.BIT_NOR, this, value);
+        return new Expression<T>(ExpressionOperator.BIT_NOR, this, nullSafe(value));
     }
 
     @Override
@@ -343,7 +345,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> bitXor(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.BIT_XOR, this, value);
+        return new Expression<T>(ExpressionOperator.BIT_XOR, this, nullSafe(value));
     }
 
     @Override
@@ -353,7 +355,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> bitXNor(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.BIT_XNOR, this, value);
+        return new Expression<T>(ExpressionOperator.BIT_XNOR, this, nullSafe(value));
     }
 
     @Override
@@ -363,7 +365,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> shl(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.SHL, this, value);
+        return new Expression<T>(ExpressionOperator.SHL, this, nullSafe(value));
     }
 
     @Override
@@ -373,7 +375,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> shr(Field<? extends Number> value) {
-        return new Expression<T>(ExpressionOperator.SHR, this, value);
+        return new Expression<T>(ExpressionOperator.SHR, this, nullSafe(value));
     }
 
     // ------------------------------------------------------------------------
@@ -387,7 +389,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> greatest(Field<?>... others) {
-        return new Greatest<T>(getDataType(), JooqUtil.combine(this, others));
+        return new Greatest<T>(getDataType(), nullSafe(combine(this, others)));
     }
 
     @Override
@@ -397,7 +399,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> least(Field<?>... others) {
-        return new Least<T>(getDataType(), JooqUtil.combine(this, others));
+        return new Least<T>(getDataType(), nullSafe(combine(this, others)));
     }
 
     // ------------------------------------------------------------------------
@@ -431,7 +433,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> rpad(Field<? extends Number> length) {
-        return new Rpad(this, length, null);
+        return new Rpad(this, nullSafe(length), null);
     }
 
     @Override
@@ -441,7 +443,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> rpad(Field<? extends Number> length, Field<String> c) {
-        return new Rpad(this, length, c);
+        return new Rpad(this, nullSafe(length), nullSafe(c));
     }
 
     @Override
@@ -451,7 +453,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> lpad(Field<? extends Number> length) {
-        return new Lpad(this, length, null);
+        return new Lpad(this, nullSafe(length), null);
     }
 
     @Override
@@ -461,7 +463,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> lpad(Field<? extends Number> length, Field<String> c) {
-        return new Lpad(this, length, c);
+        return new Lpad(this, nullSafe(length), nullSafe(c));
     }
 
     @Override
@@ -476,12 +478,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> repeat(Field<? extends Number> count) {
-        return new Repeat(this, count);
+        return new Repeat(this, nullSafe(count));
     }
 
     @Override
     public final Field<String> replace(Field<String> search) {
-        return new Replace(this, search);
+        return new Replace(this, nullSafe(search));
     }
 
     @Override
@@ -491,7 +493,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> replace(Field<String> search, Field<String> replace) {
-        return new Replace(this, search, replace);
+        return new Replace(this, nullSafe(search), nullSafe(replace));
     }
 
     @Override
@@ -506,7 +508,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<Integer> position(Field<String> search) throws SQLDialectNotSupportedException {
-        return new Position(search, this);
+        return new Position(nullSafe(search), this);
     }
 
     @Override
@@ -520,7 +522,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
      */
     @Override
     public final Field<String> concat(Field<?>... fields) {
-        return new Concat(JooqUtil.combine(this, fields));
+        return new Concat(nullSafe(combine(this, fields)));
     }
 
     @Override
@@ -540,12 +542,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<String> substring(Field<? extends Number> startingPosition) {
-        return new Substring(this, startingPosition);
+        return new Substring(this, nullSafe(startingPosition));
     }
 
     @Override
     public final Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return new Substring(this, startingPosition, length);
+        return new Substring(this, nullSafe(startingPosition), nullSafe(length));
     }
 
     @Override
@@ -575,11 +577,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> nvl(Field<T> defaultValue) {
-        if (defaultValue == null) {
-            return nvl((T) null);
-        }
-
-        return new Nvl<T>(this, defaultValue);
+        return new Nvl<T>(this, nullSafe(defaultValue));
     }
 
     @Override
@@ -587,14 +585,9 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return nvl(val(defaultValue));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
-        if (valueIfNotNull == null || valueIfNull == null) {
-            return nvl2(val((Z) valueIfNotNull), val((Z) valueIfNull));
-        }
-
-        return new Nvl2<Z>(this, valueIfNotNull, valueIfNull);
+        return new Nvl2<Z>(this, nullSafe(valueIfNotNull), nullSafe(valueIfNull));
     }
 
     @Override
@@ -609,7 +602,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> nullif(Field<T> other) {
-        return function("nullif", getDataType(), this, other);
+        return function("nullif", getDataType(), this, nullSafe(other));
     }
 
     @Override
@@ -627,17 +620,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final <Z> Field<Z> decode(Field<T> search, Field<Z> result) {
-        return decode(search, result, new Field<?>[0]);
+        return decode(nullSafe(search), nullSafe(result), new Field<?>[0]);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more) {
-        if (search == null || result == null) {
-            return decode(val((T) search), val((Z) result), more);
-        }
-
-        return new Decode<T, Z>(this, search, result, more);
+        return new Decode<T, Z>(this, nullSafe(search), nullSafe(result), nullSafe(more));
     }
 
     @Override
@@ -645,18 +633,9 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         return coalesce(val(option), vals(options).toArray(new Field<?>[0]));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
-        if (option == null) {
-            return coalesce(val((T) option), options);
-        }
-
-        Field<?>[] arguments = new Field<?>[options.length + 2];
-        arguments[0] = this;
-        arguments[1] = option;
-        System.arraycopy(options, 0, arguments, 2, options.length);
-        return function("coalesce", getDataType(), arguments);
+        return function("coalesce", getDataType(), nullSafe(combine(this, option, options)));
     }
 
     // ------------------------------------------------------------------------
@@ -732,7 +711,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             return falseCondition();
         }
         else {
-            return new InCondition<T>(this, values, InOperator.IN);
+            return new InCondition<T>(this, nullSafe(values), InOperator.IN);
         }
     }
 
@@ -764,7 +743,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<T>(this, values, InOperator.NOT_IN);
+        return new InCondition<T>(this, nullSafe(values), InOperator.NOT_IN);
     }
 
     @Override
@@ -791,7 +770,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition between(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, minValue, maxValue);
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue));
     }
 
     @Override
@@ -801,7 +780,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition equal(Field<T> field) {
-        return new CompareCondition<T>(this, field, Comparator.EQUALS);
+        return new CompareCondition<T>(this, nullSafe(field), Comparator.EQUALS);
     }
 
     @Override
@@ -831,7 +810,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notEqual(Field<T> field) {
-        return new CompareCondition<T>(this, field, Comparator.NOT_EQUALS);
+        return new CompareCondition<T>(this, nullSafe(field), Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -861,7 +840,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessThan(Field<T> field) {
-        return new CompareCondition<T>(this, field, Comparator.LESS);
+        return new CompareCondition<T>(this, nullSafe(field), Comparator.LESS);
     }
 
     @Override
@@ -891,7 +870,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessOrEqual(Field<T> field) {
-        return new CompareCondition<T>(this, field, Comparator.LESS_OR_EQUAL);
+        return new CompareCondition<T>(this, nullSafe(field), Comparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -921,7 +900,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterThan(Field<T> field) {
-        return new CompareCondition<T>(this, field, Comparator.GREATER);
+        return new CompareCondition<T>(this, nullSafe(field), Comparator.GREATER);
     }
 
     @Override
@@ -951,7 +930,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterOrEqual(Field<T> field) {
-        return new CompareCondition<T>(this, field, Comparator.GREATER_OR_EQUAL);
+        return new CompareCondition<T>(this, nullSafe(field), Comparator.GREATER_OR_EQUAL);
     }
 
     @Override

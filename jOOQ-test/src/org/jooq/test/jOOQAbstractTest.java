@@ -7851,7 +7851,7 @@ public abstract class jOOQAbstractTest<
                     .set(TBook_ID(), 6)
                     .set(TBook_AUTHOR_ID(), 8)
                     .set(TBook_PUBLISHED_IN(), 1994)
-                    .set(TBook_LANGUAGE_ID(), 1)
+                    .set((Field<Integer>)TBook_LANGUAGE_ID(), 1)
                     .set(TBook_CONTENT_TEXT(), "Design Patterns are awesome")
                     .set(TBook_TITLE(), "Design Patterns"),
 

@@ -345,7 +345,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
                 for (int i = 0; i < row.length; i++) {
                     if (i < fields.length && fields[i] != null) {
-                        insert.addValue(fields[i], fields[i].getDataType().convert(row[i]));
+                        addValue0(insert, fields[i], row[i]);
                     }
                 }
 
@@ -356,7 +356,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
                     for (int i = 0; i < row.length; i++) {
                         if (i < fields.length && fields[i] != null && !mainKey[i]) {
-                            insert.addValueForUpdate(fields[i], fields[i].getDataType().convert(row[i]));
+                            addValueForUpdate0(insert, fields[i], row[i]);
                         }
                     }
                 }
@@ -439,6 +439,20 @@ class LoaderImpl<R extends TableRecord<R>> implements
         finally {
             reader.close();
         }
+    }
+
+    /**
+     * Type-safety...
+     */
+    private <T> void addValue0(InsertQuery<R> insert, Field<T> field, String row) {
+        insert.addValue(field, field.getDataType().convert(row));
+    }
+
+    /**
+     * Type-safety...
+     */
+    private <T> void addValueForUpdate0(InsertQuery<R> insert, Field<T> field, String row) {
+        insert.addValueForUpdate(field, field.getDataType().convert(row));
     }
 
     /**

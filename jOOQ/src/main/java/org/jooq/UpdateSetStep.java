@@ -57,12 +57,12 @@ public interface UpdateSetStep {
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
-    UpdateSetMoreStep set(Field<?> field, Object value);
+    <T> UpdateSetMoreStep set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
-    UpdateSetMoreStep set(Field<?> field, Field<?> value);
+    <T> UpdateSetMoreStep set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement

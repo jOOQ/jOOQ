@@ -112,6 +112,7 @@ class InsertImpl<R extends TableRecord<R>>
         return values0(vals(values.toArray()));
     }
 
+    @SuppressWarnings("unchecked")
     private final InsertImpl<R> values0(List<Field<?>> values) {
 
         // [#885] If this insert is called with an implicit field name set, take
@@ -126,7 +127,7 @@ class InsertImpl<R extends TableRecord<R>>
 
         getDelegate().newRecord();
         for (int i = 0; i < fields.size(); i++) {
-            getDelegate().addValue(fields.get(i), values.get(i));
+            getDelegate().addValue((Field<Object>) fields.get(i), (Field<Object>) values.get(i));
         }
 
         return this;
@@ -140,7 +141,7 @@ class InsertImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final InsertImpl<R> set(Field<?> field, Object value) {
+    public final <T> InsertImpl<R> set(Field<T> field, T value) {
         if (onDuplicateKeyUpdate) {
             getDelegate().addValueForUpdate(field, value);
         }
@@ -152,7 +153,7 @@ class InsertImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final InsertImpl<R> set(Field<?> field, Field<?> value) {
+    public final <T> InsertImpl<R> set(Field<T> field, Field<T> value) {
         if (onDuplicateKeyUpdate) {
             getDelegate().addValueForUpdate(field, value);
         }

@@ -67,7 +67,7 @@ public class F {
         H2Factory create = create(connection);
 
         create.insertInto(T_AUTHOR)
-              .set(TAuthor.ID, create.select(max(TAuthor.ID).add(1)).from(T_AUTHOR).asField())
+              .set(TAuthor.ID, create.select(max(TAuthor.ID).add(1)).from(T_AUTHOR).<Integer>asField())
               .set(TAuthor.FIRST_NAME, firstName)
               .set(TAuthor.LAST_NAME, lastName)
               .execute();

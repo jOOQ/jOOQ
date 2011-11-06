@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
+import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
@@ -198,17 +199,13 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> set(Field<?> field, Object value) {
+    public final <T> MergeImpl<R> set(Field<T> field, T value) {
         return set(field, val(value));
     }
 
     @Override
-    public final MergeImpl<R> set(Field<?> field, Field<?> value) {
-        if (value == null) {
-            return set(field, (Object) value);
-        }
-
-        updateMap.put(field, value);
+    public final <T> MergeImpl<R> set(Field<T> field, Field<T> value) {
+        updateMap.put(field, nullSafe(value));
         return this;
     }
 

@@ -60,7 +60,7 @@ public interface StoreQuery<R extends TableRecord<R>> extends Query {
      * @param field The field
      * @param value The value
      */
-    void addValue(Field<?> field, Object value);
+    <T> void addValue(Field<T> field, T value);
 
     /**
      * Add a value to the store statement
@@ -69,7 +69,7 @@ public interface StoreQuery<R extends TableRecord<R>> extends Query {
      * @param value The value. If value is <code>null</code>, this results in
      *            calling {@link #addValue(Field, Object)} with null as a value.
      */
-    void addValue(Field<?> field, Field<?> value);
+    <T> void addValue(Field<T> field, Field<T> value);
 
     /**
      * Add multiple values to the store statement.

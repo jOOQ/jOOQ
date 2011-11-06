@@ -81,19 +81,19 @@ final class UpdateImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final UpdateSetMoreStep set(Field<?> field, Object value) {
+    public final <T> UpdateImpl<R> set(Field<T> field, T value) {
         getDelegate().addValue(field, value);
         return this;
     }
 
     @Override
-    public final UpdateSetMoreStep set(Field<?> field, Field<?> value) {
+    public final <T> UpdateImpl<R> set(Field<T> field, Field<T> value) {
         getDelegate().addValue(field, value);
         return this;
     }
 
     @Override
-    public final UpdateSetMoreStep set(Map<? extends Field<?>, ?> map) {
+    public final UpdateImpl<R> set(Map<? extends Field<?>, ?> map) {
         getDelegate().addValues(map);
         return this;
     }

@@ -124,18 +124,18 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @Override
-    public final void addValueForUpdate(Field<?> field, Object value) {
+    public final <T> void addValueForUpdate(Field<T> field, T value) {
         addValueForUpdate(field, val(value));
     }
 
     @Override
-    public final void addValueForUpdate(Field<?> field, Field<?> value) {
+    public final <T> void addValueForUpdate(Field<T> field, Field<T> value) {
         if (value == null) {
-            addValueForUpdate(field, (Object) value);
-            return;
+            updateMap.put(field, val(null, field));
         }
-
-        updateMap.put(field, value);
+        else {
+            updateMap.put(field, value);
+        }
     }
 
     @Override

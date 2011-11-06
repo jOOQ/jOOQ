@@ -85,7 +85,7 @@ public interface InsertQuery<R extends TableRecord<R>> extends StoreQuery<R>, In
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    void addValueForUpdate(Field<?> field, Object value);
+    <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
      * Add a value to the <code>ON DUPLICATE KEY UPDATE</code> clause of this
@@ -93,7 +93,7 @@ public interface InsertQuery<R extends TableRecord<R>> extends StoreQuery<R>, In
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
-    void addValueForUpdate(Field<?> field, Field<?> value);
+    <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
      * Add multiple values to the <code>ON DUPLICATE KEY UPDATE</code> clause of

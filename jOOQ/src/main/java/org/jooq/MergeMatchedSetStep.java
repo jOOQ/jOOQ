@@ -62,13 +62,13 @@ public interface MergeMatchedSetStep {
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
      * <code>WHEN MATCHED</code> clause
      */
-    MergeMatchedSetMoreStep set(Field<?> field, Object value);
+    <T> MergeMatchedSetMoreStep set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
      * <code>WHEN MATCHED</code> clause
      */
-    MergeMatchedSetMoreStep set(Field<?> field, Field<?> value);
+    <T> MergeMatchedSetMoreStep set(Field<T> field, Field<T> value);
 
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>MERGE</code>

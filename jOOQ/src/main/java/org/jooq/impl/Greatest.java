@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.greatest;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -76,18 +77,16 @@ class Greatest<T> extends AbstractFunction<T> {
                 Field<T> other = (Field<T>) getArguments()[1];
 
                 if (getArguments().length > 2) {
-                    Field<?>[] remaining = new Field<?>[getArguments().length - 2];
+                    Field<?>[] remaining = new Field[getArguments().length - 2];
                     System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
 
                     return Factory.decode()
-                        .when(first.greaterThan(other),
-                              first.greatest(remaining))
-                        .otherwise(other.greatest(remaining));
+                        .when(first.greaterThan(other), greatest(first, remaining))
+                        .otherwise(greatest(other, remaining));
                 }
                 else {
                     return Factory.decode()
-                        .when(first.greaterThan(other),
-                              first)
+                        .when(first.greaterThan(other), first)
                         .otherwise(other);
                 }
             }

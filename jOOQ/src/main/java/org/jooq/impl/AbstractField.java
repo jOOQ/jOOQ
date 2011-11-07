@@ -44,7 +44,6 @@ import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
-import static org.jooq.impl.JooqUtil.combine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -279,30 +278,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Field<T> mod(Field<? extends Number> value) {
         return new Mod<T>(this, nullSafe(value));
-    }
-
-    // ------------------------------------------------------------------------
-    // Functions created from this field
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final Field<T> greatest(T... others) {
-        return greatest(vals(others).toArray(new Field<?>[0]));
-    }
-
-    @Override
-    public final Field<T> greatest(Field<?>... others) {
-        return new Greatest<T>(getDataType(), nullSafe(combine(this, others)));
-    }
-
-    @Override
-    public final Field<T> least(T... others) {
-        return least(vals(others).toArray(new Field<?>[0]));
-    }
-
-    @Override
-    public final Field<T> least(Field<?>... others) {
-        return new Least<T>(getDataType(), nullSafe(combine(this, others)));
     }
 
     // ------------------------------------------------------------------------

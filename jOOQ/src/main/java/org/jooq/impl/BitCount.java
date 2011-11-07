@@ -35,8 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.bitAnd;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.shr;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -71,144 +73,144 @@ class BitCount extends AbstractFunction<Integer> {
                     Field<Byte> f = (Field<Byte>) field;
 
                     byte i = 0;
-                    return f.bitAnd(literal((byte) 0x01)).add(
-                           f.bitAnd(literal((byte) 0x02)).shr(literal(++i))).add(
-                           f.bitAnd(literal((byte) 0x04)).shr(literal(++i))).add(
-                           f.bitAnd(literal((byte) 0x08)).shr(literal(++i))).add(
-                           f.bitAnd(literal((byte) 0x10)).shr(literal(++i))).add(
-                           f.bitAnd(literal((byte) 0x20)).shr(literal(++i))).add(
-                           f.bitAnd(literal((byte) 0x40)).shr(literal(++i))).add(
-                           f.bitAnd(literal((byte) 0x80)).shr(literal(++i))).cast(Integer.class);
+                    return bitAnd(f, literal((byte) 0x01)).add(
+                           shr(bitAnd(f, literal((byte) 0x02)), literal(++i))).add(
+                           shr(bitAnd(f, literal((byte) 0x04)), literal(++i))).add(
+                           shr(bitAnd(f, literal((byte) 0x08)), literal(++i))).add(
+                           shr(bitAnd(f, literal((byte) 0x10)), literal(++i))).add(
+                           shr(bitAnd(f, literal((byte) 0x20)), literal(++i))).add(
+                           shr(bitAnd(f, literal((byte) 0x40)), literal(++i))).add(
+                           shr(bitAnd(f, literal((byte) 0x80)), literal(++i))).cast(Integer.class);
                 }
                 else if (field.getType() == Short.class) {
                     @SuppressWarnings("unchecked")
                     Field<Short> f = (Field<Short>) field;
 
                     short i = 0;
-                    return f.bitAnd(literal((short) 0x0001)).add(
-                           f.bitAnd(literal((short) 0x0002)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0004)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0008)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0010)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0020)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0040)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0080)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0100)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0200)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0400)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x0800)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x1000)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x2000)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x4000)).shr(literal(++i))).add(
-                           f.bitAnd(literal((short) 0x8000)).shr(literal(++i))).cast(Integer.class);
+                    return bitAnd(f, literal((short) 0x0001)).add(
+                           shr(bitAnd(f, literal((short) 0x0002)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0004)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0008)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0010)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0020)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0040)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0080)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0100)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0200)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0400)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x0800)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x1000)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x2000)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x4000)), literal(++i))).add(
+                           shr(bitAnd(f, literal((short) 0x8000)), literal(++i))).cast(Integer.class);
                 }
                 else if (field.getType() == Integer.class) {
                     @SuppressWarnings("unchecked")
                     Field<Integer> f = (Field<Integer>) field;
 
                     int i = 0;
-                    return f.bitAnd(literal(0x00000001)).add(
-                           f.bitAnd(literal(0x00000002)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000004)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000008)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000010)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000020)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000040)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000080)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000100)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000200)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000400)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00000800)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00001000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00002000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00004000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00008000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00010000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00020000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00040000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00080000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00100000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00200000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00400000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x00800000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x01000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x02000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x04000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x08000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x10000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x20000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x40000000)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x80000000)).shr(literal(++i)));
+                    return bitAnd(f, literal(0x00000001)).add(
+                           shr(bitAnd(f, literal(0x00000002)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000004)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000008)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000010)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000020)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000040)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000080)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000100)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000200)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000400)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00000800)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00001000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00002000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00004000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00008000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00010000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00020000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00040000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00080000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00100000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00200000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00400000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x00800000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x01000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x02000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x04000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x08000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x10000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x20000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x40000000)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x80000000)), literal(++i)));
                 }
                 else if (field.getType() == Long.class) {
                     @SuppressWarnings("unchecked")
                     Field<Long> f = (Field<Long>) field;
 
                     long i = 0;
-                    return f.bitAnd(literal(0x0000000000000001L)).add(
-                           f.bitAnd(literal(0x0000000000000002L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000004L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000008L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000010L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000020L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000040L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000080L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000100L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000200L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000400L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000000800L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000001000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000002000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000004000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000008000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000010000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000020000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000040000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000080000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000100000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000200000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000400000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000000800000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000001000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000002000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000004000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000008000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000010000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000020000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000040000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000080000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000100000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000200000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000400000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000000800000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000001000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000002000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000004000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000008000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000010000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000020000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000040000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000080000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000100000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000200000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000400000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0000800000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0001000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0002000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0004000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0008000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0010000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0020000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0040000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0080000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0100000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0200000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0400000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x0800000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x1000000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x2000000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x4000000000000000L)).shr(literal(++i))).add(
-                           f.bitAnd(literal(0x8000000000000000L)).shr(literal(++i))).cast(Integer.class);
+                    return bitAnd(f, literal(0x0000000000000001L)).add(
+                           shr(bitAnd(f, literal(0x0000000000000002L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000004L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000008L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000010L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000020L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000040L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000080L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000100L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000200L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000400L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000000800L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000001000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000002000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000004000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000008000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000010000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000020000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000040000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000080000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000100000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000200000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000400000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000000800000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000001000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000002000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000004000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000008000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000010000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000020000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000040000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000080000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000100000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000200000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000400000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000000800000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000001000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000002000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000004000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000008000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000010000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000020000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000040000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000080000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000100000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000200000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000400000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0000800000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0001000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0002000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0004000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0008000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0010000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0020000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0040000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0080000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0100000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0200000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0400000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x0800000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x1000000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x2000000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x4000000000000000L)), literal(++i))).add(
+                           shr(bitAnd(f, literal(0x8000000000000000L)), literal(++i))).cast(Integer.class);
                 }
                 else {
                     // Currently not supported

@@ -40,7 +40,6 @@ import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
@@ -331,16 +330,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more) {
         return new Decode<T, Z>(this, nullSafe(search), nullSafe(result), nullSafe(more));
-    }
-
-    @Override
-    public final Field<T> coalesce(T option, T... options) {
-        return coalesce(val(option), vals(options).toArray(new Field<?>[0]));
-    }
-
-    @Override
-    public final Field<T> coalesce(Field<T> option, Field<?>... options) {
-        return function("coalesce", getDataType(), nullSafe(combine(this, option, options)));
     }
 
     // ------------------------------------------------------------------------

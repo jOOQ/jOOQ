@@ -67,6 +67,7 @@ import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.ceil;
 import static org.jooq.impl.Factory.charLength;
+import static org.jooq.impl.Factory.coalesce;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.cos;
 import static org.jooq.impl.Factory.cosh;
@@ -5723,29 +5724,29 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // COALESCE
         // ---------------------------------------------------------------------
-        assertEquals(null, create().select(sNull.coalesce(sNull)).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.coalesce(1)).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.coalesce(iNull, val(1))).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.coalesce(iNull, iNull, val(1))).fetchOne(0));
+        assertEquals(null, create().select(coalesce(sNull, sNull)).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(coalesce(iNull, val(1))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(coalesce(iNull, iNull, val(1))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(coalesce(iNull, iNull, iNull, val(1))).fetchOne(0));
 
-        assertEquals("1", create().select(sNull.coalesce("1")).fetchOne(0));
-        assertEquals("1", create().select(sNull.coalesce(sNull, val("1"))).fetchOne(0));
-        assertEquals("1", create().select(sNull.coalesce(sNull, sNull, val("1"))).fetchOne(0));
+        assertEquals("1", create().select(coalesce(sNull, val("1"))).fetchOne(0));
+        assertEquals("1", create().select(coalesce(sNull, sNull, val("1"))).fetchOne(0));
+        assertEquals("1", create().select(coalesce(sNull, sNull, sNull, val("1"))).fetchOne(0));
 
-        assertEquals(Integer.valueOf(2), create().select(val(2).coalesce(1)).fetchOne(0));
-        assertEquals(Integer.valueOf(2), create().select(val(2).coalesce(1, 1)).fetchOne(0));
-        assertEquals(Integer.valueOf(2), create().select(val(2).coalesce(1, 1, 1)).fetchOne(0));
+        assertEquals(Integer.valueOf(2), create().select(coalesce(2, 1)).fetchOne(0));
+        assertEquals(Integer.valueOf(2), create().select(coalesce(2, 1, 1)).fetchOne(0));
+        assertEquals(Integer.valueOf(2), create().select(coalesce(2, 1, 1, 1)).fetchOne(0));
 
-        assertEquals("2", create().select(val("2").coalesce("1")).fetchOne(0));
-        assertEquals("2", create().select(val("2").coalesce("1", "1")).fetchOne(0));
-        assertEquals("2", create().select(val("2").coalesce("1", "1", "1")).fetchOne(0));
+        assertEquals("2", create().select(coalesce("2", "1")).fetchOne(0));
+        assertEquals("2", create().select(coalesce("2", "1", "1")).fetchOne(0));
+        assertEquals("2", create().select(coalesce("2", "1", "1", "1")).fetchOne(0));
 
         assertTrue(("" + create()
-            .select(TBook_CONTENT_TEXT().cast(String.class).coalesce(sNull, val("abc")))
+            .select(coalesce(TBook_CONTENT_TEXT().cast(String.class), sNull, val("abc")))
             .from(TBook())
             .where(TBook_ID().equal(1)).fetchOne(0)).startsWith("To know and"));
         assertEquals("abc", create()
-            .select(TBook_CONTENT_TEXT().cast(String.class).coalesce(sNull, val("abc")))
+            .select(coalesce(TBook_CONTENT_TEXT().cast(String.class), sNull, val("abc")))
             .from(TBook())
             .where(TBook_ID().equal(2)).fetchOne(0));
 

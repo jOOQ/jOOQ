@@ -195,9 +195,6 @@ public class jOOQTest {
             FIELD_ID1.between((Integer) null, null),
             FIELD_ID1.between((Field<Integer>) null, null));
         assertEquals(
-            FIELD_ID1.coalesce((Integer) null),
-            FIELD_ID1.coalesce((Field<Integer>) null));
-        assertEquals(
             FIELD_ID1.decode((Integer) null, null),
             FIELD_ID1.decode((Field<Integer>) null, null));
         assertEquals(
@@ -332,6 +329,18 @@ public class jOOQTest {
         assertEquals(
             Factory.charLength((String) null),
             Factory.charLength((Field<String>) null));
+        assertEquals(
+            Factory.coalesce((Integer) null, (Integer) null),
+            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.coalesce((Integer) null, (Integer) null, (Integer) null),
+            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.coalesce((Integer) null, (Integer) null, (Integer[]) null),
+            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<?>[]) null));
+        assertEquals(
+            Factory.coalesce((Integer) null, (Integer) null, (Integer) null, (Integer) null),
+            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
             Factory.concat((String) null, (String) null),
             Factory.concat((Field<String>) null, (Field<String>) null));

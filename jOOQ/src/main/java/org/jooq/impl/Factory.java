@@ -1304,8 +1304,8 @@ public class Factory implements FactoryOperations {
      *
      * @see #coalesce(Field, Field, Field...)
      */
-    public static <T> Field<T> coalesce(T value1, T value2, T... values) {
-        return coalesce(val(value1), val(value2), vals(values).toArray(new Field[0]));
+    public static <T> Field<T> coalesce(T value, T... values) {
+        return coalesce(val(value), vals(values).toArray(new Field[0]));
     }
 
     /**
@@ -1319,8 +1319,8 @@ public class Factory implements FactoryOperations {
      * </li>
      * </ul>
      */
-    public static <T> Field<T> coalesce(Field<T> field1, Field<T> field2, Field<?>... fields) {
-        return function("coalesce", nullSafeDataType(field1), nullSafe(combine(field1, field2, fields)));
+    public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {
+        return function("coalesce", nullSafeDataType(field), nullSafe(combine(field, fields)));
     }
 
     /**
@@ -2551,6 +2551,62 @@ public class Factory implements FactoryOperations {
     // ------------------------------------------------------------------------
     // Mathematical functions
     // ------------------------------------------------------------------------
+
+    /**
+     * Find the greatest among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
+     *
+     * @see #greatest(Field...)
+     */
+    public static <T> Field<T> greatest(T value, T... values) {
+        return greatest(val(value), vals(values).toArray(new Field[0]));
+    }
+
+    /**
+     * Find the greatest among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
+     */
+    public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
+        return new Greatest<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
+    }
+
+    /**
+     * Find the least among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
+     *
+     * @see #least(Field...)
+     */
+    public static <T> Field<T> least(T value, T... values) {
+        return least(val(value), vals(values).toArray(new Field[0]));
+    }
+
+    /**
+     * Find the least among all values
+     * <p>
+     * This function has no equivalent in Adaptive Server, Derby, SQL Server and
+     * Sybase SQL Anywhere. Its current simulation implementation has
+     * <code>O(2^n)</code> complexity and should be avoided for
+     * <code>n &gt; 5</code>! Better implementation suggestions are very
+     * welcome.
+     */
+    public static <T> Field<T> least(Field<T> field, Field<?>... others) {
+        return new Least<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
+    }
 
     /**
      * Get the sign of a numeric field: sign(field)

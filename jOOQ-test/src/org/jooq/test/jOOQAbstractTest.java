@@ -47,103 +47,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.abs;
-import static org.jooq.impl.Factory.acos;
-import static org.jooq.impl.Factory.ascii;
-import static org.jooq.impl.Factory.asin;
-import static org.jooq.impl.Factory.atan;
-import static org.jooq.impl.Factory.atan2;
-import static org.jooq.impl.Factory.avg;
-import static org.jooq.impl.Factory.bitAnd;
-import static org.jooq.impl.Factory.bitCount;
-import static org.jooq.impl.Factory.bitLength;
-import static org.jooq.impl.Factory.bitNand;
-import static org.jooq.impl.Factory.bitNor;
-import static org.jooq.impl.Factory.bitNot;
-import static org.jooq.impl.Factory.bitOr;
-import static org.jooq.impl.Factory.bitXNor;
-import static org.jooq.impl.Factory.bitXor;
-import static org.jooq.impl.Factory.cast;
-import static org.jooq.impl.Factory.castNull;
-import static org.jooq.impl.Factory.ceil;
-import static org.jooq.impl.Factory.charLength;
-import static org.jooq.impl.Factory.coalesce;
-import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.cos;
-import static org.jooq.impl.Factory.cosh;
-import static org.jooq.impl.Factory.cot;
-import static org.jooq.impl.Factory.coth;
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.countDistinct;
-import static org.jooq.impl.Factory.cube;
-import static org.jooq.impl.Factory.cumeDist;
-import static org.jooq.impl.Factory.currentDate;
-import static org.jooq.impl.Factory.currentTime;
-import static org.jooq.impl.Factory.currentTimestamp;
-import static org.jooq.impl.Factory.currentUser;
-import static org.jooq.impl.Factory.decode;
-import static org.jooq.impl.Factory.deg;
-import static org.jooq.impl.Factory.denseRank;
-import static org.jooq.impl.Factory.e;
-import static org.jooq.impl.Factory.exp;
-import static org.jooq.impl.Factory.extract;
-import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.firstValue;
-import static org.jooq.impl.Factory.floor;
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.grouping;
-import static org.jooq.impl.Factory.groupingId;
-import static org.jooq.impl.Factory.groupingSets;
-import static org.jooq.impl.Factory.lag;
-import static org.jooq.impl.Factory.lead;
-import static org.jooq.impl.Factory.length;
-import static org.jooq.impl.Factory.ln;
-import static org.jooq.impl.Factory.log;
-import static org.jooq.impl.Factory.lower;
-import static org.jooq.impl.Factory.lpad;
-import static org.jooq.impl.Factory.max;
-import static org.jooq.impl.Factory.median;
-import static org.jooq.impl.Factory.min;
-import static org.jooq.impl.Factory.nullif;
-import static org.jooq.impl.Factory.nvl;
-import static org.jooq.impl.Factory.nvl2;
-import static org.jooq.impl.Factory.octetLength;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.percentRank;
-import static org.jooq.impl.Factory.pi;
-import static org.jooq.impl.Factory.position;
-import static org.jooq.impl.Factory.power;
-import static org.jooq.impl.Factory.rad;
-import static org.jooq.impl.Factory.rand;
-import static org.jooq.impl.Factory.rank;
-import static org.jooq.impl.Factory.repeat;
-import static org.jooq.impl.Factory.replace;
-import static org.jooq.impl.Factory.rollup;
-import static org.jooq.impl.Factory.round;
-import static org.jooq.impl.Factory.rowNumber;
-import static org.jooq.impl.Factory.rpad;
-import static org.jooq.impl.Factory.shl;
-import static org.jooq.impl.Factory.shr;
-import static org.jooq.impl.Factory.sign;
-import static org.jooq.impl.Factory.sin;
-import static org.jooq.impl.Factory.sinh;
-import static org.jooq.impl.Factory.sqrt;
-import static org.jooq.impl.Factory.stddevPop;
-import static org.jooq.impl.Factory.stddevSamp;
-import static org.jooq.impl.Factory.substring;
-import static org.jooq.impl.Factory.sum;
-import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.tan;
-import static org.jooq.impl.Factory.tanh;
-import static org.jooq.impl.Factory.trim;
-import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.two;
-import static org.jooq.impl.Factory.val;
-import static org.jooq.impl.Factory.vals;
-import static org.jooq.impl.Factory.varPop;
-import static org.jooq.impl.Factory.varSamp;
-import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.Factory.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -5368,10 +5272,10 @@ public abstract class jOOQAbstractTest<
 
         // Greatest and least
         record = create().select(
-            val(1).greatest(2, 3, 4),
-            val(1).least(2, 3),
-            val("1").greatest("2", "3", "4"),
-            val("1").least("2", "3")).fetchOne();
+            greatest(1, 2, 3, 4),
+            least(1, 2, 3),
+            greatest("1", "2", "3", "4"),
+            least("1", "2", "3")).fetchOne();
 
         assertEquals(Integer.valueOf(4), record.getValue(0));
         assertEquals(Integer.valueOf(1), record.getValue(1));

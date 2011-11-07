@@ -210,14 +210,8 @@ public class jOOQTest {
             FIELD_ID1.greaterThan((Integer) null),
             FIELD_ID1.greaterThan((Field<Integer>) null));
         assertEquals(
-            FIELD_ID1.greatest((Integer) null),
-            FIELD_ID1.greatest((Field<Integer>) null));
-        assertEquals(
             FIELD_ID1.in((Integer) null),
             FIELD_ID1.in((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.least((Integer) null),
-            FIELD_ID1.least((Field<Integer>) null));
         assertEquals(
             FIELD_ID1.lessOrEqual((Integer) null),
             FIELD_ID1.lessOrEqual((Field<Integer>) null));
@@ -372,11 +366,35 @@ public class jOOQTest {
             Factory.floor((Integer) null),
             Factory.floor((Field<Integer>) null));
         assertEquals(
+            Factory.greatest((Integer) null),
+            Factory.greatest((Field<Integer>) null));
+        assertEquals(
+            Factory.greatest((Integer) null, (Integer[]) null),
+            Factory.greatest((Field<Integer>) null, (Field[]) null));
+        assertEquals(
+            Factory.greatest((Integer) null, (Integer) null, (Integer) null),
+            Factory.greatest((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.greatest((Integer) null, (Integer) null),
+            Factory.greatest((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
             Factory.lag((Field<Integer>) null, 1, (Integer) null),
             Factory.lag((Field<Integer>) null, 1, (Field<Integer>) null));
         assertEquals(
             Factory.lead((Field<Integer>) null, 1, (Integer) null),
             Factory.lead((Field<Integer>) null, 1, (Field<Integer>) null));
+        assertEquals(
+            Factory.least((Integer) null),
+            Factory.least((Field<Integer>) null));
+        assertEquals(
+            Factory.least((Integer) null, (Integer) null),
+            Factory.least((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.least((Integer) null, (Integer[]) null),
+            Factory.least((Field<Integer>) null, (Field[]) null));
+        assertEquals(
+            Factory.least((Integer) null, (Integer) null, (Integer) null),
+            Factory.least((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
             Factory.length((String) null),
             Factory.length((Field<String>) null));

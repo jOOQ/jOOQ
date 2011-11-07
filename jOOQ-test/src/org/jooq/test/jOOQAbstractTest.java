@@ -85,6 +85,7 @@ import static org.jooq.impl.Factory.deg;
 import static org.jooq.impl.Factory.denseRank;
 import static org.jooq.impl.Factory.e;
 import static org.jooq.impl.Factory.exp;
+import static org.jooq.impl.Factory.extract;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.firstValue;
@@ -5233,12 +5234,12 @@ public abstract class jOOQAbstractTest<
 
         // ... and the extract function
         // ----------------------------
-        Field<Integer> year = now.extract(DatePart.YEAR).as("y");
-        Field<Integer> month = now.extract(DatePart.MONTH).as("m");
-        Field<Integer> day = now.extract(DatePart.DAY).as("dd");
-        Field<Integer> hour = now.extract(DatePart.HOUR).as("h");
-        Field<Integer> minute = now.extract(DatePart.MINUTE).as("mn");
-        Field<Integer> second = now.extract(DatePart.SECOND).as("sec");
+        Field<Integer> year = extract(now, DatePart.YEAR).as("y");
+        Field<Integer> month = extract(now, DatePart.MONTH).as("m");
+        Field<Integer> day = extract(now, DatePart.DAY).as("dd");
+        Field<Integer> hour = extract(now, DatePart.HOUR).as("h");
+        Field<Integer> minute = extract(now, DatePart.MINUTE).as("mn");
+        Field<Integer> second = extract(now, DatePart.SECOND).as("sec");
 
         q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
         q1.execute();
@@ -5279,9 +5280,9 @@ public abstract class jOOQAbstractTest<
     public void testExtractInSubselect() throws Exception {
         Field<Timestamp> now = currentTimestamp();
 
-        Field<Integer> year = now.extract(DatePart.YEAR).as("y");
-        Field<Integer> month = now.extract(DatePart.MONTH).as("m");
-        Field<Integer> day = now.extract(DatePart.DAY).as("d");
+        Field<Integer> year = extract(now, DatePart.YEAR).as("y");
+        Field<Integer> month = extract(now, DatePart.MONTH).as("m");
+        Field<Integer> day = extract(now, DatePart.DAY).as("d");
 
         Select<?> sub = create().select(year, month, day);
         Table<?> subTable = sub.asTable("subselect");

@@ -332,13 +332,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     Field<T> mod(Field<? extends Number> value);
 
-    /**
-     * Get the extract(field, datePart) function
-     * <p>
-     * This translates into any dialect
-     */
-    Field<Integer> extract(DatePart datePart);
-
     // ------------------------------------------------------------------------
     // General functions created from this field
     // ------------------------------------------------------------------------

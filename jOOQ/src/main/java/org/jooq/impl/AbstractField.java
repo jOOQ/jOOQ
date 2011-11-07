@@ -61,7 +61,6 @@ import org.jooq.CaseWhenStep;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DataType;
-import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -310,11 +309,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     // ------------------------------------------------------------------------
     // Other functions created from this field
     // ------------------------------------------------------------------------
-
-    @Override
-    public final Field<Integer> extract(DatePart datePart) {
-        return new Extract(this, datePart);
-    }
 
     @Override
     public final <Z> Field<Z> decode(T search, Z result) {

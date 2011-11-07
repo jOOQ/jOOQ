@@ -65,6 +65,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConfigurationRegistry;
 import org.jooq.DataType;
+import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
 import org.jooq.FactoryOperations;
@@ -1954,6 +1955,28 @@ public class Factory implements FactoryOperations {
      */
     public static Field<Integer> octetLength(Field<String> field) {
         return new Function<Integer>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
+    }
+
+    // ------------------------------------------------------------------------
+    // Date and time functions
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the extract(field, datePart) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
+        return extract(val(value), datePart);
+    }
+
+    /**
+     * Get the extract(field, datePart) function
+     * <p>
+     * This translates into any dialect
+     */
+    public static Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart) {
+        return new Extract(nullSafe(field), datePart);
     }
 
     // ------------------------------------------------------------------------

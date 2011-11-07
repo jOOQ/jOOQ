@@ -76,6 +76,7 @@ import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Condition;
+import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.Insert;
@@ -355,6 +356,9 @@ public class jOOQTest {
         assertEquals(
             Factory.exp((Integer) null),
             Factory.exp((Field<Integer>) null));
+        assertEquals(
+            Factory.extract((java.util.Date) null, DatePart.DAY),
+            Factory.extract((Field<java.util.Date>) null, DatePart.DAY));
         assertEquals(
             Factory.floor((Integer) null),
             Factory.floor((Field<Integer>) null));

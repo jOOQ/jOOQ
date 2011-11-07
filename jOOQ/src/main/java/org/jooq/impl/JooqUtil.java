@@ -203,33 +203,50 @@ final class JooqUtil {
      * Combine a field with an array of fields
      */
     static Field<?>[] combine(Field<?> field, Field<?>... fields) {
-        Field<?>[] result = new Field<?>[fields.length + 1];
-        result[0] = field;
-        System.arraycopy(fields, 0, result, 1, fields.length);
-        return result;
+        if (fields == null) {
+            return new Field[] { field };
+        }
+        else {
+            Field<?>[] result = new Field<?>[fields.length + 1];
+            result[0] = field;
+            System.arraycopy(fields, 0, result, 1, fields.length);
+
+            return result;
+        }
     }
 
     /**
      * Combine a field with an array of fields
      */
     static Field<?>[] combine(Field<?> field1, Field<?> field2, Field<?>... fields) {
-        Field<?>[] result = new Field<?>[fields.length + 2];
-        result[0] = field1;
-        result[1] = field2;
-        System.arraycopy(fields, 0, result, 2, fields.length);
-        return result;
+        if (fields == null) {
+            return new Field[] { field1, field2 };
+        }
+        else {
+            Field<?>[] result = new Field<?>[fields.length + 2];
+            result[0] = field1;
+            result[1] = field2;
+            System.arraycopy(fields, 0, result, 2, fields.length);
+
+            return result;
+        }
     }
 
     /**
      * Combine a field with an array of fields
      */
     static Field<?>[] combine(Field<?> field1, Field<?> field2, Field<?> field3, Field<?>... fields) {
-        Field<?>[] result = new Field<?>[fields.length + 3];
-        result[0] = field1;
-        result[1] = field2;
-        result[2] = field3;
-        System.arraycopy(fields, 0, result, 3, fields.length);
-        return result;
+        if (fields == null) {
+            return new Field[] { field1, field2, field3 };
+        }
+        else {
+            Field<?>[] result = new Field<?>[fields.length + 3];
+            result[0] = field1;
+            result[1] = field2;
+            result[2] = field3;
+            System.arraycopy(fields, 0, result, 3, fields.length);
+            return result;
+        }
     }
 
     /**

@@ -2152,6 +2152,403 @@ public class Factory implements FactoryOperations {
     }
 
     // ------------------------------------------------------------------------
+    // Bitwise operations
+    // ------------------------------------------------------------------------
+
+    /**
+     * The MySQL <code>BIT_COUNT(field)</code> function, counting the number of
+     * bits that are set in this number.
+     *
+     * @see #bitCount(Field)
+     */
+    public static Field<Integer> bitCount(Number value) {
+        return bitCount(val(value));
+    }
+
+    /**
+     * The MySQL <code>BIT_COUNT(field)</code> function, counting the number of
+     * bits that are set in this number.
+     * <p>
+     * This function is simulated in most other databases like this (for a
+     * TINYINT field): <code><pre>
+     * ([field] &   1) +
+     * ([field] &   2) >> 1 +
+     * ([field] &   4) >> 2 +
+     * ([field] &   8) >> 3 +
+     * ([field] &  16) >> 4 +
+     *  ...
+     * ([field] & 128) >> 7
+     * </pre></code>
+     * <p>
+     * More efficient algorithms are very welcome
+     */
+    public static Field<Integer> bitCount(Field<? extends Number> field) {
+        return new BitCount(nullSafe(field));
+    }
+
+    /**
+     * The bitwise not operator.
+     *
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNot(T value) {
+        return bitNot(val(value));
+    }
+
+    /**
+     * The bitwise not operator.
+     * <p>
+     * Most dialects natively support this using <code>~[field]</code>. jOOQ
+     * simulates this operator in some dialects using <code>-[field] - 1</code>
+     */
+    public static <T extends Number> Field<T> bitNot(Field<T> field) {
+        return new Neg<T>(nullSafe(field), ExpressionOperator.BIT_NOT);
+    }
+
+    /**
+     * The bitwise and operator.
+     *
+     * @see #bitAnd(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
+        return bitAnd(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise and operator.
+     *
+     * @see #bitAnd(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
+        return bitAnd(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise and operator.
+     *
+     * @see #bitAnd(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
+        return bitAnd(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise and operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the and operation where available:
+     * <code><pre>[field1] & [field2]</pre></code>
+     * ... or the and function elsewhere:
+     * <code><pre>bitand([field1], [field2])</pre></code>
+     */
+    public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise not and operator.
+     *
+     * @see #bitNand(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNand(T value1, T value2) {
+        return bitNand(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise not and operator.
+     *
+     * @see #bitNand(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
+        return bitNand(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise not and operator.
+     *
+     * @see #bitNand(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
+        return bitNand(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise not and operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the not and operation where available:
+     * <code><pre>~([field1] & [field2])</pre></code>
+     * ... or the not and function elsewhere:
+     * <code><pre>bitnot(bitand([field1], [field2]))</pre></code>
+     *
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise or operator.
+     *
+     * @see #bitOr(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitOr(T value1, T value2) {
+        return bitOr(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise or operator.
+     *
+     * @see #bitOr(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
+        return bitOr(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise or operator.
+     *
+     * @see #bitOr(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
+        return bitOr(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise or operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>[field1] | [field2]</pre></code>
+     * ... or the or function elsewhere:
+     * <code><pre>bitor([field1], [field2])</pre></code>
+     */
+    public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise not or operator.
+     *
+     * @see #bitNor(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNor(T value1, T value2) {
+        return bitNor(val(value1), val(value2));
+    }
+    /**
+     * The bitwise not or operator.
+     *
+     * @see #bitNor(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
+        return bitNor(val(value1), nullSafe(value2));
+    }
+    /**
+     * The bitwise not or operator.
+     *
+     * @see #bitNor(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
+        return bitNor(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise not or operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the not or operation where available:
+     * <code><pre>~([field1] | [field2])</pre></code>
+     * ... or the not or function elsewhere:
+     * <code><pre>bitnot(bitor([field1], [field2]))</pre></code>
+     *
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise xor operator.
+     *
+     * @see #bitXor(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitXor(T value1, T value2) {
+        return bitXor(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise xor operator.
+     *
+     * @see #bitXor(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
+        return bitXor(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise xor operator.
+     *
+     * @see #bitXor(Field, Field)
+     */
+    public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
+        return bitXor(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise xor operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>[field1] ^ [field2]</pre></code>
+     * ... or the xor function elsewhere:
+     * <code><pre>bitxor([field1], [field2])</pre></code>
+     */
+    public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise not xor operator.
+     *
+     * @see #bitXNor(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
+        return bitXNor(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise not xor operator.
+     *
+     * @see #bitXNor(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
+        return bitXNor(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise not xor operator.
+     *
+     * @see #bitXNor(Field, Field)
+     * @see #bitNot(Field)
+     */
+    public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
+        return bitXNor(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise not xor operator.
+     * <p>
+     * This is not supported by Derby, Ingres
+     * <p>
+     * This renders the or operation where available:
+     * <code><pre>~([field1] ^ [field2])</pre></code>
+     * ... or the not xor function elsewhere:
+     * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
+     */
+    public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise left shift operator.
+     *
+     * @see #shl(Field, Field)
+     * @see #power(Field, Number)
+     */
+    public static <T extends Number> Field<T> shl(T value1, T value2) {
+        return shl(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise left shift operator.
+     *
+     * @see #shl(Field, Field)
+     * @see #power(Field, Number)
+     */
+    public static <T extends Number> Field<T> shl(T value1, Field<T> value2) {
+        return shl(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise left shift operator.
+     *
+     * @see #shl(Field, Field)
+     * @see #power(Field, Number)
+     */
+    public static <T extends Number> Field<T> shl(Field<T>value1, T value2) {
+        return shl(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise left shift operator.
+     * <p>
+     * Some dialects natively support this using <code>[field1] << [field2]</code>.
+     * jOOQ simulates this operator in some dialects using
+     * <code>[field1] * power(2, [field2])</code>, where power might also be simulated.
+     *
+     * @see #power(Field, Field)
+     */
+    public static <T extends Number> Field<T> shl(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
+    }
+
+    /**
+     * The bitwise right shift operator.
+     *
+     * @see #shr(Field, Field)
+     * @see #power(Field, Number)
+     */
+    public static <T extends Number> Field<T> shr(T value1, T value2) {
+        return shr(val(value1), val(value2));
+    }
+
+    /**
+     * The bitwise right shift operator.
+     *
+     * @see #shr(Field, Field)
+     * @see #power(Field, Number)
+     */
+    public static <T extends Number> Field<T> shr(T value1, Field<T> value2) {
+        return shr(val(value1), nullSafe(value2));
+    }
+
+    /**
+     * The bitwise right shift operator.
+     *
+     * @see #shr(Field, Field)
+     * @see #power(Field, Number)
+     */
+    public static <T extends Number> Field<T> shr(Field<T> value1, T value2) {
+        return shr(nullSafe(value1), val(value2));
+    }
+
+    /**
+     * The bitwise right shift operator.
+     * <p>
+     * Some dialects natively support this using <code>[field1] >> [field2]</code>.
+     * jOOQ simulates this operator in some dialects using
+     * <code>[field1] / power(2, [field2])</code>, where power might also be simulated.
+     *
+     * @see #power(Field, Field)
+     */
+    public static <T extends Number> Field<T> shr(Field<T> field1, Field<T> field2) {
+        return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
+    }
+
+    // ------------------------------------------------------------------------
     // Mathematical functions
     // ------------------------------------------------------------------------
 

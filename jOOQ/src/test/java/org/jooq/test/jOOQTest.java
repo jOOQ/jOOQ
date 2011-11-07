@@ -194,24 +194,6 @@ public class jOOQTest {
             FIELD_ID1.between((Integer) null, null),
             FIELD_ID1.between((Field<Integer>) null, null));
         assertEquals(
-            FIELD_ID1.bitAnd((Integer) null),
-            FIELD_ID1.bitAnd((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.bitNand((Integer) null),
-            FIELD_ID1.bitNand((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.bitNor((Integer) null),
-            FIELD_ID1.bitNor((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.bitOr((Integer) null),
-            FIELD_ID1.bitOr((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.bitXNor((Integer) null),
-            FIELD_ID1.bitXNor((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.bitXor((Integer) null),
-            FIELD_ID1.bitXor((Field<Integer>) null));
-        assertEquals(
             FIELD_ID1.coalesce((Integer) null),
             FIELD_ID1.coalesce((Field<Integer>) null));
         assertEquals(
@@ -257,12 +239,6 @@ public class jOOQTest {
             FIELD_ID1.notIn((Integer) null),
             FIELD_ID1.notIn((Field<Integer>) null));
         assertEquals(
-            FIELD_ID1.shl((Integer) null),
-            FIELD_ID1.shl((Field<Integer>) null));
-        assertEquals(
-            FIELD_ID1.shr((Integer) null),
-            FIELD_ID1.shr((Field<Integer>) null));
-        assertEquals(
             FIELD_ID1.sub((Integer) null),
             FIELD_ID1.sub((Field<Integer>) null));
 
@@ -290,8 +266,65 @@ public class jOOQTest {
             Factory.atan2((Integer) null, (Integer) null),
             Factory.atan2((Integer) null, (Field<Integer>) null));
         assertEquals(
+            Factory.bitAnd((Integer) null, (Integer) null),
+            Factory.bitAnd((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitAnd((Integer) null, (Integer) null),
+            Factory.bitAnd((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.bitAnd((Integer) null, (Integer) null),
+            Factory.bitAnd((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitCount((Integer) null),
+            Factory.bitCount((Field<Integer>) null));
+        assertEquals(
             Factory.bitLength((String) null),
             Factory.bitLength((Field<String>) null));
+        assertEquals(
+            Factory.bitNand((Integer) null, (Integer) null),
+            Factory.bitNand((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitNand((Integer) null, (Integer) null),
+            Factory.bitNand((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.bitNand((Integer) null, (Integer) null),
+            Factory.bitNand((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitNor((Integer) null, (Integer) null),
+            Factory.bitNor((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitNor((Integer) null, (Integer) null),
+            Factory.bitNor((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.bitNor((Integer) null, (Integer) null),
+            Factory.bitNor((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitOr((Integer) null, (Integer) null),
+            Factory.bitOr((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitOr((Integer) null, (Integer) null),
+            Factory.bitOr((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.bitOr((Integer) null, (Integer) null),
+            Factory.bitOr((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitXNor((Integer) null, (Integer) null),
+            Factory.bitXNor((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitXNor((Integer) null, (Integer) null),
+            Factory.bitXNor((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.bitXNor((Integer) null, (Integer) null),
+            Factory.bitXNor((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitXor((Integer) null, (Integer) null),
+            Factory.bitXor((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.bitXor((Integer) null, (Integer) null),
+            Factory.bitXor((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.bitXor((Integer) null, (Integer) null),
+            Factory.bitXor((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
             Factory.ceil((Integer) null),
             Factory.ceil((Field<Integer>) null));
@@ -415,6 +448,24 @@ public class jOOQTest {
         assertEquals(
             Factory.rtrim((String) null),
             Factory.rtrim((Field<String>) null));
+        assertEquals(
+            Factory.shl((Integer) null, (Integer) null),
+            Factory.shl((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.shl((Integer) null, (Integer) null),
+            Factory.shl((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.shl((Integer) null, (Integer) null),
+            Factory.shl((Field<Integer>) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.shr((Integer) null, (Integer) null),
+            Factory.shr((Integer) null, (Field<Integer>) null));
+        assertEquals(
+            Factory.shr((Integer) null, (Integer) null),
+            Factory.shr((Field<Integer>) null, (Integer) null));
+        assertEquals(
+            Factory.shr((Integer) null, (Integer) null),
+            Factory.shr((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
             Factory.sign((Integer) null),
             Factory.sign((Field<Integer>) null));

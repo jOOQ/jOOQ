@@ -206,6 +206,9 @@ function printContent() {
 <li>
 <a href="#Import" title="Importing data from XML, CSV">Importing data from XML, CSV</a>
 </li>
+<li>
+<a href="#Batch" title="Using JDBC batch operations">Using JDBC batch operations</a>
+</li>
 </ol>
 </li>
 </ol><h1 id="JOOQ">
@@ -4173,6 +4176,78 @@ Query query = error.query();</pre>
 
 							<h3>XML </h3>
 							<p>This will be implemented soon... </p>
+						<h1 id="Batch">
+<a name="Batch"></a>4.7. Using JDBC batch operations</h1><p>
+							Some JDBC drivers have highly optimised means of executing batch
+							operations. The JDBC interface for those operations is a bit verbose.
+							jOOQ abstracts that by re-using the existing query API's
+						</p>
+							<h2>JDBC batch operations</h2>
+							<p>With JDBC, you can easily execute several statements at once using
+								the addBatch() method. Essentially, there are two modes in JDBC</p>
+
+							<ol>
+								
+<li>Execute several queries without bind values</li>
+								
+<li>Execute one query several times with bind values</li>
+							
+</ol>
+	
+							<p>In code, this looks like the following snippet:</p>
+							<pre class="prettyprint lang-java">
+// 1. several queries
+// ------------------
+Statement stmt = connection.createStatement();
+stmt.addBatch("INSERT INTO author VALUES (1, 'Erich Gamma')");
+stmt.addBatch("INSERT INTO author VALUES (2, 'Richard Helm')");
+stmt.addBatch("INSERT INTO author VALUES (3, 'Ralph Johnson')");
+stmt.addBatch("INSERT INTO author VALUES (4, 'John Vlissides')");
+int[] result = stmt.executeBatch();
+
+// 2. a single query
+// -----------------
+PreparedStatement stmt = connection.prepareStatement("INSERT INTO autho VALUES (?, ?)");
+stmt.setInt(1, 1);
+stmt.setString(2, "Erich Gamma");
+stmt.addBatch();
+
+stmt.setInt(1, 2);
+stmt.setString(2, "Richard Helm");
+stmt.addBatch();
+
+stmt.setInt(1, 3);
+stmt.setString(2, "Ralph Johnson");
+stmt.addBatch();
+
+stmt.setInt(1, 4);
+stmt.setString(2, "John Vlissides");
+stmt.addBatch();
+
+int[] result = stmt.executeBatch();</pre>
+								
+								
+							<h2>This will also be supported by jOOQ</h2>
+							<p>Version 1.6.9 of jOOQ now supports executing queries in batch
+								mode as follows:</p>
+							<pre class="prettyprint lang-java">
+// 1. several queries
+// ------------------
+create.batch(
+	create.insertInto(AUTHOR, ID, NAME).values(1, "Erich Gamma"),
+	create.insertInto(AUTHOR, ID, NAME).values(2, "Richard Helm"),
+	create.insertInto(AUTHOR, ID, NAME).values(3, "Ralph Johnson"),
+	create.insertInto(AUTHOR, ID, NAME).values(4, "John Vlissides"))
+.execute();
+
+// 2. a single query
+// -----------------
+create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
+	  .bind(1, "Erich Gamma")
+	  .bind(2, "Richard Helm")
+	  .bind(3, "Ralph Johnson")
+	  .bind(4, "John Vlissides")
+	  .execute();</pre>
 						
 <?php 
 }

@@ -42,6 +42,9 @@ function printContent() {
 <li>
 <a href="<?=$root?>/manual/ADVANCED/Import/" title="Importing data from XML, CSV">Importing data from XML, CSV</a>
 </li>
+<li>
+<a href="<?=$root?>/manual/ADVANCED/Batch/" title="Using JDBC batch operations">Using JDBC batch operations</a>
+</li>
 </ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
 <tr>
 <td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SQL/" title="Previous section: When it's just easier: Plain SQL">previous</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Next section: Master data generation. Enumeration tables">next</a></td>

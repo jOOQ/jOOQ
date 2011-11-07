@@ -65,6 +65,11 @@ public class Transform {
         System.out.println("Transforming single-page manual");
         System.out.println("-------------------------------");
         singlePage();
+
+        System.out.println();
+        System.out.println("Transforming PDF manual");
+        System.out.println("-------------------------------");
+        pdf();
     }
 
 
@@ -113,6 +118,27 @@ public class Transform {
 
         Source source = new DOMSource(manual.document());
         Result target = new StreamResult(new File(dir, "index.php"));
+
+        transformer.transform(source, target);
+    }
+
+    public static void pdf() throws Exception {
+        InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
+        InputStream isXSL = Transform.class.getResourceAsStream("pdf.xsl");
+
+        StreamSource xsl = new StreamSource(isXSL);
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer(xsl);
+
+        Match manual = $(isXML);
+
+        File dir = new File("manual-pdf");
+        dir.mkdirs();
+
+        System.out.println("Transforming XML -> FO");
+
+        Source source = new DOMSource(manual.document());
+        Result target = new StreamResult(new File(dir, "manual.fo.xml"));
 
         transformer.transform(source, target);
     }

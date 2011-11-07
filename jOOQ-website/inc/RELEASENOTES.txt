@@ -9,6 +9,151 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://jooq.sourceforge.net/releasenotes/RELEASENOTES.txt
 
+http://www.jooq.org/inc/RELEASENOTES.txt
+
+Version 1.6.9 - November 7, 2011
+=================================================================
+This is a maintenance release for the 1.x branch. Developments
+on this branch will stop after version 1.6.9. Only important bug
+fixes are merged to this branch. Developments for release 2.0
+have started.
+
+The most important functionality in release 1.6.9 is the newly
+added support for JDBC batch operations. You can now batch 
+execute several queries.
+
+See the official blog for more information:
+http://lukaseder.wordpress.com/2011/10/25/jdbc-batch-operations-with-jooq/
+
+Features and improvements
+-------------------------
+#621 - Add support for JDBC batch operations
+#794 - Add support for ORDER BY [int value] in order to reference
+       a column index for sorting
+#882 - Optimise Field.isTrue() and isFalse(). Take Field's data
+       type into consideration.
+#885 - Add support for INSERT INTO .. VALUES (..) syntax, 
+       omitting explicit field declarations
+#887 - Add <E> List<E> Cursor.fetchInto(Class<E>)
+
+Bug fixes
+---------
+#748 - H2 regression in 1.3.158 regarding stored functions, which
+       return a ResultSet (this was fixed in H2)
+#859 - Derby casting of numeric types to BOOLEAN doesn't work
+#886 - Regression in date extract function when used in a 
+       subselect
+#888 - Derby casting of VARCHAR to FLOAT (and similar) doesn't
+       work
+       
+Version 1.6.8 - October 22, 2011
+=================================================================
+The main improvement of this release is the re-design of the
+stored procedure / function API. With 12 supported RDBMS, which
+all have their own idea about what is a stored procedure and what
+is a stored function, it has proven to be a better design, to
+unite them in one single type: org.jooq.Routine. A routine can
+have a return value as well as OUT parameters. It can be embedded
+in SQL and used as a field or a table.
+
+This means, you will need to re-generate your database schema,
+when upgrading to jOOQ 1.6.8. After re-generation, you'll need to
+fix your client code. These are the package changes:
+
+- [generated.package].procedures > [generated.package].routines
+- [generated.package].functions  > [generated.package].routines
+- [generated.package].Procedures > [generated.package].Routines
+- [generated.package].Functions  > [generated.package].Routines
+
+Oracle generated packages are not re-located. With these
+improvements, using stored procedures and functions becomes even
+more reliable, especially when cursor types are involved. Read
+more about the rationale behind this change:
+
+http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/
+
+Apart from that, important improvements have been made in the
+area of plain SQL tables. Also, consider a demo integration of
+jOOQ with Google Cloud SQL:
+
+http://lukaseder.wordpress.com/2011/10/22/jooq-and-google-cloud-sql-example/
+
+Features and improvements
+-------------------------
+#271 - Don't pre-fetch table meta data when selecting from plain
+       SQL tables
+#489 - Add support for SELECT * (i.e. render SELECT * where
+       applicable)
+#596 - Add support for VARIANCE() and STDDEV() OVER() window
+       functions
+#608 - Add jOOQ version number in generated source code
+#670 - Add more Javadoc to Field.xxx() functions
+#692 - Add support for ResultSet type returned from HSQLDB
+       stored functions
+#850 - Use http://www.jooq.org as URL for the @Generated 
+       annotation
+#854 - Add convenience methods Fields.isTrue(), isFalse() for
+       conversion of "Y", "YES", "1", "true", "on", etc into a
+       boolean condition
+#870 - Add support for MEDIAN aggregate function
+#872 - Add support for STDDEV_POP(), STDDEV_SAMP(), VAR_POP(),
+       VAR_SAMP() aggregate functions
+#874 - Reduce the number of internal classes for dialect-specific
+       function aliases
+#878 - Implement DataType.equals() and hashCode()
+
+API changes (backwards-compatible)
+----------------------------------
+#851 - Change Field.{sortAsc|sortDesc}(List<T> sortList) into
+       Field.{sortAsc|sortDesc}(Collection<T> sortList)
+
+API changes (backwards-incompatible)
+------------------------------------
+#848 - Purge deprecated API - Prior to 1.6.1
+#849 - Replace Cursor.fetchResult() by Cursor.fetch()
+#852 - Review stored procedures / functions concept. Merge them
+       all into a single "Routine" type
+
+Bug fixes
+---------
+#756 - Error when aliasing HSQLDB and Postgres unnested tables
+#761 - Exception when TRACE logging execution with plain SQL
+       tables involved
+#773 - Execute standalone stored functions as CallableStatement
+       to prevent issues with transactions
+#847 - Query.getSQL() doesn't render dialect-specific SQL when
+       Query is constructed using the fluent API
+#853 - DB2 generated convenience methods for stored functions
+       have unstable ordering
+#857 - Derby casting of numeric types to String / VARCHAR does
+       not work
+#858 - SQLDataType.getSQLDataType() should return itself, instead
+       of null
+#860 - SQLite CEIL function is incorrectly simulated. CEIL(2.0)
+       returns 3.0 instead of 2.0
+#861 - Field.replace(String) generates bad SQL for various RDBMS.
+       Field.replace(String, String) works, though
+#863 - Ingres integration generates illegal SQL when selecting
+       things like SELECT 1 WHERE 1 = 1
+#866 - Sybase ASE Field.replace(String) function incorrectly
+       removes the argument string
+#873 - Error when selecting two times the same aggregate field
+#877 - Compilation error in generated source code when a table
+       without a primary key has an identity column
+#879 - Add Google Cloud SQL Example
+#880 - Query.getSQL() does not consider SchemaMapping
+
+Test cases
+----------
+#811 - Loader integration tests fail for SQLite
+#812 - CSV Loader test leaves Postgres JDBC connection in an
+       inconsistent transactional state on error
+#856 - Add integration tests for Field.abs()
+#865 - Add integration tests for Field.ascii()
+#867 - Add integration tests for Field.sum(), avg(), max(), min()
+#881 - Re-design H2 stored functions to be pre-compiled, in order
+       to speed up integration tests
+
 Version 1.6.7 - September 25, 2011
 =================================================================
 

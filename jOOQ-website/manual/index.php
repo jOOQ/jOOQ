@@ -212,6 +212,9 @@ function printContent() {
 <li>
 <a href="<?=$root?>/manual/ADVANCED/Import/" title="Importing data from XML, CSV">Importing data from XML, CSV</a>
 </li>
+<li>
+<a href="<?=$root?>/manual/ADVANCED/Batch/" title="Using JDBC batch operations">Using JDBC batch operations</a>
+</li>
 </ol>
 </li>
 </ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">

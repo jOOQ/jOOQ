@@ -438,27 +438,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
 
-    /**
-     * Gets the Oracle-style <code>COALESCE(expr1, expr2, ... , exprn)</code>
-     * function
-     *
-     * @see #coalesce(Field, Field...)
-     */
-    Field<T> coalesce(T option, T... options);
-
-    /**
-     * Gets the Oracle-style <code>COALESCE(expr1, expr2, ... , exprn)</code>
-     * function
-     * <p>
-     * Returns the dialect's equivalent to COALESCE:
-     * <ul>
-     * <li>Oracle <a
-     * href="http://www.techonthenet.com/oracle/functions/coalesce.php">COALESCE</a>
-     * </li>
-     * </ul>
-     */
-    Field<T> coalesce(Field<T> option, Field<?>... options);
-
     // ------------------------------------------------------------------------
     // Conditions created from this field
     // ------------------------------------------------------------------------

@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.JooqUtil.combine;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -1294,6 +1296,31 @@ public class Factory implements FactoryOperations {
         }
 
         return (Field<T>[]) castFields;
+    }
+
+    /**
+     * Gets the Oracle-style <code>COALESCE(value1, value2, ... , value n)</code>
+     * function
+     *
+     * @see #coalesce(Field, Field, Field...)
+     */
+    public static <T> Field<T> coalesce(T value1, T value2, T... values) {
+        return coalesce(val(value1), val(value2), vals(values).toArray(new Field[0]));
+    }
+
+    /**
+     * Gets the Oracle-style <code>COALESCE(field1, field2, ... , field n)</code>
+     * function
+     * <p>
+     * Returns the dialect's equivalent to COALESCE:
+     * <ul>
+     * <li>Oracle <a
+     * href="http://www.techonthenet.com/oracle/functions/coalesce.php">COALESCE</a>
+     * </li>
+     * </ul>
+     */
+    public static <T> Field<T> coalesce(Field<T> field1, Field<T> field2, Field<?>... fields) {
+        return function("coalesce", nullSafeDataType(field1), nullSafe(combine(field1, field2, fields)));
     }
 
     /**
@@ -3492,12 +3519,9 @@ public class Factory implements FactoryOperations {
      * Get a list of values and fields
      */
     public static List<Field<?>> vals(Object... values) {
-        if (values == null) {
-            throw new IllegalArgumentException("Cannot create a list of constants for null");
-        }
-        else {
-            FieldList result = new FieldList();
+        FieldList result = new FieldList();
 
+        if (values != null) {
             for (Object value : values) {
 
                 // Fields can be mixed with constant values
@@ -3508,9 +3532,9 @@ public class Factory implements FactoryOperations {
                     result.add(val(value));
                 }
             }
-
-            return result;
         }
+
+        return result;
     }
 
     // -------------------------------------------------------------------------

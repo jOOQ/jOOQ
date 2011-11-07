@@ -54,6 +54,10 @@ import static org.jooq.impl.ExpressionOperator.BIT_XNOR;
 import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
+import static org.jooq.impl.Factory.bitAnd;
+import static org.jooq.impl.Factory.bitNot;
+import static org.jooq.impl.Factory.bitOr;
+import static org.jooq.impl.Factory.bitXor;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.power;
@@ -108,6 +112,7 @@ class Expression<T> extends AbstractFunction<T> {
         return super.mul(value);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         SQLDialect dialect = configuration.getDialect();
@@ -125,13 +130,14 @@ class Expression<T> extends AbstractFunction<T> {
 
         // Oracle has to simulate or/xor
         else if (BIT_OR == operator && ORACLE == dialect) {
-            return lhs.sub(lhsAsNumber().bitAnd(rhsAsNumber())).add(rhsAsNumber());
+            return lhs.sub(bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
         }
 
         // ~(a & b) & (a | b)
         else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(dialect)) {
-            return lhs.bitAnd(rhsAsNumber()).bitNot().bitAnd(
-                   lhsAsNumber().bitOr(rhsAsNumber()));
+            return (Field<T>) bitAnd(
+                bitNot(bitAnd(lhsAsNumber(), rhsAsNumber())),
+                bitOr(lhsAsNumber(), rhsAsNumber()));
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
@@ -144,13 +150,13 @@ class Expression<T> extends AbstractFunction<T> {
 
         // These operators are not supported in any dialect
         else if (BIT_NAND == operator) {
-            return lhs.bitAnd(rhsAsNumber()).bitNot();
+            return (Field<T>) bitNot(bitAnd(lhsAsNumber(), rhsAsNumber()));
         }
         else if (BIT_NOR == operator) {
-            return lhs.bitOr(rhsAsNumber()).bitNot();
+            return (Field<T>) bitNot(bitOr(lhsAsNumber(), rhsAsNumber()));
         }
         else if (BIT_XNOR == operator) {
-            return lhs.bitXor(rhsAsNumber()).bitNot();
+            return (Field<T>) bitNot(bitXor(lhsAsNumber(), rhsAsNumber()));
         }
 
         // Use the default operator expression
@@ -163,16 +169,16 @@ class Expression<T> extends AbstractFunction<T> {
      * In some expressions, the lhs can be safely assumed to be a single number
      */
     @SuppressWarnings("unchecked")
-    private final Field<? extends Number> lhsAsNumber() {
-        return (Field<? extends Number>) lhs;
+    private final Field<Number> lhsAsNumber() {
+        return (Field<Number>) lhs;
     }
 
     /**
      * In some expressions, the rhs can be safely assumed to be a single number
      */
     @SuppressWarnings("unchecked")
-    private final Field<? extends Number> rhsAsNumber() {
-        return (Field<? extends Number>) rhs.get(0);
+    private final Field<Number> rhsAsNumber() {
+        return (Field<Number>) rhs.get(0);
     }
 
     private class DefaultExpression extends AbstractField<T> {

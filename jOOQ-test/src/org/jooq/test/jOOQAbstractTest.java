@@ -54,7 +54,15 @@ import static org.jooq.impl.Factory.asin;
 import static org.jooq.impl.Factory.atan;
 import static org.jooq.impl.Factory.atan2;
 import static org.jooq.impl.Factory.avg;
+import static org.jooq.impl.Factory.bitAnd;
+import static org.jooq.impl.Factory.bitCount;
 import static org.jooq.impl.Factory.bitLength;
+import static org.jooq.impl.Factory.bitNand;
+import static org.jooq.impl.Factory.bitNor;
+import static org.jooq.impl.Factory.bitNot;
+import static org.jooq.impl.Factory.bitOr;
+import static org.jooq.impl.Factory.bitXNor;
+import static org.jooq.impl.Factory.bitXor;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.ceil;
@@ -113,6 +121,8 @@ import static org.jooq.impl.Factory.rollup;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.rowNumber;
 import static org.jooq.impl.Factory.rpad;
+import static org.jooq.impl.Factory.shl;
+import static org.jooq.impl.Factory.shr;
 import static org.jooq.impl.Factory.sign;
 import static org.jooq.impl.Factory.sin;
 import static org.jooq.impl.Factory.sinh;
@@ -4944,7 +4954,7 @@ public abstract class jOOQAbstractTest<
                 return;
         }
 
-        Field<Integer> bitCount = val(3).bitCount();
+        Field<Integer> bitCount = bitCount(3);
 
         // TODO [#896] This somehow doesn't work on some dialects
         if (asList(ASE, DB2, SQLSERVER).contains(getDialect())) {
@@ -4954,17 +4964,17 @@ public abstract class jOOQAbstractTest<
         Record result =
         create().select(
                     bitCount,
-                    val(3).bitNot().bitNot(),
-                    val(3).bitAnd(5),
-                    val(3).bitOr(5),
+                    bitNot(bitNot(3)),
+                    bitAnd(3, 5),
+                    bitOr(3, 5),
 
-                    val(3).bitXor(5),
-                    val(3).bitNand(5).bitNot(),
-                    val(3).bitNor(5).bitNot(),
-                    val(3).bitXNor(5).bitNot(),
+                    bitXor(3, 5),
+                    bitNot(bitNand(3, 5)),
+                    bitNot(bitNor(3, 5)),
+                    bitNot(bitXNor(3, 5)),
 
-                    val(333).shl(3),
-                    val(333).shr(3))
+                    shl(333, 3),
+                    shr(333, 3))
                 .fetchOne();
 
         int index = 0;

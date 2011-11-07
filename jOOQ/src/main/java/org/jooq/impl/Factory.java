@@ -1400,7 +1400,7 @@ public class Factory implements FactoryOperations {
 
     /**
      * Gets the Oracle-style NULLIF(value, other) function
-     * <p>
+     *
      * @see #nullif(Field)
      */
     public static <T> Field<T> nullif(T value, T other) {
@@ -1409,7 +1409,7 @@ public class Factory implements FactoryOperations {
 
     /**
      * Gets the Oracle-style NULLIF(value, other) function
-     * <p>
+     *
      * @see #nullif(Field)
      */
     public static <T> Field<T> nullif(T value, Field<T> other) {
@@ -1418,7 +1418,7 @@ public class Factory implements FactoryOperations {
 
     /**
      * Gets the Oracle-style NULLIF(value, other) function
-     * <p>
+     *
      * @see #nullif(Field)
      */
     public static <T> Field<T> nullif(Field<T> value, T other) {
@@ -1445,9 +1445,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the upper(field) function
-     * <p>
-     * This renders the upper function in all dialects:
-     * <code><pre>upper([this])</pre></code>
+     *
+     * @see #upper(Field)
      */
     public static Field<String> upper(String value) {
         return upper(val(value));
@@ -1457,7 +1456,7 @@ public class Factory implements FactoryOperations {
      * Get the upper(field) function
      * <p>
      * This renders the upper function in all dialects:
-     * <code><pre>upper([this])</pre></code>
+     * <code><pre>upper([field])</pre></code>
      */
     public static Field<String> upper(Field<String> field) {
         return function("upper", SQLDataType.VARCHAR, nullSafe(field));
@@ -1465,9 +1464,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the lower(field) function
-     * <p>
-     * This renders the lower function in all dialects:
-     * <code><pre>lower([this])</pre></code>
+     *
+     * @see #lower(Field)
      */
     public static Field<String> lower(String value) {
         return lower(val(value));
@@ -1477,7 +1475,7 @@ public class Factory implements FactoryOperations {
      * Get the lower(field) function
      * <p>
      * This renders the lower function in all dialects:
-     * <code><pre>lower([this])</pre></code>
+     * <code><pre>lower([field])</pre></code>
      */
     public static Field<String> lower(Field<String> value) {
         return function("lower", SQLDataType.VARCHAR, nullSafe(value));
@@ -1485,10 +1483,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the trim(field) function
-     * <p>
-     * This renders the trim function where available:
-     * <code><pre>trim([this])</pre></code> ... or simulates it elsewhere using
-     * rtrim and ltrim: <code><pre>ltrim(rtrim([this]))</pre></code>
+     *
+     * @see #trim(Field)
      */
     public static Field<String> trim(String value) {
         return trim(val(value));
@@ -1498,8 +1494,8 @@ public class Factory implements FactoryOperations {
      * Get the trim(field) function
      * <p>
      * This renders the trim function where available:
-     * <code><pre>trim([this])</pre></code> ... or simulates it elsewhere using
-     * rtrim and ltrim: <code><pre>ltrim(rtrim([this]))</pre></code>
+     * <code><pre>trim([field])</pre></code> ... or simulates it elsewhere using
+     * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
      */
     public static Field<String> trim(Field<String> field) {
         return new Trim(nullSafe(field));
@@ -1507,9 +1503,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the rtrim(field) function
-     * <p>
-     * This renders the rtrim function in all dialects:
-     * <code><pre>rtrim([this])</pre></code>
+     *
+     * @see #rtrim(Field)
      */
     public static Field<String> rtrim(String value) {
         return rtrim(val(value));
@@ -1519,7 +1514,7 @@ public class Factory implements FactoryOperations {
      * Get the rtrim(field) function
      * <p>
      * This renders the rtrim function in all dialects:
-     * <code><pre>rtrim([this])</pre></code>
+     * <code><pre>rtrim([field])</pre></code>
      */
     public static Field<String> rtrim(Field<String> field) {
         return function("rtrim", SQLDataType.VARCHAR, nullSafe(field));
@@ -1527,9 +1522,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the ltrim(field) function
-     * <p>
-     * This renders the ltrim function in all dialects:
-     * <code><pre>ltrim([this])</pre></code>
+     *
+     * @see #ltrim(Field)
      */
     public static Field<String> ltrim(String value) {
         return ltrim(val(value));
@@ -1539,7 +1533,7 @@ public class Factory implements FactoryOperations {
      * Get the ltrim(field) function
      * <p>
      * This renders the ltrim function in all dialects:
-     * <code><pre>ltrim([this])</pre></code>
+     * <code><pre>ltrim([field])</pre></code>
      */
     public static Field<String> ltrim(Field<String> value) {
         return function("ltrim", SQLDataType.VARCHAR, nullSafe(value));
@@ -1547,12 +1541,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the rpad(field, length) function
-     * <p>
-     * This renders the rpad function where available:
-     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat([this], repeat(' ', [length] - length([this])))</pre></code>
+     *
+     * @see #rpad(Field, Field)
      */
     public static Field<String> rpad(Field<String> field, int length) {
         return rpad(nullSafe(field), val(length));
@@ -1562,10 +1552,10 @@ public class Factory implements FactoryOperations {
      * Get the rpad(field, length) function
      * <p>
      * This renders the rpad function where available:
-     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * <code><pre>rpad([field], [length])</pre></code> ... or simulates it
      * elsewhere using concat, repeat, and length, which may be simulated as
      * well, depending on the RDBMS:
-     * <code><pre>concat([this], repeat(' ', [length] - length([this])))</pre></code>
+     * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new Rpad(nullSafe(field), nullSafe(length));
@@ -1573,12 +1563,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the rpad(field, length, character) function
-     * <p>
-     * This renders the rpad function where available:
-     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat([this], repeat([character], [length] - length([this])))</pre></code>
+     *
+     * @see #rpad(Field, Field, Field)
      */
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), val(length), val(character));
@@ -1588,10 +1574,10 @@ public class Factory implements FactoryOperations {
      * Get the rpad(field, length, character) function
      * <p>
      * This renders the rpad function where available:
-     * <code><pre>rpad([this], [length])</pre></code> ... or simulates it
+     * <code><pre>rpad([field], [length])</pre></code> ... or simulates it
      * elsewhere using concat, repeat, and length, which may be simulated as
      * well, depending on the RDBMS:
-     * <code><pre>concat([this], repeat([character], [length] - length([this])))</pre></code>
+     * <code><pre>concat([field], repeat([character], [length] - length([field])))</pre></code>
      */
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
@@ -1599,12 +1585,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the lpad(field, length) function
-     * <p>
-     * This renders the lpad function where available:
-     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat(repeat(' ', [length] - length([this])), [this])</pre></code>
+     *
+     * @see #lpad(Field, Field)
      */
     public static Field<String> lpad(Field<String> field, int length) {
         return lpad(nullSafe(field), val(length));
@@ -1614,10 +1596,10 @@ public class Factory implements FactoryOperations {
      * Get the lpad(field, length) function
      * <p>
      * This renders the lpad function where available:
-     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * <code><pre>lpad([field], [length])</pre></code> ... or simulates it
      * elsewhere using concat, repeat, and length, which may be simulated as
      * well, depending on the RDBMS:
-     * <code><pre>concat(repeat(' ', [length] - length([this])), [this])</pre></code>
+     * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
@@ -1625,12 +1607,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the lpad(field, length, character) function
-     * <p>
-     * This renders the lpad function where available:
-     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
-     * elsewhere using concat, repeat, and length, which may be simulated as
-     * well, depending on the RDBMS:
-     * <code><pre>concat(repeat([character], [length] - length([this])), [this])</pre></code>
+     *
+     * @see #lpad(Field, Field, Field)
      */
     public static Field<String> lpad(Field<String> field, int length, String character) {
         return lpad(nullSafe(field), val(length), val(character));
@@ -1640,38 +1618,28 @@ public class Factory implements FactoryOperations {
      * Get the lpad(field, length, character) function
      * <p>
      * This renders the lpad function where available:
-     * <code><pre>lpad([this], [length])</pre></code> ... or simulates it
+     * <code><pre>lpad([field], [length])</pre></code> ... or simulates it
      * elsewhere using concat, repeat, and length, which may be simulated as
      * well, depending on the RDBMS:
-     * <code><pre>concat(repeat([character], [length] - length([this])), [this])</pre></code>
+     * <code><pre>concat(repeat([character], [length] - length([field])), [field])</pre></code>
      */
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
 
     /**
-     * Get the repeat(count) function
-     * <p>
-     * This renders the repeat or replicate function where available:
-     * <code><pre>repeat([this], [count]) or
-     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
-     * using rpad and length, which may be simulated as well, depending on the
-     * RDBMS:
-     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     * Get the repeat(field, count) function
+     *
+     * @see #repeat(Field, Field)
      */
     public static Field<String> repeat(String field, int count) {
         return repeat(val(field), val(count));
     }
 
     /**
-     * Get the repeat(count) function
-     * <p>
-     * This renders the repeat or replicate function where available:
-     * <code><pre>repeat([this], [count]) or
-     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
-     * using rpad and length, which may be simulated as well, depending on the
-     * RDBMS:
-     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     * Get the repeat(field, count) function
+     *
+     * @see #repeat(Field, Field)
      */
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(val(field), nullSafe(count));
@@ -1679,13 +1647,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the repeat(count) function
-     * <p>
-     * This renders the repeat or replicate function where available:
-     * <code><pre>repeat([this], [count]) or
-     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
-     * using rpad and length, which may be simulated as well, depending on the
-     * RDBMS:
-     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     *
+     * @see #repeat(Field, Field)
      */
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), val(count));
@@ -1695,59 +1658,53 @@ public class Factory implements FactoryOperations {
      * Get the repeat(field, count) function
      * <p>
      * This renders the repeat or replicate function where available:
-     * <code><pre>repeat([this], [count]) or
-     * replicate([this], [count])</pre></code> ... or simulates it elsewhere
+     * <code><pre>repeat([field], [count]) or
+     * replicate([field], [count])</pre></code> ... or simulates it elsewhere
      * using rpad and length, which may be simulated as well, depending on the
      * RDBMS:
-     * <code><pre>rpad([this], length([this]) * [count], [this])</pre></code>
+     * <code><pre>rpad([field], length([field]) * [count], [field])</pre></code>
      */
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
     }
 
     /**
-     * Get the replace(in, search) function
-     * <p>
-     * This renders the replace or str_replace function where available:
-     * <code><pre>replace([this], [search]) or
-     * str_replace([this], [search])</pre></code> ... or simulates it elsewhere
-     * using the three-argument replace function:
-     * <code><pre>replace([this], [search], '')</pre></code>
+     * Get the replace(field, search) function
+     *
+     * @see #replace(Field, Field)
      */
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), val(search));
     }
 
     /**
-     * Get the replace(in, search) function
+     * Get the replace(field, search) function
      * <p>
      * This renders the replace or str_replace function where available:
-     * <code><pre>replace([this], [search]) or
-     * str_replace([this], [search])</pre></code> ... or simulates it elsewhere
+     * <code><pre>replace([field], [search]) or
+     * str_replace([field], [search])</pre></code> ... or simulates it elsewhere
      * using the three-argument replace function:
-     * <code><pre>replace([this], [search], '')</pre></code>
+     * <code><pre>replace([field], [search], '')</pre></code>
      */
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search));
     }
 
     /**
-     * Get the replace(in, search, replace) function
-     * <p>
-     * This renders the replace or str_replace function:
-     * <code><pre>replace([this], [search]) or
-     * str_replace([this], [search])</pre></code>
+     * Get the replace(field, search, replace) function
+     *
+     * @see #replace(Field, Field, Field)
      */
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), val(search), val(replace));
     }
 
     /**
-     * Get the replace(in, search, replace) function
+     * Get the replace(field, search, replace) function
      * <p>
      * This renders the replace or str_replace function:
-     * <code><pre>replace([this], [search]) or
-     * str_replace([this], [search])</pre></code>
+     * <code><pre>replace([field], [search]) or
+     * str_replace([field], [search])</pre></code>
      */
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
@@ -1796,9 +1753,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the ascii(field) function
-     * <p>
-     * This renders the replace or str_replace function:
-     * <code><pre>ascii([this])</pre></code>
+     *
+     * @see #ascii(Field)
      */
     public static Field<Integer> ascii(String field) {
         return ascii(val(field));
@@ -1807,8 +1763,8 @@ public class Factory implements FactoryOperations {
     /**
      * Get the ascii(field) function
      * <p>
-     * This renders the replace or str_replace function:
-     * <code><pre>ascii([this])</pre></code>
+     * This renders the ascii function:
+     * <code><pre>ascii([field])</pre></code>
      */
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
@@ -1816,10 +1772,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the concat(value[, value, ...]) function
-     * <p>
-     * This creates <code>this || fields[0] || fields[1] || ...</code> as an
-     * expression, or <code>concat(this, fields[0], fields[1], ...)</code>,
-     * depending on the dialect.
+     *
+     * @see #concat(Field...)
      */
     public static Field<String> concat(String... values) {
         return concat(vals((Object[]) values).toArray(new Field[0]));
@@ -1828,8 +1782,8 @@ public class Factory implements FactoryOperations {
     /**
      * Get the concat(field[, field, ...]) function
      * <p>
-     * This creates <code>this || fields[0] || fields[1] || ...</code> as an
-     * expression, or <code>concat(this, fields[0], fields[1], ...)</code>,
+     * This creates <code>fields[0] || fields[1] || ...</code> as an
+     * expression, or <code>concat(fields[0], fields[1], ...)</code>,
      * depending on the dialect.
      * <p>
      * If any of the given fields is not a {@link String} field, they are cast
@@ -1841,10 +1795,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the substring(field, startingPosition) function
-     * <p>
-     * This renders the substr or substring function:
-     * <code><pre>substr([this], [startingPosition]) or
-     * substring([this], [startingPosition])</pre></code>
+     *
+     * @see #substring(Field, Field)
      */
     public static Field<String> substring(Field<String> field, int startingPosition) {
         return substring(nullSafe(field), val(startingPosition));
@@ -1854,8 +1806,8 @@ public class Factory implements FactoryOperations {
      * Get the substring(field, startingPosition) function
      * <p>
      * This renders the substr or substring function:
-     * <code><pre>substr([this], [startingPosition]) or
-     * substring([this], [startingPosition])</pre></code>
+     * <code><pre>substr([field], [startingPosition]) or
+     * substring([field], [startingPosition])</pre></code>
      */
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition) {
         return new Substring(nullSafe(field), nullSafe(startingPosition));
@@ -1863,10 +1815,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the substring(field, startingPosition, length) function
-     * <p>
-     * This renders the substr or substring function:
-     * <code><pre>substr([this], [startingPosition], [length]) or
-     * substring([this], [startingPosition], [length])</pre></code>
+     *
+     * @see #substring(Field, Field, Field)
      */
     public static Field<String> substring(Field<String> field, int startingPosition, int length) {
         return substring(nullSafe(field), val(startingPosition), val(length));
@@ -1876,8 +1826,8 @@ public class Factory implements FactoryOperations {
      * Get the substring(field, startingPosition, length) function
      * <p>
      * This renders the substr or substring function:
-     * <code><pre>substr([this], [startingPosition], [length]) or
-     * substring([this], [startingPosition], [length])</pre></code>
+     * <code><pre>substr([field], [startingPosition], [length]) or
+     * substring([field], [startingPosition], [length])</pre></code>
      */
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         return new Substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
@@ -2577,15 +2527,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the sign of a numeric field: sign(field)
-     * <p>
-     * This renders the sign function where available:
-     * <code><pre>sign([this])</pre></code>
-     * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
-     * <code><pre>
-     * CASE WHEN [this] > 0 THEN 1
-     *      WHEN [this] < 0 THEN -1
-     *      ELSE 0
-     * END
+     *
+     * @see #sign(Field)
      */
     public static Field<Integer> sign(Number value) {
         return sign(val(value));
@@ -2595,7 +2538,7 @@ public class Factory implements FactoryOperations {
      * Get the sign of a numeric field: sign(field)
      * <p>
      * This renders the sign function where available:
-     * <code><pre>sign([this])</pre></code>
+     * <code><pre>sign([field])</pre></code>
      * ... or simulates it elsewhere (without bind variables on values -1, 0, 1):
      * <code><pre>
      * CASE WHEN [this] > 0 THEN 1
@@ -2609,9 +2552,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the absolute value of a numeric field: abs(field)
-     * <p>
-     * This renders the same on all dialects:
-     * <code><pre>abs([this])</pre></code>
+     *
+     * @see #abs(Field)
      */
     public static <T extends Number> Field<T> abs(T value) {
         return abs(val(value));
@@ -2621,7 +2563,7 @@ public class Factory implements FactoryOperations {
      * Get the absolute value of a numeric field: abs(field)
      * <p>
      * This renders the same on all dialects:
-     * <code><pre>abs([this])</pre></code>
+     * <code><pre>abs([field])</pre></code>
      */
     public static <T extends Number> Field<T> abs(Field<T> field) {
         return function("abs", nullSafeDataType(field), nullSafe(field));
@@ -2629,11 +2571,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get rounded value of a numeric field: round(field)
-     * <p>
-     * This renders the round function where available:
-     * <code><pre>round([this]) or
-     * round([this], 0)</pre></code>
-     * ... or simulates it elsewhere using floor and ceil
+     *
+     * @see #round(Field)
      */
     public static <T extends Number> Field<T> round(T value) {
         return round(val(value));
@@ -2643,8 +2582,8 @@ public class Factory implements FactoryOperations {
      * Get rounded value of a numeric field: round(field)
      * <p>
      * This renders the round function where available:
-     * <code><pre>round([this]) or
-     * round([this], 0)</pre></code>
+     * <code><pre>round([field]) or
+     * round([field], 0)</pre></code>
      * ... or simulates it elsewhere using floor and ceil
      */
     public static <T extends Number> Field<T> round(Field<T> field) {
@@ -2653,10 +2592,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get rounded value of a numeric field: round(field, decimals)
-     * <p>
-     * This renders the round function where available:
-     * <code><pre>round([this], [decimals])</pre></code>
-     * ... or simulates it elsewhere using floor and ceil
+     *
+     * @see #round(Field, int)
      */
     public static <T extends Number> Field<T> round(T value, int decimals) {
         return round(val(value), decimals);
@@ -2666,7 +2603,7 @@ public class Factory implements FactoryOperations {
      * Get rounded value of a numeric field: round(field, decimals)
      * <p>
      * This renders the round function where available:
-     * <code><pre>round([this], [decimals])</pre></code>
+     * <code><pre>round([field], [decimals])</pre></code>
      * ... or simulates it elsewhere using floor and ceil
      */
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
@@ -2675,11 +2612,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the largest integer value not greater than [this]
-     * <p>
-     * This renders the floor function where available:
-     * <code><pre>floor([this])</pre></code>
-     * ... or simulates it elsewhere using round:
-     * <code><pre>round([this] - 0.499999999999999)</pre></code>
+     *
+     * @see #floor(Field)
      */
     public static <T extends Number> Field<T> floor(T value) {
         return floor(val(value));
@@ -2699,25 +2633,21 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the smallest integer value not less than [this]
-     * <p>
-     * This renders the ceil or ceiling function where available:
-     * <code><pre>ceil([this]) or
-     * ceiling([this])</pre></code>
-     * ... or simulates it elsewhere using round:
-     * <code><pre>round([this] + 0.499999999999999)</pre></code>
+     *
+     * @see #ceil(Field)
      */
     public static <T extends Number> Field<T> ceil(T value) {
         return ceil(val(value));
     }
 
     /**
-     * Get the smallest integer value not less than [this]
+     * Get the smallest integer value not less than [field]
      * <p>
      * This renders the ceil or ceiling function where available:
-     * <code><pre>ceil([this]) or
-     * ceiling([this])</pre></code>
+     * <code><pre>ceil([field]) or
+     * ceiling([field])</pre></code>
      * ... or simulates it elsewhere using round:
-     * <code><pre>round([this] + 0.499999999999999)</pre></code>
+     * <code><pre>round([field] + 0.499999999999999)</pre></code>
      */
     public static <T extends Number> Field<T> ceil(Field<T> field) {
         return new Ceil<T>(nullSafe(field));
@@ -2725,11 +2655,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the sqrt(field) function
-     * <p>
-     * This renders the sqrt function where available:
-     * <code><pre>sqrt([this])</pre></code> ... or simulates it elsewhere using
-     * power (which in turn may also be simulated using ln and exp functions):
-     * <code><pre>power([this], 0.5)</pre></code>
+     *
+     * @see #sqrt(Field)
      */
     public static Field<BigDecimal> sqrt(Number value) {
         return sqrt(val(value));
@@ -2739,9 +2666,9 @@ public class Factory implements FactoryOperations {
      * Get the sqrt(field) function
      * <p>
      * This renders the sqrt function where available:
-     * <code><pre>sqrt([this])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>sqrt([field])</pre></code> ... or simulates it elsewhere using
      * power (which in turn may also be simulated using ln and exp functions):
-     * <code><pre>power([this], 0.5)</pre></code>
+     * <code><pre>power([field], 0.5)</pre></code>
      */
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
         return new Sqrt(nullSafe(field));
@@ -2749,9 +2676,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the exp(field) function, taking this field as the power of e
-     * <p>
-     * This renders the same on all dialects:
-     * <code><pre>exp([this])</pre></code>
+     *
+     * @see #exp(Field)
      */
     public static Field<BigDecimal> exp(Number value) {
         return exp(val(value));
@@ -2761,7 +2687,7 @@ public class Factory implements FactoryOperations {
      * Get the exp(field) function, taking this field as the power of e
      * <p>
      * This renders the same on all dialects:
-     * <code><pre>exp([this])</pre></code>
+     * <code><pre>exp([field])</pre></code>
      */
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
         return function("exp", SQLDataType.NUMERIC, nullSafe(field));
@@ -2769,10 +2695,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the ln(field) function, taking the natural logarithm of this field
-     * <p>
-     * This renders the ln or log function where available:
-     * <code><pre>ln([this]) or
-     * log([this])</pre></code>
+     *
+     * @see #ln(Field)
      */
     public static Field<BigDecimal> ln(Number value) {
         return ln(val(value));
@@ -2782,8 +2706,8 @@ public class Factory implements FactoryOperations {
      * Get the ln(field) function, taking the natural logarithm of this field
      * <p>
      * This renders the ln or log function where available:
-     * <code><pre>ln([this]) or
-     * log([this])</pre></code>
+     * <code><pre>ln([field]) or
+     * log([field])</pre></code>
      */
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
         return new Ln(nullSafe(field));
@@ -2791,11 +2715,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the log(field, base) function
-     * <p>
-     * This renders the log function where available:
-     * <code><pre>log([this])</pre></code> ... or simulates it elsewhere (in
-     * most RDBMS) using the natural logarithm:
-     * <code><pre>ln([this]) / ln([base])</pre></code>
+     *
+     * @see #log(Field, int)
      */
     public static Field<BigDecimal> log(Number value, int base) {
         return log(val(value), base);
@@ -2805,9 +2726,9 @@ public class Factory implements FactoryOperations {
      * Get the log(field, base) function
      * <p>
      * This renders the log function where available:
-     * <code><pre>log([this])</pre></code> ... or simulates it elsewhere (in
+     * <code><pre>log([field])</pre></code> ... or simulates it elsewhere (in
      * most RDBMS) using the natural logarithm:
-     * <code><pre>ln([this]) / ln([base])</pre></code>
+     * <code><pre>ln([field]) / ln([base])</pre></code>
      */
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
         return new Ln(nullSafe(field), base);
@@ -2815,11 +2736,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the power(field, exponent) function
-     * <p>
-     * This renders the power function where available:
-     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
-     * elsewhere using ln and exp:
-     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     *
+     * @see #power(Field, Field)
      */
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return power(val(value), val(exponent));
@@ -2827,11 +2745,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the power(field, exponent) function
-     * <p>
-     * This renders the power function where available:
-     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
-     * elsewhere using ln and exp:
-     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     *
+     * @see #power(Field, Field)
      */
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
         return power(nullSafe(field), val(exponent));
@@ -2839,11 +2754,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the power(field, exponent) function
-     * <p>
-     * This renders the power function where available:
-     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
-     * elsewhere using ln and exp:
-     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     *
+     * @see #power(Field, Field)
      */
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return power(val(value), nullSafe(exponent));
@@ -2853,9 +2765,9 @@ public class Factory implements FactoryOperations {
      * Get the power(field, exponent) function
      * <p>
      * This renders the power function where available:
-     * <code><pre>power([this], [exponent])</pre></code> ... or simulates it
+     * <code><pre>power([field], [exponent])</pre></code> ... or simulates it
      * elsewhere using ln and exp:
-     * <code><pre>exp(ln([this]) * [exponent])</pre></code>
+     * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
         return new Power(nullSafe(field), nullSafe(exponent));
@@ -2863,9 +2775,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the arc cosine(field) function
-     * <p>
-     * This renders the acos function where available:
-     * <code><pre>acos([this])</pre></code>
+     *
+     * @see #acos(Field)
      */
     public static Field<BigDecimal> acos(Number value) {
         return acos(val(value));
@@ -2875,7 +2786,7 @@ public class Factory implements FactoryOperations {
      * Get the arc cosine(field) function
      * <p>
      * This renders the acos function where available:
-     * <code><pre>acos([this])</pre></code>
+     * <code><pre>acos([field])</pre></code>
      */
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
         return function("acos", SQLDataType.NUMERIC, nullSafe(field));
@@ -2883,9 +2794,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the arc sine(field) function
-     * <p>
-     * This renders the asin function where available:
-     * <code><pre>asin([this])</pre></code>
+     *
+     * @see #asin(Field)
      */
     public static Field<BigDecimal> asin(Number value) {
         return asin(val(value));
@@ -2895,7 +2805,7 @@ public class Factory implements FactoryOperations {
      * Get the arc sine(field) function
      * <p>
      * This renders the asin function where available:
-     * <code><pre>asin([this])</pre></code>
+     * <code><pre>asin([field])</pre></code>
      */
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
         return function("asin", SQLDataType.NUMERIC, nullSafe(field));
@@ -2903,9 +2813,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the arc tangent(field) function
-     * <p>
-     * This renders the atan function where available:
-     * <code><pre>atan([this])</pre></code>
+     *
+     * @see #atan(Field)
      */
     public static Field<BigDecimal> atan(Number value) {
         return atan(val(value));
@@ -2915,51 +2824,45 @@ public class Factory implements FactoryOperations {
      * Get the arc tangent(field) function
      * <p>
      * This renders the atan function where available:
-     * <code><pre>atan([this])</pre></code>
+     * <code><pre>atan([field])</pre></code>
      */
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return function("atan", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
-     * Get the arc tangent 2(field, y) function
-     * <p>
-     * This renders the atan2 or atn2 function where available:
-     * <code><pre>atan2([this]) or
-     * atn2([this])</pre></code>
+     * Get the atan2(field, y) function
+     *
+     * @see #atan2(Field, Field)
      */
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return atan2(val(x), val(y));
     }
 
     /**
-     * Get the arc tangent 2(field, y) function
-     * <p>
-     * This renders the atan2 or atn2 function where available:
-     * <code><pre>atan2([this]) or
-     * atn2([this])</pre></code>
-     */
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return atan2(nullSafe(x), val(y));
-    }
-
-    /**
-     * Get the arc tangent 2(field, y) function
-     * <p>
-     * This renders the atan2 or atn2 function where available:
-     * <code><pre>atan2([this]) or
-     * atn2([this])</pre></code>
+     * Get the atan2(field, y) function
+     *
+     * @see #atan2(Field, Field)
      */
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return atan2(val(x), nullSafe(y));
     }
 
     /**
-     * Get the arc tangent 2(field, y) function
+     * Get the atan2(field, y) function
+      *
+     * @see #atan2(Field, Field)
+     */
+    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
+        return atan2(nullSafe(x), val(y));
+    }
+
+    /**
+     * Get the atan2(field, y) function
      * <p>
      * This renders the atan2 or atn2 function where available:
-     * <code><pre>atan2([this]) or
-     * atn2([this])</pre></code>
+     * <code><pre>atan2([x], [y]) or
+     * atn2([x], [y])</pre></code>
      */
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
@@ -2967,9 +2870,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the cosine(field) function
-     * <p>
-     * This renders the cos function where available:
-     * <code><pre>cos([this])</pre></code>
+     *
+     * @see #cos(Field)
      */
     public static Field<BigDecimal> cos(Number value) {
         return cos(val(value));
@@ -2979,7 +2881,7 @@ public class Factory implements FactoryOperations {
      * Get the cosine(field) function
      * <p>
      * This renders the cos function where available:
-     * <code><pre>cos([this])</pre></code>
+     * <code><pre>cos([field])</pre></code>
      */
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
         return function("cos", SQLDataType.NUMERIC, nullSafe(field));
@@ -2987,9 +2889,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the sine(field) function
-     * <p>
-     * This renders the sin function where available:
-     * <code><pre>sin([this])</pre></code>
+     *
+     * @see #sin(Field)
      */
     public static Field<BigDecimal> sin(Number value) {
         return sin(val(value));
@@ -2999,7 +2900,7 @@ public class Factory implements FactoryOperations {
      * Get the sine(field) function
      * <p>
      * This renders the sin function where available:
-     * <code><pre>sin([this])</pre></code>
+     * <code><pre>sin([field])</pre></code>
      */
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
         return function("sin", SQLDataType.NUMERIC, nullSafe(field));
@@ -3007,9 +2908,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the tangent(field) function
-     * <p>
-     * This renders the tan function where available:
-     * <code><pre>tan([this])</pre></code>
+     *
+     * @see #tan(Field)
      */
     public static Field<BigDecimal> tan(Number value) {
         return tan(val(value));
@@ -3019,7 +2919,7 @@ public class Factory implements FactoryOperations {
      * Get the tangent(field) function
      * <p>
      * This renders the tan function where available:
-     * <code><pre>tan([this])</pre></code>
+     * <code><pre>tan([field])</pre></code>
      */
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function("tan", SQLDataType.NUMERIC, nullSafe(field));
@@ -3027,10 +2927,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the cotangent(field) function
-     * <p>
-     * This renders the cot function where available:
-     * <code><pre>cot([this])</pre></code> ... or simulates it elsewhere using
-     * sin and cos: <code><pre>cos([this]) / sin([this])</pre></code>
+     *
+     * @see #cot(Field)
      */
     public static Field<BigDecimal> cot(Number value) {
         return cot(val(value));
@@ -3040,8 +2938,8 @@ public class Factory implements FactoryOperations {
      * Get the cotangent(field) function
      * <p>
      * This renders the cot function where available:
-     * <code><pre>cot([this])</pre></code> ... or simulates it elsewhere using
-     * sin and cos: <code><pre>cos([this]) / sin([this])</pre></code>
+     * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
+     * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
         return new Cot(nullSafe(field));
@@ -3049,10 +2947,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the hyperbolic sine function: sinh(field)
-     * <p>
-     * This renders the sinh function where available:
-     * <code><pre>sinh([this])</pre></code> ... or simulates it elsewhere using
-     * exp: <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2))</pre></code>
+     *
+     * @see #sinh(Field)
      */
     public static Field<BigDecimal> sinh(Number value) {
         return sinh(val(value));
@@ -3062,8 +2958,8 @@ public class Factory implements FactoryOperations {
      * Get the hyperbolic sine function: sinh(field)
      * <p>
      * This renders the sinh function where available:
-     * <code><pre>sinh([this])</pre></code> ... or simulates it elsewhere using
-     * exp: <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2))</pre></code>
+     * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
         return new Sinh(nullSafe(field));
@@ -3071,10 +2967,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the hyperbolic cosine function: cosh(field)
-     * <p>
-     * This renders the cosh function where available:
-     * <code><pre>cosh([this])</pre></code> ... or simulates it elsewhere using
-     * exp: <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2))</pre></code>
+     *
+     * @see #cosh(Field)
      */
     public static Field<BigDecimal> cosh(Number value) {
         return cosh(val(value));
@@ -3084,8 +2978,8 @@ public class Factory implements FactoryOperations {
      * Get the hyperbolic cosine function: cosh(field)
      * <p>
      * This renders the cosh function where available:
-     * <code><pre>cosh([this])</pre></code> ... or simulates it elsewhere using
-     * exp: <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2))</pre></code>
+     * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
+     * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
         return new Cosh(nullSafe(field));
@@ -3093,11 +2987,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the hyperbolic tangent function: tanh(field)
-     * <p>
-     * This renders the tanh function where available:
-     * <code><pre>tanh([this])</pre></code> ... or simulates it elsewhere using
-     * exp:
-     * <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2) + 1)</pre></code>
+     *
+     * @see #tanh(Field)
      */
     public static Field<BigDecimal> tanh(Number value) {
         return tanh(val(value));
@@ -3107,9 +2998,9 @@ public class Factory implements FactoryOperations {
      * Get the hyperbolic tangent function: tanh(field)
      * <p>
      * This renders the tanh function where available:
-     * <code><pre>tanh([this])</pre></code> ... or simulates it elsewhere using
+     * <code><pre>tanh([field])</pre></code> ... or simulates it elsewhere using
      * exp:
-     * <code><pre>(exp([this] * 2) - 1) / (exp([this] * 2) + 1)</pre></code>
+     * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(nullSafe(field));
@@ -3117,9 +3008,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the hyperbolic cotangent function: coth(field)
-     * <p>
-     * This is not supported by any RDBMS, but simulated using exp exp:
-     * <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2) - 1)</pre></code>
+     *
+     * @see #coth(Field)
      */
     public static Field<BigDecimal> coth(Number value) {
         return coth(val(value));
@@ -3129,7 +3019,7 @@ public class Factory implements FactoryOperations {
      * Get the hyperbolic cotangent function: coth(field)
      * <p>
      * This is not supported by any RDBMS, but simulated using exp exp:
-     * <code><pre>(exp([this] * 2) + 1) / (exp([this] * 2) - 1)</pre></code>
+     * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
@@ -3138,10 +3028,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Calculate degrees from radians from this field
-     * <p>
-     * This renders the degrees function where available:
-     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
-     * <code><pre>[this] * 180 / PI</pre></code>
+     *
+     * @see #deg(Field)
      */
     public static Field<BigDecimal> deg(Number value) {
         return deg(val(value));
@@ -3151,8 +3039,8 @@ public class Factory implements FactoryOperations {
      * Calculate degrees from radians from this field
      * <p>
      * This renders the degrees function where available:
-     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
-     * <code><pre>[this] * 180 / PI</pre></code>
+     * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[field] * 180 / PI</pre></code>
      */
     public static Field<BigDecimal> deg(Field<? extends Number> field) {
         return new Degrees(nullSafe(field));
@@ -3160,10 +3048,8 @@ public class Factory implements FactoryOperations {
 
     /**
      * Calculate radians from degrees from this field
-     * <p>
-     * This renders the degrees function where available:
-     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
-     * <code><pre>[this] * PI / 180</pre></code>
+     *
+     * @see #rad(Field)
      */
     public static Field<BigDecimal> rad(Number value) {
         return rad(val(value));
@@ -3173,8 +3059,8 @@ public class Factory implements FactoryOperations {
      * Calculate radians from degrees from this field
      * <p>
      * This renders the degrees function where available:
-     * <code><pre>degrees([this])</pre></code> ... or simulates it elsewhere:
-     * <code><pre>[this] * PI / 180</pre></code>
+     * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
+     * <code><pre>[field] * PI / 180</pre></code>
      */
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
         return new Radians(nullSafe(field));

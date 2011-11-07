@@ -9,6 +9,43 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://jooq.sourceforge.net/releasenotes/RELEASENOTES.txt
 
+http://www.jooq.org/inc/RELEASENOTES.txt
+
+Version 1.6.9 - November 7, 2011
+=================================================================
+This is a maintenance release for the 1.x branch. Developments
+on this branch will stop after version 1.6.9. Only important bug
+fixes are merged to this branch. Developments for release 2.0
+have started.
+
+The most important functionality in release 1.6.9 is the newly
+added support for JDBC batch operations. You can now batch 
+execute several queries.
+
+See the official blog for more information:
+http://lukaseder.wordpress.com/2011/10/25/jdbc-batch-operations-with-jooq/
+
+Features and improvements
+-------------------------
+#621 - Add support for JDBC batch operations
+#794 - Add support for ORDER BY [int value] in order to reference
+       a column index for sorting
+#882 - Optimise Field.isTrue() and isFalse(). Take Field's data
+       type into consideration.
+#885 - Add support for INSERT INTO .. VALUES (..) syntax, 
+       omitting explicit field declarations
+#887 - Add <E> List<E> Cursor.fetchInto(Class<E>)
+
+Bug fixes
+---------
+#748 - H2 regression in 1.3.158 regarding stored functions, which
+       return a ResultSet (this was fixed in H2)
+#859 - Derby casting of numeric types to BOOLEAN doesn't work
+#886 - Regression in date extract function when used in a 
+       subselect
+#888 - Derby casting of VARCHAR to FLOAT (and similar) doesn't
+       work
+       
 Version 1.6.8 - October 22, 2011
 =================================================================
 The main improvement of this release is the re-design of the

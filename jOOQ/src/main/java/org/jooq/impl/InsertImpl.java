@@ -127,7 +127,8 @@ class InsertImpl<R extends TableRecord<R>>
 
         getDelegate().newRecord();
         for (int i = 0; i < fields.size(); i++) {
-            getDelegate().addValue((Field<Object>) fields.get(i), (Field<Object>) values.get(i));
+            // javac has trouble when inferring Object for T. Use Void instead
+            getDelegate().addValue((Field<Void>) fields.get(i), (Field<Void>) values.get(i));
         }
 
         return this;

@@ -281,33 +281,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     // ------------------------------------------------------------------------
-    // Other functions created from this field
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final <Z> Field<Z> decode(T search, Z result) {
-        return decode(search, result, new Object[0]);
-    }
-
-    @Override
-    public final <Z> Field<Z> decode(T search, Z result, Object... more) {
-        return decode(
-            val(search),
-            val(result),
-            vals(more).toArray(new Field<?>[0]));
-    }
-
-    @Override
-    public final <Z> Field<Z> decode(Field<T> search, Field<Z> result) {
-        return decode(nullSafe(search), nullSafe(result), new Field<?>[0]);
-    }
-
-    @Override
-    public final <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more) {
-        return new Decode<T, Z>(this, nullSafe(search), nullSafe(result), nullSafe(more));
-    }
-
-    // ------------------------------------------------------------------------
     // Conditions created from this field
     // ------------------------------------------------------------------------
 

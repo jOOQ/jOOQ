@@ -5657,28 +5657,27 @@ public abstract class jOOQAbstractTest<
         // ---------------------------------------------------------------------
         // DECODE
         // ---------------------------------------------------------------------
-        assertEquals(null, create().select(sNull.decode(sNull, sNull)).fetchOne(0));
+        assertEquals(null, create().select(decode(sNull, sNull, sNull)).fetchOne(0));
+        assertEquals(null, create().select(decode(iNull, val(2), val(1))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(decode(iNull, val(2), val(1), val(1))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(decode(iNull, iNull, val(1))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(decode(iNull, iNull, val(1), val(2))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(decode(iNull, val(2), val(2), iNull, val(1))).fetchOne(0));
+        assertEquals(Integer.valueOf(1), create().select(decode(iNull, val(2), val(2), iNull, val(1), val(3))).fetchOne(0));
 
-        assertEquals(null, create().select(iNull.decode(2, 1)).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.decode(2, 1, 1)).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.decode(iNull, val(1))).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.decode(iNull, val(1), val(2))).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.decode(val(2), val(2), iNull, val(1))).fetchOne(0));
-        assertEquals(Integer.valueOf(1), create().select(iNull.decode(val(2), val(2), iNull, val(1), val(3))).fetchOne(0));
-
-        assertEquals(null, create().select(sNull.decode("2", "1")).fetchOne(0));
-        assertEquals("1", create().select(sNull.decode("2", "1", "1")).fetchOne(0));
-        assertEquals("1", create().select(sNull.decode(sNull, val("1"))).fetchOne(0));
-        assertEquals("1", create().select(sNull.decode(sNull, val("1"), val("2"))).fetchOne(0));
-        assertEquals("1", create().select(sNull.decode(val("2"), val("2"), sNull, val("1"))).fetchOne(0));
-        assertEquals("1", create().select(sNull.decode(val("2"), val("2"), sNull, val("1"), val("3"))).fetchOne(0));
+        assertEquals(null, create().select(decode(sNull, "2", "1")).fetchOne(0));
+        assertEquals("1", create().select(decode(sNull, "2", "1", "1")).fetchOne(0));
+        assertEquals("1", create().select(decode(sNull, sNull, val("1"))).fetchOne(0));
+        assertEquals("1", create().select(decode(sNull, sNull, val("1"), val("2"))).fetchOne(0));
+        assertEquals("1", create().select(decode(sNull, val("2"), val("2"), sNull, val("1"))).fetchOne(0));
+        assertEquals("1", create().select(decode(sNull, val("2"), val("2"), sNull, val("1"), val("3"))).fetchOne(0));
 
         Field<Integer> lang = TBook_LANGUAGE_ID().cast(Integer.class);
         Result<Record> result = create().select(
-                lang.decode(1, "EN"),
-                lang.decode(1, "EN", "Other"),
-                lang.decode(1, "EN", 2, "DE"),
-                lang.decode(1, "EN", 2, "DE", "Other"))
+                decode(lang, 1, "EN"),
+                decode(lang, 1, "EN", "Other"),
+                decode(lang, 1, "EN", 2, "DE"),
+                decode(lang, 1, "EN", 2, "DE", "Other"))
             .from(TBook())
             .orderBy(TBook_ID()).fetch();
 

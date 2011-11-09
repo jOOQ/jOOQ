@@ -333,64 +333,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Field<T> mod(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
-    // General functions created from this field
-    // ------------------------------------------------------------------------
-
-    /**
-     * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
-     *
-     * @see #decode(Field, Field, Field[])
-     */
-    <Z> Field<Z> decode(T search, Z result);
-
-    /**
-     * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
-     *
-     * @see #decode(Field, Field, Field[])
-     */
-    <Z> Field<Z> decode(T search, Z result, Object... more);
-
-    /**
-     * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
-     *
-     * @see #decode(Field, Field, Field[])
-     */
-    <Z> Field<Z> decode(Field<T> search, Field<Z> result);
-
-    /**
-     * Gets the Oracle-style
-     * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
-     * <p>
-     * Returns the dialect's equivalent to DECODE:
-     * <ul>
-     * <li>Oracle <a
-     * href="http://www.techonthenet.com/oracle/functions/decode.php">DECODE</a></li>
-     * </ul>
-     * <p>
-     * Other dialects: <code><pre>
-     * CASE WHEN [this = search] THEN [result],
-     *     [WHEN more...         THEN more...]
-     *     [ELSE more...]
-     * END
-     * </pre></code>
-     *
-     * @param search the mandatory first search parameter
-     * @param result the mandatory first result parameter
-     * @param more the optional parameters. If <code>more.length</code> is even,
-     *            then it is assumed that it contains more search/result pairs.
-     *            If <code>more.length</code> is odd, then it is assumed that it
-     *            contains more search/result pairs plus a default at the end.
-     */
-    <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
-
-    // ------------------------------------------------------------------------
     // Conditions created from this field
     // ------------------------------------------------------------------------
 

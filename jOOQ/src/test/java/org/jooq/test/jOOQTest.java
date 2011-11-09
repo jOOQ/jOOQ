@@ -195,9 +195,6 @@ public class jOOQTest {
             FIELD_ID1.between((Integer) null, null),
             FIELD_ID1.between((Field<Integer>) null, null));
         assertEquals(
-            FIELD_ID1.decode((Integer) null, null),
-            FIELD_ID1.decode((Field<Integer>) null, null));
-        assertEquals(
             FIELD_ID1.div((Integer) null),
             FIELD_ID1.div((Field<Integer>) null));
         assertEquals(
@@ -350,6 +347,9 @@ public class jOOQTest {
         assertEquals(
             Factory.coth((Integer) null),
             Factory.coth((Field<Integer>) null));
+        assertEquals(
+            Factory.decode((Integer) null, null, null),
+            Factory.decode((Field<Integer>) null, null, null));
         assertEquals(
             Factory.decode((Integer) null, null, null),
             Factory.decode((Field<Integer>) null, null, null));

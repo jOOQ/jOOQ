@@ -310,7 +310,7 @@ final class JooqUtil {
                 Class.forName(Column.class.getName());
                 isJPAAvailable = true;
             }
-            catch (Exception e) {
+            catch (Throwable e) {
                 isJPAAvailable = false;
             }
         }

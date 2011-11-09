@@ -46,6 +46,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.util.maven.example.PublicFactory;
 import org.jooq.util.maven.example.tables.TBook;
+import org.jooq.util.maven.example.tables.records.TBookRecord;
 
 import org.junit.Test;
 
@@ -58,7 +59,7 @@ public class TestGeneratedSources {
     private static final List<String>  BOOK_TITLES   = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
 
     @Test
-    public void run() throws Exception {
+    public void testFetch() throws Exception {
         Connection connection = DriverManager.getConnection("jdbc:postgresql:postgres", "postgres", "test");
         PublicFactory create = new PublicFactory(connection);
 
@@ -70,5 +71,22 @@ public class TestGeneratedSources {
 
         assertEquals(BOOK_IDS, books.getValues(0));
         assertEquals(BOOK_TITLES, books.getValues(1));
+    }
+
+    @Test
+    public void testFetchInto() throws Exception {
+        Connection connection = DriverManager.getConnection("jdbc:postgresql:postgres", "postgres", "test");
+        PublicFactory create = new PublicFactory(connection);
+
+        List<TBookRecord> books =
+        create.select(TBook.ID, TBook.TITLE)
+              .from(TBook.T_BOOK)
+              .orderBy(TBook.ID)
+              .fetchInto(TBookRecord.class);
+
+        for (int i = 0; i < BOOK_IDS.size(); i++) {
+            assertEquals(BOOK_IDS.get(i), books.get(i).getId());
+            assertEquals(BOOK_TITLES.get(i), books.get(i).getTitle());
+        }
     }
 }

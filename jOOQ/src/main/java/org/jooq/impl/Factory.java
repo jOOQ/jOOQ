@@ -1174,7 +1174,7 @@ public class Factory implements FactoryOperations {
      * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(T value, T search, Z result) {
-        return val(value).decode(search, result);
+        return decode(value, search, result, new Object[0]);
     }
 
     /**
@@ -1185,7 +1185,7 @@ public class Factory implements FactoryOperations {
      * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
-        return val(value).decode(search, result, more);
+        return decode(val(value), val(search), val(result), vals(more).toArray(new Field[0]));
     }
 
     /**
@@ -1196,18 +1196,39 @@ public class Factory implements FactoryOperations {
      * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
-        return nullSafe(value).decode(nullSafe(search), nullSafe(result));
+        return decode(nullSafe(value), nullSafe(search), nullSafe(result), new Field[0]);
     }
 
     /**
      * Gets the Oracle-style
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
      * function
+     * <p>
+     * Returns the dialect's equivalent to DECODE:
+     * <ul>
+     * <li>Oracle <a
+     * href="http://www.techonthenet.com/oracle/functions/decode.php">DECODE</a></li>
+     * </ul>
+     * <p>
+     * Other dialects: <code><pre>
+     * CASE WHEN [this = search] THEN [result],
+     *     [WHEN more...         THEN more...]
+     *     [ELSE more...]
+     * END
+     * </pre></code>
+     *
+     * @param value The value to decode
+     * @param search the mandatory first search parameter
+     * @param result the mandatory first result candidate parameter
+     * @param more the optional parameters. If <code>more.length</code> is even,
+     *            then it is assumed that it contains more search/result pairs.
+     *            If <code>more.length</code> is odd, then it is assumed that it
+     *            contains more search/result pairs plus a default at the end.     *
      *
      * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
-        return nullSafe(value).decode(nullSafe(search), nullSafe(result), nullSafe(more));
+        return new Decode<T, Z>(nullSafe(value), nullSafe(search), nullSafe(result), nullSafe(more));
     }
 
     /**

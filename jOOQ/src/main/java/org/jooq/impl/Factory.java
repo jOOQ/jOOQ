@@ -1171,7 +1171,7 @@ public class Factory implements FactoryOperations {
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
      * function
      *
-     * @see Field#decode(Field, Field, Field[])
+     * @see #decode(Field, Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(T value, T search, Z result) {
         return decode(value, search, result, new Object[0]);
@@ -1182,7 +1182,7 @@ public class Factory implements FactoryOperations {
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
      * function
      *
-     * @see Field#decode(Field, Field, Field[])
+     * @see #decode(Field, Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
         return decode(val(value), val(search), val(result), vals(more).toArray(new Field[0]));
@@ -1193,7 +1193,7 @@ public class Factory implements FactoryOperations {
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
      * function
      *
-     * @see Field#decode(Field, Field, Field[])
+     * @see #decode(Field, Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
         return decode(nullSafe(value), nullSafe(search), nullSafe(result), new Field[0]);
@@ -1224,8 +1224,6 @@ public class Factory implements FactoryOperations {
      *            then it is assumed that it contains more search/result pairs.
      *            If <code>more.length</code> is odd, then it is assumed that it
      *            contains more search/result pairs plus a default at the end.     *
-     *
-     * @see Field#decode(Field, Field, Field[])
      */
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
         return new Decode<T, Z>(nullSafe(value), nullSafe(search), nullSafe(result), nullSafe(more));
@@ -1323,7 +1321,7 @@ public class Factory implements FactoryOperations {
      * Gets the Oracle-style <code>COALESCE(value1, value2, ... , value n)</code>
      * function
      *
-     * @see #coalesce(Field, Field, Field...)
+     * @see #coalesce(Field, Field...)
      */
     public static <T> Field<T> coalesce(T value, T... values) {
         return coalesce(val(value), vals(values).toArray(new Field[0]));
@@ -1406,7 +1404,7 @@ public class Factory implements FactoryOperations {
     /**
      * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
      *
-     * @see #nvl2(Field, Field)
+     * @see #nvl2(Field, Field, Field)
      */
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
         return nvl2(nullSafe(value), val(valueIfNotNull), val(valueIfNull));
@@ -1415,7 +1413,7 @@ public class Factory implements FactoryOperations {
     /**
      * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
      *
-     * @see #nvl2(Field, Field)
+     * @see #nvl2(Field, Field, Field)
      */
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
         return nvl2(nullSafe(value), val(valueIfNotNull), nullSafe(valueIfNull));
@@ -1424,7 +1422,7 @@ public class Factory implements FactoryOperations {
     /**
      * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
      *
-     * @see #nvl2(Field, Field)
+     * @see #nvl2(Field, Field, Field)
      */
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
         return nvl2(nullSafe(value), nullSafe(valueIfNotNull), val(valueIfNull));
@@ -1449,7 +1447,7 @@ public class Factory implements FactoryOperations {
     /**
      * Gets the Oracle-style NULLIF(value, other) function
      *
-     * @see #nullif(Field)
+     * @see #nullif(Field, Field)
      */
     public static <T> Field<T> nullif(T value, T other) {
         return nullif(val(value), val(other));
@@ -1458,7 +1456,7 @@ public class Factory implements FactoryOperations {
     /**
      * Gets the Oracle-style NULLIF(value, other) function
      *
-     * @see #nullif(Field)
+     * @see #nullif(Field, Field)
      */
     public static <T> Field<T> nullif(T value, Field<T> other) {
         return nullif(val(value), nullSafe(other));
@@ -1467,7 +1465,7 @@ public class Factory implements FactoryOperations {
     /**
      * Gets the Oracle-style NULLIF(value, other) function
      *
-     * @see #nullif(Field)
+     * @see #nullif(Field, Field)
      */
     public static <T> Field<T> nullif(Field<T> value, T other) {
         return nullif(nullSafe(value), val(other));
@@ -1835,7 +1833,7 @@ public class Factory implements FactoryOperations {
      * depending on the dialect.
      * <p>
      * If any of the given fields is not a {@link String} field, they are cast
-     * to <code>Field&lt;String&gt;</code> first using {@link #cast(Class)}
+     * to <code>Field&lt;String&gt;</code> first using {@link #cast(Object, Class)}
      */
     public static Field<String> concat(Field<?>... fields) {
         return new Concat(nullSafe(fields));
@@ -1883,9 +1881,9 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the length of a <code>VARCHAR</code> type. This is a synonym for
-     * {@link #charLength()}
+     * {@link #charLength(String)}
      *
-     * @see #charLength()
+     * @see #charLength(String)
      */
     public static Field<Integer> length(String value) {
         return length(val(value));
@@ -1893,9 +1891,9 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the length of a <code>VARCHAR</code> type. This is a synonym for
-     * {@link #charLength()}
+     * {@link #charLength(Field)}
      *
-     * @see #charLength()
+     * @see #charLength(Field)
      */
     public static Field<Integer> length(Field<String> field) {
         return charLength(field);
@@ -2582,7 +2580,7 @@ public class Factory implements FactoryOperations {
      * <code>n &gt; 5</code>! Better implementation suggestions are very
      * welcome.
      *
-     * @see #greatest(Field...)
+     * @see #greatest(Field, Field...)
      */
     public static <T> Field<T> greatest(T value, T... values) {
         return greatest(val(value), vals(values).toArray(new Field[0]));
@@ -2610,7 +2608,7 @@ public class Factory implements FactoryOperations {
      * <code>n &gt; 5</code>! Better implementation suggestions are very
      * welcome.
      *
-     * @see #least(Field...)
+     * @see #least(Field, Field...)
      */
     public static <T> Field<T> least(T value, T... values) {
         return least(val(value), vals(values).toArray(new Field[0]));

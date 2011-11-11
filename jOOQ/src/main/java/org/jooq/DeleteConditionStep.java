@@ -50,13 +50,13 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface DeleteConditionStep extends DeleteFinalStep {
+public interface DeleteConditionStep<R extends TableRecord<R>> extends DeleteFinalStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
-    DeleteConditionStep and(Condition condition);
+    DeleteConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -69,7 +69,7 @@ public interface DeleteConditionStep extends DeleteFinalStep {
      *
      * @see Factory#condition(String)
      */
-    DeleteConditionStep and(String sql);
+    DeleteConditionStep<R> and(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -82,31 +82,31 @@ public interface DeleteConditionStep extends DeleteFinalStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    DeleteConditionStep and(String sql, Object... bindings);
+    DeleteConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
-    DeleteConditionStep andNot(Condition condition);
+    DeleteConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator
      */
-    DeleteConditionStep andExists(Select<?> select);
+    DeleteConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator
      */
-    DeleteConditionStep andNotExists(Select<?> select);
+    DeleteConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
-    DeleteConditionStep or(Condition condition);
+    DeleteConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -119,7 +119,7 @@ public interface DeleteConditionStep extends DeleteFinalStep {
      *
      * @see Factory#condition(String)
      */
-    DeleteConditionStep or(String sql);
+    DeleteConditionStep<R> or(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -132,23 +132,23 @@ public interface DeleteConditionStep extends DeleteFinalStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    DeleteConditionStep or(String sql, Object... bindings);
+    DeleteConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
-    DeleteConditionStep orNot(Condition condition);
+    DeleteConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator
      */
-    DeleteConditionStep orExists(Select<?> select);
+    DeleteConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator
      */
-    DeleteConditionStep orNotExists(Select<?> select);
+    DeleteConditionStep<R> orNotExists(Select<?> select);
 }

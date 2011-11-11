@@ -54,17 +54,17 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface UpdateWhereStep extends UpdateFinalStep {
+public interface UpdateWhereStep<R extends TableRecord<R>> extends UpdateFinalStep<R> {
 
     /**
      * Add conditions to the query
      */
-    UpdateConditionStep where(Condition... conditions);
+    UpdateConditionStep<R> where(Condition... conditions);
 
     /**
      * Add conditions to the query
      */
-    UpdateConditionStep where(Collection<Condition> conditions);
+    UpdateConditionStep<R> where(Collection<Condition> conditions);
 
     /**
      * Add conditions to the query
@@ -76,7 +76,7 @@ public interface UpdateWhereStep extends UpdateFinalStep {
      *
      * @see Factory#condition(String)
      */
-    UpdateConditionStep where(String sql);
+    UpdateConditionStep<R> where(String sql);
 
     /**
      * Add conditions to the query
@@ -88,15 +88,15 @@ public interface UpdateWhereStep extends UpdateFinalStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    UpdateConditionStep where(String sql, Object... bindings);
+    UpdateConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add an EXISTS clause to the query
      */
-    UpdateConditionStep whereExists(Select<?> select);
+    UpdateConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query
      */
-    UpdateConditionStep whereNotExists(Select<?> select);
+    UpdateConditionStep<R> whereNotExists(Select<?> select);
 }

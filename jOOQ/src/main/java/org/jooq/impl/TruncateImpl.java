@@ -49,7 +49,7 @@ import org.jooq.Truncate;
 /**
  * @author Lukas Eder
  */
-class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Truncate {
+class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Truncate<R> {
 
     /**
      * Generated UID

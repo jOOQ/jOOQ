@@ -52,13 +52,13 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface UpdateConditionStep extends UpdateFinalStep {
+public interface UpdateConditionStep<R extends TableRecord<R>> extends UpdateFinalStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
-    UpdateConditionStep and(Condition condition);
+    UpdateConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -71,7 +71,7 @@ public interface UpdateConditionStep extends UpdateFinalStep {
      *
      * @see Factory#condition(String)
      */
-    UpdateConditionStep and(String sql);
+    UpdateConditionStep<R> and(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -84,31 +84,31 @@ public interface UpdateConditionStep extends UpdateFinalStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    UpdateConditionStep and(String sql, Object... bindings);
+    UpdateConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
-    UpdateConditionStep andNot(Condition condition);
+    UpdateConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator
      */
-    UpdateConditionStep andExists(Select<?> select);
+    UpdateConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator
      */
-    UpdateConditionStep andNotExists(Select<?> select);
+    UpdateConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
-    UpdateConditionStep or(Condition condition);
+    UpdateConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -121,7 +121,7 @@ public interface UpdateConditionStep extends UpdateFinalStep {
      *
      * @see Factory#condition(String)
      */
-    UpdateConditionStep or(String sql);
+    UpdateConditionStep<R> or(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -134,23 +134,23 @@ public interface UpdateConditionStep extends UpdateFinalStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    UpdateConditionStep or(String sql, Object... bindings);
+    UpdateConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
-    UpdateConditionStep orNot(Condition condition);
+    UpdateConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator
      */
-    UpdateConditionStep orExists(Select<?> select);
+    UpdateConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator
      */
-    UpdateConditionStep orNotExists(Select<?> select);
+    UpdateConditionStep<R> orNotExists(Select<?> select);
 }

@@ -72,12 +72,12 @@ class MergeImpl<R extends TableRecord<R>> extends AbstractQuery
 implements
 
     // Cascading interface implementations for Merge behaviour
-    MergeUsingStep,
-    MergeOnStep,
-    MergeOnConditionStep,
-    MergeMatchedSetMoreStep,
-    MergeNotMatchedValuesStep,
-    MergeFinalStep {
+    MergeUsingStep<R>,
+    MergeOnStep<R>,
+    MergeOnConditionStep<R>,
+    MergeMatchedSetMoreStep<R>,
+    MergeNotMatchedValuesStep<R>,
+    MergeFinalStep<R> {
 
     /**
      * Generated UID
@@ -116,18 +116,18 @@ implements
     }
 
     @Override
-    public final MergeOnConditionStep on(Condition... conditions) {
+    public final MergeImpl<R> on(Condition... conditions) {
         on.addConditions(conditions);
         return this;
     }
 
     @Override
-    public final MergeOnConditionStep on(String sql) {
+    public final MergeImpl<R> on(String sql) {
         return on(condition(sql));
     }
 
     @Override
-    public final MergeOnConditionStep on(String sql, Object... bindings) {
+    public final MergeImpl<R> on(String sql, Object... bindings) {
         return on(condition(sql, bindings));
     }
 

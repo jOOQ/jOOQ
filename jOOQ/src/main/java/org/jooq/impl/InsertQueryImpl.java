@@ -264,7 +264,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
     }
 
     @SuppressWarnings("unchecked")
-    private final Merge toMerge() {
+    private final Merge<R> toMerge() {
         if (getInto() instanceof UpdatableTable) {
             UpdatableTable<R> into = (UpdatableTable<R>) getInto();
 

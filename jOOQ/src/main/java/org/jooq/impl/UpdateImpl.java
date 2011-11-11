@@ -63,8 +63,8 @@ final class UpdateImpl<R extends TableRecord<R>>
     implements
 
     // Cascading interface implementations for Update behaviour
-    UpdateSetMoreStep,
-    UpdateConditionStep {
+    UpdateSetMoreStep<R>,
+    UpdateConditionStep<R> {
 
     /**
      * Generated UID

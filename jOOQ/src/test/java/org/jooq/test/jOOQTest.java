@@ -525,7 +525,7 @@ public class jOOQTest {
 
     @Test
     public final void testTruncate() throws Exception {
-        Truncate t = create.truncate(TABLE1);
+        Truncate<Table1Record> t = create.truncate(TABLE1);
 
         assertEquals("truncate table \"TABLE1\"", r_dec().render(t));
         assertEquals("truncate table \"TABLE1\"", r_ref().render(t));
@@ -1299,7 +1299,7 @@ public class jOOQTest {
 
     @Test
     public final void testInsertSelect2() throws Exception {
-        Insert q = create.insertInto(TABLE1, create.selectQuery());
+        Insert<Table1Record> q = create.insertInto(TABLE1, create.selectQuery());
 
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_ref().render(q));
@@ -1443,7 +1443,7 @@ public class jOOQTest {
 
     @Test
     public final void testMergeQuery() throws Exception {
-        Merge q =
+        Merge<Table1Record> q =
         create.mergeInto(TABLE1)
               .using(create.select(FIELD_ID2).from(TABLE2))
               .on(FIELD_ID2.equal(FIELD_ID1))

@@ -54,6 +54,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface MergeMatchedSetMoreStep extends MergeMatchedSetStep, MergeNotMatchedStep {
+public interface MergeMatchedSetMoreStep<R extends TableRecord<R>> extends MergeMatchedSetStep<R>, MergeNotMatchedStep<R> {
 
 }

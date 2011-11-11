@@ -54,11 +54,11 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface MergeMatchedStep {
+public interface MergeMatchedStep<R extends TableRecord<R>> {
 
     /**
      * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement
      */
-    MergeMatchedSetStep whenMatchedThenUpdate();
+    MergeMatchedSetStep<R> whenMatchedThenUpdate();
 }

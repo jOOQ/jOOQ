@@ -45,7 +45,7 @@ import java.util.Map;
  * @param <R> The record type of the table being inserted into
  * @author Lukas Eder
  */
-public interface InsertQuery<R extends TableRecord<R>> extends StoreQuery<R>, Insert {
+public interface InsertQuery<R extends TableRecord<R>> extends StoreQuery<R>, Insert<R> {
 
     /**
      * Adds a new Record to the insert statement for multi-record inserts

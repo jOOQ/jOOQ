@@ -58,17 +58,17 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface InsertSetStep {
+public interface InsertSetStep<R extends TableRecord<R>> {
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
-    <T> InsertSetMoreStep set(Field<T> field, T value);
+    <T> InsertSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
-    <T> InsertSetMoreStep set(Field<T> field, Field<T> value);
+    <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
@@ -77,20 +77,20 @@ public interface InsertSetStep {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
-    InsertSetMoreStep set(Map<? extends Field<?>, ?> map);
+    InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
     /**
      * Add values to the insert statement with implicit field names
      */
-    InsertValuesStep values(Object... values);
+    InsertValuesStep<R> values(Object... values);
 
     /**
      * Add values to the insert statement with implicit field names
      */
-    InsertValuesStep values(Field<?>... values);
+    InsertValuesStep<R> values(Field<?>... values);
 
     /**
      * Add values to the insert statement with implicit field names
      */
-    InsertValuesStep values(Collection<?> values);
+    InsertValuesStep<R> values(Collection<?> values);
 }

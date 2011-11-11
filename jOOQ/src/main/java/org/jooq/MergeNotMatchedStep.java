@@ -56,17 +56,17 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface MergeNotMatchedStep {
+public interface MergeNotMatchedStep<R extends TableRecord<R>> {
 
     /**
      * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
      * <code>MERGE</code> statement
      */
-    MergeNotMatchedValuesStep whenNotMatchedThenInsert(Field<?>... fields);
+    MergeNotMatchedValuesStep<R> whenNotMatchedThenInsert(Field<?>... fields);
 
     /**
      * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement
      */
-    MergeNotMatchedValuesStep whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
+    MergeNotMatchedValuesStep<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
 }

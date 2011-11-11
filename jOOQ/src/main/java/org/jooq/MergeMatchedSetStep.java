@@ -56,19 +56,19 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface MergeMatchedSetStep {
+public interface MergeMatchedSetStep<R extends TableRecord<R>> {
 
     /**
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
      * <code>WHEN MATCHED</code> clause
      */
-    <T> MergeMatchedSetMoreStep set(Field<T> field, T value);
+    <T> MergeMatchedSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
      * <code>WHEN MATCHED</code> clause
      */
-    <T> MergeMatchedSetMoreStep set(Field<T> field, Field<T> value);
+    <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>MERGE</code>
@@ -78,5 +78,5 @@ public interface MergeMatchedSetStep {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
-    MergeMatchedSetMoreStep set(Map<? extends Field<?>, ?> map);
+    MergeMatchedSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 }

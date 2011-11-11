@@ -43,6 +43,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.jooq.exception.FetchIntoException;
+
 import org.w3c.dom.Document;
 
 /**
@@ -1725,9 +1727,26 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
      * @see Record#into(Class)
      */
-    <E> List<E> into(Class<? extends E> type);
+    <E> List<E> into(Class<? extends E> type) throws FetchIntoException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code>record.into(table)</code> on every
+     * record contained in this <code>Result</code>. See
+     * {@link Record#into(Table)} for more details
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     * @see Record#into(Table)
+     */
+    <Z extends TableRecord<Z>> Result<Z> into(Table<Z> table) throws FetchIntoException;
 
     /**
      * Map results into a custom handler callback

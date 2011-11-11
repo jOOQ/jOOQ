@@ -36,6 +36,7 @@
 
 package org.jooq;
 
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -43,6 +44,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+
+import org.jooq.exception.FetchIntoException;
 
 /**
  * A wrapper for database result records returned by
@@ -887,15 +890,35 @@ public interface Record extends FieldProvider, Store<Object> {
      * </ul>
      * <h3>Other restrictions</h3>
      * <ul>
-     * <li><code>type</code> must provide a public default constructor</li>
+     * <li><code>type</code> must provide a default constructor. Non-public
+     * default constructors are made accessible using
+     * {@link Constructor#setAccessible(boolean)}</li>
      * <li>primitive types are supported. If a value is <code>null</code>, this
      * will result in setting the primitive type's default value (zero for
      * numbers, or <code>false</code> for booleans). Hence, there is no way of
      * distinguishing <code>null</code> and <code>0</code> in that case.</li>
      * </ul>
-     *
+     * 
      * @param <E> The generic entity type.
      * @param type The entity type.
      */
-    <E> E into(Class<? extends E> type);
+    <E> E into(Class<? extends E> type) throws FetchIntoException;
+
+    /**
+     * Map resulting records onto a custom record type. The mapping algorithm is
+     * this: <h3>jOOQ will map <code>Record</code> values by equal field names:</h3>
+     * If a field's value for {@link Field#getName()} is <code>MY_field</code>
+     * (case-sensitive!), then there must be a field in <code>table</code> with
+     * the exact same name. <h3>Other restrictions</h3>
+     * <ul>
+     * <li>{@link Table#getRecordType()} must return a class of type
+     * {@link TableRecord}, which must provide a default constructor. Non-public
+     * default constructors are made accessible using
+     * {@link Constructor#setAccessible(boolean)}</li>
+     * </ul>
+     * 
+     * @param <R> The generic table record type.
+     * @param table The table type.
+     */
+    <R extends TableRecord<R>> R into(Table<R> table);
 }

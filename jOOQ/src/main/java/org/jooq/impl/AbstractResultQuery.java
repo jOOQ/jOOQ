@@ -62,6 +62,9 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
+import org.jooq.TableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 
 /**
@@ -363,6 +366,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) {
         return fetch().into(type);
+    }
+
+    @Override
+    public final <Z extends TableRecord<Z>> Result<Z> fetchInto(Table<Z> table) throws DataAccessException {
+        return fetch().into(table);
     }
 
     @Override

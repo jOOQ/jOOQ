@@ -48,6 +48,8 @@ import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.Result;
+import org.jooq.Table;
+import org.jooq.TableRecord;
 
 /**
  * @author Lukas Eder
@@ -165,6 +167,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     @Override
     public final <E> List<E> fetchInto(Class<? extends E> clazz) {
         return fetch().into(clazz);
+    }
+
+    @Override
+    public final <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table) {
+        return fetch().into(table);
     }
 
     @Override

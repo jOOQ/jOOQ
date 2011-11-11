@@ -36,11 +36,11 @@
 package org.jooq.util.sqlite.sqlite_master;
 
 
-import org.jooq.Record;
 import org.jooq.TableField;
-import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.impl.TableRecordImpl;
 import org.jooq.util.sqlite.SQLiteDataType;
+import org.jooq.util.sqlite.sqlite_master.SQLiteMaster.SQLiteMasterRecord;
 
 
 /**
@@ -49,7 +49,7 @@ import org.jooq.util.sqlite.SQLiteDataType;
  *
  * @author Lukas Eder
  */
-public class SQLiteMaster extends TableImpl<Record> {
+public class SQLiteMaster extends TableImpl<SQLiteMasterRecord> {
 
     private static final long serialVersionUID = -823335201;
 
@@ -58,16 +58,31 @@ public class SQLiteMaster extends TableImpl<Record> {
      */
     public static final SQLiteMaster SQLITE_MASTER = new SQLiteMaster();
 
-    public static final TableField<Record, String>  TYPE     = new TableFieldImpl<Record, String>("type", SQLiteDataType.VARCHAR, SQLITE_MASTER);
-    public static final TableField<Record, String>  NAME     = new TableFieldImpl<Record, String>("name", SQLiteDataType.VARCHAR, SQLITE_MASTER);
-    public static final TableField<Record, String>  TBL_NAME = new TableFieldImpl<Record, String>("tbl_name", SQLiteDataType.VARCHAR, SQLITE_MASTER);
-    public static final TableField<Record, Integer> ROOTPAGE = new TableFieldImpl<Record, Integer>("rootpage", SQLiteDataType.INTEGER, SQLITE_MASTER);
-    public static final TableField<Record, String>  SQL      = new TableFieldImpl<Record, String>("sql", SQLiteDataType.VARCHAR, SQLITE_MASTER);
+    public static final TableField<SQLiteMasterRecord, String>  TYPE     = createField("type",     SQLiteDataType.VARCHAR, SQLITE_MASTER);
+    public static final TableField<SQLiteMasterRecord, String>  NAME     = createField("name",     SQLiteDataType.VARCHAR, SQLITE_MASTER);
+    public static final TableField<SQLiteMasterRecord, String>  TBL_NAME = createField("tbl_name", SQLiteDataType.VARCHAR, SQLITE_MASTER);
+    public static final TableField<SQLiteMasterRecord, Integer> ROOTPAGE = createField("rootpage", SQLiteDataType.INTEGER, SQLITE_MASTER);
+    public static final TableField<SQLiteMasterRecord, String>  SQL      = createField("sql",      SQLiteDataType.VARCHAR, SQLITE_MASTER);
 
     /**
      * No further instances allowed
      */
     private SQLiteMaster() {
         super("sqlite_master");
+    }
+
+    /**
+     * @author Lukas Eder
+     */
+    public static class SQLiteMasterRecord extends TableRecordImpl<SQLiteMasterRecord> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 6282658285158563850L;
+
+        public SQLiteMasterRecord() {
+            super(SQLITE_MASTER);
+        }
     }
 }

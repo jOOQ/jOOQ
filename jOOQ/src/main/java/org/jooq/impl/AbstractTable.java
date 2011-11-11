@@ -39,11 +39,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.DataType;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableField;
 
 abstract class AbstractTable<R extends Record> extends AbstractType<R> implements Table<R> {
 
@@ -105,5 +107,16 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
         }
 
         return Collections.unmodifiableList(result);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link TableField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table) {
+        return new TableFieldImpl<R, T>(name, type, table);
     }
 }

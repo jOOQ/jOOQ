@@ -38,7 +38,6 @@ package org.jooq.test;
 import org.jooq.TableField;
 import org.jooq.impl.CustomTable;
 import org.jooq.impl.SQLDataType;
-import org.jooq.impl.TableFieldImpl;
 
 /**
  * @author Lukas Eder
@@ -52,11 +51,11 @@ public class BookTable extends CustomTable<BookRecord> {
 
     public static final BookTable                      BOOK       = new BookTable();
 
-    public static final TableField<BookRecord, String> FIRST_NAME = new TableFieldImpl<BookRecord, String>("FIRST_NAME", SQLDataType.VARCHAR, BOOK);
-    public static final TableField<BookRecord, String> UNMATCHED  = new TableFieldImpl<BookRecord, String>("UNMATCHED", SQLDataType.VARCHAR, BOOK);
-    public static final TableField<BookRecord, String> LAST_NAME  = new TableFieldImpl<BookRecord, String>("LAST_NAME", SQLDataType.VARCHAR, BOOK);
-    public static final TableField<BookRecord, Short>  ID         = new TableFieldImpl<BookRecord, Short>("ID", SQLDataType.SMALLINT, BOOK);
-    public static final TableField<BookRecord, String> TITLE      = new TableFieldImpl<BookRecord, String>("TITLE", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, String> FIRST_NAME = createField("FIRST_NAME", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, String> UNMATCHED  = createField("UNMATCHED", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, String> LAST_NAME  = createField("LAST_NAME", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, Short>  ID         = createField("ID", SQLDataType.SMALLINT, BOOK);
+    public static final TableField<BookRecord, String> TITLE      = createField("TITLE", SQLDataType.VARCHAR, BOOK);
 
     protected BookTable() {
         super(null);

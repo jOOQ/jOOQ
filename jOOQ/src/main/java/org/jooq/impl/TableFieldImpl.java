@@ -54,7 +54,7 @@ import org.jooq.TableField;
  *
  * @author Lukas Eder
  */
-public class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T> {
+class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T> {
 
     private static final long serialVersionUID = -2211214195583539735L;
 

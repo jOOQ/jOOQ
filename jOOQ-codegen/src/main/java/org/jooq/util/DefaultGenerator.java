@@ -89,7 +89,6 @@ import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.SequenceImpl;
 import org.jooq.impl.StopWatch;
 import org.jooq.impl.StringUtils;
-import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTFieldImpl;
@@ -1964,7 +1963,7 @@ public class DefaultGenerator implements Generator {
 
     private void printTableColumn(GenerationWriter out, ColumnDefinition column, Definition table) throws SQLException {
         Class<?> declaredMemberClass = TableField.class;
-        Class<?> concreteMemberClass = TableFieldImpl.class;
+        Class<?> concreteMemberClass = null;
 
         printColumnDefinition(out, column, table, declaredMemberClass, concreteMemberClass);
     }
@@ -1994,11 +1993,19 @@ public class DefaultGenerator implements Generator {
 		out.print("> ");
 		out.print(strategy.getJavaIdentifierUC(column));
 		out.print(columnDisambiguationSuffix);
-		out.print(" = new ");
-		out.print(concreteMemberClass);
-		out.print(genericPrefix);
-		out.print(getJavaType(column.getType()));
-		out.print(">(\"");
+
+		if (concreteMemberClass == null) {
+		    out.print(" = createField");
+		}
+		else {
+            out.print(" = new ");
+            out.print(concreteMemberClass);
+            out.print(genericPrefix);
+            out.print(getJavaType(column.getType()));
+            out.print(">");
+		}
+
+		out.print("(\"");
 		out.print(column.getName());
 		out.print("\", ");
 		out.print(getJavaTypeReference(column.getDatabase(), column.getType()));

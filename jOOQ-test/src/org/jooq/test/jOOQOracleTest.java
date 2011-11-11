@@ -39,6 +39,7 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
+import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_BOOK;
 import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
@@ -664,6 +665,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         List<?> paths =
         ora.select(substring(sysConnectByPath(TDirectory_NAME(), "/"), 2))
            .from(TDirectory())
+           .where(trueCondition())
+           .and(trueCondition())
            .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
            .startWith(TDirectory_PARENT_ID().isNull())
            .orderBy(one())

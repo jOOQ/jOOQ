@@ -136,10 +136,10 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
-import org.jooq.impl.JooqLogger;
 import org.jooq.impl.SQLDataType;
-import org.jooq.impl.StopWatch;
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StopWatch;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.GenerationTool;
 
 import org.apache.commons.io.FileUtils;

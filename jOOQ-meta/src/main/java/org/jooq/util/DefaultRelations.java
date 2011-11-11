@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 public class DefaultRelations extends AbstractDefinition implements Relations {
 

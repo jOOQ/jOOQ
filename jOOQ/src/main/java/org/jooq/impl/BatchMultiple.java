@@ -41,6 +41,8 @@ import java.sql.Statement;
 
 import org.jooq.Batch;
 import org.jooq.Query;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StopWatch;
 
 /**
  * @author Lukas Eder

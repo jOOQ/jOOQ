@@ -50,6 +50,7 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder

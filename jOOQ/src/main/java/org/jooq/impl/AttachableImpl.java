@@ -45,6 +45,7 @@ import org.jooq.Configuration;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.Store;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A default implementation for mixin of the {@link Attachable} interface

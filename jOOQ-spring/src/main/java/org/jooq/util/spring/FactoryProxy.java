@@ -80,7 +80,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;

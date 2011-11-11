@@ -37,7 +37,7 @@
 package org.jooq.exception;
 
 import org.jooq.Configuration;
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 /**
  * An exception thrown if an SQL construct is used, which is not supported by

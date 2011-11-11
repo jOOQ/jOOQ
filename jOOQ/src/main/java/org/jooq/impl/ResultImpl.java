@@ -38,9 +38,9 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.jooq.impl.StringUtils.abbreviate;
-import static org.jooq.impl.StringUtils.leftPad;
-import static org.jooq.impl.StringUtils.rightPad;
+import static org.jooq.tools.StringUtils.abbreviate;
+import static org.jooq.tools.StringUtils.leftPad;
+import static org.jooq.tools.StringUtils.rightPad;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -73,6 +73,7 @@ import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONObject;
 
 import org.w3c.dom.Document;

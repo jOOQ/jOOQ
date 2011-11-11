@@ -42,8 +42,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.jooq.impl.JooqLogger;
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * A base implementation for element container definitions

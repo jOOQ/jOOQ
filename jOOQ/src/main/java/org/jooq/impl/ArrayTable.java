@@ -47,6 +47,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.h2.H2DataType;
 
 /**

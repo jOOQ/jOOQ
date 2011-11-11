@@ -43,7 +43,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 public class DefaultMasterDataTableDefinition extends AbstractDefinition implements MasterDataTableDefinition {
 

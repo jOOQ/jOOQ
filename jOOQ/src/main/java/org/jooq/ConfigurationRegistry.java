@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 
 /**

@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
 import org.jooq.UDTRecord;
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.StringUtils;
 
 /**
  * A wrapper for a {@link PrintWriter}

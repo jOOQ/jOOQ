@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jooq.impl;
+package org.jooq.tools;
 
 /**
  * <p>
@@ -106,7 +106,7 @@ package org.jooq.impl;
  * @since 1.0
  * @version $Id: StringUtils.java 911986 2010-02-19 21:19:05Z niallp $
  */
-public class StringUtils {
+public final class StringUtils {
 
     /**
      * <p>The maximum size to which the padding constant(s) can expand.</p>

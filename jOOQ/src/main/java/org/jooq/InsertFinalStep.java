@@ -53,6 +53,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface InsertFinalStep extends Insert {
+public interface InsertFinalStep<R extends TableRecord<R>> extends Insert<R> {
 
 }

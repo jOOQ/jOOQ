@@ -52,17 +52,17 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface UpdateSetStep {
+public interface UpdateSetStep<R extends TableRecord<R>> {
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
-    <T> UpdateSetMoreStep set(Field<T> field, T value);
+    <T> UpdateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
-    <T> UpdateSetMoreStep set(Field<T> field, Field<T> value);
+    <T> UpdateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
@@ -71,5 +71,5 @@ public interface UpdateSetStep {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
-    UpdateSetMoreStep set(Map<? extends Field<?>, ?> map);
+    UpdateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 }

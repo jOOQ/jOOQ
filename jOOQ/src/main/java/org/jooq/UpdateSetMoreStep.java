@@ -50,6 +50,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface UpdateSetMoreStep extends UpdateSetStep, UpdateWhereStep {
+public interface UpdateSetMoreStep<R extends TableRecord<R>> extends UpdateSetStep<R>, UpdateWhereStep<R> {
 
 }

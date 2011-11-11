@@ -69,7 +69,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface InsertReturningStep {
+public interface InsertReturningStep<R extends TableRecord<R>> {
 
     /**
      * Configure the <code>INSERT</code> statement to return all fields in
@@ -77,7 +77,7 @@ public interface InsertReturningStep {
      *
      * @see InsertResultStep
      */
-    InsertResultStep returning();
+    InsertResultStep<R> returning();
 
     /**
      * Configure the <code>INSERT</code> statement to return a list of fields in
@@ -86,7 +86,7 @@ public interface InsertReturningStep {
      * @param fields Fields to be returned
      * @see InsertResultStep
      */
-    InsertResultStep returning(Field<?>... fields);
+    InsertResultStep<R> returning(Field<?>... fields);
 
     /**
      * Configure the <code>INSERT</code> statement to return a list of fields in
@@ -95,5 +95,5 @@ public interface InsertReturningStep {
      * @param fields Fields to be returned
      * @see InsertResultStep
      */
-    InsertResultStep returning(Collection<? extends Field<?>> fields);
+    InsertResultStep<R> returning(Collection<? extends Field<?>> fields);
 }

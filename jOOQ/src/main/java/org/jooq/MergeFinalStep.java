@@ -54,6 +54,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface MergeFinalStep extends Merge {
+public interface MergeFinalStep<R extends TableRecord<R>> extends Merge<R> {
 
 }

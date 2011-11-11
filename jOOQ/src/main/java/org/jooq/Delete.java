@@ -40,6 +40,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Delete extends Query {
+public interface Delete<R extends TableRecord<R>> extends Query {
 
 }

@@ -48,6 +48,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface DeleteFinalStep extends Delete {
+public interface DeleteFinalStep<R extends TableRecord<R>> extends Delete<R> {
 
 }

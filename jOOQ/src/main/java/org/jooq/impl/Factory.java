@@ -930,7 +930,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> InsertSetStep insertInto(Table<R> into) {
+    public final <R extends TableRecord<R>> InsertSetStep<R> insertInto(Table<R> into) {
         return new InsertImpl<R>(this, into, Collections.<Field<?>>emptyList());
     }
 
@@ -938,7 +938,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Field<?>... fields) {
+    public final <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields) {
         return new InsertImpl<R>(this, into, Arrays.asList(fields));
     }
 
@@ -946,7 +946,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
+    public final <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return new InsertImpl<R>(this, into, fields);
     }
 
@@ -954,7 +954,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> Insert insertInto(Table<R> into, Select<?> select) {
+    public final <R extends TableRecord<R>> Insert<R> insertInto(Table<R> into, Select<?> select) {
         return new InsertSelectQueryImpl<R>(this, into, select);
     }
 
@@ -970,7 +970,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> UpdateSetStep update(Table<R> table) {
+    public final <R extends TableRecord<R>> UpdateSetStep<R> update(Table<R> table) {
         return new UpdateImpl<R>(this, table);
     }
 
@@ -978,7 +978,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> MergeUsingStep mergeInto(Table<R> table) {
+    public final <R extends TableRecord<R>> MergeUsingStep<R> mergeInto(Table<R> table) {
         return new MergeImpl<R>(this, table);
     }
 
@@ -994,7 +994,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> DeleteWhereStep delete(Table<R> table) {
+    public final <R extends TableRecord<R>> DeleteWhereStep<R> delete(Table<R> table) {
         return new DeleteImpl<R>(this, table);
     }
 
@@ -1022,7 +1022,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> Truncate truncate(Table<R> table) {
+    public final <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
         return new TruncateImpl<R>(this, table);
     }
 

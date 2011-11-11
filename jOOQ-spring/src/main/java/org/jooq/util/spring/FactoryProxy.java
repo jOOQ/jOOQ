@@ -264,22 +264,22 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertSetStep insertInto(Table<R> into) {
+    public final <R extends TableRecord<R>> InsertSetStep<R> insertInto(Table<R> into) {
         return getDelegate().insertInto(into);
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Field<?>... fields) {
+    public final <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields) {
         return getDelegate().insertInto(into, fields);
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
+    public final <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return getDelegate().insertInto(into, fields);
     }
 
     @Override
-    public final <R extends TableRecord<R>> Insert insertInto(Table<R> into, Select<?> select) {
+    public final <R extends TableRecord<R>> Insert<R> insertInto(Table<R> into, Select<?> select) {
         return getDelegate().insertInto(into, select);
     }
 
@@ -289,12 +289,12 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends TableRecord<R>> UpdateSetStep update(Table<R> table) {
+    public final <R extends TableRecord<R>> UpdateSetStep<R> update(Table<R> table) {
         return getDelegate().update(table);
     }
 
     @Override
-    public final <R extends TableRecord<R>> MergeUsingStep mergeInto(Table<R> table) {
+    public final <R extends TableRecord<R>> MergeUsingStep<R> mergeInto(Table<R> table) {
         return getDelegate().mergeInto(table);
     }
 
@@ -304,7 +304,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends TableRecord<R>> DeleteWhereStep delete(Table<R> table) {
+    public final <R extends TableRecord<R>> DeleteWhereStep<R> delete(Table<R> table) {
         return getDelegate().delete(table);
     }
 
@@ -319,7 +319,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public <R extends TableRecord<R>> Truncate truncate(Table<R> table) {
+    public <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
         return getDelegate().truncate(table);
     }
 

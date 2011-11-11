@@ -56,13 +56,13 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface MergeOnConditionStep extends MergeMatchedStep {
+public interface MergeOnConditionStep<R extends TableRecord<R>> extends MergeMatchedStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    MergeOnConditionStep and(Condition condition);
+    MergeOnConditionStep<R> and(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -75,7 +75,7 @@ public interface MergeOnConditionStep extends MergeMatchedStep {
      *
      * @see Factory#condition(String)
      */
-    MergeOnConditionStep and(String sql);
+    MergeOnConditionStep<R> and(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -88,31 +88,31 @@ public interface MergeOnConditionStep extends MergeMatchedStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    MergeOnConditionStep and(String sql, Object... bindings);
+    MergeOnConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    MergeOnConditionStep andNot(Condition condition);
+    MergeOnConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    MergeOnConditionStep andExists(Select<?> select);
+    MergeOnConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
-    MergeOnConditionStep andNotExists(Select<?> select);
+    MergeOnConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
-    MergeOnConditionStep or(Condition condition);
+    MergeOnConditionStep<R> or(Condition condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -125,7 +125,7 @@ public interface MergeOnConditionStep extends MergeMatchedStep {
      *
      * @see Factory#condition(String)
      */
-    MergeOnConditionStep or(String sql);
+    MergeOnConditionStep<R> or(String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -138,23 +138,23 @@ public interface MergeOnConditionStep extends MergeMatchedStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    MergeOnConditionStep or(String sql, Object... bindings);
+    MergeOnConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    MergeOnConditionStep orNot(Condition condition);
+    MergeOnConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    MergeOnConditionStep orExists(Select<?> select);
+    MergeOnConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
-    MergeOnConditionStep orNotExists(Select<?> select);
+    MergeOnConditionStep<R> orNotExists(Select<?> select);
 }

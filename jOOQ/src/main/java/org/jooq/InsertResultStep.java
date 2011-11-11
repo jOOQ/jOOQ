@@ -42,7 +42,7 @@ import org.jooq.exception.DataAccessException;
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
- * 
+ *
  * TableRecord<?> record =
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)
@@ -65,26 +65,26 @@ import org.jooq.exception.DataAccessException;
  * fields are requested, a second statement is issued. Client code must assure
  * transactional integrity between the two statements.</li>
  * </ul>
- * 
+ *
  * @author Lukas Eder
  */
-public interface InsertResultStep extends Insert {
+public interface InsertResultStep<R extends TableRecord<R>> extends Insert<R> {
 
     /**
      * The result holding returned values as specified by the
      * {@link InsertReturningStep}
      * <p>
      * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
-     * 
+     *
      * @throws DataAccessException if something went wrong executing the query
      */
-    Result<?> fetch() throws DataAccessException;
+    Result<R> fetch() throws DataAccessException;
 
     /**
      * The record holding returned values as specified by the
      * {@link InsertReturningStep}
-     * 
+     *
      * @throws DataAccessException if something went wrong executing the query
      */
-    TableRecord<?> fetchOne() throws DataAccessException;
+    R fetchOne() throws DataAccessException;
 }

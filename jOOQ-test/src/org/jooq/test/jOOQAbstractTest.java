@@ -1227,7 +1227,7 @@ public abstract class jOOQAbstractTest<
 
         // Insert some numbers
         // -------------------
-        InsertSetMoreStep set =
+        InsertSetMoreStep<T639> set =
         create().insertInto(T639())
                 .set(T639_ID(), 1)
                 .set(T639_BIG_DECIMAL(), new BigDecimal("1234.5670"))
@@ -3347,7 +3347,7 @@ public abstract class jOOQAbstractTest<
                 break;
         }
 
-        Insert i = create().insertInto(
+        Insert<A> i = create().insertInto(
             TAuthor(),
             create().select(vals(
                 1000,
@@ -3530,7 +3530,7 @@ public abstract class jOOQAbstractTest<
         Field<String> f = val("Dan").as("f");
         Field<String> l = val("Brown").as("l");
 
-        MergeFinalStep q =
+        MergeFinalStep<A> q =
         create().mergeInto(TAuthor())
                 .using(create().select(f, l))
                 .on(TAuthor_LAST_NAME().equal(l))
@@ -4101,8 +4101,7 @@ public abstract class jOOQAbstractTest<
 
         // DSL querying
         // ------------
-        TableRecord<T> returned = (TableRecord<T>)
-        create().insertInto(TTriggers(), TTriggers_COUNTER())
+        TableRecord<T> returned = create().insertInto(TTriggers(), TTriggers_COUNTER())
                 .values(0)
                 .returning()
                 .fetchOne();
@@ -4147,8 +4146,7 @@ public abstract class jOOQAbstractTest<
         }
 
 
-        returned = (TableRecord<T>)
-        create().insertInto(TTriggers(), TTriggers_COUNTER())
+        returned = create().insertInto(TTriggers(), TTriggers_COUNTER())
                 .values(0)
                 .returning(TTriggers_ID())
                 .fetchOne();

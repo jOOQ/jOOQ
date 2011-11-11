@@ -49,18 +49,16 @@ import org.jooq.UDTRecord;
 
 /**
  * A common base type for UDT attributes / fields
- * <p>
- * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */
-public class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T> {
+class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implements UDTField<R, T> {
 
     private static final long serialVersionUID = -2211214195583539735L;
 
     private final UDT<R>      udt;
 
-    public UDTFieldImpl(String name, DataType<T> type, UDT<R> udt) {
+    UDTFieldImpl(String name, DataType<T> type, UDT<R> udt) {
         super(name, type);
 
         this.udt = udt;

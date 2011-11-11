@@ -37,7 +37,7 @@ package org.jooq.util;
 
 import java.io.File;
 
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.StringUtils;
 
 /**
  * The default naming strategy for the {@link DefaultGenerator}

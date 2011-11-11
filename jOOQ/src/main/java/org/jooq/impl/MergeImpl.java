@@ -64,6 +64,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder

@@ -44,6 +44,8 @@ import org.jooq.Configuration;
 import org.jooq.ConfigurationRegistry;
 import org.jooq.Query;
 import org.jooq.exception.DetachedException;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StopWatch;
 
 /**
  * @author Lukas Eder

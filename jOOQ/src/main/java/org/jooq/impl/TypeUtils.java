@@ -43,6 +43,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -248,6 +249,11 @@ final class TypeUtils {
                 }
                 else if (toClass == java.util.Date.class) {
                     return (T) new java.util.Date(time);
+                }
+                else if (toClass == Calendar.class) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(time);
+                    return (T) calendar;
                 }
             }
         }

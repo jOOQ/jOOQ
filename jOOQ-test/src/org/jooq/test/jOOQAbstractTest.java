@@ -71,6 +71,7 @@ import java.sql.Timestamp;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1647,10 +1648,14 @@ public abstract class jOOQAbstractTest<
         A author = create().newRecord(TAuthor());
         author.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1));
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(1);
+        
         assertEquals(new Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Date.class));
         assertEquals(new Time(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Time.class));
         assertEquals(new Timestamp(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Timestamp.class));
         assertEquals(new java.util.Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), java.util.Date.class));
+        assertEquals(calendar, author.getValue(TAuthor_DATE_OF_BIRTH(), Calendar.class));
     }
 
     @Test
@@ -2746,6 +2751,23 @@ public abstract class jOOQAbstractTest<
             fail();
         }
         catch (FetchIntoException expected) {}
+
+        // [#930] Calendar/Date conversion checks
+        List<DatesWithAnnotations> calendars =
+        create().select(TAuthor_DATE_OF_BIRTH())
+                .from(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetchInto(DatesWithAnnotations.class);
+
+        assertEquals(2, calendars.size());
+
+        for (int index : asList(0, 1)) {
+            assertEquals(calendars.get(index).cal1, calendars.get(index).cal2);
+            assertEquals(calendars.get(index).cal1, calendars.get(index).calOfBirth);
+            assertEquals(calendars.get(index).date1, calendars.get(index).date2);
+            assertEquals(calendars.get(index).date1, calendars.get(index).dateOfBirth);
+            assertEquals(calendars.get(index).cal1.getTime(), calendars.get(index).date1);
+        }
     }
 
     @Test

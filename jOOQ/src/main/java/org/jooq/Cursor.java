@@ -104,6 +104,18 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
     R fetchOne() throws DataAccessException;
 
     /**
+     * Fetch the next record into a custom handler callback
+     * <p>
+     * This will conveniently close the <code>Cursor</code>, after the last
+     * <code>Record</code> was fetched.
+     *
+     * @param handler The handler callback
+     * @return Convenience result, returning the parameter handler itself
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <H extends RecordHandler<R>> H fetchOneInto(H handler) throws DataAccessException;
+
+    /**
      * Fetch results into a custom handler callback
      *
      * @param handler The handler callback
@@ -111,6 +123,22 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      */
     <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
+
+    /**
+     * Map the next resulting record onto a custom type.
+     * <p>
+     * This is the same as calling <code>fetchOne().into(type)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <E> The generic entity type.
+     * @param type The entity type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     */
+    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
 
     /**
      * Map resulting records onto a custom type.
@@ -129,6 +157,22 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
 
     /**
+     * Map the next resulting record onto a custom record.
+     * <p>
+     * This is the same as calling <code>fetchOne().into(table)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     */
+    <Z extends TableRecord<Z>> Z fetchOneInto(Table<Z> table) throws DataAccessException, FetchIntoException;
+
+    /**
      * Map resulting records onto a custom record.
      * <p>
      * This is the same as calling <code>fetch().into(table)</code>. See
@@ -142,7 +186,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @throws FetchIntoException wrapping any reflection exception that might
      *             have occurred while mapping records
      */
-    <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table);
+    <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table) throws DataAccessException, FetchIntoException;
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and

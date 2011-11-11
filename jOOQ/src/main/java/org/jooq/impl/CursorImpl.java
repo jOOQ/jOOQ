@@ -154,19 +154,33 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
-        R record = null;
+    public final <H extends RecordHandler<R>> H fetchOneInto(H handler) {
+        handler.next(fetchOne());
+        return handler;
+    }
 
-        while ((record = fetchOne()) != null) {
-            handler.next(record);
+    @Override
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
+        while (hasNext()) {
+            fetchOneInto(handler);
         }
 
         return handler;
     }
 
     @Override
+    public final <E> E fetchOneInto(Class<? extends E> clazz) {
+        return fetchOne().into(clazz);
+    }
+
+    @Override
     public final <E> List<E> fetchInto(Class<? extends E> clazz) {
         return fetch().into(clazz);
+    }
+
+    @Override
+    public final <Z extends TableRecord<Z>> Z fetchOneInto(Table<Z> table) {
+        return fetchOne().into(table);
     }
 
     @Override

@@ -53,14 +53,14 @@ import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.test.Data.FIELD_DATE1;
-import static org.jooq.test.Data.FIELD_ID1;
-import static org.jooq.test.Data.FIELD_ID2;
-import static org.jooq.test.Data.FIELD_ID3;
-import static org.jooq.test.Data.FIELD_NAME1;
-import static org.jooq.test.Data.TABLE1;
-import static org.jooq.test.Data.TABLE2;
-import static org.jooq.test.Data.TABLE3;
+import static org.jooq.test.Table1.FIELD_DATE1;
+import static org.jooq.test.Table1.FIELD_ID1;
+import static org.jooq.test.Table1.FIELD_NAME1;
+import static org.jooq.test.Table1.TABLE1;
+import static org.jooq.test.Table2.FIELD_ID2;
+import static org.jooq.test.Table2.TABLE2;
+import static org.jooq.test.Table3.FIELD_ID3;
+import static org.jooq.test.Table3.TABLE3;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -94,8 +94,8 @@ import org.jooq.UpdateQuery;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
-import org.jooq.test.Data.Table1Record;
 import org.jooq.util.oracle.OracleDataType;
+import org.jooq.util.oracle.OracleFactory;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -127,7 +127,7 @@ public class jOOQTest {
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
-        create = new Factory((Connection) null, Data.DIALECT);
+        create = new OracleFactory((Connection) null);
     }
 
     @After
@@ -795,7 +795,7 @@ public class jOOQTest {
 
     @Test
     public final void testCustomField() throws Exception {
-        Field<?> f = new CustomField<Integer>("test", Data.INTEGER_TYPE) {
+        Field<?> f = new CustomField<Integer>("test", TestDataType.INTEGER_TYPE) {
             private static final long serialVersionUID = 1L;
 
             @Override

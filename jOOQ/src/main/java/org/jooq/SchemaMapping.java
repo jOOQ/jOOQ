@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jooq.impl.SchemaImpl;
-import org.jooq.impl.TableFieldImpl;
 import org.jooq.impl.TableImpl;
 
 /**
@@ -165,21 +164,16 @@ public class SchemaMapping implements Serializable {
      * @param generatedTable The table known at codegen time to be mapped
      * @param configuredTableName The table configured at run time to be mapped
      */
-    public void add(Table<?> generatedTable, String configuredTableName) {
-        Table<Record> configuredTable = new TableImpl<Record>(configuredTableName, generatedTable.getSchema());
+    public void add(final Table<?> generatedTable, final String configuredTableName) {
 
-        for (Field<?> field : generatedTable.getFields()) {
-            addField(configuredTable, field);
-        }
+        @SuppressWarnings("serial")
+        Table<Record> configuredTable = new TableImpl<Record>(configuredTableName, generatedTable.getSchema()) {{
+            for (Field<?> field : generatedTable.getFields()) {
+                createField(field.getName(), field.getDataType(), this);
+            }
+        }};
 
         add(generatedTable, configuredTable);
-    }
-
-    /**
-     * Clone a field and attach it to a given table
-     */
-    private <T> void addField(Table<Record> table, Field<T> field) {
-        new TableFieldImpl<Record, T>(field.getName(), field.getDataType(), table);
     }
 
     /**

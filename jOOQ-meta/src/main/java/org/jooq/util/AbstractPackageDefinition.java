@@ -39,7 +39,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder

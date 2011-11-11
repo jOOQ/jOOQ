@@ -41,7 +41,7 @@ import static org.jooq.util.h2.information_schema.tables.FunctionColumns.FUNCTIO
 import java.sql.SQLException;
 
 import org.jooq.Record;
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;

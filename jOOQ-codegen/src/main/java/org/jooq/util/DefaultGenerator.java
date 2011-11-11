@@ -81,19 +81,19 @@ import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.FieldTypeHelper;
-import org.jooq.impl.JooqLogger;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.SequenceImpl;
-import org.jooq.impl.StopWatch;
-import org.jooq.impl.StringUtils;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.impl.UpdatableTableImpl;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StopWatch;
+import org.jooq.tools.StringUtils;
 
 
 /**

@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A base implementation for all types of databases.

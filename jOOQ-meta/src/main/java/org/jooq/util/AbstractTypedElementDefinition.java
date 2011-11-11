@@ -35,8 +35,8 @@
  */
 package org.jooq.util;
 
-import org.jooq.impl.JooqLogger;
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 abstract class AbstractTypedElementDefinition<T extends Definition>
     extends AbstractDefinition

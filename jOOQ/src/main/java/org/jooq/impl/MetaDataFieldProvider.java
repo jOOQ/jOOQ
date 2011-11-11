@@ -47,6 +47,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A <code>FieldProvider</code> providing fields for a JDBC

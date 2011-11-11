@@ -59,6 +59,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.tools.StringUtils;
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with

@@ -36,14 +36,14 @@
 
 package org.jooq.util;
 
-import static org.jooq.impl.StringUtils.defaultString;
+import static org.jooq.tools.StringUtils.defaultString;
 
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-import org.jooq.impl.JooqLogger;
+import org.jooq.tools.JooqLogger;
 
 /**
  * The GenerationTool takes care of generating Java code from a database schema. It

@@ -39,7 +39,7 @@ package org.jooq.util.mysql;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;

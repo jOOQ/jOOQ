@@ -36,7 +36,7 @@
 
 package org.jooq.util;
 
-import org.jooq.impl.StringUtils;
+import org.jooq.tools.StringUtils;
 
 /**
  * The definition of a database schema

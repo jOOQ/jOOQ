@@ -57,6 +57,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.StringUtils;
 
 /**
  * General jooq utilities

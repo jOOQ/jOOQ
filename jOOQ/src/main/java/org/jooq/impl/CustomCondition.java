@@ -39,7 +39,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
+import org.jooq.BindContext;
 import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.RenderContext;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A base class for custom {@link Condition} implementations in client code.
@@ -52,7 +56,7 @@ import org.jooq.Condition;
  * <li>{@link #toSQL(org.jooq.RenderContext)}</li>
  * <li>{@link #bind(org.jooq.BindContext)}</li>
  * </ul>
- * Refer to those method's Javadoc for further details about their expected
+ * Refer to those methods' Javadoc for further details about their expected
  * behaviour.
  *
  * @author Lukas Eder
@@ -67,6 +71,30 @@ public abstract class CustomCondition extends AbstractCondition {
     protected CustomCondition() {
     }
 
+    // -------------------------------------------------------------------------
+    // Implementation required
+    // -------------------------------------------------------------------------
+
+    /**
+     * Subclasses must implement this method
+     * <hr/>
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract void toSQL(RenderContext context);
+
+    /**
+     * Subclasses must implement this method
+     * <hr/>
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract void bind(BindContext context) throws DataAccessException;
+
+    // -------------------------------------------------------------------------
+    // Further overrides allowed
+    // -------------------------------------------------------------------------
+
     /**
      * Subclasses may further override this method
      * <hr/>
@@ -75,5 +103,24 @@ public abstract class CustomCondition extends AbstractCondition {
     @Override
     public List<Attachable> getAttachables() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public void attach(Configuration configuration) {
+        super.attach(configuration);
+    }
+
+    // -------------------------------------------------------------------------
+    // No further overrides allowed
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final boolean declaresFields() {
+        return super.declaresFields();
+    }
+
+    @Override
+    public final boolean declaresTables() {
+        return super.declaresTables();
     }
 }

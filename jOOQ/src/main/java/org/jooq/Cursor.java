@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.FetchIntoException;
 
 /**
  * Cursors allow for lazy, sequential access to an underlying JDBC
@@ -122,8 +123,26 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException;
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code>fetch().into(table)</code>. See
+     * {@link Record#into(Class)} for more details
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @see Record#into(Class)
+     * @see Result#into(Class)
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     */
+    <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table);
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and

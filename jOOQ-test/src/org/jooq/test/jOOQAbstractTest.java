@@ -188,24 +188,27 @@ public abstract class jOOQAbstractTest<
         T639 extends UpdatableRecord<T639>,
         T785 extends TableRecord<T785>> {
 
-    private static final List<Integer>   BOOK_IDS      = Arrays.asList(1, 2, 3, 4);
-    private static final List<String>    BOOK_TITLES   = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
+    private static final List<Short>     BOOK_IDS_SHORT   = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
+    private static final List<Integer>   BOOK_IDS         = Arrays.asList(1, 2, 3, 4);
+    private static final List<String>    BOOK_TITLES      = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
+    private static final List<String>    BOOK_FIRST_NAMES = Arrays.asList("George", "George", "Paulo", "Paulo");
+    private static final List<String>    BOOK_LAST_NAMES  = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
 
-    private static final String          JDBC_SCHEMA   = "jdbc.Schema";
-    private static final String          JDBC_PASSWORD = "jdbc.Password";
-    private static final String          JDBC_USER     = "jdbc.User";
-    private static final String          JDBC_URL      = "jdbc.URL";
-    private static final String          JDBC_DRIVER   = "jdbc.Driver";
+    private static final String          JDBC_SCHEMA      = "jdbc.Schema";
+    private static final String          JDBC_PASSWORD    = "jdbc.Password";
+    private static final String          JDBC_USER        = "jdbc.User";
+    private static final String          JDBC_URL         = "jdbc.URL";
+    private static final String          JDBC_DRIVER      = "jdbc.Driver";
 
-    protected static final JooqLogger    log           = JooqLogger.getLogger(jOOQAbstractTest.class);
-    protected static final StopWatch     testSQLWatch  = new StopWatch();
+    protected static final JooqLogger    log              = JooqLogger.getLogger(jOOQAbstractTest.class);
+    protected static final StopWatch     testSQLWatch     = new StopWatch();
     protected static boolean             initialised;
     protected static boolean             reset;
     protected static Connection          connection;
     protected static boolean             autocommit;
     protected static String              jdbcURL;
     protected static String              jdbcSchema;
-    protected static Map<String, String> scripts       = new HashMap<String, String>();
+    protected static Map<String, String> scripts          = new HashMap<String, String>();
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -2803,6 +2806,54 @@ public abstract class jOOQAbstractTest<
         assertEquals("Orwell", result.get(1).LAST_NAME);
         assertEquals("Coelho", result.get(2).LAST_NAME);
         assertEquals("Coelho", result.get(3).LAST_NAME);
+    }
+
+    @Test
+    public void testFetchIntoCustomTable() throws Exception {
+        // TODO [#791] Fix test data and have all upper case columns everywhere
+        switch (getDialect()) {
+            case ASE:
+            case INGRES:
+            case POSTGRES:
+                log.info("SKIPPING", "fetchInto() tests");
+                return;
+        }
+
+        Result<BookRecord> result =
+            create().select(
+                        TBook_ID(),
+                        TBook_TITLE(),
+                        TAuthor_FIRST_NAME(),
+                        TAuthor_LAST_NAME())
+                    .from(TBook())
+                    .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+                    .orderBy(TBook_ID())
+                    .fetchInto(BookTable.BOOK);
+
+        assertEquals(4, result.size());
+
+        assertEquals(BOOK_IDS_SHORT, result.getValues(3));
+        assertEquals(BOOK_IDS_SHORT, result.getValues(TBook_ID()));
+        assertEquals(BOOK_IDS_SHORT, result.getValues(BookTable.ID));
+        assertEquals(Short.valueOf((short) 1), result.getValue(0, BookTable.ID));
+        assertEquals(Short.valueOf((short) 2), result.getValue(1, BookTable.ID));
+        assertEquals(Short.valueOf((short) 3), result.getValue(2, BookTable.ID));
+        assertEquals(Short.valueOf((short) 4), result.getValue(3, BookTable.ID));
+
+        assertEquals(BOOK_TITLES, result.getValues(4));
+        assertEquals(BOOK_TITLES, result.getValues(TBook_TITLE()));
+        assertEquals(BOOK_TITLES, result.getValues(BookTable.TITLE));
+
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(0));
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(BookTable.FIRST_NAME));
+
+        assertEquals(BOOK_LAST_NAMES, result.getValues(2));
+        assertEquals(BOOK_LAST_NAMES, result.getValues(TAuthor_LAST_NAME()));
+        assertEquals(BOOK_LAST_NAMES, result.getValues(BookTable.LAST_NAME));
+
+        assertEquals(Collections.nCopies(4, null), result.getValues(1));
+        assertEquals(Collections.nCopies(4, null), result.getValues(BookTable.UNMATCHED));
     }
 
     @Test
@@ -6626,10 +6677,17 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLike() throws Exception {
+        Field<String> notLike = TBook_PUBLISHED_IN().cast(String.class);
+
+        // DB2 doesn't support this syntax
+        if (getDialect() == DB2) {
+            notLike = val("bbb");
+        }
+
         Result<B> books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().like("%a%"))
-                .and(TBook_TITLE().notLike(TBook_PUBLISHED_IN().cast(String.class)))
+                .and(TBook_TITLE().notLike(notLike))
                 .fetch();
 
         assertEquals(3, books.size());

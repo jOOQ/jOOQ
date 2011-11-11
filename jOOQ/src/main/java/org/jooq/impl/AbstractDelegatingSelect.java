@@ -47,6 +47,8 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableRecord;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -212,6 +214,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     @Override
     public final <T> List<T> fetchInto(Class<? extends T> type) {
         return getDelegate().fetchInto(type);
+    }
+
+    @Override
+    public final <Z extends TableRecord<Z>> Result<Z> fetchInto(Table<Z> table) throws DataAccessException {
+        return getDelegate().fetchInto(table);
     }
 
     @Override

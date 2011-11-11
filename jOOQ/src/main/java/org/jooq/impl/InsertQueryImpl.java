@@ -59,7 +59,6 @@ import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -372,19 +371,11 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                     result = statement.executeUpdate();
 
                     SQLiteFactory create = new SQLiteFactory(configuration.getConnection());
-                    for (Record untyped : create
-                            .select(returning)
-                            .from(getInto())
-                            .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
-                            .fetch()) {
-
-                        R typed = JooqUtil.newRecord(getInto(), configuration);
-                        for (Field<?> field : returning) {
-                            setValue(field, typed, untyped);
-                        }
-
-                        getReturnedRecords().add(typed);
-                    }
+                    returned =
+                    create.select(returning)
+                          .from(getInto())
+                          .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
+                          .fetchInto(getInto());
 
                     return result;
                 }
@@ -480,28 +471,14 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
 
                 // Other values are requested, too. Run another query
                 else {
-                    for (Record untyped : create(configuration).select(returning)
-                            .from(updatable)
-                            .where(field.in(ids))
-                            .fetch()) {
-
-                        R typed = JooqUtil.newRecord(getInto(), configuration);
-                        for (Field<?> f : returning) {
-                            setValue(f, typed, untyped);
-                        }
-
-                        getReturnedRecords().add(typed);
-                    }
+                    returned =
+                    create(configuration).select(returning)
+                                         .from(updatable)
+                                         .where(field.in(ids))
+                                         .fetchInto(getInto());
                 }
             }
         }
-    }
-
-    /**
-     * Generic typesafety
-     */
-    private <T> void setValue(Field<T> field, R typed, Record untyped) {
-        typed.setValue(field, untyped.getValue(field));
     }
 
     @Override

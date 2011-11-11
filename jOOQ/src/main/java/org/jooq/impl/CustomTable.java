@@ -35,41 +35,55 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
 import java.util.List;
 
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.RenderContext;
-import org.jooq.exception.DataAccessException;
+import org.jooq.Cursor;
+import org.jooq.ForeignKey;
+import org.jooq.Identity;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.ResultQuery;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableRecord;
 
 /**
- * A base class for custom {@link Field} implementations in client code.
+ * A base class for custom {@link Table} implementations in client code.
  * <p>
- * Client code may provide proper {@link Field} implementations extending this
- * useful base class. All necessary parts of the {@link Field} interface are
- * already implemented. Only these two methods need further implementation:
+ * Client code may provide proper {@link Table} implementations extending this
+ * useful base class. All necessary parts of the {@link Table} interface are
+ * already implemented. Only this method needs further implementation:
  * <ul>
- * <li>{@link #toSQL(org.jooq.RenderContext)}</li>
- * <li>{@link #bind(org.jooq.BindContext)}</li>
+ * <li>{@link #getRecordType()}</li>
  * </ul>
- * Refer to those methods' Javadoc for further details about their expected
+ * Refer to this method's Javadoc for further details about its expected
  * behaviour.
+ * <p>
+ * Use this base class when providing custom tables to any of the following
+ * methods:
+ * <ul>
+ * <li>{@link ResultQuery#fetchInto(Table)}</li>
+ * <li>{@link Cursor#fetchInto(Table)}</li>
+ * <li>{@link Result#into(Table)}</li>
+ * <li>{@link Record#into(Table)}</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
-public abstract class CustomField<T> extends AbstractField<T> {
+public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1778024624798672262L;
+    private static final long serialVersionUID = 4300737872863697213L;
 
-    protected CustomField(String name, DataType<T> type) {
-        super(name, type);
+    protected CustomTable(String name) {
+        super(name);
+    }
+
+    protected CustomTable(String name, Schema schema) {
+        super(name, schema);
     }
 
     // -------------------------------------------------------------------------
@@ -82,39 +96,11 @@ public abstract class CustomField<T> extends AbstractField<T> {
      * {@inheritDoc}
      */
     @Override
-    public abstract void toSQL(RenderContext context);
-
-    /**
-     * Subclasses must implement this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract void bind(BindContext context) throws DataAccessException;
+    public abstract Class<? extends R> getRecordType();
 
     // -------------------------------------------------------------------------
     // Further overrides allowed
     // -------------------------------------------------------------------------
-
-    /**
-     * Subclasses may further override this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isNullLiteral() {
-        return false;
-    }
-
-    /**
-     * Subclasses may further override this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Attachable> getAttachables() {
-        return Collections.emptyList();
-    }
 
     /**
      * Subclasses may further override this method
@@ -131,18 +117,13 @@ public abstract class CustomField<T> extends AbstractField<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public final Field<T> as(String alias) {
-        return super.as(alias);
+    public final Identity<R, ? extends Number> getIdentity() {
+        return super.getIdentity();
     }
 
     @Override
-    public final Field<T> add(Field<? extends Number> value) {
-        return super.add(value);
-    }
-
-    @Override
-    public final Field<T> mul(Field<? extends Number> value) {
-        return super.mul(value);
+    public final List<ForeignKey<R, ?>> getReferences() {
+        return super.getReferences();
     }
 
     @Override

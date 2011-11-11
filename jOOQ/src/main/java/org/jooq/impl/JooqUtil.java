@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -128,14 +129,21 @@ final class JooqUtil {
 
             // Any generated record
             else {
-                result = type.newInstance();
+                Constructor<R> constructor = type.getDeclaredConstructor();
+
+                // [#919] Allow for accessing non-public constructors
+                if (!constructor.isAccessible()) {
+                    constructor.setAccessible(true);
+                }
+
+                result = constructor.newInstance();
             }
 
             result.attach(configuration);
             return result;
         }
         catch (Exception e) {
-            throw new IllegalStateException("Could not construct new record. Please report this issue", e);
+            throw new IllegalStateException("Could not construct new record", e);
         }
     }
 

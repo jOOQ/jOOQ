@@ -647,13 +647,49 @@ public class DefaultGenerator implements Generator {
         			out.printStaticInitialisationStatementsPlaceholder();
         			out.println("}");
         			out.close();
-    		    } catch (Exception e) {
+    		    }
+    		    catch (Exception e) {
     		        log.error("Error while generating table " + table, e);
     		    }
     		}
 
     		registerInSchema(outS, database.getTables(), Table.class, true);
     		watch.splitInfo("Tables generated");
+		}
+
+        // ----------------------------------------------------------------------
+        // XXX Generating relations
+        // ----------------------------------------------------------------------
+		if (database.getTables().size() > 0) {
+            log.info("Generating table references", targetTablePackageDir.getCanonicalPath());
+
+            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Tables.java")));
+            printHeader(out, targetPackage);
+            printClassJavadoc(out, "Convenience access to all tables in " + schema.getName());
+            out.println("public final class Tables {");
+
+            for (TableDefinition table : database.getTables()) {
+                out.println();
+                out.println("\t/**");
+                out.println("\t * The table " + table.getQualifiedName());
+                out.println("\t */");
+
+                out.print("\tpublic static ");
+                out.print(strategy.getFullJavaClassName(table));
+                out.print(" ");
+                out.print(strategy.getJavaIdentifierUC(table));
+                out.print(" = ");
+                out.print(strategy.getFullJavaClassName(table));
+                out.print(".");
+                out.print(strategy.getJavaIdentifierUC(table));
+                out.println(";");
+            }
+
+            printPrivateConstructor(out, "Tables");
+            out.println("}");
+            out.close();
+
+            watch.splitInfo("Table references generated");
 		}
 
         // ----------------------------------------------------------------------

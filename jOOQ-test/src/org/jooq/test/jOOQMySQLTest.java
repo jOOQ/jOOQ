@@ -37,8 +37,8 @@
 package org.jooq.test;
 
 import static org.jooq.impl.Factory.val;
-import static org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR;
-import static org.jooq.test.mysql.generatedclasses.tables.VBook.V_BOOK;
+import static org.jooq.test.mysql.generatedclasses.Tables.V_AUTHOR;
+import static org.jooq.test.mysql.generatedclasses.Tables.V_BOOK;
 import static org.jooq.util.mysql.MySQLFactory.aesDecrypt;
 import static org.jooq.util.mysql.MySQLFactory.aesEncrypt;
 import static org.jooq.util.mysql.MySQLFactory.compress;

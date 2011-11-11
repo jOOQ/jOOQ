@@ -36,8 +36,8 @@
 
 package org.jooq.test;
 
-import static org.jooq.test.sqlserver.generatedclasses.tables.VAuthor.V_AUTHOR;
-import static org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK;
+import static org.jooq.test.sqlserver.generatedclasses.Tables.V_AUTHOR;
+import static org.jooq.test.sqlserver.generatedclasses.Tables.V_BOOK;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

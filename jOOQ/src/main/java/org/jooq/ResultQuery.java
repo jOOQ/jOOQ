@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.FetchIntoException;
 
 /**
  * A query that can return results. Mostly, this is a {@link Select} query used
@@ -442,8 +443,24 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
+     * @throws FetchIntoException wrapping any reflection exception that might
+     *             have occurred while mapping records
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException;
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
+
+    /**
+     * Map resulting records onto a custom record.
+     * <p>
+     * This is the same as calling <code>fetch().into(table)</code>. See
+     * {@link Record#into(Table)} for more details
+     *
+     * @param <Z> The generic table record type.
+     * @param table The table type.
+     * @see Record#into(Table)
+     * @see Result#into(Table)
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <Z extends TableRecord<Z>> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
 
     /**
      * Fetch results into a custom handler callback

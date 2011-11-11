@@ -52,6 +52,8 @@ import org.jooq.Attachable;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
+import org.jooq.Table;
+import org.jooq.TableRecord;
 import org.jooq.exception.FetchIntoException;
 
 /**
@@ -582,5 +584,34 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         else {
             member.set(result, getValue(field, mType));
         }
+    }
+
+    @Override
+    public final <R extends TableRecord<R>> R into(Table<R> table) {
+        try {
+            R result = JooqUtil.newRecord(table, getConfiguration());
+
+            for (Field<?> field : getFields()) {
+                Field<?> targetField = result.getField(field);
+
+                if (targetField != null) {
+                    setValue(result, field, targetField);
+                }
+            }
+
+            return result;
+        }
+
+        // All reflection exceptions are intercepted
+        catch (Exception e) {
+            throw new FetchIntoException("An error ocurred when mapping record to " + table, e);
+        }
+    }
+
+    /**
+     * Type-safely copy a value from one record to another
+     */
+    final <T> void setValue(Record target, Field<?> sourceField, Field<T> targetField) {
+        target.setValue(targetField, targetField.getDataType().convert(getValue(sourceField)));
     }
 }

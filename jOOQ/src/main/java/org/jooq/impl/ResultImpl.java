@@ -71,6 +71,8 @@ import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
+import org.jooq.Table;
+import org.jooq.TableRecord;
 import org.jooq.tools.json.JSONObject;
 
 import org.w3c.dom.Document;
@@ -1229,6 +1231,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         for (R record : this) {
             list.add(record.into(type));
+        }
+
+        return list;
+    }
+
+    @Override
+    public final <Z extends TableRecord<Z>> Result<Z> into(Table<Z> table) {
+        Result<Z> list = new ResultImpl<Z>(getConfiguration(), table);
+
+        for (R record : this) {
+            list.add(record.into(table));
         }
 
         return list;

@@ -41,15 +41,17 @@ package org.jooq.test;
  */
 public class BookWithoutAnnotations {
 
-    public Integer id;
-    public int     id2;
-    public int     ID;
-    public String  title;
-    public String  firstName;
-    public String  firstName2;
-    public String  lastName;
-    public String  lastName2;
-    public String  LAST_NAME;
+    public Integer        id;
+    public int            id2;
+    public int            ID;
+    public String         title;
+    public String         firstName;
+    public String         firstName2;
+    public String         lastName;
+    public String         lastName2;
+    public String         LAST_NAME;
+    public java.util.Date DATE_OF_BIRTH;
+    public java.sql.Date  dateOfBirth;
 
     public void setId(int id) {
         id2 = id;

@@ -40,6 +40,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Update extends Query {
+public interface Update<R extends TableRecord<R>> extends Query {
 
 }

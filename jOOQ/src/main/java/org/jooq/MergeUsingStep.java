@@ -54,12 +54,12 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface MergeUsingStep {
+public interface MergeUsingStep<R extends TableRecord<R>> {
 
     /**
      * Add the <code>USING</code> clause to the <code>MERGE</code> statement
      */
-    MergeOnStep using(TableLike<?> table);
+    MergeOnStep<R> using(TableLike<?> table);
 
     /**
      * Add a dummy <code>USING</code> clause to the <code>MERGE</code> statement
@@ -68,5 +68,5 @@ public interface MergeUsingStep {
      * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
      * Server, where derived tables need to be aliased.
      */
-    MergeOnStep usingDual();
+    MergeOnStep<R> usingDual();
 }

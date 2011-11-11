@@ -329,7 +329,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> InsertSetStep insertInto(Table<R> into);
+    <R extends TableRecord<R>> InsertSetStep<R> insertInto(Table<R> into);
 
     /**
      * Create a new DSL insert statement.
@@ -346,7 +346,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Field<?>... fields);
+    <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields);
 
     /**
      * Create a new DSL insert statement.
@@ -363,7 +363,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> InsertValuesStep insertInto(Table<R> into, Collection<? extends Field<?>> fields);
+    <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields);
 
     /**
      * Create a new DSL insert statement.
@@ -378,7 +378,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> Insert insertInto(Table<R> into, Select<?> select);
+    <R extends TableRecord<R>> Insert<R> insertInto(Table<R> into, Select<?> select);
 
     /**
      * Create a new {@link UpdateQuery}
@@ -401,7 +401,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> UpdateSetStep update(Table<R> table);
+    <R extends TableRecord<R>> UpdateSetStep<R> update(Table<R> table);
 
     /**
      * Create a new DSL merge statement.
@@ -466,7 +466,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> MergeUsingStep mergeInto(Table<R> table);
+    <R extends TableRecord<R>> MergeUsingStep<R> mergeInto(Table<R> table);
 
     /**
      * Create a new {@link DeleteQuery}
@@ -487,7 +487,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> DeleteWhereStep delete(Table<R> table);
+    <R extends TableRecord<R>> DeleteWhereStep<R> delete(Table<R> table);
 
     /**
      * Execute a set of queries in batch mode (without bind values).
@@ -551,7 +551,7 @@ public interface FactoryOperations extends Configuration {
      * Note, this statement is only supported in DSL mode. Immediate execution
      * is omitted for future extensibility of this command.
      */
-    <R extends TableRecord<R>> Truncate truncate(Table<R> table);
+    <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
     // Other queries for identites and sequences

@@ -52,17 +52,17 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface DeleteWhereStep extends DeleteFinalStep {
+public interface DeleteWhereStep<R extends TableRecord<R>> extends DeleteFinalStep<R> {
 
     /**
      * Add conditions to the query
      */
-    DeleteConditionStep where(Condition... conditions);
+    DeleteConditionStep<R> where(Condition... conditions);
 
     /**
      * Add conditions to the query
      */
-    DeleteConditionStep where(Collection<Condition> conditions);
+    DeleteConditionStep<R> where(Collection<Condition> conditions);
 
     /**
      * Add conditions to the query
@@ -74,7 +74,7 @@ public interface DeleteWhereStep extends DeleteFinalStep {
      *
      * @see Factory#condition(String)
      */
-    DeleteConditionStep where(String sql);
+    DeleteConditionStep<R> where(String sql);
 
     /**
      * Add conditions to the query
@@ -86,15 +86,15 @@ public interface DeleteWhereStep extends DeleteFinalStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    DeleteConditionStep where(String sql, Object... bindings);
+    DeleteConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add an EXISTS clause to the query
      */
-    DeleteConditionStep whereExists(Select<?> select);
+    DeleteConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query
      */
-    DeleteConditionStep whereNotExists(Select<?> select);
+    DeleteConditionStep<R> whereNotExists(Select<?> select);
 }

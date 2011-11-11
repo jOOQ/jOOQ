@@ -54,19 +54,19 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface InsertOnDuplicateSetStep {
+public interface InsertOnDuplicateSetStep<R extends TableRecord<R>> {
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause
      */
-    <T> InsertOnDuplicateSetMoreStep set(Field<T> field, T value);
+    <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause
      */
-    <T> InsertOnDuplicateSetMoreStep set(Field<T> field, Field<T> value);
+    <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
@@ -76,6 +76,6 @@ public interface InsertOnDuplicateSetStep {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
-    InsertOnDuplicateSetMoreStep set(Map<? extends Field<?>, ?> map);
+    InsertOnDuplicateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
 }

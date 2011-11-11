@@ -49,7 +49,6 @@ import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
-import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.Result;
 import org.jooq.Table;
@@ -63,10 +62,10 @@ class InsertImpl<R extends TableRecord<R>>
     implements
 
     // Cascading interface implementations for Insert behaviour
-    InsertValuesStep,
-    InsertSetMoreStep,
-    InsertOnDuplicateSetMoreStep,
-    InsertResultStep {
+    InsertValuesStep<R>,
+    InsertSetMoreStep<R>,
+    InsertOnDuplicateSetMoreStep<R>,
+    InsertResultStep<R> {
 
     /**
      * Generated UID
@@ -178,37 +177,37 @@ class InsertImpl<R extends TableRecord<R>>
     }
 
     @Override
-    public final InsertSetStep newRecord() {
+    public final InsertImpl<R> newRecord() {
         getDelegate().newRecord();
         return this;
     }
 
     @Override
-    public final InsertResultStep returning() {
+    public final InsertImpl<R> returning() {
         getDelegate().setReturning();
         return this;
     }
 
     @Override
-    public final InsertResultStep returning(Field<?>... f) {
+    public final InsertImpl<R> returning(Field<?>... f) {
         getDelegate().setReturning(f);
         return this;
     }
 
     @Override
-    public final InsertResultStep returning(Collection<? extends Field<?>> f) {
+    public final InsertImpl<R> returning(Collection<? extends Field<?>> f) {
         getDelegate().setReturning(f);
         return this;
     }
 
     @Override
-    public final Result<?> fetch() {
+    public final Result<R> fetch() {
         getDelegate().execute();
         return getDelegate().getReturnedRecords();
     }
 
     @Override
-    public final TableRecord<?> fetchOne() {
+    public final R fetchOne() {
         getDelegate().execute();
         return getDelegate().getReturnedRecord();
     }

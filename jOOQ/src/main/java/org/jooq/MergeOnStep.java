@@ -56,12 +56,12 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface MergeOnStep {
+public interface MergeOnStep<R extends TableRecord<R>> {
 
     /**
      * Provide join conditions and proceed to the next step
      */
-    MergeOnConditionStep on(Condition... conditions);
+    MergeOnConditionStep<R> on(Condition... conditions);
 
     /**
      * Provide join conditions and proceed to the next step
@@ -73,7 +73,7 @@ public interface MergeOnStep {
      *
      * @see Factory#condition(String)
      */
-    MergeOnConditionStep on(String sql);
+    MergeOnConditionStep<R> on(String sql);
 
     /**
      * Provide join conditions and proceed to the next step
@@ -85,5 +85,5 @@ public interface MergeOnStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    MergeOnConditionStep on(String sql, Object... bindings);
+    MergeOnConditionStep<R> on(String sql, Object... bindings);
 }

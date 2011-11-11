@@ -54,7 +54,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface InsertOnDuplicateStep extends InsertFinalStep, InsertReturningStep {
+public interface InsertOnDuplicateStep<R extends TableRecord<R>> extends InsertFinalStep<R>, InsertReturningStep<R> {
 
     /**
      * Add an <code>ON DUPLICATE KEY UPDATE</code> clause to this insert query.
@@ -76,5 +76,5 @@ public interface InsertOnDuplicateStep extends InsertFinalStep, InsertReturningS
      * <p>
      * These are the dialects that fulfill the above requirements:
      */
-    InsertOnDuplicateSetStep onDuplicateKeyUpdate();
+    InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 }

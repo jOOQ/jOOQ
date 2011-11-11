@@ -58,8 +58,8 @@ class DeleteImpl<R extends TableRecord<R>>
     implements
 
     // Cascading interface implementations for Delete behaviour
-    DeleteWhereStep,
-    DeleteConditionStep {
+    DeleteWhereStep<R>,
+    DeleteConditionStep<R> {
 
     /**
      * Generated UID

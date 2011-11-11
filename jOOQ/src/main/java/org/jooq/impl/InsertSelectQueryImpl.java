@@ -50,7 +50,7 @@ import org.jooq.TableRecord;
 /**
  * @author Lukas Eder
  */
-class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery implements Insert {
+class InsertSelectQueryImpl<R extends TableRecord<R>> extends AbstractQuery implements Insert<R> {
 
     /**
      * Generated UID

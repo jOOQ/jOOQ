@@ -62,6 +62,7 @@ import org.jooq.Result;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 
 /**
@@ -111,25 +112,9 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, Package pkg, DataType<T> type) {
-        this(Factory.getNewFactory(dialect), name, schema, pkg, type);
-    }
-
-    protected AbstractRoutine(Configuration configuration, String name, Schema schema) {
-        this(configuration, name, schema, null, null);
-    }
-
-    protected AbstractRoutine(Configuration configuration, String name, Schema schema, Package pkg) {
-        this(configuration, name, schema, pkg, null);
-    }
-
-    protected AbstractRoutine(Configuration configuration, String name, Schema schema, DataType<T> type) {
-        this(configuration, name, schema, null, type);
-    }
-
-    protected AbstractRoutine(Configuration configuration, String name, Schema schema, Package pkg, DataType<T> type) {
         super(name, schema);
 
-        this.attachable = new AttachableImpl(this, configuration);
+        this.attachable = new AttachableImpl(this, Factory.getNewFactory(dialect));
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.pkg = pkg;
@@ -559,5 +544,16 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     public final Field<T> asField(String alias) {
         return asField().as(alias);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
+        return new ParameterImpl<T>(name, type);
     }
 }

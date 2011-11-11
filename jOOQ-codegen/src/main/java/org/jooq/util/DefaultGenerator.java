@@ -83,7 +83,6 @@ import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.JooqLogger;
 import org.jooq.impl.PackageImpl;
-import org.jooq.impl.ParameterImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.SequenceImpl;
@@ -1955,39 +1954,36 @@ public class DefaultGenerator implements Generator {
 
     private void printUDTColumn(GenerationWriter out, AttributeDefinition attribute, Definition table) throws SQLException {
         Class<?> declaredMemberClass = UDTField.class;
-        Class<?> concreteMemberClass = null;
-
-        printColumnDefinition(out, attribute, table, declaredMemberClass, concreteMemberClass);
+        printColumnDefinition(out, attribute, table, declaredMemberClass);
     }
 
     private void printTableColumn(GenerationWriter out, ColumnDefinition column, Definition table) throws SQLException {
         Class<?> declaredMemberClass = TableField.class;
-        Class<?> concreteMemberClass = null;
-
-        printColumnDefinition(out, column, table, declaredMemberClass, concreteMemberClass);
+        printColumnDefinition(out, column, table, declaredMemberClass);
     }
 
 	private void printParameter(GenerationWriter out, ParameterDefinition parameter, Definition proc) throws SQLException {
-		printColumnDefinition(out, parameter, proc, Parameter.class, ParameterImpl.class);
+		printColumnDefinition(out, parameter, proc, Parameter.class);
 	}
 
-	private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass, Class<?> concreteMemberClass) throws SQLException {
+	private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass) throws SQLException {
 		String columnDisambiguationSuffix =
 		    strategy.getJavaIdentifierUC(column).equals(strategy.getJavaIdentifierUC(type)) ? "_" : "";
 		printFieldJavaDoc(out, columnDisambiguationSuffix, column);
 
-		String genericPrefix = "<";
 		boolean hasType =
 		    type instanceof TableDefinition ||
 		    type instanceof UDTDefinition;
 
-        if (hasType) {
-			genericPrefix += strategy.getFullJavaClassName(type, "Record") + ", ";
-		}
-
 		out.print("\tpublic static final ");
 		out.print(declaredMemberClass);
-		out.print(genericPrefix);
+		out.print("<");
+
+		if (hasType) {
+		    out.print(strategy.getFullJavaClassName(type, "Record"));
+		    out.print(", ");
+		}
+
 		out.print(getJavaType(column.getType()));
 		out.print("> ");
 		out.print(strategy.getJavaIdentifierUC(column));
@@ -2000,11 +1996,7 @@ public class DefaultGenerator implements Generator {
 		    out.print(" = createField");
 		}
 		else {
-            out.print(" = new ");
-            out.print(concreteMemberClass);
-            out.print(genericPrefix);
-            out.print(getJavaType(column.getType()));
-            out.print(">");
+            out.print(" = createParameter");
 		}
 
 		out.print("(\"");

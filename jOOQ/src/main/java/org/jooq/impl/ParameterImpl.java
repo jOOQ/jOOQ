@@ -47,16 +47,14 @@ import org.jooq.RenderContext;
 
 /**
  * A common base class for stored procedure parameters
- * <p>
- * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */
-public class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {
+class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements Parameter<T> {
 
     private static final long serialVersionUID = -5277225593751085577L;
 
-    public ParameterImpl(String name, DataType<T> type) {
+    ParameterImpl(String name, DataType<T> type) {
         super(name, type);
     }
 

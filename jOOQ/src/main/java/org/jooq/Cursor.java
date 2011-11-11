@@ -110,7 +110,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
-    RecordHandler<R> fetchInto(RecordHandler<R> handler) throws DataAccessException;
+    <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
      * Map resulting records onto a custom type.

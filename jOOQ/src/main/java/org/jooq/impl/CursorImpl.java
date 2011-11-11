@@ -154,7 +154,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final RecordHandler<R> fetchInto(RecordHandler<R> handler) {
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
         R record = null;
 
         while ((record = fetchOne()) != null) {

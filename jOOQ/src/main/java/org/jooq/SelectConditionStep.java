@@ -79,7 +79,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectConditionStep extends SelectGroupByStep {
+public interface SelectConditionStep extends SelectConnectByStep {
 
     /**
      * Combine the currently assembled conditions with another one using the

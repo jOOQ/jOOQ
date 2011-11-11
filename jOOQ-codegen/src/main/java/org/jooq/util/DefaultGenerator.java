@@ -91,7 +91,6 @@ import org.jooq.impl.StopWatch;
 import org.jooq.impl.StringUtils;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
-import org.jooq.impl.UDTFieldImpl;
 import org.jooq.impl.UDTImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
@@ -1956,7 +1955,7 @@ public class DefaultGenerator implements Generator {
 
     private void printUDTColumn(GenerationWriter out, AttributeDefinition attribute, Definition table) throws SQLException {
         Class<?> declaredMemberClass = UDTField.class;
-        Class<?> concreteMemberClass = UDTFieldImpl.class;
+        Class<?> concreteMemberClass = null;
 
         printColumnDefinition(out, attribute, table, declaredMemberClass, concreteMemberClass);
     }
@@ -1994,7 +1993,10 @@ public class DefaultGenerator implements Generator {
 		out.print(strategy.getJavaIdentifierUC(column));
 		out.print(columnDisambiguationSuffix);
 
-		if (concreteMemberClass == null) {
+		if (declaredMemberClass == TableField.class) {
+		    out.print(" = createField");
+		}
+		else if (declaredMemberClass == UDTField.class) {
 		    out.print(" = createField");
 		}
 		else {

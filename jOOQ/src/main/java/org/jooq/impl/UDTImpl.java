@@ -48,6 +48,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.UDT;
+import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 
 /**
@@ -124,5 +125,16 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
     @Override
     public final void bind(BindContext context) {
         throw new UnsupportedOperationException("UDTImpl cannot be used as a true QueryPart");
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     */
+    protected static final <R extends UDTRecord<R>, T> UDTField<R, T> createField(String name, DataType<T> type, UDT<R> udt) {
+        return new UDTFieldImpl<R, T>(name, type, udt);
     }
 }

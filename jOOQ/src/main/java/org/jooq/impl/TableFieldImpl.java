@@ -49,8 +49,6 @@ import org.jooq.TableField;
 
 /**
  * A common base type for table fields.
- * <p>
- * This type is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */
@@ -60,7 +58,7 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     private final Table<R>    table;
 
-    public TableFieldImpl(String name, DataType<T> type, Table<R> table) {
+    TableFieldImpl(String name, DataType<T> type, Table<R> table) {
         super(name, type);
 
         this.table = table;

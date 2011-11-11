@@ -46,6 +46,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
@@ -332,6 +333,11 @@ final class JooqUtil {
      * or methods
      */
     static final boolean hasColumnAnnotations(Class<?> type) {
+        // An entity usually has @Column annotations, too
+        if (type.getAnnotation(Entity.class) != null) {
+            return true;
+        }
+
         for (java.lang.reflect.Field member : type.getFields()) {
             if (member.getAnnotation(Column.class) != null) {
                 return true;

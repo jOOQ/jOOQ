@@ -1642,6 +1642,15 @@ public abstract class jOOQAbstractTest<
         assertEquals(new Date(1), SQLDataType.DATE.convert(new Timestamp(1)));
         assertEquals(new Time(1), SQLDataType.TIME.convert(new Timestamp(1)));
         assertEquals(new Timestamp(1), SQLDataType.TIMESTAMP.convert(new Timestamp(1)));
+
+        // [#926] Some additional date conversion checks
+        A author = create().newRecord(TAuthor());
+        author.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1));
+
+        assertEquals(new Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Date.class));
+        assertEquals(new Time(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Time.class));
+        assertEquals(new Timestamp(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Timestamp.class));
+        assertEquals(new java.util.Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), java.util.Date.class));
     }
 
     @Test
@@ -2673,7 +2682,8 @@ public abstract class jOOQAbstractTest<
                     TBook_ID(),
                     TBook_TITLE(),
                     TAuthor_FIRST_NAME(),
-                    TAuthor_LAST_NAME())
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                 .orderBy(TBook_ID())
@@ -2754,7 +2764,8 @@ public abstract class jOOQAbstractTest<
                     TBook_ID(),
                     TBook_TITLE(),
                     TAuthor_FIRST_NAME(),
-                    TAuthor_LAST_NAME())
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH())
                 .from(TBook())
                 .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                 .orderBy(TBook_ID())
@@ -2824,7 +2835,8 @@ public abstract class jOOQAbstractTest<
                         TBook_ID(),
                         TBook_TITLE(),
                         TAuthor_FIRST_NAME(),
-                        TAuthor_LAST_NAME())
+                        TAuthor_LAST_NAME(),
+                        TAuthor_DATE_OF_BIRTH())
                     .from(TBook())
                     .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                     .orderBy(TBook_ID())

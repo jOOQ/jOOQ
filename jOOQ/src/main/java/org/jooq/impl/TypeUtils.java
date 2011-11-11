@@ -47,7 +47,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.exception.DataTypeException;
 
 /**
  * Utility methods for type conversions
@@ -234,18 +234,25 @@ final class TypeUtils {
             }
 
             // Date types can be converted among each other
-            else if (toClass == Date.class && java.util.Date.class.isAssignableFrom(fromClass)) {
-                return (T) new Date(((java.util.Date) from).getTime());
-            }
-            else if (toClass == Time.class && java.util.Date.class.isAssignableFrom(fromClass)) {
-                return (T) new Time(((java.util.Date) from).getTime());
-            }
-            else if (toClass == Timestamp.class && java.util.Date.class.isAssignableFrom(fromClass)) {
-                return (T) new Timestamp(((java.util.Date) from).getTime());
+            else if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                long time = ((java.util.Date) from).getTime();
+
+                if (toClass == Date.class) {
+                    return (T) new Date(time);
+                }
+                else if (toClass == Time.class) {
+                    return (T) new Time(time);
+                }
+                else if (toClass == Timestamp.class) {
+                    return (T) new Timestamp(time);
+                }
+                else if (toClass == java.util.Date.class) {
+                    return (T) new java.util.Date(time);
+                }
             }
         }
 
-        throw new SQLDialectNotSupportedException("Cannot convert from " + from + " to " + toClass);
+        throw new DataTypeException("Cannot convert from " + from + " to " + toClass);
     }
 
     /**

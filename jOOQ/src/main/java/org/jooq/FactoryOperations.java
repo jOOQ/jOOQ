@@ -43,6 +43,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.MappingException;
 import org.jooq.impl.Factory;
 
 /**
@@ -674,10 +675,12 @@ public interface FactoryOperations extends Configuration {
      * @param table The table holding records of type &lt;R&gt;
      * @param source The source to be used to fill the new record
      * @return The new record
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
      * @see Record#from(Object)
      * @see Record#into(Class)
      */
-    <R extends TableRecord<R>> R newRecord(Table<R> table, Object source);
+    <R extends TableRecord<R>> R newRecord(Table<R> table, Object source) throws MappingException;
 
     // -------------------------------------------------------------------------
     // Fast querying

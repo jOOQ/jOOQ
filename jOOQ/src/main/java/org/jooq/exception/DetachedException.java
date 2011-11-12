@@ -53,22 +53,11 @@ public class DetachedException extends DataAccessException {
     private static final long serialVersionUID = -6460945824599280420L;
 
     /**
-     * Constructor for DataAccessException.
+     * Constructor for DetachedException.
      *
      * @param message the detail message
      */
     public DetachedException(String message) {
         super(message);
-    }
-
-    /**
-     * Constructor for DataAccessException.
-     *
-     * @param message the detail message
-     * @param cause the root cause (usually from using a underlying data access
-     *            API such as JDBC)
-     */
-    public DetachedException(String message, Throwable cause) {
-        super(message, cause);
     }
 }

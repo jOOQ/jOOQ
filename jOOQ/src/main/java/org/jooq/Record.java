@@ -45,6 +45,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 
 /**
@@ -136,8 +137,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    String getValueAsString(Field<?> field) throws IllegalArgumentException;
+    String getValueAsString(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -148,8 +151,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    String getValueAsString(Field<?> field, String defaultValue) throws IllegalArgumentException;
+    String getValueAsString(Field<?> field, String defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -158,8 +163,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    String getValueAsString(String fieldName) throws IllegalArgumentException;
+    String getValueAsString(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -170,8 +177,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    String getValueAsString(String fieldName, String defaultValue) throws IllegalArgumentException;
+    String getValueAsString(String fieldName, String defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -180,8 +189,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Byte getValueAsByte(Field<?> field) throws IllegalArgumentException;
+    Byte getValueAsByte(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -192,8 +203,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Byte getValueAsByte(Field<?> field, Byte defaultValue) throws IllegalArgumentException;
+    Byte getValueAsByte(Field<?> field, Byte defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -202,8 +215,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Byte getValueAsByte(String fieldName) throws IllegalArgumentException;
+    Byte getValueAsByte(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -214,8 +229,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Byte getValueAsByte(String fieldName, Byte defaultValue) throws IllegalArgumentException;
+    Byte getValueAsByte(String fieldName, Byte defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -224,8 +241,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Short getValueAsShort(Field<?> field) throws IllegalArgumentException;
+    Short getValueAsShort(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -236,8 +255,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Short getValueAsShort(Field<?> field, Short defaultValue) throws IllegalArgumentException;
+    Short getValueAsShort(Field<?> field, Short defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -246,8 +267,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Short getValueAsShort(String fieldName) throws IllegalArgumentException;
+    Short getValueAsShort(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -258,8 +281,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Short getValueAsShort(String fieldName, Short defaultValue) throws IllegalArgumentException;
+    Short getValueAsShort(String fieldName, Short defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -268,8 +293,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Integer getValueAsInteger(Field<?> field) throws IllegalArgumentException;
+    Integer getValueAsInteger(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -280,8 +307,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Integer getValueAsInteger(Field<?> field, Integer defaultValue) throws IllegalArgumentException;
+    Integer getValueAsInteger(Field<?> field, Integer defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -290,8 +319,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Integer getValueAsInteger(String fieldName) throws IllegalArgumentException;
+    Integer getValueAsInteger(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -302,8 +333,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Integer getValueAsInteger(String fieldName, Integer defaultValue) throws IllegalArgumentException;
+    Integer getValueAsInteger(String fieldName, Integer defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -312,8 +346,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Long getValueAsLong(Field<?> field) throws IllegalArgumentException;
+    Long getValueAsLong(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -324,8 +360,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Long getValueAsLong(Field<?> field, Long defaultValue) throws IllegalArgumentException;
+    Long getValueAsLong(Field<?> field, Long defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -334,8 +372,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Long getValueAsLong(String fieldName) throws IllegalArgumentException;
+    Long getValueAsLong(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -346,8 +386,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Long getValueAsLong(String fieldName, Long defaultValue) throws IllegalArgumentException;
+    Long getValueAsLong(String fieldName, Long defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -356,8 +398,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigInteger getValueAsBigInteger(Field<?> field) throws IllegalArgumentException;
+    BigInteger getValueAsBigInteger(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -368,8 +412,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigInteger getValueAsBigInteger(Field<?> field, BigInteger defaultValue) throws IllegalArgumentException;
+    BigInteger getValueAsBigInteger(Field<?> field, BigInteger defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -378,8 +425,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigInteger getValueAsBigInteger(String fieldName) throws IllegalArgumentException;
+    BigInteger getValueAsBigInteger(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -390,8 +439,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigInteger getValueAsBigInteger(String fieldName, BigInteger defaultValue) throws IllegalArgumentException;
+    BigInteger getValueAsBigInteger(String fieldName, BigInteger defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -400,8 +452,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Float getValueAsFloat(Field<?> field) throws IllegalArgumentException;
+    Float getValueAsFloat(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -412,8 +466,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Float getValueAsFloat(Field<?> field, Float defaultValue) throws IllegalArgumentException;
+    Float getValueAsFloat(Field<?> field, Float defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -422,8 +478,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Float getValueAsFloat(String fieldName) throws IllegalArgumentException;
+    Float getValueAsFloat(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -434,8 +492,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Float getValueAsFloat(String fieldName, Float defaultValue) throws IllegalArgumentException;
+    Float getValueAsFloat(String fieldName, Float defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -444,8 +504,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Double getValueAsDouble(Field<?> field) throws IllegalArgumentException;
+    Double getValueAsDouble(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -456,8 +518,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Double getValueAsDouble(Field<?> field, Double defaultValue) throws IllegalArgumentException;
+    Double getValueAsDouble(Field<?> field, Double defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -466,8 +530,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Double getValueAsDouble(String fieldName) throws IllegalArgumentException;
+    Double getValueAsDouble(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -478,8 +544,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Double getValueAsDouble(String fieldName, Double defaultValue) throws IllegalArgumentException;
+    Double getValueAsDouble(String fieldName, Double defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -488,8 +556,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigDecimal getValueAsBigDecimal(Field<?> field) throws IllegalArgumentException;
+    BigDecimal getValueAsBigDecimal(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -500,8 +570,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigDecimal getValueAsBigDecimal(Field<?> field, BigDecimal defaultValue) throws IllegalArgumentException;
+    BigDecimal getValueAsBigDecimal(Field<?> field, BigDecimal defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -510,8 +583,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigDecimal getValueAsBigDecimal(String fieldName) throws IllegalArgumentException;
+    BigDecimal getValueAsBigDecimal(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -522,8 +597,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    BigDecimal getValueAsBigDecimal(String fieldName, BigDecimal defaultValue) throws IllegalArgumentException;
+    BigDecimal getValueAsBigDecimal(String fieldName, BigDecimal defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -556,8 +634,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Boolean getValueAsBoolean(Field<?> field) throws IllegalArgumentException;
+    Boolean getValueAsBoolean(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -592,8 +672,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Boolean getValueAsBoolean(Field<?> field, Boolean defaultValue) throws IllegalArgumentException;
+    Boolean getValueAsBoolean(Field<?> field, Boolean defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -626,8 +708,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Boolean getValueAsBoolean(String fieldName) throws IllegalArgumentException;
+    Boolean getValueAsBoolean(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -662,8 +746,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Boolean getValueAsBoolean(String fieldName, Boolean defaultValue) throws IllegalArgumentException;
+    Boolean getValueAsBoolean(String fieldName, Boolean defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -672,8 +759,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Timestamp getValueAsTimestamp(Field<?> field) throws IllegalArgumentException;
+    Timestamp getValueAsTimestamp(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -684,8 +773,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Timestamp getValueAsTimestamp(Field<?> field, Timestamp defaultValue) throws IllegalArgumentException;
+    Timestamp getValueAsTimestamp(Field<?> field, Timestamp defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -694,8 +786,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Timestamp getValueAsTimestamp(String fieldName) throws IllegalArgumentException;
+    Timestamp getValueAsTimestamp(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -706,8 +800,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Timestamp getValueAsTimestamp(String fieldName, Timestamp defaultValue) throws IllegalArgumentException;
+    Timestamp getValueAsTimestamp(String fieldName, Timestamp defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -716,8 +813,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Date getValueAsDate(Field<?> field) throws IllegalArgumentException;
+    Date getValueAsDate(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -728,8 +827,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Date getValueAsDate(Field<?> field, Date defaultValue) throws IllegalArgumentException;
+    Date getValueAsDate(Field<?> field, Date defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -738,8 +839,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Date getValueAsDate(String fieldName) throws IllegalArgumentException;
+    Date getValueAsDate(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -750,8 +853,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Date getValueAsDate(String fieldName, Date defaultValue) throws IllegalArgumentException;
+    Date getValueAsDate(String fieldName, Date defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field.
@@ -760,8 +865,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Time getValueAsTime(Field<?> field) throws IllegalArgumentException;
+    Time getValueAsTime(Field<?> field) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field.
@@ -772,8 +879,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Time getValueAsTime(Field<?> field, Time defaultValue) throws IllegalArgumentException;
+    Time getValueAsTime(Field<?> field, Time defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Record, providing a field name.
@@ -782,8 +891,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The converted value of a field's index contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Time getValueAsTime(String fieldName) throws IllegalArgumentException;
+    Time getValueAsTime(String fieldName) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this record, providing a field name.
@@ -794,8 +905,10 @@ public interface Record extends FieldProvider, Store<Object> {
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    Time getValueAsTime(String fieldName, Time defaultValue) throws IllegalArgumentException;
+    Time getValueAsTime(String fieldName, Time defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field.
@@ -806,8 +919,12 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException;
+    <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field.
@@ -820,8 +937,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
      *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException;
+    <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a converted value from this Record, providing a field name.
@@ -832,8 +952,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * @return The value of a field's name contained in this record
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException;
+    <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this record, providing a field name.
@@ -846,8 +968,11 @@ public interface Record extends FieldProvider, Store<Object> {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument fieldName is not
      *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
      */
-    <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException;
+    <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Set a value into this record.

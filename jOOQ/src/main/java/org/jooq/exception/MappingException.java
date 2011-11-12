@@ -36,6 +36,7 @@
 package org.jooq.exception;
 
 import org.jooq.Cursor;
+import org.jooq.FactoryOperations;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -49,6 +50,11 @@ import org.jooq.ResultQuery;
  * <li> {@link Result#into(Class)}</li>
  * <li> {@link Record#into(Class)}</li>
  * </ul>
+ * ... or when copying data into a {@link Record} with any of these methods
+ * <ul>
+ * <li> {@link FactoryOperations#newRecord(org.jooq.Table, Object)}</li>
+ * <li> {@link Record#from(Object)}</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
@@ -60,7 +66,7 @@ public class MappingException extends DataAccessException {
     private static final long serialVersionUID = -6460945824599280420L;
 
     /**
-     * Constructor for DataAccessException.
+     * Constructor for MappingException.
      *
      * @param message the detail message
      */
@@ -69,11 +75,10 @@ public class MappingException extends DataAccessException {
     }
 
     /**
-     * Constructor for DataAccessException.
+     * Constructor for MappingException.
      *
      * @param message the detail message
-     * @param cause the root cause (usually from using a underlying data access
-     *            API such as JDBC)
+     * @param cause the root cause
      */
     public MappingException(String message, Throwable cause) {
         super(message, cause);

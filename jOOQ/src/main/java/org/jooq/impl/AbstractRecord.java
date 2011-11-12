@@ -45,7 +45,6 @@ import static org.jooq.impl.Util.getMatchingSetters;
 import static org.jooq.impl.Util.hasColumnAnnotations;
 import static org.jooq.impl.Util.isJPAAvailable;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -524,7 +523,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
                 }
 
                 for (java.lang.reflect.Method method : methods) {
-                    into(result, method, field);
+                    method.invoke(result, getValue(field, method.getParameterTypes()[0]));
                 }
             }
 
@@ -600,63 +599,33 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
-    private final void into(Object result, Method method, Field<?> field)
-        throws IllegalAccessException, InvocationTargetException {
-
-        Class<?> mType = method.getParameterTypes()[0];
-
-        if (mType.isPrimitive()) {
-            if (mType == byte.class) {
-                method.invoke(result, getValueAsByte(field, (byte) 0));
-            }
-            else if (mType == short.class) {
-                method.invoke(result, getValueAsShort(field, (short) 0));
-            }
-            else if (mType == int.class) {
-                method.invoke(result, getValueAsInteger(field, 0));
-            }
-            else if (mType == long.class) {
-                method.invoke(result, getValueAsLong(field, 0L));
-            }
-            else if (mType == float.class) {
-                method.invoke(result, getValueAsFloat(field, 0.0f));
-            }
-            else if (mType == double.class) {
-                method.invoke(result, getValueAsDouble(field, 0.0));
-            }
-            else if (mType == boolean.class) {
-                method.invoke(result, getValueAsBoolean(field, false));
-            }
-        }
-        else {
-            method.invoke(result, getValue(field, mType));
-        }
-    }
-
     private final void into(Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
         Class<?> mType = member.getType();
 
         if (mType.isPrimitive()) {
             if (mType == byte.class) {
-                member.setByte(result, getValueAsByte(field, (byte) 0));
+                member.setByte(result, getValue(field, byte.class));
             }
             else if (mType == short.class) {
-                member.setShort(result, getValueAsShort(field, (short) 0));
+                member.setShort(result, getValue(field, short.class));
             }
             else if (mType == int.class) {
-                member.setInt(result, getValueAsInteger(field, 0));
+                member.setInt(result, getValue(field, int.class));
             }
             else if (mType == long.class) {
-                member.setLong(result, getValueAsLong(field, 0L));
+                member.setLong(result, getValue(field, long.class));
             }
             else if (mType == float.class) {
-                member.setFloat(result, getValueAsFloat(field, 0.0f));
+                member.setFloat(result, getValue(field, float.class));
             }
             else if (mType == double.class) {
-                member.setDouble(result, getValueAsDouble(field, 0.0));
+                member.setDouble(result, getValue(field, double.class));
             }
             else if (mType == boolean.class) {
-                member.setBoolean(result, getValueAsBoolean(field, false));
+                member.setBoolean(result, getValue(field, boolean.class));
+            }
+            else if (mType == char.class) {
+                member.setChar(result, getValue(field, char.class));
             }
         }
         else {
@@ -690,6 +659,9 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
             }
             else if (mType == boolean.class) {
                 Util.setValue(this, field, member.getBoolean(source));
+            }
+            else if (mType == char.class) {
+                Util.setValue(this, field, member.getChar(source));
             }
         }
         else {

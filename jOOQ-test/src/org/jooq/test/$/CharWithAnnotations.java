@@ -33,46 +33,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.exception;
+package org.jooq.test.$;
 
-import org.jooq.Query;
-import org.jooq.ResultQuery;
-import org.jooq.TableRecord;
-import org.jooq.UpdatableRecord;
+import javax.persistence.Column;
 
 /**
- * An unexpected result was encountered after executing a {@link Query}. This
- * exception indicates wrong usage of jOOQ's various fetch methods, or an
- * integrity problem in your data.
- * <p>
- * This is typically the case in the following situations:
- * <ul>
- * <li>When you call methods such as {@link ResultQuery#fetchOne()} and the
- * database returns more than one record.</li>
- * <li>When you call methods such as
- * {@link ResultQuery#fetchMap(org.jooq.Field)} and the database returns several
- * records per key.</li>
- * <li>When you refresh a {@link TableRecord} using
- * {@link TableRecord#refreshUsing(org.jooq.TableField...)}, or
- * {@link UpdatableRecord#refresh()}, and the record does not exist anymore in
- * the database.</li>
- * </ul>
- *
  * @author Lukas Eder
  */
-public class InvalidResultException extends DataAccessException {
+public class CharWithAnnotations {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6460945824599280420L;
+    @Column(name = "LAST_NAME")
+    public char last1;
 
-    /**
-     * Constructor for InvalidResultException.
-     *
-     * @param message the detail message
-     */
-    public InvalidResultException(String message) {
-        super(message);
-    }
+    @Column(name = "LAST_NAME")
+    public Character last2;
+
+    @Column(name = "ID")
+    public Character id2;
+
+    @Column(name = "ID")
+    public char id1;
+
 }

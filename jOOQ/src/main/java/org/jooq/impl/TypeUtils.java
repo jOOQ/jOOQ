@@ -170,7 +170,24 @@ final class TypeUtils {
     @SuppressWarnings("unchecked")
     public static <T> T convert(Object from, Class<? extends T> toClass) {
         if (from == null) {
-            return null;
+
+            // [#936] If types are converted to primitives, the result must not
+            // be null. Return the default value instead
+            if (toClass.isPrimitive()) {
+
+                // Characters default to the "zero" character
+                if (toClass == char.class) {
+                    return (T) Character.valueOf((char) 0);
+                }
+
+                // All others can be converted from (int) 0
+                else {
+                    return convert(0, toClass);
+                }
+            }
+            else {
+                return null;
+            }
         }
         else {
             final Class<?> fromClass = from.getClass();
@@ -196,16 +213,16 @@ final class TypeUtils {
             }
 
             // Various number types are converted between each other via String
-            else if (toClass == Byte.class) {
+            else if (toClass == Byte.class || toClass == byte.class) {
                 return (T) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
             }
-            else if (toClass == Short.class) {
+            else if (toClass == Short.class || toClass == short.class) {
                 return (T) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
             }
-            else if (toClass == Integer.class) {
+            else if (toClass == Integer.class || toClass == int.class) {
                 return (T) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
             }
-            else if (toClass == Long.class) {
+            else if (toClass == Long.class || toClass == long.class) {
                 if (java.util.Date.class.isAssignableFrom(fromClass)) {
                     return (T) Long.valueOf(((java.util.Date) from).getTime());
                 }
@@ -213,10 +230,10 @@ final class TypeUtils {
                     return (T) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
                 }
             }
-            else if (toClass == Float.class) {
+            else if (toClass == Float.class || toClass == float.class) {
                 return (T) Float.valueOf(from.toString().trim());
             }
-            else if (toClass == Double.class) {
+            else if (toClass == Double.class || toClass == double.class) {
                 return (T) Double.valueOf(from.toString().trim());
             }
             else if (toClass == BigDecimal.class) {
@@ -225,7 +242,7 @@ final class TypeUtils {
             else if (toClass == BigInteger.class) {
                 return (T) new BigDecimal(from.toString().trim()).toBigInteger();
             }
-            else if (toClass == Boolean.class) {
+            else if (toClass == Boolean.class || toClass == boolean.class) {
                 String s = from.toString().toLowerCase().trim();
 
                 if (TRUE_VALUES.contains(s)) {
@@ -238,6 +255,13 @@ final class TypeUtils {
                     return null;
                 }
             }
+            else if (toClass == Character.class || toClass == char.class) {
+                if (from.toString().length() != 1) {
+                    throw fail(from, toClass);
+                }
+
+                return (T) Character.valueOf(from.toString().charAt(0));
+            }
 
             // Date types can be converted among each other
             else if (java.util.Date.class.isAssignableFrom(fromClass)) {
@@ -245,7 +269,7 @@ final class TypeUtils {
             }
 
             // Long may also be converted into a date type
-            else if (fromClass == Long.class && java.util.Date.class.isAssignableFrom(toClass)) {
+            else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
                 return (T) toDate((Long) from, toClass);
             }
         }

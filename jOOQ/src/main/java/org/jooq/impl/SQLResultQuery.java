@@ -70,7 +70,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        JooqUtil.toSQLReference(context, sql, bindings);
+        Util.toSQLReference(context, sql, bindings);
     }
 
     @Override

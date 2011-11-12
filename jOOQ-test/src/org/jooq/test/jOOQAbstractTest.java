@@ -132,12 +132,21 @@ import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DetachedException;
-import org.jooq.exception.FetchIntoException;
 import org.jooq.exception.InvalidResultException;
+import org.jooq.exception.MappingException;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
 import org.jooq.impl.SQLDataType;
+import org.jooq.test.$.BookRecord;
+import org.jooq.test.$.BookTable;
+import org.jooq.test.$.BookWithAnnotations;
+import org.jooq.test.$.BookWithoutAnnotations;
+import org.jooq.test.$.DatesWithAnnotations;
+import org.jooq.test.$.FinalWithAnnotations;
+import org.jooq.test.$.FinalWithoutAnnotations;
+import org.jooq.test.$.StaticWithAnnotations;
+import org.jooq.test.$.StaticWithoutAnnotations;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -2716,6 +2725,16 @@ public abstract class jOOQAbstractTest<
         assertEquals(3, result.get(2).id3);
         assertEquals(4, result.get(3).id3);
 
+        assertEquals(Long.valueOf(1), result.get(0).id4);
+        assertEquals(Long.valueOf(2), result.get(1).id4);
+        assertEquals(Long.valueOf(3), result.get(2).id4);
+        assertEquals(Long.valueOf(4), result.get(3).id4);
+
+        assertEquals(1L, result.get(0).id5);
+        assertEquals(2L, result.get(1).id5);
+        assertEquals(3L, result.get(2).id5);
+        assertEquals(4L, result.get(3).id5);
+
         assertEquals("1984", result.get(0).title);
         assertEquals("Animal Farm", result.get(1).title);
         assertEquals("O Alquimista", result.get(2).title);
@@ -2747,7 +2766,7 @@ public abstract class jOOQAbstractTest<
                     .fetchInto(AbstractList.class);
             fail();
         }
-        catch (FetchIntoException expected) {}
+        catch (MappingException expected) {}
 
         try {
             // Cannot a class without default constructor
@@ -2755,7 +2774,7 @@ public abstract class jOOQAbstractTest<
                     .fetchInto(Math.class);
             fail();
         }
-        catch (FetchIntoException expected) {}
+        catch (MappingException expected) {}
 
         // [#930] Calendar/Date conversion checks
         // --------------------------------------
@@ -2892,7 +2911,112 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordFromWithAnnotations() throws Exception {
+        BookWithAnnotations b = new BookWithAnnotations();
+        b.firstName = "Edgar Allen";
+        b.lastName2 = "Poe";
+        b.dateOfBirth = new Date(1);
+        b.id = 17;
+        b.title = "The Raven";
+
+        // This data shouldn't be considered
+        b.id2 = 18;
+        b.lastName = "Poet";
+
+        B book = create().newRecord(TBook(), b);
+        A author = create().newRecord(TAuthor(), b);
+
+        assertEquals(b.id, author.getValue(TAuthor_ID()));
+        assertEquals(b.firstName, author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals(b.lastName2, author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(b.dateOfBirth, author.getValue(TAuthor_DATE_OF_BIRTH()));
+        assertNull(author.getValue(TAuthor_YEAR_OF_BIRTH()));
+
+        assertEquals(b.id, book.getValue(TBook_ID()));
+        assertEquals(b.title, book.getValue(TBook_TITLE()));
+        assertNull(book.getValue(TBook_AUTHOR_ID()));
+        assertNull(book.getValue(TBook_CONTENT_PDF()));
+        assertNull(book.getValue(TBook_CONTENT_TEXT()));
+        assertNull(book.getValue(TBook_LANGUAGE_ID()));
+        assertNull(book.getValue(TBook_PUBLISHED_IN()));
+    }
+
+    @Test
+    public void testRecordFromWithoutAnnotations() throws Exception {
+        BookWithoutAnnotations b = new BookWithoutAnnotations();
+        b.firstName = "Edgar Allen";
+        b.lastName = "Poe";
+        b.DATE_OF_BIRTH = new Date(1);
+        b.id = 17;
+        b.title = "The Raven";
+
+        // This data shouldn't be considered
+        b.id2 = 18;
+        b.ID = 19;
+        b.LAST_NAME = "Poet";
+        b.dateOfBirth = new Date(2);
+
+        B book = create().newRecord(TBook(), b);
+        A author = create().newRecord(TAuthor(), b);
+
+        assertEquals(b.id, author.getValue(TAuthor_ID()));
+        assertEquals(b.firstName, author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals(b.lastName, author.getValue(TAuthor_LAST_NAME()));
+        assertEquals(b.DATE_OF_BIRTH, author.getValue(TAuthor_DATE_OF_BIRTH()));
+        assertNull(author.getValue(TAuthor_YEAR_OF_BIRTH()));
+
+        assertEquals(b.id, book.getValue(TBook_ID()));
+        assertEquals(b.title, book.getValue(TBook_TITLE()));
+        assertNull(book.getValue(TBook_AUTHOR_ID()));
+        assertNull(book.getValue(TBook_CONTENT_PDF()));
+        assertNull(book.getValue(TBook_CONTENT_TEXT()));
+        assertNull(book.getValue(TBook_LANGUAGE_ID()));
+        assertNull(book.getValue(TBook_PUBLISHED_IN()));
+    }
+
+    @Test
+    public void testReflectionWithAnnotations() throws Exception {
+
+        // [#934] Static members are not to be considered
+        assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), new StaticWithAnnotations()));
+        create().newRecord(TBook()).into(StaticWithAnnotations.class);
+        assertEquals(13, StaticWithAnnotations.ID);
+
+        // [#935] Final member fields are considered when reading
+        B book = create().newRecord(TBook());
+        book.setValue(TBook_ID(), new FinalWithAnnotations().ID);
+        assertEquals(book, create().newRecord(TBook(), new FinalWithAnnotations()));
+
+        // [#935] ... but not when writing
+        FinalWithAnnotations f = create().newRecord(TBook()).into(FinalWithAnnotations.class);
+        assertEquals(f.ID, new FinalWithAnnotations().ID);
+    }
+
+    @Test
+    public void testReflectionWithoutAnnotations() throws Exception {
+
+        // Arbitrary sources should have no effect
+        assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), (Object) null));
+        assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), new Object()));
+
+        // [#934] Static members are not to be considered
+        assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), new StaticWithoutAnnotations()));
+        create().newRecord(TBook()).into(StaticWithoutAnnotations.class);
+        assertEquals(13, StaticWithoutAnnotations.ID);
+
+        // [#935] Final member fields are considered when reading
+        B book = create().newRecord(TBook());
+        book.setValue(TBook_ID(), new FinalWithoutAnnotations().ID);
+        assertEquals(book, create().newRecord(TBook(), new FinalWithoutAnnotations()));
+
+        // [#935] ... but not when writing
+        FinalWithoutAnnotations f = create().newRecord(TBook()).into(FinalWithoutAnnotations.class);
+        assertEquals(f.ID, new FinalWithoutAnnotations().ID);
+    }
+
+    @Test
     public void testFetchIntoCustomTable() throws Exception {
+
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:

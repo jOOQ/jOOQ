@@ -43,7 +43,7 @@ import org.jooq.exception.DataAccessException;
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface TableRecord<R extends Record> extends Record {
+public interface TableRecord<R extends TableRecord<R>> extends Record {
 
     /**
      * The table from which this record was read

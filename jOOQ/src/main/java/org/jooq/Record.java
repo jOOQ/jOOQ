@@ -45,7 +45,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 
-import org.jooq.exception.FetchIntoException;
+import org.jooq.exception.MappingException;
 
 /**
  * A wrapper for database result records returned by
@@ -863,30 +863,35 @@ public interface Record extends FieldProvider, Store<Object> {
      * <h3>If any JPA {@link Column} annotations are found on the provided
      * <code>type</code>, only those are used:</h3>
      * <ul>
-     * <li>If <code>type</code> contains public single-argument methods
+     * <li>If <code>type</code> contains public single-argument instance methods
      * annotated with <code>Column</code>, those methods are invoked</li>
-     * <li>If <code>type</code> contains public no-argument methods starting
-     * with <code>getXXX</code> or <code>isXXX</code>, annotated with
-     * <code>Column</code>, then matching <code>setXXX()</code> methods are
-     * invoked</li>
-     * <li>If <code>type</code> contains public members annotated with
-     * <code>Column</code>, those members are set</li>
+     * <li>If <code>type</code> contains public no-argument instance methods
+     * starting with <code>getXXX</code> or <code>isXXX</code>, annotated with
+     * <code>Column</code>, then matching public <code>setXXX()</code> instance
+     * methods are invoked</li>
+     * <li>If <code>type</code> contains public instance member fields annotated
+     * with <code>Column</code>, those members are set</li>
+     * </ul>
+     * Additional rules:
+     * <ul>
      * <li>The same annotation can be re-used for several methods/members</li>
      * <li>{@link Column#name()} must match {@link Field#getName()}. All other
      * annotation attributes are ignored</li>
+     * <li>Static methods / member fields are ignored</li>
+     * <li>Final member fields are ignored</li>
      * </ul>
      * <h3>If there are no JPA <code>Column</code> annotations, or jOOQ can't
      * find the <code>javax.persistence</code> API on the classpath, jOOQ will
-     * map <code>Record</code> values by naming convention:</h3> If a field's
-     * value for {@link Field#getName()} is <code>MY_field</code>
-     * (case-sensitive!), then this field's value will be set on all of these:
+     * map <code>Record</code> values by naming convention:</h3> If
+     * {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
+     * this field's value will be set on all of these:
      * <ul>
-     * <li>Public member <code>MY_field</code></li>
-     * <li>Public member <code>myField</code></li>
-     * <li>Public method <code>MY_field(...)</code></li>
-     * <li>Public method <code>myField(...)</code></li>
-     * <li>Public method <code>setMY_field(...)</code></li>
-     * <li>Public method <code>setMyField(...)</code></li>
+     * <li>Public single-argument instance method <code>MY_field(...)</code></li>
+     * <li>Public single-argument instance method <code>myField(...)</code></li>
+     * <li>Public single-argument instance method <code>setMY_field(...)</code></li>
+     * <li>Public single-argument instance method <code>setMyField(...)</code></li>
+     * <li>Public non-final instance member field <code>MY_field</code></li>
+     * <li>Public non-final instance member field <code>myField</code></li>
      * </ul>
      * <h3>Other restrictions</h3>
      * <ul>
@@ -898,11 +903,12 @@ public interface Record extends FieldProvider, Store<Object> {
      * numbers, or <code>false</code> for booleans). Hence, there is no way of
      * distinguishing <code>null</code> and <code>0</code> in that case.</li>
      * </ul>
-     * 
+     *
      * @param <E> The generic entity type.
      * @param type The entity type.
+     * @see #from(Object)
      */
-    <E> E into(Class<? extends E> type) throws FetchIntoException;
+    <E> E into(Class<? extends E> type) throws MappingException;
 
     /**
      * Map resulting records onto a custom record type. The mapping algorithm is
@@ -916,9 +922,57 @@ public interface Record extends FieldProvider, Store<Object> {
      * default constructors are made accessible using
      * {@link Constructor#setAccessible(boolean)}</li>
      * </ul>
-     * 
+     *
      * @param <R> The generic table record type.
      * @param table The table type.
      */
     <R extends TableRecord<R>> R into(Table<R> table);
+
+    /**
+     * Load data into this record from a source. The mapping algorithm is this:
+     * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
+     * of the provided <code>source</code>, only those are used. Matching
+     * candidates are:</h3>
+     * <ul>
+     * <li>Public no-argument instance methods annotated with
+     * <code>Column</code></li>
+     * <li>Public no-argument instance methods starting with <code>getXXX</code>
+     * or <code>isXXX</code>, if there exists a matching public single-argument
+     * <code>setXXX()</code> instance method that is annotated with
+     * <code>Column</code></li>
+     * <li>Public instance member fields annotated with <code>Column</code></li>
+     * </ul>
+     * Additional matching rules:
+     * <ul>
+     * <li>{@link Column#name()} must match {@link Field#getName()}. All other
+     * annotation attributes are ignored</li>
+     * <li>Only the first match per field is used</li>
+     * <li>Matching methods have a higher priority than matching member fields</li>
+     * <li>Explicitly matching methods have a higher priority than implicitly
+     * matching methods (implicitly matching getter = setter is annotated)</li>
+     * <li>Static methods / member fields are ignored</li>
+     * </ul>
+     * <h3>If there are no JPA <code>Column</code> annotations, or jOOQ can't
+     * find the <code>javax.persistence</code> API on the classpath, jOOQ will
+     * map members by naming convention:</h3> If {@link Field#getName()} is
+     * <code>MY_field</code> (case-sensitive!), then this field's value will be
+     * fetched from the first of these:
+     * <ul>
+     * <li>Public no-argument instance method <code>MY_field()</code></li>
+     * <li>Public no-argument instance method <code>myField()</code></li>
+     * <li>Public no-argument instance method <code>getMY_field()</code></li>
+     * <li>Public no-argument instance method <code>getMyField()</code></li>
+     * <li>Public instance member field <code>MY_field</code></li>
+     * <li>Public instance member field <code>myField</code></li>
+     * </ul>
+     * <h3>Other restrictions</h3>
+     * <ul>
+     * <li>primitive types are supported.</li>
+     * </ul>
+     *
+     * @param source The source object to copy data from
+     * @see #into(Class)
+     */
+    void from(Object source) throws MappingException;
+
 }

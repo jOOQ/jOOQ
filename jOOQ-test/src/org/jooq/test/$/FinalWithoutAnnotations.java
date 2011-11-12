@@ -33,78 +33,14 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test;
+package org.jooq.test.$;
 
-import javax.persistence.Column;
 
 /**
  * @author Lukas Eder
  */
-public class BookWithAnnotations {
+public class FinalWithoutAnnotations {
 
-    // JPA-annotated members
-    // ---------------------
-    @Column(name = "ID")
-    public Integer id;
+    public final int ID = 13;
 
-    @Column(name = "ID")
-    public int     id2;
-
-    @Column(name = "TITLE")
-    public String  title;
-
-    @Column(name = "FIRST_NAME")
-    public String  firstName;
-
-    @Column(name = "DATE_OF_BIRTH")
-    public java.util.Date dateOfBirth;
-
-    // Members without annotations
-    // ---------------------------
-    public int     id3;
-    public String  firstName2;
-    public String  lastName;
-    public String  lastName2;
-
-    // Methods with annotations
-    // ------------------------
-    @Column(name = "ID")
-    public void setId(int id) {
-        id3 = id;
-    }
-
-    @Column(name = "FIRST_NAME")
-    public void setFirstName(String f) {
-        firstName2 = f;
-    }
-
-    @Column(name = "LAST_NAME")
-    public void setLastName(String l) {
-        lastName = l;
-    }
-
-    public void setLAST_NAME(String l) {
-        lastName2 = l;
-    }
-
-    @Column(name = "LAST_NAME")
-    public String getLAST_NAME() {
-        return lastName2;
-    }
-
-    @Column(name = "LAST_NAME")
-    @SuppressWarnings("unused")
-    public void tooManyParameters(String l, String tooMany) {
-        throw new AssertionError();
-    }
-
-    @Column(name = "LAST_NAME")
-    public void notEnoughParameters() {
-        throw new AssertionError();
-    }
-
-    @Override
-    public String toString() {
-        return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
-    }
 }

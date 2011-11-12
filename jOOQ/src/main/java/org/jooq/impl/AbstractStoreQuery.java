@@ -121,7 +121,7 @@ abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuer
         }
         else {
             try {
-                A record = JooqUtil.newArrayRecord(field.getType(), getConfiguration());
+                A record = Util.newArrayRecord(field.getType(), getConfiguration());
                 record.setList(value);
                 addValue(field, record);
             }

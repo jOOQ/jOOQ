@@ -290,7 +290,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             throw translate("AbstractRoutine.executeCallableStatement", sql, exc);
         }
         finally {
-            JooqUtil.safeClose(statement);
+            Util.safeClose(statement);
             watch.splitDebug("Routine executed");
         }
     }
@@ -408,12 +408,12 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                     // also the type name
                     case ORACLE: {
                         if (sqlType == Types.STRUCT) {
-                            UDTRecord<?> record = JooqUtil.newRecord((Class<? extends UDTRecord<?>>) parameter.getType());
+                            UDTRecord<?> record = Util.newRecord((Class<? extends UDTRecord<?>>) parameter.getType());
                             statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
                         }
 
                         else if (sqlType == Types.ARRAY) {
-                            ArrayRecord<?> record = JooqUtil.newArrayRecord(
+                            ArrayRecord<?> record = Util.newArrayRecord(
                                 (Class<? extends ArrayRecord<?>>) parameter.getType(), configuration);
                             statement.registerOutParameter(index, Types.ARRAY, record.getName());
                         }

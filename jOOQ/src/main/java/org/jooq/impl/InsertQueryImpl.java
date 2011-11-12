@@ -463,7 +463,7 @@ class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> im
                 // additional query
                 if (returning.size() == 1 && returning.get(0).equals(field)) {
                     for (Number id : ids) {
-                        R typed = JooqUtil.newRecord(getInto(), configuration);
+                        R typed = Util.newRecord(getInto(), configuration);
                         ((AbstractRecord) typed).setValue(field, new Value<Number>(id));
                         getReturnedRecords().add(typed);
                     }

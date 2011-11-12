@@ -36,7 +36,7 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.JooqUtil.combine;
+import static org.jooq.impl.Util.combine;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -795,7 +795,7 @@ public class Factory implements FactoryOperations {
             return new CursorImpl<Record>(this, fields, rs).fetch();
         }
         catch (SQLException e) {
-            throw JooqUtil.translate("Factory.fetch", null, e);
+            throw Util.translate("Factory.fetch", null, e);
         }
     }
 
@@ -1149,8 +1149,18 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends Record> R newRecord(Table<R> table) {
-        return JooqUtil.newRecord(table, this);
+    public final <R extends TableRecord<R>> R newRecord(Table<R> table) {
+        return Util.newRecord(table, this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <R extends TableRecord<R>> R newRecord(Table<R> table, Object source) {
+        R result = newRecord(table);
+        result.from(source);
+        return result;
     }
 
     // -------------------------------------------------------------------------

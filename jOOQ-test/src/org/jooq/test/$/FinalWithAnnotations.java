@@ -33,66 +33,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.test.$;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.jooq.Batch;
-import org.jooq.Query;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
+import javax.persistence.Column;
 
 /**
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+public class FinalWithAnnotations {
 
-    /**
-     * Generated UID
-     */
-    private static final JooqLogger log              = JooqLogger.getLogger(BatchMultiple.class);
+    @Column(name = "ID")
+    public final int ID = 13;
 
-    private final Factory           create;
-    private final Query[]           queries;
-
-    public BatchMultiple(Factory create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
-    }
-
-    @Override
-    public final int[] execute() {
-        StopWatch watch = new StopWatch();
-        Connection connection = create.getConnection();
-        Statement statement = null;
-        String sql = null;
-
-        try {
-            statement = connection.createStatement();
-
-            for (Query query : queries) {
-                sql = create.renderInlined(query);
-                watch.splitTrace("SQL rendered");
-
-                if (log.isDebugEnabled())
-                    log.debug("Adding batch", sql);
-
-                statement.addBatch(sql);
-            }
-
-            int[] result = statement.executeBatch();
-            watch.splitTrace("Statement executed");
-
-            return result;
-        }
-        catch (SQLException e) {
-            throw Util.translate("BatchMultiple.execute", sql, e);
-        }
-        finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Statement executed");
-        }
-    }
 }

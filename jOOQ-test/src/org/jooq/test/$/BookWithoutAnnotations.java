@@ -33,66 +33,53 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.test.$;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.jooq.Batch;
-import org.jooq.Query;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
 
 /**
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+public class BookWithoutAnnotations {
 
-    /**
-     * Generated UID
-     */
-    private static final JooqLogger log              = JooqLogger.getLogger(BatchMultiple.class);
+    public Integer        id;
+    public int            id2;
+    public int            ID;
+    public String         title;
+    public String         firstName;
+    public String         firstName2;
+    public String         lastName;
+    public String         lastName2;
+    public String         LAST_NAME;
+    public java.util.Date DATE_OF_BIRTH;
+    public java.sql.Date  dateOfBirth;
 
-    private final Factory           create;
-    private final Query[]           queries;
+    public void setId(long id) {
+        id2 = (int) id;
+    }
 
-    public BatchMultiple(Factory create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
+    public void setFirstName(String f) {
+        firstName2 = f;
+    }
+
+    public void setLAST_NAME(String l) {
+        lastName = l;
+    }
+
+    public void LAST_NAME(String l) {
+        lastName2 = l;
+    }
+
+    @SuppressWarnings("unused")
+    public void setLAST_NAME(String l, String tooManyParameters) {
+        throw new AssertionError();
+    }
+
+    public void setLAST_NAME() {
+        throw new AssertionError();
     }
 
     @Override
-    public final int[] execute() {
-        StopWatch watch = new StopWatch();
-        Connection connection = create.getConnection();
-        Statement statement = null;
-        String sql = null;
-
-        try {
-            statement = connection.createStatement();
-
-            for (Query query : queries) {
-                sql = create.renderInlined(query);
-                watch.splitTrace("SQL rendered");
-
-                if (log.isDebugEnabled())
-                    log.debug("Adding batch", sql);
-
-                statement.addBatch(sql);
-            }
-
-            int[] result = statement.executeBatch();
-            watch.splitTrace("Statement executed");
-
-            return result;
-        }
-        catch (SQLException e) {
-            throw Util.translate("BatchMultiple.execute", sql, e);
-        }
-        finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Statement executed");
-        }
+    public String toString() {
+        return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
     }
 }

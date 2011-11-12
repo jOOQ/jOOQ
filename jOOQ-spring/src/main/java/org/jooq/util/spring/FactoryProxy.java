@@ -324,8 +324,13 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends Record> R newRecord(Table<R> table) {
+    public final <R extends TableRecord<R>> R newRecord(Table<R> table) {
         return getDelegate().newRecord(table);
+    }
+
+    @Override
+    public final <R extends TableRecord<R>> R newRecord(Table<R> table, Object source) {
+        return getDelegate().newRecord(table, source);
     }
 
     @Override

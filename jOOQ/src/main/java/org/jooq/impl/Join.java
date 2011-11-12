@@ -144,7 +144,7 @@ class Join extends AbstractQueryPart {
     private void toSQL0(RenderContext context) {
         if (usingSyntax) {
             context.sql(" using (");
-            JooqUtil.toSQLNames(context, using);
+            Util.toSQLNames(context, using);
             context.sql(")");
         }
         else {

@@ -43,7 +43,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.jooq.exception.FetchIntoException;
+import org.jooq.exception.MappingException;
 
 import org.w3c.dom.Document;
 
@@ -1727,11 +1727,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @see Record#into(Class)
      */
-    <E> List<E> into(Class<? extends E> type) throws FetchIntoException;
+    <E> List<E> into(Class<? extends E> type) throws MappingException;
 
     /**
      * Map resulting records onto a custom record.
@@ -1742,11 +1742,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *
      * @param <Z> The generic table record type.
      * @param table The table type.
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @see Record#into(Table)
      */
-    <Z extends TableRecord<Z>> Result<Z> into(Table<Z> table) throws FetchIntoException;
+    <Z extends TableRecord<Z>> Result<Z> into(Table<Z> table) throws MappingException;
 
     /**
      * Map results into a custom handler callback

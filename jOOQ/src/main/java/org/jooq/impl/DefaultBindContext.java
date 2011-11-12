@@ -68,7 +68,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
      * Generated UID
      */
     private static final long       serialVersionUID = -5457385919209241505L;
-    private static final JooqLogger log              = JooqLogger.getLogger(JooqUtil.class);
+    private static final JooqLogger log              = JooqLogger.getLogger(Util.class);
 
     private final PreparedStatement stmt;
     private int                     index;
@@ -169,7 +169,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
             return bindValue0(value, type);
         }
         catch (SQLException e) {
-            throw JooqUtil.translate("DefaultBindContext.bindValue", null, e);
+            throw Util.translate("DefaultBindContext.bindValue", null, e);
         }
     }
 
@@ -193,7 +193,7 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
 
             // Treat Oracle-style ARRAY types specially
             if (ArrayRecord.class.isAssignableFrom(type)) {
-                String typeName = JooqUtil.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
+                String typeName = Util.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
                 stmt.setNull(nextIndex(), sqlType, typeName);
             }
 

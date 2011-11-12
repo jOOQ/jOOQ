@@ -41,7 +41,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
-import org.jooq.exception.FetchIntoException;
+import org.jooq.exception.MappingException;
 
 /**
  * Cursors allow for lazy, sequential access to an underlying JDBC
@@ -135,10 +135,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      */
-    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
+    <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Map resulting records onto a custom type.
@@ -151,10 +151,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Map the next resulting record onto a custom record.
@@ -167,10 +167,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      */
-    <Z extends TableRecord<Z>> Z fetchOneInto(Table<Z> table) throws DataAccessException, FetchIntoException;
+    <Z extends TableRecord<Z>> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
      * Map resulting records onto a custom record.
@@ -183,10 +183,10 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      */
-    <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table) throws DataAccessException, FetchIntoException;
+    <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and

@@ -33,49 +33,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.exception;
-
-import org.jooq.Cursor;
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.ResultQuery;
+package org.jooq.test.$;
 
 /**
- * An error occurred while fetching data into a user defined Java object with
- * any of these methods:
- * <ul>
- * <li> {@link ResultQuery#fetchInto(Class)}</li>
- * <li> {@link Cursor#fetchInto(Class)}</li>
- * <li> {@link Result#into(Class)}</li>
- * <li> {@link Record#into(Class)}</li>
- * </ul>
- *
  * @author Lukas Eder
  */
-public class FetchIntoException extends DataAccessException {
+public class StaticWithoutAnnotations {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -6460945824599280420L;
+    public static int ID = 13;
 
-    /**
-     * Constructor for DataAccessException.
-     *
-     * @param message the detail message
-     */
-    public FetchIntoException(String message) {
-        super(message);
+    public static int getID() {
+        return ID;
     }
 
-    /**
-     * Constructor for DataAccessException.
-     *
-     * @param message the detail message
-     * @param cause the root cause (usually from using a underlying data access
-     *            API such as JDBC)
-     */
-    public FetchIntoException(String message, Throwable cause) {
-        super(message, cause);
+    public static void setID(int id) {
+        ID = id;
     }
 }

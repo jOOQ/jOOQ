@@ -33,66 +33,87 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.test.$;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.jooq.Batch;
-import org.jooq.Query;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
+import javax.persistence.Column;
 
 /**
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+public class BookWithAnnotations {
 
-    /**
-     * Generated UID
-     */
-    private static final JooqLogger log              = JooqLogger.getLogger(BatchMultiple.class);
+    // JPA-annotated members
+    // ---------------------
+    @Column(name = "ID")
+    public Integer id;
 
-    private final Factory           create;
-    private final Query[]           queries;
+    @Column(name = "ID")
+    public Long id4;
 
-    public BatchMultiple(Factory create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
+    @Column(name = "ID")
+    public int     id2;
+
+    @Column(name = "TITLE")
+    public String  title;
+
+    @Column(name = "FIRST_NAME")
+    public String  firstName;
+
+    @Column(name = "DATE_OF_BIRTH")
+    public java.util.Date dateOfBirth;
+
+    // Members without annotations
+    // ---------------------------
+    public int     id3;
+    public long    id5;
+    public String  firstName2;
+    public String  lastName;
+    public String  lastName2;
+
+    // Methods with annotations
+    // ------------------------
+    @Column(name = "ID")
+    public void setId(long id) {
+        id3 = (int) id;
+    }
+
+    @Column(name = "ID")
+    public void setId(Long id) {
+        id5 = (int) (long) id;
+    }
+
+    @Column(name = "FIRST_NAME")
+    public void setFirstName(String f) {
+        firstName2 = f;
+    }
+
+    @Column(name = "LAST_NAME")
+    public void setLastName(String l) {
+        lastName = l;
+    }
+
+    public void setLAST_NAME(String l) {
+        lastName2 = l;
+    }
+
+    @Column(name = "LAST_NAME")
+    public String getLAST_NAME() {
+        return lastName2;
+    }
+
+    @Column(name = "LAST_NAME")
+    @SuppressWarnings("unused")
+    public void tooManyParameters(String l, String tooMany) {
+        throw new AssertionError();
+    }
+
+    @Column(name = "LAST_NAME")
+    public void notEnoughParameters() {
+        throw new AssertionError();
     }
 
     @Override
-    public final int[] execute() {
-        StopWatch watch = new StopWatch();
-        Connection connection = create.getConnection();
-        Statement statement = null;
-        String sql = null;
-
-        try {
-            statement = connection.createStatement();
-
-            for (Query query : queries) {
-                sql = create.renderInlined(query);
-                watch.splitTrace("SQL rendered");
-
-                if (log.isDebugEnabled())
-                    log.debug("Adding batch", sql);
-
-                statement.addBatch(sql);
-            }
-
-            int[] result = statement.executeBatch();
-            watch.splitTrace("Statement executed");
-
-            return result;
-        }
-        catch (SQLException e) {
-            throw Util.translate("BatchMultiple.execute", sql, e);
-        }
-        finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Statement executed");
-        }
+    public String toString() {
+        return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
     }
 }

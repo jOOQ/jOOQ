@@ -33,66 +33,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.exception;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import org.jooq.Batch;
-import org.jooq.Query;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
+import org.jooq.Cursor;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.ResultQuery;
 
 /**
+ * An error occurred while fetching data into a user defined Java object with
+ * any of these methods:
+ * <ul>
+ * <li> {@link ResultQuery#fetchInto(Class)}</li>
+ * <li> {@link Cursor#fetchInto(Class)}</li>
+ * <li> {@link Result#into(Class)}</li>
+ * <li> {@link Record#into(Class)}</li>
+ * </ul>
+ *
  * @author Lukas Eder
  */
-class BatchMultiple implements Batch {
+public class MappingException extends DataAccessException {
 
     /**
      * Generated UID
      */
-    private static final JooqLogger log              = JooqLogger.getLogger(BatchMultiple.class);
+    private static final long serialVersionUID = -6460945824599280420L;
 
-    private final Factory           create;
-    private final Query[]           queries;
-
-    public BatchMultiple(Factory create, Query... queries) {
-        this.create = create;
-        this.queries = queries;
+    /**
+     * Constructor for DataAccessException.
+     *
+     * @param message the detail message
+     */
+    public MappingException(String message) {
+        super(message);
     }
 
-    @Override
-    public final int[] execute() {
-        StopWatch watch = new StopWatch();
-        Connection connection = create.getConnection();
-        Statement statement = null;
-        String sql = null;
-
-        try {
-            statement = connection.createStatement();
-
-            for (Query query : queries) {
-                sql = create.renderInlined(query);
-                watch.splitTrace("SQL rendered");
-
-                if (log.isDebugEnabled())
-                    log.debug("Adding batch", sql);
-
-                statement.addBatch(sql);
-            }
-
-            int[] result = statement.executeBatch();
-            watch.splitTrace("Statement executed");
-
-            return result;
-        }
-        catch (SQLException e) {
-            throw Util.translate("BatchMultiple.execute", sql, e);
-        }
-        finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Statement executed");
-        }
+    /**
+     * Constructor for DataAccessException.
+     *
+     * @param message the detail message
+     * @param cause the root cause (usually from using a underlying data access
+     *            API such as JDBC)
+     */
+    public MappingException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

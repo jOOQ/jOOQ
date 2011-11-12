@@ -67,7 +67,7 @@ class SQLCondition extends AbstractCondition {
         // We have no control over the plain SQL content, hence we MUST put it
         // in parentheses to ensure correct semantics
 
-        JooqUtil.toSQLReferenceWithParentheses(context, sql, bindings);
+        Util.toSQLReferenceWithParentheses(context, sql, bindings);
     }
 
     @Override

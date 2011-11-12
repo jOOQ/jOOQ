@@ -276,6 +276,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
      * Internal convenience method
      */
     protected final DataAccessException translate(String task, String sql, SQLException e) {
-        return JooqUtil.translate(task, sql, e);
+        return Util.translate(task, sql, e);
     }
 }

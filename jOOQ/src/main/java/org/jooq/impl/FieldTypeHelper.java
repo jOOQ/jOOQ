@@ -501,7 +501,7 @@ public final class FieldTypeHelper {
         }
         else {
             // TODO: [#523] Use array record meta data instead
-            ArrayRecord<?> record = JooqUtil.newArrayRecord(type, configuration);
+            ArrayRecord<?> record = Util.newArrayRecord(type, configuration);
             record.set(array);
             return record;
         }
@@ -963,7 +963,7 @@ public final class FieldTypeHelper {
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        UDTRecord<?> record = (UDTRecord<?>) JooqUtil.newRecord((Class) type);
+        UDTRecord<?> record = (UDTRecord<?>) Util.newRecord((Class) type);
         List<String> values = new PGobjectParser().parse(object.toString());
 
         List<Field<?>> fields = record.getFields();

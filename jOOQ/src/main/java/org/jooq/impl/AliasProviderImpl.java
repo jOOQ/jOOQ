@@ -117,7 +117,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                         ArrayTable<?> table = (ArrayTable<?>) o;
 
                         context.sql("(");
-                        JooqUtil.toSQLNames(context, table.getFields());
+                        Util.toSQLNames(context, table.getFields());
                         context.sql(")");
                     }
 

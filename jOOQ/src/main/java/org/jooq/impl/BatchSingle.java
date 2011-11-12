@@ -104,10 +104,10 @@ class BatchSingle implements BatchBindStep {
             return result;
         }
         catch (SQLException e) {
-            throw JooqUtil.translate("BatchSingle.execute", sql, e);
+            throw Util.translate("BatchSingle.execute", sql, e);
         }
         finally {
-            JooqUtil.safeClose(statement);
+            Util.safeClose(statement);
             watch.splitDebug("Statement executed");
         }
     }

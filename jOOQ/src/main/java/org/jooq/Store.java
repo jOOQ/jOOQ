@@ -41,6 +41,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.exception.DataTypeException;
+
 /**
  * A common base type for {@link Record} and {@link ArrayRecord} providing
  * common, index-based functionality for storage objects
@@ -48,7 +50,7 @@ import java.sql.Timestamp;
  * <code>Store</code> implements {@link Attachable}, as some stores need a
  * reference to an open JDBC connection to perform some actions on their
  * elements.
- *
+ * 
  * @param <E> The store's element type
  * @author Lukas Eder
  */
@@ -67,7 +69,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -77,7 +79,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The value of a field's index contained in this Store, or
@@ -89,25 +91,30 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    BigDecimal getValueAsBigDecimal(int index) throws IllegalArgumentException;
+    BigDecimal getValueAsBigDecimal(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    BigDecimal getValueAsBigDecimal(int index, BigDecimal defaultValue) throws IllegalArgumentException;
+    BigDecimal getValueAsBigDecimal(int index, BigDecimal defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
@@ -135,13 +142,15 @@ public interface Store<E> extends Attachable {
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Boolean getValueAsBoolean(int index) throws IllegalArgumentException;
+    Boolean getValueAsBoolean(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
@@ -169,273 +178,322 @@ public interface Store<E> extends Attachable {
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Boolean getValueAsBoolean(int index, Boolean defaultValue) throws IllegalArgumentException;
+    Boolean getValueAsBoolean(int index, Boolean defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    BigInteger getValueAsBigInteger(int index) throws IllegalArgumentException;
+    BigInteger getValueAsBigInteger(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    BigInteger getValueAsBigInteger(int index, BigInteger defaultValue) throws IllegalArgumentException;
+    BigInteger getValueAsBigInteger(int index, BigInteger defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Byte getValueAsByte(int index) throws IllegalArgumentException;
+    Byte getValueAsByte(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Byte getValueAsByte(int index, Byte defaultValue) throws IllegalArgumentException;
+    Byte getValueAsByte(int index, Byte defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Date getValueAsDate(int index) throws IllegalArgumentException;
+    Date getValueAsDate(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Date getValueAsDate(int index, Date defaultValue) throws IllegalArgumentException;
+    Date getValueAsDate(int index, Date defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Double getValueAsDouble(int index) throws IllegalArgumentException;
+    Double getValueAsDouble(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Double getValueAsDouble(int index, Double defaultValue) throws IllegalArgumentException;
+    Double getValueAsDouble(int index, Double defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Float getValueAsFloat(int index) throws IllegalArgumentException;
+    Float getValueAsFloat(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Float getValueAsFloat(int index, Float defaultValue) throws IllegalArgumentException;
+    Float getValueAsFloat(int index, Float defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Integer getValueAsInteger(int index) throws IllegalArgumentException;
+    Integer getValueAsInteger(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Integer getValueAsInteger(int index, Integer defaultValue) throws IllegalArgumentException;
+    Integer getValueAsInteger(int index, Integer defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Long getValueAsLong(int index) throws IllegalArgumentException;
+    Long getValueAsLong(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Long getValueAsLong(int index, Long defaultValue) throws IllegalArgumentException;
+    Long getValueAsLong(int index, Long defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Short getValueAsShort(int index) throws IllegalArgumentException;
+    Short getValueAsShort(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Short getValueAsShort(int index, Short defaultValue) throws IllegalArgumentException;
+    Short getValueAsShort(int index, Short defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    String getValueAsString(int index) throws IllegalArgumentException;
+    String getValueAsString(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    String getValueAsString(int index, String defaultValue) throws IllegalArgumentException;
+    String getValueAsString(int index, String defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Time getValueAsTime(int index) throws IllegalArgumentException;
+    Time getValueAsTime(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Time getValueAsTime(int index, Time defaultValue) throws IllegalArgumentException;
+    Time getValueAsTime(int index, Time defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Timestamp getValueAsTimestamp(int index) throws IllegalArgumentException;
+    Timestamp getValueAsTimestamp(int index) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a value from this Store, providing a field index.
-     *
+     * 
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
      *         or defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    Timestamp getValueAsTimestamp(int index, Timestamp defaultValue) throws IllegalArgumentException;
+    Timestamp getValueAsTimestamp(int index, Timestamp defaultValue) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Store, providing a field index.
-     *
+     * 
      * @param <T> The conversion type parameter
      * @param index The field's index
      * @param type The conversion type
      * @return The value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException;
+    <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Store, providing a field index.
-     *
+     * 
      * @param <T> The conversion type parameter
      * @param index The field's index
      * @param type The conversion type
@@ -444,6 +502,9 @@ public interface Store<E> extends Attachable {
      *         defaultValue, if <code>null</code>
      * @throws IllegalArgumentException If the argument index is not contained
      *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
      */
-    <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException;
+    <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
+        DataTypeException;
 }

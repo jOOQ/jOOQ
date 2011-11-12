@@ -32,6 +32,9 @@
 			    	<div class="navigation-item-left <?php if ($menu == 'home') print 'navigation-item-active'?>">
 			    		<a href="<?=$root?>/" title="jOOQ Home Page">Home</a>
 		    		</div>
+			    	<div class="navigation-item-left <?php if ($menu == 'tutorial') print 'navigation-item-active'?>">
+			    		<a href="<?=$root?>/tutorial.php" title="jOOQ Tutorial : The First Steps">Tutorial</a>
+			    	</div>
 			    	<div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
 			    		<a href="https://sourceforge.net/projects/jooq/files/" title="jOOQ Download">Download</a>
 			    	</div>

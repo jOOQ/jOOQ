@@ -1469,7 +1469,7 @@ public void bind(BindContext context) throws SQLException;</pre>
 #Configure the database connection here
 jdbc.Driver=com.mysql.jdbc.Driver
 jdbc.URL=jdbc:mysql://[your jdbc URL]
-jdbc.Schema=[your database schema]
+jdbc.Schema=[your database schema / owner / name]
 jdbc.User=[your database user]
 jdbc.Password=[your database password]
 

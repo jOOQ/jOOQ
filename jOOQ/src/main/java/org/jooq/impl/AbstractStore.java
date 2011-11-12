@@ -53,9 +53,9 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -2989496800221194411L;
+    private static final long    serialVersionUID = -2989496800221194411L;
 
-    private final AttachableImpl    attachable;
+    private final AttachableImpl attachable;
 
     AbstractStore() {
         this(null);

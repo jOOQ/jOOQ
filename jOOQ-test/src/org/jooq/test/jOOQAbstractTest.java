@@ -131,6 +131,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.DetachedException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
@@ -142,6 +143,7 @@ import org.jooq.test.$.BookRecord;
 import org.jooq.test.$.BookTable;
 import org.jooq.test.$.BookWithAnnotations;
 import org.jooq.test.$.BookWithoutAnnotations;
+import org.jooq.test.$.CharWithAnnotations;
 import org.jooq.test.$.DatesWithAnnotations;
 import org.jooq.test.$.FinalWithAnnotations;
 import org.jooq.test.$.FinalWithoutAnnotations;
@@ -1531,6 +1533,17 @@ public abstract class jOOQAbstractTest<
         assertEquals(null, SQLDataType.TIME.convert(null));
         assertEquals(null, SQLDataType.TIMESTAMP.convert(null));
 
+        assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert('1'));
+        assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert('1'));
+        assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert('1'));
+        assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert('1'));
+        assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert('1'));
+        assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert('1'));
+        assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert('1'));
+        assertEquals(new BigDecimal("1"), SQLDataType.NUMERIC.convert('1'));
+        assertEquals(Boolean.TRUE, SQLDataType.BOOLEAN.convert('1'));
+        assertEquals("1", SQLDataType.VARCHAR.convert('1'));
+
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert("1"));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert("1"));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert("1"));
@@ -1657,19 +1670,76 @@ public abstract class jOOQAbstractTest<
         assertEquals(new Time(1), SQLDataType.TIME.convert(1L));
         assertEquals(new Timestamp(1), SQLDataType.TIMESTAMP.convert(1L));
 
+        // [#936] Primitive type conversion
+        A author1 = create().newRecord(TAuthor());
+        assertEquals(Byte.valueOf("0"), author1.getValue(TAuthor_ID(), byte.class));
+        assertEquals(Short.valueOf("0"), author1.getValue(TAuthor_ID(), short.class));
+        assertEquals(Integer.valueOf("0"), author1.getValue(TAuthor_ID(), int.class));
+        assertEquals(Long.valueOf("0"), author1.getValue(TAuthor_ID(), long.class));
+        assertEquals(Float.valueOf("0"), author1.getValue(TAuthor_ID(), float.class));
+        assertEquals(Double.valueOf("0"), author1.getValue(TAuthor_ID(), double.class));
+        assertEquals(Boolean.FALSE, author1.getValue(TAuthor_ID(), boolean.class));
+        assertEquals(Character.valueOf((char) 0), author1.getValue(TAuthor_ID(), char.class));
+
+        author1.setValue(TAuthor_ID(), 1);
+        assertEquals(Byte.valueOf("1"), author1.getValue(TAuthor_ID(), byte.class));
+        assertEquals(Short.valueOf("1"), author1.getValue(TAuthor_ID(), short.class));
+        assertEquals(Integer.valueOf("1"), author1.getValue(TAuthor_ID(), int.class));
+        assertEquals(Long.valueOf("1"), author1.getValue(TAuthor_ID(), long.class));
+        assertEquals(Float.valueOf("1"), author1.getValue(TAuthor_ID(), float.class));
+        assertEquals(Double.valueOf("1"), author1.getValue(TAuthor_ID(), double.class));
+        assertEquals(Boolean.TRUE, author1.getValue(TAuthor_ID(), boolean.class));
+        assertEquals(Character.valueOf('1'), author1.getValue(TAuthor_ID(), char.class));
+
         // [#926] Some additional date conversion checks
-        A author = create().newRecord(TAuthor());
-        author.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1));
+        // ---------------------------------------------
+        A author2 = create().newRecord(TAuthor());
+        author2.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1));
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(1);
 
-        assertEquals(new Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Date.class));
-        assertEquals(new Time(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Time.class));
-        assertEquals(new Timestamp(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Timestamp.class));
-        assertEquals(new java.util.Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), java.util.Date.class));
-        assertEquals(calendar, author.getValue(TAuthor_DATE_OF_BIRTH(), Calendar.class));
-        assertEquals(Long.valueOf(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Long.class));
+        assertEquals(new Date(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), Date.class));
+        assertEquals(new Time(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), Time.class));
+        assertEquals(new Timestamp(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), Timestamp.class));
+        assertEquals(new java.util.Date(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), java.util.Date.class));
+        assertEquals(calendar, author2.getValue(TAuthor_DATE_OF_BIRTH(), Calendar.class));
+        assertEquals(Long.valueOf(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), Long.class));
+        assertEquals(Long.valueOf(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), long.class));
+
+        // [#933] Character conversion checks
+        // ----------------------------------
+        author2.setValue(TAuthor_ID(), 1);
+        author2.setValue(TAuthor_LAST_NAME(), "a");
+        assertEquals(Character.valueOf('1'), author2.getValue(TAuthor_ID(), Character.class));
+        assertEquals(Character.valueOf('1'), author2.getValue(TAuthor_ID(), char.class));
+        assertEquals(Character.valueOf('a'), author2.getValue(TAuthor_LAST_NAME(), Character.class));
+        assertEquals(Character.valueOf('a'), author2.getValue(TAuthor_LAST_NAME(), char.class));
+        assertEquals(null, author2.getValue(TAuthor_FIRST_NAME(), Character.class));
+        assertEquals(Character.valueOf((char) 0), author2.getValue(TAuthor_FIRST_NAME(), char.class));
+
+        author2.setValue(TAuthor_ID(), 12);
+        author2.setValue(TAuthor_LAST_NAME(), "ab");
+        try {
+            author2.getValue(TAuthor_ID(), Character.class);
+            fail();
+        }
+        catch (DataTypeException expected) {}
+        try {
+            author2.getValue(TAuthor_ID(), char.class);
+            fail();
+        }
+        catch (DataTypeException expected) {}
+        try {
+            author2.getValue(TAuthor_LAST_NAME(), Character.class);
+            fail();
+        }
+        catch (DataTypeException expected) {}
+        try {
+            author2.getValue(TAuthor_LAST_NAME(), char.class);
+            fail();
+        }
+        catch (DataTypeException expected) {}
     }
 
     @Test
@@ -2912,6 +2982,16 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testRecordFromWithAnnotations() throws Exception {
+
+        // TODO [#791] Fix test data and have all upper case columns everywhere
+        switch (getDialect()) {
+            case ASE:
+            case INGRES:
+            case POSTGRES:
+                log.info("SKIPPING", "fetchInto() tests");
+                return;
+        }
+
         BookWithAnnotations b = new BookWithAnnotations();
         b.firstName = "Edgar Allen";
         b.lastName2 = "Poe";
@@ -2943,6 +3023,16 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testRecordFromWithoutAnnotations() throws Exception {
+
+        // TODO [#791] Fix test data and have all upper case columns everywhere
+        switch (getDialect()) {
+            case ASE:
+            case INGRES:
+            case POSTGRES:
+                log.info("SKIPPING", "fetchInto() tests");
+                return;
+        }
+
         BookWithoutAnnotations b = new BookWithoutAnnotations();
         b.firstName = "Edgar Allen";
         b.lastName = "Poe";
@@ -2977,6 +3067,37 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testReflectionWithAnnotations() throws Exception {
 
+        // TODO [#791] Fix test data and have all upper case columns everywhere
+        switch (getDialect()) {
+            case ASE:
+            case INGRES:
+            case POSTGRES:
+                log.info("SKIPPING", "fetchInto() tests");
+                return;
+        }
+
+        // [#933] Map values to char / Character
+        A author1 = create().newRecord(TAuthor());
+        CharWithAnnotations c1 = author1.into(CharWithAnnotations.class);
+        assertEquals((char) 0, c1.id1);
+        assertEquals(null, c1.id2);
+        assertEquals((char) 0, c1.last1);
+        assertEquals(null, c1.last2);
+
+        author1.setValue(TAuthor_ID(), 1);
+        author1.setValue(TAuthor_LAST_NAME(), "a");
+        CharWithAnnotations c2 = author1.into(CharWithAnnotations.class);
+        assertEquals('1', c2.id1);
+        assertEquals('1', c2.id2.charValue());
+        assertEquals('a', c2.last1);
+        assertEquals('a', c2.last2.charValue());
+
+        A author2 = create().newRecord(TAuthor(), c2);
+        assertEquals('1', author2.getValue(TAuthor_ID(), char.class).charValue());
+        assertEquals('1', author2.getValue(TAuthor_ID(), Character.class).charValue());
+        assertEquals('a', author2.getValue(TAuthor_LAST_NAME(), char.class).charValue());
+        assertEquals('a', author2.getValue(TAuthor_LAST_NAME(), Character.class).charValue());
+
         // [#934] Static members are not to be considered
         assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), new StaticWithAnnotations()));
         create().newRecord(TBook()).into(StaticWithAnnotations.class);
@@ -2994,6 +3115,15 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testReflectionWithoutAnnotations() throws Exception {
+
+        // TODO [#791] Fix test data and have all upper case columns everywhere
+        switch (getDialect()) {
+            case ASE:
+            case INGRES:
+            case POSTGRES:
+                log.info("SKIPPING", "fetchInto() tests");
+                return;
+        }
 
         // Arbitrary sources should have no effect
         assertEquals(create().newRecord(TBook()), create().newRecord(TBook(), (Object) null));

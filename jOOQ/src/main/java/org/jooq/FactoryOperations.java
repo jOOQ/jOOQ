@@ -675,7 +675,7 @@ public interface FactoryOperations extends Configuration {
      * @param table The table holding records of type &lt;R&gt;
      * @param source The source to be used to fill the new record
      * @return The new record
-     * @throws MappingException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection or data type conversion exception that might
      *             have occurred while mapping records
      * @see Record#from(Object)
      * @see Record#into(Class)

@@ -50,7 +50,7 @@ public class DataTypeException extends DataAccessException {
     private static final long serialVersionUID = -6460945824599280420L;
 
     /**
-     * Constructor for DataAccessException.
+     * Constructor for DataTypeException.
      *
      * @param message the detail message
      */
@@ -59,7 +59,7 @@ public class DataTypeException extends DataAccessException {
     }
 
     /**
-     * Constructor for DataAccessException.
+     * Constructor for DataTypeException.
      *
      * @param message the detail message
      * @param cause the root cause (usually from using a underlying data access

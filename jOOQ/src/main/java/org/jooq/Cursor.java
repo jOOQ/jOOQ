@@ -51,7 +51,7 @@ import org.jooq.exception.MappingException;
  * <p>
  * Client code must close this {@link Cursor} in order to close the underlying
  * {@link PreparedStatement} and {@link ResultSet}
- *
+ * 
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
@@ -62,7 +62,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
-     *
+     * 
      * @throws DataAccessException if something went wrong executing the query
      */
     boolean hasNext() throws DataAccessException;
@@ -72,7 +72,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
-     *
+     * 
      * @throws DataAccessException if something went wrong executing the query
      */
     Result<R> fetch() throws DataAccessException;
@@ -82,7 +82,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
-     *
+     * 
      * @param number The number of records to fetch. If this is <code>0</code>
      *            or negative an empty list is returned, the cursor is
      *            untouched. If this is greater than the number of remaining
@@ -96,7 +96,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
-     *
+     * 
      * @return The next record from the cursor, or <code>null</code> if there is
      *         no next record.
      * @throws DataAccessException if something went wrong executing the query
@@ -108,7 +108,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
-     *
+     * 
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
@@ -117,7 +117,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
 
     /**
      * Fetch results into a custom handler callback
-     *
+     * 
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
@@ -129,14 +129,14 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This is the same as calling <code>fetchOne().into(type)</code>. See
      * {@link Record#into(Class)} for more details
-     *
+     * 
      * @param <E> The generic entity type.
      * @param type The entity type.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection exception that might
-     *             have occurred while mapping records
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
      */
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
@@ -145,14 +145,14 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This is the same as calling <code>fetch().into(type)</code>. See
      * {@link Record#into(Class)} for more details
-     *
+     * 
      * @param <E> The generic entity type.
      * @param type The entity type.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection exception that might
-     *             have occurred while mapping records
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
      */
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
@@ -161,14 +161,14 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This is the same as calling <code>fetchOne().into(table)</code>. See
      * {@link Record#into(Class)} for more details
-     *
+     * 
      * @param <Z> The generic table record type.
      * @param table The table type.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection exception that might
-     *             have occurred while mapping records
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
      */
     <Z extends TableRecord<Z>> Z fetchOneInto(Table<Z> table) throws DataAccessException, MappingException;
 
@@ -177,14 +177,14 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * <p>
      * This is the same as calling <code>fetch().into(table)</code>. See
      * {@link Record#into(Class)} for more details
-     *
+     * 
      * @param <Z> The generic table record type.
      * @param table The table type.
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws MappingException wrapping any reflection exception that might
-     *             have occurred while mapping records
+     * @throws MappingException wrapping any reflection or data type conversion
+     *             exception that might have occurred while mapping records
      */
     <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
@@ -195,7 +195,7 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * If you fetch all records from the underlying {@link ResultSet}, jOOQ
      * <code>Cursor</code> implementations will close themselves for you.
      * Calling <code>close()</code> again will have no effect.
-     *
+     * 
      * @throws DataAccessException if something went wrong executing the query
      */
     void close() throws DataAccessException;

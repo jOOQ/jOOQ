@@ -47,41 +47,95 @@ import javax.persistence.Entity;
 @Entity
 public class DatesWithAnnotations {
 
-    @Column(name = "DATE_OF_BIRTH")
-    public Calendar calOfBirth;
-    public Calendar cal1;
-    public Calendar cal2;
+    // -------------------------------------------------------------------------
+    // Mapping to java.util.Calendar
+    // -------------------------------------------------------------------------
 
     @Column(name = "DATE_OF_BIRTH")
-    public Date dateOfBirth;
-    public Date date1;
-    public Date date2;
+    public Calendar cal1;
+    public Calendar cal2;
+    public Calendar cal3;
 
     @Column(name = "DATE_OF_BIRTH")
     public void setCal(Calendar calendar) {
-        cal1 = calendar;
+        cal2 = calendar;
     }
 
     public void setC(Calendar calendar) {
-        cal2 = calendar;
+        cal3 = calendar;
     }
 
     @Column(name = "DATE_OF_BIRTH")
     public Calendar getC() {
-        return cal2;
+        return cal3;
     }
 
+    // -------------------------------------------------------------------------
+    // Mapping to java.util.Date
+    // -------------------------------------------------------------------------
+
     @Column(name = "DATE_OF_BIRTH")
-    public void setDate(Date ated) {
-        date1 = ated;
+    public Date date1;
+    public Date date2;
+    public Date date3;
+
+    @Column(name = "DATE_OF_BIRTH")
+    public void setDate(Date date) {
+        date2 = date;
     }
 
     public void setD(Date date) {
-        date2 = date;
+        date3 = date;
     }
 
     @Column(name = "DATE_OF_BIRTH")
     public Date getD() {
-        return date2;
+        return date3;
+    }
+
+    // -------------------------------------------------------------------------
+    // Mapping to java.lang.Long
+    // -------------------------------------------------------------------------
+
+    @Column(name = "DATE_OF_BIRTH")
+    public Long long1;
+    public Long long2;
+    public Long long3;
+
+    @Column(name = "DATE_OF_BIRTH")
+    public void setLong(Long l) {
+        long2 = l;
+    }
+
+    public void setL(Long l) {
+        long3 = l;
+    }
+
+    @Column(name = "DATE_OF_BIRTH")
+    public Long getL() {
+        return long3;
+    }
+
+    // -------------------------------------------------------------------------
+    // Mapping to long
+    // -------------------------------------------------------------------------
+
+    @Column(name = "DATE_OF_BIRTH")
+    public long primitiveLong1;
+    public long primitiveLong2;
+    public long primitiveLong3;
+
+    @Column(name = "DATE_OF_BIRTH")
+    public void setPrimitiveLong(long l) {
+        primitiveLong2 = l;
+    }
+
+    public void setPL(long l) {
+        primitiveLong3 = l;
+    }
+
+    @Column(name = "DATE_OF_BIRTH")
+    public long getPL() {
+        return primitiveLong3;
     }
 }

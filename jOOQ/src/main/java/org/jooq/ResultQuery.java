@@ -43,7 +43,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import org.jooq.exception.DataAccessException;
-import org.jooq.exception.FetchIntoException;
+import org.jooq.exception.MappingException;
 
 /**
  * A query that can return results. Mostly, this is a {@link Select} query used
@@ -443,10 +443,10 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Record#into(Class)
      * @see Result#into(Class)
      * @throws DataAccessException if something went wrong executing the query
-     * @throws FetchIntoException wrapping any reflection exception that might
+     * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      */
-    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, FetchIntoException;
+    <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
     /**
      * Map resulting records onto a custom record.

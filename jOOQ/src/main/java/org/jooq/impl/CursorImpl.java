@@ -191,7 +191,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final void close() {
-        JooqUtil.safeClose(rs, stmt);
+        Util.safeClose(rs, stmt);
         rs = null;
         stmt = null;
         isClosed = true;
@@ -246,7 +246,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
             try {
                 if (!isClosed && rs.next()) {
-                    record = JooqUtil.newRecord(type, fields, configuration);
+                    record = Util.newRecord(type, fields, configuration);
                     final List<Field<?>> fieldList = fields.getFields();
                     final int size = fieldList.size();
 
@@ -260,7 +260,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 }
             }
             catch (SQLException e) {
-                throw JooqUtil.translate("Cursor.fetch", null, e);
+                throw Util.translate("Cursor.fetch", null, e);
             }
 
             // Conveniently close cursors and underlying objects after the last

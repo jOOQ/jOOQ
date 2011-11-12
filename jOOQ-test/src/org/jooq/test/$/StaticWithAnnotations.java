@@ -33,36 +33,25 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test;
+package org.jooq.test.$;
 
-import org.jooq.TableField;
-import org.jooq.impl.CustomTable;
-import org.jooq.impl.SQLDataType;
+import javax.persistence.Column;
 
 /**
  * @author Lukas Eder
  */
-public class BookTable extends CustomTable<BookRecord> {
+public class StaticWithAnnotations {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -1124714471434439420L;
+    @Column(name = "ID")
+    public static int ID = 13;
 
-    public static final BookTable                      BOOK       = new BookTable();
-
-    public static final TableField<BookRecord, String> FIRST_NAME = createField("FIRST_NAME", SQLDataType.VARCHAR, BOOK);
-    public static final TableField<BookRecord, String> UNMATCHED  = createField("UNMATCHED", SQLDataType.VARCHAR, BOOK);
-    public static final TableField<BookRecord, String> LAST_NAME  = createField("LAST_NAME", SQLDataType.VARCHAR, BOOK);
-    public static final TableField<BookRecord, Short>  ID         = createField("ID", SQLDataType.SMALLINT, BOOK);
-    public static final TableField<BookRecord, String> TITLE      = createField("TITLE", SQLDataType.VARCHAR, BOOK);
-
-    protected BookTable() {
-        super(null);
+    @Column(name = "ID")
+    public static int getID() {
+        return ID;
     }
 
-    @Override
-    public Class<? extends BookRecord> getRecordType() {
-        return BookRecord.class;
+    @Column(name = "ID")
+    public static void setID(int id) {
+        ID = id;
     }
 }

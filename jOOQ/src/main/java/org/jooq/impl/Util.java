@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,7 +66,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-final class JooqUtil {
+final class Util {
 
     /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
@@ -338,13 +339,13 @@ final class JooqUtil {
             return true;
         }
 
-        for (java.lang.reflect.Field member : type.getFields()) {
+        for (java.lang.reflect.Field member : getInstanceMembers(type)) {
             if (member.getAnnotation(Column.class) != null) {
                 return true;
             }
         }
 
-        for (Method method : type.getMethods()) {
+        for (Method method : getInstanceMethods(type)) {
             if (method.getAnnotation(Column.class) != null) {
                 return true;
             }
@@ -359,7 +360,7 @@ final class JooqUtil {
     static final List<java.lang.reflect.Field> getAnnotatedMembers(Class<?> type, String name) {
         List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
-        for (java.lang.reflect.Field member : type.getFields()) {
+        for (java.lang.reflect.Field member : getInstanceMembers(type)) {
             Column annotation = member.getAnnotation(Column.class);
 
             if (annotation != null) {
@@ -378,7 +379,7 @@ final class JooqUtil {
     static final List<java.lang.reflect.Field> getMatchingMembers(Class<?> type, String name) {
         List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
 
-        for (java.lang.reflect.Field member : type.getFields()) {
+        for (java.lang.reflect.Field member : getInstanceMembers(type)) {
             if (name.equals(member.getName())) {
                 result.add(member);
             }
@@ -391,12 +392,12 @@ final class JooqUtil {
     }
 
     /**
-     * Get all methods annotated with a given column name
+     * Get all setter methods annotated with a given column name
      */
-    static final List<Method> getAnnotatedMethods(Class<?> type, String name) {
+    static final List<Method> getAnnotatedSetters(Class<?> type, String name) {
         List<Method> result = new ArrayList<Method>();
 
-        for (Method method : type.getMethods()) {
+        for (Method method : getInstanceMethods(type)) {
             Column annotation = method.getAnnotation(Column.class);
 
             if (annotation != null && name.equals(annotation.name())) {
@@ -429,12 +430,58 @@ final class JooqUtil {
     }
 
     /**
-     * Get all methods matching a given column name
+     * Get the first getter method annotated with a given column name
      */
-    static final List<Method> getMatchingMethods(Class<?> type, String name) {
+    static final Method getAnnotatedGetter(Class<?> type, String name) {
+        for (Method method : getInstanceMethods(type)) {
+            Column annotation = method.getAnnotation(Column.class);
+
+            if (annotation != null && name.equals(annotation.name())) {
+
+                // Annotated getter
+                if (method.getParameterTypes().length == 0) {
+                    return method;
+                }
+
+                // Annotated setter with matching getter
+                else if (method.getParameterTypes().length == 1) {
+                    String m = method.getName();
+
+                    if (m.startsWith("set")) {
+                        try {
+                            Method getter = type.getMethod("get" + m.substring(3));
+
+                            // Getter annotation is more relevant
+                            if (getter.getAnnotation(Column.class) == null) {
+                                return getter;
+                            }
+                        }
+                        catch (NoSuchMethodException ignore) {}
+
+                        try {
+                            Method getter = type.getMethod("is" + m.substring(3));
+
+                            // Getter annotation is more relevant
+                            if (getter.getAnnotation(Column.class) == null) {
+                                return getter;
+                            }
+                        }
+                        catch (NoSuchMethodException ignore) {}
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get all setter methods matching a given column name
+     */
+    static final List<Method> getMatchingSetters(Class<?> type, String name) {
         List<Method> result = new ArrayList<Method>();
 
-        for (Method method : type.getMethods()) {
+        for (Method method : getInstanceMethods(type)) {
             if (method.getParameterTypes().length == 1) {
                 if (name.equals(method.getName())) {
                     result.add(method);
@@ -452,5 +499,74 @@ final class JooqUtil {
         }
 
         return result;
+    }
+
+
+    /**
+     * Get the first getter method matching a given column name
+     */
+    static final Method getMatchingGetter(Class<?> type, String name) {
+        for (Method method : getInstanceMethods(type)) {
+            if (method.getParameterTypes().length == 0) {
+                if (name.equals(method.getName())) {
+                    return method;
+                }
+                else if (StringUtils.toCamelCaseLC(name).equals(method.getName())) {
+                    return method;
+                }
+                else if (("get" + name).equals(method.getName())) {
+                    return method;
+                }
+                else if (("get" + StringUtils.toCamelCase(name)).equals(method.getName())) {
+                    return method;
+                }
+                else if (("is" + name).equals(method.getName())) {
+                    return method;
+                }
+                else if (("is" + StringUtils.toCamelCase(name)).equals(method.getName())) {
+                    return method;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private static final List<Method> getInstanceMethods(Class<?> type) {
+        List<Method> result = new ArrayList<Method>();
+
+        for (Method method : type.getMethods()) {
+            if ((method.getModifiers() & Modifier.STATIC) == 0) {
+                result.add(method);
+            }
+        }
+
+        return result;
+    }
+
+    private static final List<java.lang.reflect.Field> getInstanceMembers(Class<?> type) {
+        List<java.lang.reflect.Field> result = new ArrayList<java.lang.reflect.Field>();
+
+        for (java.lang.reflect.Field field : type.getFields()) {
+            if ((field.getModifiers() & Modifier.STATIC) == 0) {
+                result.add(field);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Type-safely copy a value from one record to another
+     */
+    static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {
+        setValue(target, targetField, source.getValue(sourceField));
+    }
+
+    /**
+     * Type-safely set a value to a record
+     */
+    static final <T> void setValue(Record target, Field<T> targetField, Object value) {
+        target.setValue(targetField, targetField.getDataType().convert(value));
     }
 }

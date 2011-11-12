@@ -103,11 +103,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 return result;
             }
             catch (SQLException e) {
-                throw JooqUtil.translate("AbstractQuery.execute", sql, e);
+                throw Util.translate("AbstractQuery.execute", sql, e);
             }
             finally {
                 if (!keepStatementOpen()) {
-                    JooqUtil.safeClose(statement);
+                    Util.safeClose(statement);
                 }
 
                 watch.splitDebug("Statement executed");

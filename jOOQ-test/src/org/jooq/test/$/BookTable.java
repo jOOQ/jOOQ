@@ -33,53 +33,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test;
+package org.jooq.test.$;
 
+import org.jooq.TableField;
+import org.jooq.impl.CustomTable;
+import org.jooq.impl.SQLDataType;
 
 /**
  * @author Lukas Eder
  */
-public class BookWithoutAnnotations {
+public class BookTable extends CustomTable<BookRecord> {
 
-    public Integer        id;
-    public int            id2;
-    public int            ID;
-    public String         title;
-    public String         firstName;
-    public String         firstName2;
-    public String         lastName;
-    public String         lastName2;
-    public String         LAST_NAME;
-    public java.util.Date DATE_OF_BIRTH;
-    public java.sql.Date  dateOfBirth;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -1124714471434439420L;
 
-    public void setId(int id) {
-        id2 = id;
-    }
+    public static final BookTable                      BOOK       = new BookTable();
 
-    public void setFirstName(String f) {
-        firstName2 = f;
-    }
+    public static final TableField<BookRecord, String> FIRST_NAME = createField("FIRST_NAME", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, String> UNMATCHED  = createField("UNMATCHED", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, String> LAST_NAME  = createField("LAST_NAME", SQLDataType.VARCHAR, BOOK);
+    public static final TableField<BookRecord, Short>  ID         = createField("ID", SQLDataType.SMALLINT, BOOK);
+    public static final TableField<BookRecord, String> TITLE      = createField("TITLE", SQLDataType.VARCHAR, BOOK);
 
-    public void setLAST_NAME(String l) {
-        lastName = l;
-    }
-
-    public void LAST_NAME(String l) {
-        lastName2 = l;
-    }
-
-    @SuppressWarnings("unused")
-    public void setLAST_NAME(String l, String tooManyParameters) {
-        throw new AssertionError();
-    }
-
-    public void setLAST_NAME() {
-        throw new AssertionError();
+    protected BookTable() {
+        super(null);
     }
 
     @Override
-    public String toString() {
-        return "JPABook [id=" + id + ", title=" + title + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+    public Class<? extends BookRecord> getRecordType() {
+        return BookRecord.class;
     }
 }

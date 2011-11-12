@@ -662,7 +662,22 @@ public interface FactoryOperations extends Configuration {
      * @param table The table holding records of type &lt;R&gt;
      * @return The new record
      */
-    <R extends Record> R newRecord(Table<R> table);
+    <R extends TableRecord<R>> R newRecord(Table<R> table);
+
+    /**
+     * Create a new pre-filled {@link Record} that can be inserted into the
+     * corresponding table.
+     * <p>
+     * This performs roughly the inverse operation of {@link Record#into(Class)}
+     *
+     * @param <R> The generic record type
+     * @param table The table holding records of type &lt;R&gt;
+     * @param source The source to be used to fill the new record
+     * @return The new record
+     * @see Record#from(Object)
+     * @see Record#into(Class)
+     */
+    <R extends TableRecord<R>> R newRecord(Table<R> table, Object source);
 
     // -------------------------------------------------------------------------
     // Fast querying

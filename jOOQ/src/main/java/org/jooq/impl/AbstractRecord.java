@@ -36,8 +36,18 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Util.getAnnotatedGetter;
+import static org.jooq.impl.Util.getAnnotatedMembers;
+import static org.jooq.impl.Util.getAnnotatedSetters;
+import static org.jooq.impl.Util.getMatchingGetter;
+import static org.jooq.impl.Util.getMatchingMembers;
+import static org.jooq.impl.Util.getMatchingSetters;
+import static org.jooq.impl.Util.hasColumnAnnotations;
+import static org.jooq.impl.Util.isJPAAvailable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
@@ -54,7 +64,7 @@ import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableRecord;
-import org.jooq.exception.FetchIntoException;
+import org.jooq.exception.MappingException;
 
 /**
  * @author Lukas Eder
@@ -487,29 +497,34 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     public final <T> T into(Class<? extends T> type) {
         try {
             T result = type.newInstance();
+            boolean useAnnotations = isJPAAvailable() && hasColumnAnnotations(type);
 
             for (Field<?> field : getFields()) {
                 List<java.lang.reflect.Field> members;
                 List<java.lang.reflect.Method> methods;
 
                 // Annotations are available and present
-                if (JooqUtil.isJPAAvailable() && JooqUtil.hasColumnAnnotations(type)) {
-                    members = JooqUtil.getAnnotatedMembers(type, field.getName());
-                    methods = JooqUtil.getAnnotatedMethods(type, field.getName());
+                if (useAnnotations) {
+                    members = getAnnotatedMembers(type, field.getName());
+                    methods = getAnnotatedSetters(type, field.getName());
                 }
 
                 // No annotations are present
                 else {
-                    members = JooqUtil.getMatchingMembers(type, field.getName());
-                    methods = JooqUtil.getMatchingMethods(type, field.getName());
+                    members = getMatchingMembers(type, field.getName());
+                    methods = getMatchingSetters(type, field.getName());
                 }
 
                 for (java.lang.reflect.Field member : members) {
-                    copyInto(result, member, field);
+
+                    // [#935] Avoid setting final fields
+                    if ((member.getModifiers() & Modifier.FINAL) == 0) {
+                        into(result, member, field);
+                    }
                 }
 
                 for (java.lang.reflect.Method method : methods) {
-                    copyInto(result, method, field);
+                    into(result, method, field);
                 }
             }
 
@@ -518,11 +533,74 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
         // All reflection exceptions are intercepted
         catch (Exception e) {
-            throw new FetchIntoException("An error ocurred when mapping record to " + type, e);
+            throw new MappingException("An error ocurred when mapping record to " + type, e);
         }
     }
 
-    private final void copyInto(Object result, Method method, Field<?> field)
+    @Override
+    public final <R extends TableRecord<R>> R into(Table<R> table) {
+        try {
+            R result = Util.newRecord(table, getConfiguration());
+
+            for (Field<?> sourceField : getFields()) {
+                Field<?> targetField = result.getField(sourceField);
+
+                if (targetField != null) {
+                    Util.setValue(result, targetField, this, sourceField);
+                }
+            }
+
+            return result;
+        }
+
+        // All reflection exceptions are intercepted
+        catch (Exception e) {
+            throw new MappingException("An error ocurred when mapping record to " + table, e);
+        }
+    }
+
+    @Override
+    public final void from(Object source) {
+        if (source == null) return;
+
+        Class<?> type = source.getClass();
+
+        try {
+            boolean useAnnotations = isJPAAvailable() && hasColumnAnnotations(type);
+
+            for (Field<?> field : getFields()) {
+                List<java.lang.reflect.Field> members;
+                Method method;
+
+                // Annotations are available and present
+                if (useAnnotations) {
+                    members = getAnnotatedMembers(type, field.getName());
+                    method = getAnnotatedGetter(type, field.getName());
+                }
+
+                // No annotations are present
+                else {
+                    members = getMatchingMembers(type, field.getName());
+                    method = getMatchingGetter(type, field.getName());
+                }
+
+                // Use only the first applicable method or member
+                if (method != null) {
+                    Util.setValue(this, field, method.invoke(source));
+                }
+                else if (members.size() > 0) {
+                    from(source, members.get(0), field);
+                }
+            }
+        }
+
+        // All reflection exceptions are intercepted
+        catch (Exception e) {
+            throw new MappingException("An error ocurred when mapping record from " + type, e);
+        }
+    }
+
+    private final void into(Object result, Method method, Field<?> field)
         throws IllegalAccessException, InvocationTargetException {
 
         Class<?> mType = method.getParameterTypes()[0];
@@ -555,7 +633,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
-    private final void copyInto(Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
+    private final void into(Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
         Class<?> mType = member.getType();
 
         if (mType.isPrimitive()) {
@@ -586,32 +664,36 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
-    @Override
-    public final <R extends TableRecord<R>> R into(Table<R> table) {
-        try {
-            R result = JooqUtil.newRecord(table, getConfiguration());
+    private final void from(Object source, java.lang.reflect.Field member, Field<?> field)
+        throws IllegalAccessException {
 
-            for (Field<?> field : getFields()) {
-                Field<?> targetField = result.getField(field);
+        Class<?> mType = member.getType();
 
-                if (targetField != null) {
-                    setValue(result, field, targetField);
-                }
+        if (mType.isPrimitive()) {
+            if (mType == byte.class) {
+                Util.setValue(this, field, member.getByte(source));
             }
-
-            return result;
+            else if (mType == short.class) {
+                Util.setValue(this, field, member.getShort(source));
+            }
+            else if (mType == int.class) {
+                Util.setValue(this, field, member.getInt(source));
+            }
+            else if (mType == long.class) {
+                Util.setValue(this, field, member.getLong(source));
+            }
+            else if (mType == float.class) {
+                Util.setValue(this, field, member.getFloat(source));
+            }
+            else if (mType == double.class) {
+                Util.setValue(this, field, member.getDouble(source));
+            }
+            else if (mType == boolean.class) {
+                Util.setValue(this, field, member.getBoolean(source));
+            }
         }
-
-        // All reflection exceptions are intercepted
-        catch (Exception e) {
-            throw new FetchIntoException("An error ocurred when mapping record to " + table, e);
+        else {
+            Util.setValue(this, field, member.get(source));
         }
-    }
-
-    /**
-     * Type-safely copy a value from one record to another
-     */
-    final <T> void setValue(Record target, Field<?> sourceField, Field<T> targetField) {
-        target.setValue(targetField, targetField.getDataType().convert(getValue(sourceField)));
     }
 }

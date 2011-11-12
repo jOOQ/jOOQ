@@ -434,7 +434,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw JooqUtil.translate("LoaderImpl.executeCSV", null, e);
+            throw Util.translate("LoaderImpl.executeCSV", null, e);
         }
         finally {
             reader.close();

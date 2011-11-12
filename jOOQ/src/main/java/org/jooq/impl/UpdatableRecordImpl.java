@@ -43,7 +43,6 @@ import java.util.Set;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Record;
-import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
@@ -55,7 +54,7 @@ import org.jooq.UpdatableTable;
  *
  * @author Lukas Eder
  */
-public class UpdatableRecordImpl<R extends TableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
+public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
 
     /**
      * Generated UID

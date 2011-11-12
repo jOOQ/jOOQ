@@ -206,7 +206,12 @@ final class TypeUtils {
                 return (T) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
             }
             else if (toClass == Long.class) {
-                return (T) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                    return (T) Long.valueOf(((java.util.Date) from).getTime());
+                }
+                else {
+                    return (T) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                }
             }
             else if (toClass == Float.class) {
                 return (T) Float.valueOf(from.toString().trim());
@@ -236,29 +241,45 @@ final class TypeUtils {
 
             // Date types can be converted among each other
             else if (java.util.Date.class.isAssignableFrom(fromClass)) {
-                long time = ((java.util.Date) from).getTime();
+                return (T) toDate(((java.util.Date) from).getTime(), toClass);
+            }
 
-                if (toClass == Date.class) {
-                    return (T) new Date(time);
-                }
-                else if (toClass == Time.class) {
-                    return (T) new Time(time);
-                }
-                else if (toClass == Timestamp.class) {
-                    return (T) new Timestamp(time);
-                }
-                else if (toClass == java.util.Date.class) {
-                    return (T) new java.util.Date(time);
-                }
-                else if (toClass == Calendar.class) {
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(time);
-                    return (T) calendar;
-                }
+            // Long may also be converted into a date type
+            else if (fromClass == Long.class && java.util.Date.class.isAssignableFrom(toClass)) {
+                return (T) toDate((Long) from, toClass);
             }
         }
 
-        throw new DataTypeException("Cannot convert from " + from + " to " + toClass);
+        throw fail(from, toClass);
+    }
+
+    /**
+     * Convert a long timestamp to any date type
+     */
+    private static Object toDate(long time, Class<?> toClass) {
+        if (toClass == Date.class) {
+            return new Date(time);
+        }
+        else if (toClass == Time.class) {
+            return new Time(time);
+        }
+        else if (toClass == Timestamp.class) {
+            return new Timestamp(time);
+        }
+        else if (toClass == java.util.Date.class) {
+            return new java.util.Date(time);
+        }
+        else if (toClass == Calendar.class) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(time);
+            return calendar;
+        }
+
+        throw fail(time, toClass);
+    }
+
+    private static DataTypeException fail(Object from, Class<?> toClass) {
+        return new DataTypeException("Cannot convert from " + from + " (" + from.getClass() + ") to " + toClass);
     }
 
     /**

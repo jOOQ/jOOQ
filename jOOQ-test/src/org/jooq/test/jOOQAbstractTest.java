@@ -1644,18 +1644,23 @@ public abstract class jOOQAbstractTest<
         assertEquals(new Time(1), SQLDataType.TIME.convert(new Timestamp(1)));
         assertEquals(new Timestamp(1), SQLDataType.TIMESTAMP.convert(new Timestamp(1)));
 
+        assertEquals(new Date(1), SQLDataType.DATE.convert(1L));
+        assertEquals(new Time(1), SQLDataType.TIME.convert(1L));
+        assertEquals(new Timestamp(1), SQLDataType.TIMESTAMP.convert(1L));
+
         // [#926] Some additional date conversion checks
         A author = create().newRecord(TAuthor());
         author.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1));
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(1);
-        
+
         assertEquals(new Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Date.class));
         assertEquals(new Time(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Time.class));
         assertEquals(new Timestamp(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Timestamp.class));
         assertEquals(new java.util.Date(1), author.getValue(TAuthor_DATE_OF_BIRTH(), java.util.Date.class));
         assertEquals(calendar, author.getValue(TAuthor_DATE_OF_BIRTH(), Calendar.class));
+        assertEquals(Long.valueOf(1), author.getValue(TAuthor_DATE_OF_BIRTH(), Long.class));
     }
 
     @Test
@@ -2753,6 +2758,7 @@ public abstract class jOOQAbstractTest<
         catch (FetchIntoException expected) {}
 
         // [#930] Calendar/Date conversion checks
+        // --------------------------------------
         List<DatesWithAnnotations> calendars =
         create().select(TAuthor_DATE_OF_BIRTH())
                 .from(TAuthor())
@@ -2763,11 +2769,55 @@ public abstract class jOOQAbstractTest<
 
         for (int index : asList(0, 1)) {
             assertEquals(calendars.get(index).cal1, calendars.get(index).cal2);
-            assertEquals(calendars.get(index).cal1, calendars.get(index).calOfBirth);
+            assertEquals(calendars.get(index).cal1, calendars.get(index).cal3);
+
             assertEquals(calendars.get(index).date1, calendars.get(index).date2);
-            assertEquals(calendars.get(index).date1, calendars.get(index).dateOfBirth);
+            assertEquals(calendars.get(index).date1, calendars.get(index).date3);
+
+            assertEquals(calendars.get(index).long1, calendars.get(index).long2);
+            assertEquals(calendars.get(index).long1, calendars.get(index).long3);
+
+            assertEquals(calendars.get(index).primitiveLong1, calendars.get(index).primitiveLong2);
+            assertEquals(calendars.get(index).primitiveLong1, calendars.get(index).primitiveLong3);
+
             assertEquals(calendars.get(index).cal1.getTime(), calendars.get(index).date1);
+            assertEquals(calendars.get(index).cal1.getTime().getTime(), calendars.get(index).date1.getTime());
+            assertEquals(calendars.get(index).cal1.getTime().getTime(), calendars.get(index).long1.longValue());
+            assertEquals(calendars.get(index).cal1.getTime().getTime(), calendars.get(index).primitiveLong1);
         }
+
+        A author = create().newRecord(TAuthor());
+        DatesWithAnnotations dates = author.into(DatesWithAnnotations.class);
+
+        assertNull(dates.cal1);
+        assertNull(dates.cal2);
+        assertNull(dates.cal3);
+        assertNull(dates.date1);
+        assertNull(dates.date2);
+        assertNull(dates.date3);
+        assertNull(dates.long1);
+        assertNull(dates.long2);
+        assertNull(dates.long3);
+        assertEquals(0L, dates.primitiveLong1);
+        assertEquals(0L, dates.primitiveLong2);
+        assertEquals(0L, dates.primitiveLong3);
+
+        author = create().newRecord(TAuthor());
+        author.setValue(TAuthor_DATE_OF_BIRTH(), new Date(1L));
+        dates = author.into(DatesWithAnnotations.class);
+
+        assertEquals(1L, dates.cal1.getTime().getTime());
+        assertEquals(1L, dates.cal2.getTime().getTime());
+        assertEquals(1L, dates.cal3.getTime().getTime());
+        assertEquals(1L, dates.date1.getTime());
+        assertEquals(1L, dates.date2.getTime());
+        assertEquals(1L, dates.date3.getTime());
+        assertEquals(1L, (long) dates.long1);
+        assertEquals(1L, (long) dates.long2);
+        assertEquals(1L, (long) dates.long3);
+        assertEquals(1L, dates.primitiveLong1);
+        assertEquals(1L, dates.primitiveLong2);
+        assertEquals(1L, dates.primitiveLong3);
     }
 
     @Test

@@ -906,6 +906,8 @@ public interface Record extends FieldProvider, Store<Object> {
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
      * @see #from(Object)
      */
     <E> E into(Class<? extends E> type) throws MappingException;
@@ -971,6 +973,8 @@ public interface Record extends FieldProvider, Store<Object> {
      * </ul>
      *
      * @param source The source object to copy data from
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
      * @see #into(Class)
      */
     void from(Object source) throws MappingException;

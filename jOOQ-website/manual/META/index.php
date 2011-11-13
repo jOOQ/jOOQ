@@ -16,9 +16,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Extend/" title="Previous section: Extend jOOQ with custom types">previous</a> : <a href="<?=$root?>/manual/META/Configuration/" title="Next section: Configuration and setup of the generator">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">previous</a> : <a title="Next section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">next</a></td>
 </tr>
 </table>
 					<h2>Overview</h2>
@@ -44,26 +44,26 @@ function printContent() {
 					</p>
 				<h3>Table of contents</h3><ol>
 <li>
-<a href="<?=$root?>/manual/META/Configuration/" title="Configuration and setup of the generator">Configuration and setup of the generator</a>
+<a title="Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/SCHEMA/" title="The schema, top-level generated artefact">The schema, top-level generated artefact</a>
+<a title="The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/TABLE/" title="Tables, views and their corresponding records">Tables, views and their corresponding records</a>
+<a title="Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/PROCEDURE/" title="Procedures and packages">Procedures and packages</a>
+<a title="Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/UDT/" title="UDT's including ARRAY and ENUM types">UDT's including ARRAY and ENUM types</a>
+<a title="UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/SEQUENCE/" title="Sequences">Sequences</a>
+<a title="Sequences" href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a>
 </li>
-</ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+</ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Extend/" title="Previous section: Extend jOOQ with custom types">previous</a> : <a href="<?=$root?>/manual/META/Configuration/" title="Next section: Configuration and setup of the generator">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">previous</a> : <a title="Next section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">next</a></td>
 </tr>
 </table>
 <?php 

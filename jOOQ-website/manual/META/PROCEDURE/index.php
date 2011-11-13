@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/TABLE/" title="Previous section: Tables, views and their corresponding records">previous</a> : <a href="<?=$root?>/manual/META/UDT/" title="Next section: UDT's including ARRAY and ENUM types">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>
 </tr>
 </table>
 							<h2>Stored procedures in modern RDBMS</h2>
@@ -42,8 +42,7 @@ function printContent() {
 							
 							<h3>"Standalone" stored procedures and functions</h3>
 							<p>Let's say you have these stored procedures and functions in your Oracle database </p>
-							<pre class="prettyprint lang-sql">
--- Check whether there is an author in T_AUTHOR by that name
+<pre class="prettyprint lang-sql">-- Check whether there is an author in T_AUTHOR by that name
 CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2) RETURN NUMBER;
 
 -- Check whether there is an author in T_AUTHOR by that name
@@ -62,8 +61,7 @@ CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT 
 </ul>
 							<p>Let's see what these things look like, in Java. The classes (simplified for the example): </p>
 							
-							<pre class="prettyprint lang-java">
-// The function has a generic type parameter &lt;T&gt; bound to its return value
+<pre class="prettyprint lang-java">// The function has a generic type parameter &lt;T&gt; bound to its return value
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine&lt;BigDecimal&gt; {
 
     // Much like Tables, functions have static parameter definitions
@@ -103,15 +101,13 @@ public class PAuthorExists_2 extends org.jooq.impl.AbstractRoutine&lt;java.lang.
 
 							<p>An example invocation of such a stored procedure might look like this: </p>
 							
-							<pre class="prettyprint lang-java">
-PAuthorExists p = new PAuthorExists();
+<pre class="prettyprint lang-java">PAuthorExists p = new PAuthorExists();
 p.setAuthorName("Paulo");
 p.execute(configuration);
 assertEquals(BigDecimal.ONE, p.getResult());</pre>
 
 							<p>If you use the generated convenience methods, however, things are much simpler, still: </p>
-							<pre class="prettyprint lang-java">
-// Every schema has a single Routines class with convenience methods
+<pre class="prettyprint lang-java">// Every schema has a single Routines class with convenience methods
 public final class Routines {
 
     // Convenience method to directly call the stored function
@@ -132,8 +128,7 @@ public final class Routines {
 }</pre>
 
 							<p>An sample invocation, equivalent to the previous example:</p>
-							<pre class="prettyprint lang-java">
-assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</pre>
+<pre class="prettyprint lang-java">assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</pre>
 
 
 							<h3>jOOQ's understanding of procedures vs functions</h3>
@@ -177,9 +172,9 @@ assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));<
 								one for
 								standalone procedures/functions.
 							</p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/TABLE/" title="Previous section: Tables, views and their corresponding records">previous</a> : <a href="<?=$root?>/manual/META/UDT/" title="Next section: UDT's including ARRAY and ENUM types">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>
 </tr>
 </table>
 <?php 

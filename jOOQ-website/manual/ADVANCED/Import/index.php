@@ -17,9 +17,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/Export/" title="Previous section: Exporting to XML, CSV, JSON, HTML, Text">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/" title="Next section: Using JDBC batch operations">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">previous</a> : <a title="Next section: Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">next</a></td>
 </tr>
 </table>
 							<h2>Importing with jOOQ</h2>
@@ -33,16 +33,14 @@ function printContent() {
 								exported previously, by jOOQ's exporting functionality, and then
 								modified in Microsoft Excel or any other spreadsheet tool: </p>
 								
-							<pre>
-ID;AUTHOR_ID;TITLE
+<pre>ID;AUTHOR_ID;TITLE
 1;1;1984
 2;1;Animal Farm</pre>
 
 							<p>With jOOQ, you can load this data using various parameters from the
 								loader API. A simple load may look like this: </p>
 								
-							<pre class="prettyprint lang-java">
-Factory create = new Factory(connection, SQLDialect.ORACLE);
+<pre class="prettyprint lang-java">Factory create = new Factory(connection, SQLDialect.ORACLE);
 
 // Load data into the T_AUTHOR table from an input stream
 // holding the CSV data.
@@ -52,8 +50,7 @@ create.loadInto(T_AUTHOR)
       .execute();</pre>
       
       						<p>Here are various other examples: </p>
-      						<pre class="prettyprint lang-java">
-// Ignore the AUTHOR_ID column from the CSV file when inserting
+<pre class="prettyprint lang-java">// Ignore the AUTHOR_ID column from the CSV file when inserting
 create.loadInto(T_AUTHOR)
       .loadCSV(inputstream)
       .fields(ID, null, TITLE)
@@ -101,8 +98,7 @@ create.loadInto(T_AUTHOR)
 								about more details. Errors that occur during the load are reported by
 								the execute method's result: </p>
 								
-							<pre class="prettyprint lang-java">
-Loader&lt;TAuthor&gt; loader = /* .. */ .execute();
+<pre class="prettyprint lang-java">Loader&lt;TAuthor&gt; loader = /* .. */ .execute();
 
 // The number of processed rows
 int processed = loader.processed();
@@ -129,9 +125,9 @@ Query query = error.query();</pre>
 
 							<h3>XML </h3>
 							<p>This will be implemented soon... </p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/Export/" title="Previous section: Exporting to XML, CSV, JSON, HTML, Text">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/" title="Next section: Using JDBC batch operations">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">previous</a> : <a title="Next section: Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">next</a></td>
 </tr>
 </table>
 <?php 

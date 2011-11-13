@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/PROCEDURE/" title="Previous section: Procedures and packages">previous</a> : <a href="<?=$root?>/manual/META/SEQUENCE/" title="Next section: Sequences">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">previous</a> : <a title="Next section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">next</a></td>
 </tr>
 </table>
 							<h2>Increased RDBMS support for UDT's</h2>
@@ -78,8 +78,7 @@ function printContent() {
 </ul>
 							
 							<p>In Oracle, you would define UDTs like this: </p>
-							<pre class="prettyprint lang-sql">
-CREATE TYPE u_street_type AS OBJECT (
+<pre class="prettyprint lang-sql">CREATE TYPE u_street_type AS OBJECT (
   street VARCHAR2(100),
   no VARCHAR2(30)
 )
@@ -94,8 +93,7 @@ CREATE TYPE u_address_type AS OBJECT (
 )</pre>
 
 							<p>These types could then be used in tables and/or stored procedures like such: </p>
-							<pre class="prettyprint lang-sql">
-CREATE TABLE t_author (
+<pre class="prettyprint lang-sql">CREATE TABLE t_author (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   -- [...]
   address u_address_type
@@ -120,8 +118,7 @@ CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</pr
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDT.java" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and 
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDTRecord.java" title="Internal API reference: org.jooq.UDTRecord">UDT record classes</a> as such:
 							</p>
-							<pre class="prettyprint lang-java">
-// There is an analogy between UDT/Table and UDTRecord/TableRecord...
+<pre class="prettyprint lang-java">// There is an analogy between UDT/Table and UDTRecord/TableRecord...
 public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
 
     // The UDT meta-model singleton instance
@@ -138,16 +135,14 @@ public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
 }</pre>
 
 							<p>Now, when you interact with entities or procedures that hold UDT's, that's very simple as well. Here is an example: </p>
-							<pre class="prettyprint lang-java">
-// Fetch any author from the T_AUTHOR table
+<pre class="prettyprint lang-java">// Fetch any author from the T_AUTHOR table
 TAuthorRecord author = create.selectFrom(T_AUTHOR).fetchAny();
 
 // Print out the author's address's house number
 System.out.println(author.getAddress().getStreet().getNo());</pre>
 
 							<p>A similar thing can be achieved when interacting with the example stored procedure: </p>
-							<pre class="prettyprint lang-java">
-// Create a new UDTRecord of type U_ADDRESS_TYPE
+<pre class="prettyprint lang-java">// Create a new UDTRecord of type U_ADDRESS_TYPE
 UAddressTypeRecord address = new UAddressTypeRecord();
 address.setCountry("Switzerland");
 
@@ -198,8 +193,7 @@ address = Procedures.pCheckAddress(connection, address);</pre>
 							<h3>Example: General ARRAY types</h3>
 							<p>An example usage of ARRAYs is given here for the Postgres dialect </p>
 							
-							<pre class="prettyprint lang-sql">
-CREATE TABLE t_arrays (
+<pre class="prettyprint lang-sql">CREATE TABLE t_arrays (
   id integer not null primary key,
   string_array VARCHAR(20)[],
   number_array INTEGER[]
@@ -208,8 +202,7 @@ CREATE TABLE t_arrays (
 CREATE FUNCTION f_arrays(in_array IN text[]) RETURNS text[]</pre>
 
 							<p>When generating source code from the above entities, these artefacts will be created in Java: </p>
-							<pre class="prettyprint lang-java">
-public class TArrays extends UpdatableTableImpl&lt;TArraysRecord&gt; {
+<pre class="prettyprint lang-java">public class TArrays extends UpdatableTableImpl&lt;TArraysRecord&gt; {
 
     // The generic type parameter &lt;T&gt; is bound to an array of a matching type
     public static final TableField&lt;TArraysRecord, String[]&gt; STRING_ARRAY =  // [...]
@@ -232,8 +225,7 @@ public final class Functions {
 								generated objects from those types as well. The example above would
 								read like this in Oracle: </p>
 								
-							<pre class="prettyprint lang-sql">
-CREATE TYPE u_string_array AS VARRAY(4) OF VARCHAR2(20)
+<pre class="prettyprint lang-sql">CREATE TYPE u_string_array AS VARRAY(4) OF VARCHAR2(20)
 CREATE TYPE u_number_array AS VARRAY(4) OF NUMBER(7)
 
 CREATE TABLE t_arrays (
@@ -251,8 +243,7 @@ RETURN u_string_array</pre>
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ArrayRecord.java" title="Internal API reference: org.jooq.ArrayRecord">org.jooq.ArrayRecord</a> and other
 								artefacts in Oracle: </p>
 								
-							<pre class="prettyprint lang-java">
-public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]
+<pre class="prettyprint lang-java">public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]
 public class UNumberArrayRecord extends ArrayRecordImpl&lt;Integer&gt; { // [...]
 
 public class TArrays extends UpdatableTableImpl&lt;TArraysRecord&gt; {
@@ -285,8 +276,7 @@ public final class Functions {
 </ul>
 							
 							<p>Some examples: </p>
-							<pre class="prettyprint lang-sql">
--- An example enum type
+<pre class="prettyprint lang-sql">-- An example enum type
 CREATE TYPE u_book_status AS ENUM ('SOLD OUT', 'ON STOCK', 'ORDERED')
 
 -- An example useage of that enum type
@@ -298,8 +288,7 @@ CREATE TABLE t_book (
 )</pre>
 
 							<p>The above Postgres ENUM type will be generated as </p>
-							<pre class="prettyprint lang-java">
-public enum UBookStatus implements EnumType {
+<pre class="prettyprint lang-java">public enum UBookStatus implements EnumType {
     ORDERED("ORDERED"),
     ON_STOCK("ON STOCK"),
     SOLD_OUT("SOLD OUT");
@@ -307,8 +296,7 @@ public enum UBookStatus implements EnumType {
     // [...]
 }</pre>
 							<p>Intuitively, the generated classes for the T_BOOK table in Postgres would look like this: </p>
-							<pre class="prettyprint lang-sql">
-// The meta-model class
+<pre class="prettyprint lang-sql">// The meta-model class
 public class TBook extends UpdatableTableImpl&lt;TBookRecord&gt; {
 
     // The TableField STATUS binds &lt;T&gt; to UBookStatus
@@ -330,9 +318,9 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 								sense in your data model. See the section on 
 								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a> for more
 								details. </p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/PROCEDURE/" title="Previous section: Procedures and packages">previous</a> : <a href="<?=$root?>/manual/META/SEQUENCE/" title="Next section: Sequences">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">previous</a> : <a title="Next section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">next</a></td>
 </tr>
 </table>
 <?php 

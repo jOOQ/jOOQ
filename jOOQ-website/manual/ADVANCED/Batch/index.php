@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/Import/" title="Previous section: Importing data from XML, CSV">previous</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">previous</a></td>
 </tr>
 </table>
 							<h2>JDBC batch operations</h2>
@@ -37,8 +37,7 @@ function printContent() {
 </ol>
 	
 							<p>In code, this looks like the following snippet:</p>
-							<pre class="prettyprint lang-java">
-// 1. several queries
+<pre class="prettyprint lang-java">// 1. several queries
 // ------------------
 Statement stmt = connection.createStatement();
 stmt.addBatch("INSERT INTO author VALUES (1, 'Erich Gamma')");
@@ -72,8 +71,7 @@ int[] result = stmt.executeBatch();</pre>
 							<h2>This will also be supported by jOOQ</h2>
 							<p>Version 1.6.9 of jOOQ now supports executing queries in batch
 								mode as follows:</p>
-							<pre class="prettyprint lang-java">
-// 1. several queries
+<pre class="prettyprint lang-java">// 1. several queries
 // ------------------
 create.batch(
 	create.insertInto(AUTHOR, ID, NAME).values(1, "Erich Gamma"),
@@ -90,9 +88,9 @@ create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
 	  .bind(3, "Ralph Johnson")
 	  .bind(4, "John Vlissides")
 	  .execute();</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/Import/" title="Previous section: Importing data from XML, CSV">previous</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">previous</a></td>
 </tr>
 </table>
 <?php 

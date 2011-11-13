@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/" title="Previous section: The jOOQ User Manual">previous</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Next section: The example database">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The jOOQ User Manual" href="<?=$root?>/manual/">previous</a> : <a title="Next section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">next</a></td>
 </tr>
 </table>
 					<h2>Overview</h2>
@@ -48,38 +48,38 @@ function printContent() {
 					</p>
 				<h3>Table of contents</h3><ol>
 <li>
-<a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">The example database</a>
+<a title="The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Factory/" title="The Factory class">The Factory class</a>
+<a title="The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Table/" title="Tables and Fields">Tables and Fields</a>
+<a title="Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Result/" title="Results and Records">Results and Records</a>
+<a title="Results and Records" href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Updatable Records">Updatable Records</a>
+<a title="Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Query/" title="The Query and its various subtypes">The Query and its various subtypes</a>
+<a title="The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="ResultQuery and various ways of fetching data">ResultQuery and various ways of fetching data</a>
+<a title="ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="QueryParts and the global architecture">QueryParts and the global architecture</a>
+<a title="QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Serializability/" title="Serializability of QueryParts and Results">Serializability of QueryParts and Results</a>
+<a title="Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Extend/" title="Extend jOOQ with custom types">Extend jOOQ with custom types</a>
+<a title="Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a>
 </li>
-</ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+</ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/" title="Previous section: The jOOQ User Manual">previous</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Next section: The example database">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The jOOQ User Manual" href="<?=$root?>/manual/">previous</a> : <a title="Next section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">next</a></td>
 </tr>
 </table>
 <?php 

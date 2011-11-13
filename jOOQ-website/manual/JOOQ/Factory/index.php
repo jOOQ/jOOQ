@@ -20,9 +20,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Previous section: The example database">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/" title="Next section: Tables and Fields">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a title="Next section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
 </tr>
 </table>
 							<h2>The Factory and the jOOQ API</h2>
@@ -75,13 +75,11 @@ function printContent() {
 								only using the MySQL dialect, you can choose to create a new Factory
 								using any of the following types: 
 							</p>
-							<pre class="prettyprint lang-java">
-// A general, dialect-unspecific factory
+<pre class="prettyprint lang-java">// A general, dialect-unspecific factory
 Factory create = new Factory(connection, SQLDialect.MYSQL);
 
 // A MySQL-specific factory
-MySQLFactory create = new MySQLFactory(connection);
-							</pre>
+MySQLFactory create = new MySQLFactory(connection);</pre>
 							<p>
 								The advantage of using a dialect-specific Factory lies in the fact,
 								that you have access to more proprietary RDMBS functionality. This may
@@ -151,9 +149,9 @@ MySQLFactory create = new MySQLFactory(connection);
 								that can perform CRUD operations on the
 								Factory's underlying Connection.
 							</p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="Previous section: The example database">previous</a> : <a href="<?=$root?>/manual/JOOQ/Table/" title="Next section: Tables and Fields">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a title="Next section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
 </tr>
 </table>
 <?php 

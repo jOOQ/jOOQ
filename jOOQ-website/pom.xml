@@ -14,7 +14,7 @@
   	<dependency>
   		<groupId>commons-io</groupId>
   		<artifactId>commons-io</artifactId>
-  		<version>20030203.000550</version>
+  		<version>2.1</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
@@ -26,11 +26,24 @@
   		<scope>compile</scope>
   	</dependency>
   	<dependency>
-  		<groupId>fop</groupId>
-  		<artifactId>fop</artifactId>
-  		<version>0.93</version>
+  		<groupId>xalan</groupId>
+  		<artifactId>xalan</artifactId>
+  		<version>2.7.1</version>
   		<type>jar</type>
-  		<classifier>jdk14</classifier>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.xmlgraphics</groupId>
+  		<artifactId>fop</artifactId>
+  		<version>0.95</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.avalon.framework</groupId>
+  		<artifactId>avalon-framework-impl</artifactId>
+  		<version>4.3.1</version>
+  		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
   </dependencies>

@@ -18,9 +18,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Previous section: Updatable Records">previous</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="Next section: ResultQuery and various ways of fetching data">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">previous</a> : <a title="Next section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">next</a></td>
 </tr>
 </table>
 							<h2>SELECT statements</h2>
@@ -87,11 +87,10 @@ function printContent() {
 </ul>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
--- Select all books by authors born after 1920, named "Paulo" 
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">-- Select all books by authors born after 1920, named "Paulo" 
 -- from a catalogue consisting of authors and books:
 
 
@@ -102,9 +101,8 @@ SELECT *
  WHERE a.year_of_birth &gt; 1920 
    AND a.first_name = 'Paulo'
  ORDER BY b.title</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-// Instanciate your factory using a JDBC connection.
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">// Instanciate your factory using a JDBC connection.
 Factory create = new Factory(connection, SQLDialect.ORACLE);
 
 // Execute the query "on a single line"
@@ -150,8 +148,7 @@ Result&lt;Record&gt; result = create.select()
 								want to add Query parts in the order SQL expects them), you can use
 								this syntax: 
 							</p>
-							<pre class="prettyprint lang-java">
-// Re-use the factory to create a SelectQuery. This example will not make use of static imports...
+<pre class="prettyprint lang-java">// Re-use the factory to create a SelectQuery. This example will not make use of static imports...
 SelectQuery q = create.selectQuery();
 q.addFrom(TAuthor.T_AUTHOR);
 
@@ -185,19 +182,17 @@ q.addOrderBy(TBook.TITLE);</pre>
 							The INSERT VALUES and the INSERT SELECT syntax</p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-INSERT INTO T_AUTHOR 
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">INSERT INTO T_AUTHOR 
     (ID, FIRST_NAME, LAST_NAME)
 VALUES 
     (100, 'Hermann', 'Hesse'),
     (101, 'Alfred', 'D&ouml;blin');</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.insertInto(T_AUTHOR, 
-          TAuthor.ID, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.insertInto(T_AUTHOR, 
+        TAuthor.ID, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       .values(100, "Hermann", "Hesse")
       .values(101, "Alfred", "D&ouml;blin")
       .execute();</pre>
@@ -221,8 +216,7 @@ create.insertInto(T_AUTHOR,
 								for INSERT statements. This is also supported in jOOQ, should you
 								prefer that syntax. The above INSERT statement can also be expressed
 								as follows: </p>
-							<pre class="prettyprint lang-java">
-create.insertInto(T_AUTHOR)
+<pre class="prettyprint lang-java">create.insertInto(T_AUTHOR)
       .set(TAuthor.ID, 100)
       .set(TAuthor.FIRST_NAME, "Hermann")
       .set(TAuthor.LAST_NAME, "Hesse")
@@ -240,8 +234,7 @@ create.insertInto(T_AUTHOR)
 								which is supported by jOOQ and simulated in other RDBMS, where this is
 								possible. Here is an example how to use the ON DUPLICATE KEY UPDATE
 								clause: </p>
-							<pre class="prettyprint lang-java">
-// Add a new author called "Koontz" with ID 3.
+<pre class="prettyprint lang-java">// Add a new author called "Koontz" with ID 3.
 // If that ID is already present, update the author's name
 create.insertInto(T_AUTHOR, TAuthor.ID, TAuthor.LAST_NAME)
       .values(3, "Koontz")
@@ -256,8 +249,7 @@ create.insertInto(T_AUTHOR, TAuthor.ID, TAuthor.LAST_NAME)
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Statement.html#getGeneratedKeys()" title="External API reference: java.sql.Statement">getGeneratedKeys()</a> 
 								method. Take this example:</p>
 								
-							<pre class="prettyprint lang-java">
-// Add another author, with a generated ID
+<pre class="prettyprint lang-java">// Add another author, with a generated ID
 Record&lt;?&gt; record =
 create.insertInto(T_AUTHOR, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       .values("Charlotte", "Roche")
@@ -277,8 +269,7 @@ create.insertInto(T_AUTHOR, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
       						
       						<h3>Example: Non-DSL Query</h3>
       						<p>You can always use the more verbose regular syntax of the InsertQuery, if you need more control: </p>
-      						<pre class="prettyprint lang-java">
-// Insert a new author into the T_AUTHOR table
+<pre class="prettyprint lang-java">// Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
 i.addValue(TAuthor.ID, 100);
 i.addValue(TAuthor.FIRST_NAME, "Hermann");
@@ -293,8 +284,7 @@ i.execute();</pre>
 							<h3>Example: INSERT Query combined with SELECT statements</h3>
 							<p>The InsertQuery.addValue() method is overloaded, such that you can
 								also provide a Field, potentially containing an expression: </p>
-							<pre class="prettyprint lang-java">
-// Insert a new author into the T_AUTHOR table
+<pre class="prettyprint lang-java">// Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
 i.addValue(TAuthor.ID, create.select(TAuthor.ID.max().add(1)).from(T_AUTHOR).asField())
 i.addValue(TAuthor.FIRST_NAME, "Hermann");
@@ -307,8 +297,7 @@ i.execute();</pre>
 							<h3>Example: INSERT SELECT syntax support</h3>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when 
 								you copy records from one table to another: </p>
-							<pre class="prettyprint lang-java">
-Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
+<pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
            create.selectFrom(T_AUTHOR).where(TAuthor.DECEASED.equal(1)));
 i.execute();</pre>
 
@@ -318,18 +307,16 @@ i.execute();</pre>
 							multi-table updates will be implemented in the near future. </p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-
-UPDATE T_AUTHOR
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">UPDATE T_AUTHOR
    SET FIRST_NAME = 'Hermann',
        LAST_NAME = 'Hesse'
- WHERE ID = 3;</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.update(T_AUTHOR)
+ WHERE ID = 3;
+ </pre>
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.update(T_AUTHOR)
       .set(TAuthor.FIRST_NAME, "Hermann")
       .set(TAuthor.LAST_NAME, "Hesse")
       .where(TAuthor.ID.equal(3))
@@ -341,8 +328,7 @@ create.update(T_AUTHOR)
 							<h3>Example: Non-DSL Query</h3>
 							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdateQuery.java" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class, 
 							this is how you could express an UPDATE statement:</p> 
-							<pre class="prettyprint lang-java">
-UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
+<pre class="prettyprint lang-java">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
 u.addValue(TAuthor.FIRST_NAME, "Hermann");
 u.addValue(TAuthor.FIRST_NAME, "Hesse");
 u.addConditions(TAuthor.ID.equal(3));
@@ -354,16 +340,14 @@ u.execute();</pre>
 							multi-table deletes will be implemented in the near future. </p>
 							
 							<h3>Example: SQL query and DSL query</h3>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-
-DELETE T_AUTHOR
- WHERE ID = 100;</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.delete(T_AUTHOR)
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">DELETE T_AUTHOR
+ WHERE ID = 100;
+ </pre>
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.delete(T_AUTHOR)
       .where(TAuthor.ID.equal(100))
       .execute();</pre>
 </td>
@@ -373,8 +357,7 @@ create.delete(T_AUTHOR)
 							<h3>Example: Non-DSL Query</h3>
 							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/DeleteQuery.java" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class, 
 							this is how you could express a DELETE statement: </p> 
-							<pre class="prettyprint lang-java">
-DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
+<pre class="prettyprint lang-java">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
 d.addConditions(TAuthor.ID.equal(100));
 d.execute();</pre>
 
@@ -394,28 +377,29 @@ d.execute();</pre>
 								not supported. Here is an example:
 							</p>
 							
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
--- Check if there is already an author called 'Hitchcock'
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">-- Check if there is already an author called 'Hitchcock'
 -- If there is, rename him to John. If there isn't add him.
 
 MERGE INTO T_AUTHOR
 USING (SELECT 1 FROM DUAL)
 ON (LAST_NAME = 'Hitchcock')
 WHEN MATCHED THEN UPDATE SET FIRST_NAME = 'John'
-WHEN NOT MATCHED THEN INSERT (LAST_NAME) VALUES ('Hitchcock')</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.mergeInto(T_AUTHOR)
+WHEN NOT MATCHED THEN INSERT (LAST_NAME) 
+                      VALUES ('Hitchcock')</pre>
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.mergeInto(T_AUTHOR)
       .using(create().selectOne())
       .on(TAuthor.LAST_NAME.equal("Hitchcock"))
       .whenMatchedThenUpdate()
       .set(TAuthor.FIRST_NAME, "John")
       .whenNotMatchedThenInsert(TAuthor.LAST_NAME)
       .values("Hitchcock")
-      .execute();</pre>
+      .execute();
+
+</pre>
 </td>
 </tr>
 </table>
@@ -426,20 +410,20 @@ create.mergeInto(T_AUTHOR)
 								The syntax is trivial:
 							</p>
 							
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
+<td class="left" width="50%">
 <pre class="prettyprint lang-sql">TRUNCATE TABLE T_AUTHOR;</pre>
-</td><td width="50%" class="right">
+</td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.truncate(T_AUTHOR).execute();</pre>
 </td>
 </tr>
 </table>
 							<p>This is not supported by Ingres and SQLite. jOOQ will execute a DELETE FROM
 								T_AUTHOR statement instead. </p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Previous section: Updatable Records">previous</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="Next section: ResultQuery and various ways of fetching data">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">previous</a> : <a title="Next section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">next</a></td>
 </tr>
 </table>
 <?php 

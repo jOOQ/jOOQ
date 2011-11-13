@@ -20,9 +20,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Factory/" title="Previous section: The Factory class">previous</a> : <a href="<?=$root?>/manual/JOOQ/Result/" title="Next section: Results and Records">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">previous</a> : <a title="Next section: Results and Records" href="<?=$root?>/manual/JOOQ/Result/">next</a></td>
 </tr>
 </table>
 							<h2>The Table</h2>
@@ -146,9 +146,9 @@ function printContent() {
 							<p>
 								This can be used for additional type safety in the future, or by client code.
 							</p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Factory/" title="Previous section: The Factory class">previous</a> : <a href="<?=$root?>/manual/JOOQ/Result/" title="Next section: Results and Records">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">previous</a> : <a title="Next section: Results and Records" href="<?=$root?>/manual/JOOQ/Result/">next</a></td>
 </tr>
 </table>
 <?php 

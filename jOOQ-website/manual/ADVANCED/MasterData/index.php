@@ -17,9 +17,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/" title="Previous section: Advanced topics">previous</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Next section: Mapping generated schemata and tables">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
 </tr>
 </table>
 							<h2>Enumeration tables</h2>
@@ -36,8 +36,7 @@ function printContent() {
 							<p>As previously discussed in the 
 							  <a href="<?=$root?>/manual/META/Configuration/" title="jOOQ Manual reference: Configuration and setup of the generator">configuration and setup</a>
 							   section, you can configure master data tables as follows: </p>
-						    <pre class="prettyprint">
-#Generate a master data table enum classes (several Java regular expressions, separated by comma)
+<pre class="prettyprint">#Generate a master data table enum classes (several Java regular expressions, separated by comma)
 generator.generate.master-data-tables=[a list of tables]
 
 #For every master data table, specify two special columns
@@ -45,8 +44,7 @@ generator.generate.master-data-table-literal.[master data table]=[column used fo
 generator.generate.master-data-table-description.[master data table]=[column used for documentation]</pre>
 
 							<p>The results of this will be a Java enum that looks similar to this: </p>
-							<pre class="prettyprint lang-java">
-public enum TLanguage implements MasterDataType&lt;Integer&gt; {
+<pre class="prettyprint lang-java">public enum TLanguage implements MasterDataType&lt;Integer&gt; {
 
   /**
    * English
@@ -101,8 +99,7 @@ public enum TLanguage implements MasterDataType&lt;Integer&gt; {
 								LANGUAGE_ID Field&lt;Integer&gt;, a Field&lt;TLanguage&gt; is
 								generated: </p>
 								
-							<pre class="prettyprint lang-java">
-public class TBook extends UpdatableTableImpl&lt;TBookRecord&gt; {
+<pre class="prettyprint lang-java">public class TBook extends UpdatableTableImpl&lt;TBookRecord&gt; {
 
   // [...]
   public static final TableField&lt;TBookRecord, TLanguage&gt; LANGUAGE_ID = 
@@ -110,8 +107,7 @@ public class TBook extends UpdatableTableImpl&lt;TBookRecord&gt; {
 }</pre>
 
 							<p>Which can then be used in the TBookRecord directly: </p>
-							<pre class="prettyprint lang-java">
-public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
+<pre class="prettyprint lang-java">public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 
   // [...]
   public TLanguage getLanguageId() { // [...]
@@ -125,9 +121,9 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 								Also, be aware that it will be difficult to perform actual JOIN
 								operations on the underlying table with jOOQ, once the master data
 								type is generated. </p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/" title="Previous section: Advanced topics">previous</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Next section: Mapping generated schemata and tables">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
 </tr>
 </table>
 <?php 

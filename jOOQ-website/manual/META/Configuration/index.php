@@ -15,9 +15,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/" title="Previous section: Meta model code generation">previous</a> : <a href="<?=$root?>/manual/META/SCHEMA/" title="Next section: The schema, top-level generated artefact">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
 </tr>
 </table>
 							<h2>The deliverables</h2>
@@ -70,8 +70,7 @@ function printContent() {
 							<h2>Configure jOOQ</h2>
 							<p>You need to tell jOOQ some things about your database connection.
 								Here's an example of how to do it for a MySQL database </p>
-							<pre class="prettyprint">
-#Configure the database connection here
+<pre class="prettyprint">#Configure the database connection here
 jdbc.Driver=com.mysql.jdbc.Driver
 jdbc.URL=jdbc:mysql://[your jdbc URL]
 jdbc.Schema=[your database schema / owner / name]
@@ -109,8 +108,7 @@ generator.target.package=[org.jooq.your.package]
 generator.target.directory=[/path/to/your/dir]</pre>
 
 							<p>And you can add some optional advanced configuration parameters: </p>
-							<pre class="prettyprint">
-#Generate a master data table enum classes (several Java regular expressions, separated by comma)
+<pre class="prettyprint">#Generate a master data table enum classes (several Java regular expressions, separated by comma)
 generator.generate.master-data-tables=[a list of tables]
 
 #For every master data table, specify two special columns
@@ -123,8 +121,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 								
 							<h2>Run jOOQ code generation</h2>
 							<p>Code generation works by calling this class with the above property file as argument.</p>
-							<pre class="prettyprint">
-org.jooq.util.GenerationTool /jooq-config.properties</pre>
+							<pre class="prettyprint">org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							<p>Be sure that these elements are located on the classpath: </p>
 							<ul>
 								
@@ -187,8 +184,7 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							
 							<h3>Run generation with ant</h3>
 							<p>You can also use an ant task to generate your classes: </p>
-							<pre class="prettyprint lang-xml">
-&lt;!-- Task definition --&gt;
+<pre class="prettyprint lang-xml">&lt;!-- Task definition --&gt;
 &lt;taskdef name="generate-classes" classname="org.jooq.util.GenerationTask"&gt;
   &lt;classpath&gt;
     &lt;fileset dir="${path.to.jooq.distribution}"&gt;
@@ -218,8 +214,7 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							<p>Using the official jOOQ-codegen-maven plugin, you can integrate
 								source code generation in your Maven build process: </p>
 							
-							<pre class="prettyprint lang-xml">
-&lt;plugin&gt;
+<pre class="prettyprint lang-xml">&lt;plugin&gt;
 
   &lt;!-- Specify the maven code generator plugin --&gt;
   &lt;groupId&gt;org.jooq&lt;/groupId&gt;
@@ -291,9 +286,9 @@ org.jooq.util.GenerationTool /jooq-config.properties</pre>
 							<p>Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you
 								can execute SQL statements with your generated classes.</p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/" title="Previous section: Meta model code generation">previous</a> : <a href="<?=$root?>/manual/META/SCHEMA/" title="Next section: The schema, top-level generated artefact">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
 </tr>
 </table>
 <?php 

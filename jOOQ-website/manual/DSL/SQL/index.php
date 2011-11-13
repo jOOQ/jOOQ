@@ -20,9 +20,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/CAST/" title="Previous section: Type casting">previous</a> : <a href="<?=$root?>/manual/ADVANCED/" title="Next section: Advanced topics">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Type casting" href="<?=$root?>/manual/DSL/CAST/">previous</a> : <a title="Next section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">next</a></td>
 </tr>
 </table>
 							<h2>Plain SQL in jOOQ</h2>
@@ -74,8 +74,7 @@ function printContent() {
 							<p>To construct artefacts wrapping plain SQL, you should use any of
 								these methods from the Factory class: </p>
 								
-							<pre class="prettyprint lang-java">
-// A condition
+<pre class="prettyprint lang-java">// A condition
 Condition condition(String sql);
 Condition condition(String sql, Object... bindings);
 
@@ -110,8 +109,7 @@ Result&lt;Record&gt; fetch(String sql, Object... bindings);</pre>
 								clause to a query. Hence, there exist several convenience methods
 								where plain SQL can be inserted usefully. This is an example
 								displaying all various use-cases in one single query: </p>
-							<pre class="prettyprint lang-java">
-// You can use your table aliases in plain SQL fields
+<pre class="prettyprint lang-java">// You can use your table aliases in plain SQL fields
 // As long as that will produce syntactically correct SQL
 Field&lt;?&gt; LAST_NAME    = create.field("a.LAST_NAME");
 
@@ -157,9 +155,9 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 									Hence, jOOQ can't prevent SQL injection. </li>
 							
 </ul>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/CAST/" title="Previous section: Type casting">previous</a> : <a href="<?=$root?>/manual/ADVANCED/" title="Next section: Advanced topics">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Type casting" href="<?=$root?>/manual/DSL/CAST/">previous</a> : <a title="Next section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">next</a></td>
 </tr>
 </table>
 <?php 

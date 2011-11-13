@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Previous section: Adding Oracle hints to queries">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Export/" title="Next section: Exporting to XML, CSV, JSON, HTML, Text">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
 </tr>
 </table>
 							<h2>CONNECT BY .. STARTS WITH</h2>
@@ -30,15 +30,13 @@ function printContent() {
 								CONNECT BY clause, used for hierarchical queries. The formal syntax
 								definition is as follows: </p>
 								
-							<pre class="prettyprint lang-sql">
---   SELECT ..
+<pre class="prettyprint lang-sql">--   SELECT ..
 --     FROM ..
 --    WHERE ..
  CONNECT BY [NOCYCLE] condition [AND condition, ...] [START WITH condition]
 -- GROUP BY ..</pre>
 							<p>This can be done in jOOQ using the .connectBy(Condition) clauses in your SELECT statement: </p>
-							<pre class="prettyprint lang-java">
-// Some Oracle-specific features are only available
+<pre class="prettyprint lang-java">// Some Oracle-specific features are only available
 // from the OracleFactory
 OracleFactory create = new OracleFactory(connection);
 
@@ -49,8 +47,7 @@ create.select(create.rownum())
 
 							<p>Here's a more complex example where you can recursively fetch
 								directories in your database, and concatenate them to a path:</p>
-							<pre class="prettyprint lang-java">
- OracleFactory ora = new OracleFactory(connection);
+<pre class="prettyprint lang-java"> OracleFactory ora = new OracleFactory(connection);
 
  List&lt;?&gt; paths =
  ora.select(ora.sysConnectByPath(Directory.NAME, "/").substring(2))
@@ -61,8 +58,7 @@ create.select(create.rownum())
     .fetch(0);</pre>
     
     						<p>The output might then look like this</p>
-    						<pre>
-+------------------------------------------------+
+<pre>+------------------------------------------------+
 |substring                                       |
 +------------------------------------------------+
 |C:                                              |
@@ -73,9 +69,9 @@ create.select(create.rownum())
 +------------------------------------------------+
 |...21 record(s) truncated...
 </pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Previous section: Adding Oracle hints to queries">previous</a> : <a href="<?=$root?>/manual/ADVANCED/Export/" title="Next section: Exporting to XML, CSV, JSON, HTML, Text">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
 </tr>
 </table>
 <?php 

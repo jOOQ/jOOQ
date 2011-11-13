@@ -514,6 +514,21 @@ public class DefaultGenerator implements Generator {
 
         			out.println("\t}");
 
+        			// TODO [#117] begin of non-static members (make configurable)
+        			out.println();
+        			printNoFurtherInstancesAllowedJavadoc(out);
+        			out.println("\tprivate " + strategy.getJavaClassName(table) + "(java.lang.String alias) {");
+        			out.print("\t\tsuper(alias, ");
+        			out.print(strategy.getFullJavaIdentifierUC(schema));
+        			out.print(", ");
+        			out.print(strategy.getFullJavaClassName(table));
+        	        out.print(".");
+        	        out.print(strategy.getJavaIdentifierUC(table));
+        	        out.println(");");
+        			out.println("\t}");
+                    // TODO [#117] end of non-static members (make configurable)
+
+
         			// Add primary / unique / foreign key information
                     if (generateRelations()) {
                         ColumnDefinition identity = table.getIdentity();
@@ -643,6 +658,20 @@ public class DefaultGenerator implements Generator {
                             out.println("\t}");
                         }
                     }
+
+                    // TODO [#117] begin of non-static members (make configurable)
+                    out.println();
+                    out.println("\t@Override");
+                    out.print("\tpublic ");
+                    out.print(strategy.getFullJavaClassName(table));
+                    out.print(" as(");
+                    out.print(String.class);
+                    out.println(" alias) {");
+                    out.print("\t\treturn new ");
+                    out.print(strategy.getFullJavaClassName(table));
+                    out.println("(alias);");
+                    out.println("\t}");
+                    // TODO [#117] end of non-static members (make configurable)
 
         			out.printStaticInitialisationStatementsPlaceholder();
         			out.println("}");
@@ -2011,7 +2040,14 @@ public class DefaultGenerator implements Generator {
 		    type instanceof TableDefinition ||
 		    type instanceof UDTDefinition;
 
-		out.print("\tpublic static final ");
+		if (type instanceof TableDefinition) {
+		    // TODO [#117] begin of non-static members (make configurable)
+		    out.print("\tpublic final ");
+		    // TODO [#117] end of non-static members (make configurable)
+		}
+		else {
+		    out.print("\tpublic static final ");
+		}
 		out.print(declaredMemberClass);
 		out.print("<");
 
@@ -2041,7 +2077,14 @@ public class DefaultGenerator implements Generator {
 		out.print(getJavaTypeReference(column.getDatabase(), column.getType()));
 
 		if (hasType) {
-		    out.print(", " + strategy.getJavaIdentifierUC(type));
+			if (type instanceof TableDefinition) {
+			    // TODO [#117] begin of non-static members (make configurable)
+			    out.print(", this");
+			    // TODO [#117] end of non-static members (make configurable)
+			}
+			else {
+			    out.print(", " + strategy.getJavaIdentifierUC(type));
+			}
 		}
 
 		out.println(");");

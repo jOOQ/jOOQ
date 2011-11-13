@@ -54,26 +54,48 @@ import org.jooq.Table;
  */
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
-    private static final long serialVersionUID = 261033315221985068L;
-    private final FieldList   fields;
+    private static final long                 serialVersionUID = 261033315221985068L;
+
+    private final FieldList                   fields;
+    private final AliasProviderImpl<Table<R>> alias;
 
     public TableImpl(String name) {
         this(name, null);
     }
 
     public TableImpl(String name, Schema schema) {
+        this(name, schema, null);
+    }
+
+    public TableImpl(String name, Schema schema, Table<R> aliased) {
         super(name, schema);
 
         this.fields = new FieldList();
+
+        if (aliased != null) {
+            alias = new AliasProviderImpl<Table<R>>(aliased, name);
+        }
+        else {
+            alias = null;
+        }
     }
 
     @Override
     public final List<Attachable> getAttachables0() {
-        return getAttachables(fields);
+        if (alias != null) {
+            return getAttachables(alias, fields);
+        }
+        else {
+            return getAttachables(fields);
+        }
     }
 
     @Override
-    public final void bind(BindContext context) {}
+    public final void bind(BindContext context) {
+        if (alias != null) {
+            alias.bind(context);
+        }
+    }
 
     @Override
     protected final FieldList getFieldList() {
@@ -82,17 +104,32 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (getMappedSchema(context, getSchema()) != null) {
-            context.sql(getMappedSchema(context, getSchema()));
-            context.sql(".");
+        if (alias != null) {
+            alias.toSQL(context);
         }
+        else {
+            if (getMappedSchema(context, getSchema()) != null) {
+                context.sql(getMappedSchema(context, getSchema()));
+                context.sql(".");
+            }
 
-        context.literal(getMappedTable(context, this).getName());
+            context.literal(getMappedTable(context, this).getName());
+        }
     }
 
+    /**
+     * @deprecated - TODO [#117] This implementation is obsolete. After
+     *             re-generation all tables will override this method.
+     */
+    @Deprecated
     @Override
-    public final Table<R> as(String alias) {
-        return new TableAlias<R>(this, alias);
+    public Table<R> as(String as) {
+        if (alias != null) {
+            return alias.as(as);
+        }
+        else {
+            return new TableAlias<R>(this, as);
+        }
     }
 
     /**
@@ -103,5 +140,15 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     @Override
     public Class<? extends R> getRecordType() {
         return (Class<? extends R>) RecordImpl.class;
+    }
+
+    @Override
+    public boolean declaresTables() {
+        if (alias != null) {
+            return true;
+        }
+        else {
+            return super.declaresTables();
+        }
     }
 }

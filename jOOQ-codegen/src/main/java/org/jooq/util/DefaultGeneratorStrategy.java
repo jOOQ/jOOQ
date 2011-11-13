@@ -144,8 +144,15 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     public final String getFullJavaIdentifierUC(Definition definition) {
         StringBuilder sb = new StringBuilder();
 
-        // Columns, Attributes, Parameters
-        if (definition instanceof TypedElementDefinition) {
+        // Columns
+        if (definition instanceof ColumnDefinition) {
+            // TODO [#117] begin of non-static members (make configurable)
+            sb.append(getFullJavaIdentifierUC(((TypedElementDefinition<?>) definition).getContainer()));
+            // TODO [#117] end of non-static members (make configurable)
+        }
+        
+        // Attributes, Parameters
+        else if (definition instanceof TypedElementDefinition) {
             sb.append(getFullJavaClassName(((TypedElementDefinition<?>) definition).getContainer()));
         }
 

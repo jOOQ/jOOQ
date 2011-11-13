@@ -68,6 +68,10 @@ public class UpdatableTableImpl<R extends TableRecord<R>> extends TableImpl<R> i
         super(name, schema);
     }
 
+    public UpdatableTableImpl(String name, Schema schema, Table<R> aliased) {
+        super(name, schema, aliased);
+    }
+
     /**
      * {@inheritDoc}
      * <p>

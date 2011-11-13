@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/SCHEMA/" title="Previous section: The schema, top-level generated artefact">previous</a> : <a href="<?=$root?>/manual/META/PROCEDURE/" title="Next section: Procedures and packages">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">previous</a> : <a title="Next section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">next</a></td>
 </tr>
 </table>
 							<h2>Tables and TableRecords</h2>
@@ -46,8 +46,7 @@ function printContent() {
 							</p>
 							
 							<h3>The Table as an entity meta model</h3>
-							<pre class="prettyprint lang-java">
-public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
+<pre class="prettyprint lang-java">public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
 
     // The singleton instance of the Table
     public static final TAuthor T_AUTHOR = new TAuthor();
@@ -68,8 +67,7 @@ public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
 								extends Record&gt;'s associated Record type &lt;R&gt;. In the case of
 								the above TAuthor Table, this will be a TAuthorRecord. </p>
 								
-							<pre class="prettyprint lang-java">
-public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
+<pre class="prettyprint lang-java">public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
 
     // Getters and setters for the various fields
     public void setId(Integer value) {       // [...]
@@ -84,9 +82,9 @@ public class TAuthorRecord extends UpdatableRecordImpl&lt;TAuthorRecord&gt; {
     // Navigation methods for foreign keys
     public List&lt;TBookRecord&gt; getTBooks() throws SQLException { // [...]
 }</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/SCHEMA/" title="Previous section: The schema, top-level generated artefact">previous</a> : <a href="<?=$root?>/manual/META/PROCEDURE/" title="Next section: Procedures and packages">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">previous</a> : <a title="Next section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">next</a></td>
 </tr>
 </table>
 <?php 

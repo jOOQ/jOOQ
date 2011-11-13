@@ -17,16 +17,15 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Serializability/" title="Previous section: Serializability of QueryParts and Results">previous</a> : <a href="<?=$root?>/manual/META/" title="Next section: Meta model code generation">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">previous</a> : <a title="Next section: Meta model code generation" href="<?=$root?>/manual/META/">next</a></td>
 </tr>
 </table>
 							<h2>Write your own QueryPart implementations</h2>
 							<p>If a SQL clause is too complex to express with jOOQ, you can extend
 								either one of the following types for use directly in a jOOQ query:</p>
-							<pre class="prettyprint lang-java">
-public abstract class CustomField&lt;T&gt; extends AbstractField&lt;T&gt; {
+<pre class="prettyprint lang-java">public abstract class CustomField&lt;T&gt; extends AbstractField&lt;T&gt; {
   // [...]
 }
 public abstract class CustomCondition extends AbstractCondition {
@@ -38,8 +37,7 @@ public abstract class CustomCondition extends AbstractCondition {
 								own implementations for the <a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">QueryParts</a>' 
 								bind(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/BindContext.java" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and 
 								toSQL(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/RenderContext.java" title="Internal API reference: org.jooq.RenderContext">RenderContext</a>) methods:</p>
-							<pre class="prettyprint lang-java">
-// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
+<pre class="prettyprint lang-java">// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
 // in the correct order, passing the render context.
 //
 // If context.inline() is true, you must inline all bind variables
@@ -61,9 +59,9 @@ public void bind(BindContext context) throws SQLException;</pre>
 								<a href="<?=$root?>/manual/DSL/SQL/" title="jOOQ Manual reference: When it's just easier: Plain SQL">Plain SQL</a> functionality,
 								where you can provide jOOQ with a simple String representation of your
 								embedded SQL. </p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Serializability/" title="Previous section: Serializability of QueryParts and Results">previous</a> : <a href="<?=$root?>/manual/META/" title="Next section: Meta model code generation">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">previous</a> : <a title="Next section: Meta model code generation" href="<?=$root?>/manual/META/">next</a></td>
 </tr>
 </table>
 <?php 

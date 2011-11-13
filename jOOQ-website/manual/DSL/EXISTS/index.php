@@ -17,9 +17,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/IN/" title="Previous section: Nested SELECT using the IN operator">previous</a> : <a href="<?=$root?>/manual/DSL/NESTED/" title="Next section: Other types of nested SELECT">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">previous</a> : <a title="Next section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">next</a></td>
 </tr>
 </table>
 							<h2>The EXISTS operator for use in semi-joins or anti-joins</h2>
@@ -41,8 +41,7 @@ function printContent() {
 								creation is not an option (for now). Here is how it's done in the
 								Factory: </p>
 								
-							<pre class="prettyprint lang-java">
-Condition exists(Select&lt;?&gt; query);
+<pre class="prettyprint lang-java">Condition exists(Select&lt;?&gt; query);
 Condition notExists(Select&lt;?&gt; query);</pre>
 
 							<p>When you create such a Condition, it can then be connected to any
@@ -52,49 +51,44 @@ Condition notExists(Select&lt;?&gt; query);</pre>
 								convenience methods, where they might be useful. For instance in the
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
 								
-							<pre class="prettyprint lang-java">
-Condition andExists(Select&lt;?&gt; select);
+<pre class="prettyprint lang-java">Condition andExists(Select&lt;?&gt; select);
 Condition andNotExists(Select&lt;?&gt; select);
 Condition orExists(Select&lt;?&gt; select);
 Condition orNotExists(Select&lt;?&gt; select);</pre>
 
 							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>:</p>
 							
-							<pre class="prettyprint lang-java">
-SelectConditionStep whereExists(Select&lt;?&gt; select);
+<pre class="prettyprint lang-java">SelectConditionStep whereExists(Select&lt;?&gt; select);
 SelectConditionStep whereNotExists(Select&lt;?&gt; select);</pre>
 
 							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a>: </p>
 							
-							<pre class="prettyprint lang-java">
-SelectConditionStep andExists(Select&lt;?&gt; select);
+<pre class="prettyprint lang-java">SelectConditionStep andExists(Select&lt;?&gt; select);
 SelectConditionStep andNotExists(Select&lt;?&gt; select);
 SelectConditionStep orExists(Select&lt;?&gt; select);
 SelectConditionStep orNotExists(Select&lt;?&gt; select);</pre>
 
 							<p>An example of how to use it is quickly given. Get all authors that haven't written any books: </p>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-SELECT *
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">SELECT *
   FROM T_AUTHOR
  WHERE NOT EXISTS (SELECT 1 
                      FROM T_BOOK 
                     WHERE T_BOOK.AUTHOR_ID = T_AUTHOR.ID)</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.select()
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.select()
       .from(T_AUTHOR)
       .whereNotExists(create.select(1)
-                  .from(T_BOOK)
-                  .where(TBook.AUTHOR_ID.equal(T_AUTHOR.ID)));</pre>
+            .from(T_BOOK)
+            .where(TBook.AUTHOR_ID.equal(T_AUTHOR.ID)));</pre>
 </td>
 </tr>
 </table>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/IN/" title="Previous section: Nested SELECT using the IN operator">previous</a> : <a href="<?=$root?>/manual/DSL/NESTED/" title="Next section: Other types of nested SELECT">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">previous</a> : <a title="Next section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">next</a></td>
 </tr>
 </table>
 <?php 

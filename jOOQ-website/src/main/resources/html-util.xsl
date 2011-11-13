@@ -5,6 +5,10 @@
 
 	<xsl:output encoding="UTF-8" method="html" omit-xml-declaration="yes" indent="yes"/>
 	
+	<xsl:template match="html-only" mode="content">
+		<xsl:apply-templates mode="content"/>
+	</xsl:template>
+	
 	<xsl:template match="section" mode="toc">
 		<xsl:if test="count(sections/section) &gt; 0">
 			<ol>

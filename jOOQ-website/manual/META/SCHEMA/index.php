@@ -17,9 +17,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/Configuration/" title="Previous section: Configuration and setup of the generator">previous</a> : <a href="<?=$root?>/manual/META/TABLE/" title="Next section: Tables, views and their corresponding records">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">next</a></td>
 </tr>
 </table>
 							<h2>The Schema</h2>
@@ -51,12 +51,11 @@ function printContent() {
 							<p>The schema can be used to dynamically discover generate database
 								artefacts. Tables, sequences, and other items are accessible from the
 								schema. For example:</p>
-							<pre class="prettyprint lang-java">
-public final java.util.List&lt;org.jooq.Sequence&gt; getSequences();
+<pre class="prettyprint lang-java">public final java.util.List&lt;org.jooq.Sequence&gt; getSequences();
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/Configuration/" title="Previous section: Configuration and setup of the generator">previous</a> : <a href="<?=$root?>/manual/META/TABLE/" title="Next section: Tables, views and their corresponding records">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">next</a></td>
 </tr>
 </table>
 <?php 

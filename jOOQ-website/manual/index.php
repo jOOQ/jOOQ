@@ -17,26 +17,29 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Next section: jOOQ classes and their usage">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Next section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">next</a></td>
 </tr>
 </table>
-			<h3>All manuals</h3>
-			<p>Coming soon in the manuals section of the jOOQ website:</p>
-			<ul>
-				
+			
+				<h3>All manuals</h3>
+				<ul>
+					
 <li>
 <a href="<?=$root?>/manual-single-page" title="The jOOQ Manual on one single page">A single-paged HTML manual</a>
 </li>
-				
+					
 <li>
 <a href="<?=$root?>/manual" title="The jOOQ Manual on multiple pages">A multi-paged HTML manual</a>
 </li>
+					
+<li>
+<a href="<?=$root?>/manual-pdf/jOOQ-manual.pdf" title="The jOOQ Manual as a PDF">A downloadable PDF manual</a>
+</li>
 				
-<li>A downloadable PDF manual (coming soon)</li>
-			
 </ul>
+			
 			<h3>Overview</h3>
 			<p>This manual is divided into four main sections:</p>
 			<ul>
@@ -90,136 +93,136 @@ function printContent() {
 </ul>
 		<h3>Table of contents</h3><ol>
 <li>
-<a href="<?=$root?>/manual/JOOQ/" title="jOOQ classes and their usage">jOOQ classes and their usage</a>
+<a title="jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a>
 <ol>
 <li>
-<a href="<?=$root?>/manual/JOOQ/ExampleDatabase/" title="The example database">The example database</a>
+<a title="The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Factory/" title="The Factory class">The Factory class</a>
+<a title="The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Table/" title="Tables and Fields">Tables and Fields</a>
+<a title="Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Result/" title="Results and Records">Results and Records</a>
+<a title="Results and Records" href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Updatable Records">Updatable Records</a>
+<a title="Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Query/" title="The Query and its various subtypes">The Query and its various subtypes</a>
+<a title="The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="ResultQuery and various ways of fetching data">ResultQuery and various ways of fetching data</a>
+<a title="ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="QueryParts and the global architecture">QueryParts and the global architecture</a>
+<a title="QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Serializability/" title="Serializability of QueryParts and Results">Serializability of QueryParts and Results</a>
+<a title="Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/JOOQ/Extend/" title="Extend jOOQ with custom types">Extend jOOQ with custom types</a>
+<a title="Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a>
 </li>
 </ol>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/" title="Meta model code generation">Meta model code generation</a>
+<a title="Meta model code generation" href="<?=$root?>/manual/META/">Meta model code generation</a>
 <ol>
 <li>
-<a href="<?=$root?>/manual/META/Configuration/" title="Configuration and setup of the generator">Configuration and setup of the generator</a>
+<a title="Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/SCHEMA/" title="The schema, top-level generated artefact">The schema, top-level generated artefact</a>
+<a title="The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/TABLE/" title="Tables, views and their corresponding records">Tables, views and their corresponding records</a>
+<a title="Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/PROCEDURE/" title="Procedures and packages">Procedures and packages</a>
+<a title="Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/UDT/" title="UDT's including ARRAY and ENUM types">UDT's including ARRAY and ENUM types</a>
+<a title="UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/META/SEQUENCE/" title="Sequences">Sequences</a>
+<a title="Sequences" href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a>
 </li>
 </ol>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/" title="DSL or fluent API. Where SQL meets Java">DSL or fluent API. Where SQL meets Java</a>
+<a title="DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a>
 <ol>
 <li>
-<a href="<?=$root?>/manual/DSL/SELECT/" title="Complete SELECT syntax">Complete SELECT syntax</a>
+<a title="Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/CONDITION/" title="Conditions">Conditions</a>
+<a title="Conditions" href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/ALIAS/" title="Aliased tables and fields">Aliased tables and fields</a>
+<a title="Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/IN/" title="Nested SELECT using the IN operator">Nested SELECT using the IN operator</a>
+<a title="Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">Nested SELECT using the IN operator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/EXISTS/" title="Nested SELECT using the EXISTS operator">Nested SELECT using the EXISTS operator</a>
+<a title="Nested SELECT using the EXISTS operator" href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/NESTED/" title="Other types of nested SELECT">Other types of nested SELECT</a>
+<a title="Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">Other types of nested SELECT</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/UNION/" title="UNION and other set operations">UNION and other set operations</a>
+<a title="UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">UNION and other set operations</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="Functions and aggregate operators">Functions and aggregate operators</a>
+<a title="Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Stored procedures and functions">Stored procedures and functions</a>
+<a title="Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Arithmetic operations and concatenation">Arithmetic operations and concatenation</a>
+<a title="Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/CASE/" title="The CASE clause">The CASE clause</a>
+<a title="The CASE clause" href="<?=$root?>/manual/DSL/CASE/">The CASE clause</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/CAST/" title="Type casting">Type casting</a>
+<a title="Type casting" href="<?=$root?>/manual/DSL/CAST/">Type casting</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/SQL/" title="When it's just easier: Plain SQL">When it's just easier: Plain SQL</a>
+<a title="When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a>
 </li>
 </ol>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/" title="Advanced topics">Advanced topics</a>
+<a title="Advanced topics" href="<?=$root?>/manual/ADVANCED/">Advanced topics</a>
 <ol>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Master data generation. Enumeration tables">Master data generation. Enumeration tables</a>
+<a title="Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="Mapping generated schemata and tables">Mapping generated schemata and tables</a>
+<a title="Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Adding Oracle hints to queries">Adding Oracle hints to queries</a>
+<a title="Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">Adding Oracle hints to queries</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/CONNECTBY/" title="The Oracle CONNECT BY clause">The Oracle CONNECT BY clause</a>
+<a title="The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/Export/" title="Exporting to XML, CSV, JSON, HTML, Text">Exporting to XML, CSV, JSON, HTML, Text</a>
+<a title="Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/Import/" title="Importing data from XML, CSV">Importing data from XML, CSV</a>
+<a title="Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/ADVANCED/Batch/" title="Using JDBC batch operations">Using JDBC batch operations</a>
+<a title="Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a>
 </li>
 </ol>
 </li>
-</ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+</ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Next section: jOOQ classes and their usage">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Next section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">next</a></td>
 </tr>
 </table>
 <?php 

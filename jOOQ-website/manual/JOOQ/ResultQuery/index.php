@@ -19,14 +19,13 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Query/" title="Previous section: The Query and its various subtypes">previous</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/" title="Next section: QueryParts and the global architecture">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>
 </tr>
 </table>
 							<h2>The ResultQuery provides many convenience methods</h2>
-							<pre class="prettyprint lang-java">
-public interface ResultQuery&lt;R extends Record&gt; {
+<pre class="prettyprint lang-java">public interface ResultQuery&lt;R extends Record&gt; {
 
   // These methods allow for fetching a jOOQ Result
   // or parts of it.
@@ -100,9 +99,9 @@ public interface ResultQuery&lt;R extends Record&gt; {
   FutureResult&lt;R&gt; fetchLater();
   FutureResult&lt;R&gt; fetchLater(ExecutorService executor);
 }</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Query/" title="Previous section: The Query and its various subtypes">previous</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/" title="Next section: QueryParts and the global architecture">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>
 </tr>
 </table>
 <?php 

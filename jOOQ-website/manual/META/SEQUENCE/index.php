@@ -18,17 +18,16 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/UDT/" title="Previous section: UDT's including ARRAY and ENUM types">previous</a> : <a href="<?=$root?>/manual/DSL/" title="Next section: DSL or fluent API. Where SQL meets Java">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">previous</a> : <a title="Next section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">next</a></td>
 </tr>
 </table>
 							<h2>Sequences as a source for identity values</h2>
 							<p> Sequences implement the 
 							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Sequence.java" title="Internal API reference: org.jooq.Sequence">org.jooq.Sequence</a> interface, providing essentially this functionality:</p>
 							
-							<pre class="prettyprint lang-java">
-// Get a field for the CURRVAL sequence property
+<pre class="prettyprint lang-java">// Get a field for the CURRVAL sequence property
 Field&lt;BigInteger&gt; currval();
 
 // Get a field for the NEXTVAL sequence property
@@ -36,25 +35,22 @@ Field&lt;BigInteger&gt; nextval();</pre>
 							<p>So if you have a sequence like this in Oracle: </p>
 							<pre class="prettyprint lang-sql">CREATE SEQUENCE s_author_id</pre>		
 							<p>This is what jOOQ will generate: </p>	
-							<pre class="prettyprint lang-java">
-public final class Sequences {
+<pre class="prettyprint lang-java">public final class Sequences {
 
     // A static sequence instance
     public static final Sequence S_AUTHOR_ID = // [...]
 }</pre>		
 
 							<p>Which you can use in a select statement as such: </p>
-							<pre class="prettyprint lang-java">
-Field&lt;BigInteger&gt; s = Sequences.S_AUTHOR_ID.nextval();
+<pre class="prettyprint lang-java">Field&lt;BigInteger&gt; s = Sequences.S_AUTHOR_ID.nextval();
 BigInteger nextID   = create.select(s).fetchOne(s);</pre>
 
 							<p>Or directly fetch currval() and nextval() from the sequence using the Factory: </p>
-							<pre class="prettyprint lang-java">
-BigInteger currval = create.currval(Sequences.S_AUTHOR_ID);
+<pre class="prettyprint lang-java">BigInteger currval = create.currval(Sequences.S_AUTHOR_ID);
 BigInteger nextval = create.nextval(Sequences.S_AUTHOR_ID);</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/UDT/" title="Previous section: UDT's including ARRAY and ENUM types">previous</a> : <a href="<?=$root?>/manual/DSL/" title="Next section: DSL or fluent API. Where SQL meets Java">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">previous</a> : <a title="Next section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">next</a></td>
 </tr>
 </table>
 <?php 

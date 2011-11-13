@@ -18,9 +18,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SELECT/" title="Previous section: Complete SELECT syntax">previous</a> : <a href="<?=$root?>/manual/DSL/ALIAS/" title="Next section: Aliased tables and fields">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
 </tr>
 </table>
 							<h2>Conditions are the SELECT's core business</h2>
@@ -34,8 +34,7 @@ function printContent() {
 								which is typically a participant of a
 								condition, and the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">Condition</a> 
 								itself: </p>
-							<pre class="prettyprint lang-java">
-public interface Condition {
+<pre class="prettyprint lang-java">public interface Condition {
     Condition and(Condition other);
     Condition and(String sql);
     Condition and(String sql, Object... bindings);
@@ -60,8 +59,7 @@ public interface Condition {
 								cases. Here are some important API elements in the Field interface:
 							</p>
 							
-							<pre class="prettyprint lang-java">
-public interface Field&lt;T&gt; {
+<pre class="prettyprint lang-java">public interface Field&lt;T&gt; {
     Condition isNull();
     Condition isNotNull();
     Condition like(T value);
@@ -98,19 +96,17 @@ public interface Field&lt;T&gt; {
 								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">Examples of nested SELECTs</a>. </p>
 							<p>Combining the API of Field and Condition you can express complex predicates like this: </p>
 							
-							<pre class="prettyprint lang-sql">
-(T_BOOK.TYPE_CODE IN (1, 2, 5, 8, 13, 21)       AND T_BOOK.LANGUAGE = 'DE') OR
+<pre class="prettyprint lang-sql">(T_BOOK.TYPE_CODE IN (1, 2, 5, 8, 13, 21)       AND T_BOOK.LANGUAGE = 'DE') OR
 (T_BOOK.TYPE_CODE IN (2, 3, 5, 7, 11, 13)       AND T_BOOK.LANGUAGE = 'FR') OR
 (T_BOOK.TYPE_CODE IN (SELECT CODE FROM T_TYPES) AND T_BOOK.LANGUAGE = 'EN')</pre>
 
 							<p>Just write: </p>
-							<pre class="prettyprint lang-java">
-TBook.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                      .and(TBook.LANGUAGE.equal("DE")).or(
+<pre class="prettyprint lang-java">TBook.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                      .and(TBook.LANGUAGE.equal("DE")).or(
 TBook.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                      .and(TBook.LANGUAGE.equal("FR")).or(
 TBook.TYPE_CODE.in(create.select(TTypes.CODE).from(T_TYPES)).and(TBook.LANGUAGE.equal("EN"))));</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/SELECT/" title="Previous section: Complete SELECT syntax">previous</a> : <a href="<?=$root?>/manual/DSL/ALIAS/" title="Next section: Aliased tables and fields">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
 </tr>
 </table>
 <?php 

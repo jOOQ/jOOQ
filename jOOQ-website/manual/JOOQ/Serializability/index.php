@@ -17,9 +17,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/QueryPart/" title="Previous section: QueryParts and the global architecture">previous</a> : <a href="<?=$root?>/manual/JOOQ/Extend/" title="Next section: Extend jOOQ with custom types">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">previous</a> : <a title="Next section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">next</a></td>
 </tr>
 </table>
 							<h2>Attaching QueryParts</h2>
@@ -32,8 +32,7 @@ function printContent() {
 								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>, 
 								you will have to "import" or "re-attach" them to a Factory
 							</p>
-							<pre class="prettyprint lang-java">
-// Deserialise a SELECT statement
+<pre class="prettyprint lang-java">// Deserialise a SELECT statement
 ObjectInputStream in = new ObjectInputStream(...);
 Select&lt;?&gt; select = (Select&lt;?&gt;) in.readObject();
 
@@ -47,8 +46,7 @@ create.attach(select);</pre>
 					
 							<h2>Automatically attaching QueryParts</h2>
 							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
-							<pre class="prettyprint lang-java">
-// Create your own custom ConfigurationProvider that will make
+<pre class="prettyprint lang-java">// Create your own custom ConfigurationProvider that will make
 // your default Factory available to jOOQ
 ConfigurationProvider provider = new CustomConfigurationProvider();
 
@@ -71,9 +69,9 @@ ConfigurationRegistry.setProvider(provider);</pre>
 </li>
 							
 </ul>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/QueryPart/" title="Previous section: QueryParts and the global architecture">previous</a> : <a href="<?=$root?>/manual/JOOQ/Extend/" title="Next section: Extend jOOQ with custom types">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">previous</a> : <a title="Next section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">next</a></td>
 </tr>
 </table>
 <?php 

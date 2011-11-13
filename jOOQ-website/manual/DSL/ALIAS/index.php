@@ -19,21 +19,19 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/CONDITION/" title="Previous section: Conditions">previous</a> : <a href="<?=$root?>/manual/DSL/IN/" title="Next section: Nested SELECT using the IN operator">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">previous</a> : <a title="Next section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">next</a></td>
 </tr>
 </table>
 							<h2>Aliasing Tables</h2>
 							<p>A typical example of what you might want to do in SQL is this: </p>
-							<pre class="prettyprint lang-sql">
-SELECT a.ID, b.ID
+<pre class="prettyprint lang-sql">SELECT a.ID, b.ID
   FROM T_AUTHOR a
   JOIN T_BOOK b on a.ID = b.AUTHOR_ID</pre>
   
   							<p>In this example, we are aliasing Tables, calling them a and b. Here is how you can create Table aliases in jOOQ: </p>
-  							<pre class="prettyprint lang-java">
-Table&lt;TBookRecord&gt; book = T_BOOK.as("b");
+<pre class="prettyprint lang-java">Table&lt;TBookRecord&gt; book = T_BOOK.as("b");
 Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</pre>
 
 							<p>Now, if you want to reference any fields from those Tables, you may
@@ -41,8 +39,7 @@ Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</pre>
 								Instead, you have to get the fields from the new book and author Table
 								aliases: </p>
 								
-							<pre class="prettyprint lang-java">
-Field&lt;Integer&gt; bookID = book.getField(TBook.ID);
+<pre class="prettyprint lang-java">Field&lt;Integer&gt; bookID = book.getField(TBook.ID);
 Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
 
 							<p>
@@ -52,8 +49,7 @@ Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
 								<a href="https://sourceforge.net/apps/trac/jooq/ticket/117" title="Trac ticket: #117">#117</a>.
 								For now, this is how the above SQL statement would read in jOOQ:
 							</p>
-							<pre class="prettyprint lang-java">
-create.select(authorID, bookID)
+<pre class="prettyprint lang-java">create.select(authorID, bookID)
       .from(author)
       .join(book).on(authorID.equal(book.getField(TBook.AUTHOR_ID)));</pre>
       
@@ -69,26 +65,23 @@ create.select(authorID, bookID)
 							<p>Fields can also be aliased independently from Tables. Most often,
 								this is done when using functions or aggregate operators. Here is an
 								example: </p>
-							<pre class="prettyprint lang-sql">
-  SELECT FIRST_NAME || ' ' || LAST_NAME author, COUNT(*) books
+<pre class="prettyprint lang-sql">  SELECT FIRST_NAME || ' ' || LAST_NAME author, COUNT(*) books
     FROM T_AUTHOR
     JOIN T_BOOK ON T_AUTHOR.ID = AUTHOR_ID
 GROUP BY FIRST_NAME, LAST_NAME;</pre>
 							<p>Here is how it's done with jOOQ: </p>
-							<pre class="prettyprint lang-java">
-Record record = create.select(
+<pre class="prettyprint lang-java">Record record = create.select(
          TAuthor.FIRST_NAME.concat(" ", TAuthor.LAST_NAME).as("author"),
          create.count().as("books"))
       .from(T_AUTHOR)
       .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
       .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME).fetchAny();</pre>
       						<p>When you alias Fields like above, you can access those Fields' values using the alias name: </p>
-      						<pre class="prettyprint lang-java">
-System.out.println("Author : " + record.getValue("author"));
+<pre class="prettyprint lang-java">System.out.println("Author : " + record.getValue("author"));
 System.out.println("Books  : " + record.getValue("books"));</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/CONDITION/" title="Previous section: Conditions">previous</a> : <a href="<?=$root?>/manual/DSL/IN/" title="Next section: Nested SELECT using the IN operator">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">previous</a> : <a title="Next section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">next</a></td>
 </tr>
 </table>
 <?php 

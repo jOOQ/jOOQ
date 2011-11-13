@@ -18,9 +18,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/CASE/" title="Previous section: The CASE clause">previous</a> : <a href="<?=$root?>/manual/DSL/SQL/" title="Next section: When it's just easier: Plain SQL">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">previous</a> : <a title="Next section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">next</a></td>
 </tr>
 </table>
 							<h2>Enforcing a specific type when you need it</h2>
@@ -35,8 +35,7 @@ function printContent() {
 								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">nested select</a>). 
 								In those cases you would write SQL type CASTs like
 								this: </p>
-							<pre class="prettyprint lang-sql">
--- Let's say, your Postgres column LAST_NAME was VARCHAR(30)
+<pre class="prettyprint lang-sql">-- Let's say, your Postgres column LAST_NAME was VARCHAR(30)
 -- Then you could do this:
 SELECT CAST(T_AUTHOR.LAST_NAME AS TEXT) FROM DUAL</pre>
 							<p>in jOOQ, you can write something like that: </p>
@@ -46,8 +45,7 @@ SELECT CAST(T_AUTHOR.LAST_NAME AS TEXT) FROM DUAL</pre>
 								Java's String</p>
 							<pre class="prettyprint lang-java">create.select(TAuthor.LAST_NAME.cast(String.class));</pre>
 							<p>The complete CAST API in Field consists of these three methods: </p>
-							<pre class="prettyprint lang-java">
-public interface Field&lt;T&gt; {
+<pre class="prettyprint lang-java">public interface Field&lt;T&gt; {
     &lt;Z&gt; Field&lt;Z&gt; cast(Field&lt;Z&gt; field);
     &lt;Z&gt; Field&lt;Z&gt; cast(DataType&lt;Z&gt; type);
     &lt;Z&gt; Field&lt;Z&gt; cast(Class&lt;? extends Z&gt; type);
@@ -62,9 +60,9 @@ public class Factory {
     &lt;T&gt; Field&lt;T&gt; castNull(DataType&lt;T&gt; type);
     &lt;T&gt; Field&lt;T&gt; castNull(Class&lt;? extends T&gt; type);
 }</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/CASE/" title="Previous section: The CASE clause">previous</a> : <a href="<?=$root?>/manual/DSL/SQL/" title="Next section: When it's just easier: Plain SQL">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">previous</a> : <a title="Next section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">next</a></td>
 </tr>
 </table>
 <?php 

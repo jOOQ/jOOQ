@@ -20,9 +20,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/" title="Previous section: DSL or fluent API. Where SQL meets Java">previous</a> : <a href="<?=$root?>/manual/DSL/CONDITION/" title="Next section: Conditions">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
 </tr>
 </table>
 							<h2>SELECT from anonymous or ad-hoc types</h2>
@@ -32,8 +32,7 @@ function printContent() {
 							some extensions, is provided by a query like this:
 							</p>
 							
-							<pre class="prettyprint lang-sql">
--- get all authors' first and last names, and the number 
+<pre class="prettyprint lang-sql">-- get all authors' first and last names, and the number 
 -- of books they've written in German, if they have written
 -- more than five books in German in the last three years 
 -- (from 2011), and sort those authors by last names
@@ -53,8 +52,7 @@ ORDER BY T_AUTHOR.LAST_NAME ASC NULLS FIRST
      FOR UPDATE</pre>			
      
      						<p>So that's daily business. How to do it with jOOQ: When you first create a SELECT statement using the Factory's select() methods </p>
-     						<pre class="prettyprint lang-java">
-SelectFromStep select(Field&lt;?&gt;... fields);
+<pre class="prettyprint lang-java">SelectFromStep select(Field&lt;?&gt;... fields);
 
 // Example:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
@@ -75,8 +73,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
 								clauses. Let's say you do decide to add a FROM clause, then you can
 								use this method for instance:
 							</p>			
-							<pre class="prettyprint lang-java">
-SelectJoinStep from(TableLike&lt;?&gt;... table);
+<pre class="prettyprint lang-java">SelectJoinStep from(TableLike&lt;?&gt;... table);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -89,8 +86,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a> extends
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>. 
 								But let's say we add a JOIN: </p>
-							<pre class="prettyprint lang-java">
-// These join types are supported
+<pre class="prettyprint lang-java">// These join types are supported
 SelectOnStep                    join(Table&lt;?&gt; table);
 SelectOnStep           leftOuterJoin(Table&lt;?&gt; table);
 SelectOnStep          rightOuterJoin(Table&lt;?&gt; table);
@@ -111,8 +107,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectOnStep.java" title="Internal API reference: org.jooq.SelectOnStep">org.jooq.SelectOnStep</a>
 								is a top-level interface. </p>
 								
-							<pre class="prettyprint lang-java">
-// These join conditions are supported
+<pre class="prettyprint lang-java">// These join conditions are supported
 SelectJoinStep    on(Condition... conditions);
 SelectJoinStep using(Field&lt;?&gt;... fields);
 
@@ -129,8 +124,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the 
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>: </p>
-							<pre class="prettyprint lang-java">
-SelectConditionStep where(Condition... conditions);
+<pre class="prettyprint lang-java">SelectConditionStep where(Condition... conditions);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -146,8 +140,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								unlimited. Note that of course you can also just add a single combined
 								condition, if that is more readable or suitable for your use-case.
 								Here's how we add another condition: </p>
-							<pre class="prettyprint lang-java">
-SelectConditionStep and(Condition condition);
+<pre class="prettyprint lang-java">SelectConditionStep and(Condition condition);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -160,8 +153,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Date.html" title="External API reference: java.sql.Date">java.sql.Date</a> for us. 
 								Then we'll continue adding the GROUP BY clause
 							</p>
-							<pre class="prettyprint lang-java">
-SelectHavingStep groupBy(Field&lt;?&gt;... fields);
+<pre class="prettyprint lang-java">SelectHavingStep groupBy(Field&lt;?&gt;... fields);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -172,8 +164,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
       .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME);</pre>
       
       						<p>and the HAVING clause: </p>
-      						<pre class="prettyprint lang-java">
-SelectOrderByStep having(Condition... conditions);
+<pre class="prettyprint lang-java">SelectOrderByStep having(Condition... conditions);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -188,8 +179,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								LAST extensions to the ORDER BY clause. If this is not supported by
 								the RDBMS, then the behaviour is simulated with an additional CASE
 								WHEN ... IS NULL THEN 1 ELSE 0 END clause. </p>
-							<pre class="prettyprint lang-java">
-SelectLimitStep orderBy(Field&lt;?&gt;... fields);
+<pre class="prettyprint lang-java">SelectLimitStep orderBy(Field&lt;?&gt;... fields);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -208,8 +198,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								will simulate the LIMIT clause using nested selects and filtering on
 								ROWNUM (for Oracle), or on ROW_NUMBER() (for DB2 and SQL
 								Server): </p>
-							<pre class="prettyprint lang-java">
-SelectFinalStep limit(int offset, int numberOfRows);
+<pre class="prettyprint lang-java">SelectFinalStep limit(int offset, int numberOfRows);
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -226,8 +215,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								only in some RDBMS. One of those extensions are the FOR UPDATE
 								(supported in most RDBMS) and FOR SHARE clauses (supported only in
 								MySQL and Postgres): </p>
-							<pre class="prettyprint lang-java">
-SelectFinalStep forUpdate();
+<pre class="prettyprint lang-java">SelectFinalStep forUpdate();
 
 // The example, continued:
 create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
@@ -252,8 +240,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 								section about the <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="jOOQ Manual reference: ResultQuery and various ways of fetching data">ResultQuery</a>:
 							</p>
 							
-							<pre class="prettyprint lang-java">
-// Just execute the query.
+<pre class="prettyprint lang-java">// Just execute the query.
 int execute() throws SQLException;
 
 // Execute the query and retrieve the results
@@ -283,14 +270,13 @@ Record fetchOne() throws SQLException;
 								fields. This just selects all known TableFields in the supplied Table,
 								and it also binds &lt;R extends Record&gt; to your Table's associated
 								Record. An example of such a Query would then be: </p>
-							<pre class="prettyprint lang-java">
-TBook book = create.selectFrom(T_BOOK)
+<pre class="prettyprint lang-java">TBook book = create.selectFrom(T_BOOK)
                    .where(TBook.LANGUAGE.equal("DE"))
                    .orderBy(TBook.TITLE)
                    .fetchAny();</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/" title="Previous section: DSL or fluent API. Where SQL meets Java">previous</a> : <a href="<?=$root?>/manual/DSL/CONDITION/" title="Next section: Conditions">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
 </tr>
 </table>
 <?php 

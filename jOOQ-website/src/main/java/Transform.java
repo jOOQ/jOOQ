@@ -35,8 +35,11 @@
  */
 import static org.joox.JOOX.$;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collections;
 
 import javax.xml.transform.Result;
@@ -44,10 +47,15 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.fop.apps.FOUserAgent;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.MimeConstants;
 import org.joox.Match;
 
 /**
@@ -56,6 +64,8 @@ import org.joox.Match;
  * @author Lukas Eder
  */
 public class Transform {
+    private static FopFactory fopFactory = FopFactory.newInstance();
+
     public static void main(String[] args) throws Exception {
         System.out.println("Transforming multi-page manual");
         System.out.println("------------------------------");
@@ -71,7 +81,6 @@ public class Transform {
         System.out.println("-------------------------------");
         pdf();
     }
-
 
     public static void multiplePages() throws Exception {
         InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
@@ -91,13 +100,16 @@ public class Transform {
             dir.mkdirs();
 
             System.out.println("Transforming section " + path);
+            FileOutputStream out = new FileOutputStream(new File(dir, "index.php"));
 
             Source source = new DOMSource(manual.document());
-            Result target = new StreamResult(new File(dir, "index.php"));
+            Result target = new StreamResult(out);
 
             transformer.setParameter("sectionID", section.id());
             transformer.setParameter("relativePath", relativePath);
             transformer.transform(source, target);
+
+            out.close();
         }
     }
 
@@ -115,14 +127,21 @@ public class Transform {
         dir.mkdirs();
 
         System.out.println("Transforming manual");
+        FileOutputStream out = new FileOutputStream(new File(dir, "index.php"));
 
         Source source = new DOMSource(manual.document());
-        Result target = new StreamResult(new File(dir, "index.php"));
+        Result target = new StreamResult(out);
 
         transformer.transform(source, target);
+
+        out.close();
     }
 
     public static void pdf() throws Exception {
+
+        // XML -> FO
+        // ---------------------------------------------------------------------
+        System.out.println("Transforming XML -> FO");
         InputStream isXML = Transform.class.getResourceAsStream("manual.xml");
         InputStream isXSL = Transform.class.getResourceAsStream("pdf.xsl");
 
@@ -134,12 +153,52 @@ public class Transform {
 
         File dir = new File("manual-pdf");
         dir.mkdirs();
-
-        System.out.println("Transforming XML -> FO");
+        FileOutputStream fout = new FileOutputStream(new File(dir, "jOOQ-manual.fo.xml"));
 
         Source source = new DOMSource(manual.document());
-        Result target = new StreamResult(new File(dir, "manual.fo.xml"));
+        Result target = new StreamResult(fout);
 
         transformer.transform(source, target);
+        fout.close();
+
+        // FO -> PDF
+        // ---------------------------------------------------------------------
+        // See an example about how to do it here:
+        // http://svn.apache.org/viewvc/xmlgraphics/fop/trunk/examples/embedding/java/embedding/ExampleFO2PDF.java?view=markup
+        System.out.println("Transforming FO -> PDF");
+
+        OutputStream out = null;
+
+        fopFactory.setUserConfig(new File("C:/Users/lukas/workspace/jOOQ-website/src/main/resources/fop.config.xml"));
+        FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
+        // configure foUserAgent as desired
+
+        // Setup output stream.  Note: Using BufferedOutputStream
+        // for performance reasons (helpful with FileOutputStreams).
+        out = new FileOutputStream(new File(dir, "jOOQ-manual.pdf"));
+        out = new BufferedOutputStream(out);
+
+        // Construct fop with desired output format
+        Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, foUserAgent, out);
+
+        // Setup JAXP using identity transformer
+        transformer = factory.newTransformer(); // identity transformer
+
+        // Setup input stream
+        Source src = new StreamSource(new File(dir, "jOOQ-manual.fo.xml"));
+
+        // Resulting SAX events (the generated FO) must be piped through to FOP
+        Result res = new SAXResult(fop.getDefaultHandler());
+
+        // Start XSLT transformation and FOP processing
+        transformer.transform(src, res);
+
+        out.flush();
+        out.close();
+
+        // Open the PDF and check it
+        Runtime.getRuntime().exec(new String[] {
+                "C:\\Program Files (x86)\\Adobe\\Reader 9.0\\Reader\\AcroRd32.exe",
+                "C:\\Users\\lukas\\workspace\\jOOQ-website\\manual-pdf\\jOOQ-manual.pdf" });
     }
 }

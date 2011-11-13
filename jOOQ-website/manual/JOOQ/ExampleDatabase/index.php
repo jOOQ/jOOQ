@@ -19,14 +19,13 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Previous section: jOOQ classes and their usage">previous</a> : <a href="<?=$root?>/manual/JOOQ/Factory/" title="Next section: The Factory class">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">previous</a> : <a title="Next section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
 </tr>
 </table>
 							<h2>Example CREATE TABLE statements</h2>
-							<pre class="prettyprint lang-sql">
-CREATE TABLE t_language (
+<pre class="prettyprint lang-sql">CREATE TABLE t_language (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   cd CHAR(2) NOT NULL,
   description VARCHAR2(50)
@@ -67,15 +66,14 @@ CREATE TABLE t_book_to_book_store (
     FOREIGN KEY (book_id)
     REFERENCES t_book (id)
     ON DELETE CASCADE
-)							
-							</pre>
+)</pre>
 							<p>
 								More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc),
 								stored procedures and packages are introduced for specific examples
 							</p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/" title="Previous section: jOOQ classes and their usage">previous</a> : <a href="<?=$root?>/manual/JOOQ/Factory/" title="Next section: The Factory class">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">previous</a> : <a title="Next section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
 </tr>
 </table>
 <?php 

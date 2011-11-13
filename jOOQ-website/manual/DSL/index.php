@@ -18,9 +18,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/SEQUENCE/" title="Previous section: Sequences">previous</a> : <a href="<?=$root?>/manual/DSL/SELECT/" title="Next section: Complete SELECT syntax">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">previous</a> : <a title="Next section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">next</a></td>
 </tr>
 </table>
 					<h2>Overview</h2>
@@ -31,11 +31,10 @@ function printContent() {
 </p>
 						
 					<p>Here is an example to show you what that means. When you want to write a query like this in SQL: </p>
-					<table width="100%" cellpadding="0" cellspacing="0">
+					<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
--- Select all books by authors born after 1920, 
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">-- Select all books by authors born after 1920, 
 -- named "Paulo" from a catalogue:
 SELECT * 
   FROM t_author a 
@@ -43,9 +42,8 @@ SELECT *
  WHERE a.year_of_birth &gt; 1920 
    AND a.first_name = 'Paulo'
  ORDER BY b.title</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-Result&lt;Record&gt; result = 
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">Result&lt;Record&gt; result = 
 create.select()
       .from(T_AUTHOR)
       .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
@@ -60,47 +58,47 @@ create.select()
 					<p>You couldn't come much closer to SQL itself in Java, without re-writing the compiler. </p>
 				<h3>Table of contents</h3><ol>
 <li>
-<a href="<?=$root?>/manual/DSL/SELECT/" title="Complete SELECT syntax">Complete SELECT syntax</a>
+<a title="Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/CONDITION/" title="Conditions">Conditions</a>
+<a title="Conditions" href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/ALIAS/" title="Aliased tables and fields">Aliased tables and fields</a>
+<a title="Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/IN/" title="Nested SELECT using the IN operator">Nested SELECT using the IN operator</a>
+<a title="Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">Nested SELECT using the IN operator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/EXISTS/" title="Nested SELECT using the EXISTS operator">Nested SELECT using the EXISTS operator</a>
+<a title="Nested SELECT using the EXISTS operator" href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/NESTED/" title="Other types of nested SELECT">Other types of nested SELECT</a>
+<a title="Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">Other types of nested SELECT</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/UNION/" title="UNION and other set operations">UNION and other set operations</a>
+<a title="UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">UNION and other set operations</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="Functions and aggregate operators">Functions and aggregate operators</a>
+<a title="Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Stored procedures and functions">Stored procedures and functions</a>
+<a title="Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Arithmetic operations and concatenation">Arithmetic operations and concatenation</a>
+<a title="Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/CASE/" title="The CASE clause">The CASE clause</a>
+<a title="The CASE clause" href="<?=$root?>/manual/DSL/CASE/">The CASE clause</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/CAST/" title="Type casting">Type casting</a>
+<a title="Type casting" href="<?=$root?>/manual/DSL/CAST/">Type casting</a>
 </li>
 <li>
-<a href="<?=$root?>/manual/DSL/SQL/" title="When it's just easier: Plain SQL">When it's just easier: Plain SQL</a>
+<a title="When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a>
 </li>
-</ol><br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+</ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/META/SEQUENCE/" title="Previous section: Sequences">previous</a> : <a href="<?=$root?>/manual/DSL/SELECT/" title="Next section: Complete SELECT syntax">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">previous</a> : <a title="Next section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">next</a></td>
 </tr>
 </table>
 <?php 

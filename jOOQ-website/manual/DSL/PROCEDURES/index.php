@@ -21,9 +21,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="Previous section: Functions and aggregate operators">previous</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Next section: Arithmetic operations and concatenation">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">previous</a> : <a title="Next section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">next</a></td>
 </tr>
 </table>
 							<h2>Interaction with stored procedures</h2>
@@ -42,13 +42,11 @@ function printContent() {
 								to that function. Typically, if you have this type of function in your
 								database: </p>
 								
-							<pre class="prettyprint lang-sql">
-CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2)
+<pre class="prettyprint lang-sql">CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2)
 RETURN NUMBER;</pre>
 
 							<p>Then convenience methods like these are generated: </p>
-							<pre class="prettyprint lang-java">
-// Create a field representing a function with another field as parameter
+<pre class="prettyprint lang-java">// Create a field representing a function with another field as parameter
 public static Field&lt;BigDecimal&gt; fAuthorExists(Field&lt;String&gt; authorName) { // [...]
 
 // Create a field representing a function with a constant parameter
@@ -58,11 +56,10 @@ public static Field&lt;BigDecimal&gt; fAuthorExists(String authorName) { // [...
 								you want to know whether there exists an author with precisely that
 								name, you can reuse the above stored function in a SQL query: </p>
 								
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-SELECT T_PERSON.NAME, F_AUTHOR_EXISTS(T_PERSON.NAME)
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">SELECT T_PERSON.NAME, F_AUTHOR_EXISTS(T_PERSON.NAME)
   FROM T_PERSON
 
 -- OR:
@@ -70,9 +67,8 @@ SELECT T_PERSON.NAME, F_AUTHOR_EXISTS(T_PERSON.NAME)
 SELECT T_PERSON.NAME
   FROM T_PERSON
  WHERE F_AUTHOR_EXISTS(T_PERSON.NAME) = 1</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
- create.select(TPerson.NAME, Functions.fAuthorExists(TPerson.NAME))
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.select(TPerson.NAME, Functions.fAuthorExists(TPerson.NAME))
       .from(T_PERSON);
 
 // OR: Note, the static import of Functions.*
@@ -89,9 +85,9 @@ create.select(TPerson.NAME)
 								it may well have OUT parameters. Since there is not a standard way how
 								to embed stored procedures in SQL, they cannot be integrated in jOOQ's
 								DSL either. </p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="Previous section: Functions and aggregate operators">previous</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="Next section: Arithmetic operations and concatenation">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">previous</a> : <a title="Next section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">next</a></td>
 </tr>
 </table>
 <?php 

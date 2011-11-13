@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Previous section: Stored procedures and functions">previous</a> : <a href="<?=$root?>/manual/DSL/CASE/" title="Next section: The CASE clause">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">previous</a> : <a title="Next section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">next</a></td>
 </tr>
 </table>
 							<h2>Mathematical operations</h2>
@@ -39,11 +39,11 @@ function printContent() {
 							
 							<h2>Datetime arithmetic</h2>
 							<p>jOOQ also supports the Oracle-style syntax for adding days to a Field&lt;? extends java.util.Date&gt; </p>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
+<td class="left" width="50%">
 <pre class="prettyprint lang-sql">SELECT SYSDATE + 3 FROM DUAL;</pre>
-</td><td width="50%" class="right">
+</td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.select(create.currentTimestamp().add(3));</pre>
 </td>
 </tr>
@@ -53,17 +53,15 @@ function printContent() {
 							<p>This is not really an arithmetic expression, but it's still an
 								expression with operators: The string concatenation. jOOQ 
 								provides you with the Field's concat() method:</p>
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-SELECT 'A' || 'B' || 'C' FROM DUAL
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">SELECT 'A' || 'B' || 'C' FROM DUAL
 
 -- Or in MySQL:
 SELECT concat('A', 'B', 'C')</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">&nbsp;
 // For all RDBMS, including MySQL:
 create.select(create.val("A").concat("B", "C"));
 
@@ -71,9 +69,9 @@ create.select(create.val("A").concat("B", "C"));
 </td>
 </tr>
 </table>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Previous section: Stored procedures and functions">previous</a> : <a href="<?=$root?>/manual/DSL/CASE/" title="Next section: The CASE clause">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">previous</a> : <a title="Next section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">next</a></td>
 </tr>
 </table>
 <?php 

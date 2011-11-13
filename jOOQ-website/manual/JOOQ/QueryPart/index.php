@@ -17,9 +17,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="Previous section: ResultQuery and various ways of fetching data">previous</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/" title="Next section: Serializability of QueryParts and Results">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
 </tr>
 </table>
 							<h2>Everything is a QueryPart</h2>
@@ -50,17 +50,14 @@ function printContent() {
 								It is used for any condition
 								comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 								condition here: </p>
-						   <pre class="prettyprint lang-sql">
--- [...]
+<pre class="prettyprint lang-sql">-- [...]
 FROM T_AUTHOR
 JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 -- [...]</pre>
 
 							<p>This is how jOOQ implements such a condition: </p>
 							
-							<pre class="prettyprint lang-java">
-
-@Override
+<pre class="prettyprint lang-java">@Override
 public final void bind(BindContext context) throws SQLException {
     // The CompareCondition itself does not bind any variables.
     // But the two fields involved in the condition might do so...
@@ -101,9 +98,9 @@ public final void toSQL(RenderContext context) {
 }
 </pre>
 							<p>For more complex examples, please refer to the codebase, directly</p>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="Previous section: ResultQuery and various ways of fetching data">previous</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/" title="Next section: Serializability of QueryParts and Results">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
 </tr>
 </table>
 <?php 

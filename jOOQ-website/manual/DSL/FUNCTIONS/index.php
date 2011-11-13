@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/UNION/" title="Previous section: UNION and other set operations">previous</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Next section: Stored procedures and functions">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">previous</a> : <a title="Next section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">next</a></td>
 </tr>
 </table>
 							<h2>jOOQ's strategy for supporting vendor-specific functions</h2>
@@ -45,8 +45,7 @@ function printContent() {
 							<h2>Functions </h2>
 							<p>These are just a few functions in the Field interface, so you get the idea: </p>
 							
-							<pre class="prettyprint lang-java">
-Field&lt;String&gt; rpad(Field&lt;? extends Number&gt; length);
+<pre class="prettyprint lang-java">Field&lt;String&gt; rpad(Field&lt;? extends Number&gt; length);
 Field&lt;String&gt; rpad(int length);
 Field&lt;String&gt; rpad(Field&lt;? extends Number&gt; length, Field&lt;String&gt; c);
 Field&lt;String&gt; rpad(int length, char c);
@@ -67,8 +66,7 @@ Field&lt;Integer&gt; position(Field&lt;String&gt; search);</pre>
 								Field interface. Others in the Factory. Here are some examples from
 								Field: </p>
 								
-							<pre class="prettyprint lang-java">
-// Every-day functions
+<pre class="prettyprint lang-java">// Every-day functions
 Field&lt;Integer&gt; count();
 Field&lt;Integer&gt; countDistinct();
 Field&lt;T&gt; max();
@@ -88,15 +86,13 @@ Field&lt;BigDecimal&gt; varSamp();
 								generating the next key on insertion of an ID. When you want to
 								achieve something like this </p>
 								
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-SELECT MAX(ID) + 1 AS next_id 
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">SELECT MAX(ID) + 1 AS next_id 
   FROM T_AUTHOR</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.select(ID.max().add(1).as("next_id"))
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.select(ID.max().add(1).as("next_id"))
       .from(T_AUTHOR);</pre>
 </td>
 </tr>
@@ -116,19 +112,17 @@ create.select(ID.max().add(1).as("next_id"))
 								back to the beginning of the transaction table (ordered by booked_at)
 							</p>
 							
-							<table width="100%" cellpadding="0" cellspacing="0">
+							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
-<td width="50%" class="left">
-<pre class="prettyprint lang-sql">
-SELECT booked_at, amount,
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">SELECT booked_at, amount,
    SUM(amount) OVER (PARTITION BY 1
                      ORDER BY booked_at
                      ROWS BETWEEN UNBOUNDED PRECEDING 
                      AND CURRENT ROW) AS total
   FROM transactions</pre>
-</td><td width="50%" class="right">
-<pre class="prettyprint lang-java">
-create.select(BOOKED_AT, AMOUNT, 
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.select(BOOKED_AT, AMOUNT, 
               AMOUNT.sumOver().partitionByOne()
                     .orderBy(BOOKED_AT)
                     .rowsBetweenUnboundedPreceding()
@@ -137,9 +131,9 @@ create.select(BOOKED_AT, AMOUNT,
 </td>
 </tr>
 </table>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/DSL/UNION/" title="Previous section: UNION and other set operations">previous</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/" title="Next section: Stored procedures and functions">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">previous</a> : <a title="Next section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">next</a></td>
 </tr>
 </table>
 <?php 

@@ -19,9 +19,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Previous section: Master data generation. Enumeration tables">previous</a> : <a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Next section: Adding Oracle hints to queries">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
 </tr>
 </table>
 							<h2>Mapping your DEV schema to a productive environment</h2>
@@ -54,8 +54,7 @@ function printContent() {
 								class, that you can equip your Factory
 								with. Take the following example: </p>
 								
-							<pre class="prettyprint lang-java">
-SchemaMapping mapping = new SchemaMapping();
+<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
 mapping.add(DEV, "MY_BOOK_WORLD");
 
 // Add the mapping to the factory
@@ -76,8 +75,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								their own LOG schema instance. Then you can enhance your SchemaMapping
 								like this: </p>
 								
-							<pre class="prettyprint lang-java">
-SchemaMapping mapping = new SchemaMapping();
+<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
 mapping.add(DEV, "MY_BOOK_WORLD");
 mapping.add(LOG, "MY_BOOK_WORLD_LOG");</pre>
 
@@ -92,8 +90,7 @@ mapping.add(LOG, "MY_BOOK_WORLD_LOG");</pre>
 								the Factory's underlying Connection. Many RDBMS support a USE or SET
 								SCHEMA command, which you can call like this: </p>
 								
-							<pre class="prettyprint lang-java">
-// Set the default schema
+<pre class="prettyprint lang-java">// Set the default schema
 Schema MY_BOOK_WORLD = ...
 create.use(MY_BOOK_WORLD);
 
@@ -101,8 +98,7 @@ create.use(MY_BOOK_WORLD);
 create.selectFrom(T_AUTHOR).fetch();</pre>
 							<p>Queries generated from the above Factory will produce this kind of SQL statement: </p>
 							
-							<pre class="prettyprint lang-sql">
--- the schema name is omitted from all SQL constructs.
+<pre class="prettyprint lang-sql">-- the schema name is omitted from all SQL constructs.
 SELECT * FROM T_AUTHOR</pre>
 
 
@@ -115,8 +111,7 @@ SELECT * FROM T_AUTHOR</pre>
 								applied to all of your tables. This can be achieved by creating the
 								following mapping: </p>
 								
-							<pre class="prettyprint lang-java">
-SchemaMapping mapping = new SchemaMapping();
+<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
 mapping.add(DEV, "MY_BOOK_WORLD");
 mapping.add(T_AUTHOR, "MY_APP__T_AUTHOR");
 
@@ -127,11 +122,10 @@ Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
 create.selectFrom(T_AUTHOR).fetch();</pre>
 
 							<p>The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement: </p>
-							<pre class="prettyprint lang-sql">
-SELECT * FROM MY_BOOK_WORLD.MY_APP__T_AUTHOR</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+<pre class="prettyprint lang-sql">SELECT * FROM MY_BOOK_WORLD.MY_APP__T_AUTHOR</pre>
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/ADVANCED/MasterData/" title="Previous section: Master data generation. Enumeration tables">previous</a> : <a href="<?=$root?>/manual/ADVANCED/OracleHints/" title="Next section: Adding Oracle hints to queries">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
 </tr>
 </table>
 <?php 

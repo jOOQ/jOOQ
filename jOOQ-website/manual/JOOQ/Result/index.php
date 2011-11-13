@@ -20,9 +20,9 @@ function getSlogan() {
 function printContent() {
     global $root;
 ?>
-<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Table/" title="Previous section: Tables and Fields">previous</a> : <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Next section: Updatable Records">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>
 </tr>
 </table>
 							<h2>The Result</h2>
@@ -52,8 +52,7 @@ function printContent() {
 								very much like the <a href="http://download.oracle.com/javase/6/docs/api/java/util/Iterator.html" title="External API reference: java.util.Iterator">java.util.Iterator</a>, 
 								by providing a very simple API: 
 							</p>
-							<pre class="prettyprint lang-java">
-// Check whether there are any more records to be fetched
+<pre class="prettyprint lang-java">// Check whether there are any more records to be fetched
 boolean hasNext() throws SQLException;
 
 // Fetch the next record from the underlying JDBC ResultSet
@@ -71,8 +70,7 @@ void close() throws SQLException;</pre>
 								its data and adds convenience methods for data type conversion. These
 								are the main access ways: 
 							</p>
-							<pre class="prettyprint lang-java">
-// If you can keep a reference of the selected field, then you can get the corresponding value type-safely
+<pre class="prettyprint lang-java">// If you can keep a reference of the selected field, then you can get the corresponding value type-safely
 &lt;T&gt; T getValue(Field&lt;T&gt; field);
 
 // If you know the name of the selected field within the tuple,
@@ -90,8 +88,7 @@ Object getValue(int index);</pre>
 								you know what type you want to get, you can always use the Record's
 								convenience methods for type conversion, however. Some examples: 
 							</p>
-							<pre class="prettyprint lang-java">
-// These methods will try to convert a value to a BigDecimal.
+<pre class="prettyprint lang-java">// These methods will try to convert a value to a BigDecimal.
 // This will work for all numeric types and for CHAR/VARCHAR types, if they contain numeric values:
 BigDecimal getValueAsBigDecimal(String fieldName);
 BigDecimal getValueAsBigDecimal(int fieldIndex);
@@ -99,9 +96,9 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 // This method can perform arbitrary conversions
 &lt;T&gt; T getValue(String fieldName, Class&lt;? extends T&gt; type);
 &lt;T&gt; T getValue(int fieldIndex, Class&lt;? extends T&gt; type);</pre>
-						<br><table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td align="left" valign="top"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td align="right" valign="top" style="white-space: nowrap"><a href="<?=$root?>/manual/JOOQ/Table/" title="Previous section: Tables and Fields">previous</a> : <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="Next section: Updatable Records">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>
 </tr>
 </table>
 <?php 

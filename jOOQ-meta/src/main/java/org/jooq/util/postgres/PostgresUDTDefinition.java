@@ -35,7 +35,7 @@
  */
 package org.jooq.util.postgres;
 
-import static org.jooq.util.postgres.information_schema.tables.Attributes.ATTRIBUTES;
+import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,7 +48,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.postgres.information_schema.tables.Attributes;
 
 public class PostgresUDTDefinition extends AbstractUDTDefinition {
 
@@ -61,28 +60,28 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
         List<AttributeDefinition> result = new ArrayList<AttributeDefinition>();
 
         for (Record record : create().select(
-                    Attributes.ATTRIBUTE_NAME,
-                    Attributes.ORDINAL_POSITION,
-                    Attributes.DATA_TYPE,
-                    Attributes.NUMERIC_PRECISION,
-                    Attributes.NUMERIC_SCALE,
-                    Attributes.ATTRIBUTE_UDT_NAME)
+                    ATTRIBUTES.ATTRIBUTE_NAME,
+                    ATTRIBUTES.ORDINAL_POSITION,
+                    ATTRIBUTES.DATA_TYPE,
+                    ATTRIBUTES.NUMERIC_PRECISION,
+                    ATTRIBUTES.NUMERIC_SCALE,
+                    ATTRIBUTES.ATTRIBUTE_UDT_NAME)
                 .from(ATTRIBUTES)
-                .where(Attributes.UDT_SCHEMA.equal(getSchemaName()))
-                .and(Attributes.UDT_NAME.equal(getName()))
-                .orderBy(Attributes.ORDINAL_POSITION)
+                .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchemaName()))
+                .and(ATTRIBUTES.UDT_NAME.equal(getName()))
+                .orderBy(ATTRIBUTES.ORDINAL_POSITION)
                 .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Attributes.DATA_TYPE),
-                record.getValue(Attributes.NUMERIC_PRECISION),
-                record.getValue(Attributes.NUMERIC_SCALE),
-                record.getValue(Attributes.ATTRIBUTE_UDT_NAME));
+                record.getValue(ATTRIBUTES.DATA_TYPE),
+                record.getValue(ATTRIBUTES.NUMERIC_PRECISION),
+                record.getValue(ATTRIBUTES.NUMERIC_SCALE),
+                record.getValue(ATTRIBUTES.ATTRIBUTE_UDT_NAME));
 
             AttributeDefinition column = new DefaultAttributeDefinition(
                 this,
-                record.getValue(Attributes.ATTRIBUTE_NAME),
-                record.getValue(Attributes.ORDINAL_POSITION),
+                record.getValue(ATTRIBUTES.ATTRIBUTE_NAME),
+                record.getValue(ATTRIBUTES.ORDINAL_POSITION),
                 type);
             result.add(column);
         }

@@ -35,7 +35,7 @@
  */
 package org.jooq.util.oracle;
 
-import static org.jooq.util.oracle.sys.tables.AllTypeAttrs.ALL_TYPE_ATTRS;
+import static org.jooq.util.oracle.sys.Tables.ALL_TYPE_ATTRS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,7 +48,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.oracle.sys.tables.AllTypeAttrs;
 
 public class OracleUDTDefinition extends AbstractUDTDefinition {
 
@@ -61,25 +60,25 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
         List<AttributeDefinition> result = new ArrayList<AttributeDefinition>();
 
         for (Record record : create().select(
-                AllTypeAttrs.ATTR_NAME,
-                AllTypeAttrs.ATTR_NO,
-                AllTypeAttrs.ATTR_TYPE_NAME,
-                AllTypeAttrs.PRECISION,
-                AllTypeAttrs.SCALE)
+                ALL_TYPE_ATTRS.ATTR_NAME,
+                ALL_TYPE_ATTRS.ATTR_NO,
+                ALL_TYPE_ATTRS.ATTR_TYPE_NAME,
+                ALL_TYPE_ATTRS.PRECISION,
+                ALL_TYPE_ATTRS.SCALE)
             .from(ALL_TYPE_ATTRS)
-            .where(AllTypeAttrs.OWNER.equal(getSchemaName()))
-            .and(AllTypeAttrs.TYPE_NAME.equal(getName()))
-            .orderBy(AllTypeAttrs.ATTR_NO).fetch()) {
+            .where(ALL_TYPE_ATTRS.OWNER.equal(getSchemaName()))
+            .and(ALL_TYPE_ATTRS.TYPE_NAME.equal(getName()))
+            .orderBy(ALL_TYPE_ATTRS.ATTR_NO).fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(AllTypeAttrs.ATTR_TYPE_NAME),
-                record.getValueAsInteger(AllTypeAttrs.PRECISION, 0),
-                record.getValueAsInteger(AllTypeAttrs.SCALE, 0));
+                record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_NAME),
+                record.getValueAsInteger(ALL_TYPE_ATTRS.PRECISION, 0),
+                record.getValueAsInteger(ALL_TYPE_ATTRS.SCALE, 0));
 
             AttributeDefinition attribute = new DefaultAttributeDefinition(
                 this,
-                record.getValue(AllTypeAttrs.ATTR_NAME),
-                record.getValueAsInteger(AllTypeAttrs.ATTR_NO),
+                record.getValue(ALL_TYPE_ATTRS.ATTR_NAME),
+                record.getValueAsInteger(ALL_TYPE_ATTRS.ATTR_NO),
                 type);
 
             result.add(attribute);

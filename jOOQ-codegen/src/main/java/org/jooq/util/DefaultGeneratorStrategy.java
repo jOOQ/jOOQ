@@ -55,9 +55,16 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     private String recordClassSuffix;
     private String scheme;
 
+    private boolean instanceFields;
+
     // -------------------------------------------------------------------------
     // Initialisation
     // -------------------------------------------------------------------------
+
+    @Override
+    public void setInstanceFields(boolean instanceFields) {
+        this.instanceFields = instanceFields;
+    }
 
     @Override
     public void setMetaClassPrefix(String prefix) {
@@ -146,11 +153,14 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
         // Columns
         if (definition instanceof ColumnDefinition) {
-            // TODO [#117] begin of non-static members (make configurable)
-            sb.append(getFullJavaIdentifierUC(((TypedElementDefinition<?>) definition).getContainer()));
-            // TODO [#117] end of non-static members (make configurable)
+            if (instanceFields) {
+                sb.append(getFullJavaIdentifierUC(((TypedElementDefinition<?>) definition).getContainer()));
+            }
+            else {
+                sb.append(getFullJavaClassName(((TypedElementDefinition<?>) definition).getContainer()));
+            }
         }
-        
+
         // Attributes, Parameters
         else if (definition instanceof TypedElementDefinition) {
             sb.append(getFullJavaClassName(((TypedElementDefinition<?>) definition).getContainer()));

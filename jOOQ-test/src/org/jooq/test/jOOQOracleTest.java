@@ -40,8 +40,19 @@ import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_658_REF;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_725_LOB_TEST;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_785;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_ARRAYS;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_AUTHOR;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_BOOK;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_DIRECTORY;
+import static org.jooq.test.oracle.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.oracle.generatedclasses.Tables.V_LIBRARY;
 import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
 import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
 import static org.jooq.util.oracle.OracleFactory.level;
@@ -70,18 +81,7 @@ import org.jooq.test.oracle.generatedclasses.Sequences;
 import org.jooq.test.oracle.generatedclasses.TestFactory;
 import org.jooq.test.oracle.generatedclasses.packages.Library;
 import org.jooq.test.oracle.generatedclasses.routines.F377;
-import org.jooq.test.oracle.generatedclasses.tables.TArrays;
-import org.jooq.test.oracle.generatedclasses.tables.TAuthor;
-import org.jooq.test.oracle.generatedclasses.tables.TBook;
-import org.jooq.test.oracle.generatedclasses.tables.TBookStore;
-import org.jooq.test.oracle.generatedclasses.tables.TDirectory;
-import org.jooq.test.oracle.generatedclasses.tables.TTriggers;
-import org.jooq.test.oracle.generatedclasses.tables.T_639NumbersTable;
-import org.jooq.test.oracle.generatedclasses.tables.T_658Ref;
-import org.jooq.test.oracle.generatedclasses.tables.T_725LobTest;
-import org.jooq.test.oracle.generatedclasses.tables.T_785;
 import org.jooq.test.oracle.generatedclasses.tables.VIncomplete;
-import org.jooq.test.oracle.generatedclasses.tables.VLibrary;
 import org.jooq.test.oracle.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TBookRecord;
@@ -155,87 +155,87 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected UpdatableTable<TAuthorRecord> TAuthor() {
-        return TAuthor.T_AUTHOR;
+        return T_AUTHOR;
     }
 
     @Override
     protected TableField<TAuthorRecord, String> TAuthor_LAST_NAME() {
-        return TAuthor.LAST_NAME;
+        return T_AUTHOR.LAST_NAME;
     }
 
     @Override
     protected TableField<TAuthorRecord, String> TAuthor_FIRST_NAME() {
-        return TAuthor.FIRST_NAME;
+        return T_AUTHOR.FIRST_NAME;
     }
 
     @Override
     protected TableField<TAuthorRecord, Date> TAuthor_DATE_OF_BIRTH() {
-        return TAuthor.DATE_OF_BIRTH;
+        return T_AUTHOR.DATE_OF_BIRTH;
     }
 
     @Override
     protected TableField<TAuthorRecord, Integer> TAuthor_YEAR_OF_BIRTH() {
-        return TAuthor.YEAR_OF_BIRTH;
+        return T_AUTHOR.YEAR_OF_BIRTH;
     }
 
     @Override
     protected TableField<TAuthorRecord, Integer> TAuthor_ID() {
-        return TAuthor.ID;
+        return T_AUTHOR.ID;
     }
 
     @Override
     protected TableField<TAuthorRecord, ? extends UDTRecord<?>> TAuthor_ADDRESS() {
-        return TAuthor.ADDRESS;
+        return T_AUTHOR.ADDRESS;
     }
 
     @Override
     protected UpdatableTable<TBookRecord> TBook() {
-        return TBook.T_BOOK;
+        return T_BOOK;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_ID() {
-        return TBook.ID;
+        return T_BOOK.ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_AUTHOR_ID() {
-        return TBook.AUTHOR_ID;
+        return T_BOOK.AUTHOR_ID;
     }
 
     @Override
     protected TableField<TBookRecord, String> TBook_TITLE() {
-        return TBook.TITLE;
+        return T_BOOK.TITLE;
     }
 
     @Override
     protected UpdatableTable<TBookStoreRecord> TBookStore() {
-        return TBookStore.T_BOOK_STORE;
+        return T_BOOK_STORE;
     }
 
     @Override
     protected TableField<TBookStoreRecord, String> TBookStore_NAME() {
-        return TBookStore.NAME;
+        return T_BOOK_STORE.NAME;
     }
 
     @Override
     protected Table<T_725LobTestRecord> T725() {
-        return T_725LobTest.T_725_LOB_TEST;
+        return T_725_LOB_TEST;
     }
 
     @Override
     protected TableField<T_725LobTestRecord, Integer> T725_ID() {
-        return T_725LobTest.ID;
+        return T_725_LOB_TEST.ID;
     }
 
     @Override
     protected TableField<T_725LobTestRecord, byte[]> T725_LOB() {
-        return T_725LobTest.LOB;
+        return T_725_LOB_TEST.LOB;
     }
 
     @Override
     protected Table<T_785Record> T785() {
-        return T_785.T_785;
+        return T_785;
     }
 
     @Override
@@ -255,67 +255,67 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
+        return T_658_REF;
     }
 
     @Override
     protected Table<T_639NumbersTableRecord> T639() {
-        return T_639NumbersTable.T_639_NUMBERS_TABLE;
+        return T_639_NUMBERS_TABLE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_ID() {
-        return T_639NumbersTable.ID;
+        return T_639_NUMBERS_TABLE.ID;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigDecimal> T639_BIG_DECIMAL() {
-        return T_639NumbersTable.BIG_DECIMAL;
+        return T_639_NUMBERS_TABLE.BIG_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, BigInteger> T639_BIG_INTEGER() {
-        return T_639NumbersTable.BIG_INTEGER;
+        return T_639_NUMBERS_TABLE.BIG_INTEGER;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
-        return T_639NumbersTable.BYTE;
+        return T_639_NUMBERS_TABLE.BYTE;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE_DECIMAL() {
-        return T_639NumbersTable.BYTE_DECIMAL;
+        return T_639_NUMBERS_TABLE.BYTE_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT() {
-        return T_639NumbersTable.SHORT;
+        return T_639_NUMBERS_TABLE.SHORT;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT_DECIMAL() {
-        return T_639NumbersTable.SHORT_DECIMAL;
+        return T_639_NUMBERS_TABLE.SHORT_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER() {
-        return T_639NumbersTable.INTEGER;
+        return T_639_NUMBERS_TABLE.INTEGER;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER_DECIMAL() {
-        return T_639NumbersTable.INTEGER_DECIMAL;
+        return T_639_NUMBERS_TABLE.INTEGER_DECIMAL;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG() {
-        return T_639NumbersTable.LONG;
+        return T_639_NUMBERS_TABLE.LONG;
     }
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG_DECIMAL() {
-        return T_639NumbersTable.LONG_DECIMAL;
+        return T_639_NUMBERS_TABLE.LONG_DECIMAL;
     }
 
     @Override
@@ -330,12 +330,12 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected Table<TArraysRecord> TArrays() {
-        return TArrays.T_ARRAYS;
+        return T_ARRAYS;
     }
 
     @Override
     protected TableField<TArraysRecord, Integer> TArrays_ID() {
-        return TArrays.ID;
+        return T_ARRAYS.ID;
     }
 
     @Override
@@ -360,42 +360,42 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TArraysRecord, ? extends ArrayRecord<String>> TArrays_STRING_R() {
-        return TArrays.STRING_ARRAY;
+        return T_ARRAYS.STRING_ARRAY;
     }
 
     @Override
     protected TableField<TArraysRecord, ? extends ArrayRecord<Integer>> TArrays_NUMBER_R() {
-        return TArrays.NUMBER_ARRAY;
+        return T_ARRAYS.NUMBER_ARRAY;
     }
 
     @Override
     protected TableField<TArraysRecord, ? extends ArrayRecord<Date>> TArrays_DATE_R() {
-        return TArrays.DATE_ARRAY;
+        return T_ARRAYS.DATE_ARRAY;
     }
 
     @Override
     protected TableField<TArraysRecord, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R() {
-        return TArrays.NUMBER_LONG_ARRAY;
+        return T_ARRAYS.NUMBER_LONG_ARRAY;
     }
 
     @Override
     protected TableField<TBookRecord, ? extends Enum<?>> TBook_LANGUAGE_ID() {
-        return TBook.LANGUAGE_ID;
+        return T_BOOK.LANGUAGE_ID;
     }
 
     @Override
     protected TableField<TBookRecord, Integer> TBook_PUBLISHED_IN() {
-        return TBook.PUBLISHED_IN;
+        return T_BOOK.PUBLISHED_IN;
     }
 
     @Override
     protected TableField<TBookRecord, String> TBook_CONTENT_TEXT() {
-        return TBook.CONTENT_TEXT;
+        return T_BOOK.CONTENT_TEXT;
     }
 
     @Override
     protected TableField<TBookRecord, byte[]> TBook_CONTENT_PDF() {
-        return TBook.CONTENT_PDF;
+        return T_BOOK.CONTENT_PDF;
     }
 
     @Override
@@ -405,17 +405,17 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected Table<VLibraryRecord> VLibrary() {
-        return VLibrary.V_LIBRARY;
+        return V_LIBRARY;
     }
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_TITLE() {
-        return VLibrary.TITLE;
+        return V_LIBRARY.TITLE;
     }
 
     @Override
     protected TableField<VLibraryRecord, String> VLibrary_AUTHOR() {
-        return VLibrary.AUTHOR;
+        return V_LIBRARY.AUTHOR;
     }
 
     @Override
@@ -430,47 +430,47 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Override
     protected UpdatableTable<TDirectoryRecord> TDirectory() {
-        return TDirectory.T_DIRECTORY;
+        return T_DIRECTORY;
     }
 
     @Override
     protected TableField<TDirectoryRecord, Integer> TDirectory_ID() {
-        return TDirectory.ID;
+        return T_DIRECTORY.ID;
     }
 
     @Override
     protected TableField<TDirectoryRecord, Integer> TDirectory_PARENT_ID() {
-        return TDirectory.PARENT_ID;
+        return T_DIRECTORY.PARENT_ID;
     }
 
     @Override
     protected TableField<TDirectoryRecord, Byte> TDirectory_IS_DIRECTORY() {
-        return TDirectory.IS_DIRECTORY;
+        return T_DIRECTORY.IS_DIRECTORY;
     }
 
     @Override
     protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
-        return TDirectory.NAME;
+        return T_DIRECTORY.NAME;
     }
 
     @Override
     protected UpdatableTable<TTriggersRecord> TTriggers() {
-        return TTriggers.T_TRIGGERS;
+        return T_TRIGGERS;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID_GENERATED() {
-        return TTriggers.ID_GENERATED;
+        return T_TRIGGERS.ID_GENERATED;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_ID() {
-        return TTriggers.ID;
+        return T_TRIGGERS.ID;
     }
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
-        return TTriggers.COUNTER;
+        return T_TRIGGERS.COUNTER;
     }
 
     @Override

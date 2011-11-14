@@ -37,8 +37,8 @@
 package org.jooq.util.hsqldb;
 
 import static org.jooq.impl.Factory.nvl;
-import static org.jooq.util.hsqldb.information_schema.tables.Columns.COLUMNS;
-import static org.jooq.util.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
+import static org.jooq.util.hsqldb.information_schema.Tables.COLUMNS;
+import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,8 +51,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.hsqldb.information_schema.tables.Columns;
-import org.jooq.util.hsqldb.information_schema.tables.ElementTypes;
 
 /**
  * @author Lukas Eder
@@ -68,36 +66,36 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         for (Record record : create().select(
-                Columns.COLUMN_NAME,
-                Columns.ORDINAL_POSITION,
-                nvl(ElementTypes.COLLECTION_TYPE_IDENTIFIER, Columns.DATA_TYPE).as("datatype"),
-                Columns.IDENTITY_GENERATION,
-                Columns.COLUMN_DEFAULT,
-                Columns.NUMERIC_PRECISION,
-                Columns.NUMERIC_SCALE,
-                Columns.UDT_NAME)
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.ORDINAL_POSITION,
+                nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, COLUMNS.DATA_TYPE).as("datatype"),
+                COLUMNS.IDENTITY_GENERATION,
+                COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.NUMERIC_PRECISION,
+                COLUMNS.NUMERIC_SCALE,
+                COLUMNS.UDT_NAME)
             .from(COLUMNS)
             .leftOuterJoin(ELEMENT_TYPES)
-            .on(Columns.TABLE_SCHEMA.equal(ElementTypes.OBJECT_SCHEMA))
-            .and(Columns.TABLE_NAME.equal(ElementTypes.OBJECT_NAME))
-            .and(Columns.DTD_IDENTIFIER.equal(ElementTypes.COLLECTION_TYPE_IDENTIFIER))
-            .where(Columns.TABLE_SCHEMA.equal(getSchemaName()))
-            .and(Columns.TABLE_NAME.equal(getName()))
-            .orderBy(Columns.ORDINAL_POSITION)
+            .on(COLUMNS.TABLE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
+            .and(COLUMNS.TABLE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
+            .and(COLUMNS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
+            .where(COLUMNS.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(COLUMNS.TABLE_NAME.equal(getName()))
+            .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
                 record.getValueAsString("datatype"),
-                record.getValue(Columns.NUMERIC_PRECISION),
-                record.getValue(Columns.NUMERIC_SCALE),
-                record.getValue(Columns.UDT_NAME));
+                record.getValue(COLUMNS.NUMERIC_PRECISION),
+                record.getValue(COLUMNS.NUMERIC_SCALE),
+                record.getValue(COLUMNS.UDT_NAME));
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getName()),
-			    record.getValue(Columns.COLUMN_NAME),
-			    record.getValueAsInteger(Columns.ORDINAL_POSITION),
+			    record.getValue(COLUMNS.COLUMN_NAME),
+			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,
-			    null != record.getValue(Columns.IDENTITY_GENERATION),
+			    null != record.getValue(COLUMNS.IDENTITY_GENERATION),
 			    null);
 			result.add(column);
 		}

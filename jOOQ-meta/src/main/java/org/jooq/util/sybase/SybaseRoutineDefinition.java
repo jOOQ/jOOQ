@@ -30,9 +30,9 @@
  */
 package org.jooq.util.sybase;
 
-import static org.jooq.util.sybase.sys.tables.Sysdomain.SYSDOMAIN;
-import static org.jooq.util.sybase.sys.tables.Sysprocedure.SYSPROCEDURE;
-import static org.jooq.util.sybase.sys.tables.Sysprocparm.SYSPROCPARM;
+import static org.jooq.util.sybase.sys.Tables.SYSDOMAIN;
+import static org.jooq.util.sybase.sys.Tables.SYSPROCEDURE;
+import static org.jooq.util.sybase.sys.Tables.SYSPROCPARM;
 
 import java.sql.SQLException;
 
@@ -45,9 +45,6 @@ import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.ParameterDefinition;
-import org.jooq.util.sybase.sys.tables.Sysdomain;
-import org.jooq.util.sybase.sys.tables.Sysprocedure;
-import org.jooq.util.sybase.sys.tables.Sysprocparm;
 
 /**
  * Sybase implementation of {@link AbstractRoutineDefinition}
@@ -64,25 +61,25 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
     @Override
     protected void init0() throws SQLException {
         for (Record record : create().select(
-                    Sysprocparm.PARM_NAME,
-                    Sysdomain.DOMAIN_NAME,
-                    Sysprocparm.WIDTH,
-                    Sysprocparm.SCALE,
-                    Sysprocparm.PARM_ID,
-                    Sysprocparm.PARM_TYPE,
-                    Sysprocparm.PARM_MODE_IN,
-                    Sysprocparm.PARM_MODE_OUT)
+                    SYSPROCPARM.PARM_NAME,
+                    SYSDOMAIN.DOMAIN_NAME,
+                    SYSPROCPARM.WIDTH,
+                    SYSPROCPARM.SCALE,
+                    SYSPROCPARM.PARM_ID,
+                    SYSPROCPARM.PARM_TYPE,
+                    SYSPROCPARM.PARM_MODE_IN,
+                    SYSPROCPARM.PARM_MODE_OUT)
                 .from(SYSPROCPARM)
-                .join(SYSDOMAIN).on(Sysprocparm.DOMAIN_ID.equal(Sysdomain.DOMAIN_ID))
-                .join(SYSPROCEDURE).on(Sysprocparm.PROC_ID.equal(Sysprocedure.PROC_ID))
-                .where(Sysprocedure.PROC_NAME.equal(getName()))
-                .orderBy(Sysprocparm.PARM_ID)
+                .join(SYSDOMAIN).on(SYSPROCPARM.DOMAIN_ID.equal(SYSDOMAIN.DOMAIN_ID))
+                .join(SYSPROCEDURE).on(SYSPROCPARM.PROC_ID.equal(SYSPROCEDURE.PROC_ID))
+                .where(SYSPROCEDURE.PROC_NAME.equal(getName()))
+                .orderBy(SYSPROCPARM.PARM_ID)
                 .fetch()) {
 
-            String paramName = record.getValue(Sysprocparm.PARM_NAME);
-            Boolean paramModeIn = record.getValueAsBoolean(Sysprocparm.PARM_MODE_IN, false);
-            Boolean paramModeOut = record.getValueAsBoolean(Sysprocparm.PARM_MODE_OUT, false);
-            int parmType = record.getValue(Sysprocparm.PARM_TYPE);
+            String paramName = record.getValue(SYSPROCPARM.PARM_NAME);
+            Boolean paramModeIn = record.getValueAsBoolean(SYSPROCPARM.PARM_MODE_IN, false);
+            Boolean paramModeOut = record.getValueAsBoolean(SYSPROCPARM.PARM_MODE_OUT, false);
+            int parmType = record.getValue(SYSPROCPARM.PARM_TYPE);
 
             InOutDefinition inOutDefinition;
             if (parmType == 4) {
@@ -103,13 +100,13 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
             }
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Sysdomain.DOMAIN_NAME),
-                record.getValue(Sysprocparm.WIDTH),
-                record.getValue(Sysprocparm.SCALE));
+                record.getValue(SYSDOMAIN.DOMAIN_NAME),
+                record.getValue(SYSPROCPARM.WIDTH),
+                record.getValue(SYSPROCPARM.SCALE));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(this,
                 paramName,
-                record.getValue(Sysprocparm.PARM_ID),
+                record.getValue(SYSPROCPARM.PARM_ID),
                 type);
 
             addParameter(inOutDefinition, parameter);

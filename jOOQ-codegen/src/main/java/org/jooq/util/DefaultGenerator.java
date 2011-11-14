@@ -107,12 +107,13 @@ import org.jooq.tools.StringUtils;
  */
 public class DefaultGenerator implements Generator {
 
-    private static final JooqLogger                 log                = JooqLogger.getLogger(DefaultGenerator.class);
-    private static final Map<Class<?>, Set<String>> reservedColumns    = new HashMap<Class<?>, Set<String>>();
+    private static final JooqLogger                 log                    = JooqLogger.getLogger(DefaultGenerator.class);
+    private static final Map<Class<?>, Set<String>> reservedColumns        = new HashMap<Class<?>, Set<String>>();
     private static String                           version;
 
-    private boolean                                 generateDeprecated = true;
-    private boolean                                 generateRelations  = false;
+    private boolean                                 generateDeprecated     = true;
+    private boolean                                 generateRelations      = false;
+    private boolean                                 generateInstanceFields = true;
     private GeneratorStrategy                       strategy;
 
     @Override
@@ -143,6 +144,16 @@ public class DefaultGenerator implements Generator {
     @Override
     public void setGenerateRelations(boolean generateRelations) {
         this.generateRelations = generateRelations;
+    }
+
+    @Override
+    public boolean generateInstanceFields() {
+        return generateInstanceFields;
+    }
+
+    @Override
+    public void setGenerateInstanceFields(boolean generateInstanceFields) {
+        this.generateInstanceFields = generateInstanceFields;
     }
 
     // ----
@@ -514,20 +525,26 @@ public class DefaultGenerator implements Generator {
 
         			out.println("\t}");
 
-        			// TODO [#117] begin of non-static members (make configurable)
-        			out.println();
-        			printNoFurtherInstancesAllowedJavadoc(out);
-        			out.println("\tprivate " + strategy.getJavaClassName(table) + "(java.lang.String alias) {");
-        			out.print("\t\tsuper(alias, ");
-        			out.print(strategy.getFullJavaIdentifierUC(schema));
-        			out.print(", ");
-        			out.print(strategy.getFullJavaClassName(table));
-        	        out.print(".");
-        	        out.print(strategy.getJavaIdentifierUC(table));
-        	        out.println(");");
-        			out.println("\t}");
-                    // TODO [#117] end of non-static members (make configurable)
+        			// [#117] With instance fields, it makes sense to create a
+        			// type-safe table alias
+        			if (generateInstanceFields()) {
+            			out.println();
+            			printNoFurtherInstancesAllowedJavadoc(out);
+            			out.print("\tprivate ");
+            			out.print(strategy.getJavaClassName(table));
+            			out.print("(");
+            			out.print(String.class);
+            			out.println(" alias) {");
 
+            			out.print("\t\tsuper(alias, ");
+            			out.print(strategy.getFullJavaIdentifierUC(schema));
+            			out.print(", ");
+            			out.print(strategy.getFullJavaClassName(table));
+            	        out.print(".");
+            	        out.print(strategy.getJavaIdentifierUC(table));
+            	        out.println(");");
+            			out.println("\t}");
+        			}
 
         			// Add primary / unique / foreign key information
                     if (generateRelations()) {
@@ -659,19 +676,22 @@ public class DefaultGenerator implements Generator {
                         }
                     }
 
-                    // TODO [#117] begin of non-static members (make configurable)
-                    out.println();
-                    out.println("\t@Override");
-                    out.print("\tpublic ");
-                    out.print(strategy.getFullJavaClassName(table));
-                    out.print(" as(");
-                    out.print(String.class);
-                    out.println(" alias) {");
-                    out.print("\t\treturn new ");
-                    out.print(strategy.getFullJavaClassName(table));
-                    out.println("(alias);");
-                    out.println("\t}");
-                    // TODO [#117] end of non-static members (make configurable)
+                    // [#117] With instance fields, it makes sense to create a
+                    // type-safe table alias
+                    if (generateInstanceFields()) {
+                        out.println();
+                        out.println("\t@Override");
+                        out.print("\tpublic ");
+                        out.print(strategy.getFullJavaClassName(table));
+                        out.print(" as(");
+                        out.print(String.class);
+                        out.println(" alias) {");
+
+                        out.print("\t\treturn new ");
+                        out.print(strategy.getFullJavaClassName(table));
+                        out.println("(alias);");
+                        out.println("\t}");
+                    }
 
         			out.printStaticInitialisationStatementsPlaceholder();
         			out.println("}");
@@ -2041,9 +2061,12 @@ public class DefaultGenerator implements Generator {
 		    type instanceof UDTDefinition;
 
 		if (type instanceof TableDefinition) {
-		    // TODO [#117] begin of non-static members (make configurable)
-		    out.print("\tpublic final ");
-		    // TODO [#117] end of non-static members (make configurable)
+		    if (generateInstanceFields()) {
+		        out.print("\tpublic final ");
+		    }
+		    else {
+		        out.print("\tpublic static final ");
+		    }
 		}
 		else {
 		    out.print("\tpublic static final ");
@@ -2078,9 +2101,12 @@ public class DefaultGenerator implements Generator {
 
 		if (hasType) {
 			if (type instanceof TableDefinition) {
-			    // TODO [#117] begin of non-static members (make configurable)
-			    out.print(", this");
-			    // TODO [#117] end of non-static members (make configurable)
+			    if (generateInstanceFields()) {
+			        out.print(", this");
+			    }
+			    else {
+			        out.print(", " + strategy.getJavaIdentifierUC(type));
+			    }
 			}
 			else {
 			    out.print(", " + strategy.getJavaIdentifierUC(type));

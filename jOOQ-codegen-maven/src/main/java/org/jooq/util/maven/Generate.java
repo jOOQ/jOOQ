@@ -42,6 +42,7 @@ public class Generate {
 
     private String relations  = "false";
     private String deprecated = "true";
+    private String instanceFields = "true";
 
     String getRelations() {
         return relations;
@@ -49,5 +50,9 @@ public class Generate {
 
     String getDeprecated() {
         return deprecated;
+    }
+
+    String getInstanceFields() {
+        return instanceFields;
     }
 }

@@ -30,9 +30,9 @@
  */
 package org.jooq.util.sybase;
 
-import static org.jooq.util.sybase.sys.tables.Sysdomain.SYSDOMAIN;
-import static org.jooq.util.sybase.sys.tables.Systab.SYSTAB;
-import static org.jooq.util.sybase.sys.tables.Systabcol.SYSTABCOL;
+import static org.jooq.util.sybase.sys.Tables.SYSDOMAIN;
+import static org.jooq.util.sybase.sys.Tables.SYSTAB;
+import static org.jooq.util.sybase.sys.Tables.SYSTABCOL;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,9 +45,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.sybase.sys.tables.Sysdomain;
-import org.jooq.util.sybase.sys.tables.Systab;
-import org.jooq.util.sybase.sys.tables.Systabcol;
 /**
  * Sybase table definition
  *
@@ -64,32 +61,32 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
         List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         for (Record record : create().select(
-                Systabcol.COLUMN_NAME,
-                Systabcol.COLUMN_ID,
-                Sysdomain.DOMAIN_NAME,
-                Systabcol.WIDTH,
-                Systabcol.SCALE,
-                Systabcol.DEFAULT)
+                SYSTABCOL.COLUMN_NAME,
+                SYSTABCOL.COLUMN_ID,
+                SYSDOMAIN.DOMAIN_NAME,
+                SYSTABCOL.WIDTH,
+                SYSTABCOL.SCALE,
+                SYSTABCOL.DEFAULT)
              .from(SYSTABCOL)
              .join(SYSTAB)
-             .on(Systabcol.TABLE_ID.equal(Systab.TABLE_ID))
+             .on(SYSTABCOL.TABLE_ID.equal(SYSTAB.TABLE_ID))
              .join(SYSDOMAIN)
-             .on(Systabcol.DOMAIN_ID.equal(Sysdomain.DOMAIN_ID))
-             .where(Systab.TABLE_NAME.equal(getName()))
-             .orderBy(Systabcol.COLUMN_ID)
+             .on(SYSTABCOL.DOMAIN_ID.equal(SYSDOMAIN.DOMAIN_ID))
+             .where(SYSTAB.TABLE_NAME.equal(getName()))
+             .orderBy(SYSTABCOL.COLUMN_ID)
              .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Sysdomain.DOMAIN_NAME),
-                record.getValue(Systabcol.WIDTH),
-                record.getValue(Systabcol.SCALE));
+                record.getValue(SYSDOMAIN.DOMAIN_NAME),
+                record.getValue(SYSTABCOL.WIDTH),
+                record.getValue(SYSTABCOL.SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getName()),
-                record.getValue(Systabcol.COLUMN_NAME),
-                record.getValue(Systabcol.COLUMN_ID),
+                record.getValue(SYSTABCOL.COLUMN_NAME),
+                record.getValue(SYSTABCOL.COLUMN_ID),
                 type,
-                "autoincrement".equalsIgnoreCase(record.getValue(Systabcol.DEFAULT)),
+                "autoincrement".equalsIgnoreCase(record.getValue(SYSTABCOL.DEFAULT)),
                 null);
 
             result.add(column);

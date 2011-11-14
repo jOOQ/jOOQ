@@ -180,4 +180,9 @@ public interface GeneratorStrategy {
      * Set the naming scheme for various objects
      */
     void setMemberScheme(String scheme);
+
+    /**
+     * Whether fields are instance fields (as opposed to static fields)
+     */
+    void setInstanceFields(boolean instanceFields);
 }

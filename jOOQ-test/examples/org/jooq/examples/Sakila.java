@@ -35,18 +35,15 @@
  */
 package org.jooq.examples;
 
-import static org.jooq.examples.mysql.sakila.tables.Address.ADDRESS;
-import static org.jooq.examples.mysql.sakila.tables.City.CITY;
-import static org.jooq.examples.mysql.sakila.tables.Country.COUNTRY;
-import static org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER;
+import static org.jooq.examples.mysql.sakila.Tables.ADDRESS;
+import static org.jooq.examples.mysql.sakila.Tables.CITY;
+import static org.jooq.examples.mysql.sakila.Tables.COUNTRY;
+import static org.jooq.examples.mysql.sakila.Tables.CUSTOMER;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.jooq.examples.mysql.sakila.SakilaFactory;
-import org.jooq.examples.mysql.sakila.tables.Address;
-import org.jooq.examples.mysql.sakila.tables.City;
-import org.jooq.examples.mysql.sakila.tables.Country;
 import org.jooq.impl.Factory;
 
 public class Sakila {
@@ -61,11 +58,11 @@ public class Sakila {
               .select()
               .from(CUSTOMER)
               .join(ADDRESS)
-              .using(Address.ADDRESS_ID)
+              .using(ADDRESS.ADDRESS_ID)
               .join(CITY)
-              .using(City.CITY_ID)
+              .using(CITY.CITY_ID)
               .join(COUNTRY)
-              .using(Country.COUNTRY_ID)
+              .using(COUNTRY.COUNTRY_ID)
               .fetch()
               .formatCSV());
     }

@@ -118,10 +118,11 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     /**
-     * @deprecated - TODO [#117] This implementation is obsolete. After
-     *             re-generation all tables will override this method.
+     * Subclasses may override this method to provide custom aliasing
+     * implementations
+     * <p>
+     * {@inheritDoc}
      */
-    @Deprecated
     @Override
     public Table<R> as(String as) {
         if (alias != null) {
@@ -135,6 +136,8 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     /**
      * Subclasses must override this method if they use the generic type
      * parameter <R> for other types than {@link Record}
+     * <p>
+     * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
     @Override

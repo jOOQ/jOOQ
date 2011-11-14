@@ -92,6 +92,7 @@ public class Plugin extends AbstractMojo {
         props.put("generator.database.excludes", generator.getDatabase().getExcludes());
         props.put("generator.generate.relations", generator.getGenerate().getRelations());
         props.put("generator.generate.deprecated", generator.getGenerate().getDeprecated());
+        props.put("generator.generate.instance-fields", generator.getGenerate().getInstanceFields());
         props.put("generator.target.package", generator.getTarget().getPackageName());
         props.put("generator.target.directory", generator.getTarget().getDirectory());
 

@@ -145,6 +145,11 @@ public class GenerationTool {
 			generator.setTargetDirectory(properties.getProperty("generator.target.directory"));
 			generator.setGenerateRelations("true".equalsIgnoreCase(properties.getProperty("generator.generate.relations")));
 			generator.setGenerateDeprecated(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.deprecated")));
+			generator.setGenerateInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
+
+			// Generator properties that should in fact be strategy properties
+			strategy.setInstanceFields(generator.generateInstanceFields());
+
 
 			generator.generate(database);
 		} catch (Exception e) {

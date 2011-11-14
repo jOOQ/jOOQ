@@ -36,8 +36,9 @@
 package org.jooq.util.hsqldb;
 
 import static org.jooq.impl.Factory.nvl;
-import static org.jooq.util.hsqldb.information_schema.tables.ElementTypes.ELEMENT_TYPES;
-import static org.jooq.util.hsqldb.information_schema.tables.Parameters.PARAMETERS;
+import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
+import static org.jooq.util.hsqldb.information_schema.Tables.PARAMETERS;
+import static org.jooq.util.hsqldb.information_schema.Tables.ROUTINES;
 
 import java.sql.SQLException;
 
@@ -51,9 +52,6 @@ import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
-import org.jooq.util.hsqldb.information_schema.tables.ElementTypes;
-import org.jooq.util.hsqldb.information_schema.tables.Parameters;
-import org.jooq.util.hsqldb.information_schema.tables.Routines;
 
 /**
  * HSQLDB implementation of {@link AbstractRoutineDefinition}
@@ -79,36 +77,36 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
     @Override
     protected void init0() throws SQLException {
         Result<Record> result = create().select(
-                Parameters.PARAMETER_MODE,
-                Parameters.PARAMETER_NAME,
-                nvl(ElementTypes.COLLECTION_TYPE_IDENTIFIER, Parameters.DATA_TYPE).as("datatype"),
-                Parameters.NUMERIC_PRECISION,
-                Parameters.NUMERIC_SCALE,
-                Parameters.ORDINAL_POSITION)
+                PARAMETERS.PARAMETER_MODE,
+                PARAMETERS.PARAMETER_NAME,
+                nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, PARAMETERS.DATA_TYPE).as("datatype"),
+                PARAMETERS.NUMERIC_PRECISION,
+                PARAMETERS.NUMERIC_SCALE,
+                PARAMETERS.ORDINAL_POSITION)
             .from(PARAMETERS)
-            .join(Routines.ROUTINES)
-            .on(Parameters.SPECIFIC_SCHEMA.equal(Routines.SPECIFIC_SCHEMA))
-            .and(Parameters.SPECIFIC_NAME.equal(Routines.SPECIFIC_NAME))
+            .join(ROUTINES)
+            .on(PARAMETERS.SPECIFIC_SCHEMA.equal(ROUTINES.SPECIFIC_SCHEMA))
+            .and(PARAMETERS.SPECIFIC_NAME.equal(ROUTINES.SPECIFIC_NAME))
             .leftOuterJoin(ELEMENT_TYPES)
-            .on(Routines.ROUTINE_SCHEMA.equal(ElementTypes.OBJECT_SCHEMA))
-            .and(Routines.ROUTINE_NAME.equal(ElementTypes.OBJECT_NAME))
-            .and(Parameters.DTD_IDENTIFIER.equal(ElementTypes.COLLECTION_TYPE_IDENTIFIER))
-            .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
-            .and(Parameters.SPECIFIC_NAME.equal(this.specificName))
-            .orderBy(Parameters.ORDINAL_POSITION.asc()).fetch();
+            .on(ROUTINES.ROUTINE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
+            .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
+            .and(PARAMETERS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
+            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchemaName()))
+            .and(PARAMETERS.SPECIFIC_NAME.equal(this.specificName))
+            .orderBy(PARAMETERS.ORDINAL_POSITION.asc()).fetch();
 
         for (Record record : result) {
-            String inOut = record.getValue(Parameters.PARAMETER_MODE);
+            String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
                 record.getValueAsString("datatype"),
-                record.getValue(Parameters.NUMERIC_PRECISION),
-                record.getValue(Parameters.NUMERIC_SCALE));
+                record.getValue(PARAMETERS.NUMERIC_PRECISION),
+                record.getValue(PARAMETERS.NUMERIC_SCALE));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(Parameters.PARAMETER_NAME).replaceAll("@", ""),
-                record.getValueAsInteger(Parameters.ORDINAL_POSITION),
+                record.getValue(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
+                record.getValueAsInteger(PARAMETERS.ORDINAL_POSITION),
                 type);
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

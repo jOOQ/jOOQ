@@ -32,11 +32,13 @@ package org.jooq.util.sybase;
 
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.util.sybase.sys.tables.Sysfkey.SYSFKEY;
-import static org.jooq.util.sybase.sys.tables.Sysidx.SYSIDX;
-import static org.jooq.util.sybase.sys.tables.Sysidxcol.SYSIDXCOL;
-import static org.jooq.util.sybase.sys.tables.Systabcol.SYSTABCOL;
-import static org.jooq.util.sybase.sys.tables.Systable.SYSTABLE;
+import static org.jooq.util.sybase.sys.Tables.SYSFKEY;
+import static org.jooq.util.sybase.sys.Tables.SYSIDX;
+import static org.jooq.util.sybase.sys.Tables.SYSIDXCOL;
+import static org.jooq.util.sybase.sys.Tables.SYSPROCEDURE;
+import static org.jooq.util.sybase.sys.Tables.SYSSEQUENCE;
+import static org.jooq.util.sybase.sys.Tables.SYSTABCOL;
+import static org.jooq.util.sybase.sys.Tables.SYSTABLE;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,7 +46,6 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.Table;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -59,15 +60,8 @@ import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.sybase.sys.tables.Sysfkey;
 import org.jooq.util.sybase.sys.tables.Sysidx;
-import org.jooq.util.sybase.sys.tables.Sysidxcol;
-import org.jooq.util.sybase.sys.tables.Sysprocedure;
-import org.jooq.util.sybase.sys.tables.Syssequence;
-import org.jooq.util.sybase.sys.tables.Systabcol;
 import org.jooq.util.sybase.sys.tables.Systable;
-import org.jooq.util.sybase.sys.tables.records.SysidxRecord;
-import org.jooq.util.sybase.sys.tables.records.SystableRecord;
 
 /**
  * Sybase implementation of {@link AbstractDatabase} This implementation is
@@ -83,25 +77,25 @@ public class SybaseDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                concat(Systable.TABLE_NAME, val("_"), Sysidx.INDEX_NAME).as("indexName"),
-                Systable.TABLE_NAME,
-                Systabcol.COLUMN_NAME)
+                concat(SYSTABLE.TABLE_NAME, val("_"), SYSIDX.INDEX_NAME).as("indexName"),
+                SYSTABLE.TABLE_NAME,
+                SYSTABCOL.COLUMN_NAME)
             .from(SYSIDX)
             .join(SYSIDXCOL)
-            .on(Sysidx.TABLE_ID.equal(Sysidxcol.TABLE_ID))
-            .and(Sysidx.INDEX_ID.equal(Sysidxcol.INDEX_ID))
+            .on(SYSIDX.TABLE_ID.equal(SYSIDXCOL.TABLE_ID))
+            .and(SYSIDX.INDEX_ID.equal(SYSIDXCOL.INDEX_ID))
             .join(SYSTABLE)
-            .on(Sysidxcol.TABLE_ID.equal(Systable.TABLE_ID))
+            .on(SYSIDXCOL.TABLE_ID.equal(SYSTABLE.TABLE_ID))
             .join(SYSTABCOL)
-            .on(Sysidxcol.TABLE_ID.equal(Systabcol.TABLE_ID))
-            .and(Sysidxcol.COLUMN_ID.equal(Systabcol.COLUMN_ID))
-            .where(Sysidx.INDEX_CATEGORY.equal((byte) 1))
-            .orderBy(Sysidxcol.SEQUENCE)
+            .on(SYSIDXCOL.TABLE_ID.equal(SYSTABCOL.TABLE_ID))
+            .and(SYSIDXCOL.COLUMN_ID.equal(SYSTABCOL.COLUMN_ID))
+            .where(SYSIDX.INDEX_CATEGORY.equal((byte) 1))
+            .orderBy(SYSIDXCOL.SEQUENCE)
             .fetch()) {
 
             String key = record.getValueAsString("indexName");
-            String tableName = record.getValue(Systable.TABLE_NAME);
-            String columnName = record.getValue(Systabcol.COLUMN_NAME);
+            String tableName = record.getValue(SYSTABLE.TABLE_NAME);
+            String columnName = record.getValue(SYSTABCOL.COLUMN_NAME);
 
             TableDefinition table = getTable(tableName);
             if (table != null) {
@@ -114,26 +108,26 @@ public class SybaseDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
         for (Record record : create().select(
-                concat(Systable.TABLE_NAME, val("_"), Sysidx.INDEX_NAME).as("indexName"),
-                Systable.TABLE_NAME,
-                Systabcol.COLUMN_NAME)
+                concat(SYSTABLE.TABLE_NAME, val("_"), SYSIDX.INDEX_NAME).as("indexName"),
+                SYSTABLE.TABLE_NAME,
+                SYSTABCOL.COLUMN_NAME)
             .from(SYSIDX)
             .join(SYSIDXCOL)
-            .on(Sysidx.TABLE_ID.equal(Sysidxcol.TABLE_ID))
-            .and(Sysidx.INDEX_ID.equal(Sysidxcol.INDEX_ID))
+            .on(SYSIDX.TABLE_ID.equal(SYSIDXCOL.TABLE_ID))
+            .and(SYSIDX.INDEX_ID.equal(SYSIDXCOL.INDEX_ID))
             .join(SYSTABLE)
-            .on(Sysidxcol.TABLE_ID.equal(Systable.TABLE_ID))
+            .on(SYSIDXCOL.TABLE_ID.equal(SYSTABLE.TABLE_ID))
             .join(SYSTABCOL)
-            .on(Sysidxcol.TABLE_ID.equal(Systabcol.TABLE_ID))
-            .and(Sysidxcol.COLUMN_ID.equal(Systabcol.COLUMN_ID))
-            .where(Sysidx.INDEX_CATEGORY.equal((byte) 3))
-            .and(Sysidx.UNIQUE.equal((byte) 2))
-            .orderBy(Sysidxcol.SEQUENCE)
+            .on(SYSIDXCOL.TABLE_ID.equal(SYSTABCOL.TABLE_ID))
+            .and(SYSIDXCOL.COLUMN_ID.equal(SYSTABCOL.COLUMN_ID))
+            .where(SYSIDX.INDEX_CATEGORY.equal((byte) 3))
+            .and(SYSIDX.UNIQUE.equal((byte) 2))
+            .orderBy(SYSIDXCOL.SEQUENCE)
             .fetch()) {
 
             String key = record.getValueAsString("indexName");
-            String tableName = record.getValue(Systable.TABLE_NAME);
-            String columnName = record.getValue(Systabcol.COLUMN_NAME);
+            String tableName = record.getValue(SYSTABLE.TABLE_NAME);
+            String columnName = record.getValue(SYSTABCOL.COLUMN_NAME);
 
             TableDefinition table = getTable(tableName);
             if (table != null) {
@@ -144,49 +138,43 @@ public class SybaseDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        Table<SysidxRecord> fkIndex = SYSIDX.as("fkIndex");
-        Table<SysidxRecord> ukIndex = SYSIDX.as("ukIndex");
+        Sysidx fkIndex = SYSIDX.as("fkIndex");
+        Sysidx ukIndex = SYSIDX.as("ukIndex");
 
-        Table<SystableRecord> fkTable = SYSTABLE.as("fkTable");
-        Table<SystableRecord> ukTable = SYSTABLE.as("ukTable");
+        Systable fkTable = SYSTABLE.as("fkTable");
+        Systable ukTable = SYSTABLE.as("ukTable");
 
         for (Record record : create().select(
-                concat(
-                    fkTable.getField(Systable.TABLE_NAME),
-                    val("_"),
-                    fkIndex.getField(Sysidx.INDEX_NAME)).as("fkIndexName"),
-                fkTable.getField(Systable.TABLE_NAME),
-                Systabcol.COLUMN_NAME,
-                concat(
-                    ukTable.getField(Systable.TABLE_NAME),
-                    val("_"),
-                    ukIndex.getField(Sysidx.INDEX_NAME)).as("ukIndexName"))
+                concat(fkTable.TABLE_NAME, val("_"), fkIndex.INDEX_NAME).as("fkIndexName"),
+                fkTable.TABLE_NAME,
+                SYSTABCOL.COLUMN_NAME,
+                concat(ukTable.TABLE_NAME, val("_"), ukIndex.INDEX_NAME).as("ukIndexName"))
             .from(SYSFKEY)
             .join(fkIndex)
-            .on(Sysfkey.FOREIGN_INDEX_ID.equal(fkIndex.getField(Sysidx.INDEX_ID)))
-            .and(Sysfkey.FOREIGN_TABLE_ID.equal(fkIndex.getField(Sysidx.TABLE_ID)))
+            .on(SYSFKEY.FOREIGN_INDEX_ID.equal(fkIndex.INDEX_ID))
+            .and(SYSFKEY.FOREIGN_TABLE_ID.equal(fkIndex.TABLE_ID))
             .join(SYSIDXCOL)
-            .on(fkIndex.getField(Sysidx.INDEX_ID).equal(Sysidxcol.INDEX_ID))
-            .and(fkIndex.getField(Sysidx.TABLE_ID).equal(Sysidxcol.TABLE_ID))
+            .on(fkIndex.INDEX_ID.equal(SYSIDXCOL.INDEX_ID))
+            .and(fkIndex.TABLE_ID.equal(SYSIDXCOL.TABLE_ID))
             .join(fkTable)
-            .on(Sysfkey.FOREIGN_TABLE_ID.equal(fkTable.getField(Systable.TABLE_ID)))
+            .on(SYSFKEY.FOREIGN_TABLE_ID.equal(fkTable.TABLE_ID))
             .join(SYSTABCOL)
-            .on(Sysidxcol.TABLE_ID.equal(Systabcol.TABLE_ID))
-            .and(Sysidxcol.COLUMN_ID.equal(Systabcol.COLUMN_ID))
+            .on(SYSIDXCOL.TABLE_ID.equal(SYSTABCOL.TABLE_ID))
+            .and(SYSIDXCOL.COLUMN_ID.equal(SYSTABCOL.COLUMN_ID))
             .join(ukIndex)
-            .on(Sysfkey.PRIMARY_INDEX_ID.equal(ukIndex.getField(Sysidx.INDEX_ID)))
-            .and(Sysfkey.PRIMARY_TABLE_ID.equal(ukIndex.getField(Sysidx.TABLE_ID)))
+            .on(SYSFKEY.PRIMARY_INDEX_ID.equal(ukIndex.INDEX_ID))
+            .and(SYSFKEY.PRIMARY_TABLE_ID.equal(ukIndex.TABLE_ID))
             .join(ukTable)
-            .on(Sysfkey.PRIMARY_TABLE_ID.equal(ukTable.getField(Systable.TABLE_ID)))
+            .on(SYSFKEY.PRIMARY_TABLE_ID.equal(ukTable.TABLE_ID))
             .orderBy(
-                fkTable.getField(Systable.TABLE_NAME).asc(),
-                fkIndex.getField(Sysidx.INDEX_NAME).asc(),
-                Sysidxcol.SEQUENCE.asc())
+                fkTable.TABLE_NAME.asc(),
+                fkIndex.INDEX_NAME.asc(),
+                SYSIDXCOL.SEQUENCE.asc())
             .fetch()) {
 
             String foreignKey = record.getValueAsString("fkIndexName");
-            String foreignKeyTableName = record.getValue(Systable.TABLE_NAME);
-            String foreignKeyColumn = record.getValue(Systabcol.COLUMN_NAME);
+            String foreignKeyTableName = record.getValue(SYSTABLE.TABLE_NAME);
+            String foreignKeyColumn = record.getValue(SYSTABCOL.COLUMN_NAME);
             String referencedKey = record.getValueAsString("ukIndexName");
 
             TableDefinition foreignKeyTable = getTable(foreignKeyTableName);
@@ -202,10 +190,10 @@ public class SybaseDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        for (String name : create().select(Syssequence.SEQUENCE_NAME)
-            .from(Syssequence.SYSSEQUENCE)
-            .orderBy(Syssequence.SEQUENCE_NAME)
-            .fetch(Syssequence.SEQUENCE_NAME)) {
+        for (String name : create().select(SYSSEQUENCE.SEQUENCE_NAME)
+            .from(SYSSEQUENCE)
+            .orderBy(SYSSEQUENCE.SEQUENCE_NAME)
+            .fetch(SYSSEQUENCE.SEQUENCE_NAME)) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(this,
                 SybaseDataType.NUMERIC.getTypeName(), 38, 0);
@@ -221,13 +209,13 @@ public class SybaseDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Record record : create().select(
-                Systable.TABLE_NAME,
-                Systable.REMARKS)
+                SYSTABLE.TABLE_NAME,
+                SYSTABLE.REMARKS)
             .from(SYSTABLE)
             .fetch()) {
 
-            String name = record.getValue(Systable.TABLE_NAME);
-            String comment = record.getValue(Systable.REMARKS);
+            String name = record.getValue(SYSTABLE.TABLE_NAME);
+            String comment = record.getValue(SYSTABLE.REMARKS);
 
             SybaseTableDefinition table = new SybaseTableDefinition(this, name, comment);
             result.add(table);
@@ -258,12 +246,12 @@ public class SybaseDatabase extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        for (Record record : create().select(Sysprocedure.PROC_NAME)
-                .from(Sysprocedure.SYSPROCEDURE)
-                .orderBy(Sysprocedure.PROC_NAME)
+        for (Record record : create().select(SYSPROCEDURE.PROC_NAME)
+                .from(SYSPROCEDURE)
+                .orderBy(SYSPROCEDURE.PROC_NAME)
                 .fetch()) {
 
-            String name = record.getValue(Sysprocedure.PROC_NAME);
+            String name = record.getValue(SYSPROCEDURE.PROC_NAME);
             result.add(new SybaseRoutineDefinition(this, null, name));
         }
 

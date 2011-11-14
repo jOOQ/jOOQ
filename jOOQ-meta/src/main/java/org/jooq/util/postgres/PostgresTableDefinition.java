@@ -36,7 +36,7 @@
 
 package org.jooq.util.postgres;
 
-import static org.jooq.util.postgres.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.util.postgres.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,7 +49,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.postgres.information_schema.tables.Columns;
 
 /**
  * @author Lukas Eder
@@ -65,32 +64,32 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
         for (Record record : create().select(
-                Columns.COLUMN_NAME,
-                Columns.ORDINAL_POSITION,
-                Columns.DATA_TYPE,
-                Columns.NUMERIC_PRECISION,
-                Columns.NUMERIC_SCALE,
-                Columns.IDENTITY_GENERATION,
-                Columns.COLUMN_DEFAULT,
-                Columns.UDT_NAME)
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.ORDINAL_POSITION,
+                COLUMNS.DATA_TYPE,
+                COLUMNS.NUMERIC_PRECISION,
+                COLUMNS.NUMERIC_SCALE,
+                COLUMNS.IDENTITY_GENERATION,
+                COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.UDT_NAME)
             .from(COLUMNS)
-            .where(Columns.TABLE_SCHEMA.equal(getSchemaName()))
-            .and(Columns.TABLE_NAME.equal(getName()))
-            .orderBy(Columns.ORDINAL_POSITION)
+            .where(COLUMNS.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(COLUMNS.TABLE_NAME.equal(getName()))
+            .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Columns.DATA_TYPE),
-                record.getValue(Columns.NUMERIC_PRECISION),
-                record.getValue(Columns.NUMERIC_SCALE),
-                record.getValue(Columns.UDT_NAME));
+                record.getValue(COLUMNS.DATA_TYPE),
+                record.getValue(COLUMNS.NUMERIC_PRECISION),
+                record.getValue(COLUMNS.NUMERIC_SCALE),
+                record.getValue(COLUMNS.UDT_NAME));
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getName()),
-			    record.getValue(Columns.COLUMN_NAME),
-			    record.getValueAsInteger(Columns.ORDINAL_POSITION),
+			    record.getValue(COLUMNS.COLUMN_NAME),
+			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,
-			    record.getValue(Columns.COLUMN_DEFAULT, "").startsWith("nextval"),
+			    record.getValue(COLUMNS.COLUMN_DEFAULT, "").startsWith("nextval"),
 			    null);
 			result.add(column);
 		}

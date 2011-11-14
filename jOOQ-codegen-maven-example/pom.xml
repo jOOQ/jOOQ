@@ -117,6 +117,7 @@
 						<generate>
 							<relations>true</relations>
 							<deprecated>false</deprecated>
+							<instanceFields>false</instanceFields>
 						</generate>
 						<target>
 							<packageName>org.jooq.util.maven.example</packageName>

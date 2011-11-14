@@ -37,7 +37,7 @@
 package org.jooq.util.sqlserver;
 
 import static org.jooq.impl.Factory.field;
-import static org.jooq.util.sqlserver.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.util.sqlserver.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +51,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.sqlserver.information_schema.tables.Columns;
 
 /**
  * @author Lukas Eder
@@ -68,34 +67,34 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
         Field<Integer> identity = field("c.is_identity", Integer.class);
 
         for (Record record : create().select(
-                Columns.COLUMN_NAME,
-                Columns.ORDINAL_POSITION,
-                Columns.DATA_TYPE,
-                Columns.NUMERIC_PRECISION,
-                Columns.NUMERIC_SCALE,
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.ORDINAL_POSITION,
+                COLUMNS.DATA_TYPE,
+                COLUMNS.NUMERIC_PRECISION,
+                COLUMNS.NUMERIC_SCALE,
                 identity)
             .from(COLUMNS)
             .join("sys.objects o")
             .on("o.type in ('U', 'V')")
-            .and(Columns.TABLE_NAME.equal(field("o.name", String.class)))
+            .and(COLUMNS.TABLE_NAME.equal(field("o.name", String.class)))
             .join("sys.columns c")
             .on("c.object_id = o.object_id")
-            .and(Columns.COLUMN_NAME.equal(field("c.name", String.class)))
-            .where(Columns.TABLE_SCHEMA.equal(getSchemaName()))
-            .and(Columns.TABLE_NAME.equal(getName()))
-            .orderBy(Columns.ORDINAL_POSITION)
+            .and(COLUMNS.COLUMN_NAME.equal(field("c.name", String.class)))
+            .where(COLUMNS.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(COLUMNS.TABLE_NAME.equal(getName()))
+            .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Columns.DATA_TYPE),
-                record.getValue(Columns.NUMERIC_PRECISION),
-                record.getValue(Columns.NUMERIC_SCALE),
+                record.getValue(COLUMNS.DATA_TYPE),
+                record.getValue(COLUMNS.NUMERIC_PRECISION),
+                record.getValue(COLUMNS.NUMERIC_SCALE),
                 "");
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getName()),
-			    record.getValue(Columns.COLUMN_NAME),
-			    record.getValueAsInteger(Columns.ORDINAL_POSITION),
+			    record.getValue(COLUMNS.COLUMN_NAME),
+			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,
 			    1 == record.getValue(identity),
 			    null);

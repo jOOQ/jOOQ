@@ -35,7 +35,8 @@
  */
 package org.jooq.util.sqlserver;
 
-import static org.jooq.util.sqlserver.information_schema.tables.Parameters.PARAMETERS;
+import static org.jooq.util.sqlserver.information_schema.Tables.PARAMETERS;
+import static org.jooq.util.sqlserver.information_schema.Tables.ROUTINES;
 
 import java.sql.SQLException;
 
@@ -49,8 +50,6 @@ import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
-import org.jooq.util.sqlserver.information_schema.tables.Parameters;
-import org.jooq.util.sqlserver.information_schema.tables.Routines;
 
 /**
  * @author Lukas Eder
@@ -76,34 +75,34 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
     @Override
     protected void init0() throws SQLException {
         Result<Record> result = create().selectDistinct(
-                Parameters.PARAMETER_MODE,
-                Parameters.PARAMETER_NAME,
-                Parameters.DATA_TYPE,
-                Parameters.NUMERIC_PRECISION,
-                Parameters.NUMERIC_SCALE,
-                Parameters.ORDINAL_POSITION,
-                Parameters.IS_RESULT)
+                PARAMETERS.PARAMETER_MODE,
+                PARAMETERS.PARAMETER_NAME,
+                PARAMETERS.DATA_TYPE,
+                PARAMETERS.NUMERIC_PRECISION,
+                PARAMETERS.NUMERIC_SCALE,
+                PARAMETERS.ORDINAL_POSITION,
+                PARAMETERS.IS_RESULT)
             .from(PARAMETERS)
-            .join(Routines.ROUTINES)
-            .on(Parameters.SPECIFIC_SCHEMA.equal(Routines.SPECIFIC_SCHEMA))
-            .and(Parameters.SPECIFIC_NAME.equal(Routines.SPECIFIC_NAME))
-            .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
-            .and(Parameters.SPECIFIC_NAME.equal(this.specificName))
-            .and(Parameters.IS_RESULT.isFalse())
-            .orderBy(Parameters.ORDINAL_POSITION.asc()).fetch();
+            .join(ROUTINES)
+            .on(PARAMETERS.SPECIFIC_SCHEMA.equal(ROUTINES.SPECIFIC_SCHEMA))
+            .and(PARAMETERS.SPECIFIC_NAME.equal(ROUTINES.SPECIFIC_NAME))
+            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchemaName()))
+            .and(PARAMETERS.SPECIFIC_NAME.equal(this.specificName))
+            .and(PARAMETERS.IS_RESULT.isFalse())
+            .orderBy(PARAMETERS.ORDINAL_POSITION.asc()).fetch();
 
         for (Record record : result) {
-            String inOut = record.getValue(Parameters.PARAMETER_MODE);
+            String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Parameters.DATA_TYPE),
-                record.getValue(Parameters.NUMERIC_PRECISION),
-                record.getValue(Parameters.NUMERIC_SCALE));
+                record.getValue(PARAMETERS.DATA_TYPE),
+                record.getValue(PARAMETERS.NUMERIC_PRECISION),
+                record.getValue(PARAMETERS.NUMERIC_SCALE));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(Parameters.PARAMETER_NAME).replaceAll("@", ""),
-                record.getValueAsInteger(Parameters.ORDINAL_POSITION),
+                record.getValue(PARAMETERS.PARAMETER_NAME).replaceAll("@", ""),
+                record.getValueAsInteger(PARAMETERS.ORDINAL_POSITION),
                 type);
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

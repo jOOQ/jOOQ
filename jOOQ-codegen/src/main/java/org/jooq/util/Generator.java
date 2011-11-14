@@ -82,6 +82,16 @@ public interface Generator {
     void setGenerateRelations(boolean generateRelations);
 
     /**
+     * Whether instance fields should be generated (as opposed to static fields)
+     */
+    boolean generateInstanceFields();
+
+    /**
+     * Whether instance fields should be generated (as opposed to static fields)
+     */
+    void setGenerateInstanceFields(boolean generateInstanceFields);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

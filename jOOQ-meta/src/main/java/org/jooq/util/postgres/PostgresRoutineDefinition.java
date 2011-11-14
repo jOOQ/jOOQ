@@ -36,6 +36,9 @@
 package org.jooq.util.postgres;
 
 
+import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
+import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 
@@ -47,8 +50,6 @@ import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
-import org.jooq.util.postgres.information_schema.tables.Parameters;
-import org.jooq.util.postgres.information_schema.tables.Routines;
 
 /**
  * Postgres implementation of {@link AbstractRoutineDefinition}
@@ -62,51 +63,51 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
     public PostgresRoutineDefinition(Database database, Record record) {
         super(database,
             null,
-            record.getValue(Routines.ROUTINE_NAME),
+            record.getValue(ROUTINES.ROUTINE_NAME),
             null,
             record.getValueAsString("overload"));
 
         if (!Arrays.asList("void", "record").contains(record.getValue("data_type"))) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
                 record.getValueAsString("data_type"),
-                record.getValue(Routines.NUMERIC_PRECISION),
-                record.getValue(Routines.NUMERIC_SCALE),
-                record.getValue(Routines.TYPE_UDT_NAME));
+                record.getValue(ROUTINES.NUMERIC_PRECISION),
+                record.getValue(ROUTINES.NUMERIC_SCALE),
+                record.getValue(ROUTINES.TYPE_UDT_NAME));
 
             returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
 
-        specificName = record.getValue(Routines.SPECIFIC_NAME);
+        specificName = record.getValue(ROUTINES.SPECIFIC_NAME);
     }
 
     @Override
     protected void init0() throws SQLException {
         for (Record record : create().select(
-                Parameters.PARAMETER_NAME,
-                Parameters.DATA_TYPE,
-                Parameters.NUMERIC_PRECISION,
-                Parameters.NUMERIC_SCALE,
-                Parameters.UDT_NAME,
-                Parameters.ORDINAL_POSITION,
-                Parameters.PARAMETER_MODE)
-            .from(Parameters.PARAMETERS)
-            .where(Parameters.SPECIFIC_SCHEMA.equal(getSchemaName()))
-            .and(Parameters.SPECIFIC_NAME.equal(specificName))
-            .orderBy(Parameters.ORDINAL_POSITION.asc())
+                PARAMETERS.PARAMETER_NAME,
+                PARAMETERS.DATA_TYPE,
+                PARAMETERS.NUMERIC_PRECISION,
+                PARAMETERS.NUMERIC_SCALE,
+                PARAMETERS.UDT_NAME,
+                PARAMETERS.ORDINAL_POSITION,
+                PARAMETERS.PARAMETER_MODE)
+            .from(PARAMETERS)
+            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchemaName()))
+            .and(PARAMETERS.SPECIFIC_NAME.equal(specificName))
+            .orderBy(PARAMETERS.ORDINAL_POSITION.asc())
             .fetch()) {
 
-            String inOut = record.getValue(Parameters.PARAMETER_MODE);
+            String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Parameters.DATA_TYPE),
-                record.getValue(Parameters.NUMERIC_PRECISION),
-                record.getValue(Parameters.NUMERIC_SCALE),
-                record.getValue(Parameters.UDT_NAME));
+                record.getValue(PARAMETERS.DATA_TYPE),
+                record.getValue(PARAMETERS.NUMERIC_PRECISION),
+                record.getValue(PARAMETERS.NUMERIC_SCALE),
+                record.getValue(PARAMETERS.UDT_NAME));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
-                record.getValue(Parameters.PARAMETER_NAME),
-                record.getValue(Parameters.ORDINAL_POSITION),
+                record.getValue(PARAMETERS.PARAMETER_NAME),
+                record.getValue(PARAMETERS.ORDINAL_POSITION),
                 type);
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);

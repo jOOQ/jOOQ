@@ -36,8 +36,8 @@
 
 package org.jooq.util.oracle;
 
-import static org.jooq.util.oracle.sys.tables.AllColComments.ALL_COL_COMMENTS;
-import static org.jooq.util.oracle.sys.tables.AllTabCols.ALL_TAB_COLS;
+import static org.jooq.util.oracle.sys.Tables.ALL_COL_COMMENTS;
+import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COLS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,8 +50,6 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
-import org.jooq.util.oracle.sys.tables.AllColComments;
-import org.jooq.util.oracle.sys.tables.AllTabCols;
 
 /**
  * @author Lukas Eder
@@ -67,34 +65,34 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
 		for (Record record : create().select(
-		        AllTabCols.DATA_TYPE,
-		        AllTabCols.DATA_PRECISION,
-		        AllTabCols.DATA_SCALE,
-		        AllTabCols.COLUMN_NAME,
-		        AllTabCols.COLUMN_ID,
-		        AllColComments.COMMENTS)
+		        ALL_TAB_COLS.DATA_TYPE,
+		        ALL_TAB_COLS.DATA_PRECISION,
+		        ALL_TAB_COLS.DATA_SCALE,
+		        ALL_TAB_COLS.COLUMN_NAME,
+		        ALL_TAB_COLS.COLUMN_ID,
+		        ALL_COL_COMMENTS.COMMENTS)
 		    .from(ALL_TAB_COLS)
 		    .join(ALL_COL_COMMENTS)
-		    .on(AllTabCols.OWNER.equal(AllColComments.OWNER),
-		        AllTabCols.TABLE_NAME.equal(AllColComments.TABLE_NAME),
-		        AllTabCols.COLUMN_NAME.equal(AllColComments.COLUMN_NAME))
-	        .where(AllTabCols.OWNER.equal(getSchemaName()))
-	        .and(AllTabCols.TABLE_NAME.equal(getName()))
-	        .orderBy(AllTabCols.COLUMN_ID)
+		    .on(ALL_TAB_COLS.OWNER.equal(ALL_COL_COMMENTS.OWNER),
+		        ALL_TAB_COLS.TABLE_NAME.equal(ALL_COL_COMMENTS.TABLE_NAME),
+		        ALL_TAB_COLS.COLUMN_NAME.equal(ALL_COL_COMMENTS.COLUMN_NAME))
+	        .where(ALL_TAB_COLS.OWNER.equal(getSchemaName()))
+	        .and(ALL_TAB_COLS.TABLE_NAME.equal(getName()))
+	        .orderBy(ALL_TAB_COLS.COLUMN_ID)
 	        .fetch()) {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(AllTabCols.DATA_TYPE),
-                record.getValueAsInteger(AllTabCols.DATA_PRECISION, 0),
-                record.getValueAsInteger(AllTabCols.DATA_SCALE, 0));
+                record.getValue(ALL_TAB_COLS.DATA_TYPE),
+                record.getValueAsInteger(ALL_TAB_COLS.DATA_PRECISION, 0),
+                record.getValueAsInteger(ALL_TAB_COLS.DATA_SCALE, 0));
 
 			DefaultColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getName()),
-			    record.getValue(AllTabCols.COLUMN_NAME),
-			    record.getValueAsInteger(AllTabCols.COLUMN_ID),
+			    record.getValue(ALL_TAB_COLS.COLUMN_NAME),
+			    record.getValueAsInteger(ALL_TAB_COLS.COLUMN_ID),
 			    type,
                 false,
-			    record.getValue(AllColComments.COMMENTS));
+			    record.getValue(ALL_COL_COMMENTS.COMMENTS));
 
 			result.add(column);
 		}

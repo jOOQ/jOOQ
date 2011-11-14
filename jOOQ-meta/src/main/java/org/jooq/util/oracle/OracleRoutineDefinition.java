@@ -36,7 +36,7 @@
 
 package org.jooq.util.oracle;
 
-import static org.jooq.util.oracle.sys.tables.AllArguments.ALL_ARGUMENTS;
+import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -52,7 +52,6 @@ import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.ParameterDefinition;
-import org.jooq.util.oracle.sys.tables.AllArguments;
 
 /**
  * @author Lukas Eder
@@ -70,37 +69,37 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	@Override
     protected void init0() throws SQLException {
 	    Result<Record> result = create().select(
-	            AllArguments.IN_OUT,
-	            AllArguments.ARGUMENT_NAME,
-	            AllArguments.DATA_TYPE,
-	            AllArguments.DATA_PRECISION,
-	            AllArguments.DATA_SCALE,
-	            AllArguments.TYPE_NAME,
-	            AllArguments.POSITION)
+	            ALL_ARGUMENTS.IN_OUT,
+	            ALL_ARGUMENTS.ARGUMENT_NAME,
+	            ALL_ARGUMENTS.DATA_TYPE,
+	            ALL_ARGUMENTS.DATA_PRECISION,
+	            ALL_ARGUMENTS.DATA_SCALE,
+	            ALL_ARGUMENTS.TYPE_NAME,
+	            ALL_ARGUMENTS.POSITION)
 	        .from(ALL_ARGUMENTS)
-            .where(AllArguments.OWNER.equal(getSchemaName()))
-            .and(AllArguments.OBJECT_NAME.equal(getName()))
-            .and(AllArguments.OBJECT_ID.equal(objectId))
-            .and(AllArguments.OVERLOAD.equal(getOverload()))
-            .and(AllArguments.DATA_LEVEL.equal(BigDecimal.ZERO))
+            .where(ALL_ARGUMENTS.OWNER.equal(getSchemaName()))
+            .and(ALL_ARGUMENTS.OBJECT_NAME.equal(getName()))
+            .and(ALL_ARGUMENTS.OBJECT_ID.equal(objectId))
+            .and(ALL_ARGUMENTS.OVERLOAD.equal(getOverload()))
+            .and(ALL_ARGUMENTS.DATA_LEVEL.equal(BigDecimal.ZERO))
 
             // [#284] In packages, procedures without arguments may have a
             // single data type entry that does not mean anything...?
-            .and(AllArguments.DATA_TYPE.isNotNull())
-            .orderBy(AllArguments.POSITION.asc()).fetch();
+            .and(ALL_ARGUMENTS.DATA_TYPE.isNotNull())
+            .orderBy(ALL_ARGUMENTS.POSITION.asc()).fetch();
 
 	    for (Record record : result) {
 	        InOutDefinition inOut =
-                InOutDefinition.getFromString(record.getValue(AllArguments.IN_OUT));
+                InOutDefinition.getFromString(record.getValue(ALL_ARGUMENTS.IN_OUT));
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(AllArguments.DATA_TYPE),
-                record.getValue(AllArguments.DATA_PRECISION),
-                record.getValue(AllArguments.DATA_SCALE),
-                record.getValue(AllArguments.TYPE_NAME));
+                record.getValue(ALL_ARGUMENTS.DATA_TYPE),
+                record.getValue(ALL_ARGUMENTS.DATA_PRECISION),
+                record.getValue(ALL_ARGUMENTS.DATA_SCALE),
+                record.getValue(ALL_ARGUMENTS.TYPE_NAME));
 
-            String name = record.getValue(AllArguments.ARGUMENT_NAME);
-            Integer position = record.getValueAsInteger(AllArguments.POSITION);
+            String name = record.getValue(ALL_ARGUMENTS.ARGUMENT_NAME);
+            Integer position = record.getValueAsInteger(ALL_ARGUMENTS.POSITION);
 
             // [#378] Oracle supports stored functions with OUT parameters.
             // They are mapped to procedures in jOOQ

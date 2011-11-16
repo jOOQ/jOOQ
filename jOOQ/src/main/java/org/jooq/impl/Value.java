@@ -50,31 +50,30 @@ class Value<T> implements Serializable {
         this.value = value;
     }
 
-    public T getValue() {
+    T getValue() {
         return value;
     }
 
-    public T getValue(T defaultValue) {
+    T getValue(T defaultValue) {
         return value != null ? value : defaultValue;
     }
 
-    public void setValue(T value) {
-        if (this.value == null) {
-            setChanged(value != null);
-        }
+    void setValue(T value) {
 
-        else {
-            setChanged(!this.value.equals(value));
-        }
+        // The flag is always set to true:
+        // [#945] To avoid this bug
+        // [#948] To allow for controlling the number of hard-parses
+        //        To allow for explicitly overriding default values
 
+        this.isChanged = true;
         this.value = value;
     }
 
-    public boolean isChanged() {
+    boolean isChanged() {
         return isChanged;
     }
 
-    public void setChanged(boolean isChanged) {
+    void setChanged(boolean isChanged) {
         this.isChanged = isChanged;
     }
 

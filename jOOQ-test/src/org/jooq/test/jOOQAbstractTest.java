@@ -4246,6 +4246,21 @@ public abstract class jOOQAbstractTest<
             .where(TAuthor_FIRST_NAME().equal("Arthur"))
             .and(TAuthor_LAST_NAME().equal("Cohen"))
             .fetchOne(0));
+
+        // [#945] Set the same value twice
+        author = create().selectFrom(TAuthor())
+                         .where(TAuthor_FIRST_NAME().equal("Arthur"))
+                         .fetchOne();
+
+        author.setValue(TAuthor_FIRST_NAME(), "Leonard");
+        author.setValue(TAuthor_FIRST_NAME(), "Leonard");
+        assertEquals(1, author.store());
+        assertEquals(1, create()
+            .select(count())
+            .from(TAuthor())
+            .where(TAuthor_FIRST_NAME().equal("Leonard"))
+            .and(TAuthor_LAST_NAME().equal("Cohen"))
+            .fetchOne(0));
     }
 
     @Test

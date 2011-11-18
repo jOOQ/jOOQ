@@ -126,7 +126,7 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
     <li>Ingres 10.1.0</li>
     <li>MySQL 5.1.41 and 5.5.8</li>
     <li>Oracle XE 10.2.0.1.0</li>
-    <li>PostGreSQL 9.0</li>
+    <li>PostgreSQL 9.0</li>
     <li>SQLite with inofficial JDBC driver v056</li>
     <li>SQL Server 2008 R8</li>
     <li>Sybase Adaptive Server Enterprise 15.5</li>

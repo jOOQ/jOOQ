@@ -16,6 +16,7 @@
  */
 package org.jooq.tools;
 
+
 /**
  * <p>
  * Operations on {@link java.lang.String} that are <code>null</code> safe.
@@ -120,13 +121,13 @@ public final class StringUtils {
      * Returns either the passed in String, or if the String is
      * <code>null</code>, an empty String ("").
      * </p>
-     *
+     * 
      * <pre>
-     * StringUtils.defaultString(null) = ""
-     * StringUtils.defaultString("") = ""
+     * StringUtils.defaultString(null)  = ""
+     * StringUtils.defaultString("")    = ""
      * StringUtils.defaultString("bat") = "bat"
      * </pre>
-     *
+     * 
      * @see String#valueOf(Object)
      * @param str the String to check, may be null
      * @return the passed in String, or the empty String if it was
@@ -134,6 +135,47 @@ public final class StringUtils {
      */
     public static String defaultString(String str) {
         return str == null ? "" : str;
+    }
+
+    /**
+     * <p>Returns either the passed in String, or if the String is
+     * <code>null</code>, the value of <code>defaultStr</code>.</p>
+     *
+     * <pre>
+     * StringUtils.defaultString(null, "NULL")  = "NULL"
+     * StringUtils.defaultString("", "NULL")    = ""
+     * StringUtils.defaultString("bat", "NULL") = "bat"
+     * </pre>
+     *
+     * @see ObjectUtils#toString(Object,String)
+     * @see String#valueOf(Object)
+     * @param str  the String to check, may be null
+     * @param defaultStr  the default String to return
+     *  if the input is <code>null</code>, may be null
+     * @return the passed in String, or the default if it was <code>null</code>
+     */
+    public static String defaultString(String str, String defaultStr) {
+        return str == null ? defaultStr : str;
+    }
+
+    /**
+     * <p>Returns either the passed in String, or if the String is
+     * empty or <code>null</code>, the value of <code>defaultStr</code>.</p>
+     *
+     * <pre>
+     * StringUtils.defaultIfEmpty(null, "NULL")  = "NULL"
+     * StringUtils.defaultIfEmpty("", "NULL")    = "NULL"
+     * StringUtils.defaultIfEmpty("bat", "NULL") = "bat"
+     * </pre>
+     *
+     * @see StringUtils#defaultString(String, String)
+     * @param str  the String to check, may be null
+     * @param defaultStr  the default String to return
+     *  if the input is empty ("") or <code>null</code>, may be null
+     * @return the passed in String, or the default
+     */
+    public static String defaultIfEmpty(String str, String defaultStr) {
+        return StringUtils.isEmpty(str) ? defaultStr : str;
     }
 
     // Empty checks

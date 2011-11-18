@@ -35,6 +35,8 @@
  */
 package org.jooq.util.maven;
 
+import static org.jooq.tools.StringUtils.defaultString;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -83,16 +85,19 @@ public class Plugin extends AbstractMojo {
 
         props.put("jdbc.Driver", jdbc.getDriver());
         props.put("jdbc.URL", jdbc.getUrl());
-        props.put("jdbc.Schema", jdbc.getSchema());
-        props.put("jdbc.User", jdbc.getUser());
-        props.put("jdbc.Password", jdbc.getPassword());
+        props.put("jdbc.Schema", defaultString(jdbc.getSchema()));
+        props.put("jdbc.User", defaultString(jdbc.getUser()));
+        props.put("jdbc.Password", defaultString(jdbc.getPassword()));
+
         props.put("generator", generator.getName());
         props.put("generator.database", generator.getDatabase().getName());
         props.put("generator.database.includes", generator.getDatabase().getIncludes());
         props.put("generator.database.excludes", generator.getDatabase().getExcludes());
+
         props.put("generator.generate.relations", generator.getGenerate().getRelations());
         props.put("generator.generate.deprecated", generator.getGenerate().getDeprecated());
         props.put("generator.generate.instance-fields", generator.getGenerate().getInstanceFields());
+
         props.put("generator.target.package", generator.getTarget().getPackageName());
         props.put("generator.target.directory", generator.getTarget().getDirectory());
 

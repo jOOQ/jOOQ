@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.trueCondition;
@@ -53,6 +54,9 @@ import static org.jooq.test.oracle.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE;
+import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.countBooks;
+import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.load;
 import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
 import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
 import static org.jooq.util.oracle.OracleFactory.level;
@@ -101,10 +105,12 @@ import org.jooq.test.oracle.generatedclasses.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.udt.records.OInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.TInvalidTypeRecord;
+import org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord;
+import org.jooq.test.oracle.generatedclasses.udt.u_author_type.GetBooks;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.oracle.OracleFactory;
 
@@ -614,36 +620,38 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     // Oracle-specific tests
     // -------------------------------------------------------------------------
 
+    private OracleFactory ora() {
+        return new OracleFactory(create().getConnection(), create().getSchemaMapping());
+    }
+
     @Test
     public void testOracleConnectBySimple() throws Exception {
-        OracleFactory ora = new OracleFactory(create().getConnection(), create().getSchemaMapping());
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+            ora().select(rownum())
+                 .connectBy(level().lessThan(10))
+                 .fetch(rownum()));
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+            ora().select(rownum())
+                 .connectByNoCycle(level().lessThan(10))
+                 .fetch(rownum()));
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(rownum())
-               .connectBy(level().lessThan(10))
-               .fetch(rownum()));
+            ora().select(rownum())
+                 .connectBy(level().lessThan(10))
+                 .and("1 = ?", 1)
+                 .startWith("? = ?", 1, 1)
+                 .fetch(rownum()));
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(rownum())
-               .connectByNoCycle(level().lessThan(10))
-               .fetch(rownum()));
-
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(rownum())
-               .connectBy(level().lessThan(10))
-               .and("1 = ?", 1)
-               .startWith("? = ?", 1, 1)
-               .fetch(rownum()));
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora.select(rownum())
-               .connectByNoCycle(level().lessThan(10))
-               .and("1 = ?", 1)
-               .startWith("? = ?", 1, 1)
-               .fetch(rownum()));
+            ora().select(rownum())
+                 .connectByNoCycle(level().lessThan(10))
+                 .and("1 = ?", 1)
+                 .startWith("? = ?", 1, 1)
+                 .fetch(rownum()));
 
         Result<Record> result =
-        ora.select(rownum(), connectByIsCycle(), connectByIsLeaf())
-           .connectByNoCycle(level().lessThan(4))
-           .fetch();
+        ora().select(rownum(), connectByIsCycle(), connectByIsLeaf())
+             .connectByNoCycle(level().lessThan(4))
+             .fetch();
 
         assertEquals(Integer.valueOf(1), result.getValue(0, rownum()));
         assertEquals(Integer.valueOf(2), result.getValue(1, rownum()));
@@ -660,17 +668,15 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleConnectByDirectory() throws Exception {
-        OracleFactory ora = new OracleFactory(create().getConnection(), create().getSchemaMapping());
-
         List<?> paths =
-        ora.select(substring(sysConnectByPath(TDirectory_NAME(), "/"), 2))
-           .from(TDirectory())
-           .where(trueCondition())
-           .and(trueCondition())
-           .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
-           .startWith(TDirectory_PARENT_ID().isNull())
-           .orderBy(one())
-           .fetch(0);
+        ora().select(substring(sysConnectByPath(TDirectory_NAME(), "/"), 2))
+             .from(TDirectory())
+             .where(trueCondition())
+             .and(trueCondition())
+             .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
+             .startWith(TDirectory_PARENT_ID().isNull())
+             .orderBy(one())
+             .fetch(0);
 
         assertEquals(26, paths.size());
         assertEquals(Arrays.asList(
@@ -700,5 +706,64 @@ public class jOOQOracleTest extends jOOQAbstractTest<
             "C:/Program Files/Java/jre6/lib",
             "C:/Program Files/Java/jre6/lib/javaws.jar",
             "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
+    }
+
+    @Test
+    public void testMemberProcedures() throws Exception {
+        UAuthorTypeRecord author1;
+        UAuthorTypeRecord author2;
+
+        // Unattached:
+        author1 = new UAuthorTypeRecord();
+        author1.setId(1);
+        author2 = load(ora(), author1);
+        assertEquals(1, (int) author1.getId());
+        assertEquals(1, (int) author2.getId());
+        assertNull(author1.getFirstName());
+        assertEquals("George", author2.getFirstName());
+        assertNull(author1.getLastName());
+        assertEquals("Orwell", author2.getLastName());
+
+        // Attached
+        author1 = ora().newRecord(U_AUTHOR_TYPE);
+        author1.setId(1);
+        author2 = author1.load();
+        assertEquals(1, (int) author1.getId());
+        assertEquals(1, (int) author2.getId());
+        assertEquals("George", author1.getFirstName());
+        assertEquals("George", author2.getFirstName());
+        assertEquals("Orwell", author1.getLastName());
+        assertEquals("Orwell", author2.getLastName());
+
+        // Count books
+        author1 = ora().newRecord(U_AUTHOR_TYPE);
+        assertEquals(BigDecimal.ZERO, author1.countBooks());
+        assertEquals(BigDecimal.ZERO, ora().select(countBooks(author1)).fetchOne(0));
+
+        author1 = ora().newRecord(U_AUTHOR_TYPE);
+        author1.setId(1);
+        assertEquals(new BigDecimal("2"), author1.countBooks());
+        assertEquals(new BigDecimal("2"), ora().select(countBooks(author1)).fetchOne(0));
+
+        // Get books
+        author1 = ora().newRecord(U_AUTHOR_TYPE);
+        GetBooks noBooks = author1.getBooks();
+        assertNull(noBooks.getBook1().getId());
+        assertNull(noBooks.getBook1().getTitle());
+        assertNull(noBooks.getBook2().getId());
+        assertNull(noBooks.getBook2().getTitle());
+
+        author1 = ora().newRecord(U_AUTHOR_TYPE);
+        author1.setId(1);
+        GetBooks books = author1.getBooks();
+        assertEquals(1, (int) books.getBook1().getId());
+        assertEquals("1984", books.getBook1().getTitle());
+        assertEquals(2, (int) books.getBook2().getId());
+        assertEquals("Animal Farm", books.getBook2().getTitle());
+
+        // Get books also calls upon load, internally. Check if that's reflected
+        assertEquals(1, (int) author1.getId());
+        assertEquals("George", author1.getFirstName());
+        assertEquals("Orwell", author1.getLastName());
     }
 }

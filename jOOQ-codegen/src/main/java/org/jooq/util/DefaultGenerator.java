@@ -928,7 +928,7 @@ public class DefaultGenerator implements Generator {
         // XXX Generating UDTs
         // ----------------------------------------------------------------------
 
-		File targetUDTPackageDir = new File(targetPackageDir, "udt");
+        File targetUDTPackageDir = new File(targetPackageDir, "udt");
         if (database.getUDTs().size() > 0) {
             log.info("Generating UDTs", targetUDTPackageDir.getCanonicalPath());
 
@@ -948,7 +948,16 @@ public class DefaultGenerator implements Generator {
                     out.print(UDTImpl.class);
                     out.print("<");
                     out.print(strategy.getFullJavaClassName(udt, "Record"));
-                    out.println("> {");
+                    out.print(">");
+
+                    // [#799] Oracle UDTs with member procedures have similarities
+                    // with packages
+                    if (udt.getRoutines().size() > 0) {
+                        out.print(" implements ");
+                        out.print(org.jooq.Package.class);
+                    }
+
+                    out.println(" {");
                     out.printSerial();
 
                     printSingletonInstance(udt, out);
@@ -956,6 +965,29 @@ public class DefaultGenerator implements Generator {
 
                     for (AttributeDefinition attribute : udt.getAttributes()) {
                         printUDTColumn(out, attribute, udt);
+                    }
+
+                    // [#799] Oracle UDT's can have member procedures
+                    for (RoutineDefinition routine : udt.getRoutines()) {
+                        try {
+                            if (!routine.isSQLUsable()) {
+
+                                // Static execute() convenience method
+                                printConvenienceMethodProcedure(out, routine, false);
+                            }
+                            else {
+
+                                // Static execute() convenience method
+                                printConvenienceMethodFunction(out, routine, false);
+
+                                // Static asField() convenience method
+                                printConvenienceMethodFunctionAsField(out, routine, false);
+                                printConvenienceMethodFunctionAsField(out, routine, true);
+                            }
+
+                        } catch (Exception e) {
+                            log.error("Error while generating routine " + routine, e);
+                        }
                     }
 
                     out.println();
@@ -990,7 +1022,7 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating UDT record classes
         // ----------------------------------------------------------------------
-        File targetRecordUDTPackageDir = new File(new File(targetPackageDir, "udt"), "records");
+        File targetRecordUDTPackageDir = new File(targetUDTPackageDir, "records");
         if (database.getUDTs().size() > 0) {
             log.info("Generating UDT records", targetRecordUDTPackageDir.getCanonicalPath());
 
@@ -1019,6 +1051,23 @@ public class DefaultGenerator implements Generator {
                         printGetterAndSetter(out, attribute);
                     }
 
+                    // [#799] Oracle UDT's can have member procedures
+                    for (RoutineDefinition routine : udt.getRoutines()) {
+                        try {
+                            if (!routine.isSQLUsable()) {
+                                // Instance execute() convenience method
+                                printConvenienceMethodProcedure(out, routine, true);
+                            }
+                            else {
+                                // Instance execute() convenience method
+                                printConvenienceMethodFunction(out, routine, true);
+                            }
+
+                        } catch (Exception e) {
+                            log.error("Error while generating routine " + routine, e);
+                        }
+                    }
+
                     out.println();
                     out.println("\tpublic " + strategy.getJavaClassName(udt, "Record") + "() {");
 
@@ -1038,9 +1087,35 @@ public class DefaultGenerator implements Generator {
         }
 
         // ----------------------------------------------------------------------
+        // XXX Generating UDT member procedures
+        // ----------------------------------------------------------------------
+        if (database.getUDTs().size() > 0) {
+            for (UDTDefinition udt : database.getUDTs()) {
+                if (udt.getRoutines().size() > 0) {
+                    try {
+                        File dir = new File(targetUDTPackageDir, strategy.getJavaIdentifierUC(udt).toLowerCase());
+                        log.info("Generating member routines", dir.getCanonicalPath());
+
+                        for (RoutineDefinition routine : udt.getRoutines()) {
+                            try {
+                                printRoutine(database, schema, routine);
+                            } catch (Exception e) {
+                                log.error("Error while generating member routines " + routine, e);
+                            }
+                        }
+                    } catch (Exception e) {
+                        log.error("Error while generating UDT " + udt, e);
+                    }
+
+                    watch.splitInfo("Member procedures routines");
+                }
+            }
+        }
+
+        // ----------------------------------------------------------------------
         // XXX Generating ARRAY record classes
         // ----------------------------------------------------------------------
-        File targetRecordARRAYPackageDir = new File(new File(targetPackageDir, "udt"), "records");
+        File targetRecordARRAYPackageDir = new File(targetUDTPackageDir, "records");
         if (database.getArrays().size() > 0) {
             log.info("Generating ARRAYs", targetRecordARRAYPackageDir.getCanonicalPath());
 
@@ -1193,12 +1268,12 @@ public class DefaultGenerator implements Generator {
                     if (!routine.isSQLUsable()) {
 
                         // Static execute() convenience method
-                        printConvenienceMethodProcedure(outR, routine);
+                        printConvenienceMethodProcedure(outR, routine, false);
                     }
                     else {
 
                         // Static execute() convenience method
-                        printConvenienceMethodFunction(outR, routine);
+                        printConvenienceMethodFunction(outR, routine, false);
 
                         // Static asField() convenience method
                         printConvenienceMethodFunctionAsField(outR, routine, false);
@@ -1225,7 +1300,7 @@ public class DefaultGenerator implements Generator {
 
             for (PackageDefinition pkg : database.getPackages()) {
                 try {
-                    File targetPackagePackageDir = new File(targetPackagesPackageDir, strategy.getJavaClassName(pkg).toLowerCase());
+                    File targetPackagePackageDir = new File(targetPackagesPackageDir, strategy.getJavaIdentifierUC(pkg).toLowerCase());
                     log.info("Generating package", targetPackagePackageDir.getCanonicalPath());
 
                     for (RoutineDefinition routine : pkg.getRoutines()) {
@@ -1263,11 +1338,11 @@ public class DefaultGenerator implements Generator {
                         try {
                             if (!routine.isSQLUsable()) {
                                 // Static execute() convenience method
-                                printConvenienceMethodProcedure(outPkg, routine);
+                                printConvenienceMethodProcedure(outPkg, routine, false);
                             }
                             else {
                                 // Static execute() convenience method
-                                printConvenienceMethodFunction(outPkg, routine);
+                                printConvenienceMethodFunction(outPkg, routine, false);
 
                                 // Static asField() convenience method
                                 printConvenienceMethodFunctionAsField(outPkg, routine, false);
@@ -1384,6 +1459,7 @@ public class DefaultGenerator implements Generator {
         }
 
         out.print(">");
+
         out.println(" {");
         out.printSerial();
         out.println();
@@ -1588,7 +1664,7 @@ public class DefaultGenerator implements Generator {
         out.println("\t}");
     }
 
-    private void printConvenienceMethodFunction(GenerationWriter out, RoutineDefinition function) throws SQLException {
+    private void printConvenienceMethodFunction(GenerationWriter out, RoutineDefinition function, boolean instance) throws SQLException {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -1606,20 +1682,36 @@ public class DefaultGenerator implements Generator {
 
         printThrowsDataAccessException(out);
         out.println("\t */");
+        out.print("\tpublic ");
 
-        out.print("\tpublic static ");
+        if (!instance) {
+            out.print("static ");
+        }
+
         out.print(getJavaType(function.getReturnType()));
         out.print(" ");
         out.print(strategy.getJavaClassNameLC(function));
         out.print("(");
-        out.print(Configuration.class);
-        out.print(" configuration");
+
+        String glue = "";
+        if (!instance) {
+            out.print(Configuration.class);
+            out.print(" configuration");
+            glue = ", ";
+        }
 
         for (ParameterDefinition parameter : function.getInParameters()) {
-            out.print(", ");
+            // Skip SELF parameter
+            if (instance && parameter.equals(function.getInParameters().get(0))) {
+                continue;
+            }
+
+            out.print(glue);
             printNumberType(out, parameter.getType());
             out.print(" ");
             out.print(strategy.getJavaClassNameLC(parameter));
+
+            glue = ", ";
         }
 
         out.println(") {");
@@ -1630,12 +1722,35 @@ public class DefaultGenerator implements Generator {
         out.println("();");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
-            out.println("\t\tf.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
+            out.print("\t\tf.set");
+            out.print(strategy.getJavaClassName(parameter));
+            out.print("(");
+
+            if (instance && parameter.equals(function.getInParameters().get(0))) {
+                out.print("this");
+            }
+            else {
+                out.print(strategy.getJavaClassNameLC(parameter));
+            }
+
+            out.println(");");
         }
 
         out.println();
+        out.print("\t\tf.execute(");
 
-        out.println("\t\tf.execute(configuration);");
+        if (instance) {
+            out.print("getConfiguration()");
+        }
+        else {
+            out.print("configuration");
+        }
+
+        out.println(");");
+
+        // TODO [#956] Find a way to register "SELF" as OUT parameter
+        // in case this is a UDT instance (member) function
+
         out.println("\t\treturn f.getReturnValue();");
         out.println("\t}");
     }
@@ -1655,7 +1770,7 @@ public class DefaultGenerator implements Generator {
         out.println("\tprivate " + javaClassName + "() {}");
     }
 
-    private void printConvenienceMethodProcedure(GenerationWriter out, RoutineDefinition procedure) throws SQLException {
+    private void printConvenienceMethodProcedure(GenerationWriter out, RoutineDefinition procedure, boolean instance) throws SQLException {
         // [#281] - Java can't handle more than 255 method parameters
         if (procedure.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Procedure " + procedure + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -1683,7 +1798,11 @@ public class DefaultGenerator implements Generator {
 
         printThrowsDataAccessException(out);
         out.println("\t */");
-        out.print("\tpublic static ");
+        out.print("\tpublic ");
+
+        if (!instance) {
+            out.print("static ");
+        }
 
         if (procedure.getOutParameters().size() == 0) {
             out.print("void ");
@@ -1698,14 +1817,26 @@ public class DefaultGenerator implements Generator {
 
         out.print(strategy.getJavaClassNameLC(procedure));
         out.print("(");
-        out.print(Configuration.class);
-        out.print(" configuration");
+
+        String glue = "";
+        if (!instance) {
+            out.print(Configuration.class);
+            out.print(" configuration");
+            glue = ", ";
+        }
 
         for (ParameterDefinition parameter : procedure.getInParameters()) {
-            out.print(", ");
+            // Skip SELF parameter
+            if (instance && parameter.equals(procedure.getInParameters().get(0))) {
+                continue;
+            }
+
+            out.print(glue);
             printNumberType(out, parameter.getType());
             out.print(" ");
             out.print(strategy.getJavaClassNameLC(parameter));
+
+            glue = ", ";
         }
 
         out.println(") {");
@@ -1716,17 +1847,47 @@ public class DefaultGenerator implements Generator {
         out.println("();");
 
         for (ParameterDefinition parameter : procedure.getInParameters()) {
-            out.println("\t\tp.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
+            out.print("\t\tp.set");
+            out.print(strategy.getJavaClassName(parameter));
+            out.print("(");
+
+            if (instance && parameter.equals(procedure.getInParameters().get(0))) {
+                out.print("this");
+            }
+            else {
+                out.print(strategy.getJavaClassNameLC(parameter));
+            }
+
+            out.println(");");
         }
 
         out.println();
-        out.println("\t\tp.execute(configuration);");
+        out.print("\t\tp.execute(");
 
-        if (procedure.getOutParameters().size() == 1) {
-            out.println("\t\treturn p.get" + strategy.getJavaClassName(procedure.getOutParameters().get(0)) + "();");
+        if (instance) {
+            out.print("getConfiguration()");
         }
-        else if (procedure.getOutParameters().size() > 1) {
-            out.println("\t\treturn p;");
+        else {
+            out.print("configuration");
+        }
+
+        out.println(");");
+
+        if (procedure.getOutParameters().size() > 0) {
+            if (instance) {
+                out.print("\t\tfrom(p.get");
+                out.print(strategy.getJavaClassName(procedure.getOutParameters().get(0)));
+                out.println("());");
+            }
+
+            if (procedure.getOutParameters().size() == 1) {
+                out.print("\t\treturn p.get");
+                out.print(strategy.getJavaClassName(procedure.getOutParameters().get(0)));
+                out.println("();");
+            }
+            else if (procedure.getOutParameters().size() > 1) {
+                out.println("\t\treturn p;");
+            }
         }
 
         out.println("\t}");

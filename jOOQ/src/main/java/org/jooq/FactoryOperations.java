@@ -656,6 +656,15 @@ public interface FactoryOperations extends Configuration {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new attached {@link UDTRecord}.
+     *
+     * @param <R> The generic record type
+     * @param type The UDT describing records of type &lt;R&gt;
+     * @return The new record
+     */
+    <R extends UDTRecord<R>> R newRecord(UDT<R> type);
+
+    /**
      * Create a new {@link Record} that can be inserted into the corresponding
      * table.
      *

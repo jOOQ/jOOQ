@@ -97,6 +97,7 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
 import org.jooq.Truncate;
+import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
@@ -1144,6 +1145,14 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
     // Global Record factory
     // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
+        return Util.newRecord(type, this);
+    }
 
     /**
      * {@inheritDoc}

@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -119,12 +120,12 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractType<R> implements 
 
     @Override
     public final void toSQL(RenderContext context) {
-        throw new UnsupportedOperationException("UDTImpl cannot be used as a true QueryPart");
+        context.literal(getName());
     }
 
     @Override
     public final void bind(BindContext context) {
-        throw new UnsupportedOperationException("UDTImpl cannot be used as a true QueryPart");
+        context.bind((QueryPart) fields);
     }
 
     /**

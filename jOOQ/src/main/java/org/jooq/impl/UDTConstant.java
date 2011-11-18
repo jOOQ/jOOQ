@@ -109,9 +109,12 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
 
                 return;
             }
-        }
 
-        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
+            // Assume default behaviour if dialect is not available
+            default:
+                toSQLInline(context);
+                return;
+        }
     }
 
     private void toSQLInline(RenderContext context) {
@@ -133,8 +136,11 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             case POSTGRES:
                 return "ROW";
 
-            case ORACLE: // No break
-            case DB2: {
+            case ORACLE:
+            case DB2:
+
+            // Assume default behaviour if dialect is not available
+            default: {
                 UDT<?> udt = record.getUDT();
 
                 if (getMappedSchema(context, udt.getSchema()) != null) {
@@ -145,8 +151,6 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
                 }
             }
         }
-
-        throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
     }
 
     @Override

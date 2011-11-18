@@ -35,6 +35,7 @@
  */
 package org.jooq.util.oracle;
 
+import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TYPE_ATTRS;
 
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.RoutineDefinition;
 
 public class OracleUDTDefinition extends AbstractUDTDefinition {
 
@@ -82,6 +84,34 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
                 type);
 
             result.add(attribute);
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<RoutineDefinition> getRoutines0() {
+        List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
+
+        for (Record record : create()
+                .selectDistinct(
+                    ALL_ARGUMENTS.OBJECT_NAME,
+                    ALL_ARGUMENTS.OBJECT_ID,
+                    ALL_ARGUMENTS.OVERLOAD)
+                .from(ALL_ARGUMENTS)
+                .where(ALL_ARGUMENTS.OWNER.equal(getSchemaName()))
+                .and(ALL_ARGUMENTS.PACKAGE_NAME.equal(getName()))
+                .orderBy(
+                    ALL_ARGUMENTS.OBJECT_NAME,
+                    ALL_ARGUMENTS.OVERLOAD)
+                .fetch()) {
+
+            result.add(new OracleRoutineDefinition(getDatabase(),
+                this,
+                record.getValue(ALL_ARGUMENTS.OBJECT_NAME),
+                "",
+                record.getValue(ALL_ARGUMENTS.OBJECT_ID),
+                record.getValue(ALL_ARGUMENTS.OVERLOAD)));
         }
 
         return result;

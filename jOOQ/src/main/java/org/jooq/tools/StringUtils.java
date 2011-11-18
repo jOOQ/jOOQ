@@ -121,13 +121,13 @@ public final class StringUtils {
      * Returns either the passed in String, or if the String is
      * <code>null</code>, an empty String ("").
      * </p>
-     * 
+     *
      * <pre>
      * StringUtils.defaultString(null)  = ""
      * StringUtils.defaultString("")    = ""
      * StringUtils.defaultString("bat") = "bat"
      * </pre>
-     * 
+     *
      * @see String#valueOf(Object)
      * @param str the String to check, may be null
      * @return the passed in String, or the empty String if it was
@@ -147,7 +147,6 @@ public final class StringUtils {
      * StringUtils.defaultString("bat", "NULL") = "bat"
      * </pre>
      *
-     * @see ObjectUtils#toString(Object,String)
      * @see String#valueOf(Object)
      * @param str  the String to check, may be null
      * @param defaultStr  the default String to return

@@ -109,9 +109,9 @@ public class GenerationTool {
 
 		try {
 			connection = DriverManager.getConnection(
-					properties.getProperty("jdbc.URL"),
-					properties.getProperty("jdbc.User"),
-					properties.getProperty("jdbc.Password"));
+					defaultString(properties.getProperty("jdbc.URL")),
+					defaultString(properties.getProperty("jdbc.User")),
+				    defaultString(properties.getProperty("jdbc.Password")));
 
 			Class<Generator> generatorClass = (Class<Generator>) (properties.containsKey("generator")
 			    ? Class.forName(properties.getProperty("generator"))

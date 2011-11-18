@@ -44,9 +44,9 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.util.maven.example.PublicFactory;
-import org.jooq.util.maven.example.tables.TBook;
-import org.jooq.util.maven.example.tables.records.TBookRecord;
+import org.jooq.util.maven.example.postgres.PublicFactory;
+import org.jooq.util.maven.example.postgres.tables.TBook;
+import org.jooq.util.maven.example.postgres.tables.records.TBookRecord;
 
 import org.junit.Test;
 

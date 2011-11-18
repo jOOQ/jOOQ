@@ -43,8 +43,8 @@ public class Jdbc {
     private String driver;
     private String url;
     private String schema = "";
-    private String user;
-    private String password;
+    private String user = "";
+    private String password = "";
 
     String getDriver() {
         return driver;

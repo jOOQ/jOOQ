@@ -68,6 +68,11 @@ public final class Tables {
 	public static org.jooq.test.hsqldb.generatedclasses.tables.T_785 T_785 = org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785;
 
 	/**
+	 * The table PUBLIC.T_937
+	 */
+	public static org.jooq.test.hsqldb.generatedclasses.tables.T_937 T_937 = org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937;
+
+	/**
 	 * The table PUBLIC.T_ARRAYS
 	 */
 	public static org.jooq.test.hsqldb.generatedclasses.tables.TArrays T_ARRAYS = org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS;

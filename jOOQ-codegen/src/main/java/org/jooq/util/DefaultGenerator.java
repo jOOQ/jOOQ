@@ -42,17 +42,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 import java.lang.reflect.TypeVariable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -107,14 +102,13 @@ import org.jooq.tools.StringUtils;
  */
 public class DefaultGenerator implements Generator {
 
-    private static final JooqLogger                 log                    = JooqLogger.getLogger(DefaultGenerator.class);
-    private static final Map<Class<?>, Set<String>> reservedColumns        = new HashMap<Class<?>, Set<String>>();
-    private static String                           version;
+    private static final JooqLogger log                    = JooqLogger.getLogger(DefaultGenerator.class);
+    private static String           version;
 
-    private boolean                                 generateDeprecated     = true;
-    private boolean                                 generateRelations      = false;
-    private boolean                                 generateInstanceFields = true;
-    private GeneratorStrategy                       strategy;
+    private boolean                 generateDeprecated     = true;
+    private boolean                 generateRelations      = false;
+    private boolean                 generateInstanceFields = true;
+    private GeneratorStrategy       strategy;
 
     @Override
     public void setStrategy(GeneratorStrategy strategy) {
@@ -452,7 +446,7 @@ public class DefaultGenerator implements Generator {
 
                     // Getters
                     for (ColumnDefinition column : columns) {
-                        printFieldJavaDoc(out, "", column);
+                        printFieldJavaDoc(out, column);
                         out.print("\tpublic final ");
                         out.print(data.getField(column.getName()).getType());
                         out.print(" get");
@@ -892,13 +886,10 @@ public class DefaultGenerator implements Generator {
 
         			Class<?> baseClass;
 
-        			Set<String> reserved;
         			if (generateRelations() && table.getMainUniqueKey() != null) {
         				baseClass = UpdatableRecordImpl.class;
-                        reserved = reservedColumns(UpdatableRecordImpl.class);
         			} else {
         				baseClass = TableRecordImpl.class;
-        				reserved = reservedColumns(TableRecordImpl.class);
         			}
 
         			out.print("public class ");
@@ -911,7 +902,7 @@ public class DefaultGenerator implements Generator {
         			out.printSerial();
 
         			for (ColumnDefinition column : table.getColumns()) {
-        				printGetterAndSetter(out, column, table, reserved);
+        				printGetterAndSetter(out, column);
         			}
 
         			out.println();
@@ -1021,12 +1012,11 @@ public class DefaultGenerator implements Generator {
                     out.print(strategy.getFullJavaClassName(udt, "Record"));
                     out.println("> {");
 
-                    Set<String> reserved = reservedColumns(UDTRecordImpl.class);
                     out.printSerial();
                     out.println();
 
                     for (AttributeDefinition attribute : udt.getAttributes()) {
-                        printGetterAndSetter(out, attribute, udt, reserved);
+                        printGetterAndSetter(out, attribute);
                     }
 
                     out.println();
@@ -1371,40 +1361,6 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-	/**
-	 * Find all column names that are reserved because of the extended
-	 * class hierarchy of a generated class
-	 *
-	 * @see <a href="https://sourceforge.net/apps/trac/jooq/ticket/182">https://sourceforge.net/apps/trac/jooq/ticket/182</a>
-	 */
-    private Set<String> reservedColumns(Class<?> clazz) {
-        if (clazz == null) {
-            return Collections.emptySet();
-        }
-
-        Set<String> result = reservedColumns.get(clazz);
-
-        if (result == null) {
-            result = new HashSet<String>();
-            reservedColumns.put(clazz, result);
-
-            result.addAll(reservedColumns(clazz.getSuperclass()));
-            for (Class<?> c : clazz.getInterfaces()) {
-                result.addAll(reservedColumns(c));
-            }
-
-            for (Method m : clazz.getDeclaredMethods()) {
-                String name = m.getName();
-
-                if (name.startsWith("get") && m.getParameterTypes().length == 0) {
-                    result.add(name.substring(3));
-                }
-            }
-        }
-
-        return result;
-    }
-
     private void printRoutine(Database database, SchemaDefinition schema, RoutineDefinition routine)
         throws FileNotFoundException, SQLException {
         strategy.getFile(routine).getParentFile().mkdirs();
@@ -1414,18 +1370,10 @@ public class DefaultGenerator implements Generator {
         printHeader(out, strategy.getJavaPackageName(routine));
         printClassJavadoc(out, routine);
 
-        Class<?> procedureClass = AbstractRoutine.class;
-//        if (database.getDialect() == SQLDialect.POSTGRES &&
-//            routine.getOutParameters().size() == 1 &&
-//            routine.getOutParameters().get(0).getType().isUDT()) {
-//
-//            procedureClass = PostgresSingleUDTOutParameterProcedure.class;
-//        }
-
         out.print("public class ");
         out.print(strategy.getJavaClassName(routine));
         out.print(" extends ");
-        out.print(procedureClass);
+        out.print(AbstractRoutine.class);
         out.print("<");
 
         if (routine.getReturnValue() == null) {
@@ -1864,25 +1812,14 @@ public class DefaultGenerator implements Generator {
 		}
 	}
 
-	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element, Definition type, Set<String> reserved) throws SQLException {
-        String columnDisambiguationSuffix = "";
-        String getterDisambiguationSuffix = "";
-
-		if (strategy.getJavaIdentifierUC(element).equals(strategy.getJavaIdentifierUC(type))) {
-		    columnDisambiguationSuffix = "_";
-		}
-
-		if (reserved.contains(strategy.getJavaClassName(element))) {
-		    getterDisambiguationSuffix = "_";
-		}
-
-		printFieldJavaDoc(out, getterDisambiguationSuffix, element);
-		out.println("\tpublic void set" + strategy.getJavaClassName(element) + getterDisambiguationSuffix + "(" + getJavaType(element.getType()) + " value) {");
-		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifierUC(element) + columnDisambiguationSuffix + ", value);");
+	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) throws SQLException {
+		printFieldJavaDoc(out, element);
+		out.println("\tpublic void " + strategy.getJavaSetterName(element) + "(" + getJavaType(element.getType()) + " value) {");
+		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifierUC(element) + ", value);");
 		out.println("\t}");
-		printFieldJavaDoc(out, getterDisambiguationSuffix, element);
-		out.println("\tpublic " + getJavaType(element.getType()) + " get" + strategy.getJavaClassName(element) + getterDisambiguationSuffix + "() {");
-		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifierUC(element) + columnDisambiguationSuffix + ");");
+		printFieldJavaDoc(out, element);
+		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element) + "() {");
+		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifierUC(element) + ");");
 		out.println("\t}");
 
 		if (generateRelations() && element instanceof ColumnDefinition) {
@@ -1911,7 +1848,7 @@ public class DefaultGenerator implements Generator {
 
 	                    TableDefinition referencing = foreignKey.getKeyTable();
 
-                        printFieldJavaDoc(out, null, column);
+                        printFieldJavaDoc(out, column);
                         out.print("\tpublic ");
                         out.print(List.class);
                         out.print("<");
@@ -1988,7 +1925,7 @@ public class DefaultGenerator implements Generator {
                 }
 
                 if (!skipGeneration) {
-                    printFieldJavaDoc(out, null, column);
+                    printFieldJavaDoc(out, column);
                     out.print("\tpublic ");
                     out.print(strategy.getFullJavaClassName(referenced, "Record"));
                     out.print(" fetch");
@@ -2052,9 +1989,7 @@ public class DefaultGenerator implements Generator {
 	}
 
 	private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass) throws SQLException {
-		String columnDisambiguationSuffix =
-		    strategy.getJavaIdentifierUC(column).equals(strategy.getJavaIdentifierUC(type)) ? "_" : "";
-		printFieldJavaDoc(out, columnDisambiguationSuffix, column);
+		printFieldJavaDoc(out, column);
 
 		boolean hasType =
 		    type instanceof TableDefinition ||
@@ -2082,7 +2017,6 @@ public class DefaultGenerator implements Generator {
 		out.print(getJavaType(column.getType()));
 		out.print("> ");
 		out.print(strategy.getJavaIdentifierUC(column));
-		out.print(columnDisambiguationSuffix);
 
 		if (declaredMemberClass == TableField.class) {
 		    out.print(" = createField");
@@ -2116,11 +2050,11 @@ public class DefaultGenerator implements Generator {
 		out.println(");");
 	}
 
-	private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, TypedElementDefinition<?> element) throws SQLException {
-	    printFieldJavaDoc(out, disambiguationSuffix, element, null);
+	private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element) throws SQLException {
+	    printFieldJavaDoc(out, element, null);
 	}
 
-    private void printFieldJavaDoc(GenerationWriter out, String disambiguationSuffix, TypedElementDefinition<?> element, String deprecation) throws SQLException {
+    private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element, String deprecation) throws SQLException {
 		out.println();
 		out.println("\t/**");
 
@@ -2172,10 +2106,11 @@ public class DefaultGenerator implements Generator {
 	        }
 		}
 
-		if (disambiguationSuffix != null && disambiguationSuffix.length() > 0) {
-			out.println("\t * ");
-			out.println("\t * This item causes a name clash. That is why an underline character was appended to the Java field name");
-		}
+		// TODO Log this!
+//		if (disambiguationSuffix != null && disambiguationSuffix.length() > 0) {
+//			out.println("\t * ");
+//			out.println("\t * This item causes a name clash. That is why an underline character was appended to the Java field name");
+//		}
 
 		printDeprecation(out, deprecation);
 

@@ -83,6 +83,18 @@ public interface GeneratorStrategy {
     String getFullJavaIdentifierUC(Definition definition);
 
     /**
+     * @return The Java setter method name representing this object, e.g.
+     *         [setMyTable]
+     */
+    String getJavaSetterName(Definition definition);
+
+    /**
+     * @return The Java getter method name representing this object, e.g.
+     *         [getMyTable]
+     */
+    String getJavaGetterName(Definition definition);
+
+    /**
      * @return The Java class name representing this object, e.g. [MyTable]
      */
     String getJavaClassName(Definition definition);

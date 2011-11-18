@@ -67,6 +67,96 @@ DROP TYPE o_invalid_type/
 DROP TYPE t_invalid_type/
 DROP TYPE u_invalid_type/
 
+DROP TYPE t_book_type/
+DROP TYPE u_author_type/
+DROP TYPE u_book_type/
+
+CREATE TYPE u_book_type AS OBJECT (
+  id number(7),
+  title varchar2(400)
+)
+/
+
+CREATE TYPE t_book_type AS TABLE OF u_book_type/
+
+CREATE OR REPLACE TYPE u_author_type AS OBJECT (
+  id number(7),
+  first_name varchar2(50),
+  last_name varchar2(50),
+  
+  member procedure load,
+  member procedure get_books (book1 OUT u_book_type, book2 OUT u_book_type),
+  
+  member function count_books return number
+)
+/
+
+CREATE OR REPLACE TYPE BODY u_author_type AS 
+  member procedure load is
+  	x number(7);
+  begin
+  	x := id;
+	
+    if x is not null then
+      select a.first_name, a.last_name
+	  into first_name, last_name
+      from t_author a
+      where a.id = x;
+    end if;
+  end load;
+    
+  member procedure get_books (book1 OUT u_book_type, book2 OUT u_book_type) is
+    x number(7);
+    b1 u_book_type := u_book_type(null, null);
+    b2 u_book_type := u_book_type(null, null);
+  begin
+    x := id;
+    
+    -- execute a load to check whether the author is also reloaded
+    self.load;
+    
+    if x is not null then
+      select b.id, b.title
+      into b1.id, b1.title
+      from (
+        select b.id, b.title, rownum r
+        from t_book b
+        where b.author_id = x
+        order by b.id
+      ) b
+      where b.r = 1;
+
+      select b.id, b.title
+      into b2.id, b2.title
+      from (
+        select b.id, b.title, rownum r
+        from t_book b
+        where b.author_id = x
+        order by b.id
+      ) b
+      where b.r = 2;
+    end if;
+      
+    book1 := b1;
+    book2 := b2;
+  end get_books;
+
+  member function count_books return number is
+    x number(7);
+    r number(7);
+  begin
+    x := id;
+    
+    select count(*) 
+    into r
+    from t_book
+    where author_id = x;
+    
+    return r;
+  end count_books;
+end;
+/
+
 CREATE TYPE u_invalid_type AS invalid/
 CREATE TYPE t_invalid_type AS TABLE OF u_invalid_type/
 CREATE TYPE o_invalid_type AS OBJECT (

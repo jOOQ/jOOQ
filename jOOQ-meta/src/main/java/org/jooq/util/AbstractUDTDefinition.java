@@ -48,6 +48,8 @@ extends
 implements
     UDTDefinition {
 
+    private List<RoutineDefinition> routines;
+
     public AbstractUDTDefinition(Database database, String name, String comment) {
         super(database, name, comment);
     }
@@ -66,4 +68,15 @@ implements
     public final AttributeDefinition getAttribute(int attributeIndex) {
         return getElement(attributeIndex);
     }
+
+    @Override
+    public final List<RoutineDefinition> getRoutines() {
+        if (routines == null) {
+            routines = getRoutines0();
+        }
+
+        return routines;
+    }
+
+    protected abstract List<RoutineDefinition> getRoutines0();
 }

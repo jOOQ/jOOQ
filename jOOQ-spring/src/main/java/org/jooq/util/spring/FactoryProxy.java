@@ -76,6 +76,8 @@ import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
 import org.jooq.Truncate;
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.exception.DataAccessException;
@@ -321,6 +323,11 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     @Override
     public <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
         return getDelegate().truncate(table);
+    }
+
+    @Override
+    public final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
+        return getDelegate().newRecord(type);
     }
 
     @Override

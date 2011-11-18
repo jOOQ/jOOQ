@@ -39,6 +39,7 @@ import static org.jooq.util.db2.syscat.tables.Attributes.ATTRIBUTES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Record;
@@ -48,6 +49,7 @@ import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.RoutineDefinition;
 import org.jooq.util.db2.syscat.tables.Attributes;
 
 /**
@@ -93,4 +95,8 @@ public class DB2UDTDefinition extends AbstractUDTDefinition {
         return result;
     }
 
+    @Override
+    protected List<RoutineDefinition> getRoutines0() {
+        return Collections.emptyList();
+    }
 }

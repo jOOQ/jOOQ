@@ -599,6 +599,20 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
+    /**
+     * This method was implemented with [#799]. It may be useful to make it
+     * public for broader use...?
+     */
+    protected final void from(Record source) {
+        for (Field<?> field : getFields()) {
+            Field<?> sourceField = source.getField(field);
+
+            if (sourceField != null) {
+                Util.setValue(this, field, source, sourceField);
+            }
+        }
+    }
+
     private final void into(Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
         Class<?> mType = member.getType();
 

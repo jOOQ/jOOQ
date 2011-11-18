@@ -360,13 +360,21 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         else if (definition instanceof TableDefinition) {
             return "tables";
         }
+
+        // [#799] UDT's are also packages
+        else if (definition instanceof UDTDefinition) {
+            return "udt";
+        }
         else if (definition instanceof PackageDefinition) {
             return "packages";
         }
         else if (definition instanceof RoutineDefinition) {
             RoutineDefinition routine = (RoutineDefinition) definition;
 
-            if (routine.getPackage() != null) {
+            if (routine.getPackage() instanceof UDTDefinition) {
+                return "udt." + getJavaIdentifierUC(routine.getPackage()).toLowerCase();
+            }
+            else if (routine.getPackage() != null) {
                 return "packages." + getJavaIdentifierUC(routine.getPackage()).toLowerCase();
             }
             else {
@@ -377,9 +385,6 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
             return "enums";
         }
         else if (definition instanceof ArrayDefinition) {
-            return "udt";
-        }
-        else if (definition instanceof UDTDefinition) {
             return "udt";
         }
 

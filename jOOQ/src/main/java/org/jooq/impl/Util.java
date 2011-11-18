@@ -57,7 +57,7 @@ import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.Table;
+import org.jooq.Type;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 
@@ -106,15 +106,15 @@ final class Util {
     /**
      * Create a new record
      */
-    static <R extends Record> R newRecord(Table<R> table) {
-        return newRecord(table, null);
+    static <R extends Record> R newRecord(Type<R> type) {
+        return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static <R extends Record> R newRecord(Table<R> table, Configuration configuration) {
-        return newRecord(table.getRecordType(), table, configuration);
+    static <R extends Record> R newRecord(Type<R> type, Configuration configuration) {
+        return newRecord(type.getRecordType(), type, configuration);
     }
 
     /**

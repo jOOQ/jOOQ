@@ -37,13 +37,16 @@ package org.jooq.util;
 
 import java.util.List;
 
-
 /**
  * A definition for a UDT
+ * <p>
+ * This extends {@link PackageDefinition} because Oracle internally models UDT's
+ * in similar ways as packages. This is especially true for the way, member
+ * procedures and functions are called.
  *
  * @author Lukas Eder
  */
-public interface UDTDefinition extends Definition {
+public interface UDTDefinition extends PackageDefinition {
 
     /**
      * All attributes in the UDT
@@ -60,4 +63,9 @@ public interface UDTDefinition extends Definition {
      */
     AttributeDefinition getAttribute(int attributeIndex);
 
+    /**
+     * All routines in the UDT
+     */
+    @Override
+    List<RoutineDefinition> getRoutines();
 }

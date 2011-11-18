@@ -1102,8 +1102,9 @@ public abstract class jOOQAbstractTest<
                 assertEquals(0, schema.getUDTs().size());
             }
             // [#643] The U_INVALID types are only available in Oracle
+            // [#799] The member procedure UDT's too
             else if (getDialect() == SQLDialect.ORACLE) {
-                assertEquals(5, schema.getUDTs().size());
+                assertEquals(7, schema.getUDTs().size());
             }
             else {
                 assertEquals(2, schema.getUDTs().size());

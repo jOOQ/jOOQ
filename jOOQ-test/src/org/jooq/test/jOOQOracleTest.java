@@ -54,7 +54,7 @@ import static org.jooq.test.oracle.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.oracle.generatedclasses.Tables.V_LIBRARY;
-import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE;
+import static org.jooq.test.oracle.generatedclasses.UDTs.U_AUTHOR_TYPE;
 import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.countBooks;
 import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.load;
 import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;

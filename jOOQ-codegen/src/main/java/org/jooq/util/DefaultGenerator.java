@@ -701,7 +701,7 @@ public class DefaultGenerator implements Generator {
 		}
 
         // ----------------------------------------------------------------------
-        // XXX Generating relations
+        // XXX Generating central static table access
         // ----------------------------------------------------------------------
 		if (database.getTables().size() > 0) {
             log.info("Generating table references", targetTablePackageDir.getCanonicalPath());
@@ -927,7 +927,6 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating UDTs
         // ----------------------------------------------------------------------
-
         File targetUDTPackageDir = new File(targetPackageDir, "udt");
         if (database.getUDTs().size() > 0) {
             log.info("Generating UDTs", targetUDTPackageDir.getCanonicalPath());
@@ -1110,6 +1109,41 @@ public class DefaultGenerator implements Generator {
                     watch.splitInfo("Member procedures routines");
                 }
             }
+        }
+
+        // ----------------------------------------------------------------------
+        // XXX Generating central static udt access
+        // ----------------------------------------------------------------------
+        if (database.getUDTs().size() > 0) {
+            log.info("Generating UDT references", targetTablePackageDir.getCanonicalPath());
+
+            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "UDTs.java")));
+            printHeader(out, targetPackage);
+            printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getName());
+            out.println("public final class UDTs {");
+
+            for (UDTDefinition udt : database.getUDTs()) {
+                out.println();
+                out.println("\t/**");
+                out.println("\t * The type " + udt.getQualifiedName());
+                out.println("\t */");
+
+                out.print("\tpublic static ");
+                out.print(strategy.getFullJavaClassName(udt));
+                out.print(" ");
+                out.print(strategy.getJavaIdentifierUC(udt));
+                out.print(" = ");
+                out.print(strategy.getFullJavaClassName(udt));
+                out.print(".");
+                out.print(strategy.getJavaIdentifierUC(udt));
+                out.println(";");
+            }
+
+            printPrivateConstructor(out, "UDTs");
+            out.println("}");
+            out.close();
+
+            watch.splitInfo("UDT references generated");
         }
 
         // ----------------------------------------------------------------------

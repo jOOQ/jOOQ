@@ -59,6 +59,7 @@ import static org.junit.Assert.assertNotNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -72,6 +73,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.test.mysql.generatedclasses.Routines;
 import org.jooq.test.mysql.generatedclasses.TestFactory;
+import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
@@ -81,6 +83,7 @@ import org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.mysql.generatedclasses.tables.T_658Ref;
 import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.mysql.generatedclasses.tables.T_785;
+import org.jooq.test.mysql.generatedclasses.tables.T_959;
 import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
@@ -614,6 +617,13 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         };
     }
 
+    // IMPORTANT! Make this the first test, to prevent side-effects
+    @Override
+    @Test
+    public void testInsertIdentity() throws Exception {
+        super.testInsertIdentity();
+    }
+
     @Test
     public void testMySQLEncryptionFunctions() throws Exception {
         MySQLFactory create = (MySQLFactory) create();
@@ -628,5 +638,29 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         assertEquals("abc", create.select(desDecrypt(desEncrypt("abc"))).fetchOne(0));
         assertEquals("abc", create.select(uncompress(compress("abc"))).fetchOne(0));
         assertEquals(3, create.select(uncompressedLength(compress("abc"))).fetchOne(0));
+    }
+
+    @Test
+    public void testMySQLJavaKeywordEnums() throws Exception {
+        reset = false;
+
+        assertEquals(3,
+        create().insertInto(T_959.T_959)
+                .set(T_959.JAVA_KEYWORDS, T_959JavaKeywords.public_)
+                .newRecord()
+                .set(T_959.JAVA_KEYWORDS, T_959JavaKeywords.abstract_)
+                .newRecord()
+                .set(T_959.JAVA_KEYWORDS, T_959JavaKeywords.class_)
+                .execute());
+
+        List<T_959JavaKeywords> result =
+        create().selectFrom(T_959.T_959)
+                .orderBy(T_959.JAVA_KEYWORDS)
+                .fetch(T_959.JAVA_KEYWORDS);
+
+        assertEquals(3, result.size());
+        assertEquals(T_959JavaKeywords.abstract_, result.get(0));
+        assertEquals(T_959JavaKeywords.class_, result.get(1));
+        assertEquals(T_959JavaKeywords.public_, result.get(2));
     }
 }

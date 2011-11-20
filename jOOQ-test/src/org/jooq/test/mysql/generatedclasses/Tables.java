@@ -33,6 +33,11 @@ public final class Tables {
 	public static org.jooq.test.mysql.generatedclasses.tables.T_785 T_785 = org.jooq.test.mysql.generatedclasses.tables.T_785.T_785;
 
 	/**
+	 * The table test.t_959
+	 */
+	public static org.jooq.test.mysql.generatedclasses.tables.T_959 T_959 = org.jooq.test.mysql.generatedclasses.tables.T_959.T_959;
+
+	/**
 	 * The table test.t_author
 	 */
 	public static org.jooq.test.mysql.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR;

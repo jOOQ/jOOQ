@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 DROP TABLE IF EXISTS t_unsigned/
+DROP TABLE IF EXISTS t_959/
 
 DROP PROCEDURE IF EXISTS p_unused/
 DROP PROCEDURE IF EXISTS p_author_exists/
@@ -36,6 +37,18 @@ DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
+
+CREATE TABLE t_959 (
+  java_keywords enum('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
+	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',
+	                 'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
+	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof', 
+	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
+	                 'protected', 'public', 'return', 'short', 'static', 'strictfp', 
+	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws', 
+	                 'transient', 'true', 'try', 'void', 'volatile', 'while')
+) ENGINE = InnoDB
+/
 
 CREATE TABLE t_unsigned (
   u_byte tinyint unsigned,

@@ -40,6 +40,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE
 import static org.jooq.test.postgres.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_785;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_959;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_ARRAYS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_BOOK;
@@ -48,10 +49,12 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_LIBRARY;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -67,6 +70,7 @@ import org.jooq.impl.Factory;
 import org.jooq.test.postgres.generatedclasses.PublicFactory;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
+import org.jooq.test.postgres.generatedclasses.enums.U_959;
 import org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord;
@@ -86,6 +90,7 @@ import org.joou.UByte;
 import org.joou.UInteger;
 import org.joou.ULong;
 import org.joou.UShort;
+import org.junit.Test;
 
 
 /**
@@ -606,5 +611,29 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
             PostgresDataType.TIMEWITHOUTTIMEZONE,
             PostgresDataType.TIMEWITHTIMEZONE,
         };
+    }
+
+    @Test
+    public void testPostgresJavaKeywordEnums() throws Exception {
+        reset = false;
+
+        assertEquals(3,
+        create().insertInto(T_959)
+                .set(T_959.JAVA_KEYWORDS, U_959.public_)
+                .newRecord()
+                .set(T_959.JAVA_KEYWORDS, U_959.abstract_)
+                .newRecord()
+                .set(T_959.JAVA_KEYWORDS, U_959.class_)
+                .execute());
+
+        List<U_959> result =
+        create().selectFrom(T_959)
+                .orderBy(T_959.JAVA_KEYWORDS)
+                .fetch(T_959.JAVA_KEYWORDS);
+
+        assertEquals(3, result.size());
+        assertEquals(U_959.abstract_, result.get(0));
+        assertEquals(U_959.class_, result.get(1));
+        assertEquals(U_959.public_, result.get(2));
     }
 }

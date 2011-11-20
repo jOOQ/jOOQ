@@ -33,6 +33,11 @@ public final class Tables {
 	public static org.jooq.test.postgres.generatedclasses.tables.T_785 T_785 = org.jooq.test.postgres.generatedclasses.tables.T_785.T_785;
 
 	/**
+	 * The table public.t_959
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.T_959 T_959 = org.jooq.test.postgres.generatedclasses.tables.T_959.T_959;
+
+	/**
 	 * The table public.t_arrays
 	 */
 	public static org.jooq.test.postgres.generatedclasses.tables.TArrays T_ARRAYS = org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS;

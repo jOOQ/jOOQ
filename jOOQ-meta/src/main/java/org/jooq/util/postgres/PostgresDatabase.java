@@ -217,7 +217,10 @@ public class PostgresDatabase extends AbstractDatabase {
             .select(PG_TYPE.TYPNAME, PG_ENUM.ENUMLABEL)
             .from(PG_ENUM)
             .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
-            .orderBy(PG_ENUM.ENUMTYPID).fetch();
+            .orderBy(
+                PG_ENUM.ENUMTYPID,
+                PG_ENUM.ENUMLABEL)
+            .fetch();
 
         DefaultEnumDefinition definition = null;
         for (Record record : records) {

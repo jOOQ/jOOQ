@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS t_658_22 CASCADE/
 DROP TABLE IF EXISTS t_658_32 CASCADE/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
+DROP TABLE IF EXISTS t_959/
 
 DROP FUNCTION p_triggers()/
 DROP FUNCTION f_arrays(in_array IN integer[])/
@@ -57,7 +58,16 @@ DROP TYPE IF EXISTS u_address_type CASCADE/
 DROP TYPE IF EXISTS u_street_type CASCADE/
 DROP TYPE IF EXISTS u_book_status CASCADE/
 DROP TYPE IF EXISTS u_country CASCADE/
+DROP TYPE IF EXISTS u_959 CASCADE/
 
+CREATE TYPE u_959 AS ENUM('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
+	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',
+	                 'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
+	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof', 
+	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
+	                 'protected', 'public', 'return', 'short', 'static', 'strictfp', 
+	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws', 
+	                 'transient', 'true', 'try', 'void', 'volatile', 'while')/
 CREATE TYPE u_book_status AS ENUM ('SOLD OUT', 'ON STOCK', 'ORDERED')/
 CREATE TYPE u_country AS ENUM ('Brazil', 'England', 'Germany')/
 
@@ -75,6 +85,11 @@ CREATE TYPE u_address_type AS (
   country u_country,
   since DATE,
   code INTEGER
+)
+/
+
+CREATE TABLE t_959 (
+  java_keywords u_959
 )
 /
 

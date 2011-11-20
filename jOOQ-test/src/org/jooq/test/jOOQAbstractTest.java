@@ -44,7 +44,12 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.*;
@@ -162,8 +167,8 @@ import org.apache.commons.io.FileUtils;
 import org.joou.UByte;
 import org.joou.UInteger;
 import org.joou.ULong;
-import org.joou.Unsigned;
 import org.joou.UShort;
+import org.joou.Unsigned;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -686,7 +691,7 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testableMapping() throws Exception {
+    public void testTableMapping() throws Exception {
         SchemaMapping mapping = new SchemaMapping();
         mapping.add(TAuthor(), VAuthor());
         mapping.add(TBook(), VBook().getName());
@@ -1101,19 +1106,25 @@ public abstract class jOOQAbstractTest<
                 tables++;
             }
 
+            // [#959] The T_959 table for enum collisions with Java keywords
+            if (getDialect() == MYSQL ||
+                getDialect() == POSTGRES) {
+                tables++;
+            }
+
             if (TArrays() == null) {
                 assertEquals(tables, schema.getTables().size());
             }
 
             // [#624] The V_INCOMPLETE view is only available in Oracle
             // [#877] The T_877 table is only available in H2
-            else if (getDialect() == SQLDialect.ORACLE ||
-                     getDialect() == SQLDialect.H2) {
+            else if (getDialect() == ORACLE ||
+                     getDialect() == H2) {
                 assertEquals(tables + 2, schema.getTables().size());
             }
 
             // [#610] Collision-prone entities are only available in HSQLDB
-            else if (getDialect() == SQLDialect.HSQLDB) {
+            else if (getDialect() == HSQLDB) {
                 assertEquals(tables + 8, schema.getTables().size());
             }
 
@@ -1126,7 +1137,7 @@ public abstract class jOOQAbstractTest<
             }
             // [#643] The U_INVALID types are only available in Oracle
             // [#799] The member procedure UDT's too
-            else if (getDialect() == SQLDialect.ORACLE) {
+            else if (getDialect() == ORACLE) {
                 assertEquals(7, schema.getUDTs().size());
             }
             else {
@@ -1135,8 +1146,8 @@ public abstract class jOOQAbstractTest<
         }
 
         // Test correct source code generation for relations
-        if (getDialect() != SQLDialect.ORACLE &&
-            getDialect() != SQLDialect.SQLITE) {
+        if (getDialect() != ORACLE &&
+            getDialect() != SQLITE) {
 
             assertNull(TAuthor().getIdentity());
             assertNull(TBook().getIdentity());

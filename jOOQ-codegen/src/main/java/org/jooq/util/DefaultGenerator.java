@@ -386,7 +386,7 @@ public class DefaultGenerator implements Generator {
                         }
 
                         out.print("\t");
-                        out.print(GenerationUtil.convertToJavaIdentifier(literal));
+                        out.print(GenerationUtil.convertToJavaIdentifierEnum(literal));
                         out.print("(");
 
                         String separator = "";
@@ -1250,7 +1250,7 @@ public class DefaultGenerator implements Generator {
                     out.println();
 
                     for (String literal : e.getLiterals()) {
-                        out.println("\t" + GenerationUtil.convertToJavaIdentifier(literal) + "(\"" + literal + "\"),");
+                        out.println("\t" + GenerationUtil.convertToJavaIdentifierEnum(literal) + "(\"" + literal + "\"),");
                         out.println();
                     }
 

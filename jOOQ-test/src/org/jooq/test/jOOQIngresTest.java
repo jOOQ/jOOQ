@@ -77,6 +77,11 @@ import org.jooq.test.ingres.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.ingres.IngresDataType;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
+
 
 /**
  * @author Lukas Eder
@@ -89,6 +94,7 @@ public class jOOQIngresTest extends jOOQAbstractTest<
         XUnusedRecord,
         XUnusedRecord,
         TTriggersRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -272,6 +278,31 @@ public class jOOQIngresTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TUnsigned() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UByte> TUnsigned_U_BYTE() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UShort> TUnsigned_U_SHORT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UInteger> TUnsigned_U_INT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
+        return null;
     }
 
     @Override

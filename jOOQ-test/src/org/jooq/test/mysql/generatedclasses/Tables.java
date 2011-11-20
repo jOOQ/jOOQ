@@ -58,6 +58,11 @@ public final class Tables {
 	public static org.jooq.test.mysql.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
+	 * The table test.t_unsigned
+	 */
+	public static org.jooq.test.mysql.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.mysql.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
 	 * The table test.v_author
 	 */
 	public static org.jooq.test.mysql.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR;

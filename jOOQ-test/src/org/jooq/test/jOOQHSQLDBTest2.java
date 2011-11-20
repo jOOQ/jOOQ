@@ -64,6 +64,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.impl.Factory;
+import org.jooq.test.ase.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.hsqldb.generatedclasses.Public;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
 import org.jooq.test.oracle.generatedclasses.Routines;
@@ -80,6 +81,11 @@ import org.jooq.test.oracle.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.oracle.generatedclasses.tables.records.VLibraryRecord;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
+
 /**
  * @author Lukas Eder
  */
@@ -91,6 +97,7 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
         TArraysRecord,
         TDirectoryRecord,
         TTriggersRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -276,6 +283,31 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TUnsigned() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UByte> TUnsigned_U_BYTE() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UShort> TUnsigned_U_SHORT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UInteger> TUnsigned_U_INT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
+        return null;
     }
 
     @Override

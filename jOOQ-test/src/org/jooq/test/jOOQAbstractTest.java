@@ -48,6 +48,10 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.*;
+import static org.joou.Unsigned.ubyte;
+import static org.joou.Unsigned.uint;
+import static org.joou.Unsigned.ulong;
+import static org.joou.Unsigned.ushort;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -155,6 +159,11 @@ import org.jooq.tools.StringUtils;
 import org.jooq.util.GenerationTool;
 
 import org.apache.commons.io.FileUtils;
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.Unsigned;
+import org.joou.UShort;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -193,6 +202,9 @@ public abstract class jOOQAbstractTest<
 
         // T_TRIGGERS table
         T extends UpdatableRecord<T>,
+
+        // T_UNSIGNED table
+        U extends TableRecord<U>,
 
         // Various tables related to trac ticket numbers
         T658 extends TableRecord<T658>,
@@ -485,6 +497,12 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<T785, Integer> T785_ID();
     protected abstract TableField<T785, String> T785_NAME();
     protected abstract TableField<T785, String> T785_VALUE();
+
+    protected abstract Table<U> TUnsigned();
+    protected abstract TableField<U, UByte> TUnsigned_U_BYTE();
+    protected abstract TableField<U, UShort> TUnsigned_U_SHORT();
+    protected abstract TableField<U, UInteger> TUnsigned_U_INT();
+    protected abstract TableField<U, ULong> TUnsigned_U_LONG();
 
     protected abstract Table<X> TArrays();
     protected abstract TableField<X, Integer> TArrays_ID();
@@ -1078,6 +1096,11 @@ public abstract class jOOQAbstractTest<
                 tables++;
             }
 
+            // The additional T_UNSIGNED table
+            if (TUnsigned() != null) {
+                tables++;
+            }
+
             if (TArrays() == null) {
                 assertEquals(tables, schema.getTables().size());
             }
@@ -1519,11 +1542,95 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUnsignedDataTypes() throws Exception {
+        if (TUnsigned() == null) {
+            log.info("SKIPPING", "Unsigned tests");
+            return;
+        }
+
+        reset = false;
+
+        // unsigned null values
+        // --------------------
+        assertEquals(1,
+        create().insertInto(TUnsigned(),
+                            TUnsigned_U_BYTE(),
+                            TUnsigned_U_SHORT(),
+                            TUnsigned_U_INT(),
+                            TUnsigned_U_LONG())
+                .values(null, null, null, null)
+                .execute());
+
+        assertEquals(1, create().selectCount().from(TUnsigned()).fetchOne(0));
+        U u = create().selectFrom(TUnsigned()).fetchOne();
+        assertNotNull(u);
+        assertNull(u.getValue(TUnsigned_U_BYTE()));
+        assertNull(u.getValue(TUnsigned_U_SHORT()));
+        assertNull(u.getValue(TUnsigned_U_INT()));
+        assertNull(u.getValue(TUnsigned_U_LONG()));
+
+        // unsigned 1
+        // ----------
+        assertEquals(1,
+        create().insertInto(TUnsigned())
+                .set(TUnsigned_U_BYTE(), Unsigned.ubyte((byte) 1))
+                .set(TUnsigned_U_SHORT(), Unsigned.ushort((short) 1))
+                .set(TUnsigned_U_INT(), Unsigned.uint(1))
+                .set(TUnsigned_U_LONG(), Unsigned.ulong(1L))
+                .execute());
+
+        assertEquals(2, create().selectCount().from(TUnsigned()).fetchOne(0));
+        u = create().selectFrom(TUnsigned()).where(TUnsigned_U_INT().equal(Unsigned.uint(1))).fetchOne();
+        assertNotNull(u);
+        assertEquals(Unsigned.ubyte("1"), u.getValue(TUnsigned_U_BYTE()));
+        assertEquals(Unsigned.ushort("1"), u.getValue(TUnsigned_U_SHORT()));
+        assertEquals(Unsigned.uint("1"), u.getValue(TUnsigned_U_INT()));
+        assertEquals(Unsigned.ulong("1"), u.getValue(TUnsigned_U_LONG()));
+
+        assertEquals("1", u.getValue(TUnsigned_U_BYTE(), String.class));
+        assertEquals("1", u.getValue(TUnsigned_U_SHORT(), String.class));
+        assertEquals("1", u.getValue(TUnsigned_U_INT(), String.class));
+        assertEquals("1", u.getValue(TUnsigned_U_LONG(), String.class));
+
+        assertEquals(Unsigned.ubyte("1"), u.getValue(TUnsigned_U_BYTE()));
+        assertEquals(Unsigned.ushort("1"), u.getValue(TUnsigned_U_SHORT()));
+        assertEquals(Unsigned.uint("1"), u.getValue(TUnsigned_U_INT()));
+        assertEquals(Unsigned.ulong("1"), u.getValue(TUnsigned_U_LONG()));
+
+        // unsigned max-values
+        // -------------------
+        assertEquals(1,
+        create().insertInto(TUnsigned())
+                .set(TUnsigned_U_BYTE(), Unsigned.ubyte((byte) -1))
+                .set(TUnsigned_U_SHORT(), Unsigned.ushort((short) -1))
+                .set(TUnsigned_U_INT(), Unsigned.uint(-1))
+                .set(TUnsigned_U_LONG(), Unsigned.ulong(-1L))
+                .execute());
+
+        assertEquals(3, create().selectCount().from(TUnsigned()).fetchOne(0));
+        u = create().selectFrom(TUnsigned()).where(TUnsigned_U_INT().equal(Unsigned.uint(-1))).fetchOne();
+        assertNotNull(u);
+        assertEquals(Unsigned.ubyte(UByte.MAX_VALUE), u.getValue(TUnsigned_U_BYTE()));
+        assertEquals(Unsigned.ushort(UShort.MAX_VALUE), u.getValue(TUnsigned_U_SHORT()));
+        assertEquals(Unsigned.uint(UInteger.MAX_VALUE), u.getValue(TUnsigned_U_INT()));
+        assertEquals(Unsigned.ulong(ULong.MAX_VALUE), u.getValue(TUnsigned_U_LONG()));
+
+        assertEquals((byte) -1, u.getValue(TUnsigned_U_BYTE()).byteValue());
+        assertEquals((short) -1, u.getValue(TUnsigned_U_SHORT()).shortValue());
+        assertEquals(-1, u.getValue(TUnsigned_U_INT()).intValue());
+        assertEquals(-1L, u.getValue(TUnsigned_U_LONG()).longValue());
+    }
+
+    @Test
     public void testConversion() throws Exception {
         assertEquals(null, SQLDataType.TINYINT.convert(null));
+        assertEquals(null, SQLDataType.TINYINTUNSIGNED.convert(null));
         assertEquals(null, SQLDataType.SMALLINT.convert(null));
+        assertEquals(null, SQLDataType.SMALLINTUNSIGNED.convert(null));
         assertEquals(null, SQLDataType.INTEGER.convert(null));
+        assertEquals(null, SQLDataType.INTEGERUNSIGNED.convert(null));
         assertEquals(null, SQLDataType.BIGINT.convert(null));
+        assertEquals(null, SQLDataType.BIGINTUNSIGNED.convert(null));
         assertEquals(null, SQLDataType.REAL.convert(null));
         assertEquals(null, SQLDataType.DOUBLE.convert(null));
         assertEquals(null, SQLDataType.DECIMAL_INTEGER.convert(null));
@@ -1535,9 +1642,13 @@ public abstract class jOOQAbstractTest<
         assertEquals(null, SQLDataType.TIMESTAMP.convert(null));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert('1'));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert('1'));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert('1'));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert('1'));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert('1'));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert('1'));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert('1'));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert('1'));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert('1'));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert('1'));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert('1'));
@@ -1546,9 +1657,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert('1'));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert("1"));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert("1"));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert("1"));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert("1"));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert("1"));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert("1"));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert("1"));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert("1"));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert("1"));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert("1"));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert("1"));
@@ -1557,9 +1672,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert("1"));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert("  1"));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert("  1"));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert("  1"));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert("  1"));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert("  1"));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert("  1"));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert("  1"));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert("  1"));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert("  1"));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert("  1"));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert("  1"));
@@ -1568,9 +1687,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("  1", SQLDataType.VARCHAR.convert("  1"));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((byte) 1));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((byte) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((byte) 1));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert((byte) 1));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert((byte) 1));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert((byte) 1));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert((byte) 1));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert((byte) 1));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert((byte) 1));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert((byte) 1));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert((byte) 1));
@@ -1579,9 +1702,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert((byte) 1));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((short) 1));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((short) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((short) 1));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert((short) 1));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert((short) 1));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert((short) 1));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert((short) 1));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert((short) 1));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert((short) 1));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert((short) 1));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert((short) 1));
@@ -1590,9 +1717,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert((short) 1));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(1));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(1));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert(1));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert(1));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(1));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(1));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(1));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert(1));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert(1));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(1));
@@ -1601,9 +1732,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert(1));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert((long) 1));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert((long) 1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert((long) 1));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert((long) 1));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert((long) 1));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert((long) 1));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert((long) 1));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert((long) 1));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert((long) 1));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert((long) 1));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert((long) 1));
@@ -1612,9 +1747,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert((long) 1));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(1.1f));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(1.1f));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(1.1f));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert(1.1f));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert(1.1f));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(1.1f));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(1.1f));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(1.1f));
         assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(1.1f));
         assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(1.1f));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(1.1f));
@@ -1623,9 +1762,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1.1", SQLDataType.VARCHAR.convert(1.1f));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(1.1));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(1.1));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(1.1));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert(1.1));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert(1.1));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(1.1));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(1.1));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(1.1));
         assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(1.1));
         assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(1.1));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(1.1));
@@ -1634,9 +1777,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1.1", SQLDataType.VARCHAR.convert(1.1));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(new BigInteger("1")));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(new BigInteger("1")));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(new BigInteger("1")));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert(new BigInteger("1")));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert(new BigInteger("1")));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(new BigInteger("1")));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(new BigInteger("1")));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(new BigInteger("1")));
         assertEquals(Float.valueOf("1"), SQLDataType.REAL.convert(new BigInteger("1")));
         assertEquals(Double.valueOf("1"), SQLDataType.DOUBLE.convert(new BigInteger("1")));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(new BigInteger("1")));
@@ -1645,9 +1792,13 @@ public abstract class jOOQAbstractTest<
         assertEquals("1", SQLDataType.VARCHAR.convert(new BigInteger("1")));
 
         assertEquals(Byte.valueOf("1"), SQLDataType.TINYINT.convert(new BigDecimal("1.1")));
+        assertEquals(UByte.valueOf("1"), SQLDataType.TINYINTUNSIGNED.convert(new BigDecimal("1.1")));
         assertEquals(Short.valueOf("1"), SQLDataType.SMALLINT.convert(new BigDecimal("1.1")));
+        assertEquals(UShort.valueOf("1"), SQLDataType.SMALLINTUNSIGNED.convert(new BigDecimal("1.1")));
         assertEquals(Integer.valueOf("1"), SQLDataType.INTEGER.convert(new BigDecimal("1.1")));
+        assertEquals(UInteger.valueOf("1"), SQLDataType.INTEGERUNSIGNED.convert(new BigDecimal("1.1")));
         assertEquals(Long.valueOf("1"), SQLDataType.BIGINT.convert(new BigDecimal("1.1")));
+        assertEquals(ULong.valueOf("1"), SQLDataType.BIGINTUNSIGNED.convert(new BigDecimal("1.1")));
         assertEquals(Float.valueOf("1.1"), SQLDataType.REAL.convert(new BigDecimal("1.1")));
         assertEquals(Double.valueOf("1.1"), SQLDataType.DOUBLE.convert(new BigDecimal("1.1")));
         assertEquals(new BigInteger("1"), SQLDataType.DECIMAL_INTEGER.convert(new BigDecimal("1.1")));
@@ -1707,6 +1858,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(calendar, author2.getValue(TAuthor_DATE_OF_BIRTH(), Calendar.class));
         assertEquals(Long.valueOf(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), Long.class));
         assertEquals(Long.valueOf(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), long.class));
+        assertEquals(ULong.valueOf(1), author2.getValue(TAuthor_DATE_OF_BIRTH(), ULong.class));
 
         // [#933] Character conversion checks
         // ----------------------------------
@@ -1760,6 +1912,18 @@ public abstract class jOOQAbstractTest<
             Arrays.asList(1L, 2L),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Long.class));
         assertEquals(
+            Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, UByte.class));
+        assertEquals(
+            Arrays.asList(ushort((short) 1), ushort((short) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, UShort.class));
+        assertEquals(
+            Arrays.asList(uint(1), uint(2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, UInteger.class));
+        assertEquals(
+            Arrays.asList(ulong(1L), ulong(2L)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, ULong.class));
+        assertEquals(
             Arrays.asList(1.0f, 2.0f),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(0, Float.class));
         assertEquals(
@@ -1785,6 +1949,18 @@ public abstract class jOOQAbstractTest<
         assertEquals(
             Arrays.asList(1L, 2L),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Long.class));
+        assertEquals(
+            Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), UByte.class));
+        assertEquals(
+            Arrays.asList(ushort((short) 1), ushort((short) 2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), UShort.class));
+        assertEquals(
+            Arrays.asList(uint(1), uint(2)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), UInteger.class));
+        assertEquals(
+            Arrays.asList(ulong(1L), ulong(2L)),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), ULong.class));
         assertEquals(
             Arrays.asList(1.0f, 2.0f),
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch(TAuthor_ID().getName(), Float.class));
@@ -1814,6 +1990,18 @@ public abstract class jOOQAbstractTest<
             Arrays.asList(1L, 2L),
             Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Long.class)));
         assertEquals(
+            Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, UByte.class)));
+        assertEquals(
+            Arrays.asList(ushort((short) 1), ushort((short) 2)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, UShort.class)));
+        assertEquals(
+            Arrays.asList(uint(1), uint(2)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, UInteger.class)));
+        assertEquals(
+            Arrays.asList(ulong(1L), ulong(2L)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, ULong.class)));
+        assertEquals(
             Arrays.asList(1.0f, 2.0f),
             Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(0, Float.class)));
         assertEquals(
@@ -1839,6 +2027,18 @@ public abstract class jOOQAbstractTest<
         assertEquals(
             Arrays.asList(1L, 2L),
             Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Long.class)));
+        assertEquals(
+            Arrays.asList(ubyte((byte) 1), ubyte((byte) 2)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), UByte.class)));
+        assertEquals(
+            Arrays.asList(ushort((short) 1), ushort((short) 2)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), UShort.class)));
+        assertEquals(
+            Arrays.asList(uint(1), uint(2)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), UInteger.class)));
+        assertEquals(
+            Arrays.asList(ulong(1L), ulong(2L)),
+            Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), ULong.class)));
         assertEquals(
             Arrays.asList(1.0f, 2.0f),
             Arrays.asList(create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetchArray(TAuthor_ID().getName(), Float.class)));
@@ -1868,6 +2068,18 @@ public abstract class jOOQAbstractTest<
             1L,
             (long) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Long.class));
         assertEquals(
+            ubyte((byte) 1),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, UByte.class));
+        assertEquals(
+            ushort((short) 1),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, UShort.class));
+        assertEquals(
+            uint(1),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, UInteger.class));
+        assertEquals(
+            ulong(1L),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, ULong.class));
+        assertEquals(
             1.0f,
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(0, Float.class));
         assertEquals(
@@ -1893,6 +2105,18 @@ public abstract class jOOQAbstractTest<
         assertEquals(
             1L,
             (long) create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Long.class));
+        assertEquals(
+            ubyte((byte) 1),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), UByte.class));
+        assertEquals(
+            ushort((short) 1),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), UShort.class));
+        assertEquals(
+            uint(1),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), UInteger.class));
+        assertEquals(
+            ulong(1L),
+            create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), ULong.class));
         assertEquals(
             1.0f,
             create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).limit(1).fetchOne(TAuthor_ID().getName(), Float.class));

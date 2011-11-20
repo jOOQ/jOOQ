@@ -87,6 +87,12 @@ import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlserver.SQLServerDataType;
 import org.jooq.util.sybase.SybaseDataType;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UNumber;
+import org.joou.UShort;
+
 /**
  * Utility methods related to the treatment of fields and their types
  * <p>
@@ -180,6 +186,9 @@ public final class FieldTypeHelper {
             else if (type.isArray()) {
                 context.sql("ARRAY")
                        .sql(Arrays.asList((Object[]) value).toString());
+            }
+            else if (UNumber.class.isAssignableFrom(type)) {
+                context.sql(value.toString());
             }
             else if (ArrayRecord.class.isAssignableFrom(type)) {
                 context.sql(value.toString());
@@ -277,6 +286,22 @@ public final class FieldTypeHelper {
         else if (type == Timestamp.class) {
             return (T) stream.readTimestamp();
         }
+        else if (type == UByte.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : new UByte(string));
+        }
+        else if (type == UShort.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : new UShort(string));
+        }
+        else if (type == UInteger.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : new UInteger(string));
+        }
+        else if (type == ULong.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : new ULong(string));
+        }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
@@ -361,6 +386,9 @@ public final class FieldTypeHelper {
 //        else if (type.isArray()) {
 //            stream.writeArray(value);
 //        }
+        else if (UNumber.class.isAssignableFrom(type)) {
+            stream.writeString(value.toString());
+        }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
             stream.writeArray(((ArrayRecord<?>) value).createArray());
         }
@@ -450,6 +478,22 @@ public final class FieldTypeHelper {
         }
         else if (type == Timestamp.class) {
             return (T) getTimestamp(configuration.getDialect(), rs, index);
+        }
+        else if (type == UByte.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : new UByte(string));
+        }
+        else if (type == UShort.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : new UShort(string));
+        }
+        else if (type == UInteger.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : new UInteger(string));
+        }
+        else if (type == ULong.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : new ULong(string));
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
@@ -700,6 +744,22 @@ public final class FieldTypeHelper {
         else if (type == Timestamp.class) {
             return (T) stmt.getTimestamp(index);
         }
+        else if (type == UByte.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : new UByte(string));
+        }
+        else if (type == UShort.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : new UShort(string));
+        }
+        else if (type == UInteger.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : new UInteger(string));
+        }
+        else if (type == ULong.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : new ULong(string));
+        }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
@@ -917,6 +977,18 @@ public final class FieldTypeHelper {
         else if (type == Timestamp.class) {
             SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return (T) new Timestamp(pgParseDate(string, f).getTime());
+        }
+        else if (type == UByte.class) {
+            return (T) new UByte(string);
+        }
+        else if (type == UShort.class) {
+            return (T) new UShort(string);
+        }
+        else if (type == UInteger.class) {
+            return (T) new UInteger(string);
+        }
+        else if (type == ULong.class) {
+            return (T) new ULong(string);
         }
         else if (type.isArray()) {
             return (T) pgNewArray(type, string);

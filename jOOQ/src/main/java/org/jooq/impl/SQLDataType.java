@@ -58,6 +58,11 @@ import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlserver.SQLServerDataType;
 import org.jooq.util.sybase.SybaseDataType;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
+
 
 
 /**
@@ -164,6 +169,30 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
      * The zero-scale {@link Types#DECIMAL} type
      */
     public static final SQLDataType<BigInteger> DECIMAL_INTEGER = new SQLDataType<BigInteger>(BigInteger.class, "decimal_integer");
+
+    // -------------------------------------------------------------------------
+    // Unsigned integer types
+    // -------------------------------------------------------------------------
+
+    /**
+     * The unsigned {@link Types#TINYINT} type
+     */
+    public static final SQLDataType<UByte> TINYINTUNSIGNED = new SQLDataType<UByte>(UByte.class, "tinyintunsigned");
+
+    /**
+     * The unsigned {@link Types#SMALLINT} type
+     */
+    public static final SQLDataType<UShort> SMALLINTUNSIGNED = new SQLDataType<UShort>(UShort.class, "smallintunsigned");
+
+    /**
+     * The unsigned {@link Types#INTEGER} type
+     */
+    public static final SQLDataType<UInteger> INTEGERUNSIGNED = new SQLDataType<UInteger>(UInteger.class, "integerunsigned");
+
+    /**
+     * The unsigned {@link Types#BIGINT} type
+     */
+    public static final SQLDataType<ULong> BIGINTUNSIGNED = new SQLDataType<ULong>(ULong.class, "bigintunsigned");
 
     // -------------------------------------------------------------------------
     // Floating point types

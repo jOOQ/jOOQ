@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS t_658_22/
 DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
+DROP TABLE IF EXISTS t_unsigned/
 
 DROP PROCEDURE IF EXISTS p_unused/
 DROP PROCEDURE IF EXISTS p_author_exists/
@@ -35,6 +36,14 @@ DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
 DROP FUNCTION IF EXISTS f317/
+
+CREATE TABLE t_unsigned (
+  u_byte tinyint unsigned,
+  u_short smallint unsigned,
+  u_int int unsigned,
+  u_long bigint unsigned
+) ENGINE = InnoDB
+/
 
 CREATE TABLE t_triggers (
   id_generated int not null AUTO_INCREMENT,

@@ -80,6 +80,11 @@ import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.h2.H2DataType;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
+
 /**
  * Integration test for the H2 database
  *
@@ -93,6 +98,7 @@ public class jOOQH2Test extends jOOQAbstractTest<
         TArraysRecord,
         XUnusedRecord,
         TTriggersRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -276,6 +282,31 @@ public class jOOQH2Test extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TUnsigned() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UByte> TUnsigned_U_BYTE() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UShort> TUnsigned_U_SHORT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UInteger> TUnsigned_U_INT() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
+        return null;
     }
 
     @Override

@@ -36,6 +36,7 @@
 
 package org.jooq.util.mysql;
 
+import static java.util.Arrays.asList;
 import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.mysql.information_schema.tables.Columns.ORDINAL_POSITION;
 import static org.jooq.util.mysql.information_schema.tables.Columns.TABLE_NAME;
@@ -68,21 +69,31 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
 		for (Record record : create().select(
-		        Columns.COLUMN_NAME,
-		        Columns.ORDINAL_POSITION,
-		        Columns.DATA_TYPE,
-		        Columns.NUMERIC_PRECISION,
-		        Columns.NUMERIC_SCALE,
-		        Columns.COLUMN_COMMENT,
-		        Columns.EXTRA)
-		    .from(COLUMNS)
-		    .where(TABLE_SCHEMA.equal(getSchemaName()))
-		    .and(TABLE_NAME.equal(getName()))
-		    .orderBy(ORDINAL_POSITION)
-		    .fetch()) {
+        		    Columns.ORDINAL_POSITION,
+    		        Columns.COLUMN_NAME,
+    		        Columns.COLUMN_COMMENT,
+    		        Columns.COLUMN_TYPE,
+    		        Columns.DATA_TYPE,
+    		        Columns.NUMERIC_PRECISION,
+    		        Columns.NUMERIC_SCALE,
+    		        Columns.EXTRA)
+    		    .from(COLUMNS)
+    		    .where(TABLE_SCHEMA.equal(getSchemaName()))
+    		    .and(TABLE_NAME.equal(getName()))
+    		    .orderBy(ORDINAL_POSITION)
+    		    .fetch()) {
 
-		    DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
-                record.getValue(Columns.DATA_TYPE),
+		    String dataType = record.getValue(Columns.DATA_TYPE);
+
+		    // [#519] Some types have unsigned versions
+		    if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
+	            if (record.getValue(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
+	                dataType += "unsigned";
+	            }
+		    }
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+                dataType,
                 record.getValue(Columns.NUMERIC_PRECISION),
                 record.getValue(Columns.NUMERIC_SCALE),
                 getName() + "_" + record.getValue(Columns.COLUMN_NAME));

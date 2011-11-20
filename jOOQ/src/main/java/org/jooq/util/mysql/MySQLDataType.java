@@ -47,6 +47,11 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
+
 /**
  * Supported data types for the {@link SQLDialect#MYSQL} dialect
  *
@@ -66,11 +71,17 @@ public class MySQLDataType<T> extends AbstractDataType<T> {
     // -------------------------------------------------------------------------
 
     public static final MySQLDataType<Byte>       TINYINT          = new MySQLDataType<Byte>(SQLDataType.TINYINT, "tinyint", "signed");
+    public static final MySQLDataType<UByte>      TINYINTUNSIGNED  = new MySQLDataType<UByte>(SQLDataType.TINYINTUNSIGNED, "tinyintunsigned", "unsigned");
     public static final MySQLDataType<Short>      SMALLINT         = new MySQLDataType<Short>(SQLDataType.SMALLINT, "smallint", "signed");
+    public static final MySQLDataType<UShort>     SMALLINTUNSIGNED = new MySQLDataType<UShort>(SQLDataType.SMALLINTUNSIGNED, "smallintunsigned", "unsigned");
     public static final MySQLDataType<Integer>    INT              = new MySQLDataType<Integer>(SQLDataType.INTEGER, "int", "signed");
+    public static final MySQLDataType<UInteger>   INTUNSIGNED      = new MySQLDataType<UInteger>(SQLDataType.INTEGERUNSIGNED, "intunsigned", "unsigned");
     public static final MySQLDataType<Integer>    MEDIUMINT        = new MySQLDataType<Integer>(SQLDataType.INTEGER, "mediumint", "signed");
+    public static final MySQLDataType<UInteger>   MEDIUMINTUNSIGNED= new MySQLDataType<UInteger>(SQLDataType.INTEGERUNSIGNED, "mediumintunsigned", "unsigned");
     public static final MySQLDataType<Integer>    INTEGER          = new MySQLDataType<Integer>(SQLDataType.INTEGER, "integer", "signed");
+    public static final MySQLDataType<UInteger>   INTEGERUNSIGNED  = new MySQLDataType<UInteger>(SQLDataType.INTEGERUNSIGNED, "integerunsigned", "unsigned");
     public static final MySQLDataType<Long>       BIGINT           = new MySQLDataType<Long>(SQLDataType.BIGINT, "bigint", "signed");
+    public static final MySQLDataType<ULong>      BIGINTUNSIGNED   = new MySQLDataType<ULong>(SQLDataType.BIGINTUNSIGNED, "bigintunsigned", "unsigned");
     public static final MySQLDataType<Double>     DOUBLE           = new MySQLDataType<Double>(SQLDataType.DOUBLE, "double", "decimal");
     public static final MySQLDataType<Double>     FLOAT            = new MySQLDataType<Double>(SQLDataType.FLOAT, "float", "decimal");
     public static final MySQLDataType<Float>      REAL             = new MySQLDataType<Float>(SQLDataType.REAL, "real", "decimal");

@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static org.jooq.impl.Factory.val;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_BOOK;
 import static org.jooq.util.mysql.MySQLFactory.aesDecrypt;
@@ -75,6 +76,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
+import org.jooq.test.mysql.generatedclasses.tables.TUnsigned;
 import org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.mysql.generatedclasses.tables.T_658Ref;
 import org.jooq.test.mysql.generatedclasses.tables.T_725LobTest;
@@ -84,6 +86,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord;
@@ -93,6 +96,10 @@ import org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.mysql.MySQLFactory;
 
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
 import org.junit.Test;
 
 
@@ -107,6 +114,7 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         XUnusedRecord,
         XUnusedRecord,
         TTriggersRecord,
+        TUnsignedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -290,6 +298,31 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
         return T_785.VALUE;
+    }
+
+    @Override
+    protected Table<TUnsignedRecord> TUnsigned() {
+        return T_UNSIGNED;
+    }
+
+    @Override
+    protected TableField<TUnsignedRecord, UByte> TUnsigned_U_BYTE() {
+        return TUnsigned.U_BYTE;
+    }
+
+    @Override
+    protected TableField<TUnsignedRecord, UShort> TUnsigned_U_SHORT() {
+        return TUnsigned.U_SHORT;
+    }
+
+    @Override
+    protected TableField<TUnsignedRecord, UInteger> TUnsigned_U_INT() {
+        return TUnsigned.U_INT;
+    }
+
+    @Override
+    protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
+        return TUnsigned.U_LONG;
     }
 
     @Override

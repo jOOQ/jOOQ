@@ -59,6 +59,8 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 
+import org.joou.UNumber;
+
 /**
  * @author Lukas Eder
  */
@@ -275,6 +277,9 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
         }
         else if (type == Timestamp.class) {
             stmt.setTimestamp(nextIndex(), (Timestamp) value);
+        }
+        else if (UNumber.class.isAssignableFrom(type)) {
+            stmt.setString(nextIndex(), value.toString());
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here

@@ -35,6 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.joou.Unsigned.ubyte;
+import static org.joou.Unsigned.uint;
+import static org.joou.Unsigned.ulong;
+import static org.joou.Unsigned.ushort;
+
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -49,6 +54,11 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.exception.DataTypeException;
+
+import org.joou.UByte;
+import org.joou.UInteger;
+import org.joou.ULong;
+import org.joou.UShort;
 
 /**
  * Utility methods for type conversions
@@ -230,6 +240,27 @@ final class TypeUtils {
                     return (T) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
                 }
             }
+
+            // ... this also includes unsigned number types
+            else if (toClass == UByte.class) {
+                return (T) ubyte(new BigDecimal(from.toString().trim()).shortValue());
+            }
+            else if (toClass == UShort.class) {
+                return (T) ushort(new BigDecimal(from.toString().trim()).intValue());
+            }
+            else if (toClass == UInteger.class) {
+                return (T) uint(new BigDecimal(from.toString().trim()).longValue());
+            }
+            else if (toClass == ULong.class) {
+                if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                    return (T) ulong(((java.util.Date) from).getTime());
+                }
+                else {
+                    return (T) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
+                }
+            }
+
+            // ... and floating point / fixed point types
             else if (toClass == Float.class || toClass == float.class) {
                 return (T) Float.valueOf(from.toString().trim());
             }

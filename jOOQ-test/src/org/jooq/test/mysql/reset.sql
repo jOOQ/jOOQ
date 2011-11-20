@@ -45,4 +45,3 @@ INSERT INTO t_book_to_book_store VALUES
 	('Ex Libris', 1, 1),
 	('Ex Libris', 3, 2),
 	('Buchhandlung im Volkshaus', 3, 1)/
-

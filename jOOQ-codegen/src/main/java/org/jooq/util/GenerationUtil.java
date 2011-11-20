@@ -41,7 +41,66 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.h2.H2DataType;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 class GenerationUtil {
+    private static Set<String> JAVA_KEYWORDS = Collections.unmodifiableSet(new HashSet<String>(Arrays.asList(new String[] {
+        "abstract",
+        "continue",
+        "for",
+        "new",
+        "switch",
+        "assert",
+        "default",
+        "goto",
+        "package",
+        "synchronized",
+        "boolean",
+        "do",
+        "if",
+        "private",
+        "this",
+        "break",
+        "double",
+        "implements",
+        "protected",
+        "throw",
+        "byte",
+        "else",
+        "import",
+        "public",
+        "throws",
+        "case",
+        "enum",
+        "instanceof",
+        "return",
+        "transient",
+        "catch",
+        "extends",
+        "int",
+        "short",
+        "try",
+        "char",
+        "final",
+        "interface",
+        "static",
+        "void",
+        "class",
+        "finally",
+        "long",
+        "strictfp",
+        "volatile",
+        "const",
+        "float",
+        "native",
+        "super",
+        "while",
+        "true",
+        "false"
+    })));
 
     /**
      * Take a literal (e.g. database column) and make it a Java identifier
@@ -53,18 +112,25 @@ class GenerationUtil {
             return "_";
         }
 
-        if (!Character.isJavaIdentifierStart(literal.charAt(0))) {
-            sb.append("_");
+        if (JAVA_KEYWORDS.contains(literal)) {
+            // all java keywords are strings of lower case characters, so we know they can be identifiers, except for
+            // the fact that they're keywords!  append an underscore.
+            sb.append(literal).append("_");
         }
-
-        for (int i = 0; i < literal.length(); i++) {
-            char c = literal.charAt(i);
-
-            if (!Character.isJavaIdentifierPart(c)) {
+        else {
+            if (!Character.isJavaIdentifierStart(literal.charAt(0))) {
                 sb.append("_");
             }
-            else {
-                sb.append(c);
+
+            for (int i = 0; i < literal.length(); i++) {
+                char c = literal.charAt(i);
+
+                if (!Character.isJavaIdentifierPart(c)) {
+                    sb.append("_");
+                }
+                else {
+                    sb.append(c);
+                }
             }
         }
 

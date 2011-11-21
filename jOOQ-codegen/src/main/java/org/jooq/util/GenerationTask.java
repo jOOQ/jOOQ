@@ -61,6 +61,7 @@ public class GenerationTask extends Task {
 		properties.setProperty("generator.generate.records", "true");
 		properties.setProperty("generator.generate.relations", "false");
 		properties.setProperty("generator.generate.instance-fields", "true");
+		properties.setProperty("generator.generate.unsigned-types", "true");
 
 		properties.setProperty("generator.target.directory", ".");
 	}
@@ -84,7 +85,6 @@ public class GenerationTask extends Task {
 	public void setJdbcpassword(String value) {
 		properties.setProperty("jdbc.Password", value);
 	}
-
 
 	public void setGenerator(String value) {
 		properties.setProperty("generator", value);
@@ -110,8 +110,12 @@ public class GenerationTask extends Task {
         properties.setProperty("generator.generate.relations", value);
     }
 
-    public void setGeneratorgeneratefields(String value) {
+    public void setGeneratorgenerateinstancefields(String value) {
         properties.setProperty("generator.generate.instance-fields", value);
+    }
+
+    public void setGeneratorgenerateunsignedtypes(String value) {
+        properties.setProperty("generator.generate.unsigned-types", value);
     }
 
 	public void setGeneratortargetpackage(String value) {

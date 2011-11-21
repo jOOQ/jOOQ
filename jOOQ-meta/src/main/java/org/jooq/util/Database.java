@@ -207,4 +207,9 @@ public interface Database {
      * Check whether a type is an array type
      */
     boolean isArrayType(String dataType);
+
+    /**
+     * Whether this database supports unsigned types
+     */
+    boolean supportsUnsignedTypes();
 }

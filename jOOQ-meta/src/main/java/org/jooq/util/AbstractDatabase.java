@@ -74,12 +74,12 @@ public abstract class AbstractDatabase implements Database {
 
 
     @Override
-    public void setProperties(Properties properties) {
+    public final void setProperties(Properties properties) {
         this.properties = properties;
     }
 
     @Override
-    public String getProperty(String property) {
+    public final String getProperty(String property) {
         return properties.getProperty(property);
     }
 
@@ -144,7 +144,12 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public List<SequenceDefinition> getSequences() {
+    public final boolean supportsUnsignedTypes() {
+        return !"false".equalsIgnoreCase(properties.getProperty("generator.generate.unsigned-types"));
+    }
+
+    @Override
+    public final List<SequenceDefinition> getSequences() {
         if (sequences == null) {
             sequences = new ArrayList<SequenceDefinition>();
 
@@ -313,7 +318,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public Relations getRelations() {
+    public final Relations getRelations() {
         if (relations == null) {
             try {
                 relations = getRelations0();

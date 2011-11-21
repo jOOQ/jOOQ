@@ -92,6 +92,16 @@ public interface Generator {
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
+     * Whether unsigned data types should be generated
+     */
+    boolean generateUnsignedTypes();
+
+    /**
+     * Whether unsigned data types should be generated
+     */
+    void setGenerateUnsignedTypes(boolean generateUnsignedTypes);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

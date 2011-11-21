@@ -40,9 +40,10 @@ package org.jooq.util.maven;
  */
 public class Generate {
 
-    private String relations  = "false";
-    private String deprecated = "true";
+    private String relations      = "false";
+    private String deprecated     = "true";
     private String instanceFields = "true";
+    private String unsignedTypes  = "true";
 
     String getRelations() {
         return relations;
@@ -54,5 +55,9 @@ public class Generate {
 
     String getInstanceFields() {
         return instanceFields;
+    }
+
+    String getUnsignedTypes() {
+        return unsignedTypes;
     }
 }

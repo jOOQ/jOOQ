@@ -86,10 +86,12 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 		    String dataType = record.getValue(Columns.DATA_TYPE);
 
 		    // [#519] Some types have unsigned versions
-		    if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
-	            if (record.getValue(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
-	                dataType += "unsigned";
-	            }
+		    if (getDatabase().supportsUnsignedTypes()) {
+    		    if (asList("tinyint", "smallint", "mediumint", "int", "bigint").contains(dataType.toLowerCase())) {
+    	            if (record.getValue(Columns.COLUMN_TYPE).toLowerCase().contains("unsigned")) {
+    	                dataType += "unsigned";
+    	            }
+    		    }
 		    }
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),

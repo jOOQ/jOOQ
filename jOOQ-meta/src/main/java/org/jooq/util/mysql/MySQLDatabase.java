@@ -121,7 +121,7 @@ public class MySQLDatabase extends AbstractDatabase {
             .and(KeyColumnUsage.TABLE_NAME.equal(TableConstraints.TABLE_NAME))
             .and(KeyColumnUsage.CONSTRAINT_NAME.equal(TableConstraints.CONSTRAINT_NAME))
             .where(TableConstraints.CONSTRAINT_TYPE.equal(constraintType))
-            .and(KeyColumnUsage.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(KeyColumnUsage.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KeyColumnUsage.TABLE_NAME.asc(),
                 KeyColumnUsage.ORDINAL_POSITION.asc())
@@ -140,7 +140,7 @@ public class MySQLDatabase extends AbstractDatabase {
                 .join(KEY_COLUMN_USAGE)
                 .on(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(KeyColumnUsage.CONSTRAINT_SCHEMA))
                 .and(ReferentialConstraints.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
-                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(getSchemaName()))
+                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(getInputSchema()))
                 .orderBy(
                     KeyColumnUsage.CONSTRAINT_NAME.asc(),
                     KeyColumnUsage.ORDINAL_POSITION.asc())
@@ -177,7 +177,7 @@ public class MySQLDatabase extends AbstractDatabase {
                 Tables.TABLE_NAME,
                 Tables.TABLE_COMMENT)
             .from(TABLES)
-            .where(Tables.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(Tables.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(Tables.TABLE_NAME)
             .fetch()) {
 
@@ -204,7 +204,7 @@ public class MySQLDatabase extends AbstractDatabase {
             .from(COLUMNS)
             .where(
                 Columns.COLUMN_TYPE.like("enum(%)").and(
-                Columns.TABLE_SCHEMA.equal(getSchemaName())))
+                Columns.TABLE_SCHEMA.equal(getInputSchema())))
             .orderBy(
                 Columns.TABLE_NAME.asc(),
                 Columns.COLUMN_NAME.asc())
@@ -250,7 +250,7 @@ public class MySQLDatabase extends AbstractDatabase {
                     Proc.PARAM_LIST,
                     Proc.RETURNS)
                 .from(PROC)
-                .where(DB.equal(getSchemaName()))
+                .where(DB.equal(getInputSchema()))
                 .fetch()) {
 
             String name = record.getValue(Proc.NAME);

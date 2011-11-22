@@ -43,7 +43,7 @@ import org.jooq.test.mysql.generatedclasses.TestFactory;
 /**
  * @author Lukas Eder
  */
-public class jOOQMySQLTest2 extends jOOQMySQLTest {
+public class jOOQMySQLTestSchemaMapping extends jOOQMySQLTest {
 
     @Override
     public void setUp() throws Exception {

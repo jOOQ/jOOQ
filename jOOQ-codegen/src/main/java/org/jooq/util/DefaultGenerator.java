@@ -192,7 +192,7 @@ public class DefaultGenerator implements Generator {
         log.info("Database parameters");
 	    log.info("----------------------------------------------------------");
 	    log.info("  dialect", database.getDialect());
-	    log.info("  schema", database.getSchemaName());
+	    log.info("  schema", database.getInputSchema());
 	    log.info("  target dir", getTargetDirectory());
 	    log.info("  target package", getTargetPackage());
 	    log.info("----------------------------------------------------------");

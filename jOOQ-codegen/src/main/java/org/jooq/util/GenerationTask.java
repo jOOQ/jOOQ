@@ -94,13 +94,21 @@ public class GenerationTask extends Task {
 		properties.setProperty("generator.database", value);
 	}
 
-	public void setGeneratordatabaseincludes(String value) {
-		properties.setProperty("generator.database.includes", value);
-	}
+    public void setGeneratordatabaseincludes(String value) {
+        properties.setProperty("generator.database.includes", value);
+    }
 
-	public void setGeneratordatabaseexcludes(String value) {
-		properties.setProperty("generator.database.excludes", value);
-	}
+    public void setGeneratordatabaseexcludes(String value) {
+        properties.setProperty("generator.database.excludes", value);
+    }
+
+    public void setGeneratordatabaseinputschema(String value) {
+        properties.setProperty("generator.database.input-schema", value);
+    }
+
+    public void setGeneratordatabaseoutputschema(String value) {
+        properties.setProperty("generator.database.output-schema", value);
+    }
 
 	public void setGeneratorgeneraterecords(String value) {
 		properties.setProperty("generator.generate.records", value);

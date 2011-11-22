@@ -117,7 +117,7 @@ public class SQLServerDatabase extends AbstractDatabase {
             .join(KEY_COLUMN_USAGE)
             .on(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
             .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -139,7 +139,7 @@ public class SQLServerDatabase extends AbstractDatabase {
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
             .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getSchemaName()))
+            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -179,7 +179,7 @@ public class SQLServerDatabase extends AbstractDatabase {
         for (String name : create()
             .select(TABLES.TABLE_NAME)
             .from(TABLES)
-            .where(TABLES.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(TABLES.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(TABLES.TABLE_NAME)
             .fetch(TABLES.TABLE_NAME)) {
 
@@ -230,7 +230,7 @@ public class SQLServerDatabase extends AbstractDatabase {
                 ROUTINES.NUMERIC_PRECISION,
                 ROUTINES.NUMERIC_SCALE)
             .from(ROUTINES)
-            .where(ROUTINES.ROUTINE_SCHEMA.equal(getSchemaName()))
+            .where(ROUTINES.ROUTINE_SCHEMA.equal(getInputSchema()))
             .orderBy(ROUTINES.ROUTINE_NAME)
             .fetch()) {
 

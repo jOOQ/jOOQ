@@ -770,6 +770,12 @@ public abstract class jOOQAbstractTest<
 
             // Currently, only MySQL is tested with SchemaMapping
             case MYSQL:
+
+                // But not when the schema is already re-written
+                if (getClass() == jOOQMySQLTestSchemaRewrite.class) {
+                    log.info("SKIPPING", "Schema mapping test");
+                    return;
+                }
         }
 
         // Map to a second schema

@@ -89,14 +89,16 @@ public class Plugin extends AbstractMojo {
         props.put("jdbc.User", defaultString(jdbc.getUser()));
         props.put("jdbc.Password", defaultString(jdbc.getPassword()));
 
-        props.put("generator", generator.getName());
-        props.put("generator.database", generator.getDatabase().getName());
-        props.put("generator.database.includes", generator.getDatabase().getIncludes());
-        props.put("generator.database.excludes", generator.getDatabase().getExcludes());
+        props.put("generator", defaultString(generator.getName()));
+        props.put("generator.database", defaultString(generator.getDatabase().getName()));
+        props.put("generator.database.includes", defaultString(generator.getDatabase().getIncludes()));
+        props.put("generator.database.excludes", defaultString(generator.getDatabase().getExcludes()));
+        props.put("generator.database.input-schema", defaultString(generator.getDatabase().getInputSchema()));
+        props.put("generator.database.output-schema", defaultString(generator.getDatabase().getOutputSchema()));
 
-        props.put("generator.generate.relations", generator.getGenerate().getRelations());
-        props.put("generator.generate.deprecated", generator.getGenerate().getDeprecated());
-        props.put("generator.generate.instance-fields", generator.getGenerate().getInstanceFields());
+        props.put("generator.generate.relations", defaultString(generator.getGenerate().getRelations()));
+        props.put("generator.generate.deprecated", defaultString(generator.getGenerate().getDeprecated()));
+        props.put("generator.generate.instance-fields", defaultString(generator.getGenerate().getInstanceFields()));
 
         props.put("generator.target.package", generator.getTarget().getPackageName());
         props.put("generator.target.directory", generator.getTarget().getDirectory());

@@ -121,7 +121,7 @@ public class PostgresDatabase extends AbstractDatabase {
             .join(KEY_COLUMN_USAGE)
             .on(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
             .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -141,7 +141,7 @@ public class PostgresDatabase extends AbstractDatabase {
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
             .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getSchemaName()))
+            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -170,7 +170,7 @@ public class PostgresDatabase extends AbstractDatabase {
         for (String name : create()
             .select(TABLES.TABLE_NAME)
             .from(TABLES)
-            .where(TABLES.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(TABLES.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(TABLES.TABLE_NAME)
             .fetch(TABLES.TABLE_NAME)) {
 
@@ -193,7 +193,7 @@ public class PostgresDatabase extends AbstractDatabase {
                     SEQUENCES.NUMERIC_PRECISION,
                     SEQUENCES.NUMERIC_SCALE)
                 .from(SEQUENCES)
-                .where(SEQUENCES.SEQUENCE_SCHEMA.equal(getSchemaName()))
+                .where(SEQUENCES.SEQUENCE_SCHEMA.equal(getInputSchema()))
                 .orderBy(SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
@@ -243,7 +243,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
         for (String name : create().selectDistinct(ATTRIBUTES.UDT_NAME)
                 .from(ATTRIBUTES)
-                .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchemaName()))
+                .where(ATTRIBUTES.UDT_SCHEMA.equal(getInputSchema()))
                 .orderBy(ATTRIBUTES.UDT_NAME)
                 .fetch(ATTRIBUTES.UDT_NAME)) {
 
@@ -289,17 +289,17 @@ public class PostgresDatabase extends AbstractDatabase {
                 exists(
                     create().selectOne()
                         .from(r2)
-                        .where(r2.ROUTINE_SCHEMA.equal(getSchemaName()))
+                        .where(r2.ROUTINE_SCHEMA.equal(getInputSchema()))
                         .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
                         .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
                     create().select(count())
                         .from(r2)
-                        .where(r2.ROUTINE_SCHEMA.equal(getSchemaName()))
+                        .where(r2.ROUTINE_SCHEMA.equal(getInputSchema()))
                         .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
                         .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
                 .as("overload"))
             .from(r1)
-            .where(r1.ROUTINE_SCHEMA.equal(getSchemaName()))
+            .where(r1.ROUTINE_SCHEMA.equal(getInputSchema()))
             .orderBy(r1.ROUTINE_NAME.asc())
             .fetch()) {
 

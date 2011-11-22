@@ -201,7 +201,7 @@ public class DerbyDatabase extends AbstractDatabase {
                 .from(SYSSEQUENCES)
                 .join(SYSSCHEMAS)
                 .on(Sysschemas.SCHEMAID.equal(Syssequences.SCHEMAID))
-                .where(Sysschemas.SCHEMANAME.equal(getSchemaName()))
+                .where(Sysschemas.SCHEMANAME.equal(getInputSchema()))
                 .orderBy(Syssequences.SEQUENCENAME)
                 .fetch()) {
 
@@ -224,7 +224,7 @@ public class DerbyDatabase extends AbstractDatabase {
             .from(SYSTABLES)
             .join(SYSSCHEMAS)
             .on(Systables.SCHEMAID.equal(Sysschemas.SCHEMAID))
-            .where(Sysschemas.SCHEMANAME.equal(getSchemaName()))
+            .where(Sysschemas.SCHEMANAME.equal(getInputSchema()))
 	        .fetch()) {
 
 		    String name = record.getValue(Systables.TABLENAME);

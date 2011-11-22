@@ -119,7 +119,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
             .join(KEY_COLUMN_USAGE)
             .on(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
             .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getSchemaName()))
+            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -141,7 +141,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
             .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getSchemaName()))
+            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getInputSchema()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -175,7 +175,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 SEQUENCES.SEQUENCE_NAME,
                 SEQUENCES.DATA_TYPE)
             .from(SEQUENCES)
-            .where(SEQUENCES.SEQUENCE_SCHEMA.equal(getSchemaName()))
+            .where(SEQUENCES.SEQUENCE_SCHEMA.equal(getInputSchema()))
             .orderBy(SEQUENCES.SEQUENCE_NAME)
             .fetch()) {
 
@@ -199,7 +199,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
         for (String name : create()
             .select(TABLES.TABLE_NAME)
             .from(TABLES)
-            .where(TABLES.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(TABLES.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(TABLES.TABLE_NAME)
             .fetch(TABLES.TABLE_NAME)) {
 
@@ -257,7 +257,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .on(ROUTINES.ROUTINE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
                 .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
                 .and(ROUTINES.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
-                .where(ROUTINES.ROUTINE_SCHEMA.equal(getSchemaName()))
+                .where(ROUTINES.ROUTINE_SCHEMA.equal(getInputSchema()))
                 .orderBy(ROUTINES.ROUTINE_NAME)
                 .fetch()) {
 

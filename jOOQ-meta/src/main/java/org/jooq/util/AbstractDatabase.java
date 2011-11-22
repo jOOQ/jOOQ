@@ -55,7 +55,8 @@ public abstract class AbstractDatabase implements Database {
     private static final JooqLogger log = JooqLogger.getLogger(AbstractDatabase.class);
 
     private Connection                      connection;
-    private String                          schema;
+    private String                          inputSchema;
+    private String                          outputSchema;
     private String[]                        excludes;
     private String[]                        includes;
     private String[]                        masterDataTableNames;
@@ -99,18 +100,28 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void setSchemaName(String schema) {
-        this.schema = schema;
+    public final void setInputSchema(String inputSchema) {
+        this.inputSchema = inputSchema;
     }
 
     @Override
-    public final String getSchemaName() {
-        return schema;
+    public final String getInputSchema() {
+        return inputSchema;
+    }
+
+    @Override
+    public final void setOutputSchema(String outputSchema) {
+        this.outputSchema = outputSchema;
+    }
+
+    @Override
+    public final String getOutputSchema() {
+        return outputSchema;
     }
 
     @Override
     public final SchemaDefinition getSchema() {
-        return new SchemaDefinition(this, getSchemaName(), null);
+        return new SchemaDefinition(this, getOutputSchema(), null);
     }
 
     @Override

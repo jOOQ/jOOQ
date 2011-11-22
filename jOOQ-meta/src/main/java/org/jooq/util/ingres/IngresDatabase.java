@@ -126,7 +126,7 @@ public class IngresDatabase extends AbstractDatabase {
             .join(IIINDEX_COLUMNS)
             .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
             .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
-            .where(Iiconstraints.SCHEMA_NAME.equal(getSchemaName()))
+            .where(Iiconstraints.SCHEMA_NAME.equal(getInputSchema()))
             .and(Iiconstraints.CONSTRAINT_TYPE.equal(constraintType))
             .orderBy(
                 Iiconstraints.TABLE_NAME.asc(),
@@ -156,7 +156,7 @@ public class IngresDatabase extends AbstractDatabase {
             .join(IIINDEX_COLUMNS)
             .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
             .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
-            .where(Iiconstraints.SCHEMA_NAME.equal(getSchemaName()))
+            .where(Iiconstraints.SCHEMA_NAME.equal(getInputSchema()))
             .and(Iiconstraints.CONSTRAINT_TYPE.equal("R"))
             .orderBy(
                 IirefConstraints.REF_TABLE_NAME.asc(),
@@ -187,7 +187,7 @@ public class IngresDatabase extends AbstractDatabase {
                     trim(Iisequences.SEQ_NAME),
                     trim(Iisequences.DATA_TYPE))
                 .from(IISEQUENCES)
-                .where(Iisequences.SEQ_OWNER.equal(getSchemaName()))
+                .where(Iisequences.SEQ_OWNER.equal(getInputSchema()))
                 .orderBy(Iisequences.SEQ_NAME)
                 .fetch()) {
 
@@ -207,7 +207,7 @@ public class IngresDatabase extends AbstractDatabase {
 
         for (Record record : create().select(trim(Iitables.TABLE_NAME))
                 .from(IITABLES)
-                .where(Iitables.TABLE_OWNER.equal(getSchemaName()))
+                .where(Iitables.TABLE_OWNER.equal(getInputSchema()))
                 .orderBy(trim(Iitables.TABLE_NAME))
                 .fetch()) {
 

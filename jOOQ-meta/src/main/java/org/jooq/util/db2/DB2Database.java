@@ -126,7 +126,7 @@ public class DB2Database extends AbstractDatabase {
             .join(TABCONST)
             .on(Keycoluse.TABSCHEMA.equal(Tabconst.TABSCHEMA))
             .and(Keycoluse.CONSTNAME.equal(Tabconst.CONSTNAME))
-            .where(Keycoluse.TABSCHEMA.equal(getSchemaName()))
+            .where(Keycoluse.TABSCHEMA.equal(getInputSchema()))
             .and(Tabconst.TYPE.equal(constraintType))
             .orderBy(
                 Keycoluse.CONSTNAME.asc(),
@@ -142,7 +142,7 @@ public class DB2Database extends AbstractDatabase {
                     References.FK_COLNAMES,
                     References.REFKEYNAME)
                 .from(REFERENCES)
-                .where(References.TABSCHEMA.equal(getSchemaName()))
+                .where(References.TABSCHEMA.equal(getInputSchema()))
                 .fetch()) {
 
             String foreignKey = record.getValue(References.CONSTNAME);
@@ -181,7 +181,7 @@ public class DB2Database extends AbstractDatabase {
                 .from(SEQUENCES)
                 .join(DATATYPES)
                 .on(Sequences.DATATYPEID.equal(Datatypes.TYPEID.cast(Integer.class)))
-                .where(Sequences.SEQSCHEMA.equal(getSchemaName()))
+                .where(Sequences.SEQSCHEMA.equal(getInputSchema()))
                 .orderBy(Sequences.SEQNAME)
                 .fetch()) {
 
@@ -204,7 +204,7 @@ public class DB2Database extends AbstractDatabase {
         SelectQuery q = create().selectQuery();
         q.addFrom(TABLES);
         q.addSelect(Tables.TABNAME);
-        q.addConditions(Tables.TABSCHEMA.equal(getSchemaName()));
+        q.addConditions(Tables.TABSCHEMA.equal(getInputSchema()));
         q.addConditions(Tables.TYPE.in("T", "V")); // tables and views
         q.addOrderBy(Tables.TABNAME);
         q.execute();
@@ -228,11 +228,11 @@ public class DB2Database extends AbstractDatabase {
                 .select().from(create()
                     .select(PROCNAME.as("name"), val(true).as("isProcedure"))
                     .from(PROCEDURES)
-                    .where(PROCSCHEMA.equal(getSchemaName()))
+                    .where(PROCSCHEMA.equal(getInputSchema()))
                     .unionAll(create()
                     .select(FUNCNAME.as("name"), val(false).as("isProcedure"))
                     .from(FUNCTIONS)
-                    .where(FUNCSCHEMA.equal(getSchemaName()))))
+                    .where(FUNCSCHEMA.equal(getInputSchema()))))
                 .orderBy(Factory.literal(1))
                 .fetch()) {
 
@@ -263,7 +263,7 @@ public class DB2Database extends AbstractDatabase {
 
         for (String name : create().selectDistinct(Datatypes.TYPENAME)
             .from(DATATYPES)
-            .where(Datatypes.TYPESCHEMA.equal(getSchemaName()))
+            .where(Datatypes.TYPESCHEMA.equal(getInputSchema()))
             .orderBy(Datatypes.TYPENAME).fetch(Datatypes.TYPENAME)) {
 
             result.add(new DB2UDTDefinition(this, name, null));

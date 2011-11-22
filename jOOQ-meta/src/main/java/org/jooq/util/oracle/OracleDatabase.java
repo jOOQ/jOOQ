@@ -116,7 +116,7 @@ public class OracleDatabase extends AbstractDatabase {
             .on(ALL_CONS_COLUMNS.CONSTRAINT_NAME.equal(ALL_CONSTRAINTS.CONSTRAINT_NAME))
             .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
             .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.notLike("BIN$%"))
-            .and(ALL_CONS_COLUMNS.OWNER.equal(getSchemaName()))
+            .and(ALL_CONS_COLUMNS.OWNER.equal(getInputSchema()))
             .orderBy(
                 ALL_CONSTRAINTS.CONSTRAINT_NAME,
                 ALL_CONS_COLUMNS.POSITION)
@@ -139,7 +139,7 @@ public class OracleDatabase extends AbstractDatabase {
                 .and(ALL_CONSTRAINTS.TABLE_NAME.equal(ALL_CONS_COLUMNS.TABLE_NAME))
                 .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.equal(ALL_CONS_COLUMNS.CONSTRAINT_NAME))
                 .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal("R"))
-                .and(ALL_CONSTRAINTS.OWNER.equal(getSchemaName()))
+                .and(ALL_CONSTRAINTS.OWNER.equal(getInputSchema()))
                 .orderBy(
                     ALL_CONSTRAINTS.TABLE_NAME,
                     ALL_CONSTRAINTS.CONSTRAINT_NAME,
@@ -168,7 +168,7 @@ public class OracleDatabase extends AbstractDatabase {
 
         for (String name : create().select(ALL_SEQUENCES.SEQUENCE_NAME)
                 .from(ALL_SEQUENCES)
-                .where(ALL_SEQUENCES.SEQUENCE_OWNER.equal(getSchemaName()))
+                .where(ALL_SEQUENCES.SEQUENCE_OWNER.equal(getInputSchema()))
                 .orderBy(ALL_SEQUENCES.SEQUENCE_NAME)
                 .fetch(ALL_SEQUENCES.SEQUENCE_NAME)) {
 
@@ -192,7 +192,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_TAB_COMMENTS.TABLE_NAME,
                 ALL_TAB_COMMENTS.COMMENTS)
             .from(ALL_TAB_COMMENTS)
-            .where(ALL_TAB_COMMENTS.OWNER.equal(getSchemaName()))
+            .where(ALL_TAB_COMMENTS.OWNER.equal(getInputSchema()))
             .and(ALL_TAB_COMMENTS.TABLE_NAME.notLike("%$%"))
             .orderBy(ALL_TAB_COMMENTS.TABLE_NAME)
             .fetch()) {
@@ -225,7 +225,7 @@ public class OracleDatabase extends AbstractDatabase {
 
         for (String name : create().selectDistinct(ALL_TYPES.TYPE_NAME)
             .from(ALL_TYPES)
-            .where(ALL_TYPES.OWNER.equal(getSchemaName()))
+            .where(ALL_TYPES.OWNER.equal(getInputSchema()))
             .and(ALL_TYPES.TYPECODE.equal("OBJECT"))
             .orderBy(ALL_TYPES.TYPE_NAME)
             .fetch(ALL_TYPES.TYPE_NAME)) {
@@ -249,7 +249,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_COLL_TYPES.PRECISION,
                 ALL_COLL_TYPES.SCALE)
             .from(ALL_COLL_TYPES)
-            .where(ALL_COLL_TYPES.OWNER.equal(getSchemaName()))
+            .where(ALL_COLL_TYPES.OWNER.equal(getInputSchema()))
             .and(ALL_COLL_TYPES.COLL_TYPE.equal("VARYING ARRAY"))
             .orderBy(ALL_COLL_TYPES.TYPE_NAME)
             .fetch()) {
@@ -274,7 +274,7 @@ public class OracleDatabase extends AbstractDatabase {
 
         for (Record record : create().select(ALL_OBJECTS.OBJECT_NAME, ALL_OBJECTS.OBJECT_ID)
                 .from(ALL_OBJECTS)
-                .where(ALL_OBJECTS.OWNER.equal(getSchemaName())
+                .where(ALL_OBJECTS.OWNER.equal(getInputSchema())
                 .and(ALL_OBJECTS.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
                 .orderBy(ALL_OBJECTS.OBJECT_NAME, ALL_OBJECTS.OBJECT_ID)
                 .fetch()) {
@@ -298,7 +298,7 @@ public class OracleDatabase extends AbstractDatabase {
         		    ALL_OBJECTS.OBJECT_NAME,
         		    ALL_OBJECTS.OBJECT_ID)
                 .from(ALL_OBJECTS)
-                .where(ALL_OBJECTS.OWNER.equal(getSchemaName())
+                .where(ALL_OBJECTS.OWNER.equal(getInputSchema())
                 .and(ALL_OBJECTS.OBJECT_TYPE.equal("PACKAGE")))
                 .orderBy(ALL_OBJECTS.OBJECT_NAME, ALL_OBJECTS.OBJECT_ID)
                 .fetch()) {

@@ -43,6 +43,8 @@ public class Database {
     private String name;
     private String includes = "";
     private String excludes = "";
+    private String inputSchema;
+    private String outputSchema;
 
     String getName() {
         return name;
@@ -54,5 +56,13 @@ public class Database {
 
     String getExcludes() {
         return excludes;
+    }
+
+    String getInputSchema() {
+        return inputSchema;
+    }
+
+    String getOutputSchema() {
+        return outputSchema;
     }
 }

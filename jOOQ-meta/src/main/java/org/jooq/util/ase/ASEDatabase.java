@@ -204,7 +204,7 @@ public class ASEDatabase extends AbstractDatabase {
 
         for (Record record : create().fetch("sp_help")) {
             if (Arrays.asList("view", "user table", "system table").contains(record.getValueAsString("Object_type"))) {
-                if (getSchemaName().equals(record.getValueAsString("Owner"))) {
+                if (getInputSchema().equals(record.getValueAsString("Owner"))) {
                     result.add(record.getValueAsString("Name"));
                 }
             }

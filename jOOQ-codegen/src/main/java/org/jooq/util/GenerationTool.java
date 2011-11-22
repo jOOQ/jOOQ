@@ -135,7 +135,8 @@ public class GenerationTool {
 			Database database = databaseClass.newInstance();
 
 			database.setConnection(connection);
-			database.setSchemaName(properties.getProperty("jdbc.Schema"));
+			database.setInputSchema(defaultString(GenerationUtil.getInputSchema(properties)));
+			database.setOutputSchema(defaultString(GenerationUtil.getOutputSchema(properties)));
 			database.setIncludes(defaultString(properties.getProperty("generator.database.includes")).split(","));
 			database.setExcludes(defaultString(properties.getProperty("generator.database.excludes")).split(","));
 			database.setMasterDataTableNames(defaultString(properties.getProperty("generator.generate.master-data-tables")).split(","));

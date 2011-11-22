@@ -122,7 +122,7 @@ public class H2Database extends AbstractDatabase {
                 Constraints.COLUMN_LIST,
                 Constraints.CONSTRAINT_NAME)
             .from(CONSTRAINTS)
-            .where(Constraints.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(Constraints.TABLE_SCHEMA.equal(getInputSchema()))
             .and(Constraints.CONSTRAINT_TYPE.equal(constraintType))
             .fetch();
     }
@@ -139,7 +139,7 @@ public class H2Database extends AbstractDatabase {
                 .on(CrossReferences.PK_NAME.equal(Constraints.UNIQUE_INDEX_NAME))
                 .and(CrossReferences.PKTABLE_NAME.equal(Constraints.TABLE_NAME))
                 .and(CrossReferences.PKTABLE_SCHEMA.equal(Constraints.TABLE_SCHEMA))
-                .where(CrossReferences.FKTABLE_SCHEMA.equal(getSchemaName()))
+                .where(CrossReferences.FKTABLE_SCHEMA.equal(getInputSchema()))
                 .orderBy(
                     CrossReferences.FK_NAME.asc(),
                     CrossReferences.ORDINAL_POSITION.asc())
@@ -165,7 +165,7 @@ public class H2Database extends AbstractDatabase {
 
         for (String name : create().select(Sequences.SEQUENCE_NAME)
                 .from(SEQUENCES)
-                .where(Sequences.SEQUENCE_SCHEMA.equal(getSchemaName()))
+                .where(Sequences.SEQUENCE_SCHEMA.equal(getInputSchema()))
                 .orderBy(Sequences.SEQUENCE_NAME)
                 .fetch(Sequences.SEQUENCE_NAME)) {
 
@@ -186,7 +186,7 @@ public class H2Database extends AbstractDatabase {
                 Tables.TABLE_NAME,
                 Tables.REMARKS)
             .from(TABLES)
-            .where(Tables.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(Tables.TABLE_SCHEMA.equal(getInputSchema()))
             .orderBy(Tables.ID)
             .fetch()) {
 
@@ -216,7 +216,7 @@ public class H2Database extends AbstractDatabase {
                 .from(FUNCTION_ALIASES)
                 .leftOuterJoin(TYPE_INFO)
                 .on(FunctionAliases.DATA_TYPE.equal(TypeInfo.DATA_TYPE))
-                .where(FunctionAliases.ALIAS_SCHEMA.equal(getSchemaName()))
+                .where(FunctionAliases.ALIAS_SCHEMA.equal(getInputSchema()))
                 .and(FunctionAliases.RETURNS_RESULT.in((short) 1, (short) 2))
                 .orderBy(FunctionAliases.ALIAS_NAME).fetch()) {
 

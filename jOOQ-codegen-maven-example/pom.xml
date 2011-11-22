@@ -76,6 +76,13 @@
 	  		<type>jar</type>
 			<scope>test</scope>
 	  	</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.18</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 		
 	<properties>
@@ -88,7 +95,7 @@
 		
 		<plugins>
 			
-			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE -->
+			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
 			<plugin>
 				<groupId>org.jooq</groupId>
 				<artifactId>jooq-codegen-maven</artifactId>
@@ -161,6 +168,42 @@
 							</generator>
 						</configuration>
 					</execution>
+										
+					<execution>
+						<id>exec3</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<jdbc>
+								<driver>com.mysql.jdbc.Driver</driver>
+								<url>jdbc:mysql://localhost/test</url>
+								<user>root</user>
+								<password></password>
+							</jdbc>
+							<generator>
+								<name>org.jooq.util.DefaultGenerator</name>
+								<database>
+									<name>org.jooq.util.mysql.MySQLDatabase</name>
+									<includes>.*</includes>
+									<excludes>t_book_details</excludes>
+									
+									<!-- [#958] This checks the schema-rewriting functionality -->
+									<inputSchema>test</inputSchema>
+									<outputSchema>test2</outputSchema>
+								</database>
+								<generate>
+									<relations>true</relations>
+									<deprecated>false</deprecated>
+									<instanceFields>true</instanceFields>
+								</generate>
+								<target>
+									<packageName>org.jooq.util.maven.example.mysql</packageName>
+									<directory>target/generated-sources/jooq-mysql</directory>
+								</target>
+							</generator>
+						</configuration>
+					</execution>
 				</executions>
 				<dependencies>
 					<dependency>
@@ -172,6 +215,11 @@
 						<groupId>postgresql</groupId>
 						<artifactId>postgresql</artifactId>
 						<version>8.4-702.jdbc4</version>
+					</dependency>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.18</version>
 					</dependency>
 				</dependencies>
 			</plugin>

@@ -75,7 +75,7 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final String getSchemaName() {
-        return database.getSchemaName();
+        return database.getInputSchema();
     }
 
     @Override

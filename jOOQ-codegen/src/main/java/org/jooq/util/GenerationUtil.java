@@ -39,10 +39,12 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableSet;
 
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.h2.H2DataType;
 
 /**
@@ -201,5 +203,29 @@ class GenerationUtil {
         }
 
         throw new SQLDialectNotSupportedException("getArrayBaseType() is not supported for dialect " + dialect);
+    }
+
+    // -------------------------------------------------------------------------
+    // For backwards compatibility with "jdbc.Schema"
+    // -------------------------------------------------------------------------
+    static String getInputSchema(Properties properties) {
+        if (!StringUtils.isBlank(properties.getProperty("generator.database.input-schema"))) {
+            return properties.getProperty("generator.database.input-schema");
+        }
+        else {
+            return properties.getProperty("jdbc.Schema");
+        }
+    }
+
+    static String getOutputSchema(Properties properties) {
+        if (!StringUtils.isBlank(properties.getProperty("generator.database.output-schema"))) {
+            return properties.getProperty("generator.database.output-schema");
+        }
+        else if (!StringUtils.isBlank(properties.getProperty("generator.database.input-schema"))) {
+            return properties.getProperty("generator.database.input-schema");
+        }
+        else {
+            return properties.getProperty("jdbc.Schema");
+        }
     }
 }

@@ -138,14 +138,24 @@ public interface Database {
     Connection getConnection();
 
     /**
-     * Initialise a schema name to this database
+     * The input schema is the schema that jooq-meta is reading data from
      */
-    void setSchemaName(String schema);
+    void setInputSchema(String schema);
 
     /**
-     * The database schema
+     * The input schema is the schema that jooq-meta is reading data from
      */
-    String getSchemaName();
+    String getInputSchema();
+
+    /**
+     * The output schema is the schema used by jooq-codegen in class names
+     */
+    void setOutputSchema(String schema);
+
+    /**
+     * The output schema is the schema used by jooq-codegen in class names
+     */
+    String getOutputSchema();
 
     /**
      * Only database objects matching any of these regular expressions will be

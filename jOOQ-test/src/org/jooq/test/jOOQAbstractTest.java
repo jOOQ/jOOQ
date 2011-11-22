@@ -1090,6 +1090,11 @@ public abstract class jOOQAbstractTest<
 
                     sequences++;
                 }
+
+                // Oracle has additional sequences for [#961]
+                else if (getDialect() == ORACLE) {
+                    sequences += 5;
+                }
             }
 
             assertEquals(sequences, schema.getSequences().size());

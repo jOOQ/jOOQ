@@ -3,6 +3,11 @@ DROP VIEW v_author/
 DROP VIEW v_book/
 DROP VIEW v_incomplete/
 
+DROP SEQUENCE s_961_byte/
+DROP SEQUENCE s_961_short/
+DROP SEQUENCE s_961_int/
+DROP SEQUENCE s_961_long/
+DROP SEQUENCE s_961_big_integer/
 DROP SEQUENCE s_triggers_sequence/
 DROP TRIGGER t_triggers_trigger/
 
@@ -185,6 +190,11 @@ CREATE TYPE u_address_type AS OBJECT (
 )
 /
 
+CREATE SEQUENCE s_961_byte MAXVALUE 100/
+CREATE SEQUENCE s_961_short MAXVALUE 10000/
+CREATE SEQUENCE s_961_int MAXVALUE 2000000000/
+CREATE SEQUENCE s_961_long MAXVALUE 10000000000/
+CREATE SEQUENCE s_961_big_integer/
 CREATE SEQUENCE s_triggers_sequence
 /
 

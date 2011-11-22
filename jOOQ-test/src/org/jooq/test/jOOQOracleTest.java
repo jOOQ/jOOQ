@@ -797,4 +797,13 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals("George", author1.getFirstName());
         assertEquals("Orwell", author1.getLastName());
     }
+
+    @Test
+    public void testTypedSequences() throws Exception {
+        assertEquals(Byte.valueOf("1"), ora().nextval(Sequences.S_961_BYTE));
+        assertEquals(Short.valueOf("1"), ora().nextval(Sequences.S_961_SHORT));
+        assertEquals(Integer.valueOf("1"), ora().nextval(Sequences.S_961_INT));
+        assertEquals(Long.valueOf("1"), ora().nextval(Sequences.S_961_LONG));
+        assertEquals(BigInteger.valueOf(1), ora().nextval(Sequences.S_961_BIG_INTEGER));
+    }
 }

@@ -15,7 +15,7 @@ DELETE FROM t_directory/
 DELETE FROM t_triggers/
 
 DROP SEQUENCE s_author_id/
-CREATE SEQUENCE s_author_id/
+CREATE SEQUENCE s_author_id MAXVALUE 2000000000/
 
 INSERT INTO t_language (id, cd, description, description_english) VALUES (1, 'en', 'English', 'English')/
 INSERT INTO t_language (id, cd, description, description_english) VALUES (2, 'de', 'Deutsch', 'German')/

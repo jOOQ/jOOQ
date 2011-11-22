@@ -193,6 +193,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) throws DataAccessException {
+        return fetch().getValues(field, type);
+    }
+
+    @Override
     public final List<?> fetch(int fieldIndex) {
         return fetch().getValues(fieldIndex);
     }
@@ -226,7 +231,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) {
-        return TypeUtils.convert(fetchOne(fieldIndex), type);
+        return Convert.convert(fetchOne(fieldIndex), type);
     }
 
     @Override
@@ -237,7 +242,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
-        return TypeUtils.convert(fetchOne(fieldName), type);
+        return Convert.convert(fetchOne(fieldName), type);
     }
 
     @Override
@@ -338,7 +343,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
-        return (T[]) TypeUtils.convertArray(fetchArray(fieldIndex), type);
+        return (T[]) Convert.convertArray(fetchArray(fieldIndex), type);
     }
 
     @Override
@@ -349,7 +354,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
-        return (T[]) TypeUtils.convertArray(fetchArray(fieldName), type);
+        return (T[]) Convert.convertArray(fetchArray(fieldName), type);
     }
 
     @SuppressWarnings("unchecked")

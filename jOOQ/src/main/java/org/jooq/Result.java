@@ -44,12 +44,13 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.jooq.exception.MappingException;
+import org.jooq.impl.Convert;
 
 import org.w3c.dom.Document;
 
 /**
  * A wrapper for database results returned by <code>{@link SelectQuery}</code>
- * 
+ *
  * @param <R> The record type contained in this result
  * @author Lukas Eder
  * @see SelectQuery#getResult()
@@ -58,7 +59,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param <T> The value's field's generic type parameter
      * @param index The record's index
      * @param field The value's field
@@ -69,7 +70,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param <T> The value's field's generic type parameter
      * @param index The record's index
      * @param field The value's field
@@ -81,7 +82,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The value's field index
      * @return The value
@@ -91,7 +92,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The value's field index
      * @param defaultValue The default value if the value was <code>null</code>
@@ -102,7 +103,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The value's field name
      * @return The value
@@ -112,7 +113,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The value's field name
      * @param defaultValue The default value if the value was <code>null</code>
@@ -123,7 +124,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param <A> The value's field's generic type parameter
      * @param <T> The {@link ArrayRecord} type parameter
      * @param index The record's index
@@ -135,7 +136,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param <A> The value's field's generic type parameter
      * @param <T> The {@link ArrayRecord} type parameter
      * @param index The record's index
@@ -149,7 +150,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -160,7 +161,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -173,7 +174,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -184,7 +185,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -197,7 +198,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -208,7 +209,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -221,7 +222,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -232,7 +233,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -245,7 +246,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -256,7 +257,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -269,7 +270,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -280,7 +281,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -293,7 +294,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -304,7 +305,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -317,7 +318,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -328,7 +329,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -341,7 +342,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -352,7 +353,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -365,7 +366,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -376,7 +377,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -389,7 +390,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -400,7 +401,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -413,7 +414,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -424,7 +425,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -437,7 +438,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -448,7 +449,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -461,7 +462,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -472,7 +473,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -485,7 +486,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -496,7 +497,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -509,7 +510,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -520,7 +521,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -533,7 +534,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -544,7 +545,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -557,7 +558,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -568,7 +569,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -582,7 +583,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -593,7 +594,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -606,7 +607,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -617,7 +618,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -630,7 +631,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -641,7 +642,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -654,7 +655,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -665,7 +666,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -678,7 +679,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -689,7 +690,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -702,7 +703,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -713,7 +714,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -726,7 +727,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -737,7 +738,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -750,7 +751,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -761,7 +762,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -774,7 +775,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -785,7 +786,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -823,7 +824,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -858,7 +859,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -895,7 +896,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -930,7 +931,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -967,7 +968,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -1002,7 +1003,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -1015,7 +1016,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -1026,7 +1027,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -1039,7 +1040,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -1050,7 +1051,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -1063,7 +1064,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -1074,7 +1075,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -1087,7 +1088,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -1098,7 +1099,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -1111,7 +1112,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -1122,7 +1123,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -1135,7 +1136,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -1146,7 +1147,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -1159,7 +1160,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @return The converted value of a field contained in this record
@@ -1170,7 +1171,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param field The field
      * @param defaultValue The default value instead of <code>null</code>
@@ -1183,7 +1184,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @return The converted value of a field's index contained in this record
@@ -1194,7 +1195,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldIndex The field's index
      * @param defaultValue The default value instead of <code>null</code>
@@ -1207,7 +1208,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @return The converted value of a field's name contained in this record
@@ -1218,7 +1219,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Convenience method to fetch a value at a given position in the result.
-     * 
+     *
      * @param index The record's index
      * @param fieldName The field's name
      * @param defaultValue The default value instead of <code>null</code>
@@ -1232,7 +1233,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param <T> The values' field's generic type parameter
      * @param field The values' field
      * @return The values
@@ -1242,17 +1243,19 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @param type The type used for type conversion
      * @return The values
+     * @see Record#getValue(Field, Class)
+     * @see Convert#convert(Object, Class)
      */
     <T> List<T> getValues(Field<?> field, Class<? extends T> type);
 
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The values
      */
@@ -1261,17 +1264,19 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @param type The type used for type conversion
      * @return The values
+     * @see Record#getValue(int, Class)
+     * @see Convert#convert(Object, Class)
      */
     <T> List<T> getValues(int fieldIndex, Class<? extends T> type);
 
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The values
      */
@@ -1280,17 +1285,19 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @param type The type used for type conversion
      * @return The values
+     * @see Record#getValue(String, Class)
+     * @see Convert#convert(Object, Class)
      */
     <T> List<T> getValues(String fieldName, Class<? extends T> type);
 
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1299,7 +1306,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1308,7 +1315,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1317,7 +1324,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1326,7 +1333,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1335,7 +1342,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1344,7 +1351,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1353,7 +1360,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1362,7 +1369,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1371,7 +1378,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1380,7 +1387,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1389,7 +1396,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1398,7 +1405,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1407,7 +1414,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1416,7 +1423,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1425,7 +1432,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1434,7 +1441,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1443,7 +1450,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1452,7 +1459,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1461,7 +1468,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1470,7 +1477,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1479,7 +1486,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1488,7 +1495,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1497,7 +1504,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1506,7 +1513,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1515,7 +1522,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1524,7 +1531,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1533,7 +1540,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1542,7 +1549,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1551,7 +1558,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1560,7 +1567,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1569,7 +1576,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1578,7 +1585,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1587,7 +1594,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param field The values' field
      * @return The converted values
      */
@@ -1596,7 +1603,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldIndex The values' field index
      * @return The converted values
      */
@@ -1605,7 +1612,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
-     * 
+     *
      * @param fieldName The values' field name
      * @return The converted values
      */
@@ -1622,14 +1629,14 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * <p>
      * This is the same as calling {@link #format(int)} with
      * <code>maxRows = 50</code>
-     * 
+     *
      * @return The formatted result
      */
     String format();
 
     /**
      * Get a simple formatted representation of this result.
-     * 
+     *
      * @param maxRecords The maximum number of records to include in the
      *            formatted result
      * @return The formatted result
@@ -1666,7 +1673,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *   &lt;/tbody&gt;
      * &lt;/table&gt;
      * </pre></code>
-     * 
+     *
      * @return The formatted result
      */
     String formatHTML();
@@ -1675,14 +1682,14 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Get a simple formatted representation of this result as CSV.
      * <p>
      * This is the same as calling <code>formatCSV(',')</code>
-     * 
+     *
      * @return The formatted result
      */
     String formatCSV();
 
     /**
      * Get a simple formatted representation of this result as CSV.
-     * 
+     *
      * @param delimiter The delimiter to use between records
      * @return The formatted result
      */
@@ -1695,14 +1702,14 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *  "records":[[value-1-1,value-1-2,...,value-1-n],
      *             [value-2-1,value-2-2,...,value-2-n]]}
      * </pre></code>
-     * 
+     *
      * @return The formatted result
      */
     String formatJSON();
 
     /**
      * Get this result formatted as XML
-     * 
+     *
      * @see #exportXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
@@ -1711,7 +1718,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Get this result as XML
-     * 
+     *
      * @see #formatXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
@@ -1724,7 +1731,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * This is the same as calling <code>record.into(type)</code> on every
      * record contained in this <code>Result</code>. See
      * {@link Record#into(Class)} for more details
-     * 
+     *
      * @param <E> The generic entity type.
      * @param type The entity type.
      * @throws MappingException wrapping any reflection or data type conversion
@@ -1739,7 +1746,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * This is the same as calling <code>record.into(table)</code> on every
      * record contained in this <code>Result</code>. See
      * {@link Record#into(Table)} for more details
-     * 
+     *
      * @param <Z> The generic table record type.
      * @param table The table type.
      * @throws MappingException wrapping any reflection or data type conversion
@@ -1750,7 +1757,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
 
     /**
      * Map results into a custom handler callback
-     * 
+     *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      */

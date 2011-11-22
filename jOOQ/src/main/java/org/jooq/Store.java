@@ -42,6 +42,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.Convert;
 
 /**
  * A common base type for {@link Record} and {@link ArrayRecord} providing
@@ -50,7 +51,7 @@ import org.jooq.exception.DataTypeException;
  * <code>Store</code> implements {@link Attachable}, as some stores need a
  * reference to an open JDBC connection to perform some actions on their
  * elements.
- * 
+ *
  * @param <E> The store's element type
  * @author Lukas Eder
  */
@@ -69,7 +70,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -79,7 +80,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The value of a field's index contained in this Store, or
@@ -91,7 +92,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -103,7 +104,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -142,7 +143,7 @@ public interface Store<E> extends Attachable {
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -178,7 +179,7 @@ public interface Store<E> extends Attachable {
      * </ul>
      * <p>
      * All other values evaluate to <code>null</code>
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -192,7 +193,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -204,7 +205,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -219,7 +220,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -231,7 +232,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -245,7 +246,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -257,7 +258,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -271,7 +272,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -283,7 +284,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -297,7 +298,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -309,7 +310,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -323,7 +324,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -335,7 +336,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -349,7 +350,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -361,7 +362,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -375,7 +376,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -387,7 +388,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -401,7 +402,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -413,7 +414,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -427,7 +428,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -439,7 +440,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -453,7 +454,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @return The converted value of a field's index contained in this Store
      * @throws IllegalArgumentException If the argument index is not contained
@@ -465,7 +466,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a value from this Store, providing a field index.
-     * 
+     *
      * @param index The field's index
      * @param defaultValue The default value instead of <code>null</code>
      * @return The converted value of a field's index contained in this Store,
@@ -479,7 +480,7 @@ public interface Store<E> extends Attachable {
 
     /**
      * Get a converted value from this Store, providing a field index.
-     * 
+     *
      * @param <T> The conversion type parameter
      * @param index The field's index
      * @param type The conversion type
@@ -488,12 +489,13 @@ public interface Store<E> extends Attachable {
      *             in the Store
      * @throws DataTypeException wrapping data type conversion exception that
      *             might have occurred
+     * @see Convert#convert(Object, Class)
      */
     <T> T getValue(int index, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
     /**
      * Get a converted value from this Store, providing a field index.
-     * 
+     *
      * @param <T> The conversion type parameter
      * @param index The field's index
      * @param type The conversion type
@@ -504,6 +506,7 @@ public interface Store<E> extends Attachable {
      *             in the Store
      * @throws DataTypeException wrapping data type conversion exception that
      *             might have occurred
+     * @see Convert#convert(Object, Class)
      */
     <T> T getValue(int index, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
         DataTypeException;

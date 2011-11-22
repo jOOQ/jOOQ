@@ -102,6 +102,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetch(field, type);
+    }
+
+    @Override
     public final List<?> fetch(int fieldIndex) {
         return getDelegate().fetch(fieldIndex);
     }

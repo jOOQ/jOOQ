@@ -618,7 +618,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> List<T> getValues(Field<?> field, Class<? extends T> type) {
-        return TypeUtils.convert(getValues(field), type);
+        return Convert.convert(getValues(field), type);
     }
 
     @Override
@@ -628,7 +628,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> List<T> getValues(int fieldIndex, Class<? extends T> type) {
-        return TypeUtils.convert(getValues(fieldIndex), type);
+        return Convert.convert(getValues(fieldIndex), type);
     }
 
     @Override
@@ -638,7 +638,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> List<T> getValues(String fieldName, Class<? extends T> type) {
-        return TypeUtils.convert(getValues(fieldName), type);
+        return Convert.convert(getValues(fieldName), type);
     }
 
     @Override

@@ -103,7 +103,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final BigDecimal getValueAsBigDecimal(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), BigDecimal.class);
+        return Convert.convert(getValue(index), BigDecimal.class);
     }
 
     @Override
@@ -114,7 +114,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Boolean getValueAsBoolean(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Boolean.class);
+        return Convert.convert(getValue(index), Boolean.class);
     }
 
     @Override
@@ -125,7 +125,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final BigInteger getValueAsBigInteger(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), BigInteger.class);
+        return Convert.convert(getValue(index), BigInteger.class);
     }
 
     @Override
@@ -136,7 +136,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Byte getValueAsByte(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Byte.class);
+        return Convert.convert(getValue(index), Byte.class);
     }
 
     @Override
@@ -147,7 +147,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Date getValueAsDate(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Date.class);
+        return Convert.convert(getValue(index), Date.class);
     }
 
     @Override
@@ -158,7 +158,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Double getValueAsDouble(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Double.class);
+        return Convert.convert(getValue(index), Double.class);
     }
 
     @Override
@@ -169,7 +169,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Float getValueAsFloat(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Float.class);
+        return Convert.convert(getValue(index), Float.class);
     }
 
     @Override
@@ -180,7 +180,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Integer getValueAsInteger(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Integer.class);
+        return Convert.convert(getValue(index), Integer.class);
     }
 
     @Override
@@ -191,7 +191,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Long getValueAsLong(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Long.class);
+        return Convert.convert(getValue(index), Long.class);
     }
 
     @Override
@@ -202,7 +202,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Short getValueAsShort(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Short.class);
+        return Convert.convert(getValue(index), Short.class);
     }
 
     @Override
@@ -213,7 +213,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final String getValueAsString(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), String.class);
+        return Convert.convert(getValue(index), String.class);
     }
 
     @Override
@@ -224,7 +224,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Time getValueAsTime(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Time.class);
+        return Convert.convert(getValue(index), Time.class);
     }
 
     @Override
@@ -235,7 +235,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final Timestamp getValueAsTimestamp(int index) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), Timestamp.class);
+        return Convert.convert(getValue(index), Timestamp.class);
     }
 
     @Override
@@ -246,7 +246,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
     @Override
     public final <Z> Z getValue(int index, Class<? extends Z> type) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(index), type);
+        return Convert.convert(getValue(index), type);
     }
 
     @Override

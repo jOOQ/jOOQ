@@ -45,12 +45,14 @@ import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TYPES;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.impl.Factory;
+import org.jooq.impl.SQLDataType;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -166,16 +168,37 @@ public class OracleDatabase extends AbstractDatabase {
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
-        for (String name : create().select(ALL_SEQUENCES.SEQUENCE_NAME)
+        for (Record record : create().select(
+                    ALL_SEQUENCES.SEQUENCE_NAME,
+                    ALL_SEQUENCES.MAX_VALUE)
                 .from(ALL_SEQUENCES)
                 .where(ALL_SEQUENCES.SEQUENCE_OWNER.equal(getInputSchema()))
                 .orderBy(ALL_SEQUENCES.SEQUENCE_NAME)
-                .fetch(ALL_SEQUENCES.SEQUENCE_NAME)) {
+                .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
-                OracleDataType.NUMBER.getTypeName(), 38, 0);
+            DataTypeDefinition type;
 
-            result.add(new DefaultSequenceDefinition(getSchema(), name, type));
+            BigInteger value = record.getValue(ALL_SEQUENCES.MAX_VALUE, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
+
+            if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
+                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 2, 0);
+            }
+            else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
+                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 4, 0);
+            }
+            else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
+                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 9, 0);
+            }
+            else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
+                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 18, 0);
+            }
+            else {
+                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 38, 0);
+            }
+
+            result.add(new DefaultSequenceDefinition(getSchema(),
+                record.getValue(ALL_SEQUENCES.SEQUENCE_NAME),
+                type));
         }
 
         return result;

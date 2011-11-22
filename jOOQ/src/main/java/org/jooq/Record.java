@@ -47,6 +47,7 @@ import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.Convert;
 
 /**
  * A wrapper for database result records returned by
@@ -923,6 +924,7 @@ public interface Record extends FieldProvider, Store<Object> {
      *             that might have occurred
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @see Convert#convert(Object, Class)
      */
     <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
@@ -939,6 +941,7 @@ public interface Record extends FieldProvider, Store<Object> {
      *             in {@link #getFields()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @see Convert#convert(Object, Class)
      */
     <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
         DataTypeException;
@@ -954,6 +957,7 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @see Convert#convert(Object, Class)
      */
     <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException, DataTypeException;
 
@@ -970,6 +974,7 @@ public interface Record extends FieldProvider, Store<Object> {
      *             contained in the record
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
+     * @see Convert#convert(Object, Class)
      */
     <T> T getValue(String fieldName, Class<? extends T> type, T defaultValue) throws IllegalArgumentException,
         DataTypeException;

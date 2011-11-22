@@ -144,7 +144,7 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
             this.array = null;
         }
         else {
-            this.array = TypeUtils.convert(array.getArray(), type.getArrayType());
+            this.array = Convert.convert(array.getArray(), type.getArrayType());
         }
     }
 

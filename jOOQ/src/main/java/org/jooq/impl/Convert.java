@@ -65,7 +65,7 @@ import org.joou.UShort;
  *
  * @author Lukas Eder
  */
-final class TypeUtils {
+public final class Convert {
 
     static final Set<String> TRUE_VALUES;
     static final Set<String> FALSE_VALUES;
@@ -344,6 +344,7 @@ final class TypeUtils {
      * @param list The list of objects
      * @param type The target type
      * @return The list of converted objects
+     * @see #convert(Object, Class)
      */
     public static <T> List<T> convert(List<?> list, Class<? extends T> type) {
         List<T> result = new ArrayList<T>();
@@ -355,5 +356,5 @@ final class TypeUtils {
         return result;
     }
 
-    private TypeUtils() {}
+    private Convert() {}
 }

@@ -300,7 +300,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         Class<?> type = getType();
 
         if (type == String.class) {
-            return ((Field<String>) this).in(TypeUtils.TRUE_VALUES);
+            return ((Field<String>) this).in(Convert.TRUE_VALUES);
         }
         else if (Number.class.isAssignableFrom(type)) {
             return ((Field<Number>) this).equal((Number) getDataType().convert(1));
@@ -309,7 +309,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             return ((Field<Boolean>) this).equal(true);
         }
         else {
-            return cast(String.class).in(TypeUtils.TRUE_VALUES);
+            return cast(String.class).in(Convert.TRUE_VALUES);
         }
     }
 
@@ -319,7 +319,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         Class<?> type = getType();
 
         if (type == String.class) {
-            return ((Field<String>) this).in(TypeUtils.FALSE_VALUES);
+            return ((Field<String>) this).in(Convert.FALSE_VALUES);
         }
         else if (Number.class.isAssignableFrom(type)) {
             return ((Field<Number>) this).equal((Number) getDataType().convert(0));
@@ -328,7 +328,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             return ((Field<Boolean>) this).equal(false);
         }
         else {
-            return cast(String.class).in(TypeUtils.FALSE_VALUES);
+            return cast(String.class).in(Convert.FALSE_VALUES);
         }
     }
 

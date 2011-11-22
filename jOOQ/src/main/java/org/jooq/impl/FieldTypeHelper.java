@@ -427,7 +427,7 @@ public final class FieldTypeHelper {
         else if (type == BigInteger.class) {
         	// The SQLite JDBC driver doesn't support BigDecimals
             if (configuration.getDialect() == SQLDialect.SQLITE) {
-                return TypeUtils.convert(rs.getString(index), (Class<? extends T>) BigInteger.class);
+                return Convert.convert(rs.getString(index), (Class<? extends T>) BigInteger.class);
             }
             else {
                 BigDecimal result = rs.getBigDecimal(index);
@@ -437,7 +437,7 @@ public final class FieldTypeHelper {
         else if (type == BigDecimal.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
             if (configuration.getDialect() == SQLDialect.SQLITE) {
-                return TypeUtils.convert(rs.getString(index), (Class<? extends T>) BigDecimal.class);
+                return Convert.convert(rs.getString(index), (Class<? extends T>) BigDecimal.class);
             }
             else {
                 return (T) rs.getBigDecimal(index);
@@ -553,7 +553,7 @@ public final class FieldTypeHelper {
 
     private static Object[] convertArray(Object array, Class<? extends Object[]> type) throws SQLException {
         if (array instanceof Object[]) {
-            return TypeUtils.convert(array, type);
+            return Convert.convert(array, type);
         }
         else if (array instanceof Array) {
             return convertArray((Array) array, type);
@@ -564,7 +564,7 @@ public final class FieldTypeHelper {
 
     private static Object[] convertArray(Array array, Class<? extends Object[]> type) throws SQLException {
         if (array != null) {
-            return TypeUtils.convert(array.getArray(), type);
+            return Convert.convert(array.getArray(), type);
         }
 
         return null;

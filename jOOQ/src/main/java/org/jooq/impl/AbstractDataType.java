@@ -358,7 +358,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public final T convert(Object object) {
-        return TypeUtils.convert(object, type);
+        return Convert.convert(object, type);
     }
 
     protected static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {

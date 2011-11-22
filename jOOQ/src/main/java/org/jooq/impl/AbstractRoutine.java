@@ -133,7 +133,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     // ------------------------------------------------------------------------
 
     protected final void setNumber(Parameter<? extends Number> parameter, Number value) {
-        setValue(parameter, TypeUtils.convert(value, parameter.getType()));
+        setValue(parameter, Convert.convert(value, parameter.getType()));
     }
 
     protected final void setNumber(Parameter<? extends Number> parameter, Field<? extends Number> value) {

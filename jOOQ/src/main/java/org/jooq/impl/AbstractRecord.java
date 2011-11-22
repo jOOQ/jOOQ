@@ -472,7 +472,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @Override
     public final <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(field), type);
+        return Convert.convert(getValue(field), type);
     }
 
     @Override
@@ -483,7 +483,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @Override
     public final <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException {
-        return TypeUtils.convert(getValue(fieldName), type);
+        return Convert.convert(getValue(fieldName), type);
     }
 
     @Override

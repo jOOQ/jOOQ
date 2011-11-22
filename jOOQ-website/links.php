@@ -22,6 +22,7 @@ function printContent() {
 
 <h2>jOOQ in the WWW</h2>
 <ul>
+	<li>On Twitter: <a href="https://twitter.com/#!/JavaOOQ" title="jOOQ on Twitter">https://twitter.com/#!/JavaOOQ</a>
 	<li>On Wordpress: <a href="http://lukaseder.wordpress.com/" title="Lukas Eder's blog about Java, SQL and jOOQ">http://lukaseder.wordpress.com/</a></li>
     <li>On SourceForge: <a href="https://sourceforge.net/projects/jooq/" title="jOOQ download and hosting on source forge">https://sourceforge.net/projects/jooq/</a></li>
     <li>On GitHub: <a href="https://github.com/lukaseder/jOOQ" title="fork jOOQ on GitHub">https://github.com/lukaseder/jOOQ</a></li>

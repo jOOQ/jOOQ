@@ -88,6 +88,8 @@ function printContent() {
 
 function markup($value) {
 	$value = htmlentities($value);
+	$value = preg_replace('%&lt;pre&gt;%', '<pre>', $value);
+	$value = preg_replace('%&lt;/pre&gt;%', '</pre>', $value);
 	$value = preg_replace('%(https?://\S+)%', '<a href="$1">$1</a>', $value);
 	return $value;
 }

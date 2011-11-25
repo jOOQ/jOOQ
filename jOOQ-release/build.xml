@@ -6,21 +6,25 @@
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="release" description="Release a new version">
-		<property name="version" value="2.0.0"/>
+		<property name="version" value="2.0.0-RC1"/>
+		<property name="version-joou" value="0.9.0"/>
 		
 		<mkdir dir="${dir.release}/versions" />
 		<mkdir dir="${dir.release}/${version}" />
 		<mkdir dir="${dir.release}/${version}/lib" />
 		<mkdir dir="${dir.release}/${version}/src" />
 		
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOU/target/joou-${version-joou}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
 		
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOU/target/joou-${version-joou}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
 		
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOU/target/joou-${version-joou}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>

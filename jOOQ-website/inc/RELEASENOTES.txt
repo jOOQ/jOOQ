@@ -9,6 +9,228 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.0.0 - November 25, 2011
+=================================================================
+This release is a fresh start in many areas of jOOQ, adressing
+issues that have been requested by users for a long time. These 
+release notes docment the most important changes, a detailed
+upgrade guide, as well as the detailed list of improvements.
+
+Most important changes
+----------------------
+- The API became more static. This applies to many Factory
+  methods, such as val(), literal(), as well as to many Field
+  methods that have been moved over to the Factory. For example,
+  when before, you wrote this using "postfix function notation":
+  
+    <pre>NAME.replace(" ", "_").trim()</pre>
+    
+  you will now write (just as in SQL):
+  
+    <pre>trim(replace(NAME, " ", "_"))</pre>
+    
+  Using static imports of Factory.*, jOOQ makes SQL look even 
+  more like SQL
+- By default, jooq-codegen will now generate a "dynamic" meta 
+  model as opposed to the existing static one. Generated tables
+  covariantly override the as(String) aliasing method, leading
+  to a much more convenient aliasing style. When before, you
+  wrote:
+  
+<pre>
+Table<TRecord> parent = T.as("parent");
+Table<TRecord> child  = T.as("child");
+Condition join = 
+  parent.getField("ID").equal(child.getField("PARENT_ID"))
+</pre>
+
+  You can now write:
+  
+<pre>
+T parent = T.as("parent");
+T child  = T.as("child");
+Condition join = parent.ID.equal(child.PARENT_ID)
+</pre>
+
+  Of course, the existing notation still works
+
+- Exceptions are no longer checked. When previously, the DB's
+  SQLException was propagated to client code, there is now an
+  unchecked DataAccessException hierarchy, similar to that of
+  Spring. This will eventually give way to a standardised error
+  handling abstraction, in future developments.
+- Window functions are now constructed from their underlying
+  aggregate functions just like in SQL. For example:
+  
+<pre>
+sum(AMOUNT)
+sum(AMOUNT).over().partitionBy(ACCOUNT)
+</pre>
+    
+  This makes for a more concise API, especially when considering
+  future extensions, such as Oracle's KEEP (DENSE_RANK FIRST...)
+  syntax.
+- More type safety has been introduced regarding various places
+  where generic <R extends Record> and <T> types are involved.
+  This is especially true for INSERT / UPDATE / DELETE statements 
+- Sequences now also have a <T> type
+- Unsigned number types are now supported in those databases that
+  use them. Unsigned numbers are implemented in jOOU, a spin-off
+  open source project: 
+  
+http://code.google.com/p/joou/
+
+Upgrade instructions:
+---------------------
+Various of the above changes are incompatible with jOOQ 1.x. In
+order to upgrade, please be aware of the following pitfalls:
+
+- The schema needs to be re-generated.
+- Much of the post-fix function notation is replaced by static 
+  methods in the Factory. Today's org.jooq.Field API is not
+  maintained in jOOQ 2.0
+- Some Factory instance methods (such as val(), literal()) are
+  now static. They are compatible, but may cause compiler
+  warnings.
+- The meta model is now an instance model by default. If you 
+  prefer the static meta model, you can configure this in your 
+  jooq-codegen configuration.
+- The additional typesafety involving <R> and <T> types may cause
+  compiler warnings and errors.
+- SQLException is no longer part of the API. This can cause
+  compiler issues, in particular when extending jOOQ
+- Some utility classes have moved to org.jooq.tools
+
+Should these incompatibilities be too significant for your
+project, you can still stay on the 1.x branch, which will be
+maintained for a while. Be aware that upgrading might be more
+difficult, later, though.
+
+Features and improvements
+-------------------------
+#55  - Implement improved exception handling
+#117 - Improve DSL support for field and table aliasing (decrease
+       verbosity)
+#519 - Add support for MySQL UNSIGNED numeric types
+#626 - Create static function access
+#661 - Add support for bitwise operators
+#718 - Sequences should be mapped to appropriate type (e.g.
+       SMALLINT, INT, BIGINT, etc)
+#734 - Add support for Oracle / SQL Server CUBE() and ROLLUP() 
+       grouping functions
+#751 - Add support for Oracle / SQL Server GROUPING SETS() 
+       function
+#799 - Add support for Oracle PL/SQL's object-oriented MEMBER 
+       PROCEDURES and MEMBER FUNCTIONS
+#804 - Add <R extends Record> to Insert, Update, Delete
+#835 - Review API typesafety for <T> InsertSetMoreStep 
+       set(Field<T>, T) and similar methods
+#890 - Add Factory.selectCount() convenience method
+#891 - Let min() max(), etc functions return a new type
+       AggregateFunction. This type can then be used as an entry-
+       point for window functions
+#892 - Add support for Oracle / SQL Server GROUPING() and 
+       GROUPING_ID() functions to be used along with CUBE() and
+       ROLLUP()
+#893 - Simulate ROLLUP() function for MySQL, using the WITH
+       ROLLUP grouping modifier
+#894 - Move functions from Field<?> to org.jooq.impl.Factory
+       and make them static
+#895 - Add power(..., Field<? extends Number>)
+#897 - Add (experimental) Spring integration project
+#898 - Replace usage of checked SQLException by an unchecked
+       DataAccessException, similar to that of Spring
+#899 - Build jOOQ .jar files as bundles to be deployed into OSGI
+       environments
+#900 - Purge deprecated API - Prior to 2.0
+#901 - Introduce InvalidResultException as a subtype of
+       DataAccessException for integrity checks in methods like
+       ResultQuery#fetchOne(), ResultQuery#fetchMap(), etc.
+#902 - Make AggregateFunction the base type for constructing
+       window functions
+#904 - Move SQLDialectNotSupportedException into 
+       org.jooq.exception package
+#905 - Introduce MappingException as a subtype of 
+       DataAccessException for integrity checks in methods like 
+       ResultQuery#fetchInto(), etc.
+#907 - Add missing Field.like(Field<T>), notLike(Field<T>) 
+       methods to overload the existing Field.like(T), notLike(T)
+#908 - Change rpad / lpad functions to accept String instead of
+       char
+#912 - Add <R extends Record> R newRecord(Table<R>, Object) as
+       the inverse of various into(Class<?>) methods
+#916 - Add <R extends TableRecord<R>> {Record.into(Table<R>) | 
+       Result.into(Table<R>) | ResultQuery.fetchInto(Table<R>) | 
+       Cursor.fetchInto(Table<R>)}
+#917 - Add various Cursor.fetchOneInto() convenience methods
+#918 - Add CustomTable, CustomRecord as base classes for more 
+       convenience when used with various into(Table) methods
+#919 - Allow for accessing non-public constructors of Record 
+       subtypes
+#923 - Move some utilities to org.jooq.tools
+#924 - Generate a reference to every table in a new Tables.java 
+       class for improved static access
+#928 - Add DataTypeException extending DataAccessException in 
+       case something went wrong when converting data types
+#930 - Support converting date time types to java.util.Calendar.
+       This applies to various into(Class<?>) methods, as well as 
+       Result.getValue(xx, Class<?>)
+#931 - Allow for conversion between Long and date/time types, and
+       vice versa
+#932 - Let the bound of R in TableRecord extend TableRecord<R>, 
+       in UpdatableRecord to extend UpdatableRecord<R>
+#933 - Add support for type Character in Record.into(Class<?>) 
+       methods and similar
+#936 - Accept primitive types, such as int.class for type 
+       conversion
+#938 - CODEGEN: Add static/instance table field configuration
+#939 - Include license.txt and readme.txt in .jar files' META-INF
+       directory
+#953 - Make DefaultGeneratorStrategy methods non-final to allow 
+       for overriding
+#954 - Add examples for source code generation of multiple 
+       schemata with Maven
+#955 - Generate a reference to every type in a new UDTs.java
+       class
+#957 - Add <R> R Factory.newRecord(UDT<R>) for constructing
+       attached UDTRecords
+#958 - CODEGEN: Add generation-time schema mapping, allowing for
+       re-writing schemata in jooq-codegen
+#960 - CODEGEN: Add code generation configuration parameter to 
+       avoid using the new UByte, UShort, UInteger, ULong wrappers
+       for UNSIGNED number types
+#961 - Use Oracle's SYS.ALL_SEQUENCES.MAX_VALUE to determine the 
+       type of a sequence.
+#969 - Add <T> List<T> ResultQuery.fetch(Field<?>, 
+       Class<? extends T>) convenience method
+
+Bug fixes
+---------
+#686 - Reduce the internal API leak by preventing access to 
+       TableFieldImpl, UDTFieldImpl, ParameterImpl
+#903 - lag(Field, int, T) erroneously delegates to lead()
+#906 - Add more NullPointerException safety to API
+#913 - NoClassDefFoundError in JooqUtil.isJPAAvailable()
+#920 - Generic type is lost in Cursor.fetchInto(RecordHandler)
+#925 - SelectConditionStep should extend SelectConnectByStep, not
+       SelectGroupByStep 
+#926 - AbstractRecord.into() fails to convert java.sql.Date into 
+       java.util.Date
+#934 - Don't consider static members in reflection utilities when
+       used with Record.into(Class<?>) and similar methods
+#935 - Don't consider final member fields in reflection utilities
+       when used with Record.into(Class<?>) and similar methods
+#937 - In the event of name clash (same name for table and field)
+       generated code has errors
+#945 - Calling UpdatableRecord.setValue() twice with the same
+       argument causes the changed flag to be reset to false
+#948 - Always set the changed flag to true in Record.setValue()
+#959 - Compilation errors in generated source code if MySQL enum
+       values match Java reserved words, such as 'true', 'false',
+       'new', etc...
+#962 - Postgres ordering of generated enum literals is unstable
+#967 - Better document type conversion
+
 Version 1.7.0 - November 25, 2011
 =================================================================
 This is a maintenance release for the 1.x branch. Some important

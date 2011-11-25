@@ -112,13 +112,13 @@ import org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.u_author_type.GetBooks;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.oracle.OracleFactory;
 
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
 import org.junit.Test;
 
 

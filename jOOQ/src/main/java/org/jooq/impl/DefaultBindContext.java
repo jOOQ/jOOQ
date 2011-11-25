@@ -58,8 +58,7 @@ import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
-
-import org.joou.UNumber;
+import org.jooq.tools.unsigned.UNumber;
 
 /**
  * @author Lukas Eder

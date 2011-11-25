@@ -241,12 +241,5 @@
 			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>joou</artifactId>
-			<version>0.9.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
 	</dependencies>
 </project>

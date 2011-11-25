@@ -69,12 +69,11 @@ import org.jooq.test.ase.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.ase.ASEDataType;
-
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
 
 
 /**

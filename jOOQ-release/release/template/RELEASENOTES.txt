@@ -7,9 +7,25 @@ For a formatted text version, see
 http://www.jooq.org/notes.php
 
 For a text version, see
-http://jooq.sourceforge.net/releasenotes/RELEASENOTES.txt
-
 http://www.jooq.org/inc/RELEASENOTES.txt
+
+Version 1.7.0 - November 25, 2011
+=================================================================
+This is a maintenance release for the 1.x branch. Some important
+bug fixes are merged from version 2.0. These include:
+
+Bug fixes
+---------
+#925 - SelectConditionStep should extend SelectConnectByStep, not
+       SelectGroupByStep
+#926 - AbstractRecord.into() fails to convert java.sql.Date into
+       java.util.Date
+#937 - In the event of name clash (same name for table and field)
+       generated code has errors
+#945 - Calling UpdatableRecord.setValue() twice with the same
+       argument causes the changed flag to be reset to false
+#948 - Always set the changed flag to true in Record.setValue()
+#951 - Empty Password for jooq-codegen-maven causes NPE
 
 Version 1.6.9 - November 7, 2011
 =================================================================
@@ -45,7 +61,7 @@ Bug fixes
        subselect
 #888 - Derby casting of VARCHAR to FLOAT (and similar) doesn't
        work
-       
+
 Version 1.6.8 - October 22, 2011
 =================================================================
 The main improvement of this release is the re-design of the

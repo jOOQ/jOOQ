@@ -80,11 +80,10 @@ import org.jooq.test.oracle.generatedclasses.tables.records.T_658RefRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.oracle.generatedclasses.tables.records.VLibraryRecord;
-
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 
 /**
  * @author Lukas Eder

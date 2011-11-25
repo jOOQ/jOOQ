@@ -75,12 +75,11 @@ import org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecor
 import org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
-
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
 
 /**
  * @author Lukas Eder

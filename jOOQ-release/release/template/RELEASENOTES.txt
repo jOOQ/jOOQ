@@ -76,7 +76,8 @@ sum(AMOUNT).over().partitionBy(ACCOUNT)
 - Sequences now also have a <T> type
 - Unsigned number types are now supported in those databases that
   use them. Unsigned numbers are implemented in jOOU, a spin-off
-  open source project: 
+  open source project. For convenience, this library is
+  "internalised" into jOOQ, to avoid adding a dependency
   
 http://code.google.com/p/joou/
 

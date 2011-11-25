@@ -84,12 +84,12 @@ import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
 import org.jooq.test.postgres.generatedclasses.udt.UStreetType;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.postgres.PostgresDataType;
 
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
 import org.junit.Test;
 
 

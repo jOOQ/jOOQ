@@ -45,6 +45,10 @@ import java.sql.Types;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
@@ -57,11 +61,6 @@ import org.jooq.util.postgres.PostgresDataType;
 import org.jooq.util.sqlite.SQLiteDataType;
 import org.jooq.util.sqlserver.SQLServerDataType;
 import org.jooq.util.sybase.SybaseDataType;
-
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
 
 
 

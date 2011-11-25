@@ -35,10 +35,10 @@
  */
 package org.jooq.tools;
 
-import static org.joou.Unsigned.ubyte;
-import static org.joou.Unsigned.uint;
-import static org.joou.Unsigned.ulong;
-import static org.joou.Unsigned.ushort;
+import static org.jooq.tools.unsigned.Unsigned.ubyte;
+import static org.jooq.tools.unsigned.Unsigned.uint;
+import static org.jooq.tools.unsigned.Unsigned.ulong;
+import static org.jooq.tools.unsigned.Unsigned.ushort;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -55,11 +55,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.jooq.exception.DataTypeException;
-
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 
 /**
  * Utility methods for type conversions

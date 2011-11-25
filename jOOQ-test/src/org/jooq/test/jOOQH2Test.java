@@ -78,12 +78,11 @@ import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord;
+import org.jooq.tools.unsigned.UByte;
+import org.jooq.tools.unsigned.UInteger;
+import org.jooq.tools.unsigned.ULong;
+import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.h2.H2DataType;
-
-import org.joou.UByte;
-import org.joou.UInteger;
-import org.joou.ULong;
-import org.joou.UShort;
 
 /**
  * Integration test for the H2 database

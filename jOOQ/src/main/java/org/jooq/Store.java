@@ -42,7 +42,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.Convert;
+import org.jooq.tools.Convert;
 
 /**
  * A common base type for {@link Record} and {@link ArrayRecord} providing

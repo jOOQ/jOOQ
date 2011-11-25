@@ -73,6 +73,7 @@ import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONObject;
 

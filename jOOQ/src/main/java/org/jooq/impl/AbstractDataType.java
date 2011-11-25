@@ -56,6 +56,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.Convert;
 
 /**
  * A common base class for data types.

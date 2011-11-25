@@ -44,7 +44,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Convert;
+import org.jooq.tools.Convert;
 
 import org.w3c.dom.Document;
 

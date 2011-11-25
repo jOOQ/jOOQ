@@ -64,6 +64,7 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.exception.MappingException;
+import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder

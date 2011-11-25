@@ -6,7 +6,7 @@
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="release" description="Release a new version">
-		<property name="version" value="1.6.8"/>
+		<property name="version" value="2.0.0"/>
 		
 		<mkdir dir="${dir.release}/versions" />
 		<mkdir dir="${dir.release}/${version}" />

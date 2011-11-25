@@ -1632,6 +1632,15 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field, Field)
      */
+    public static Field<String> rpad(Field<String> field, int length, char character) {
+        return rpad(field, length, Character.toString(character));
+    }
+
+    /**
+     * Get the rpad(field, length, character) function
+     *
+     * @see #rpad(Field, Field, Field)
+     */
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), val(length), val(character));
     }
@@ -1669,6 +1678,15 @@ public class Factory implements FactoryOperations {
      */
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
+    }
+
+    /**
+     * Get the lpad(field, length, character) function
+     *
+     * @see #lpad(Field, Field, Field)
+     */
+    public static Field<String> lpad(Field<String> field, int length, char character) {
+        return lpad(field, length, Character.toString(character));
     }
 
     /**

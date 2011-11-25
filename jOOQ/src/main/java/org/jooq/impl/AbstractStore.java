@@ -44,6 +44,7 @@ import java.sql.Timestamp;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Store;
+import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder

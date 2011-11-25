@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq.tools;
 
 import static org.joou.Unsigned.ubyte;
 import static org.joou.Unsigned.uint;
@@ -49,6 +49,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,40 +68,58 @@ import org.joou.UShort;
  */
 public final class Convert {
 
-    static final Set<String> TRUE_VALUES;
-    static final Set<String> FALSE_VALUES;
+    public static final Set<String> TRUE_VALUES;
+    public static final Set<String> FALSE_VALUES;
 
     static {
-        TRUE_VALUES = new HashSet<String>();
-        FALSE_VALUES = new HashSet<String>();
+        Set<String> trueValues = new HashSet<String>();
+        Set<String> falseValues = new HashSet<String>();
 
-        TRUE_VALUES.add("1");
-        TRUE_VALUES.add("y");
-        TRUE_VALUES.add("Y");
-        TRUE_VALUES.add("yes");
-        TRUE_VALUES.add("YES");
-        TRUE_VALUES.add("true");
-        TRUE_VALUES.add("TRUE");
-        TRUE_VALUES.add("on");
-        TRUE_VALUES.add("ON");
-        TRUE_VALUES.add("enabled");
-        TRUE_VALUES.add("ENABLED");
+        trueValues.add("1");
+        trueValues.add("y");
+        trueValues.add("Y");
+        trueValues.add("yes");
+        trueValues.add("YES");
+        trueValues.add("true");
+        trueValues.add("TRUE");
+        trueValues.add("on");
+        trueValues.add("ON");
+        trueValues.add("enabled");
+        trueValues.add("ENABLED");
 
-        FALSE_VALUES.add("0");
-        FALSE_VALUES.add("n");
-        FALSE_VALUES.add("N");
-        FALSE_VALUES.add("no");
-        FALSE_VALUES.add("NO");
-        FALSE_VALUES.add("false");
-        FALSE_VALUES.add("FALSE");
-        FALSE_VALUES.add("off");
-        FALSE_VALUES.add("OFF");
-        FALSE_VALUES.add("disabled");
-        FALSE_VALUES.add("DISABLED");
+        falseValues.add("0");
+        falseValues.add("n");
+        falseValues.add("N");
+        falseValues.add("no");
+        falseValues.add("NO");
+        falseValues.add("false");
+        falseValues.add("FALSE");
+        falseValues.add("off");
+        falseValues.add("OFF");
+        falseValues.add("disabled");
+        falseValues.add("DISABLED");
+
+        TRUE_VALUES = Collections.unmodifiableSet(trueValues);
+        FALSE_VALUES = Collections.unmodifiableSet(falseValues);
     }
 
+    /**
+     * Convert an array into another one by these rules
+     * <p>
+     * <ul>
+     * <li>If <code>toClass</code> is not an array class, then make it an array
+     * class first</li>
+     * <li>If <code>toClass</code> is an array class, then create an instance
+     * from it, and convert all elements in the <code>from</code> array one by
+     * one, using {@link #convert(Object, Class)}</li>
+     * </ul>
+     *
+     * @param from The array to convert
+     * @param toClass The target array type
+     * @return A converted array
+     */
     @SuppressWarnings("unchecked")
-    static Object[] convertArray(Object[] from, Class<?> toClass) {
+    public static Object[] convertArray(Object[] from, Class<?> toClass) {
         if (from == null) {
             return null;
         }

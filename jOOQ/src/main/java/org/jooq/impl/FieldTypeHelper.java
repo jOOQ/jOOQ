@@ -72,6 +72,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.db2.DB2DataType;

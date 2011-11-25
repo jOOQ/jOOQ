@@ -64,6 +64,7 @@ import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.tools.Convert;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 

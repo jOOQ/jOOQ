@@ -47,7 +47,7 @@ import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Convert;
+import org.jooq.tools.Convert;
 
 /**
  * A wrapper for database result records returned by

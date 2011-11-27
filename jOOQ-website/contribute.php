@@ -1,7 +1,7 @@
 <?php 
 require 'frame.php';
-function printH1() {
-	print 'Be a part of jOOQ! Become a jOOQer';
+function getH1() {
+	return 'Be a part of jOOQ! Become a jOOQer';
 }
 function getSlogan() {
 	return "jOOQ can only be as great as its community. You can make the change happen! jOOQ needs

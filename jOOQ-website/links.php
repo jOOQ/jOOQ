@@ -1,7 +1,7 @@
 <?php 
 require 'frame.php';
-function printH1() {
-	print 'Useful links for jOOQ users and developers';
+function getH1() {
+	return 'Useful links for jOOQ users and developers';
 }
 function getSlogan() {
 	return "You've come far in your search of more intuitive integration of SQL and Java. 

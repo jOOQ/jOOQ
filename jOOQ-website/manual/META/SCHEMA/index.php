@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "The schema, top-level generated artefact";
+function getH1() {
+    return "The schema, top-level generated artefact";
 }
 function getActiveMenu() {
 	return "manual";
@@ -51,7 +51,7 @@ function printContent() {
 							<p>The schema can be used to dynamically discover generate database
 								artefacts. Tables, sequences, and other items are accessible from the
 								schema. For example:</p>
-<pre class="prettyprint lang-java">public final java.util.List&lt;org.jooq.Sequence&gt; getSequences();
+<pre class="prettyprint lang-java">public final java.util.List&lt;org.jooq.Sequence&lt;?&gt;&gt; getSequences();
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>

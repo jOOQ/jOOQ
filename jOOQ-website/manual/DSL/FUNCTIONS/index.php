@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Functions and aggregate operators";
+function getH1() {
+    return "Functions and aggregate operators";
 }
 function getActiveMenu() {
 	return "manual";
@@ -43,43 +43,42 @@ function printContent() {
 </ul>
 							
 							<h2>Functions </h2>
-							<p>These are just a few functions in the Field interface, so you get the idea: </p>
+							<p>These are just a few functions in the Factory, so you get the idea: </p>
 							
-<pre class="prettyprint lang-java">Field&lt;String&gt; rpad(Field&lt;? extends Number&gt; length);
-Field&lt;String&gt; rpad(int length);
-Field&lt;String&gt; rpad(Field&lt;? extends Number&gt; length, Field&lt;String&gt; c);
-Field&lt;String&gt; rpad(int length, char c);
-Field&lt;String&gt; lpad(Field&lt;? extends Number&gt; length);
-Field&lt;String&gt; lpad(int length);
-Field&lt;String&gt; lpad(Field&lt;? extends Number&gt; length, Field&lt;String&gt; c);
-Field&lt;String&gt; lpad(int length, char c);
-Field&lt;String&gt; replace(Field&lt;String&gt; search);
-Field&lt;String&gt; replace(String search);
-Field&lt;String&gt; replace(Field&lt;String&gt; search, Field&lt;String&gt; replace);
-Field&lt;String&gt; replace(String search, String replace);
-Field&lt;Integer&gt; position(String search);
-Field&lt;Integer&gt; position(Field&lt;String&gt; search);</pre>
+<pre class="prettyprint lang-java">Field&lt;String&gt; rpad(Field&lt;String&gt; field, Field&lt;? extends Number&gt; length);
+Field&lt;String&gt; rpad(Field&lt;String&gt; field, int length);
+Field&lt;String&gt; rpad(Field&lt;String&gt; field, Field&lt;? extends Number&gt; length, Field&lt;String&gt; c);
+Field&lt;String&gt; rpad(Field&lt;String&gt; field, int length, char c);
+Field&lt;String&gt; lpad(Field&lt;String&gt; field, Field&lt;? extends Number&gt; length);
+Field&lt;String&gt; lpad(Field&lt;String&gt; field, int length);
+Field&lt;String&gt; lpad(Field&lt;String&gt; field, Field&lt;? extends Number&gt; length, Field&lt;String&gt; c);
+Field&lt;String&gt; lpad(Field&lt;String&gt; field, int length, char c);
+Field&lt;String&gt; replace(Field&lt;String&gt; field, Field&lt;String&gt; search);
+Field&lt;String&gt; replace(Field&lt;String&gt; field, String search);
+Field&lt;String&gt; replace(Field&lt;String&gt; field, Field&lt;String&gt; search, Field&lt;String&gt; replace);
+Field&lt;String&gt; replace(Field&lt;String&gt; field, String search, String replace);
+Field&lt;Integer&gt; position(Field&lt;String&gt; field, String search);
+Field&lt;Integer&gt; position(Field&lt;String&gt; field, Field&lt;String&gt; search);</pre>
 
 							<h2>Aggregate operators</h2>
 							<p>Aggregate operators work just like functions, even if they have a
-								slightly different semantics. Some of them are also placed in the
-								Field interface. Others in the Factory. Here are some examples from
-								Field: </p>
+								slightly different semantics. Here are some examples from
+								Factory: </p>
 								
 <pre class="prettyprint lang-java">// Every-day functions
-Field&lt;Integer&gt; count();
-Field&lt;Integer&gt; countDistinct();
-Field&lt;T&gt; max();
-Field&lt;T&gt; min();
-Field&lt;BigDecimal&gt; sum();
-Field&lt;BigDecimal&gt; avg();
+AggregateFunction&lt;Integer&gt; count(Field&lt;?&gt; field);
+AggregateFunction&lt;Integer&gt; countDistinct(Field&lt;?&gt; field);
+AggregateFunction&lt;T&gt; max(Field&lt;?&gt; field);
+AggregateFunction&lt;T&gt; min(Field&lt;?&gt; field);
+AggregateFunction&lt;BigDecimal&gt; sum(Field&lt;? extends Number&gt; field);
+AggregateFunction&lt;BigDecimal&gt; avg(Field&lt;? extends Number&gt; field);
 
 // Statistical functions
-Field&lt;BigDecimal&gt; median();
-Field&lt;BigDecimal&gt; stddevPop();
-Field&lt;BigDecimal&gt; stddevSamp();
-Field&lt;BigDecimal&gt; varPop();
-Field&lt;BigDecimal&gt; varSamp();
+AggregateFunction&lt;BigDecimal&gt; median(Field&lt;? extends Number&gt; field);
+AggregateFunction&lt;BigDecimal&gt; stddevPop(Field&lt;? extends Number&gt; field);
+AggregateFunction&lt;BigDecimal&gt; stddevSamp(Field&lt;? extends Number&gt; field);
+AggregateFunction&lt;BigDecimal&gt; varPop(Field&lt;? extends Number&gt; field);
+AggregateFunction&lt;BigDecimal&gt; varSamp(Field&lt;? extends Number&gt; field);
 </pre>
 
 							<p>A typical example of how to use an aggregate operator is when
@@ -92,7 +91,7 @@ Field&lt;BigDecimal&gt; varSamp();
 <pre class="prettyprint lang-sql">SELECT MAX(ID) + 1 AS next_id 
   FROM T_AUTHOR</pre>
 </td><td class="right" width="50%">
-<pre class="prettyprint lang-java">create.select(ID.max().add(1).as("next_id"))
+<pre class="prettyprint lang-java">create.select(max(ID).add(1).as("next_id"))
       .from(T_AUTHOR);</pre>
 </td>
 </tr>
@@ -109,7 +108,10 @@ Field&lt;BigDecimal&gt; varSamp();
 								and supports most of their specific syntaxes. Window functions can be
 								used for things like calculating a "running total". The following example
 								fetches transactions and the running total for every transaction going
-								back to the beginning of the transaction table (ordered by booked_at)
+								back to the beginning of the transaction table (ordered by booked_at).
+								
+								They are accessible from the previously seen AggregateFunction type using
+								the over() method:
 							</p>
 							
 							<table cellspacing="0" cellpadding="0" width="100%">
@@ -122,12 +124,12 @@ Field&lt;BigDecimal&gt; varSamp();
                      AND CURRENT ROW) AS total
   FROM transactions</pre>
 </td><td class="right" width="50%">
-<pre class="prettyprint lang-java">create.select(BOOKED_AT, AMOUNT, 
-              AMOUNT.sumOver().partitionByOne()
-                    .orderBy(BOOKED_AT)
-                    .rowsBetweenUnboundedPreceding()
-                    .andCurrentRow().as("total")
-      .from(TRANSACTIONS);</pre>
+<pre class="prettyprint lang-java">create.select(t.BOOKED_AT, t.AMOUNT, 
+         sum(t.AMOUNT).over().partitionByOne()
+                      .orderBy(t.BOOKED_AT)
+                      .rowsBetweenUnboundedPreceding()
+                      .andCurrentRow().as("total")
+      .from(TRANSACTIONS.as("t"));</pre>
 </td>
 </tr>
 </table>

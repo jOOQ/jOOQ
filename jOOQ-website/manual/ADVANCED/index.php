@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../frame.php';
-function printH1() {
-    print "Advanced topics";
+function getH1() {
+    return "Advanced topics";
 }
 function getActiveMenu() {
 	return "manual";

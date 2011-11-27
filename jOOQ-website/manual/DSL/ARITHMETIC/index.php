@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Arithmetic operations and concatenation";
+function getH1() {
+    return "Arithmetic operations and concatenation";
 }
 function getActiveMenu() {
 	return "manual";
@@ -63,7 +63,7 @@ SELECT concat('A', 'B', 'C')</pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">&nbsp;
 // For all RDBMS, including MySQL:
-create.select(create.val("A").concat("B", "C"));
+create.select(concat("A", "B", "C"));
 
 </pre>
 </td>

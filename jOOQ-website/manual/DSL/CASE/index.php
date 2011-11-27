@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "The CASE clause";
+function getH1() {
+    return "The CASE clause";
 }
 function getActiveMenu() {
 	return "manual";
@@ -45,13 +45,13 @@ CASE T_AUTHOR.FIRST_NAME WHEN 'Paulo'  THEN 'brazilian'
 END </pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.decode()
-      .when(TAuthor.FIRST_NAME.equal("Paulo"), "brazilian")
-      .when(TAuthor.FIRST_NAME.equal("George"), "english")
+      .when(T_AUTHOR.FIRST_NAME.equal("Paulo"), "brazilian")
+      .when(T_AUTHOR.FIRST_NAME.equal("George"), "english")
       .otherwise("unknown");
 
 // OR:
 
-create.decode().value(TAuthor.FIRST_NAME)
+create.decode().value(T_AUTHOR.FIRST_NAME)
                .when("Paulo", "brazilian")
                .when("George", "english")
                .otherwise("unknown");</pre>
@@ -91,7 +91,7 @@ ORDER BY CASE FIRST_NAME WHEN 'Paulo'  THEN 1
 								simplifies its use: </p>
 <pre class="prettyprint lang-java">create.select()
       .from(T_AUTHOR)
-      .orderBy(TAuthor.FIRST_NAME.sortAsc("Paulo", "George"))
+      .orderBy(T_AUTHOR.FIRST_NAME.sortAsc("Paulo", "George"))
       .execute();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>

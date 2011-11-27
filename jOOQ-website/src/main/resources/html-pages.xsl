@@ -21,8 +21,8 @@
 require '</xsl:text>
 		<xsl:value-of select="$relativePath"/>
 <xsl:text disable-output-escaping="yes">frame.php';
-function printH1() {
-    print "</xsl:text>
+function getH1() {
+    return "</xsl:text>
 	<xsl:value-of select="//section[@id = $sectionID]/title"/>
 <xsl:text disable-output-escaping="yes">";
 }

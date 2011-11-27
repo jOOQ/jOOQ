@@ -1,7 +1,7 @@
 <?php 
 require 'frame.php';
-function printH1() {
-	print 'jOOQ : A peace treaty between SQL and Java';
+function getH1() {
+	return 'jOOQ : A peace treaty between SQL and Java';
 }
 function getSlogan() {
 	return "SQL was never meant to be abstracted. To be confined in the narrow boundaries 

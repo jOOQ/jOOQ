@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Stored procedures and functions";
+function getH1() {
+    return "Stored procedures and functions";
 }
 function getActiveMenu() {
 	return "manual";
@@ -68,13 +68,13 @@ SELECT T_PERSON.NAME
   FROM T_PERSON
  WHERE F_AUTHOR_EXISTS(T_PERSON.NAME) = 1</pre>
 </td><td class="right" width="50%">
-<pre class="prettyprint lang-java">create.select(TPerson.NAME, Functions.fAuthorExists(TPerson.NAME))
+<pre class="prettyprint lang-java">create.select(T_PERSON.NAME, Functions.fAuthorExists(T_PERSON.NAME))
       .from(T_PERSON);
 
 // OR: Note, the static import of Functions.*
-create.select(TPerson.NAME)
+create.select(T_PERSON.NAME)
       .from(T_PERSON)
-      .where(fAuthorExists(TPerson.NAME));</pre>
+      .where(fAuthorExists(T_PERSON.NAME));</pre>
 </td>
 </tr>
 </table>

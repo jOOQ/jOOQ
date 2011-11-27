@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Nested SELECT using the IN operator";
+function getH1() {
+    return "Nested SELECT using the IN operator";
 }
 function getActiveMenu() {
 	return "manual";
@@ -58,16 +58,16 @@ SELECT T_BOOK.*
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.select()
       .from(T_BOOK)
-      .where(TBook.AUTHOR_ID.in(
-          create.select(TAuthor.ID).from(T_AUTHOR)
-                .where(TAuthor.BORN.equal(1920))));
+      .where(T_BOOK.AUTHOR_ID.in(
+          create.select(T_AUTHOR.ID).from(T_AUTHOR)
+                .where(T_AUTHOR.BORN.equal(1920))));
 
 // OR:
 
 create.select(T_BOOK.getFields())
       .from(T_BOOK)
-      .join(T_AUTHOR).on(TBook.AUTHOR_ID.equal(TAuthor.ID)
-                     .and(TAuthor.BORN.equal(1920)));</pre>
+      .join(T_AUTHOR).on(T_BOOK.AUTHOR_ID.equal(TAuthor.ID)
+                     .and(T_AUTHOR.BORN.equal(1920)));</pre>
 </td>
 </tr>
 </table>						

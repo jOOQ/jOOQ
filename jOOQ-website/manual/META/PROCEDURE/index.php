@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Procedures and packages";
+function getH1() {
+    return "Procedures and packages";
 }
 function getActiveMenu() {
 	return "manual";
@@ -172,6 +172,45 @@ public final class Routines {
 								one for
 								standalone procedures/functions.
 							</p>
+							
+							<h3>Member functions and procedures in Oracle</h3>
+							<p>
+								Oracle UDT's can have object-oriented structures including member functions
+								and procedures. With Oracle, you can do things like this:
+							</p>
+<pre class="prettyprint lang-sql">CREATE OR REPLACE TYPE u_author_type AS OBJECT (
+  id NUMBER(7),
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50),
+  
+  MEMBER PROCEDURE LOAD,
+  MEMBER FUNCTION count_books RETURN NUMBER
+)
+
+-- The type body is omitted for the example
+</pre>
+
+							<p>
+								These member functions and procedures can simply be mapped to Java
+								methods:
+							</p>
+							
+<pre class="prettyprint lang-java">
+// Create an empty, attached UDT record from the Factory
+UAuthorType author = create.newRecord(U_AUTHOR_TYPE);
+
+// Set the author ID and load the record using the LOAD procedure
+author.setId(1);
+author.load();
+
+// The record is now updated with the LOAD implementation's content
+assertNotNull(author.getFirstName());
+assertNotNull(author.getLastName());</pre>
+
+							<p>For more details about UDT's see the Manual's section on
+							<a href="<?=$root?>/manual/META/UDT/" title="jOOQ Manual reference: UDT's including ARRAY and ENUM types">User Defined Types</a>
+</p>
+							
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>

@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Tables, views and their corresponding records";
+function getH1() {
+    return "Tables, views and their corresponding records";
 }
 function getActiveMenu() {
 	return "manual";
@@ -51,12 +51,19 @@ function printContent() {
     // The singleton instance of the Table
     public static final TAuthor T_AUTHOR = new TAuthor();
 
-    // The Table's fields    
-    public static final TableField&lt;TAuthorRecord, Integer&gt; ID =            // [...]
-    public static final TableField&lt;TAuthorRecord, String&gt; FIRST_NAME =     // [...]
-    public static final TableField&lt;TAuthorRecord, String&gt; LAST_NAME =      // [...]
-    public static final TableField&lt;TAuthorRecord, Date&gt; DATE_OF_BIRTH =    // [...]
-    public static final TableField&lt;TAuthorRecord, Integer&gt; YEAR_OF_BIRTH = // [...]
+    // The Table's fields. 
+    // Depending on your jooq-codegen configuraiton, they can also be static    
+    public final TableField&lt;TAuthorRecord, Integer&gt; ID =            // [...]
+    public final TableField&lt;TAuthorRecord, String&gt; FIRST_NAME =     // [...]
+    public final TableField&lt;TAuthorRecord, String&gt; LAST_NAME =      // [...]
+    public final TableField&lt;TAuthorRecord, Date&gt; DATE_OF_BIRTH =    // [...]
+    public final TableField&lt;TAuthorRecord, Integer&gt; YEAR_OF_BIRTH = // [...]
+    
+    // When you don't choose the static meta model, you can typesafely alias your tables.
+    // Aliased tables will then hold references to the above final fields, too
+    public TAuthor as(String alias) {
+      // [...]
+    }
 }</pre>
 
 							<h3>The Table's associated TableRecord</h3>
@@ -80,7 +87,7 @@ function printContent() {
     public Date getDateOfBirth() {           // [...]
 
     // Navigation methods for foreign keys
-    public List&lt;TBookRecord&gt; getTBooks() throws SQLException { // [...]
+    public List&lt;TBookRecord&gt; fetchTBooks() { // [...]
 }</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>

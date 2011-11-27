@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Nested SELECT using the EXISTS operator";
+function getH1() {
+    return "Nested SELECT using the EXISTS operator";
 }
 function getActiveMenu() {
 	return "manual";
@@ -36,10 +36,7 @@ function printContent() {
 </ul>
 
 							<p>This is reflected by the fact that an EXISTS clause is usually
-								created directly from the Factory. While this is more verbose than all
-								the other SQL constructs, there is no other way, when static QueryPart
-								creation is not an option (for now). Here is how it's done in the
-								Factory: </p>
+								created directly from the Factory: </p>
 								
 <pre class="prettyprint lang-java">Condition exists(Select&lt;?&gt; query);
 Condition notExists(Select&lt;?&gt; query);</pre>
@@ -47,7 +44,7 @@ Condition notExists(Select&lt;?&gt; query);</pre>
 							<p>When you create such a Condition, it can then be connected to any
 								other condition using AND, OR operators (see also the manual's section
 								on 
-								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>). Because of this verbosity, there are also quite a few
+								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>). There are also quite a few
 								convenience methods, where they might be useful. For instance in the
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
 								
@@ -80,9 +77,9 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.select()
       .from(T_AUTHOR)
-      .whereNotExists(create.select(1)
+      .whereNotExists(create.selectOne()
             .from(T_BOOK)
-            .where(TBook.AUTHOR_ID.equal(T_AUTHOR.ID)));</pre>
+            .where(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID)));</pre>
 </td>
 </tr>
 </table>

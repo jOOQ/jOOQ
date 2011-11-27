@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Tables and Fields";
+function getH1() {
+    return "Tables and Fields";
 }
 function getActiveMenu() {
 	return "manual";
@@ -43,21 +43,17 @@ function printContent() {
 								&lt;R&gt;
 								is not given so much importance as far as
 								type-safety is concerned.
-								SQL itself is inherently type-unsafe. But then
-								again, you have
+								SQL itself is highly typesafe. You have
 								incredible flexibility of creating anonymous or ad-hoc
 								types and
 								reusing them from
 								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">NESTED SELECT statements</a>
 								or from many other
-								use-cases. If
+								use-cases. There is no way that this typesafety can be
+								mapped to the Java world in a convenient way. If
 								&lt;R&gt; would play a role as important
-								as in JPA, jOOQ
-								would suffer from
-								the same verbosity, or inflexibility
-								that JPA
-								CriteriaQueries may
-								have. 
+								as in JPA, jOOQ would suffer from the same verbosity, or inflexibility
+								that JPA CriteriaQueries may have. 
 							</p>
 							
 							<h2>The Field</h2>

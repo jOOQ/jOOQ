@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Complete SELECT syntax";
+function getH1() {
+    return "Complete SELECT syntax";
 }
 function getActiveMenu() {
 	return "manual";
@@ -55,7 +55,7 @@ ORDER BY T_AUTHOR.LAST_NAME ASC NULLS FIRST
 <pre class="prettyprint lang-java">SelectFromStep select(Field&lt;?&gt;... fields);
 
 // Example:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count());</pre>
 
 							<p>
 								jOOQ will return an "intermediary" type to you, representing the
@@ -76,7 +76,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count());</pre>
 <pre class="prettyprint lang-java">SelectJoinStep from(TableLike&lt;?&gt;... table);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR);</pre>
 
 							<p>After adding the table-like structures (mostly just Tables) to
@@ -97,7 +97,7 @@ SelectJoinStep  naturalLeftOuterJoin(Table&lt;?&gt; table);
 SelectJoinStep naturalRightOuterJoin(Table&lt;?&gt; table);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
       .join(T_BOOK);</pre>
 
@@ -112,9 +112,9 @@ SelectJoinStep    on(Condition... conditions);
 SelectJoinStep using(Field&lt;?&gt;... fields);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID));</pre>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));</pre>
 
 							<p>See the section about 
 								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a> 
@@ -127,10 +127,10 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 <pre class="prettyprint lang-java">SelectConditionStep where(Condition... conditions);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"));</pre>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"));</pre>
 
 							<p>Now the returned type 
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a> is a special one, where
@@ -143,11 +143,11 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 <pre class="prettyprint lang-java">SelectConditionStep and(Condition condition);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')));</pre>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')));</pre>
 
 							<p>Let's assume we have that method parseDate() creating a
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Date.html" title="External API reference: java.sql.Date">java.sql.Date</a> for us. 
@@ -156,24 +156,24 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 <pre class="prettyprint lang-java">SelectHavingStep groupBy(Field&lt;?&gt;... fields);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME);</pre>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+      .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME);</pre>
       
       						<p>and the HAVING clause: </p>
 <pre class="prettyprint lang-java">SelectOrderByStep having(Condition... conditions);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
-      .having(create.count().greaterThan(5));</pre>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+      .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+      .having(count().greaterThan(5));</pre>
 
 							<p>and the ORDER BY clause. Some RDBMS support NULLS FIRST and NULLS
 								LAST extensions to the ORDER BY clause. If this is not supported by
@@ -182,33 +182,33 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 <pre class="prettyprint lang-java">SelectLimitStep orderBy(Field&lt;?&gt;... fields);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
-      .having(create.count().greaterThan(5))
-      .orderBy(TAuthor.LAST_NAME.asc().nullsFirst());</pre>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+      .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+      .having(count().greaterThan(5))
+      .orderBy(T_AUTHOR.LAST_NAME.asc().nullsFirst());</pre>
 
 							<p>and finally the LIMIT clause. Most dialects have a means of limiting
 								the number of result records (except Oracle). Some even support having
 								an OFFSET to the LIMIT clause. Even if your RDBMS does not support the
-								full LIMIT ... OFFSET ... clause, jOOQ
-								will simulate the LIMIT clause using nested selects and filtering on
+								full LIMIT ... OFFSET ... (or TOP ... START AT ..., or FETCH FIRST ... ROWS ONLY, etc) 
+								clause, jOOQ will simulate the LIMIT clause using nested selects and filtering on
 								ROWNUM (for Oracle), or on ROW_NUMBER() (for DB2 and SQL
 								Server): </p>
 <pre class="prettyprint lang-java">SelectFinalStep limit(int offset, int numberOfRows);
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
-      .having(create.count().greaterThan(5))
-      .orderBy(TAuthor.LAST_NAME.asc().nullsFirst())
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+      .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+      .having(count().greaterThan(5))
+      .orderBy(T_AUTHOR.LAST_NAME.asc().nullsFirst())
       .limit(1, 2);</pre>
 
 							<p>In the final step, there are some proprietary extensions available
@@ -218,20 +218,20 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 <pre class="prettyprint lang-java">SelectFinalStep forUpdate();
 
 // The example, continued:
-create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
+create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TBook.AUTHOR_ID.equal(TAuthor.ID))
-      .where(TBook.LANGUAGE.equal("DE"))
-      .and(TBook.PUBLISHED.greaterThan(parseDate('2008-01-01')))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
-      .having(create.count().greaterThan(5))
-      .orderBy(TAuthor.LAST_NAME.asc().nullsFirst())
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
+      .where(T_BOOK.LANGUAGE.equal("DE"))
+      .and(T_BOOK.PUBLISHED.greaterThan(parseDate('2008-01-01')))
+      .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
+      .having(count().greaterThan(5))
+      .orderBy(T_AUTHOR.LAST_NAME.asc().nullsFirst())
       .limit(1, 2)
       .forUpdate();</pre>
 
 							<p>
 								Now the most relevant super-type of the object we have just created is 
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>&lt;Record&gt;. 
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>. 
 								This type can be reused in various expressions such as in the
 								<a href="<?=$root?>/manual/DSL/UNION/" title="jOOQ Manual reference: UNION and other set operations">UNION and other set operations</a>, 
 								<a href="<?=$root?>/manual/DSL/EXISTS/" title="jOOQ Manual reference: Nested SELECT using the EXISTS operator">Nested select statements using the EXISTS operator</a>, 
@@ -241,23 +241,23 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, create.count())
 							</p>
 							
 <pre class="prettyprint lang-java">// Just execute the query.
-int execute() throws SQLException;
+int execute();
 
 // Execute the query and retrieve the results
-Result&lt;Record&gt; fetch() throws SQLException;
+Result&lt;Record&gt; fetch();
 
 // Execute the query and retrieve the first Record
-Record fetchAny() throws SQLException;
+Record fetchAny();
 
 // Execute the query and retrieve the single Record
 // An Exception is thrown if more records were available
-Record fetchOne() throws SQLException;
+Record fetchOne();
 
 // [...]</pre>
 
 
 							<h2>SELECT from single physical tables</h2>
-							<p>A very similar API is available, if you want to select from single
+							<p>A very similar, but limited API is available, if you want to select from single
 								physical tables in order to retrieve TableRecords or even
 								UpdatableRecords (see also the manual's section on 
 								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">SelectQuery vs SimpleSelectQuery</a>). 

@@ -1,7 +1,7 @@
 <?php 
 require 'frame.php';
-function printH1() {
-	print 'Tutorial: Getting started quickly with jOOQ';
+function getH1() {
+	echo 'Tutorial: Getting started quickly with jOOQ';
 }
 function getSlogan() {
 	return "Get up and running quickly with jOOQ following these first simple steps.";
@@ -39,7 +39,7 @@ Alternatively, you can create a Maven dependency:
   &lt;groupId&gt;org.jooq&lt;/groupId&gt;
   &lt;!-- artefacts are jooq, jooq-meta, jooq-codegen --&gt;
   &lt;artifactId&gt;jooq&lt;/artifactId&gt;
-  &lt;version&gt;1.6.9&lt;/version&gt;
+  &lt;version&gt;2.0.0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 <p>
@@ -80,7 +80,6 @@ that looks like this:
 #Configure the database connection here
 jdbc.Driver=com.mysql.jdbc.Driver
 jdbc.URL=jdbc:mysql://localhost:3306/guestbook
-jdbc.Schema=guestbook
 jdbc.User=root
 jdbc.Password=
 
@@ -91,6 +90,9 @@ generator=org.jooq.util.DefaultGenerator
 #The database type. The format here is:
 #generator.database=org.util.[database].[database]Database
 generator.database=org.jooq.util.mysql.MySQLDatabase
+
+#The database schema (or owner, user, database name) to be generated
+generator.database.input-schema=guestbook
 
 #All elements that are generated from your schema (several Java regular expressions, separated by comma)
 #Watch out for case-sensitivity. Depending on your database, this might be important!
@@ -103,10 +105,6 @@ generator.database.excludes=
 #This will be a prerequisite for various advanced features
 #Defaults to false
 generator.generate.relations=true
-
-#Generate deprecated code for backwards compatibility 
-#Defaults to true
-generator.generate.deprecated=false
 
 #The destination package of your generated classes (within the destination directory)
 generator.target.package=test.generated
@@ -133,14 +131,14 @@ Once you have the JAR files and guestbook.properties in your temp directory, typ
 (use colons instead of semi-colons on UNIX/Linux systems): 
 </p>
 <pre>
-java -classpath jooq-1.6.9.jar;jooq-meta-1.6.9.jar;jooq-codegen-1.6.9.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.properties
+java -classpath jooq-2.0.0.jar;jooq-meta-2.0.0.jar;jooq-codegen-2.0.0.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.properties
 </pre>
 <p>
 Note the prefix slash before guestbook.properies.
 Even though it's in our working directory, we need to prepend a slash, as it is
 loaded from the classpath.
 Replace the filenames with your filenames. 
-In this example, jOOQ 1.6.9 is being used.
+In this example, jOOQ 2.0.0 is being used.
 If everything has worked, you should see this in your console output:
 </p>
 <pre>
@@ -213,6 +211,11 @@ INFO: GENERATION FINISHED!     : Total: 791.688ms, +9.143ms
 Let's just write a vanilla main class in the project containing the generated classes:
 </p>
 <pre class="prettyprint lang-java">
+// For convenience, always static import your generated tables and 
+// jOOQ functions to decrease verbosity:
+import static test.generated.Tables.*;
+import static org.jooq.impl.Factory.*;
+
 public class Main {
     public static void main(String[] args) throws Exception {
         Connection conn = null;
@@ -245,7 +248,7 @@ Let's add a simple query:
 </p>
 <pre class="prettyprint lang-java">
 GuestbookFactory create = new GuestbookFactory(conn);
-Result&lt;?&gt; result = create.select().from(Posts.POSTS).fetch();
+Result&lt;?&gt; result = create.select().from(POSTS).fetch();
 </pre>
 <p>
 First get an instance of <code>GuestbookFactory</code> so we can write a simple 
@@ -266,9 +269,9 @@ print out the data:
 </p>
 <pre class="prettyprint lang-java">
 for (Record r : result) {
-    Long id = r.getValue(Posts.ID);
-    String title = r.getValue(Posts.TITLE);
-    String description = r.getValue(Posts.BODY);
+    Long id = r.getValue(POSTS.ID);
+    String title = r.getValue(POSTS.TITLE);
+    String description = r.getValue(POSTS.BODY);
    
     System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
 }
@@ -278,6 +281,11 @@ The full program should now look like this:
 </p>
 <pre class="prettyprint lang-java">
 package test;
+
+// For convenience, always static import your generated tables and 
+// jOOQ functions to decrease verbosity:
+import static test.generated.Tables.*;
+import static org.jooq.impl.Factory.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -307,12 +315,12 @@ public class Main {
             conn = DriverManager.getConnection(url, userName, password);
 
             GuestbookFactory create = new GuestbookFactory(conn);
-            Result result = create.select().from(Posts.POSTS).fetch();
+            Result result = create.select().from(POSTS).fetch();
         
             for (Record r : result) {
-                Long id = r.getValue(Posts.ID);
-                String title = r.getValue(Posts.TITLE);
-                String description = r.getValue(Posts.BODY);
+                Long id = r.getValue(POSTS.ID);
+                String title = r.getValue(POSTS.TITLE);
+                String description = r.getValue(POSTS.BODY);
             
                 System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
             }

@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Results and Records";
+function getH1() {
+    return "Results and Records";
 }
 function getActiveMenu() {
 	return "manual";
@@ -50,7 +50,7 @@ function printContent() {
 								This means, you save memory (and potentially speed), but you can only access 
 								data sequentially and you have to keep a JDBC ResultSet alive. Cursors behave 
 								very much like the <a href="http://download.oracle.com/javase/6/docs/api/java/util/Iterator.html" title="External API reference: java.util.Iterator">java.util.Iterator</a>, 
-								by providing a very simple API: 
+								by providing a very simple API. Some sample methods are: 
 							</p>
 <pre class="prettyprint lang-java">// Check whether there are any more records to be fetched
 boolean hasNext() throws SQLException;
@@ -96,6 +96,13 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 // This method can perform arbitrary conversions
 &lt;T&gt; T getValue(String fieldName, Class&lt;? extends T&gt; type);
 &lt;T&gt; T getValue(int fieldIndex, Class&lt;? extends T&gt; type);</pre>
+
+							<p>
+								For more information about the type conversions that are supported by
+								jOOQ, read the Javadoc on 
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/tools/Convert.java" title="Internal API reference: org.jooq.tools.Convert">org.jooq.tools.Convert</a>
+							
+</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>

@@ -1136,7 +1136,7 @@ public abstract class jOOQAbstractTest<
 
             // [#610] Collision-prone entities are only available in HSQLDB
             else if (getDialect() == HSQLDB) {
-                assertEquals(tables + 8, schema.getTables().size());
+                assertEquals(tables + 9, schema.getTables().size());
             }
 
             else {

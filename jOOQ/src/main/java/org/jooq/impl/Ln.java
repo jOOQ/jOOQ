@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
-import static org.jooq.impl.Factory.ln;
 
 import java.math.BigDecimal;
 
@@ -91,7 +90,7 @@ class Ln extends AbstractFunction<BigDecimal> {
                 case INGRES:
                 case SQLSERVER:
                 case SYBASE:
-                    return ln(argument).div(ln(literal(base)));
+                    return Factory.ln(argument).div(Factory.ln(literal(base)));
 
                 default:
                     return function("log", SQLDataType.NUMERIC, literal(base), argument);

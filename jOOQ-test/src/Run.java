@@ -1,3 +1,10 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import org.jooq.impl.Factory;
+import org.jooq.util.oracle.OracleFactory;
+
 /**
  * Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
@@ -33,44 +40,38 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.two;
-
-import java.math.BigDecimal;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
-
-/**
- * @author Lukas Eder
- */
-class Pi extends AbstractFunction<BigDecimal> {
+public class Run {
 
     /**
-     * Generated UID
+     * @param args
+     * @throws SQLException
      */
-    private static final long serialVersionUID = -420788300355442056L;
+    public static void main(String[] args) throws SQLException {
+        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "TEST", "TEST");
+        Factory create = new OracleFactory(connection);
 
-    Pi() {
-        super("pi", SQLDataType.NUMERIC);
+        System.out.println(create.fetch("with data as ("+
+            " select 'Lukas'      as employee,"+
+            "       'SoftSkills' as company, "+
+            "       80000        as salary, "+
+            "       2007         as year "+
+            " from dual"+
+            " union all select 'Lukas', 'SoftSkills', 80000,  2008 from dual"+
+            " union all select 'Lukas', 'SmartSoft',  90000,  2009 from dual"+
+            " union all select 'Lukas', 'SmartSoft',  95000,  2010 from dual"+
+            " union all select 'Lukas', 'jOOQ',       200000, 2011 from dual"+
+            " union all select 'Lukas', 'jOOQ',       250000, 2012 from dual"+
+            " union all select 'Tom',   'SoftSkills', 89000,  2007 from dual"+
+            " union all select 'Tom',   'SoftSkills', 90000,  2008 from dual"+
+            " union all select 'Tom',   'SoftSkills', 91000,  2009 from dual"+
+            " union all select 'Tom',   'SmartSoft',  92000,  2010 from dual"+
+            " union all select 'Tom',   'SmartSoft',  93000,  2011 from dual"+
+            " union all select 'Tom',   'SmartSoft',  94000,  2012 from dual"+
+        " )"+
+        " select grouping_id(employee, company) id, company, employee, avg(salary)"+
+        " from data"+
+        " group by cube(employee, company)"));
     }
 
-    @Override
-    final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
-            case DB2:
-            case ORACLE:
-                return Factory.asin(one()).mul(two());
-
-            case SQLITE:
-                return literal(Math.PI, BigDecimal.class);
-
-            default:
-                return function("pi", getDataType());
-        }
-    }
 }

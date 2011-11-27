@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.exp;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.two;
@@ -73,7 +72,7 @@ class Sinh extends AbstractFunction<BigDecimal> {
             case POSTGRES:
             case SQLSERVER:
             case SYBASE:
-                return exp(argument.mul(two())).sub(one()).div(exp(argument).mul(two()));
+                return Factory.exp(argument.mul(two())).sub(one()).div(Factory.exp(argument).mul(two()));
 
             default:
                 return function("sinh", SQLDataType.NUMERIC, argument);

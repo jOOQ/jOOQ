@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.least;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -81,8 +80,8 @@ class Least<T> extends AbstractFunction<T> {
                     System.arraycopy(getArguments(), 2, remaining, 0, remaining.length);
 
                     return Factory.decode()
-                        .when(first.lessThan(other), least(first, remaining))
-                        .otherwise(least(other, remaining));
+                        .when(first.lessThan(other), Factory.least(first, remaining))
+                        .otherwise(Factory.least(other, remaining));
                 }
                 else {
                     return Factory.decode()

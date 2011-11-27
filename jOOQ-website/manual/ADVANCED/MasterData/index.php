@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Master data generation. Enumeration tables";
+function getH1() {
+    return "Master data generation. Enumeration tables";
 }
 function getActiveMenu() {
 	return "manual";

@@ -1,7 +1,7 @@
 <?php 
 require 'frame.php';
-function printH1() {
-	print 'The history of jOOQ<br/>From 2009 to ' . date('Y');
+function getH1() {
+	return 'The history of jOOQ<br/>From 2009 to ' . date('Y');
 }
 function getSlogan() {
 	return "jOOQ has come a long way. The community is growing as features are being added

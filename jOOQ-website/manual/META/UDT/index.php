@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "UDT's including ARRAY and ENUM types";
+function getH1() {
+    return "UDT's including ARRAY and ENUM types";
 }
 function getActiveMenu() {
 	return "manual";
@@ -211,7 +211,7 @@ CREATE FUNCTION f_arrays(in_array IN text[]) RETURNS text[]</pre>
 
 // The convenience class is enhanced with these methods
 public final class Functions {
-    public static String[] fArrays(Connection connection, String[] inArray) throws SQLException { // [...]
+    public static String[] fArrays(Connection connection, String[] inArray) { // [...]
     public static Field&lt;String[]&gt; fArrays(String[] inArray) {                                     // [...]
     public static Field&lt;String[]&gt; fArrays(Field&lt;String[]&gt; inArray) {                              // [...]
 }</pre>

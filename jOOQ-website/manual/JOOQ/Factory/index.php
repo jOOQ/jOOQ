@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "The Factory class";
+function getH1() {
+    return "The Factory class";
 }
 function getActiveMenu() {
 	return "manual";
@@ -102,6 +102,29 @@ MySQLFactory create = new MySQLFactory(connection);</pre>
 								schema artefacts will be unified. Currently, this has no use. 
 							</p>
 							
+							<h3>Static Factory methods</h3>
+							<p>
+								With jOOQ 2.0, static factory methods have been introduced in order to
+								make your code look more like SQL. Ideally, when working with jOOQ, you
+								will simply static import all methods from the Factory class:
+							</p>
+							<pre class="prettyprint lang-java">import static org.jooq.impl.Factory.*;</pre>
+							<p>
+								This will allow to access functions even more fluently:
+							</p>
+							
+<pre class="prettyprint lang-java">concat(trim(FIRST_NAME), trim(LAST_NAME));
+// ... which is in fact the same as:
+Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
+							<p>
+								Objects created statically from the Factory do not need a reference to
+								any factory, as they can be constructed independently from your Configuration 
+								(connection, dialect, schema mapping). They will access that information at
+								render / bind time. See 
+								<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">more details on the QueryParts' internals</a>
+							
+</p>
+							
 							<h3>Potential problems</h3>
 							<p>
 								The jOOQ Factory expects its underlying
@@ -136,7 +159,7 @@ MySQLFactory create = new MySQLFactory(connection);</pre>
 </ul>
 							<p>
 								So if you want your queries to run in separate transactions, if you
-								want to roll back a transactions, if you want to close a Connection and
+								want to roll back a transaction, if you want to close a Connection and
 								return it to your container, you will have to take care of that
 								yourself. jOOQ's Factory will always expect its Connection to be in a
 								ready state for creating new PreparedStatements. If it is not, you have

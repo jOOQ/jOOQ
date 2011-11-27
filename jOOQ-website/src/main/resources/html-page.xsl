@@ -17,8 +17,8 @@
 // The following content has been XSL transformed from manual.xml using html-page.xsl
 // Please do not edit this content manually
 require '../frame.php';
-function printH1() {
-    print "The jOOQ User Manual. Single Page";
+function getH1() {
+    return "The jOOQ User Manual. Single Page";
 }
 function getActiveMenu() {
 	return "manual";

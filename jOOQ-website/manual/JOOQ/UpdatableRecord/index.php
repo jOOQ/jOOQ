@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Updatable Records";
+function getH1() {
+    return "Updatable Records";
 }
 function getActiveMenu() {
 	return "manual";

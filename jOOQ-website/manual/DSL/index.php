@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../frame.php';
-function printH1() {
-    print "DSL or fluent API. Where SQL meets Java";
+function getH1() {
+    return "DSL or fluent API. Where SQL meets Java";
 }
 function getActiveMenu() {
 	return "manual";
@@ -24,7 +24,8 @@ function printContent() {
 </tr>
 </table>
 					<h2>Overview</h2>
-					<p>jOOQ ships with its own DSL (or Domain Specific Language) that
+					<p>jOOQ ships with its own DSL (or 
+						<a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Domain Specific Language">Domain Specific Language</a>) that
 						simulates SQL as good as possible in Java. This means, that you can
 						write SQL statements almost as if Java natively supported that syntax
 						just like .NET's C# does with <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL.</a>
@@ -45,17 +46,22 @@ SELECT *
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">Result&lt;Record&gt; result = 
 create.select()
-      .from(T_AUTHOR)
-      .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
-      .where(TAuthor.YEAR_OF_BIRTH.greaterThan(1920)
-      .and(TAuthor.FIRST_NAME.equal("Paulo")))
-      .orderBy(TBook.TITLE)
+      .from(T_AUTHOR.as("a"))
+      .join(T_BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
+      .where(a.YEAR_OF_BIRTH.greaterThan(1920)
+      .and(a.FIRST_NAME.equal("Paulo")))
+      .orderBy(b.TITLE)
       .fetch();</pre>
 </td>
 </tr>
 </table>
 					
-					<p>You couldn't come much closer to SQL itself in Java, without re-writing the compiler. </p>
+					<p>
+						You couldn't come much closer to SQL itself in Java, without re-writing the compiler.
+						We'll see how the aliasing works later in the section about
+						<a href="<?=$root?>/manual/DSL/ALIAS/" title="jOOQ Manual reference: Aliased tables and fields">aliasing</a>
+					
+</p>
 				<h3>Table of contents</h3><ol>
 <li>
 <a title="Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a>

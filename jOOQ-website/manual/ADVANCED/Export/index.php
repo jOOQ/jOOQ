@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Exporting to XML, CSV, JSON, HTML, Text";
+function getH1() {
+    return "Exporting to XML, CSV, JSON, HTML, Text";
 }
 function getActiveMenu() {
 	return "manual";

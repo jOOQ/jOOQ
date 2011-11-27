@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Configuration and setup of the generator";
+function getH1() {
+    return "Configuration and setup of the generator";
 }
 function getActiveMenu() {
 	return "manual";
@@ -65,6 +65,10 @@ function printContent() {
 								classpath. If they are not present, then java.util.logging.Logger is
 								used instead.
 							</p>
+							<p>
+								Other optional dependencies are the JPA API, and the Oracle JDBC driver,
+								which is needed for Oracle's advanced data types, only
+							</p>
 							
 							
 							<h2>Configure jOOQ</h2>
@@ -73,7 +77,6 @@ function printContent() {
 <pre class="prettyprint">#Configure the database connection here
 jdbc.Driver=com.mysql.jdbc.Driver
 jdbc.URL=jdbc:mysql://[your jdbc URL]
-jdbc.Schema=[your database schema / owner / name]
 jdbc.User=[your database user]
 jdbc.Password=[your database password]
 
@@ -84,6 +87,10 @@ generator=org.jooq.util.DefaultGenerator
 #The database type. The format here is:
 #generator.database=org.util.[database].[database]Database
 generator.database=org.jooq.util.mysql.MySQLDatabase
+
+#The schema that is used locally as a source for meta information. This could be your
+#development schema or the production schema, etc:
+generator.database.input-schema=[your database schema / owner / name]
 
 #All elements that are generated from your schema (several Java regular expressions, separated by comma)
 #Watch out for case-sensitivity. Depending on your database, this might be important!
@@ -108,7 +115,20 @@ generator.target.package=[org.jooq.your.package]
 generator.target.directory=[/path/to/your/dir]</pre>
 
 							<p>And you can add some optional advanced configuration parameters: </p>
-<pre class="prettyprint">#Generate a master data table enum classes (several Java regular expressions, separated by comma)
+<pre class="prettyprint">#The schema that is used in generated source code. This will be the production schema
+#Use this to override your local development schema name for source code generation
+#If not specified, this will be the same as the input-schema.
+generator.database.output-schema=[your database schema / owner / name]
+
+#Generate instance fields in your tables, as opposed to static fields. This simplifies aliasing
+#Defaults to true
+generator.generate.instance-fields=true
+
+#Generate jOOU data types for your unsigned data types, which are not natively supported in Java
+#Defaults to true
+generator.generate.unsigned-types=true
+
+#Generate a master data table enum classes (several Java regular expressions, separated by comma)
 generator.generate.master-data-tables=[a list of tables]
 
 #For every master data table, specify two special columns
@@ -132,7 +152,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 <li>The JDBC driver you configured</li>
 							
 </ul>
-							
+
 							<h3>A command-line example (For Windows, unix/linux/etc will be similar)</h3>
 							<ul>
 								
@@ -183,7 +203,11 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							</div>
 							
 							<h3>Run generation with ant</h3>
-							<p>You can also use an ant task to generate your classes: </p>
+							<p>
+								You can also use an ant task to generate your classes. As a rule of thumb, 
+								remove the dots "." and dashes "-" from the .properties file's property names to get the 
+								ant task's arguments: 
+							</p>
 <pre class="prettyprint lang-xml">&lt;!-- Task definition --&gt;
 &lt;taskdef name="generate-classes" classname="org.jooq.util.GenerationTask"&gt;
   &lt;classpath&gt;
@@ -202,9 +226,9 @@ generator.generate.master-data-table-description.[master data table]=[column use
 &lt;target name="generate-test-classes"&gt;
   &lt;generate-classes 
       jdbcurl="jdbc:mysql://localhost/test"
-      jdbcschema="test"
       jdbcuser="root"
       jdbcpassword=""
+      generatordatabaseinputschema="test"
       generatortargetpackage="org.jooq.test.generatedclasses"
       generatortargetdirectory="${basedir}/src"/&gt;
 &lt;/target&gt;</pre>
@@ -246,7 +270,6 @@ generator.generate.master-data-table-description.[master data table]=[column use
     &lt;jdbc&gt;
       &lt;driver&gt;org.postgresql.Driver&lt;/driver&gt;
       &lt;url&gt;jdbc:postgresql:postgres&lt;/url&gt;
-      &lt;schema&gt;public&lt;/schema&gt;
       &lt;user&gt;postgres&lt;/user&gt;
       &lt;password&gt;test&lt;/password&gt;
     &lt;/jdbc&gt;
@@ -258,6 +281,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
         &lt;name&gt;org.jooq.util.postgres.PostgresDatabase&lt;/name&gt;
         &lt;includes&gt;.*&lt;/includes&gt;
         &lt;excludes&gt;&lt;/excludes&gt;
+        &lt;inputSchema&gt;public&lt;/inputSchema&gt;
       &lt;/database&gt;
       &lt;generate&gt;
         &lt;relations&gt;true&lt;/relations&gt;

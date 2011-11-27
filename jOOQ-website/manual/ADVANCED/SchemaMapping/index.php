@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Mapping generated schemata and tables";
+function getH1() {
+    return "Mapping generated schemata and tables";
 }
 function getActiveMenu() {
 	return "manual";
@@ -123,6 +123,25 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 
 							<p>The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement: </p>
 <pre class="prettyprint lang-sql">SELECT * FROM MY_BOOK_WORLD.MY_APP__T_AUTHOR</pre>
+
+							<h2>Mapping at code generation time</h2>
+							<p>
+								Note that you can also hard-wire schema mapping in generated artefacts
+								at code generation time, e.g. when you have 5 developers with their own
+								dedicated developer databases, and a common integration database. In the
+								code generation configuration, you would then write.
+							</p>
+<pre class="prettyprint">#Use this as the developer's schema:
+generator.database.input-schema=LUKAS_DEV_SCHEMA
+
+#Use this as the integration / production database:
+generator.database.output-schema=PROD
+</pre>
+							<p>
+								See the manual's section about
+								<a href="<?=$root?>/manual/META/" title="jOOQ Manual reference: Meta model code generation">jooq-codegen configuration</a>
+								for more details
+							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>

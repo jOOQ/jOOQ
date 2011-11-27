@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<title>jOOQ - <?php printH1(); ?></title>
+		<title>jOOQ - <?php print preg_replace('%<br/>%', ' - ', getH1()); ?></title>
 		<meta property="og:title" content="jOOQ" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://www.jooq.org" />
@@ -96,7 +96,7 @@
 					<table width="100%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="700" valign="top">
-								<h1><?php printH1(); ?></h1></td>
+								<h1><?php print getH1(); ?></h1></td>
 							<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
 						</tr>
 					</table>

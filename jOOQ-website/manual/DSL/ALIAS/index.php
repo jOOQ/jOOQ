@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Aliased tables and fields";
+function getH1() {
+    return "Aliased tables and fields";
 }
 function getActiveMenu() {
 	return "manual";
@@ -30,9 +30,22 @@ function printContent() {
   FROM T_AUTHOR a
   JOIN T_BOOK b on a.ID = b.AUTHOR_ID</pre>
   
-  							<p>In this example, we are aliasing Tables, calling them a and b. Here is how you can create Table aliases in jOOQ: </p>
+  							<p>
+  								In this example, we are aliasing Tables, calling them a and b.
+  								The way aliasing works depends on how you generate your meta model
+  								using jooq-codegen (see the manual's section about 
+  								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their corresponding records">generating tables</a>). Things become
+  								simpler when you choose the instance/dynamic model, instead of the
+  								static one.
+  								Here is how you can create Table aliases in jOOQ: 
+  							</p>
+  							
 <pre class="prettyprint lang-java">Table&lt;TBookRecord&gt; book = T_BOOK.as("b");
-Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</pre>
+Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");
+
+// If you choose not to generate a static meta model, this becomes even better
+TBook book = T_BOOK.as("b");
+TAuthor author = T_AUTHOR.as("a");</pre>
 
 							<p>Now, if you want to reference any fields from those Tables, you may
 								not use the original T_BOOK or T_AUTHOR meta-model objects anymore.
@@ -40,18 +53,23 @@ Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");</pre>
 								aliases: </p>
 								
 <pre class="prettyprint lang-java">Field&lt;Integer&gt; bookID = book.getField(TBook.ID);
-Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
+Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);
+
+// Or with the instance field model:
+Field&lt;Integer&gt; bookID = book.ID;
+Field&lt;Integer&gt; authorID = author.ID;</pre>
 
 							<p>
-								Unfortunately, this tends to be a bit verbose. The static meta-model
-								is not very suitable for accessing fields dynamically from Table
-								aliases. This will be resolved in a future version as of ticket
-								<a href="https://sourceforge.net/apps/trac/jooq/ticket/117" title="Trac ticket: #117">#117</a>.
-								For now, this is how the above SQL statement would read in jOOQ:
+								So this is how the above SQL statement would read in jOOQ:
 							</p>
 <pre class="prettyprint lang-java">create.select(authorID, bookID)
       .from(author)
-      .join(book).on(authorID.equal(book.getField(TBook.AUTHOR_ID)));</pre>
+      .join(book).on(authorID.equal(book.getField(T_BOOK.AUTHOR_ID)));
+      
+// Or with the instance field model:
+create.select(author.ID, book.ID)
+      .from(author)
+      .join(book).on(author.ID.equal(book.AUTHOR_ID))</pre>
       
       
       						<h3>Aliasing nested selects as tables</h3>
@@ -71,11 +89,11 @@ Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);</pre>
 GROUP BY FIRST_NAME, LAST_NAME;</pre>
 							<p>Here is how it's done with jOOQ: </p>
 <pre class="prettyprint lang-java">Record record = create.select(
-         TAuthor.FIRST_NAME.concat(" ", TAuthor.LAST_NAME).as("author"),
-         create.count().as("books"))
+         concat(T_AUTHOR.FIRST_NAME, " ", T_AUTHOR.LAST_NAME).as("author"),
+         count().as("books"))
       .from(T_AUTHOR)
-      .join(T_BOOK).on(TAuthor.ID.equal(TBook.AUTHOR_ID))
-      .groupBy(TAuthor.FIRST_NAME, TAuthor.LAST_NAME).fetchAny();</pre>
+      .join(T_BOOK).on(T_AUTHOR.ID.equal(T_BOOK.AUTHOR_ID))
+      .groupBy(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME).fetchAny();</pre>
       						<p>When you alias Fields like above, you can access those Fields' values using the alias name: </p>
 <pre class="prettyprint lang-java">System.out.println("Author : " + record.getValue("author"));
 System.out.println("Books  : " + record.getValue("books"));</pre>

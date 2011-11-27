@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Conditions";
+function getH1() {
+    return "Conditions";
 }
 function getActiveMenu() {
 	return "manual";
@@ -101,9 +101,9 @@ function printContent() {
 (T_BOOK.TYPE_CODE IN (SELECT CODE FROM T_TYPES) AND T_BOOK.LANGUAGE = 'EN')</pre>
 
 							<p>Just write: </p>
-<pre class="prettyprint lang-java">TBook.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                      .and(TBook.LANGUAGE.equal("DE")).or(
-TBook.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                      .and(TBook.LANGUAGE.equal("FR")).or(
-TBook.TYPE_CODE.in(create.select(TTypes.CODE).from(T_TYPES)).and(TBook.LANGUAGE.equal("EN"))));</pre>
+<pre class="prettyprint lang-java">T_BOOK.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                       .and(T_BOOK.LANGUAGE.equal("DE")).or(
+T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUAGE.equal("FR")).or(
+T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>

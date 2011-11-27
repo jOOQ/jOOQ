@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Other types of nested SELECT";
+function getH1() {
+    return "Other types of nested SELECT";
 }
 function getActiveMenu() {
 	return "manual";
@@ -39,10 +39,10 @@ function printContent() {
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.select()
       .from(T_BOOK)
-      .where(TBook.AUTHOR_ID.equal(create
-             .select(TAuthor.ID)
+      .where(T_BOOK.AUTHOR_ID.equal(create
+             .select(T_AUTHOR.ID)
              .from(T_AUTHOR)
-             .where(TAuthor.LAST_NAME.equal("Orwell"))));</pre>
+             .where(T_AUTHOR.LAST_NAME.equal("Orwell"))));</pre>
 </td>
 </tr>
 </table>
@@ -85,9 +85,9 @@ ORDER BY nested.books DESC
 </pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">Table&lt;Record&gt; nested = 
-    create.select(TBook.AUTHOR_ID, count().as("books"))
+    create.select(T_BOOK.AUTHOR_ID, count().as("books"))
           .from(T_BOOK)
-          .groupBy(TBook.AUTHOR_ID).asTable("nested");
+          .groupBy(T_BOOK.AUTHOR_ID).asTable("nested");
 
 create.select(nested.getFields())
       .from(nested)
@@ -123,13 +123,13 @@ ORDER BY books DESC
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">// The type of books cannot be inferred from the Select&lt;?&gt;
 Field&lt;Object&gt; books = 
-    create.select(create.count())
+    create.selectCount()
           .from(T_BOOK)
-          .where(TBook.AUTHOR_ID.equal(TAuthor.ID))
+          .where(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID))
           .asField("books");
-create.select(TAuthor.ID, books)
+create.select(T_AUTHOR.ID, books)
       .from(T_AUTHOR)
-      .orderBy(books, TAuthor.ID));</pre>
+      .orderBy(books, T_AUTHOR.ID));</pre>
 </td>
 </tr>
 </table>

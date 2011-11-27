@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "The Query and its various subtypes";
+function getH1() {
+    return "The Query and its various subtypes";
 }
 function getActiveMenu() {
 	return "manual";
@@ -95,12 +95,12 @@ function printContent() {
 
 
 SELECT * 
-  FROM t_author a 
-  JOIN t_book b 
-    ON a.id = b.author_id 
- WHERE a.year_of_birth &gt; 1920 
-   AND a.first_name = 'Paulo'
- ORDER BY b.title</pre>
+  FROM t_author  
+  JOIN t_book  
+    ON t_author.id = t_book.author_id 
+ WHERE t_author.year_of_birth &gt; 1920 
+   AND t_author.first_name = 'Paulo'
+ ORDER BY t_book.title</pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">// Instanciate your factory using a JDBC connection.
 Factory create = new Factory(connection, SQLDialect.ORACLE);
@@ -109,10 +109,10 @@ Factory create = new Factory(connection, SQLDialect.ORACLE);
 Result&lt;Record&gt; result = create.select()
     .from(T_AUTHOR)
     .join(T_BOOK)
-    .on(ID.equal(AUTHOR_ID))
-    .where(YEAR_OF_BIRTH.greaterThan(1920)
-    .and(FIRST_NAME.equal("Paulo")))
-    .orderBy(TITLE).fetch();</pre>
+    .on(T_AUTHOR.ID.equal(T_BOOK.AUTHOR_ID))
+    .where(T_AUTHOR.YEAR_OF_BIRTH.greaterThan(1920)
+    .and(T_AUTHOR.FIRST_NAME.equal("Paulo")))
+    .orderBy(T_BOOK.TITLE).fetch();</pre>
 </td>
 </tr>
 </table>
@@ -123,13 +123,17 @@ Result&lt;Record&gt; result = create.select()
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/oracle/generatedclasses/tables/TAuthor.java" title="Internal API reference: org.jooq.test.oracle.generatedclasses.tables.TAuthor">TAuthor</a> and 
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/oracle/generatedclasses/tables/TBook.java" title="Internal API reference: org.jooq.test.oracle.generatedclasses.tables.TBook">TBook</a> respectively. 
 								Their full qualification would read TAuthor.T_AUTHOR and TBook.T_BOOK, but in many cases, 
-								it's useful to static import elements involved with queries, in order to decrease verbosity. 
-							</p>
+								it's useful to static import elements involved with queries, in order to decrease verbosity:
+								<pre class="prettyprint lang-java">import static com.example.jooq.Tables.*;</pre> 
+							
+</p>
 							
 							<p>
 								Apart from the singleton Table instances TAuthor.T_AUTHOR and
-								TBook.T_BOOK, these generated classes also contain one static member
-								for every physical field, such as TAuthor.ID or TBook.TAUTHOR_ID, etc. 
+								TBook.T_BOOK, these generated classes also contain one member
+								for every physical field, such as TAuthor.ID or TBook.TAUTHOR_ID, etc.
+								Depending on your configuration, those members can be static members
+								(better for static imports) or instance members (better for aliasing) 
 							</p>
 							
 							<ul>
@@ -150,16 +154,16 @@ Result&lt;Record&gt; result = create.select()
 							</p>
 <pre class="prettyprint lang-java">// Re-use the factory to create a SelectQuery. This example will not make use of static imports...
 SelectQuery q = create.selectQuery();
-q.addFrom(TAuthor.T_AUTHOR);
+q.addFrom(T_AUTHOR);
 
 // This example shows some "mixed" API usage, where the JOIN is added with the standard API, and the 
 // Condition is created using the DSL API
-q.addJoin(TBook.T_BOOK, TAuthor.ID.equal(TBook.AUTHOR_ID));
+q.addJoin(T_BOOK, T_AUTHOR.ID.equal(T_BOOK.AUTHOR_ID));
 
 // The AND operator between Conditions is implicit here
-q.addConditions(TAuthor.YEAR_OF_BIRTH.greaterThan(1920));
-q.addConditions(TAuthor.FIRST_NAME.equal("Paulo"));
-q.addOrderBy(TBook.TITLE);</pre>
+q.addConditions(T_AUTHOR.YEAR_OF_BIRTH.greaterThan(1920));
+q.addConditions(T_AUTHOR.FIRST_NAME.equal("Paulo"));
+q.addOrderBy(T_BOOK.TITLE);</pre>
 
 							<h3>Fetching data</h3>
 							<p>
@@ -192,7 +196,7 @@ VALUES
     (101, 'Alfred', 'D&ouml;blin');</pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.insertInto(T_AUTHOR, 
-        TAuthor.ID, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
+        T_AUTHOR.ID, T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .values(100, "Hermann", "Hesse")
       .values(101, "Alfred", "D&ouml;blin")
       .execute();</pre>
@@ -202,11 +206,14 @@ VALUES
 
 							<p>The DSL syntax tries to stay close to actual SQL. In detail,
 								however, Java is limited in its possibilities. That's why the
-								.values() clause is repeated for every record. Some RDBMS support
+								.values() clause is repeated for every record in multi-record inserts. 
+								Some RDBMS support
 								inserting several records at the same time. This is also supported in
-								jOOQ, and simulated using INSERT INTO .. SELECT .. UNION ALL SELECT ..
-								clauses for those RDBMS that don't support this syntax.
-							</p>
+								jOOQ, and simulated using UNION clauses for those RDBMS that don't 
+								support this syntax.
+								<pre class="prettyprint lang-sql">INSERT INTO .. SELECT .. UNION ALL SELECT ..</pre>
+							
+</p>
 							<p>Note: Just like in SQL itself, you can have syntax errors when you
 								don't have matching numbers of fields/values. Also, you can run into
 								runtime problems, if your field/value types don't match. </p>
@@ -217,13 +224,13 @@ VALUES
 								prefer that syntax. The above INSERT statement can also be expressed
 								as follows: </p>
 <pre class="prettyprint lang-java">create.insertInto(T_AUTHOR)
-      .set(TAuthor.ID, 100)
-      .set(TAuthor.FIRST_NAME, "Hermann")
-      .set(TAuthor.LAST_NAME, "Hesse")
+      .set(T_AUTHOR.ID, 100)
+      .set(T_AUTHOR.FIRST_NAME, "Hermann")
+      .set(T_AUTHOR.LAST_NAME, "Hesse")
       .newRecord()
-      .set(TAuthor.ID, 101)
-      .set(TAuthor.FIRST_NAME, "Alfred")
-      .set(TAuthor.LAST_NAME, "D&ouml;blin")
+      .set(T_AUTHOR.ID, 101)
+      .set(T_AUTHOR.FIRST_NAME, "Alfred")
+      .set(T_AUTHOR.LAST_NAME, "D&ouml;blin")
       .execute();</pre>
 							<p>As you can see, this syntax is a bit more verbose, but also more
 								type-safe, as every field can be matched with its value.</p>
@@ -236,10 +243,10 @@ VALUES
 								clause: </p>
 <pre class="prettyprint lang-java">// Add a new author called "Koontz" with ID 3.
 // If that ID is already present, update the author's name
-create.insertInto(T_AUTHOR, TAuthor.ID, TAuthor.LAST_NAME)
+create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
       .values(3, "Koontz")
       .onDuplicateKeyUpdate()
-      .set(TAuthor.LAST_NAME, "Koontz")
+      .set(T_AUTHOR.LAST_NAME, "Koontz")
       .execute();</pre>
       
       						<h3>Example: INSERT .. RETURNING clause</h3>
@@ -251,34 +258,41 @@ create.insertInto(T_AUTHOR, TAuthor.ID, TAuthor.LAST_NAME)
 								
 <pre class="prettyprint lang-java">// Add another author, with a generated ID
 Record&lt;?&gt; record =
-create.insertInto(T_AUTHOR, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
+create.insertInto(T_AUTHOR, T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .values("Charlotte", "Roche")
-      .returning(TAuthor.ID)
+      .returning(T_AUTHOR.ID)
       .fetchOne();
 
-System.out.println(record.getValue(TAuthor.ID));
+System.out.println(record.getValue(T_AUTHOR.ID));
 
 // For some RDBMS, this also works when inserting several values
+// The following should return a 2x2 table
 Result&lt;?&gt; result =
-create.insertInto(T_AUTHOR, TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
+create.insertInto(T_AUTHOR, T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       .values("Johann Wolfgang", "von Goethe")
       .values("Friedrich", "Schiller")
       // You can request any field. Also trigger-generated values
-      .returning(TAuthor.ID, TAuthor.CREATION_DATE)
+      .returning(T_AUTHOR.ID, T_AUTHOR.CREATION_DATE)
       .fetch();</pre>
-      						
+      					
+      						<p>
+      							Be aware though, that this can lead to race-conditions
+      							in those databases that cannot properly return generated
+      							ID values.
+      						</p>
+      							
       						<h3>Example: Non-DSL Query</h3>
       						<p>You can always use the more verbose regular syntax of the InsertQuery, if you need more control: </p>
 <pre class="prettyprint lang-java">// Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
-i.addValue(TAuthor.ID, 100);
-i.addValue(TAuthor.FIRST_NAME, "Hermann");
-i.addValue(TAuthor.LAST_NAME, "Hesse");
+i.addValue(T_AUTHOR.ID, 100);
+i.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
+i.addValue(T_AUTHOR.LAST_NAME, "Hesse");
 
 i.newRecord();
-i.addValue(TAuthor.ID, 101);
-i.addValue(TAuthor.FIRST_NAME, "Alfred");
-i.addValue(TAuthor.LAST_NAME, "D&ouml;blin");
+i.addValue(T_AUTHOR.ID, 101);
+i.addValue(T_AUTHOR.FIRST_NAME, "Alfred");
+i.addValue(T_AUTHOR.LAST_NAME, "D&ouml;blin");
 i.execute();</pre>
 
 							<h3>Example: INSERT Query combined with SELECT statements</h3>
@@ -286,9 +300,9 @@ i.execute();</pre>
 								also provide a Field, potentially containing an expression: </p>
 <pre class="prettyprint lang-java">// Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
-i.addValue(TAuthor.ID, create.select(TAuthor.ID.max().add(1)).from(T_AUTHOR).asField())
-i.addValue(TAuthor.FIRST_NAME, "Hermann");
-i.addValue(TAuthor.LAST_NAME, "Hesse");
+i.addValue(T_AUTHOR.ID, create.select(max(T_AUTHOR.ID).add(1)).from(T_AUTHOR).asField())
+i.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
+i.addValue(T_AUTHOR.LAST_NAME, "Hesse");
 i.execute();</pre>
 							<p>Note that especially MySQL (and some other RDBMS) has some
 								limitations regarding that syntax. You may not be able to
@@ -298,7 +312,7 @@ i.execute();</pre>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when 
 								you copy records from one table to another: </p>
 <pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
-           create.selectFrom(T_AUTHOR).where(TAuthor.DECEASED.equal(1)));
+           create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
 i.execute();</pre>
 
 							
@@ -317,9 +331,9 @@ i.execute();</pre>
  </pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.update(T_AUTHOR)
-      .set(TAuthor.FIRST_NAME, "Hermann")
-      .set(TAuthor.LAST_NAME, "Hesse")
-      .where(TAuthor.ID.equal(3))
+      .set(T_AUTHOR.FIRST_NAME, "Hermann")
+      .set(T_AUTHOR.LAST_NAME, "Hesse")
+      .where(T_AUTHOR.ID.equal(3))
       .execute();</pre>
 </td>
 </tr>
@@ -329,9 +343,9 @@ i.execute();</pre>
 							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdateQuery.java" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class, 
 							this is how you could express an UPDATE statement:</p> 
 <pre class="prettyprint lang-java">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
-u.addValue(TAuthor.FIRST_NAME, "Hermann");
-u.addValue(TAuthor.FIRST_NAME, "Hesse");
-u.addConditions(TAuthor.ID.equal(3));
+u.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
+u.addValue(T_AUTHOR.FIRST_NAME, "Hesse");
+u.addConditions(T_AUTHOR.ID.equal(3));
 u.execute();</pre>
 
 							
@@ -348,7 +362,7 @@ u.execute();</pre>
  </pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.delete(T_AUTHOR)
-      .where(TAuthor.ID.equal(100))
+      .where(T_AUTHOR.ID.equal(100))
       .execute();</pre>
 </td>
 </tr>
@@ -358,7 +372,7 @@ u.execute();</pre>
 							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/DeleteQuery.java" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class, 
 							this is how you could express a DELETE statement: </p> 
 <pre class="prettyprint lang-java">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
-d.addConditions(TAuthor.ID.equal(100));
+d.addConditions(T_AUTHOR.ID.equal(100));
 d.execute();</pre>
 
 
@@ -392,10 +406,10 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.mergeInto(T_AUTHOR)
       .using(create().selectOne())
-      .on(TAuthor.LAST_NAME.equal("Hitchcock"))
+      .on(T_AUTHOR.LAST_NAME.equal("Hitchcock"))
       .whenMatchedThenUpdate()
-      .set(TAuthor.FIRST_NAME, "John")
-      .whenNotMatchedThenInsert(TAuthor.LAST_NAME)
+      .set(T_AUTHOR.FIRST_NAME, "John")
+      .whenNotMatchedThenInsert(T_AUTHOR.LAST_NAME)
       .values("Hitchcock")
       .execute();
 

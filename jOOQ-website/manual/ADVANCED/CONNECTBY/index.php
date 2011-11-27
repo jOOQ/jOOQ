@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "The Oracle CONNECT BY clause";
+function getH1() {
+    return "The Oracle CONNECT BY clause";
 }
 function getActiveMenu() {
 	return "manual";
@@ -50,10 +50,10 @@ create.select(create.rownum())
 <pre class="prettyprint lang-java"> OracleFactory ora = new OracleFactory(connection);
 
  List&lt;?&gt; paths =
- ora.select(ora.sysConnectByPath(Directory.NAME, "/").substring(2))
-    .from(Directory)
-    .connectBy(ora.prior(Directory.ID).equal(Directory.PARENT_ID))
-    .startWith(Directory.PARENT_ID.isNull())
+ ora.select(ora.sysConnectByPath(DIRECTORY.NAME, "/").substring(2))
+    .from(DIRECTORY)
+    .connectBy(ora.prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+    .startWith(DIRECTORY.PARENT_ID.isNull())
     .orderBy(ora.literal(1))
     .fetch(0);</pre>
     

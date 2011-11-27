@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "Using JDBC batch operations";
+function getH1() {
+    return "Using JDBC batch operations";
 }
 function getActiveMenu() {
 	return "manual";

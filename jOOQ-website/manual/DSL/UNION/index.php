@@ -3,8 +3,8 @@
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
-function printH1() {
-    print "UNION and other set operations";
+function getH1() {
+    return "UNION and other set operations";
 }
 function getActiveMenu() {
 	return "manual";
@@ -48,11 +48,11 @@ SELECT TITLE
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.select(TBook.TITLE)
       .from(T_BOOK)
-      .where(TBook.PUBLISHED_IN.greaterThan(1945))
+      .where(T_BOOK.PUBLISHED_IN.greaterThan(1945))
       .union(
-create.select(TBook.TITLE)
+create.select(T_BOOK.TITLE)
       .from(T_BOOK)
-      .where(TBook.AUTHOR_ID.equal(1)));</pre>
+      .where(T_BOOK.AUTHOR_ID.equal(1)));</pre>
 </td>
 </tr>
 </table>
@@ -67,13 +67,13 @@ create.select(TBook.TITLE)
 							<p>An example of advanced UNION usage is the following statement in jOOQ: </p>
 <pre class="prettyprint lang-java">// Create a UNION of several types of books
 Select&lt;?&gt; union = 
-    create.select(TBook.TITLE, TBook.AUTHOR_ID).from(T_BOOK).where(TBook.PUBLISHED_IN.greaterThan(1945)).union(
-    create.select(TBook.TITLE, TBook.AUTHOR_ID).from(T_BOOK).where(TBook.AUTHOR_ID.equal(1)));
+    create.select(T_BOOK.TITLE, T_BOOK.AUTHOR_ID).from(T_BOOK).where(T_BOOK.PUBLISHED_IN.greaterThan(1945)).union(
+    create.select(T_BOOK.TITLE, T_BOOK.AUTHOR_ID).from(T_BOOK).where(T_BOOK.AUTHOR_ID.equal(1)));
 
 // Now, re-use the above UNION and order it by author
-create.select(union.getField(TBook.TITLE))
+create.select(union.getField(T_BOOK.TITLE))
       .from(union)
-      .orderBy(union.getField(TBook.AUTHOR_ID).descending());</pre>
+      .orderBy(union.getField(T_BOOK.AUTHOR_ID).descending());</pre>
 
 							<p>This example does not seem surprising, when you have read the
 								previous chapters about 

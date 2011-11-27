@@ -91,7 +91,8 @@ order to upgrade, please be aware of the following pitfalls:
 - Much of the post-fix function notation is replaced by static 
   methods in the Factory. Today's org.jooq.Field API is 
   maintained in jOOQ 2.0, for backwards compatibility. It will
-  be removed, eventually, though.
+  be removed, eventually, though. Expect some incompatible
+  changes, where window functions are involved
 - Some Factory instance methods (such as val(), literal()) are
   now static. They are compatible, but may cause compiler
   warnings.

@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.ceil;
-import static org.jooq.impl.Factory.floor;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.val;
 
@@ -78,18 +76,18 @@ class Round<T extends Number> extends AbstractFunction<T> {
             case DERBY: {
                 if (decimals == 0) {
                     return Factory.decode()
-                        .when(argument.sub(floor(argument))
-                        .lessThan((T) Double.valueOf(0.5)), floor(argument))
-                        .otherwise(ceil(argument));
+                        .when(argument.sub(Factory.floor(argument))
+                        .lessThan((T) Double.valueOf(0.5)), Factory.floor(argument))
+                        .otherwise(Factory.ceil(argument));
                 }
                 else {
                     Field<BigDecimal> factor = Factory.val(BigDecimal.ONE.movePointRight(decimals));
                     Field<T> mul = argument.mul(factor);
 
                     return Factory.decode()
-                        .when(mul.sub(floor(mul))
-                        .lessThan((T) Double.valueOf(0.5)), floor(mul).div(factor))
-                        .otherwise(ceil(mul).div(factor));
+                        .when(mul.sub(Factory.floor(mul))
+                        .lessThan((T) Double.valueOf(0.5)), Factory.floor(mul).div(factor))
+                        .otherwise(Factory.ceil(mul).div(factor));
                 }
             }
 

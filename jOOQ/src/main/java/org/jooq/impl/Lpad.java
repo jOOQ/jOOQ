@@ -35,10 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.length;
-import static org.jooq.impl.Factory.repeat;
 import static org.jooq.impl.Factory.val;
 
 import org.jooq.Configuration;
@@ -78,10 +75,10 @@ class Lpad extends AbstractFunction<String> {
             case SQLSERVER:
             case SYBASE: {
                 if (character == null) {
-                    return concat(repeat(" ", length.sub(length(field))), field);
+                    return Factory.concat(Factory.repeat(" ", length.sub(Factory.length(field))), field);
                 }
                 else {
-                    return concat(repeat(character, length.sub(length(field))), field);
+                    return Factory.concat(Factory.repeat(character, length.sub(Factory.length(field))), field);
                 }
             }
 

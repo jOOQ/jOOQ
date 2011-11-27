@@ -35,10 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.length;
-import static org.jooq.impl.Factory.repeat;
 import static org.jooq.impl.Factory.val;
 
 import org.jooq.Configuration;
@@ -78,10 +75,10 @@ class Rpad extends AbstractFunction<String> {
             case SQLSERVER:
             case SYBASE: {
                 if (character == null) {
-                    return concat(field, repeat(" ", length.sub(length(field))));
+                    return Factory.concat(field, Factory.repeat(" ", length.sub(Factory.length(field))));
                 }
                 else {
-                    return concat(field, repeat(character, length.sub(length(field))));
+                    return Factory.concat(field, Factory.repeat(character, length.sub(Factory.length(field))));
                 }
             }
 

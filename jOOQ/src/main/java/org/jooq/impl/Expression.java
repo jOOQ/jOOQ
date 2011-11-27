@@ -60,7 +60,6 @@ import static org.jooq.impl.Factory.bitOr;
 import static org.jooq.impl.Factory.bitXor;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
-import static org.jooq.impl.Factory.power;
 
 import java.util.Arrays;
 import java.util.List;
@@ -142,10 +141,10 @@ class Expression<T> extends AbstractFunction<T> {
 
         // Many dialects don't support shifts. Use multiplication/division instead
         else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
-            return lhs.mul(power(literal(2), rhsAsNumber()));
+            return lhs.mul(Factory.power(literal(2), rhsAsNumber()));
         }
         else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
-            return lhs.div(power(literal(2), rhsAsNumber()));
+            return lhs.div(Factory.power(literal(2), rhsAsNumber()));
         }
 
         // These operators are not supported in any dialect

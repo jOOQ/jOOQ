@@ -36,8 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.length;
-import static org.jooq.impl.Factory.rpad;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -67,7 +65,7 @@ class Repeat extends AbstractFunction<String> {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
-                return rpad(string, length(string).mul(count), string);
+                return Factory.rpad(string, Factory.length(string).mul(count), string);
 
             case ASE:
             case SQLSERVER:

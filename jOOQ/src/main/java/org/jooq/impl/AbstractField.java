@@ -45,6 +45,8 @@ import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -59,11 +61,14 @@ import org.jooq.CaseWhenStep;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DataType;
+import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
+import org.jooq.WindowIgnoreNullsStep;
+import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
@@ -604,5 +609,676 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition greaterOrEqualAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL_ALL);
+    }
+
+    // ------------------------------------------------------------------------
+    // Pre-2.0 API. This API is maintained for backwards-compatibility. It will
+    // be removed in the future. Consider using equivalent methods from
+    // org.jooq.Factory
+    // ------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    private final <Z extends Number> Field<Z> numeric() {
+        if (getDataType().isNumeric()) {
+            return (Field<Z>) this;
+        }
+        else {
+            return (Field<Z>) cast(BigDecimal.class);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final Field<String> varchar() {
+        if (getDataType().isString()) {
+            return (Field<String>) this;
+        }
+        else {
+            return cast(String.class);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final <Z extends java.util.Date> Field<Z> date() {
+        if (getDataType().isTemporal()) {
+            return (Field<Z>) this;
+        }
+        else {
+            return (Field<Z>) cast(Timestamp.class);
+        }
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> sign() {
+        return Factory.sign(numeric());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Deprecated
+    public final Field<T> abs() {
+        return (Field<T>) Factory.abs(numeric());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Deprecated
+    public final Field<T> round() {
+        return (Field<T>) Factory.round(numeric());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Deprecated
+    public final Field<T> round(int decimals) {
+        return (Field<T>) Factory.round(numeric(), decimals);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Deprecated
+    public final Field<T> floor() {
+        return (Field<T>) Factory.floor(numeric());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Deprecated
+    public final Field<T> ceil() {
+        return (Field<T>) Factory.ceil(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> sqrt() {
+        return Factory.sqrt(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> exp() {
+        return Factory.exp(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> ln() {
+        return Factory.ln(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> log(int base) {
+        return Factory.log(numeric(), base);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> power(Number exponent) {
+        return Factory.power(numeric(), exponent);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> acos() {
+        return Factory.acos(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> asin() {
+        return Factory.asin(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> atan() {
+        return Factory.atan(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> atan2(Number y) {
+        return Factory.atan2(numeric(), y);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> atan2(Field<? extends Number> y) {
+        return Factory.atan2(numeric(), y);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> cos() {
+        return Factory.cos(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> sin() {
+        return Factory.sin(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> tan() {
+        return Factory.tan(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> cot() {
+        return Factory.cot(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> sinh() {
+        return Factory.sinh(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> cosh() {
+        return Factory.cosh(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> tanh() {
+        return Factory.tanh(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> coth() {
+        return Factory.coth(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> deg() {
+        return Factory.deg(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> rad() {
+        return Factory.rad(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> count() {
+        return Factory.count(this);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> countDistinct() {
+        return Factory.countDistinct(this);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> max() {
+        return Factory.max(this);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> min() {
+        return Factory.min(this);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> sum() {
+        return Factory.sum(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> avg() {
+        return Factory.avg(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> median() {
+        return Factory.median(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> stddevPop() {
+        return Factory.stddevPop(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> stddevSamp() {
+        return Factory.stddevSamp(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> varPop() {
+        return Factory.varPop(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<BigDecimal> varSamp() {
+        return Factory.varSamp(numeric());
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<Integer> countOver() {
+        return Factory.count(this).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<T> maxOver() {
+        return Factory.max(this).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<T> minOver() {
+        return Factory.min(this).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<BigDecimal> sumOver() {
+        return Factory.sum(numeric()).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<BigDecimal> avgOver() {
+        return Factory.avg(numeric()).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> firstValue() {
+        return Factory.firstValue(this);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lastValue() {
+        return Factory.lastValue(this);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lead() {
+        return Factory.lead(this);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lead(int offset) {
+        return Factory.lead(this, offset);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lead(int offset, T defaultValue) {
+        return Factory.lead(this, offset, defaultValue);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue) {
+        return Factory.lead(this, offset, defaultValue);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lag() {
+        return Factory.lag(this);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lag(int offset) {
+        return Factory.lag(this, offset);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lag(int offset, T defaultValue) {
+        return Factory.lag(this, offset, defaultValue);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue) {
+        return Factory.lag(this, offset, defaultValue);
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<BigDecimal> stddevPopOver() {
+        return Factory.stddevPop(numeric()).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<BigDecimal> stddevSampOver() {
+        return Factory.stddevSamp(numeric()).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<BigDecimal> varPopOver() {
+        return Factory.varPop(numeric()).over();
+    }
+
+    @Override
+    @Deprecated
+    public final WindowPartitionByStep<BigDecimal> varSampOver() {
+        return Factory.varSamp(numeric()).over();
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> upper() {
+        return Factory.upper(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> lower() {
+        return Factory.lower(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> trim() {
+        return Factory.trim(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> rtrim() {
+        return Factory.rtrim(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> ltrim() {
+        return Factory.ltrim(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> rpad(Field<? extends Number> length) {
+        return Factory.rpad(varchar(), length);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> rpad(int length) {
+        return Factory.rpad(varchar(), length);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> rpad(Field<? extends Number> length, Field<String> character) {
+        return Factory.rpad(varchar(), length, character);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> rpad(int length, char character) {
+        return Factory.rpad(varchar(), length, character);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> lpad(Field<? extends Number> length) {
+        return Factory.lpad(varchar(), length);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> lpad(int length) {
+        return Factory.lpad(varchar(), length);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> lpad(Field<? extends Number> length, Field<String> character) {
+        return Factory.lpad(varchar(), length, character);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> lpad(int length, char character) {
+        return Factory.lpad(varchar(), length, character);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> repeat(Number count) {
+        return Factory.repeat(varchar(), count == null ? 0 : count.intValue());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> repeat(Field<? extends Number> count) {
+        return Factory.repeat(varchar(), count);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> replace(Field<String> search) {
+        return Factory.replace(varchar(), search);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> replace(String search) {
+        return Factory.replace(varchar(), search);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> replace(Field<String> search, Field<String> replace) {
+        return Factory.replace(varchar(), search, replace);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> replace(String search, String replace) {
+        return Factory.replace(varchar(), search, replace);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> position(String search) {
+        return Factory.position(varchar(), search);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> position(Field<String> search) {
+        return Factory.position(varchar(), search);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> ascii() {
+        return Factory.ascii(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> concat(Field<?>... fields) {
+        return Factory.concat(Util.combine(this, fields));
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> concat(String... values) {
+        return Factory.concat(Util.combine(this, vals((Object[]) values).toArray(new Field[0])));
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> substring(int startingPosition) {
+        return Factory.substring(varchar(), startingPosition);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> substring(Field<? extends Number> startingPosition) {
+        return Factory.substring(varchar(), startingPosition);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> substring(int startingPosition, int length) {
+        return Factory.substring(varchar(), startingPosition, length);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length) {
+        return Factory.substring(varchar(), startingPosition, length);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> length() {
+        return Factory.length(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> charLength() {
+        return Factory.charLength(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> bitLength() {
+        return Factory.bitLength(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> octetLength() {
+        return Factory.octetLength(varchar());
+    }
+
+    @Override
+    @Deprecated
+    public final Field<Integer> extract(DatePart datePart) {
+        return Factory.extract(date(), datePart);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> greatest(T... others) {
+        return Factory.greatest(this, vals(others).toArray(new Field[0]));
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> greatest(Field<?>... others) {
+        return Factory.greatest(this, others);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> least(T... others) {
+        return Factory.least(this, vals(others).toArray(new Field[0]));
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> least(Field<?>... others) {
+        return Factory.least(this, others);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> nvl(T defaultValue) {
+        return Factory.nvl(this, defaultValue);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> nvl(Field<T> defaultValue) {
+        return Factory.nvl(this, defaultValue);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull) {
+        return Factory.nvl2(this, valueIfNotNull, valueIfNull);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
+        return Factory.nvl2(this, valueIfNotNull, valueIfNull);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> nullif(T other) {
+        return Factory.nullif(this, other);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> nullif(Field<T> other) {
+        return Factory.nullif(this, other);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z> Field<Z> decode(T search, Z result) {
+        return Factory.decode(this, search, result);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z> Field<Z> decode(T search, Z result, Object... more) {
+        return Factory.decode(this, search, result, more);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z> Field<Z> decode(Field<T> search, Field<Z> result) {
+        return Factory.decode(this, search, result);
+    }
+
+    @Override
+    @Deprecated
+    public final <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more) {
+        return Factory.decode(this, search, result, more);
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> coalesce(T option, T... options) {
+        return Factory.coalesce(this, Util.combine(val(option), vals(options).toArray(new Field[0])));
+    }
+
+    @Override
+    @Deprecated
+    public final Field<T> coalesce(Field<T> option, Field<?>... options) {
+        return Factory.coalesce(this, Util.combine(option, options));
     }
 }

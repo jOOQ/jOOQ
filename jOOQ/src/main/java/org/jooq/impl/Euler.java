@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.exp;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.one;
@@ -73,7 +72,7 @@ class Euler extends AbstractFunction<BigDecimal> {
             case POSTGRES:
             case SQLSERVER:
             case SYBASE:
-                return exp(one());
+                return Factory.exp(one());
 
             case SQLITE:
                 return literal(Math.E, BigDecimal.class);

@@ -348,6 +348,66 @@ public final class Routines {
 	}
 
 	/**
+	 * Invoke F691CURSOR_IN
+	 *
+	 * @param c
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.math.BigDecimal f691cursorIn(org.jooq.Configuration configuration, org.jooq.Result<org.jooq.Record> c) {
+		org.jooq.test.oracle.generatedclasses.routines.F691cursorIn f = new org.jooq.test.oracle.generatedclasses.routines.F691cursorIn();
+		f.setC(c);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F691CURSOR_IN as a field
+	 *
+	 * @param c
+	 */
+	public static org.jooq.Field<java.math.BigDecimal> f691cursorIn(org.jooq.Result<org.jooq.Record> c) {
+		org.jooq.test.oracle.generatedclasses.routines.F691cursorIn f = new org.jooq.test.oracle.generatedclasses.routines.F691cursorIn();
+		f.setC(c);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F691CURSOR_IN as a field
+	 *
+	 * @param c
+	 */
+	public static org.jooq.Field<java.math.BigDecimal> f691cursorIn(org.jooq.Field<org.jooq.Result<org.jooq.Record>> c) {
+		org.jooq.test.oracle.generatedclasses.routines.F691cursorIn f = new org.jooq.test.oracle.generatedclasses.routines.F691cursorIn();
+		f.setC(c);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke F691CURSOR_OUT
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.Result<org.jooq.Record> f691cursorOut(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle.generatedclasses.routines.F691cursorOut f = new org.jooq.test.oracle.generatedclasses.routines.F691cursorOut();
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F691CURSOR_OUT as a field
+	 *
+	 */
+	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> f691cursorOut() {
+		org.jooq.test.oracle.generatedclasses.routines.F691cursorOut f = new org.jooq.test.oracle.generatedclasses.routines.F691cursorOut();
+
+		return f.asField();
+	}
+
+	/**
 	 * Invoke P_ARRAYS1
 	 *
 	 * @param inArray IN parameter

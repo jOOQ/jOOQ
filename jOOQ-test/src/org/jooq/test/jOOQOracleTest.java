@@ -41,6 +41,8 @@ import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.test.oracle.generatedclasses.Routines.f691cursorIn;
+import static org.jooq.test.oracle.generatedclasses.Routines.f691cursorOut;
 import static org.jooq.test.oracle.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.oracle.generatedclasses.Tables.T_725_LOB_TEST;
@@ -796,6 +798,11 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals(1, (int) author1.getId());
         assertEquals("George", author1.getFirstName());
         assertEquals("Orwell", author1.getLastName());
+    }
+
+    @Test
+    public void testCursorINOUT() throws Exception {
+        assertEquals(4, (int) create().select(f691cursorIn(f691cursorOut())).fetchOne(0, Integer.class));
     }
 
     @Test

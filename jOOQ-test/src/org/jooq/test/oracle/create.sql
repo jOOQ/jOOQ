@@ -59,6 +59,8 @@ DROP FUNCTION f378/
 DROP PROCEDURE p_get_two_cursors/
 DROP PROCEDURE p_get_one_cursor/
 DROP FUNCTION f_get_one_cursor/
+DROP FUNCTION f691cursor_out/
+DROP FUNCTION f691cursor_in/
 DROP PACKAGE library/
 
 DROP TYPE t_address_type/
@@ -860,6 +862,35 @@ BEGIN
 	
 	RETURN books;
 END f_get_one_cursor;
+/
+
+CREATE OR REPLACE FUNCTION f691cursor_out
+RETURN library_types.t_cursor_type
+IS
+    books library_types.t_cursor_type;
+BEGIN
+	OPEN books FOR SELECT * FROM t_book;
+	RETURN books;
+END f691cursor_out;
+/
+
+CREATE OR REPLACE FUNCTION f691cursor_in (c IN library_types.t_cursor_type)
+RETURN NUMBER
+IS
+    book t_book%rowtype;
+    result number := 0;
+BEGIN
+	LOOP
+	    FETCH c INTO book;
+	    EXIT WHEN c%notfound;
+	    
+	    result := result + 1;
+	END LOOP;
+	
+	CLOSE c;
+	
+	RETURN result;
+END f691cursor_in;
 /
 
 CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2)

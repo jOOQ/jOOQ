@@ -2854,7 +2854,13 @@ p.setAuthorName("Paulo");
 p.execute(configuration);
 assertEquals(BigDecimal.ONE, p.getResult());</fo:block>
 
-							<fo:block font-size="11pt">If you use the generated convenience methods, however, things are much simpler, still: </fo:block>
+							<fo:block font-size="11pt">
+								The above configuration is a
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Factory">Factory</fo:basic-link>,
+								holding a reference to a JDBC connection, as discussed in a previous section.
+								
+								If you use the generated convenience methods, however, things are much simpler, still: 
+							</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Every schema has a single Routines class with convenience methods
 public final class Routines {
 

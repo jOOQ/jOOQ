@@ -106,7 +106,13 @@ p.setAuthorName("Paulo");
 p.execute(configuration);
 assertEquals(BigDecimal.ONE, p.getResult());</pre>
 
-							<p>If you use the generated convenience methods, however, things are much simpler, still: </p>
+							<p>
+								The above configuration is a
+								<a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">Factory</a>,
+								holding a reference to a JDBC connection, as discussed in a previous section.
+								
+								If you use the generated convenience methods, however, things are much simpler, still: 
+							</p>
 <pre class="prettyprint lang-java">// Every schema has a single Routines class with convenience methods
 public final class Routines {
 

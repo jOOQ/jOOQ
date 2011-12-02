@@ -19,3 +19,6 @@ jOOQ stands for Java Object Oriented Querying. It combines these essential featu
     jOOQ encourages the use of vendor-specific extensions such as stored procedures, UDT's and ARRAY's, recursive queries, and many more.
 
 For more details please visit http://www.jooq.org
+
+Follow jOOQ on Twitter: http://twitter.com/#!/JavaOOQ
+... and on Wordpress: http://lukaseder.wordpress.com

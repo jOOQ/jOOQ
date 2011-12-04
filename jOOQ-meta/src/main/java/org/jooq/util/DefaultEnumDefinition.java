@@ -36,6 +36,7 @@
 package org.jooq.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
@@ -50,6 +51,10 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
 
     public void addLiteral(String literal) {
         literals.add(literal);
+    }
+
+    public void addLiterals(String... literal) {
+        literals.addAll(Arrays.asList(literal));
     }
 
     @Override

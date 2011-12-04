@@ -25,6 +25,7 @@ DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
+DROP TABLE t_booleans/
 
 DROP PROCEDURE p_unused/
 DROP PROCEDURE p_author_exists/
@@ -35,6 +36,20 @@ DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
 DROP FUNCTION f_number/
 DROP FUNCTION f317/
+
+CREATE TABLE t_booleans (
+  id int,
+  one_zero int,
+  true_false_lc varchar(5),
+  true_false_uc varchar(5),
+  yes_no_lc varchar(3),
+  yes_no_uc varchar(3),
+  y_n_lc char(1),
+  y_n_uc char(1),
+  
+  CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
 
 CREATE TABLE t_triggers (
   id_generated int IDENTITY not null,

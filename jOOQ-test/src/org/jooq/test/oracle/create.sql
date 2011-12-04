@@ -35,6 +35,7 @@ DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
+DROP TABLE t_booleans/
 
 DROP PROCEDURE p_arrays1/
 DROP PROCEDURE p_arrays2/
@@ -198,6 +199,20 @@ CREATE SEQUENCE s_961_int MAXVALUE 2000000000/
 CREATE SEQUENCE s_961_long MAXVALUE 10000000000/
 CREATE SEQUENCE s_961_big_integer/
 CREATE SEQUENCE s_triggers_sequence
+/
+
+CREATE TABLE t_booleans (
+  id number(7),
+  one_zero number(7),
+  true_false_lc varchar2(5),
+  true_false_uc varchar2(5),
+  yes_no_lc varchar2(3),
+  yes_no_uc varchar2(3),
+  y_n_lc char(1),
+  y_n_uc char(1),
+  
+  CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
 /
 
 CREATE TABLE t_triggers (

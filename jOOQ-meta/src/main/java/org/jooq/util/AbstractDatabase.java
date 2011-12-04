@@ -36,6 +36,8 @@
 
 package org.jooq.util;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ import java.util.Properties;
 
 import org.jooq.SQLDialect;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.csv.CSVReader;
 
 /**
  * A base implementation for all types of databases.
@@ -82,6 +85,11 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final String getProperty(String property) {
         return properties.getProperty(property);
+    }
+
+    @Override
+    public final List<String> getPropertyNames() {
+        return new ArrayList<String>(properties.stringPropertyNames());
     }
 
     @Override
@@ -250,6 +258,8 @@ public abstract class AbstractDatabase implements Database {
                 List<EnumDefinition> e = getEnums0();
 
                 enums = filterExcludeInclude(e);
+                enums.addAll(getConfiguredEnums());
+
                 log.info("Enums fetched", fetchedSize(e, enums));
             } catch (Exception e) {
                 log.error("Error while fetching enums", e);
@@ -257,6 +267,28 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return enums;
+    }
+
+    private final List<EnumDefinition> getConfiguredEnums() {
+        List<EnumDefinition> result = new ArrayList<EnumDefinition>();
+
+        for (String property : properties.stringPropertyNames()) {
+            if (property.startsWith("generator.database.enum-type.")) {
+                String name = property.replace("generator.database.enum-type.", "");
+                DefaultEnumDefinition e = new DefaultEnumDefinition(this, name, null);
+
+                String literals = properties.getProperty(property);
+
+                try {
+                    CSVReader reader = new CSVReader(new StringReader(literals));
+                    e.addLiterals(reader.readNext());
+                } catch (IOException ignore) {}
+
+                result.add(e);
+            }
+        }
+
+        return result;
     }
 
     @Override

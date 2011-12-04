@@ -58,6 +58,11 @@ public final class Tables {
 	public static org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
+	 * The table t_booleans
+	 */
+	public static org.jooq.test.sqlite.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sqlite.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
 	 * The table t_triggers
 	 */
 	public static org.jooq.test.sqlite.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS;

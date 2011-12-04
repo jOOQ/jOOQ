@@ -36,7 +36,7 @@
 package org.jooq;
 
 /**
- * An SQL enum type
+ * A SQL enum type
  *
  * @author Lukas Eder
  */

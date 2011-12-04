@@ -35,16 +35,21 @@
  */
 package org.jooq.util.maven;
 
+import java.util.List;
+
 /**
  * @author Sander Plas
+ * @author Lukas Eder
  */
 public class Database {
 
-    private String name;
-    private String includes = "";
-    private String excludes = "";
-    private String inputSchema;
-    private String outputSchema;
+    private String           name;
+    private String           includes = "";
+    private String           excludes = "";
+    private String           inputSchema;
+    private String           outputSchema;
+    private List<EnumType>   enumTypes;
+    private List<ForcedType> forcedTypes;
 
     String getName() {
         return name;
@@ -64,5 +69,13 @@ public class Database {
 
     String getOutputSchema() {
         return outputSchema;
+    }
+
+    List<EnumType> getEnumTypes() {
+        return enumTypes;
+    }
+
+    List<ForcedType> getForcedTypes() {
+        return forcedTypes;
     }
 }

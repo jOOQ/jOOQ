@@ -13,6 +13,11 @@ package org.jooq.test.derby.generatedclasses;
 public final class Tables {
 
 	/**
+	 * The table TEST.T_BOOLEANS
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
 	 * The table TEST.T_TRIGGERS
 	 */
 	public static org.jooq.test.derby.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS;

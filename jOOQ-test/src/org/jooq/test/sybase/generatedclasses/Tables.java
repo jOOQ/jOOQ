@@ -13,6 +13,11 @@ package org.jooq.test.sybase.generatedclasses;
 public final class Tables {
 
 	/**
+	 * The table dba.t_booleans
+	 */
+	public static org.jooq.test.sybase.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
 	 * The table dba.t_triggers
 	 */
 	public static org.jooq.test.sybase.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS;

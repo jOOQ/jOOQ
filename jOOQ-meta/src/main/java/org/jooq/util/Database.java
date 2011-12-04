@@ -214,6 +214,11 @@ public interface Database {
     String getProperty(String property);
 
     /**
+     * Get a configuration property from this database
+     */
+    List<String> getPropertyNames();
+
+    /**
      * Check whether a type is an array type
      */
     boolean isArrayType(String dataType);

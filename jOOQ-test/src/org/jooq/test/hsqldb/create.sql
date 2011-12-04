@@ -57,6 +57,21 @@ DROP TABLE IF EXISTS long/
 DROP TABLE IF EXISTS object/
 DROP TABLE IF EXISTS string/
 DROP TABLE IF EXISTS big_decimal/
+DROP TABLE IF EXISTS t_booleans/
+
+CREATE TABLE t_booleans (
+  id int,
+  one_zero int,
+  true_false_lc varchar(5),
+  true_false_uc varchar(5),
+  yes_no_lc varchar(3),
+  yes_no_uc varchar(3),
+  y_n_lc char(1),
+  y_n_uc char(1),
+  
+  CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
 
 CREATE SEQUENCE s_triggers_sequence START WITH 1/
 

@@ -96,6 +96,17 @@ public class Plugin extends AbstractMojo {
         props.put("generator.database.input-schema", defaultString(generator.getDatabase().getInputSchema()));
         props.put("generator.database.output-schema", defaultString(generator.getDatabase().getOutputSchema()));
 
+        if (generator.getDatabase().getEnumTypes() != null) {
+            for (EnumType type : generator.getDatabase().getEnumTypes()) {
+                props.put("generator.database.enum-type." + type.getName(), type.getLiterals());
+            }
+        }
+        if (generator.getDatabase().getForcedTypes() != null) {
+            for (ForcedType type : generator.getDatabase().getForcedTypes()) {
+                props.put("generator.database.forced-type." + type.getName(), type.getExpressions());
+            }
+        }
+
         props.put("generator.generate.relations", defaultString(generator.getGenerate().getRelations()));
         props.put("generator.generate.deprecated", defaultString(generator.getGenerate().getDeprecated()));
         props.put("generator.generate.instance-fields", defaultString(generator.getGenerate().getInstanceFields()));
@@ -104,17 +115,19 @@ public class Plugin extends AbstractMojo {
         props.put("generator.target.directory", generator.getTarget().getDirectory());
 
         if (generator.getMasterDataTables() != null) {
+
             StringBuilder mdtList = new StringBuilder();
             for (MasterDataTable mdt : generator.getMasterDataTables()) {
                 if (mdtList.length() > 0) {
                     mdtList.append(",");
                 }
+
                 mdtList.append(mdt.getName());
 
                 props.put("generator.generate.master-data-table-literal." + mdt.getName(), mdt.getLiteral());
                 props.put("generator.generate.master-data-table-description." + mdt.getName(), mdt.getDescription());
-
             }
+
             props.put("generator.generate.master-data-tables", mdtList.toString());
         }
 

@@ -19,6 +19,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_T_BOOK_STORE = createIdentity(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.h2.generatedclasses.tables.TBookStore.ID);
 
 	// UNIQUE and PRIMARY KEY definitions
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.h2.generatedclasses.tables.TBooleans.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.h2.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> PK_T_AUTHOR = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.h2.generatedclasses.tables.TAuthor.ID);

@@ -92,7 +92,7 @@ public class DefaultColumnDefinition
 
             // Else...
             if (type == null) {
-                type = underlying;
+                type = super.getType();
             }
         }
 

@@ -42,16 +42,17 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     extends AbstractDefinition
     implements TypedElementDefinition<T> {
 
-    private static final JooqLogger  log = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
+    private static final JooqLogger      log = JooqLogger.getLogger(AbstractTypedElementDefinition.class);
 
-    private final T                  container;
-    private final DataTypeDefinition type;
+    private final T                      container;
+    private final DataTypeDefinition     definedType;
+    private transient DataTypeDefinition type;
 
-    public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition type, String comment) {
+    public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
         super(container.getDatabase(), protectName(container.getName(), name, position), comment);
 
         this.container = container;
-        this.type = type;
+        this.definedType = definedType;
     }
 
     private static String protectName(String table, String name, int position) {
@@ -70,6 +71,30 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
     @Override
     public DataTypeDefinition getType() {
+        if (type == null) {
+            Database db = container.getDatabase();
+
+            for (String property : db.getPropertyNames()) {
+                if (property.startsWith("generator.database.forced-type.")) {
+                    if (getQualifiedName().matches(db.getProperty(property))) {
+                        String forcedType = property.replace("generator.database.forced-type.", "");
+
+                        log.debug("Forcing type", this + " into " + forcedType);
+                        type = new DefaultDataTypeDefinition(db,
+                            definedType.getType(),
+                            definedType.getPrecision(),
+                            definedType.getScale(),
+                            forcedType);
+                    }
+                }
+            }
+
+            // If not yet set, use the default defined type
+            if (type == null) {
+                type = definedType;
+            }
+        }
+
         return type;
     }
 

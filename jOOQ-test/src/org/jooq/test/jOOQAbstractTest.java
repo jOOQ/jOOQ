@@ -135,6 +135,7 @@ import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
@@ -586,6 +587,41 @@ public abstract class jOOQAbstractTest<
 
     protected final Schema schema() {
         return create().getSchemaMapping().map(TAuthor().getSchema());
+    }
+
+    private final Table<?> getTable(String name) throws Exception {
+        if (schema() == null) {
+            Class<?> tables = Class.forName("org.jooq.test." + getDialect().getName().toLowerCase() + ".generatedclasses.Tables");
+            return (Table<?>) tables.getField(name).get(tables);
+        }
+        else {
+            Table<?> result = schema().getTable(name);
+
+            if (result == null) {
+                result = schema().getTable(name.toUpperCase());
+            }
+
+            if (result == null) {
+                result = schema().getTable(name.toLowerCase());
+            }
+
+            return result;
+        }
+    }
+
+    private final Field<?> getField(Table<?> table, String name) {
+        // TODO [#978] This doesn't work when SchemaMapping is involved
+        Field<?> result = table.getField(name);
+
+        if (result == null) {
+            result = table.getField(name.toUpperCase());
+        }
+
+        if (result == null) {
+            result = table.getField(name.toLowerCase());
+        }
+
+        return result;
     }
 
     protected final Factory create() {
@@ -1098,9 +1134,17 @@ public abstract class jOOQAbstractTest<
             }
 
             assertEquals(sequences, schema.getSequences().size());
+            for (Table<?> table : schema.getTables()) {
+                assertEquals(table, schema.getTable(table.getName()));
+            }
+            for (UDT<?> udt : schema.getUDTs()) {
+                assertEquals(udt, schema.getUDT(udt.getName()));
+            }
+            for (Sequence<?> sequence : schema.getSequences()) {
+                assertEquals(sequence, schema.getSequence(sequence.getName()));
+            }
 
-
-            int tables = 15;
+            int tables = 16;
 
             // The additional T_DIRECTORY table for recursive queries
             if (supportsRecursiveQueries()) {
@@ -6447,6 +6491,107 @@ public abstract class jOOQAbstractTest<
         value = book.getValue(TBook_STATUS());
         assertEquals("ON_STOCK", value.name());
         assertEquals("ON STOCK", ((EnumType) value).getLiteral());
+    }
+
+    @Test
+    public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
+        reset = false;
+
+        // This does not yet work correctly for Sybase ASE, Postgres
+        // Sybase: Is casting enums to unknown enum types
+        // ASE: Cannot implicitly cast '1' to 1
+
+        @SuppressWarnings("unchecked")
+        Table<R> booleans = (Table<R>) getTable("T_BOOLEANS");
+
+        @SuppressWarnings("unchecked")
+        Field<Integer> id = (Field<Integer>) getField(booleans, "ID");
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e1 = (Field<EnumType>) getField(booleans, "ONE_ZERO");
+        EnumType e1False = (EnumType) e1.getType().getField("_0").get(e1.getType());
+        EnumType e1True = (EnumType) e1.getType().getField("_1").get(e1.getType());
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e2 = (Field<EnumType>) getField(booleans, "TRUE_FALSE_LC");
+        EnumType e2False = (EnumType) e2.getType().getField("false_").get(e2.getType());
+        EnumType e2True = (EnumType) e2.getType().getField("true_").get(e2.getType());
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e3 = (Field<EnumType>) getField(booleans, "TRUE_FALSE_UC");
+        EnumType e3False = (EnumType) e3.getType().getField("FALSE").get(e3.getType());
+        EnumType e3True = (EnumType) e3.getType().getField("TRUE").get(e3.getType());
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e4 = (Field<EnumType>) getField(booleans, "YES_NO_LC");
+        EnumType e4False = (EnumType) e4.getType().getField("no").get(e4.getType());
+        EnumType e4True = (EnumType) e4.getType().getField("yes").get(e4.getType());
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e5 = (Field<EnumType>) getField(booleans, "YES_NO_UC");
+        EnumType e5False = (EnumType) e5.getType().getField("NO").get(e5.getType());
+        EnumType e5True = (EnumType) e5.getType().getField("YES").get(e5.getType());
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e6 = (Field<EnumType>) getField(booleans, "Y_N_LC");
+        EnumType e6False = (EnumType) e6.getType().getField("n").get(e6.getType());
+        EnumType e6True = (EnumType) e6.getType().getField("y").get(e6.getType());
+
+        @SuppressWarnings("unchecked")
+        Field<EnumType> e7 = (Field<EnumType>) getField(booleans, "Y_N_UC");
+        EnumType e7False = (EnumType) e7.getType().getField("N").get(e7.getType());
+        EnumType e7True = (EnumType) e7.getType().getField("Y").get(e7.getType());
+
+        assertEquals(1,
+        create().insertInto(booleans)
+                .set(id, 1)
+                .set(e1, e1False)
+                .set(e2, e2False)
+                .set(e3, e3False)
+                .set(e4, e4False)
+                .set(e5, e5False)
+                .set(e6, e6False)
+                .set(e7, e7False)
+                .execute());
+
+        assertEquals(1,
+        create().insertInto(booleans)
+                .set(id, 2)
+                .set(e1, e1True)
+                .set(e2, e2True)
+                .set(e3, e3True)
+                .set(e4, e4True)
+                .set(e5, e5True)
+                .set(e6, e6True)
+                .set(e7, e7True)
+                .execute());
+
+        Result<?> result =
+        create().selectFrom(booleans).orderBy(id.asc()).fetch();
+
+        assertEquals(1, (int) result.getValue(0, id));
+        assertEquals(2, (int) result.getValue(1, id));
+
+        assertEquals(e1False, result.getValue(0, e1));
+        assertEquals(e1True, result.getValue(1, e1));
+
+        assertEquals(e2False, result.getValue(0, e2));
+        assertEquals(e2True, result.getValue(1, e2));
+
+        assertEquals(e3False, result.getValue(0, e3));
+        assertEquals(e3True, result.getValue(1, e3));
+
+        assertEquals(e4False, result.getValue(0, e4));
+        assertEquals(e4True, result.getValue(1, e4));
+
+        assertEquals(e5False, result.getValue(0, e5));
+        assertEquals(e5True, result.getValue(1, e5));
+
+        assertEquals(e6False, result.getValue(0, e6));
+        assertEquals(e6True, result.getValue(1, e6));
+
+        assertEquals(e7False, result.getValue(0, e7));
+        assertEquals(e7True, result.getValue(1, e7));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

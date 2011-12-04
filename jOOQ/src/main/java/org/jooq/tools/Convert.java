@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.EnumType;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -232,6 +233,10 @@ public final class Convert {
 
             // All types can be converted into String
             else if (toClass == String.class) {
+                if (from instanceof EnumType) {
+                    return (T) ((EnumType) from).getLiteral();
+                }
+
                 return (T) from.toString();
             }
 

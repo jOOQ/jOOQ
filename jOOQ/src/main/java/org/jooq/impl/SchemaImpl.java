@@ -90,6 +90,39 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
         typeMapping.put(name, type);
     }
 
+    @Override
+    public final Table<?> getTable(String name) {
+        for (Table<?> table : getTables()) {
+            if (table.getName().equals(name)) {
+                return table;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public final UDT<?> getUDT(String name) {
+        for (UDT<?> udt : getUDTs()) {
+            if (udt.getName().equals(name)) {
+                return udt;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public final Sequence<?> getSequence(String name) {
+        for (Sequence<?> sequence : getSequences()) {
+            if (sequence.getName().equals(name)) {
+                return sequence;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      * <p>

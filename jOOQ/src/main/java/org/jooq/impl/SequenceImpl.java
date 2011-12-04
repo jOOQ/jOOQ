@@ -60,16 +60,31 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
     }
 
     @Override
-    public Field<T> currval() {
+    public final String getName() {
+        return name;
+    }
+
+    @Override
+    public final Schema getSchema() {
+        return schema;
+    }
+
+    @Override
+    public final DataType<T> getDataType() {
+        return type;
+    }
+
+    @Override
+    public final Field<T> currval() {
         return getSequence("currval");
     }
 
     @Override
-    public Field<T> nextval() {
+    public final Field<T> nextval() {
         return getSequence("nextval");
     }
 
-    private Field<T> getSequence(final String sequence) {
+    private final Field<T> getSequence(final String sequence) {
         return new SequenceFunction<T>(this, sequence);
     }
 }

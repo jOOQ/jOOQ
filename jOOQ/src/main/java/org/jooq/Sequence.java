@@ -44,6 +44,21 @@ package org.jooq;
 public interface Sequence<T extends Number> {
 
     /**
+     * Get the sequence name
+     */
+    String getName();
+
+    /**
+     * Get the sequence schema
+     */
+    Schema getSchema();
+
+    /**
+     * Get the sequence data type
+     */
+    DataType<T> getDataType();
+
+    /**
      * Get the current value of this sequence
      */
     Field<T> currval();

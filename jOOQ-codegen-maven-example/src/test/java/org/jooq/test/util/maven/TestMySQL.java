@@ -41,6 +41,7 @@ import static org.jooq.util.maven.example.mysql.Tables.T_AUTHOR;
 import static org.jooq.util.maven.example.mysql.Tables.T_BOOK;
 import static org.jooq.util.maven.example.mysql.Tables.T_BOOK_STORE;
 import static org.jooq.util.maven.example.mysql.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.util.maven.example.mysql.Tables.T_BOOLEANS;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -48,10 +49,18 @@ import java.sql.DriverManager;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.util.maven.example.mysql.Test2Factory;
+import org.jooq.util.maven.example.mysql.enums.BooleanTrueFalseLc;
+import org.jooq.util.maven.example.mysql.enums.BooleanTrueFalseUc;
+import org.jooq.util.maven.example.mysql.enums.BooleanYesNoLc;
+import org.jooq.util.maven.example.mysql.enums.BooleanYesNoUc;
+import org.jooq.util.maven.example.mysql.enums.BooleanYnLc;
+import org.jooq.util.maven.example.mysql.enums.BooleanYnUc;
+import org.jooq.util.maven.example.mysql.enums.Boolean_10;
 import org.jooq.util.maven.example.mysql.tables.TAuthor;
 import org.jooq.util.maven.example.mysql.tables.TBook;
 import org.jooq.util.maven.example.mysql.tables.TBookStore;
 import org.jooq.util.maven.example.mysql.tables.TBookToBookStore;
+import org.jooq.util.maven.example.mysql.tables.records.TBooleansRecord;
 
 import org.junit.Test;
 
@@ -90,5 +99,39 @@ public class TestMySQL {
 
         assertEquals(Integer.valueOf(3), result.getValue(0, countDistinct(s.NAME)));
         assertEquals(Integer.valueOf(2), result.getValue(1, countDistinct(s.NAME)));
+    }
+
+    @Test
+    public void testCustomEnum() throws Exception {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/test2", "root", "");
+        Test2Factory create = new Test2Factory(connection);
+
+        create.delete(T_BOOLEANS).execute();
+
+        assertEquals(1,
+        create.insertInto(T_BOOLEANS)
+              .set(T_BOOLEANS.ID, 1)
+              .set(T_BOOLEANS.ONE_ZERO, Boolean_10._0)
+              .set(T_BOOLEANS.TRUE_FALSE_LC, BooleanTrueFalseLc.true_)
+              .set(T_BOOLEANS.TRUE_FALSE_UC, BooleanTrueFalseUc.FALSE)
+              .set(T_BOOLEANS.Y_N_LC, BooleanYnLc.y)
+              .set(T_BOOLEANS.Y_N_UC, BooleanYnUc.N)
+              .set(T_BOOLEANS.YES_NO_LC, BooleanYesNoLc.yes)
+              .set(T_BOOLEANS.YES_NO_UC, BooleanYesNoUc.NO)
+              .execute());
+
+        TBooleansRecord bool = create.selectFrom(T_BOOLEANS).fetchOne();
+        assertEquals(1, (int) bool.getId());
+        assertEquals(Boolean_10._0, bool.getOneZero());
+        assertEquals(BooleanTrueFalseLc.true_, bool.getTrueFalseLc());
+        assertEquals(BooleanTrueFalseUc.FALSE, bool.getTrueFalseUc());
+        assertEquals(BooleanYnLc.y, bool.getYNLc());
+        assertEquals(BooleanYnUc.N, bool.getYNUc());
+        assertEquals(BooleanYesNoLc.yes, bool.getYesNoLc());
+        assertEquals(BooleanYesNoUc.NO, bool.getYesNoUc());
+
+        assertEquals(1,
+        create.delete(T_BOOLEANS).execute());
     }
 }

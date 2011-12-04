@@ -13,6 +13,11 @@ package org.jooq.test.h2.generatedclasses;
 public final class Tables {
 
 	/**
+	 * The table PUBLIC.T_BOOLEANS
+	 */
+	public static org.jooq.test.h2.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
 	 * The table PUBLIC.T_TRIGGERS
 	 */
 	public static org.jooq.test.h2.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS;

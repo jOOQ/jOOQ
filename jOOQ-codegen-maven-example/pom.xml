@@ -191,6 +191,70 @@
 									<!-- [#958] This checks the schema-rewriting functionality -->
 									<inputSchema>test</inputSchema>
 									<outputSchema>test2</outputSchema>
+									
+									<!-- [#968] custom enum types -->
+									<enumTypes>
+										<enumType>
+											<name>BOOLEAN_10</name>
+											<literals>1,0</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YN_UC</name>
+											<literals>"Y",N</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YN_LC</name>
+											<literals>y,"n"</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YES_NO_UC</name>
+											<literals>"YES","NO"</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_YES_NO_LC</name>
+											<literals>yes,no</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_TRUE_FALSE_UC</name>
+											<literals>TRUE,FALSE</literals>
+										</enumType>
+										<enumType>
+											<name>BOOLEAN_TRUE_FALSE_LC</name>
+											<literals>true,false</literals>
+										</enumType>
+									</enumTypes>
+									
+									<!-- [#968] [#677] forced column types -->
+									<forcedTypes>
+										<forcedType>
+											<name>BOOLEAN_10</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.ONE_ZERO)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YN_UC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.Y_N_UC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YN_LC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.Y_N_LC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YES_NO_UC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.YES_NO_UC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_YES_NO_LC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.YES_NO_LC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_TRUE_FALSE_UC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.TRUE_FALSE_UC)</expressions>
+										</forcedType>
+										<forcedType>
+											<name>BOOLEAN_TRUE_FALSE_LC</name>
+											<expressions>(?i:(.*?\.)?T_BOOLEANS\.TRUE_FALSE_LC)</expressions>
+										</forcedType>
+									</forcedTypes>
 								</database>
 								<generate>
 									<relations>true</relations>

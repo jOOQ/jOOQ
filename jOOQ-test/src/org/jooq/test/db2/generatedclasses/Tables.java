@@ -53,6 +53,11 @@ public final class Tables {
 	public static org.jooq.test.db2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
+	 * The table LUKAS.T_BOOLEANS
+	 */
+	public static org.jooq.test.db2.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.db2.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
 	 * The table LUKAS.T_TRIGGERS
 	 */
 	public static org.jooq.test.db2.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.db2.generatedclasses.tables.TTriggers.T_TRIGGERS;

@@ -27,6 +27,7 @@ DROP TABLE IF EXISTS t_658_32 CASCADE/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 DROP TABLE IF EXISTS t_959/
+DROP TABLE IF EXISTS t_booleans/
 
 DROP FUNCTION p_triggers()/
 DROP FUNCTION f_arrays(in_array IN integer[])/
@@ -85,6 +86,20 @@ CREATE TYPE u_address_type AS (
   country u_country,
   since DATE,
   code INTEGER
+)
+/
+
+CREATE TABLE t_booleans (
+  id int,
+  one_zero int,
+  true_false_lc varchar(5),
+  true_false_uc varchar(5),
+  yes_no_lc varchar(3),
+  yes_no_uc varchar(3),
+  y_n_lc char(1),
+  y_n_uc char(1),
+  
+  CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )
 /
 

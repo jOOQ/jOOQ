@@ -63,6 +63,11 @@ public final class Tables {
 	public static org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
+	 * The table public.t_booleans
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
 	 * The table public.t_triggers
 	 */
 	public static org.jooq.test.postgres.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS;

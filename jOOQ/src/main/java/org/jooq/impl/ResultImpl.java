@@ -65,6 +65,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
+import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
@@ -1094,6 +1095,9 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
         else if (value.getClass().isArray()) {
             formatted = Arrays.asList((Object[]) value).toString();
+        }
+        else if (value instanceof EnumType) {
+            formatted = ((EnumType) value).getLiteral();
         }
         else {
             formatted = value.toString();

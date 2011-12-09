@@ -6587,6 +6587,10 @@ public abstract class jOOQAbstractTest<
         // Sybase: Is casting enums to unknown enum types
         // ASE: Cannot implicitly cast '1' to 1
 
+        // TODO [#677] This doesn't work correctly yet for
+        // Ingres, HSQLDB, H2, Derby, Sybase ASE
+        // Double-check again for Postgres
+
         @SuppressWarnings("unchecked")
         Table<R> booleans = (Table<R>) getTable("T_BOOLEANS");
 
@@ -6628,6 +6632,15 @@ public abstract class jOOQAbstractTest<
         EnumType e7False = (EnumType) e7.getType().getField("N").get(e7.getType());
         EnumType e7True = (EnumType) e7.getType().getField("Y").get(e7.getType());
 
+        @SuppressWarnings("unchecked")
+        Field<Boolean> b1 = (Field<Boolean>) getField(booleans, "C_BOOLEAN");
+
+        @SuppressWarnings("unchecked")
+        Field<Boolean> b2 = (Field<Boolean>) getField(booleans, "VC_BOOLEAN");
+
+        @SuppressWarnings("unchecked")
+        Field<Boolean> b3 = (Field<Boolean>) getField(booleans, "N_BOOLEAN");
+
         assertEquals(1,
         create().insertInto(booleans)
                 .set(id, 1)
@@ -6638,6 +6651,9 @@ public abstract class jOOQAbstractTest<
                 .set(e5, e5False)
                 .set(e6, e6False)
                 .set(e7, e7False)
+                .set(b1, false)
+                .set(b2, false)
+                .set(b3, false)
                 .execute());
 
         assertEquals(1,
@@ -6650,6 +6666,9 @@ public abstract class jOOQAbstractTest<
                 .set(e5, e5True)
                 .set(e6, e6True)
                 .set(e7, e7True)
+                .set(b1, true)
+                .set(b2, true)
+                .set(b3, true)
                 .execute());
 
         Result<?> result =
@@ -6678,6 +6697,15 @@ public abstract class jOOQAbstractTest<
 
         assertEquals(e7False, result.getValue(0, e7));
         assertEquals(e7True, result.getValue(1, e7));
+
+        assertFalse(result.getValue(0, b1));
+        assertTrue(result.getValue(1, b1));
+
+        assertFalse(result.getValue(0, b2));
+        assertTrue(result.getValue(1, b2));
+
+        assertFalse(result.getValue(0, b3));
+        assertTrue(result.getValue(1, b3));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -38,6 +38,7 @@ package org.jooq;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
@@ -219,15 +220,20 @@ public class SchemaMapping implements Serializable {
         return generatedTable;
     }
 
+    /**
+     * Synonym for {@link #use(String)}. Added for better interoperability with
+     * Spring
+     */
     public void setDefaultSchema(String schema) {
         use(schema);
     }
 
+    /**
+     * Initialise SchemaMapping. Added for better interoperability with Spring
+     */
     public void setSchemaMapping(Map<String, String> schemaMap) {
-        for (String generatedSchemaName : schemaMap.keySet()) {
-            String configuredSchemaName = schemaMap.get(generatedSchemaName);
-            add(new SchemaImpl(generatedSchemaName),
-                new SchemaImpl(configuredSchemaName));
+        for (Entry<String, String> entry : schemaMap.entrySet()) {
+            add(new SchemaImpl(entry.getKey()), new SchemaImpl(entry.getValue()));
         }
     }
 

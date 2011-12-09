@@ -590,19 +590,21 @@ public abstract class jOOQAbstractTest<
     }
 
     private final Table<?> getTable(String name) throws Exception {
-        if (schema() == null) {
+        Schema schema = TAuthor().getSchema();
+
+        if (schema == null) {
             Class<?> tables = Class.forName("org.jooq.test." + getDialect().getName().toLowerCase() + ".generatedclasses.Tables");
             return (Table<?>) tables.getField(name).get(tables);
         }
         else {
-            Table<?> result = schema().getTable(name);
+            Table<?> result = schema.getTable(name);
 
             if (result == null) {
-                result = schema().getTable(name.toUpperCase());
+                result = schema.getTable(name.toUpperCase());
             }
 
             if (result == null) {
-                result = schema().getTable(name.toLowerCase());
+                result = schema.getTable(name.toLowerCase());
             }
 
             return result;
@@ -610,7 +612,6 @@ public abstract class jOOQAbstractTest<
     }
 
     private final Field<?> getField(Table<?> table, String name) {
-        // TODO [#978] This doesn't work when SchemaMapping is involved
         Field<?> result = table.getField(name);
 
         if (result == null) {

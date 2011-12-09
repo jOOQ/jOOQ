@@ -70,7 +70,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         return (UpdatableTable<R>) super.getTable();
     }
 
-    private final UniqueKey<R> getMainKey() {
+    @Override
+    final UniqueKey<R> getMainKey() {
         return getTable().getMainKey();
     }
 

@@ -40,6 +40,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Arrays;
 
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
@@ -282,9 +283,21 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
                     final Object thisValue = getValue(i);
                     final Object thatValue = that.getValue(i);
 
-                    if (thisValue == null) {
-                        if (thatValue != null) {
-                            return false;
+                    if (thisValue == null || thatValue == null) {
+                        return thisValue == thatValue;
+                    }
+
+                    // [#985] Compare arrays too.
+                    else if (thisValue.getClass().isArray() && thatValue.getClass().isArray()) {
+
+                        // Might be byte[]
+                        if (thisValue.getClass() == byte[].class && thatValue.getClass() == byte[].class) {
+                            return new String((byte[]) thisValue).equals(new String((byte[]) thatValue));
+                        }
+
+                        // Other primitive types are not expected
+                        else {
+                            return Arrays.asList((Object[]) thisValue).equals(Arrays.asList((Object[]) thatValue));
                         }
                     }
                     else if (!thisValue.equals(thatValue)) {

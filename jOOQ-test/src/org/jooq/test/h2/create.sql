@@ -225,7 +225,6 @@ COMMENT ON COLUMN t_book.content_text IS 'Some textual content of the book'/
 COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'/
 
 CREATE TABLE t_book_store (
-  id INTEGER AUTO_INCREMENT,
   name VARCHAR(400) NOT NULL,
   
   CONSTRAINT uk_t_book_store_name UNIQUE(name)

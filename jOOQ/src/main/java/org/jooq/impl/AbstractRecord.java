@@ -63,6 +63,7 @@ import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.UniqueKey;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 
@@ -165,11 +166,42 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     @Override
     public final <T> void setValue(Field<T> field, T value) {
-        getValue0(field).setValue(value);
+        UniqueKey<?> mainKey = getMainKey();
+        Value<T> val = getValue0(field);
+
+        // Normal fields' changed flag is always set to true
+        if (mainKey == null || !mainKey.getFields().contains(field)) {
+            val.setValue(value);
+        }
+
+        // The main key's changed flag might've been set previously
+        else if (val.isChanged()) {
+            val.setValue(value);
+        }
+
+        // [#979] If the main key is being changed, all other fields' flags need
+        // to be set to true for in case this record is stored again, an INSERT
+        // statement will thus be issued
+        else {
+            val.setValue(value, true);
+
+            if (val.isChanged()) {
+                for (Value<?> other : getValues()) {
+                    other.setChanged(true);
+                }
+            }
+        }
     }
 
     final <T> void setValue(Field<T> field, Value<T> value) {
         getValues()[getIndex(field)] = value;
+    }
+
+    /**
+     * Subclasses may override this
+     */
+    UniqueKey<?> getMainKey() {
+        return null;
     }
 
     @Override

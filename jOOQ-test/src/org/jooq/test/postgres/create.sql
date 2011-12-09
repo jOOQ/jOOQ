@@ -306,7 +306,6 @@ COMMENT ON COLUMN t_book.status IS 'The book''s stock status'
 
 
 CREATE TABLE t_book_store (
-  id serial not null,
   name VARCHAR(400) NOT NULL,
   
   CONSTRAINT uk_t_book_store_name UNIQUE(name)

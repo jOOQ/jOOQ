@@ -14,7 +14,6 @@ package org.jooq.test.ase.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
-	public static final org.jooq.Identity<org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_t_book_store = createIdentity(org.jooq.test.ase.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.ase.generatedclasses.tables.TBookStore.ID);
 	public static final org.jooq.Identity<org.jooq.test.ase.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.ase.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.ase.generatedclasses.tables.TTriggers.ID_GENERATED);
 
 	// UNIQUE and PRIMARY KEY definitions

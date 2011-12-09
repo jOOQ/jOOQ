@@ -14,7 +14,6 @@ package org.jooq.test.postgres.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
-	public static final org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_t_book_store = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE.ID);
 	public static final org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 
 	// UNIQUE and PRIMARY KEY definitions

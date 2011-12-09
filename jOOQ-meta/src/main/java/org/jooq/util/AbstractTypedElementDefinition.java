@@ -35,6 +35,9 @@
  */
 package org.jooq.util;
 
+import org.jooq.DataType;
+import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.FieldTypeHelper;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -80,11 +83,25 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                         String forcedType = property.replace("generator.database.forced-type.", "");
 
                         log.debug("Forcing type", this + " into " + forcedType);
-                        type = new DefaultDataTypeDefinition(db,
-                            definedType.getType(),
-                            definedType.getPrecision(),
-                            definedType.getScale(),
-                            forcedType);
+                        DataType<?> forcedDataType = null;
+
+                        String t = definedType.getType();
+                        int p = definedType.getPrecision();
+                        int s = definedType.getScale();
+
+                        try {
+                            forcedDataType = FieldTypeHelper.getDialectDataType(db.getDialect(), forcedType, p, s);
+                        } catch (SQLDialectNotSupportedException ignore) {}
+
+                        // [#677] SQLDataType matches are actual type-rewrites
+                        if (forcedDataType != null) {
+                            type = new DefaultDataTypeDefinition(db, forcedType, p, s);
+                        }
+
+                        // Other forced types are UDT's, enums, etc.
+                        else {
+                            type = new DefaultDataTypeDefinition(db, t, p, s, forcedType);
+                        }
                     }
                 }
             }

@@ -13,6 +13,7 @@ DELETE FROM t_author/
 DELETE FROM t_language/
 DELETE FROM t_directory/
 DELETE FROM t_triggers/
+DELETE FROM t_booleans/
 
 DROP SEQUENCE s_author_id/
 CREATE SEQUENCE s_author_id MAXVALUE 2000000000/

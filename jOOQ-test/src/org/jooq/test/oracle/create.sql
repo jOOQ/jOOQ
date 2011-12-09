@@ -210,6 +210,9 @@ CREATE TABLE t_booleans (
   yes_no_uc varchar2(3),
   y_n_lc char(1),
   y_n_uc char(1),
+  vc_boolean varchar2(1),
+  c_boolean char(1),
+  n_boolean number(7),
   
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )

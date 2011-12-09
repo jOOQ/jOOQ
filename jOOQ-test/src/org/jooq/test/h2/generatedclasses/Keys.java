@@ -16,7 +16,6 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	// IDENTITY definitions
 	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.h2.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> IDENTITY_T_877 = createIdentity(org.jooq.test.h2.generatedclasses.tables.T_877.T_877, org.jooq.test.h2.generatedclasses.tables.T_877.ID);
-	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_T_BOOK_STORE = createIdentity(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.h2.generatedclasses.tables.TBookStore.ID);
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.h2.generatedclasses.tables.TBooleans.ID);

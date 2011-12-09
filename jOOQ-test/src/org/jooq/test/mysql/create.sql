@@ -230,10 +230,8 @@ CREATE TABLE t_book (
 
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL COMMENT 'The books store name',
-  id INT NOT NULL AUTO_INCREMENT COMMENT 'The book store ID',
   
-  CONSTRAINT uk_t_book_store_name UNIQUE(name),
-  CONSTRAINT uk_t_book_store_id UNIQUE(id)
+  CONSTRAINT uk_t_book_store_name UNIQUE(name)
 ) ENGINE = InnoDB
   COMMENT = 'A book store'
 /

@@ -58,15 +58,37 @@ class Value<T> implements Serializable {
         return value != null ? value : defaultValue;
     }
 
-    void setValue(T value) {
+    void setValue(T val) {
 
         // The flag is always set to true:
-        // [#945] To avoid this bug
+        // [#945] To avoid bugs resulting from setting the same value twice
         // [#948] To allow for controlling the number of hard-parses
         //        To allow for explicitly overriding default values
+        setValue(val, false);
+    }
 
-        this.isChanged = true;
-        this.value = value;
+    void setValue(T val, boolean primaryKey) {
+
+        // [#948] Force setting of val in most cases, to allow for controlling
+        // the number of necessary hard-parses, and to allow for explicitly
+        // overriding default values with null
+        if (!primaryKey) {
+            isChanged = true;
+        }
+
+        // [#979] Avoid modifying isChanged on unchanged primary key values
+        else {
+
+            // [#945] Be sure that isChanged is never reset to false
+            if (value == null) {
+                isChanged |= val != null;
+            }
+            else {
+                isChanged |= !value.equals(val);
+            }
+        }
+
+        value = val;
     }
 
     boolean isChanged() {

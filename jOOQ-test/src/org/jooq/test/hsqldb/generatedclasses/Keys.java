@@ -14,7 +14,6 @@ package org.jooq.test.hsqldb.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
-	public static final org.jooq.Identity<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord, java.lang.Integer> IDENTITY_T_BOOK_STORE = createIdentity(org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.hsqldb.generatedclasses.tables.TBookStore.T_BOOK_STORE.ID);
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.hsqldb.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);

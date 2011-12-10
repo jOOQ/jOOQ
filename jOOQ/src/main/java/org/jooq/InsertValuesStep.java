@@ -54,7 +54,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface InsertValuesStep<R extends TableRecord<R>> extends InsertOnDuplicateStep<R> {
+public interface InsertValuesStep<R extends Record> extends InsertOnDuplicateStep<R> {
 
     /**
      * Add values to the insert statement

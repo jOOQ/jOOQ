@@ -58,7 +58,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface InsertSetStep<R extends TableRecord<R>> {
+public interface InsertSetStep<R extends Record> {
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement

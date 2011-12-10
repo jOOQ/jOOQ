@@ -40,6 +40,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Insert<R extends TableRecord<R>> extends Query {
+public interface Insert<R extends Record> extends Query {
 
 }

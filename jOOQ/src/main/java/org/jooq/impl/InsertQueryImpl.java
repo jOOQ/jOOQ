@@ -59,11 +59,11 @@ import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.sqlite.SQLiteFactory;
@@ -71,7 +71,7 @@ import org.jooq.util.sqlite.SQLiteFactory;
 /**
  * @author Lukas Eder
  */
-class InsertQueryImpl<R extends TableRecord<R>> extends AbstractStoreQuery<R> implements InsertQuery<R> {
+class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
     private static final long        serialVersionUID = 4466005417945353842L;
 

@@ -54,7 +54,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface InsertOnDuplicateSetStep<R extends TableRecord<R>> {
+public interface InsertOnDuplicateSetStep<R extends Record> {
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's

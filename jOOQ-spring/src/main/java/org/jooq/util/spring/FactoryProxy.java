@@ -261,27 +261,27 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into) {
+    public final <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
         return getDelegate().insertQuery(into);
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertSetStep<R> insertInto(Table<R> into) {
+    public final <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
         return getDelegate().insertInto(into);
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields) {
+    public final <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields) {
         return getDelegate().insertInto(into, fields);
     }
 
     @Override
-    public final <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
+    public final <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return getDelegate().insertInto(into, fields);
     }
 
     @Override
-    public final <R extends TableRecord<R>> Insert<R> insertInto(Table<R> into, Select<?> select) {
+    public final <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select) {
         return getDelegate().insertInto(into, select);
     }
 
@@ -321,7 +321,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
+    public final <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table) {
         return getDelegate().truncate(table);
     }
 

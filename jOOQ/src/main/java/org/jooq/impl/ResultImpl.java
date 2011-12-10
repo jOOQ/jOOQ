@@ -73,7 +73,6 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONObject;
@@ -1243,7 +1242,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <Z extends TableRecord<Z>> Result<Z> into(Table<Z> table) {
+    public final <Z extends Record> Result<Z> into(Table<Z> table) {
         Result<Z> list = new ResultImpl<Z>(getConfiguration(), table);
 
         for (R record : this) {

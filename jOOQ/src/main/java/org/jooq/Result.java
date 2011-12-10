@@ -1753,7 +1753,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *             exception that might have occurred while mapping records
      * @see Record#into(Table)
      */
-    <Z extends TableRecord<Z>> Result<Z> into(Table<Z> table) throws MappingException;
+    <Z extends Record> Result<Z> into(Table<Z> table) throws MappingException;
 
     /**
      * Map results into a custom handler callback

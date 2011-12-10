@@ -62,7 +62,6 @@ import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
@@ -570,7 +569,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
-    public final <R extends TableRecord<R>> R into(Table<R> table) {
+    public final <R extends Record> R into(Table<R> table) {
         try {
             R result = Util.newRecord(table, getConfiguration());
 

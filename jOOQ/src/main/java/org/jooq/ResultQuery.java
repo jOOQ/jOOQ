@@ -475,7 +475,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Result#into(Table)
      * @throws DataAccessException if something went wrong executing the query
      */
-    <Z extends TableRecord<Z>> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
+    <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException;
 
     /**
      * Fetch results into a custom handler callback

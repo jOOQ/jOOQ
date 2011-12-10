@@ -308,7 +308,7 @@ public interface FactoryOperations extends Configuration {
      * @param into The table to insert data into
      * @return The new {@link InsertQuery}
      */
-    <R extends TableRecord<R>> InsertQuery<R> insertQuery(Table<R> into);
+    <R extends Record> InsertQuery<R> insertQuery(Table<R> into);
 
     /**
      * Create a new DSL insert statement. This type of insert may feel more
@@ -330,7 +330,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> InsertSetStep<R> insertInto(Table<R> into);
+    <R extends Record> InsertSetStep<R> insertInto(Table<R> into);
 
     /**
      * Create a new DSL insert statement.
@@ -347,7 +347,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields);
+    <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields);
 
     /**
      * Create a new DSL insert statement.
@@ -364,7 +364,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields);
+    <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields);
 
     /**
      * Create a new DSL insert statement.
@@ -379,7 +379,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> Insert<R> insertInto(Table<R> into, Select<?> select);
+    <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select);
 
     /**
      * Create a new {@link UpdateQuery}

@@ -69,7 +69,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface InsertReturningStep<R extends TableRecord<R>> {
+public interface InsertReturningStep<R extends Record> {
 
     /**
      * Configure the <code>INSERT</code> statement to return all fields in

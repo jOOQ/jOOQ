@@ -49,7 +49,6 @@ import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -180,12 +179,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <Z extends TableRecord<Z>> Z fetchOneInto(Table<Z> table) {
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
         return fetchOne().into(table);
     }
 
     @Override
-    public final <Z extends TableRecord<Z>> List<Z> fetchInto(Table<Z> table) {
+    public final <Z extends Record> List<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
     }
 

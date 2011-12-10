@@ -33,6 +33,16 @@ public final class Tables {
 	public static org.jooq.test.db2.generatedclasses.tables.T_785 T_785 = org.jooq.test.db2.generatedclasses.tables.T_785.T_785;
 
 	/**
+	 * The table LUKAS.T_986_1
+	 */
+	public static org.jooq.test.db2.generatedclasses.tables.T_986_1 T_986_1 = org.jooq.test.db2.generatedclasses.tables.T_986_1.T_986_1;
+
+	/**
+	 * The table LUKAS.T_986_2
+	 */
+	public static org.jooq.test.db2.generatedclasses.tables.T_986_2 T_986_2 = org.jooq.test.db2.generatedclasses.tables.T_986_2.T_986_2;
+
+	/**
 	 * The table LUKAS.T_AUTHOR
 	 */
 	public static org.jooq.test.db2.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.db2.generatedclasses.tables.TAuthor.T_AUTHOR;

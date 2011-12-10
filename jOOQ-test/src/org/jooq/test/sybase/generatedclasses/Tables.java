@@ -63,6 +63,16 @@ public final class Tables {
 	public static org.jooq.test.sybase.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
+	 * The table dba.t_986_1
+	 */
+	public static org.jooq.test.sybase.generatedclasses.tables.T_986_1 T_986_1 = org.jooq.test.sybase.generatedclasses.tables.T_986_1.T_986_1;
+
+	/**
+	 * The table dba.t_986_2
+	 */
+	public static org.jooq.test.sybase.generatedclasses.tables.T_986_2 T_986_2 = org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2;
+
+	/**
 	 * The table dba.t_639_numbers_table
 	 */
 	public static org.jooq.test.sybase.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.sybase.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

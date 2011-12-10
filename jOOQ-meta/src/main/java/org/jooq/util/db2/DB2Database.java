@@ -35,6 +35,7 @@
  */
 package org.jooq.util.db2;
 
+import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.db2.syscat.tables.Datatypes.DATATYPES;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCNAME;
@@ -92,7 +93,7 @@ public class DB2Database extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
-            String key = record.getValue(Keycoluse.CONSTNAME);
+            String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(Keycoluse.TABNAME);
             String columnName = record.getValue(Keycoluse.COLNAME);
 
@@ -106,7 +107,7 @@ public class DB2Database extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
-            String key = record.getValue(Keycoluse.CONSTNAME);
+            String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(Keycoluse.TABNAME);
             String columnName = record.getValue(Keycoluse.COLNAME);
 
@@ -119,7 +120,7 @@ public class DB2Database extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create().select(
-                Keycoluse.CONSTNAME,
+                concat(Keycoluse.TABNAME, val("__"), Keycoluse.CONSTNAME).as("constraint_name"),
                 Keycoluse.TABNAME,
                 Keycoluse.COLNAME)
             .from(KEYCOLUSE)
@@ -129,6 +130,7 @@ public class DB2Database extends AbstractDatabase {
             .where(Keycoluse.TABSCHEMA.equal(getInputSchema()))
             .and(Tabconst.TYPE.equal(constraintType))
             .orderBy(
+                Keycoluse.TABNAME.asc(),
                 Keycoluse.CONSTNAME.asc(),
                 Keycoluse.COLSEQ.asc())
             .fetch();
@@ -137,18 +139,18 @@ public class DB2Database extends AbstractDatabase {
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                    References.CONSTNAME,
+                    concat(References.TABNAME, val("__"), References.CONSTNAME).as("constraint_name"),
                     References.TABNAME,
                     References.FK_COLNAMES,
-                    References.REFKEYNAME)
+                    concat(References.REFTABNAME, val("__"), References.REFKEYNAME).as("referenced_constraint_name"))
                 .from(REFERENCES)
                 .where(References.TABSCHEMA.equal(getInputSchema()))
                 .fetch()) {
 
-            String foreignKey = record.getValue(References.CONSTNAME);
+            String foreignKey = record.getValue("constraint_name", String.class);
             String foreignKeyTableName = record.getValue(References.TABNAME);
             String foreignKeyColumn = record.getValue(References.FK_COLNAMES);
-            String uniqueKey = record.getValue(References.REFKEYNAME);
+            String uniqueKey = record.getValue("referenced_constraint_name", String.class);
 
             TableDefinition foreignKeyTable = getTable(foreignKeyTableName);
 

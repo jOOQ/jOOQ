@@ -77,7 +77,7 @@ public class SybaseDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                concat(SYSTABLE.TABLE_NAME, val("_"), SYSIDX.INDEX_NAME).as("indexName"),
+                concat(SYSTABLE.TABLE_NAME, val("__"), SYSIDX.INDEX_NAME).as("indexName"),
                 SYSTABLE.TABLE_NAME,
                 SYSTABCOL.COLUMN_NAME)
             .from(SYSIDX)
@@ -108,7 +108,7 @@ public class SybaseDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations r) throws SQLException {
         for (Record record : create().select(
-                concat(SYSTABLE.TABLE_NAME, val("_"), SYSIDX.INDEX_NAME).as("indexName"),
+                concat(SYSTABLE.TABLE_NAME, val("__"), SYSIDX.INDEX_NAME).as("indexName"),
                 SYSTABLE.TABLE_NAME,
                 SYSTABCOL.COLUMN_NAME)
             .from(SYSIDX)
@@ -145,10 +145,10 @@ public class SybaseDatabase extends AbstractDatabase {
         Systable ukTable = SYSTABLE.as("ukTable");
 
         for (Record record : create().select(
-                concat(fkTable.TABLE_NAME, val("_"), fkIndex.INDEX_NAME).as("fkIndexName"),
+                concat(fkTable.TABLE_NAME, val("__"), fkIndex.INDEX_NAME).as("fkIndexName"),
                 fkTable.TABLE_NAME,
                 SYSTABCOL.COLUMN_NAME,
-                concat(ukTable.TABLE_NAME, val("_"), ukIndex.INDEX_NAME).as("ukIndexName"))
+                concat(ukTable.TABLE_NAME, val("__"), ukIndex.INDEX_NAME).as("ukIndexName"))
             .from(SYSFKEY)
             .join(fkIndex)
             .on(SYSFKEY.FOREIGN_INDEX_ID.equal(fkIndex.INDEX_ID))

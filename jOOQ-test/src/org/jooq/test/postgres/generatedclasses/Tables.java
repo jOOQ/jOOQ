@@ -38,6 +38,16 @@ public final class Tables {
 	public static org.jooq.test.postgres.generatedclasses.tables.T_959 T_959 = org.jooq.test.postgres.generatedclasses.tables.T_959.T_959;
 
 	/**
+	 * The table public.t_986_1
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.T_986_1 T_986_1 = org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1;
+
+	/**
+	 * The table public.t_986_2
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.T_986_2 T_986_2 = org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2;
+
+	/**
 	 * The table public.t_arrays
 	 */
 	public static org.jooq.test.postgres.generatedclasses.tables.TArrays T_ARRAYS = org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS;

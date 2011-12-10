@@ -157,8 +157,11 @@ public class PostgresDatabase extends AbstractDatabase {
             TableDefinition referencingTable = getTable(foreignKeyTable);
 
             if (referencingTable != null) {
+
+                // [#986] Add the table name as a namespace prefix to the key
+                // name. In Postgres, foreign key names are only unique per table
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn);
+                relations.addForeignKey(foreignKeyTable + "__" + foreignKey, uniqueKey, referencingColumn);
             }
         }
     }

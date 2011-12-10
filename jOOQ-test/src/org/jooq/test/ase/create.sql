@@ -14,6 +14,8 @@ DROP TABLE t_language/
 DROP TABLE x_test_case_85/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
+DROP TABLE t_986_1/
+DROP TABLE t_986_2/
 DROP TABLE x_unused/
 DROP TABLE t_639_numbers_table/
 DROP TABLE t_658_ref/
@@ -234,6 +236,20 @@ CREATE TABLE x_unused (
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
   CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES x_unused(ID, NAME)
 ) 
+/
+
+CREATE TABLE t_986_1 (
+  REF INT,
+  
+  CONSTRAINT pk_986 PRIMARY KEY(REF)
+)
+/
+
+CREATE TABLE t_986_2 (
+  REF INT,
+  
+  CONSTRAINT pk_986 PRIMARY KEY(REF)
+)
 /
 
 CREATE TABLE t_639_numbers_table (

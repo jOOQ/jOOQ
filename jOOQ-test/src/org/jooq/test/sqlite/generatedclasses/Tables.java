@@ -38,6 +38,16 @@ public final class Tables {
 	public static org.jooq.test.sqlite.generatedclasses.tables.T_785 T_785 = org.jooq.test.sqlite.generatedclasses.tables.T_785.T_785;
 
 	/**
+	 * The table t_986_1
+	 */
+	public static org.jooq.test.sqlite.generatedclasses.tables.T_986_1 T_986_1 = org.jooq.test.sqlite.generatedclasses.tables.T_986_1.T_986_1;
+
+	/**
+	 * The table t_986_2
+	 */
+	public static org.jooq.test.sqlite.generatedclasses.tables.T_986_2 T_986_2 = org.jooq.test.sqlite.generatedclasses.tables.T_986_2.T_986_2;
+
+	/**
 	 * The table t_author
 	 */
 	public static org.jooq.test.sqlite.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.sqlite.generatedclasses.tables.TAuthor.T_AUTHOR;

@@ -1174,6 +1174,16 @@ public abstract class jOOQAbstractTest<
                 tables++;
             }
 
+            // [#986] Some foreign key name collision checks
+            if (getDialect() == ASE ||
+                getDialect() == DB2 ||
+                getDialect() == POSTGRES ||
+                getDialect() == SQLITE ||
+                getDialect() == SYBASE) {
+
+                tables += 2;
+            }
+
             if (TArrays() == null) {
                 assertEquals(tables, schema.getTables().size());
             }

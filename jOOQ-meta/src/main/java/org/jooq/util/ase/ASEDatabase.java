@@ -35,7 +35,9 @@
  */
 package org.jooq.util.ase;
 
+import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.util.ase.sys.tables.Sysindexes.SYSINDEXES;
 
 import java.sql.SQLException;
@@ -43,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
@@ -121,9 +124,12 @@ public class ASEDatabase extends AbstractDatabase {
      * unique-clustered-indexes.html</a>
      */
     private List<Record> fetchKeys(int incl, int excl) {
+        Field<String> table = field("object_name(id)", String.class);
+        Field<String> key = field("name", String.class);
+
         return create().select(
-                    field("name", String.class),
-                    field("object_name(id)", String.class),
+                    concat(table, val("__"), key),
+                    table,
                     field("index_col(object_name(id), indid, 1)", String.class),
                     field("index_col(object_name(id), indid, 2)", String.class),
                     field("index_col(object_name(id), indid, 3)", String.class),
@@ -141,10 +147,15 @@ public class ASEDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        Field<String> fkTable = field("object_name(tableid)", String.class);
+        Field<String> fk = field("object_name(constrid)", String.class);
+        Field<String> pkTable = field("object_name(reftabid)", String.class);
+        Field<String> pk = field("index_name(pmrydbid, reftabid, indexid)", String.class);
+
         for (Record record : create().select(
-                field("object_name(tableid)", String.class).as("fk_table"),
-                field("object_name(constrid)", String.class).as("fk"),
-                field("index_name(pmrydbid, reftabid, indexid)", String.class).as("pk"),
+                fkTable.as("fk_table"),
+                concat(fkTable, val("__"), fk).as("fk"),
+                concat(pkTable, val("__"), pk).as("pk"),
                 field("col_name(tableid, fokey1)", String.class),
                 field("col_name(tableid, fokey2)", String.class),
                 field("col_name(tableid, fokey3)", String.class),

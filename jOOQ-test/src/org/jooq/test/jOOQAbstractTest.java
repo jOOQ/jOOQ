@@ -1556,6 +1556,71 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLCRUD() throws Exception {
+        reset = false;
+
+        // CRUD with plain SQL
+        Table<Record> table = table(TAuthor().getName());
+        Field<Object> id = field(TAuthor_ID().getName());
+        Field<Object> firstName = field(TAuthor_FIRST_NAME().getName());
+        Field<Object> lastName = field(TAuthor_LAST_NAME().getName());
+
+        assertEquals(2,
+        create().insertInto(table, id, firstName, lastName)
+                .values(10, "Herbert", "Meier")
+                .values(11, "Friedrich", "Glauser")
+                .execute());
+
+        Result<Record> authors1 = create()
+                .select(id, firstName, lastName)
+                .from(table)
+                .where(id.in(10, 11))
+                .orderBy(id)
+                .fetch();
+
+        assertEquals(2, authors1.size());
+        assertEquals(10, authors1.getValue(0, id));
+        assertEquals(11, authors1.getValue(1, id));
+        assertEquals("Herbert", authors1.getValue(0, firstName));
+        assertEquals("Friedrich", authors1.getValue(1, firstName));
+        assertEquals("Meier", authors1.getValue(0, lastName));
+        assertEquals("Glauser", authors1.getValue(1, lastName));
+
+        assertEquals(2,
+        create().update(table)
+                .set(firstName, "Friedrich")
+                .set(lastName, "Schiller")
+                .where(id.in(10, 11))
+                .execute());
+
+        Result<Record> authors2 =
+        create().select(id, firstName, lastName)
+                .from(table)
+                .where(id.in(10, 11))
+                .orderBy(id)
+                .fetch();
+
+        assertEquals(2, authors2.size());
+        assertEquals(10, authors2.getValue(0, id));
+        assertEquals(11, authors2.getValue(1, id));
+        assertEquals("Friedrich", authors2.getValue(0, firstName));
+        assertEquals("Friedrich", authors2.getValue(1, firstName));
+        assertEquals("Schiller", authors2.getValue(0, lastName));
+        assertEquals("Schiller", authors2.getValue(1, lastName));
+
+        assertEquals(2,
+        create().delete(table)
+                .where(id.in(10, 11))
+                .execute());
+
+        assertEquals(0,
+        create().selectCount()
+                .from(table)
+                .where(id.in(10, 11))
+                .fetchOne(0));
+    }
+
+    @Test
     public void testCustomSQL() throws Exception {
         final Field<Integer> IDx2 = new CustomField<Integer>(TBook_ID().getName(), TBook_ID().getDataType()) {
             private static final long serialVersionUID = 1L;

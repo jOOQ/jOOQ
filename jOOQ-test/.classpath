@@ -24,6 +24,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jconn3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jtds-1.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
-	<classpathentry kind="lib" path="lib/h2-1.3.161.jar"/>
+	<classpathentry kind="lib" path="lib/h2-1.3.162.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

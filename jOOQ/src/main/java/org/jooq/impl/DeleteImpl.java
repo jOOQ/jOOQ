@@ -46,14 +46,14 @@ import org.jooq.Configuration;
 import org.jooq.DeleteConditionStep;
 import org.jooq.DeleteWhereStep;
 import org.jooq.Operator;
+import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 
 /**
  * @author Lukas Eder
  */
-class DeleteImpl<R extends TableRecord<R>>
+class DeleteImpl<R extends Record>
     extends AbstractDelegatingQueryPart<DeleteQueryImpl<R>>
     implements
 

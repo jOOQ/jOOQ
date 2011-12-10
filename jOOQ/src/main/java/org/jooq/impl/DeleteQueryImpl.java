@@ -45,14 +45,14 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Operator;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 
 /**
  * @author Lukas Eder
  */
-class DeleteQueryImpl<R extends TableRecord<R>> extends AbstractQuery implements DeleteQuery<R> {
+class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQuery<R> {
 
     private static final long           serialVersionUID = -1943687511774150929L;
 

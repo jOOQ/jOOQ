@@ -980,7 +980,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> MergeUsingStep<R> mergeInto(Table<R> table) {
+    public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return new MergeImpl<R>(this, table);
     }
 
@@ -988,7 +988,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
+    public final <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
         return new DeleteQueryImpl<R>(this, table);
     }
 
@@ -996,7 +996,7 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final <R extends TableRecord<R>> DeleteWhereStep<R> delete(Table<R> table) {
+    public final <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
         return new DeleteImpl<R>(this, table);
     }
 

@@ -52,7 +52,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface DeleteWhereStep<R extends TableRecord<R>> extends DeleteFinalStep<R> {
+public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
 
     /**
      * Add conditions to the query

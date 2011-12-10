@@ -40,6 +40,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Merge<R extends TableRecord<R>> extends Query {
+public interface Merge<R extends Record> extends Query {
 
 }

@@ -54,7 +54,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends TableRecord<R>> {
+public interface MergeUsingStep<R extends Record> {
 
     /**
      * Add the <code>USING</code> clause to the <code>MERGE</code> statement

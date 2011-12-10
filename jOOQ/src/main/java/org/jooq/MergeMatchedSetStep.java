@@ -56,7 +56,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface MergeMatchedSetStep<R extends TableRecord<R>> {
+public interface MergeMatchedSetStep<R extends Record> {
 
     /**
      * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's

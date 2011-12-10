@@ -45,7 +45,7 @@ import java.util.Map;
  * @param <R> The record type of the table being modified
  * @author Lukas Eder
  */
-public interface StoreQuery<R extends TableRecord<R>> extends Query {
+public interface StoreQuery<R extends Record> extends Query {
 
     /**
      * Add values to the store statement

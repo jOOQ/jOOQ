@@ -50,6 +50,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface UpdateFinalStep<R extends TableRecord<R>> extends Update<R> {
+public interface UpdateFinalStep<R extends Record> extends Update<R> {
 
 }

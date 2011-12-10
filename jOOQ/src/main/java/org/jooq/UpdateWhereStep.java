@@ -54,7 +54,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface UpdateWhereStep<R extends TableRecord<R>> extends UpdateFinalStep<R> {
+public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
 
     /**
      * Add conditions to the query

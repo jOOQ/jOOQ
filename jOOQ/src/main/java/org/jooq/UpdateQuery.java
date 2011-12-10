@@ -42,6 +42,6 @@ package org.jooq;
  * @param <R> The record type of the table being updated
  * @author Lukas Eder
  */
-public interface UpdateQuery<R extends TableRecord<R>> extends StoreQuery<R>, ConditionProvider, Update<R> {
+public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionProvider, Update<R> {
 
 }

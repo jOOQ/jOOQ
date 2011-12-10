@@ -94,7 +94,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
         // procedures / functions
         catch (SQLException e) {
             log.warn("Cannot fetch column count for cursor : " + e.getMessage());
-            fields.add(field("dummy", SQLDataType.OTHER));
+            fields.add(field("dummy"));
         }
 
         try {

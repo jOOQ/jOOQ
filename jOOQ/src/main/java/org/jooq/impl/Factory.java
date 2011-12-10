@@ -512,7 +512,7 @@ public class Factory implements FactoryOperations {
      * @param sql The SQL
      * @return A field wrapping the plain SQL
      */
-    public static Field<?> field(String sql) {
+    public static Field<Object> field(String sql) {
         return field(sql, new Object[0]);
     }
 
@@ -537,7 +537,7 @@ public class Factory implements FactoryOperations {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
-    public static Field<?> field(String sql, Object... bindings) {
+    public static Field<Object> field(String sql, Object... bindings) {
         return field(sql, Object.class, bindings);
     }
 

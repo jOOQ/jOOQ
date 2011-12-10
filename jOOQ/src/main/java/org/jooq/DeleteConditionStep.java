@@ -50,7 +50,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface DeleteConditionStep<R extends TableRecord<R>> extends DeleteFinalStep<R> {
+public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the

@@ -296,17 +296,17 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends TableRecord<R>> MergeUsingStep<R> mergeInto(Table<R> table) {
+    public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return getDelegate().mergeInto(table);
     }
 
     @Override
-    public final <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table) {
+    public final <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
         return getDelegate().deleteQuery(table);
     }
 
     @Override
-    public final <R extends TableRecord<R>> DeleteWhereStep<R> delete(Table<R> table) {
+    public final <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
         return getDelegate().delete(table);
     }
 

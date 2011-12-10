@@ -467,7 +467,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> MergeUsingStep<R> mergeInto(Table<R> table);
+    <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     /**
      * Create a new {@link DeleteQuery}
@@ -475,7 +475,7 @@ public interface FactoryOperations extends Configuration {
      * @param table The table to delete data from
      * @return The new {@link DeleteQuery}
      */
-    <R extends TableRecord<R>> DeleteQuery<R> deleteQuery(Table<R> table);
+    <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table);
 
     /**
      * Create a new DSL delete statement.
@@ -488,7 +488,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> DeleteWhereStep<R> delete(Table<R> table);
+    <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
 
     /**
      * Execute a set of queries in batch mode (without bind values).

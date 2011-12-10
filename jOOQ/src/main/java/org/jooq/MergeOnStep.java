@@ -56,7 +56,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface MergeOnStep<R extends TableRecord<R>> {
+public interface MergeOnStep<R extends Record> {
 
     /**
      * Provide join conditions and proceed to the next step

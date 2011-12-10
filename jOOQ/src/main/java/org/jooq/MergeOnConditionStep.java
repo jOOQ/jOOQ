@@ -56,7 +56,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface MergeOnConditionStep<R extends TableRecord<R>> extends MergeMatchedStep<R> {
+public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the

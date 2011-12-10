@@ -56,7 +56,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface MergeNotMatchedValuesStep<R extends TableRecord<R>> {
+public interface MergeNotMatchedValuesStep<R extends Record> {
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>

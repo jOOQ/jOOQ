@@ -59,17 +59,17 @@ import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Operator;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
-import org.jooq.TableRecord;
 import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
  */
-class MergeImpl<R extends TableRecord<R>> extends AbstractQuery
+class MergeImpl<R extends Record> extends AbstractQuery
 implements
 
     // Cascading interface implementations for Merge behaviour

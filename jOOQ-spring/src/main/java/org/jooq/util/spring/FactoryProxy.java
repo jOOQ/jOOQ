@@ -286,12 +286,12 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
-    public final <R extends TableRecord<R>> UpdateQuery<R> updateQuery(Table<R> table) {
+    public final <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
         return getDelegate().updateQuery(table);
     }
 
     @Override
-    public final <R extends TableRecord<R>> UpdateSetStep<R> update(Table<R> table) {
+    public final <R extends Record> UpdateSetStep<R> update(Table<R> table) {
         return getDelegate().update(table);
     }
 

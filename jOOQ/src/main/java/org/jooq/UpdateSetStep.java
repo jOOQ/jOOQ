@@ -52,7 +52,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
-public interface UpdateSetStep<R extends TableRecord<R>> {
+public interface UpdateSetStep<R extends Record> {
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement

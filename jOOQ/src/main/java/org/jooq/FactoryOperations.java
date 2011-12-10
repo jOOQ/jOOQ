@@ -387,7 +387,7 @@ public interface FactoryOperations extends Configuration {
      * @param table The table to update data into
      * @return The new {@link UpdateQuery}
      */
-    <R extends TableRecord<R>> UpdateQuery<R> updateQuery(Table<R> table);
+    <R extends Record> UpdateQuery<R> updateQuery(Table<R> table);
 
     /**
      * Create a new DSL update statement.
@@ -402,7 +402,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
-    <R extends TableRecord<R>> UpdateSetStep<R> update(Table<R> table);
+    <R extends Record> UpdateSetStep<R> update(Table<R> table);
 
     /**
      * Create a new DSL merge statement.

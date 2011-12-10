@@ -46,16 +46,16 @@ import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 
 /**
  * A default implementation for store queries.
  *
  * @author Lukas Eder
  */
-abstract class AbstractStoreQuery<R extends TableRecord<R>> extends AbstractQuery implements StoreQuery<R> {
+abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implements StoreQuery<R> {
 
     /**
      * Generated UID

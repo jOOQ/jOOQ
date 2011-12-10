@@ -46,9 +46,9 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetMoreStep;
@@ -58,7 +58,7 @@ import org.jooq.UpdateSetMoreStep;
  *
  * @author Lukas Eder
  */
-final class UpdateImpl<R extends TableRecord<R>>
+final class UpdateImpl<R extends Record>
     extends AbstractDelegatingQueryPart<UpdateQuery<R>>
     implements
 

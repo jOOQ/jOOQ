@@ -55,7 +55,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface InsertSetMoreStep<R extends TableRecord<R>> extends InsertSetStep<R>, InsertOnDuplicateStep<R> {
+public interface InsertSetMoreStep<R extends Record> extends InsertSetStep<R>, InsertOnDuplicateStep<R> {
 
     /**
      * Add an additional record to the <code>INSERT</code> statement

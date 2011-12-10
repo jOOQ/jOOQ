@@ -1058,7 +1058,7 @@ public interface Record extends FieldProvider, Store<Object> {
      * @param <R> The generic table record type.
      * @param table The table type.
      */
-    <R extends TableRecord<R>> R into(Table<R> table);
+    <R extends Record> R into(Table<R> table);
 
     /**
      * Load data into this record from a source. The mapping algorithm is this:

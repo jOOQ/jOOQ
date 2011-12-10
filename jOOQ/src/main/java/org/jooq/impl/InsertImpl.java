@@ -50,14 +50,14 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertValuesStep;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 
 /**
  * @author Lukas Eder
  */
-class InsertImpl<R extends TableRecord<R>>
+class InsertImpl<R extends Record>
     extends AbstractDelegatingQueryPart<InsertQuery<R>>
     implements
 

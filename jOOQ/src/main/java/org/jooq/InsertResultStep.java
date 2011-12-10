@@ -68,7 +68,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-public interface InsertResultStep<R extends TableRecord<R>> extends Insert<R> {
+public interface InsertResultStep<R extends Record> extends Insert<R> {
 
     /**
      * The result holding returned values as specified by the

@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 
 /**
@@ -540,5 +541,17 @@ public interface ResultQuery<R extends Record> extends Query {
      * The record type produced by this query
      */
     Class<? extends R> getRecordType();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
 }

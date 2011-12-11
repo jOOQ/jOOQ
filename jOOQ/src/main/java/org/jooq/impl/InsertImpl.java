@@ -50,6 +50,7 @@ import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.InsertValuesStep;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;
@@ -84,12 +85,22 @@ class InsertImpl<R extends Record>
     }
 
     // -------------------------------------------------------------------------
-    // The QueryPart API
+    // The Query API
     // -------------------------------------------------------------------------
 
     @Override
     public final int execute() {
         return getDelegate().execute();
+    }
+
+    @Override
+    public final Query bind(String param, Object value) {
+        return getDelegate().bind(param, value);
+    }
+
+    @Override
+    public final Query bind(int index, Object value) {
+        return getDelegate().bind(index, value);
     }
 
     // -------------------------------------------------------------------------

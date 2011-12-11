@@ -8823,6 +8823,42 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testQueryBindValues() throws Exception {
+        Select<?> select =
+        create().select(
+                    TAuthor_ID(),
+                    param("p1", String.class))
+                .from(TAuthor())
+                .where(TAuthor_ID().in(
+                    param("p2", Integer.class),
+                    param("p3", Integer.class)))
+                .orderBy(TAuthor_ID().asc());
+
+        // Should execute fine, but no results due to IN (null, null) filter
+        assertEquals(0, select.fetch().size());
+
+        // Set both parameters to the same value
+        Result<?> result1 =
+        select.bind("p2", 1L)
+              .bind(3, "1")
+              .fetch();
+        assertEquals(1, result1.size());
+        assertEquals(1, result1.getValue(0, 0));
+        assertNull(result1.getValue(0, 1));
+
+        // Set more parameters
+        Result<?> result2 =
+        select.bind(1, "asdf")
+              .bind("p3", "2")
+              .fetch();
+        assertEquals(2, result2.size());
+        assertEquals(1, result2.getValue(0, 0));
+        assertEquals(2, result2.getValue(1, 0));
+        assertEquals("asdf", result2.getValue(0, 1));
+        assertEquals("asdf", result2.getValue(1, 1));
+    }
+
+    @Test
     public void testLoader() throws Exception {
         reset = false;
         connection.setAutoCommit(false);

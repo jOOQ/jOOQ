@@ -46,6 +46,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -78,6 +79,16 @@ final class UpdateImpl<R extends Record>
     @Override
     public final int execute() {
         return getDelegate().execute();
+    }
+
+    @Override
+    public final Query bind(String param, Object value) {
+        return getDelegate().bind(param, value);
+    }
+
+    @Override
+    public final Query bind(int index, Object value) {
+        return getDelegate().bind(index, value);
     }
 
     @Override

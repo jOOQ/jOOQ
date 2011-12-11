@@ -117,9 +117,10 @@ public final class Convert {
      * @param from The array to convert
      * @param toClass The target array type
      * @return A converted array
+     * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static Object[] convertArray(Object[] from, Class<?> toClass) {
+    public static Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
         if (from == null) {
             return null;
         }
@@ -188,16 +189,17 @@ public final class Convert {
      * the platform's default charset</li>
      * <li><code>Object[]</code> can be converted into any other array type, if
      * array elements can be converted, too</li>
-     * <li><b>All other combinations that are not listed above will result in an
-     * undisclosed unchecked exception.</b></li>
+     * <li><b>All other combinations that are not listed above will result in a
+     * {@link DataTypeException}</b></li>
      * </ul>
      *
      * @param from The object to convert
      * @param toClass The target type
      * @return The converted object
+     * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static <T> T convert(Object from, Class<? extends T> toClass) {
+    public static <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
         if (from == null) {
 
             // [#936] If types are converted to primitives, the result must not
@@ -367,9 +369,10 @@ public final class Convert {
      * @param list The list of objects
      * @param type The target type
      * @return The list of converted objects
+     * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Class)
      */
-    public static <T> List<T> convert(List<?> list, Class<? extends T> type) {
+    public static <T> List<T> convert(List<?> list, Class<? extends T> type) throws DataTypeException {
         List<T> result = new ArrayList<T>();
 
         for (Object o : list) {

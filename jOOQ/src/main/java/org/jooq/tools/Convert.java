@@ -227,7 +227,7 @@ public final class Convert {
                 return (T) from;
             }
             else if (fromClass == byte[].class) {
-                return convert(new String((byte[]) from), toClass);
+                return convert(Arrays.toString((byte[]) from), toClass);
             }
             else if (fromClass.isArray()) {
                 return (T) convertArray((Object[]) from, toClass);

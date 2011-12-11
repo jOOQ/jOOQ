@@ -292,12 +292,17 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
 
                         // Might be byte[]
                         if (thisValue.getClass() == byte[].class && thatValue.getClass() == byte[].class) {
-                            return new String((byte[]) thisValue).equals(new String((byte[]) thatValue));
+                            return Arrays.equals((byte[]) thisValue, (byte[]) thatValue);
                         }
 
                         // Other primitive types are not expected
+                        else if (!thisValue.getClass().getComponentType().isPrimitive() &&
+                                 !thatValue.getClass().getComponentType().isPrimitive()) {
+                            return Arrays.equals((Object[]) thisValue, (Object[]) thatValue);
+                        }
+
                         else {
-                            return Arrays.asList((Object[]) thisValue).equals(Arrays.asList((Object[]) thatValue));
+                            return false;
                         }
                     }
                     else if (!thisValue.equals(thatValue)) {

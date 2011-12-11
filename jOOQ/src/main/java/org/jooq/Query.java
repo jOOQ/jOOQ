@@ -40,11 +40,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.Factory;
 
 /**
  * Any query
- * 
+ *
  * @author Lukas Eder
  */
 public interface Query extends QueryPart {
@@ -52,7 +53,7 @@ public interface Query extends QueryPart {
     /**
      * Execute the query, if it has been created with a properly configured
      * factory
-     * 
+     *
      * @return A result value, depending on the concrete implementation of
      *         {@link Query}:
      *         <ul>
@@ -98,7 +99,7 @@ public interface Query extends QueryPart {
      * <p>
      * Bind values created with {@link Factory#val(Object)} will have their bind
      * index as name.
-     * 
+     *
      * @see Param
      * @see Factory#param(String, Object)
      */
@@ -109,10 +110,35 @@ public interface Query extends QueryPart {
      * <p>
      * Bind values created with {@link Factory#val(Object)} will have their bind
      * index as name.
-     * 
+     *
      * @see Param
      * @see Factory#param(String, Object)
      */
     Param<?> getParam(String name);
+
+    /**
+     * Bind a new value to a named parameter
+     *
+     * @param param The named parameter name. If this is a number, then this is
+     *            the same as calling {@link #bind(int, Object)}
+     * @param value The new bind value.
+     * @throws IllegalArgumentException if there is no parameter by the given
+     *             parameter name or index.
+     * @throws DataTypeException if <code>value</code> cannot be converted into
+     *             the parameter's data type
+     */
+    Query bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Bind a new value to an indexed parameter
+     *
+     * @param index The parameter index, starting with 1
+     * @param value The new bind value.
+     * @throws IllegalArgumentException if there is no parameter by the given
+     *             parameter index.
+     * @throws DataTypeException if <code>value</code> cannot be converted into
+     *             the parameter's data type
+     */
+    Query bind(int index, Object value) throws IllegalArgumentException, DataTypeException;
 
 }

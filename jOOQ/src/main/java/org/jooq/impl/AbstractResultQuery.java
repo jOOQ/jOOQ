@@ -64,6 +64,7 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 
@@ -93,6 +94,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
      * Get a list of fields provided a result set.
      */
     protected abstract List<Field<?>> getFields(ResultSetMetaData rs) throws SQLException;
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final ResultQuery<R> bind(String param, Object value) throws IllegalArgumentException, DataTypeException {
+        return (ResultQuery<R>) super.bind(param, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException {
+        return (ResultQuery<R>) super.bind(index, value);
+    }
 
     @Override
     protected final int execute(Configuration configuration, PreparedStatement statement) throws SQLException {

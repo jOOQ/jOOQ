@@ -35,12 +35,13 @@
  */
 package org.jooq;
 
+import org.jooq.exception.DataTypeException;
 import org.jooq.impl.Factory;
 import org.jooq.tools.Convert;
 
 /**
  * A named parameter
- * 
+ *
  * @author Lukas Eder
  * @see Factory#param(String, Object)
  */
@@ -75,7 +76,7 @@ public interface Param<T> extends Field<T> {
     /**
      * Set the parameter's underlying value. This is the same as
      * {@link #setConverted(Object)}, but ensures generic type-safety.
-     * 
+     *
      * @see #setConverted(Object)
      */
     void setValue(T value);
@@ -83,9 +84,11 @@ public interface Param<T> extends Field<T> {
     /**
      * Sets a converted value, using this {@link Param}'s underlying
      * {@link DataType}, obtained from {@link #getDataType()}
-     * 
+     *
      * @see DataType#convert(Object)
      * @see Convert#convert(Object, Class)
+     * @throws DataTypeException If <code>value</code> cannot be converted into
+     *             this parameter's data type.
      */
-    void setConverted(Object value);
+    void setConverted(Object value) throws DataTypeException;
 }

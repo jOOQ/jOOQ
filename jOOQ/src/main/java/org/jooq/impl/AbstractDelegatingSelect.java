@@ -45,6 +45,7 @@ import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
@@ -63,6 +64,16 @@ abstract class AbstractDelegatingSelect<R extends Record>
 
     AbstractDelegatingSelect(Select<R> query) {
         super(query);
+    }
+
+    @Override
+    public final ResultQuery<R> bind(String param, Object value) {
+        return getDelegate().bind(param, value);
+    }
+
+    @Override
+    public final ResultQuery<R> bind(int index, Object value) {
+        return getDelegate().bind(index, value);
     }
 
     @Override

@@ -42,6 +42,7 @@ import java.sql.SQLException;
 
 import org.jooq.Configuration;
 import org.jooq.ConfigurationRegistry;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
@@ -57,6 +58,46 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
     AbstractQuery(Configuration configuration) {
         super(configuration);
+    }
+
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Query bind(String param, Object value) {
+        try {
+            int index = Integer.valueOf(param);
+            return bind(index, value);
+        }
+        catch (NumberFormatException e) {
+            Param<?> p = getParam(param);
+
+            if (p == null) {
+                throw new IllegalArgumentException("No such parameter : " + param);
+            }
+
+            p.setConverted(value);
+            return this;
+        }
+    }
+
+    /**
+     * Subclasses may override this for covariant result types
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Query bind(int index, Object value) {
+        Param<?>[] array = getParams().values().toArray(new Param[0]);
+
+        if (index < 1 || index > array.length) {
+            throw new IllegalArgumentException("Index out of range for Query parameters : " + index);
+        }
+
+        array[index - 1].setConverted(value);
+        return this;
     }
 
     @Override

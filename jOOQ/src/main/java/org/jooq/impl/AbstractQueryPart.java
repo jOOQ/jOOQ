@@ -42,10 +42,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -107,16 +109,50 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
 
     /**
      * This method is also declared as {@link Query#getSQL()}
+     * <p>
+     * {@inheritDoc}
      */
+    @Override
     public final String getSQL() {
         return create().render(this);
     }
 
+    /**
+     * This method is also declared as {@link Query#getBindValues()}
+     * <p>
+     * {@inheritDoc}
+     */
     @Override
     public final List<Object> getBindValues() {
-        BindValueCollector collector = new BindValueCollector();
-        create(getConfiguration()).bind(this, collector);
-        return collector.result;
+        List<Object> result = new ArrayList<Object>();
+
+        for (Param<?> param : getParams().values()) {
+            result.add(param.getValue());
+        }
+
+        return Collections.unmodifiableList(result);
+    }
+
+    /**
+     * This method is also declared as {@link Query#getParams()}
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public final Map<String, Param<?>> getParams() {
+        ParamCollector collector = new ParamCollector(getConfiguration());
+        collector.bind(this);
+        return Collections.unmodifiableMap(collector.result);
+    }
+
+    /**
+     * This method is also declared as {@link Query#getParam(String)}
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public final Param<?> getParam(String name) {
+        return getParams().get(name);
     }
 
     /**

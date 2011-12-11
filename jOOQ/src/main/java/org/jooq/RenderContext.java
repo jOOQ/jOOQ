@@ -106,4 +106,18 @@ public interface RenderContext extends Context<RenderContext> {
      * Set the new context value for {@link #inline()}
      */
     RenderContext inline(boolean inline);
+
+    /**
+     * Whether bind variables should be rendered as named parameters:<br/>
+     * <code>&#160; :1, :2, :custom_name</code>
+     * <p>
+     * or as JDBC bind variables <br/>
+     * <code>&#160; ?</code>
+     */
+    boolean namedParams();
+
+    /**
+     * Set the new context value for {@link #namedParams()}
+     */
+    RenderContext namedParams(boolean renderNamedParams);
 }

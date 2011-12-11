@@ -35,122 +35,59 @@
  */
 package org.jooq.impl;
 
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.RenderContext;
 
 /**
+ * A base class for {@link BindContext} implementations
+ *
  * @author Lukas Eder
  */
-class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
+abstract class AbstractBindContext extends AbstractContext<BindContext> implements BindContext {
 
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = -8358225526567622252L;
+    private static final long serialVersionUID = -319766597723101571L;
 
-    private final StringBuilder sql;
-    private boolean             inline;
-    private boolean             renderNamedParams;
-    private int                 alias;
-
-    DefaultRenderContext(Configuration configuration) {
+    AbstractBindContext(Configuration configuration) {
         super(configuration);
-
-        this.sql = new StringBuilder();
     }
 
-    DefaultRenderContext(RenderContext context) {
+    AbstractBindContext(BindContext context) {
         this((Configuration) context);
 
-        inline(context.inline());
-        namedParams(context.namedParams());
         declareFields(context.declareFields());
         declareTables(context.declareTables());
     }
 
     // ------------------------------------------------------------------------
-    // RenderContext API
+    // BindContext API
     // ------------------------------------------------------------------------
 
     @Override
-    public final String peekAlias() {
-        return "alias_" + (alias + 1);
-    }
-
-    @Override
-    public final String nextAlias() {
-        return "alias_" + (++alias);
-    }
-
-    @Override
-    public final String render() {
-        return sql.toString();
-    }
-
-    @Override
-    public final String render(QueryPart part) {
-        return new DefaultRenderContext(this).sql(part).render();
-    }
-
-    @Override
-    public final RenderContext sql(String s) {
-        sql.append(s);
-        return this;
-    }
-
-    @Override
-    public final RenderContext sql(char c) {
-        sql.append(c);
-        return this;
-    }
-
-    @Override
-    public final RenderContext sql(int i) {
-        sql.append(i);
-        return this;
-    }
-
-    @Override
-    public final RenderContext literal(String literal) {
-        switch (configuration.getDialect()) {
-            case MYSQL:
-                sql("`").sql(literal).sql("`");
-                break;
-
-            case DB2:
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case INGRES:
-            case ORACLE:
-            case POSTGRES:
-                sql('"').sql(literal).sql('"');
-                break;
-
-            // SQLite is supposed to support all sorts of delimiters, but it
-            // seems too buggy
-            case SQLITE:
-                sql(literal);
-                break;
-
-            case ASE:
-            case SQLSERVER:
-            case SYBASE:
-                sql("[").sql(literal).sql("]");
-                break;
-
-            default:
-                sql(literal);
-                break;
+    public final BindContext bind(Collection<? extends QueryPart> parts) {
+        for (QueryPart part : parts) {
+            bind(part);
         }
 
         return this;
     }
 
     @Override
-    public final RenderContext sql(QueryPart part) {
+    public final BindContext bind(QueryPart[] parts) {
+        bind(Arrays.asList(parts));
+        return this;
+    }
+
+    @Override
+    public final BindContext bind(QueryPart part) {
         QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
 
         // If this is supposed to be a declaration section and the part isn't
@@ -159,44 +96,69 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         // We're declaring fields, but "part" does not declare fields
         if (declareFields() && !internal.declaresFields()) {
             declareFields(false);
-            internal.toSQL(this);
+            bindInternal(internal);
             declareFields(true);
         }
 
         // We're declaring tables, but "part" does not declare tables
         else if (declareTables() && !internal.declaresTables()) {
             declareTables(false);
-            internal.toSQL(this);
+            bindInternal(internal);
             declareTables(true);
         }
 
         // We're not declaring, or "part" can declare
         else {
-            internal.toSQL(this);
+            bindInternal(internal);
         }
 
         return this;
     }
 
     @Override
-    public final boolean inline() {
-        return inline;
-    }
+    public final BindContext bindValues(Object... values) {
 
-    @Override
-    public final RenderContext inline(boolean i) {
-        this.inline = i;
+        // [#724] When values is null, this is probably due to API-misuse
+        // The user probably meant new Object[] { null }
+        if (values == null) {
+            bindValues(new Object[] { null });
+        }
+        else {
+            for (Object value : values) {
+                Class<?> type = (value == null) ? Object.class : value.getClass();
+                bindValue(value, type);
+            }
+        }
+
         return this;
     }
 
     @Override
-    public final boolean namedParams() {
-        return renderNamedParams;
+    public final BindContext bindValue(Object value, Class<?> type) {
+        try {
+            return bindValue0(value, type);
+        }
+        catch (SQLException e) {
+            throw Util.translate("DefaultBindContext.bindValue", null, e);
+        }
     }
 
-    @Override
-    public final RenderContext namedParams(boolean r) {
-        this.renderNamedParams = r;
+    // ------------------------------------------------------------------------
+    // AbstractBindContext template methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * Subclasses may override this method to achieve different behaviour
+     */
+    protected void bindInternal(QueryPartInternal internal) {
+        internal.bind(this);
+    }
+
+    /**
+     * Subclasses may override this method to achieve different behaviour
+     */
+    @SuppressWarnings("unused")
+    protected BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         return this;
     }
 
@@ -207,17 +169,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
-        sb.append(  "rendering    [");
-        sb.append(render());
-        sb.append("]");
-        sb.append("\ninlining     [");
-        sb.append(inline);
-        sb.append("]");
-        sb.append("\nnamed params [");
-        sb.append(renderNamedParams);
-        sb.append("]");
-
         toString(sb);
         return sb.toString();
     }

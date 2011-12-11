@@ -33,71 +33,64 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq;
+package org.jooq.impl;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.jooq.BindContext;
+import org.jooq.Configuration;
+import org.jooq.Param;
+import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
+import org.jooq.tools.StringUtils;
 
 /**
- * A context type that is used for rendering SQL or for binding
- * <p>
- * This interface is for JOOQ INTERNAL USE only. Do not reference directly
+ * A stub {@link BindContext} that acts as a collector of {@link Param}
+ * {@link QueryPart}'s
  *
  * @author Lukas Eder
- * @see BindContext
- * @see RenderContext
  */
-public interface Context<C extends Context<C>> extends Configuration {
+class ParamCollector extends AbstractBindContext {
 
     /**
-     * Whether the current context is rendering a SQL field declaration (e.g. a
-     * {@link Field} in the <code>SELECT</code> clause of the query).
+     * Generated UID
      */
-    boolean declareFields();
+    private static final long   serialVersionUID = -3741599479523459297L;
 
-    /**
-     * Set the new context value for {@link #declareFields()}
-     */
-    C declareFields(boolean declareFields);
+    final Map<String, Param<?>> result           = new LinkedHashMap<String, Param<?>>();
 
-    /**
-     * Whether the current context is rendering a SQL table declaration (e.g. a
-     * {@link Table} in the <code>FROM</code> or <code>JOIN</code> clause of the
-     * query).
-     */
-    boolean declareTables();
+    ParamCollector(Configuration configuration) {
+        super(configuration);
+    }
 
-    /**
-     * Set the new context value for {@link #declareTables()}
-     */
-    C declareTables(boolean declareTables);
+    @Override
+    public final PreparedStatement statement() {
+        throw new UnsupportedOperationException();
+    }
 
-    /**
-     * Whether the current context is rendering a sub-query (nested query)
-     */
-    boolean subquery();
+    @Override
+    protected final void bindInternal(QueryPartInternal internal) {
+        if (internal instanceof Param) {
+            Param<?> param = (Param<?>) internal;
+            String i = String.valueOf(nextIndex());
 
-    /**
-     * Set the new context value for {@link #subquery()}
-     */
-    C subquery(boolean subquery);
+            if (StringUtils.isBlank(param.getParamName())) {
+                result.put(i, param);
+            }
+            else {
+                result.put(param.getParamName(), param);
+            }
+        }
+        else {
+            super.bindInternal(internal);
+        }
+    }
 
-    /**
-     * Get the next bind index. This increments an internal counter. This is
-     * relevant for two use-cases:
-     * <ul>
-     * <li>When binding variables to a {@link PreparedStatement}. Client code
-     * must assure that calling {@link #nextIndex()} is followed by setting a
-     * bind value to {@link #statement()}</li>
-     * <li>When rendering unnamed bind variables with
-     * {@link RenderContext#namedParams()} being to <code>true</code></li>
-     * </ul>
-     */
-    int nextIndex();
-
-    /**
-     * Peek the next bind index. This won't increment the internal counter,
-     * unlike {@link #nextIndex()}
-     */
-    int peekIndex();
-
+    @Override
+    protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
+        throw new UnsupportedOperationException();
+    }
 }

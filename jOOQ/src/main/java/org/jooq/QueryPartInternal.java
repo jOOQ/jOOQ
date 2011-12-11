@@ -37,6 +37,7 @@
 package org.jooq;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.exception.DataAccessException;
 
@@ -60,14 +61,35 @@ public interface QueryPartInternal extends QueryPart {
     void toSQL(RenderContext context);
 
     /**
-     * Retrieve the bind values that will be bound by this QueryPart
+     * Retrieve the SQL that will be rendered by this {@link QueryPart}
+     * <p>
+     * This method is exposed publicly in {@link Query#getSQL()}
+     */
+    String getSQL();
+
+    /**
+     * Retrieve the bind values that will be bound by this {@link QueryPart}
      * <p>
      * This method is exposed publicly in {@link Query#getBindValues()}
      */
     List<Object> getBindValues();
 
     /**
-     * Bind all parameters of this QueryPart to a PreparedStatement
+     * Retrieve the named parameters that will be bound by this {@link QueryPart}
+     * <p>
+     * This method is exposed publicly in {@link Query#getParams()}
+     */
+    Map<String, Param<?>> getParams();
+
+    /**
+     * Retrieve a named parameter that will be bound by this {@link QueryPart}
+     * <p>
+     * This method is exposed publicly in {@link Query#getParam(String)}
+     */
+    Param<?> getParam(String name);
+
+    /**
+     * Bind all parameters of this {@link QueryPart} to a PreparedStatement
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
      *
@@ -79,7 +101,7 @@ public interface QueryPartInternal extends QueryPart {
     void bind(BindContext context) throws DataAccessException;
 
     /**
-     * Reproduce the SQL dialect this QueryPart was created with
+     * Reproduce the SQL dialect this {@link QueryPart} was created with
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
      *
@@ -88,7 +110,7 @@ public interface QueryPartInternal extends QueryPart {
     SQLDialect getDialect();
 
     /**
-     * Check whether this QueryPart is able to declare fields in a
+     * Check whether this {@link QueryPart} is able to declare fields in a
      * <code>SELECT</code> clause.
      * <p>
      * This method can be used by any {@link Context} to check how a certain SQL
@@ -99,7 +121,7 @@ public interface QueryPartInternal extends QueryPart {
     boolean declaresFields();
 
     /**
-     * Check whether this QueryPart is able to declare tables in a
+     * Check whether this {@link QueryPart} is able to declare tables in a
      * <code>FROM</code> clause or <code>JOIN</code> clause.
      * <p>
      * This method can be used by any {@link Context} to check how a certain SQL

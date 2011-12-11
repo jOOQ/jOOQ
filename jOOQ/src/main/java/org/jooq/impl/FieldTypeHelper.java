@@ -53,7 +53,6 @@ import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -65,9 +64,7 @@ import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.MasterDataType;
-import org.jooq.NamedTypeProviderQueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -108,130 +105,6 @@ public final class FieldTypeHelper {
     private static final int        BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
 
     private static final JooqLogger log               = JooqLogger.getLogger(FieldTypeHelper.class);
-
-    public static void toSQL(RenderContext context, Object value) {
-        if (value == null) {
-            toSQL(context, value, Object.class);
-        }
-        else {
-            toSQL(context, value, value.getClass());
-        }
-    }
-
-    public static void toSQL(RenderContext context, Object value, NamedTypeProviderQueryPart<?> field) {
-        toSQL(context, value, field.getType());
-    }
-
-    public static void toSQL(RenderContext context, Object value, Class<?> type) {
-        if (context.inline()) {
-            if (value == null) {
-                context.sql("null");
-            }
-            else if (type == Blob.class) {
-
-                // blob's are treated as byte[] by jOOQ
-                context.sql("[BLOB]");
-            }
-            else if (type == Boolean.class) {
-                context.sql(value.toString());
-            }
-            else if (type == BigInteger.class) {
-                context.sql(value.toString());
-            }
-            else if (type == BigDecimal.class) {
-                context.sql(value.toString());
-            }
-            else if (type == Byte.class) {
-                context.sql(value.toString());
-            }
-            else if (type == byte[].class) {
-                context.sql("'")
-                       .sql(new String((byte[]) value).replace("'", "''"))
-                       .sql("'");
-            }
-            else if (type == Clob.class) {
-
-                // clob's are treated as String by jOOQ
-                context.sql("[CLOB]");
-            }
-            else if (type == Date.class) {
-                context.sql("'").sql(value.toString()).sql("'");
-            }
-            else if (type == Double.class) {
-                context.sql(value.toString());
-            }
-            else if (type == Float.class) {
-                context.sql(value.toString());
-            }
-            else if (type == Integer.class) {
-                context.sql(value.toString());
-            }
-            else if (type == Long.class) {
-                context.sql(value.toString());
-            }
-            else if (type == Short.class) {
-                context.sql(value.toString());
-            }
-            else if (type == String.class) {
-                context.sql("'")
-                       .sql(value.toString().replace("'", "''"))
-                       .sql("'");
-            }
-            else if (type == Time.class) {
-                context.sql("'").sql(value.toString()).sql("'");
-            }
-            else if (type == Timestamp.class) {
-                context.sql("'").sql(value.toString()).sql("'");
-            }
-            else if (type.isArray()) {
-                context.sql("ARRAY")
-                       .sql(Arrays.asList((Object[]) value).toString());
-            }
-            else if (UNumber.class.isAssignableFrom(type)) {
-                context.sql(value.toString());
-            }
-            else if (ArrayRecord.class.isAssignableFrom(type)) {
-                context.sql(value.toString());
-            }
-            else if (EnumType.class.isAssignableFrom(type)) {
-                toSQL(context, ((EnumType) value).getLiteral());
-            }
-            else if (MasterDataType.class.isAssignableFrom(type)) {
-                toSQL(context, ((MasterDataType<?>) value).getPrimaryKey());
-            }
-            else if (UDTRecord.class.isAssignableFrom(type)) {
-                context.sql("[UDT]");
-            }
-            else {
-                throw new UnsupportedOperationException("Class " + type + " is not supported");
-            }
-        }
-
-        // In Postgres, some additional casting must be done in some cases...
-        // TODO: Improve this implementation with [#215] (cast support)
-        else if (context.getDialect() == SQLDialect.POSTGRES) {
-
-            // Postgres needs explicit casting for array types
-            if (type.isArray() && byte[].class != type) {
-                context.sql("?::");
-                context.sql(getDataType(context.getDialect(), type).getCastTypeName(context));
-            }
-
-            // ... and also for enum types
-            else if (EnumType.class.isAssignableFrom(type)) {
-                context.sql("?::");
-                context.literal(((EnumType) value).getName());
-            }
-
-            else {
-                context.sql("?");
-            }
-        }
-
-        else {
-            context.sql("?");
-        }
-    }
 
     @SuppressWarnings("unchecked")
     public static <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {

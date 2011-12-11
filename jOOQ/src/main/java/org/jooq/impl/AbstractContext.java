@@ -56,6 +56,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     boolean                   declareFields;
     boolean                   declareTables;
     boolean                   subquery;
+    int                       index;
 
     AbstractContext(Configuration configuration) {
         this.configuration = configuration;
@@ -107,6 +108,16 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         return (C) this;
     }
 
+    @Override
+    public final int nextIndex() {
+        return ++index;
+    }
+
+    @Override
+    public final int peekIndex() {
+        return index + 1;
+    }
+
     // ------------------------------------------------------------------------
     // Configuration API
     // ------------------------------------------------------------------------
@@ -127,7 +138,10 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     }
 
     void toString(StringBuilder sb) {
-        sb.append("\ndeclaring [");
+        sb.append(  "bind index   [");
+        sb.append(index);
+        sb.append("]");
+        sb.append("\ndeclaring    [");
 
         if (declareFields) {
             sb.append("fields");
@@ -139,7 +153,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
             sb.append("-");
         }
 
-        sb.append("]\nsubquery  [");
+        sb.append("]\nsubquery     [");
         sb.append(subquery);
         sb.append("]");
     }

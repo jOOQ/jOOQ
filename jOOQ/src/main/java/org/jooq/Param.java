@@ -35,69 +35,57 @@
  */
 package org.jooq;
 
-import java.sql.PreparedStatement;
+import org.jooq.impl.Factory;
+import org.jooq.tools.Convert;
 
 /**
- * A context type that is used for rendering SQL or for binding
- * <p>
- * This interface is for JOOQ INTERNAL USE only. Do not reference directly
- *
+ * A named parameter
+ * 
  * @author Lukas Eder
- * @see BindContext
- * @see RenderContext
+ * @see Factory#param(String, Object)
  */
-public interface Context<C extends Context<C>> extends Configuration {
+public interface Param<T> extends Field<T> {
 
     /**
-     * Whether the current context is rendering a SQL field declaration (e.g. a
-     * {@link Field} in the <code>SELECT</code> clause of the query).
+     * {@inheritDoc}
+     * <hr/>
+     * The <code>Param</code>'s value for {@link #getName()} coincides with
+     * {@link #getParamName()}
      */
-    boolean declareFields();
+    @Override
+    String getName();
 
     /**
-     * Set the new context value for {@link #declareFields()}
-     */
-    C declareFields(boolean declareFields);
-
-    /**
-     * Whether the current context is rendering a SQL table declaration (e.g. a
-     * {@link Table} in the <code>FROM</code> or <code>JOIN</code> clause of the
-     * query).
-     */
-    boolean declareTables();
-
-    /**
-     * Set the new context value for {@link #declareTables()}
-     */
-    C declareTables(boolean declareTables);
-
-    /**
-     * Whether the current context is rendering a sub-query (nested query)
-     */
-    boolean subquery();
-
-    /**
-     * Set the new context value for {@link #subquery()}
-     */
-    C subquery(boolean subquery);
-
-    /**
-     * Get the next bind index. This increments an internal counter. This is
-     * relevant for two use-cases:
+     * The parameter name. This name is useful for two things:
      * <ul>
-     * <li>When binding variables to a {@link PreparedStatement}. Client code
-     * must assure that calling {@link #nextIndex()} is followed by setting a
-     * bind value to {@link #statement()}</li>
-     * <li>When rendering unnamed bind variables with
-     * {@link RenderContext#namedParams()} being to <code>true</code></li>
+     * <li>Named parameters in frameworks that support them, such as Spring's
+     * <code>JdbcTemplate</code></li>
+     * <li>Accessing the parameter from the {@link Query} API, with
+     * {@link Query#getParam(String)}, {@link Query#getParams()}</li>
      * </ul>
      */
-    int nextIndex();
+    String getParamName();
 
     /**
-     * Peek the next bind index. This won't increment the internal counter,
-     * unlike {@link #nextIndex()}
+     * Get the parameter's underlying value. This returns <code>null</code> if
+     * no value has been set yet.
      */
-    int peekIndex();
+    T getValue();
 
+    /**
+     * Set the parameter's underlying value. This is the same as
+     * {@link #setConverted(Object)}, but ensures generic type-safety.
+     * 
+     * @see #setConverted(Object)
+     */
+    void setValue(T value);
+
+    /**
+     * Sets a converted value, using this {@link Param}'s underlying
+     * {@link DataType}, obtained from {@link #getDataType()}
+     * 
+     * @see DataType#convert(Object)
+     * @see Convert#convert(Object, Class)
+     */
+    void setConverted(Object value);
 }

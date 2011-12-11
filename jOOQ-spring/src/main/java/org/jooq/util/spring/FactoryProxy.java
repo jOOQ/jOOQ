@@ -186,6 +186,11 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
+    public final String renderNamedParams(QueryPart part) {
+        return getDelegate().renderNamedParams(part);
+    }
+
+    @Override
     public final String renderInlined(QueryPart part) {
         return getDelegate().renderInlined(part);
     }

@@ -47,7 +47,7 @@ import org.jooq.exception.DataAccessException;
  * will then pass the same context to their components
  * <p>
  * This interface is for JOOQ INTERNAL USE only. Do not reference directly
- * 
+ *
  * @author Lukas Eder
  * @see RenderContext
  */
@@ -59,22 +59,9 @@ public interface BindContext extends Context<BindContext> {
     PreparedStatement statement();
 
     /**
-     * Get the next bind index. This increments an internal counter. Client code
-     * must assure that calling {@link #nextIndex()} is followed by setting a
-     * bind value to {@link #statement()}
-     */
-    int nextIndex();
-
-    /**
-     * Peek the next bind index. This won't increment the internal counter,
-     * unlike {@link #nextIndex()}
-     */
-    int peekIndex();
-
-    /**
      * Bind values from a {@link QueryPart}. This will also increment the
      * internal counter.
-     * 
+     *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */
@@ -83,7 +70,7 @@ public interface BindContext extends Context<BindContext> {
     /**
      * Bind values from several {@link QueryPart}'s. This will also increment
      * the internal counter.
-     * 
+     *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */
@@ -92,7 +79,7 @@ public interface BindContext extends Context<BindContext> {
     /**
      * Bind values from several {@link QueryPart}'s. This will also increment
      * the internal counter.
-     * 
+     *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */
@@ -101,7 +88,7 @@ public interface BindContext extends Context<BindContext> {
     /**
      * Bind a value using a specific type. This will also increment the internal
      * counter.
-     * 
+     *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */
@@ -109,7 +96,7 @@ public interface BindContext extends Context<BindContext> {
 
     /**
      * Bind several values. This will also increment the internal counter.
-     * 
+     *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */

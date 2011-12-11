@@ -46,15 +46,12 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Arrays;
-import java.util.Collection;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
@@ -63,7 +60,7 @@ import org.jooq.tools.unsigned.UNumber;
 /**
  * @author Lukas Eder
  */
-class DefaultBindContext extends AbstractContext<BindContext> implements BindContext {
+class DefaultBindContext extends AbstractBindContext {
 
     /**
      * Generated UID
@@ -72,7 +69,6 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     private static final JooqLogger log              = JooqLogger.getLogger(Util.class);
 
     private final PreparedStatement stmt;
-    private int                     index;
 
     DefaultBindContext(Configuration configuration, PreparedStatement stmt) {
         super(configuration);
@@ -93,89 +89,8 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
     }
 
     @Override
-    public final int nextIndex() {
-        return ++index;
-    }
-
-    @Override
-    public final int peekIndex() {
-        return index + 1;
-    }
-
-    @Override
-    public final BindContext bind(QueryPart part) {
-        QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
-
-        // If this is supposed to be a declaration section and the part isn't
-        // able to declare anything, then disable declaration temporarily
-
-        // We're declaring fields, but "part" does not declare fields
-        if (declareFields() && !internal.declaresFields()) {
-            declareFields(false);
-            internal.bind(this);
-            declareFields(true);
-        }
-
-        // We're declaring tables, but "part" does not declare tables
-        else if (declareTables() && !internal.declaresTables()) {
-            declareTables(false);
-            internal.bind(this);
-            declareTables(true);
-        }
-
-        // We're not declaring, or "part" can declare
-        else {
-            internal.bind(this);
-        }
-
-        return this;
-    }
-
-    @Override
-    public final BindContext bind(Collection<? extends QueryPart> parts) {
-        for (QueryPart part : parts) {
-            bind(part);
-        }
-
-        return this;
-    }
-
-    @Override
-    public final BindContext bind(QueryPart[] parts) {
-        bind(Arrays.asList(parts));
-        return this;
-    }
-
-    @Override
-    public final BindContext bindValues(Object... values) {
-
-        // [#724] When values is null, this is probably due to API-misuse
-        // The user probably meant new Object[] { null }
-        if (values == null) {
-            bindValues(new Object[] { null });
-        }
-        else {
-            for (Object value : values) {
-                Class<?> type = (value == null) ? Object.class : value.getClass();
-                bindValue(value, type);
-            }
-        }
-
-        return this;
-    }
-
-    @Override
-    public final BindContext bindValue(Object value, Class<?> type) {
-        try {
-            return bindValue0(value, type);
-        }
-        catch (SQLException e) {
-            throw Util.translate("DefaultBindContext.bindValue", null, e);
-        }
-    }
-
     @SuppressWarnings("unchecked")
-    private final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
+    protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.getDialect();
 
         if (log.isTraceEnabled()) {
@@ -334,21 +249,5 @@ class DefaultBindContext extends AbstractContext<BindContext> implements BindCon
         }
 
         return this;
-    }
-
-    // ------------------------------------------------------------------------
-    // Object API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("binding   [index ");
-        sb.append(index);
-        sb.append("]");
-
-        toString(sb);
-        return sb.toString();
     }
 }

@@ -206,10 +206,8 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 context.sql(val.toString());
             }
             else if (type == byte[].class) {
-
-                // TODO [#990] This can cause issues
                 context.sql("'")
-                       .sql(new String((byte[]) val).replace("'", "''"))
+                       .sql(Arrays.toString((byte[]) val).replace("'", "''"))
                        .sql("'");
             }
             else if (Number.class.isAssignableFrom(type)) {
@@ -217,7 +215,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             }
             else if (type.isArray()) {
                 context.sql("ARRAY")
-                       .sql(Arrays.asList((Object[]) val).toString());
+                       .sql(Arrays.toString((Object[]) val));
             }
             else if (ArrayRecord.class.isAssignableFrom(type)) {
                 context.sql(val.toString());

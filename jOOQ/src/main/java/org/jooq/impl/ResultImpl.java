@@ -1090,10 +1090,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             formatted = "{null}";
         }
         else if (value.getClass() == byte[].class) {
-            formatted = new String((byte[]) value);
+            formatted = Arrays.toString((byte[]) value);
         }
         else if (value.getClass().isArray()) {
-            formatted = Arrays.asList((Object[]) value).toString();
+            formatted = Arrays.toString((Object[]) value);
         }
         else if (value instanceof EnumType) {
             formatted = ((EnumType) value).getLiteral();

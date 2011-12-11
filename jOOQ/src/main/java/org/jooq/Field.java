@@ -62,6 +62,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <li>The formal name of the field, if it is a <i>physical table/view field</i></li>
      * <li>The alias of an <i>aliased field</i></li>
      * <li>A generated / unspecified value for any other <i>expression</i></li>
+     * <li>The name of a parameter if it is a named {@link Param}</li>
      * </ul>
      */
     @Override

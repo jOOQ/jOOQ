@@ -37,13 +37,14 @@
 package org.jooq;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 
 /**
  * Any query
- *
+ * 
  * @author Lukas Eder
  */
 public interface Query extends QueryPart {
@@ -51,7 +52,7 @@ public interface Query extends QueryPart {
     /**
      * Execute the query, if it has been created with a properly configured
      * factory
-     *
+     * 
      * @return A result value, depending on the concrete implementation of
      *         {@link Query}:
      *         <ul>
@@ -84,8 +85,34 @@ public interface Query extends QueryPart {
     String getSQL();
 
     /**
-     * Retrieve the bind values that will be bound by this Query
+     * Retrieve the bind values that will be bound by this Query. This
+     * <code>List</code> cannot be modified. To modify bind values, use
+     * {@link #getParams()} instead.
      */
     List<Object> getBindValues();
+
+    /**
+     * Get a <code>Map</code> of named parameters. The <code>Map</code> itself
+     * cannot be modified, but the {@link Param} elements allow for modifying
+     * bind values on an existing {@link Query}.
+     * <p>
+     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * index as name.
+     * 
+     * @see Param
+     * @see Factory#param(String, Object)
+     */
+    Map<String, Param<?>> getParams();
+
+    /**
+     * Get a named parameter from the {@link Query}, provided its name.
+     * <p>
+     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * index as name.
+     * 
+     * @see Param
+     * @see Factory#param(String, Object)
+     */
+    Param<?> getParam(String name);
 
 }

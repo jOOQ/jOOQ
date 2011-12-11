@@ -70,6 +70,18 @@ public interface FactoryOperations extends Configuration {
     String render(QueryPart part);
 
     /**
+     * Render a QueryPart in the context of this factory, rendering bind
+     * variables as named parameters.
+     * <p>
+     * This is the same as calling
+     * <code>renderContext().namedParams(true).render(part)</code>
+     *
+     * @param part The {@link QueryPart} to be rendered
+     * @return The rendered SQL
+     */
+    String renderNamedParams(QueryPart part);
+
+    /**
      * Render a QueryPart in the context of this factory, inlining all bind
      * variables.
      * <p>

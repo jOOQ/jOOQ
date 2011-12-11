@@ -79,6 +79,7 @@ import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeUsingStep;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -218,6 +219,7 @@ public class Factory implements FactoryOperations {
      * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
      * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
      * <li> <code>{@link RenderContext#inline()} == false</code></li>
+     * <li> <code>{@link RenderContext#namedParams()} == false</code></li>
      * </ul>
      * <p>
      * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
@@ -232,6 +234,14 @@ public class Factory implements FactoryOperations {
     @Override
     public final String render(QueryPart part) {
         return renderContext().render(part);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final String renderNamedParams(QueryPart part) {
+        return renderContext().namedParams(true).render(part);
     }
 
     /**
@@ -3532,17 +3542,86 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a named parameter with a generic type ({@link Object} /
+     * {@link SQLDataType#OTHER}) and no initial value.
+     * <p>
+     * Try to avoid this method when using any of these databases, as these
+     * databases may have trouble inferring the type of the bind value. Use
+     * typed named parameters instead, using {@link #param(String, Class)} or
+     * {@link #param(String, DataType)}
+     * <ul>
+     * <li> {@link SQLDialect#DB2}</li>
+     * <li> {@link SQLDialect#DERBY}</li>
+     * <li> {@link SQLDialect#H2}</li>
+     * <li> {@link SQLDialect#HSQLDB}</li>
+     * <li> {@link SQLDialect#INGRES}</li>
+     * <li> {@link SQLDialect#SYBASE}</li>
+     * </ul>
+     *
+     * @see #param(String, Object)
+     */
+    public static Param<Object> param(String name) {
+        return param(name, Object.class);
+    }
+
+    /**
+     * Create a named parameter with a defined type and no initial value.
+     *
+     * @see #param(String, Object)
+     */
+    public static <T> Param<T> param(String name, Class<? extends T> type) {
+        return param(name, SQLDataType.getDataType(null, type));
+    }
+
+    /**
+     * Create a named parameter with a defined type and no initial value.
+     *
+     * @see #param(String, Object)
+     */
+    public static <T> Param<T> param(String name, DataType<T> type) {
+        return new Val<T>(null, type, name);
+    }
+
+    /**
+     * Create a named parameter with an initial value.
+     * <p>
+     * Named parameters are useful for several use-cases:
+     * <ul>
+     * <li>They can be used with Spring's <code>JdbcTemplate</code>, which
+     * supports named parameters. Use
+     * {@link FactoryOperations#renderNamedParams(QueryPart)} to render
+     * parameter names in SQL</li>
+     * <li>Named parameters can be retrieved using a well-known name from
+     * {@link Query#getParam(String)} and {@link Query#getParams()}.</li>
+     * </ul>
+     *
+     * @see Query#getParam(String)
+     * @see Query#getParams()
+     * @see #renderNamedParams(QueryPart)
+     */
+    public static <T> Param<T> param(String name, T value) {
+        return new Val<T>(value, val(value).getDataType(), name);
+    }
+
+    /**
      * Get a value
      * <p>
      * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java
      * type <code>&lt;T&gt;</code>. This may not always be accurate, which can
-     * lead to problems in some strongly typed RDMBS (namely:
-     * {@link SQLDialect#DERBY}, {@link SQLDialect#DB2}, {@link SQLDialect#H2},
-     * {@link SQLDialect#HSQLDB}), especially when value is <code>null</code>.
+     * lead to problems in some strongly typed RDMBS, especially when value is
+     * <code>null</code>. These databases are namely:
+     * <ul>
+     * <li>{@link SQLDialect#DERBY}</li>
+     * <li>{@link SQLDialect#DB2}</li>
+     * <li>{@link SQLDialect#H2}</li>
+     * <li>{@link SQLDialect#HSQLDB}
+     * <li>{@link SQLDialect#INGRES}
+     * <li>{@link SQLDialect#SYBASE}
+     * </ul>
      * <p>
-     * If you need more type-safety, please use
-     * {@link #val(Object, DataType)} instead, and provide the precise
-     * RDMBS-specific data type, that is needed.
+     * If you need more type-safety, please use {@link #val(Object, DataType)}
+     * instead, and provide the precise RDMBS-specific data type, that is
+     * needed.
      *
      * @param <T> The generic value type
      * @param value The constant value
@@ -3624,7 +3703,7 @@ public class Factory implements FactoryOperations {
 
         // The default behaviour
         else {
-            return new Constant<T>(type.convert(value), type);
+            return new Val<T>(type.convert(value), type);
         }
     }
 

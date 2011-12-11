@@ -1561,9 +1561,9 @@ public abstract class jOOQAbstractTest<
 
         // CRUD with plain SQL
         Table<Record> table = table(TAuthor().getName());
-        Field<Object> id = field(TAuthor_ID().getName());
-        Field<Object> firstName = field(TAuthor_FIRST_NAME().getName());
-        Field<Object> lastName = field(TAuthor_LAST_NAME().getName());
+        Field<Integer> id = field(TAuthor_ID().getName(), Integer.class);
+        Field<String> firstName = field(TAuthor_FIRST_NAME().getName(), String.class);
+        Field<String> lastName = field(TAuthor_LAST_NAME().getName(), String.class);
 
         assertEquals(2,
         create().insertInto(table, id, firstName, lastName)
@@ -1579,8 +1579,8 @@ public abstract class jOOQAbstractTest<
                 .fetch();
 
         assertEquals(2, authors1.size());
-        assertEquals(10, authors1.getValue(0, id));
-        assertEquals(11, authors1.getValue(1, id));
+        assertEquals(10, (int) authors1.getValue(0, id));
+        assertEquals(11, (int) authors1.getValue(1, id));
         assertEquals("Herbert", authors1.getValue(0, firstName));
         assertEquals("Friedrich", authors1.getValue(1, firstName));
         assertEquals("Meier", authors1.getValue(0, lastName));
@@ -1601,8 +1601,8 @@ public abstract class jOOQAbstractTest<
                 .fetch();
 
         assertEquals(2, authors2.size());
-        assertEquals(10, authors2.getValue(0, id));
-        assertEquals(11, authors2.getValue(1, id));
+        assertEquals(10, (int) authors2.getValue(0, id));
+        assertEquals(11, (int) authors2.getValue(1, id));
         assertEquals("Friedrich", authors2.getValue(0, firstName));
         assertEquals("Friedrich", authors2.getValue(1, firstName));
         assertEquals("Schiller", authors2.getValue(0, lastName));
@@ -8786,6 +8786,40 @@ public abstract class jOOQAbstractTest<
                     .where(TAuthor_ID().in(8, 9, 10))
                     .orderBy(TAuthor_ID())
                     .fetch(TAuthor_LAST_NAME()));
+    }
+
+    @Test
+    public void testNamedParams() throws Exception {
+        Select<?> select =
+        create().select(
+                    TAuthor_ID(),
+                    param("p1", String.class))
+                .from(TAuthor())
+                .where(TAuthor_ID().in(
+                    param("p2", Integer.class),
+                    param("p3", Integer.class)))
+                .orderBy(TAuthor_ID().asc());
+
+        // Should execute fine, but no results due to IN (null, null) filter
+        assertEquals(0, select.fetch().size());
+
+        // Set both parameters to the same value
+        select.getParam("p2").setConverted(1L);
+        select.getParam("p3").setConverted("1");
+        Result<?> result1 = select.fetch();
+        assertEquals(1, result1.size());
+        assertEquals(1, result1.getValue(0, 0));
+        assertNull(result1.getValue(0, 1));
+
+        // Set more parameters
+        select.getParam("p1").setConverted("asdf");
+        select.getParam("p3").setConverted("2");
+        Result<?> result2 = select.fetch();
+        assertEquals(2, result2.size());
+        assertEquals(1, result2.getValue(0, 0));
+        assertEquals(2, result2.getValue(1, 0));
+        assertEquals("asdf", result2.getValue(0, 1));
+        assertEquals("asdf", result2.getValue(1, 1));
     }
 
     @Test

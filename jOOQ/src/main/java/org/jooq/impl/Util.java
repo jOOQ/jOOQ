@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -173,7 +175,7 @@ final class Util {
                     context.sql(split[i]);
 
                     if (i < bindings.length) {
-                        FieldTypeHelper.toSQL(context, bindings[i]);
+                        context.sql(val(bindings[i]));
                     }
                 }
             }

@@ -52,13 +52,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import org.jooq.ArrayRecord;
+import org.jooq.Attachable;
+import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
+import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Schema;
+import org.jooq.SchemaMapping;
+import org.jooq.Table;
 import org.jooq.Type;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
@@ -570,5 +577,55 @@ final class Util {
      */
     static final <T> void setValue(Record target, Field<T> targetField, Object value) {
         target.setValue(targetField, targetField.getDataType().convert(value));
+    }
+
+    /**
+     * Map a {@link Schema} according to the configured {@link SchemaMapping}
+     */
+    static Schema getMappedSchema(Configuration configuration, Schema schema) {
+        if (configuration.getSchemaMapping() != null) {
+            return configuration.getSchemaMapping().map(schema);
+        }
+        else {
+            return schema;
+        }
+    }
+
+    /**
+     * Map a {@link Table} according to the configured {@link SchemaMapping}
+     */
+    static Table<?> getMappedTable(Configuration configuration, Table<?> table) {
+        if (configuration.getSchemaMapping() != null) {
+            return configuration.getSchemaMapping().map(table);
+        }
+        else {
+            return table;
+        }
+    }
+
+    /**
+     * Wrap a piece of SQL code in parentheses, if not wrapped already
+     */
+    static String wrapInParentheses(String sql) {
+        if (sql.startsWith("(")) {
+            return sql;
+        }
+        else {
+            return "(" + sql + ")";
+        }
+    }
+
+    /**
+     * Expose the internal API of an {@link Attachable}
+     */
+    static AttachableInternal internal(Attachable part) {
+        return part.internalAPI(AttachableInternal.class);
+    }
+
+    /**
+     * Expose the internal API of a {@link QueryPart}
+     */
+    static QueryPartInternal internal(QueryPart part) {
+        return part.internalAPI(QueryPartInternal.class);
     }
 }

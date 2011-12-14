@@ -365,8 +365,8 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
-        if (getMappedSchema(context, getSchema()) != null) {
-            context.sql(getMappedSchema(context, getSchema()));
+        if (Util.getMappedSchema(context, getSchema()) != null) {
+            context.sql(Util.getMappedSchema(context, getSchema()));
             context.sql(".");
         }
 
@@ -526,6 +526,8 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             for (Parameter<?> p : getInParameters()) {
 
                 // Disambiguate overloaded function signatures
+                // TODO [#625] This won't work any longer, when generated
+                // routine artefacts are dialect-independent
                 if (SQLDialect.POSTGRES == attachable.getDialect() && isOverloaded()) {
                     array[i] = getInValues().get(p).cast(p.getType());
                 }
@@ -536,10 +538,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                 i++;
             }
 
-            RenderContext local = create(attachable).renderContext();
-            toSQLQualifiedName(local);
-
-            function = function(local.render(), type, array);
+            function = new RoutineField<T>(getName(), type, array);
         }
 
         return function;
@@ -558,5 +557,29 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
         return new ParameterImpl<T>(name, type);
+    }
+
+    /**
+     * The {@link Field} representation of this {@link Routine}
+     *
+     * @author Lukas Eder
+     */
+    private class RoutineField<Z> extends AbstractFunction<Z> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -5730297947647252624L;
+
+        RoutineField(String name, DataType<Z> type, Field<?>[] arguments) {
+            super(name, type, arguments);
+        }
+
+        @Override
+        final Field<Z> getFunction0(Configuration configuration) {
+            RenderContext local = create(configuration).renderContext();
+            toSQLQualifiedName(local);
+            return function(local.render(), getDataType(), getArguments());
+        }
     }
 }

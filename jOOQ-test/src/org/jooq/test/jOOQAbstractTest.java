@@ -845,7 +845,26 @@ public abstract class jOOQAbstractTest<
         assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
         assertEquals("Brida", result.getValue(3, TBook_TITLE()));
 
+        // [#995] Schema mapping in stored functions
+        // -----------------------------------------
+        Field<Integer> f1 = FOneField().cast(Integer.class);
+        Field<Integer> f2 = FNumberField(42).cast(Integer.class);
+
+        q =
+        create(mapping).select(f1, f2);
+
+        // Assure that schema is replaced
+        assertTrue(create(mapping).render(q).contains(TAuthor().getSchema().getName() + "2"));
+        assertTrue(q.getSQL().contains(TAuthor().getSchema().getName() + "2"));
+        assertEquals(create(mapping).render(q), q.getSQL());
+
+        // Assure that results are correct
+        Record record = q.fetchOne();
+        assertEquals(1, (int) record.getValue(f1));
+        assertEquals(42, (int) record.getValue(f2));
+
         // Map both schema AND tables
+        // --------------------------
         mapping = new SchemaMapping();
         mapping.add(TAuthor(), VAuthor());
         mapping.add(TBook(), VBook().getName());

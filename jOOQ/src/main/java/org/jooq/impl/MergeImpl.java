@@ -253,7 +253,7 @@ implements
                .declareTables(true)
                .sql(table)
                .sql(" using ")
-               .sql(wrapInParentheses(context.render(using)))
+               .sql(Util.wrapInParentheses(context.render(using)))
                .declareTables(false);
 
         switch (context.getDialect()) {
@@ -288,7 +288,7 @@ implements
         }
 
         context.sql(" on ")
-               .sql(wrapInParentheses(context.render(on)))
+               .sql(Util.wrapInParentheses(context.render(on)))
                .sql(" when matched then update set ")
                .sql(updateMap)
                .sql(" when not matched then insert ")

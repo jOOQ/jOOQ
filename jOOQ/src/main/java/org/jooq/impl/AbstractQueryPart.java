@@ -52,9 +52,7 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
-import org.jooq.Schema;
 import org.jooq.Store;
-import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -205,56 +203,6 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // -------------------------------------------------------------------------
     // Internal convenience methods
     // -------------------------------------------------------------------------
-
-    /**
-     * Internal convenience method
-     */
-    final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        if (configuration.getSchemaMapping() != null) {
-            return configuration.getSchemaMapping().map(schema);
-        }
-        else {
-            return schema;
-        }
-    }
-
-    /**
-     * Internal convenience method
-     */
-    final Table<?> getMappedTable(Configuration configuration, Table<?> table) {
-        if (configuration.getSchemaMapping() != null) {
-            return configuration.getSchemaMapping().map(table);
-        }
-        else {
-            return table;
-        }
-    }
-
-    /**
-     * Wrap a piece of SQL code in parentheses, if not wrapped already
-     */
-    protected final String wrapInParentheses(String sql) {
-        if (sql.startsWith("(")) {
-            return sql;
-        }
-        else {
-            return "(" + sql + ")";
-        }
-    }
-
-    /**
-     * Internal convenience method
-     */
-    protected final AttachableInternal internal(Attachable part) {
-        return part.internalAPI(AttachableInternal.class);
-    }
-
-    /**
-     * Internal convenience method
-     */
-    protected final QueryPartInternal internal(QueryPart part) {
-        return part.internalAPI(QueryPartInternal.class);
-    }
 
     /**
      * Internal convenience method

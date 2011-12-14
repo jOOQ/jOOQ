@@ -143,8 +143,8 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             default: {
                 UDT<?> udt = record.getUDT();
 
-                if (getMappedSchema(context, udt.getSchema()) != null) {
-                    return getMappedSchema(context, udt.getSchema()) + "." + udt.getName();
+                if (Util.getMappedSchema(context, udt.getSchema()) != null) {
+                    return Util.getMappedSchema(context, udt.getSchema()) + "." + udt.getName();
                 }
                 else {
                     return udt.getName();

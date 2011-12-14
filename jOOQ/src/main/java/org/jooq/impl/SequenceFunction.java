@@ -101,7 +101,7 @@ class SequenceFunction<T extends Number> extends AbstractFunction<T> {
         RenderContext local = create(configuration).renderContext();
 
         if (sequence.schema != null) {
-            local.sql(getMappedSchema(configuration, sequence.schema));
+            local.sql(Util.getMappedSchema(configuration, sequence.schema));
             local.sql(".");
         }
 

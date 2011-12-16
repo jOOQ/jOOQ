@@ -62,17 +62,17 @@ public interface MergeNotMatchedValuesStep<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    MergeFinalStep<R> values(Object... values);
+    MergeNotMatchedWhereStep<R> values(Object... values);
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    MergeFinalStep<R> values(Field<?>... values);
+    MergeNotMatchedWhereStep<R> values(Field<?>... values);
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
-    MergeFinalStep<R> values(Collection<?> values);
+    MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

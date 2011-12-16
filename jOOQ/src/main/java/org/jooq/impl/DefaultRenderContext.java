@@ -151,28 +151,30 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sql(QueryPart part) {
-        QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
+        if (part != null) {
+            QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
 
-        // If this is supposed to be a declaration section and the part isn't
-        // able to declare anything, then disable declaration temporarily
+            // If this is supposed to be a declaration section and the part isn't
+            // able to declare anything, then disable declaration temporarily
 
-        // We're declaring fields, but "part" does not declare fields
-        if (declareFields() && !internal.declaresFields()) {
-            declareFields(false);
-            internal.toSQL(this);
-            declareFields(true);
-        }
+            // We're declaring fields, but "part" does not declare fields
+            if (declareFields() && !internal.declaresFields()) {
+                declareFields(false);
+                internal.toSQL(this);
+                declareFields(true);
+            }
 
-        // We're declaring tables, but "part" does not declare tables
-        else if (declareTables() && !internal.declaresTables()) {
-            declareTables(false);
-            internal.toSQL(this);
-            declareTables(true);
-        }
+            // We're declaring tables, but "part" does not declare tables
+            else if (declareTables() && !internal.declaresTables()) {
+                declareTables(false);
+                internal.toSQL(this);
+                declareTables(true);
+            }
 
-        // We're not declaring, or "part" can declare
-        else {
-            internal.toSQL(this);
+            // We're not declaring, or "part" can declare
+            else {
+                internal.toSQL(this);
+            }
         }
 
         return this;

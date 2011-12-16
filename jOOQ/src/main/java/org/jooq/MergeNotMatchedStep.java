@@ -56,7 +56,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface MergeNotMatchedStep<R extends Record> {
+public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R> {
 
     /**
      * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the

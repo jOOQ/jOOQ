@@ -73,8 +73,10 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
 
     @Override
     public final BindContext bind(Collection<? extends QueryPart> parts) {
-        for (QueryPart part : parts) {
-            bind(part);
+        if (parts != null) {
+            for (QueryPart part : parts) {
+                bind(part);
+            }
         }
 
         return this;
@@ -82,34 +84,39 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
 
     @Override
     public final BindContext bind(QueryPart[] parts) {
-        bind(Arrays.asList(parts));
+        if (parts != null) {
+            bind(Arrays.asList(parts));
+        }
+
         return this;
     }
 
     @Override
     public final BindContext bind(QueryPart part) {
-        QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
+        if (part != null) {
+            QueryPartInternal internal = part.internalAPI(QueryPartInternal.class);
 
-        // If this is supposed to be a declaration section and the part isn't
-        // able to declare anything, then disable declaration temporarily
+            // If this is supposed to be a declaration section and the part isn't
+            // able to declare anything, then disable declaration temporarily
 
-        // We're declaring fields, but "part" does not declare fields
-        if (declareFields() && !internal.declaresFields()) {
-            declareFields(false);
-            bindInternal(internal);
-            declareFields(true);
-        }
+            // We're declaring fields, but "part" does not declare fields
+            if (declareFields() && !internal.declaresFields()) {
+                declareFields(false);
+                bindInternal(internal);
+                declareFields(true);
+            }
 
-        // We're declaring tables, but "part" does not declare tables
-        else if (declareTables() && !internal.declaresTables()) {
-            declareTables(false);
-            bindInternal(internal);
-            declareTables(true);
-        }
+            // We're declaring tables, but "part" does not declare tables
+            else if (declareTables() && !internal.declaresTables()) {
+                declareTables(false);
+                bindInternal(internal);
+                declareTables(true);
+            }
 
-        // We're not declaring, or "part" can declare
-        else {
-            bindInternal(internal);
+            // We're not declaring, or "part" can declare
+            else {
+                bindInternal(internal);
+            }
         }
 
         return this;

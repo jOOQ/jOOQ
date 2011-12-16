@@ -54,9 +54,18 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface MergeMatchedSetMoreStep<R extends Record>
-   extends
-       MergeMatchedSetStep<R>,
-       MergeMatchedWhereStep<R> {
+public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatchedStep<R> {
 
+    /**
+     * Add an additional <code>DELETE WHERE</code> clause to the preceding
+     * <code>WHEN MATCHED THEN UPDATE</code> clause.
+     * <p>
+     * <b>Note:</b> This syntax is only available for the
+     * {@link SQLDialect#ORACLE} database!
+     *
+     * @see <a
+     *      href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm">http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm</a>
+     *      for a full definition of the Oracle <code>MERGE</code> statement
+     */
+    MergeNotMatchedStep<R> deleteWhere(Condition condition);
 }

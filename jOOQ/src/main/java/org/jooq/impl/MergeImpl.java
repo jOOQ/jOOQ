@@ -52,9 +52,10 @@ import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.MergeFinalStep;
+import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedSetMoreStep;
 import org.jooq.MergeNotMatchedValuesStep;
+import org.jooq.MergeNotMatchedWhereStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
@@ -77,27 +78,35 @@ implements
     MergeOnStep<R>,
     MergeOnConditionStep<R>,
     MergeMatchedSetMoreStep<R>,
+    MergeMatchedDeleteStep<R>,
     MergeNotMatchedValuesStep<R>,
-    MergeFinalStep<R> {
+    MergeNotMatchedWhereStep<R> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -8835479296876774391L;
+    private static final long           serialVersionUID = -8835479296876774391L;
 
     private final Table<R>              table;
     private final ConditionProviderImpl on;
-    private final FieldMapForUpdate     updateMap;
-    private final FieldMapForInsert     insertMap;
     private TableLike<?>                using;
+
+    // [#998] Oracle extensions to the MERGE statement
+    private Condition                   matchedWhere;
+    private Condition                   matchedDeleteWhere;
+    private Condition                   notMatchedWhere;
+
+    // Flags to keep track of DSL object creation state
+    private boolean                     matchedClause;
+    private FieldMapForUpdate           matchedUpdate;
+    private boolean                     notMatchedClause;
+    private FieldMapForInsert           notMatchedInsert;
 
     MergeImpl(Configuration configuration, Table<R> table) {
         super(configuration);
 
         this.table = table;
         this.on = new ConditionProviderImpl();
-        this.updateMap = new FieldMapForUpdate();
-        this.insertMap = new FieldMapForInsert();
     }
 
     // -------------------------------------------------------------------------
@@ -196,6 +205,10 @@ implements
 
     @Override
     public final MergeImpl<R> whenMatchedThenUpdate() {
+        matchedClause = true;
+        matchedUpdate = new FieldMapForUpdate();
+
+        notMatchedClause = false;
         return this;
     }
 
@@ -206,13 +219,13 @@ implements
 
     @Override
     public final <T> MergeImpl<R> set(Field<T> field, Field<T> value) {
-        updateMap.put(field, nullSafe(value));
+        matchedUpdate.put(field, nullSafe(value));
         return this;
     }
 
     @Override
     public final MergeImpl<R> set(Map<? extends Field<?>, ?> map) {
-        updateMap.set(map);
+        matchedUpdate.set(map);
         return this;
     }
 
@@ -223,7 +236,11 @@ implements
 
     @Override
     public final MergeImpl<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
-        insertMap.putFields(fields);
+        notMatchedClause = true;
+        notMatchedInsert = new FieldMapForInsert();
+        notMatchedInsert.putFields(fields);
+
+        matchedClause = false;
         return this;
     }
 
@@ -239,7 +256,28 @@ implements
 
     @Override
     public final MergeImpl<R> values(Collection<?> values) {
-        insertMap.putValues(vals(values.toArray()));
+        notMatchedInsert.putValues(vals(values.toArray()));
+        return this;
+    }
+
+    @Override
+    public final MergeImpl<R> where(Condition condition) {
+        if (matchedClause) {
+            matchedWhere = condition;
+        }
+        else if (notMatchedClause) {
+            notMatchedWhere = condition;
+        }
+        else {
+            throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
+        }
+
+        return this;
+    }
+
+    @Override
+    public final MergeImpl<R> deleteWhere(Condition condition) {
+        matchedDeleteWhere = condition;
         return this;
     }
 
@@ -288,11 +326,37 @@ implements
         }
 
         context.sql(" on ")
-               .sql(Util.wrapInParentheses(context.render(on)))
-               .sql(" when matched then update set ")
-               .sql(updateMap)
-               .sql(" when not matched then insert ")
-               .sql(insertMap);
+               .sql(Util.wrapInParentheses(context.render(on)));
+
+        // [#999] WHEN MATCHED clause is optional
+        if (matchedUpdate != null) {
+            context.sql(" when matched then update set ")
+                   .sql(matchedUpdate);
+        }
+
+        // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
+        if (matchedWhere != null) {
+            context.sql(" where ")
+                   .sql(matchedWhere);
+        }
+
+        // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
+        if (matchedDeleteWhere != null) {
+            context.sql(" delete where ")
+                   .sql(matchedDeleteWhere);
+        }
+
+        // [#999] WHEN NOT MATCHED clause is optional
+        if (notMatchedInsert != null) {
+            context.sql(" when not matched then insert ")
+                   .sql(notMatchedInsert);
+        }
+
+        // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
+        if (notMatchedWhere != null) {
+            context.sql(" where ")
+                   .sql(notMatchedWhere);
+        }
 
         switch (context.getDialect()) {
             case SQLSERVER:
@@ -308,12 +372,21 @@ implements
                .bind(using)
                .declareTables(false)
                .bind(on)
-               .bind(updateMap)
-               .bind(insertMap);
+               .bind(matchedUpdate)
+               .bind(matchedWhere)
+               .bind(matchedDeleteWhere)
+               .bind(notMatchedInsert)
+               .bind(notMatchedWhere);
     }
 
     @Override
     public final List<Attachable> getAttachables() {
-        return getAttachables(table, using, on, updateMap, insertMap);
+        return getAttachables(
+            table, using, on,
+            matchedUpdate,
+            matchedWhere,
+            matchedDeleteWhere,
+            notMatchedInsert,
+            notMatchedWhere);
     }
 }

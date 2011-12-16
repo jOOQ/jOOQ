@@ -117,7 +117,12 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
     </ul>
     
     <h2>What databases are supported</h2>
-    <p>Every RDMBS out there has its own little specialties. jOOQ considers those specialties as much as possible, while trying to standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, unit tests are run for syntax and variable binding verification, as well as integration tests for any of these databases:</p>
+    <p>Every RDMBS out there has its own little specialties. 
+    jOOQ considers those specialties as much as possible, while trying to 
+    standardise the behaviour in jOOQ. In order to increase the quality of jOOQ, 
+    some 70 unit tests are run for syntax and variable binding verification, 
+    as well as some 130 integration tests with an overall of around 900 queries for any 
+    of these databases:</p>
 <ul>
     <li>DB2 9.7</li>
     <li>Derby 10.8</li>
@@ -125,19 +130,22 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
     <li>HSQLDB 2.2.5</li>
     <li>Ingres 10.1.0</li>
     <li>MySQL 5.1.41 and 5.5.8</li>
-    <li>Oracle XE 10.2.0.1.0</li>
+    <li>Oracle XE 10.2.0.1.0 and 11g</li>
     <li>PostgreSQL 9.0</li>
     <li>SQLite with inofficial JDBC driver v056</li>
     <li>SQL Server 2008 R8</li>
     <li>Sybase Adaptive Server Enterprise 15.5</li>
     <li>Sybase SQL Anywhere 12</li>
 </ul>
-
+	<p>These platforms have been observed to work as well, but are not integration-tested</p>
+<ul>
+	<li>Google Cloud SQL (MySQL)</li>
+</ul>
+	
 <h3>Planned (Contributions and suggestions are very welcome!)</h3>
     <ul>
     <li>Access</li>
     <li>Firebird</li>
-    <li>Google Cloud SQL</li>
     <li>Informix</li>
     <li>Interbase</li>
     <li>SQL Azure</li>

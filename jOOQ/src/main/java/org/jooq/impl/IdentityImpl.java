@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -65,7 +64,7 @@ class IdentityImpl<R extends Record, T> implements Identity<R, T> {
     }
 
     @Override
-    public final Field<T> getField() {
+    public final TableField<R, T> getField() {
         return field;
     }
 

@@ -57,5 +57,5 @@ public interface Identity<R extends Record, T> extends Serializable {
     /**
      * The <code>IDENTITY</code> column.
      */
-    Field<T> getField();
+    TableField<R, T> getField();
 }

@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static org.jooq.impl.Factory.val;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_BOOK;
@@ -77,6 +78,7 @@ import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
+import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
 import org.jooq.test.mysql.generatedclasses.tables.TUnsigned;
 import org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable;
@@ -88,6 +90,7 @@ import org.jooq.test.mysql.generatedclasses.tables.VLibrary;
 import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord;
@@ -118,6 +121,8 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         TUnsignedRecord,
+        XUnusedRecord,
+        TIdentityPkRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -471,6 +476,36 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
         return TTriggers.COUNTER;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TIdentity() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentity_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentity_VAL() {
+        return null;
+    }
+
+    @Override
+    protected UpdatableTable<TIdentityPkRecord> TIdentityPK() {
+        return T_IDENTITY_PK;
+    }
+
+    @Override
+    protected TableField<TIdentityPkRecord, Integer> TIdentityPK_ID() {
+        return TIdentityPk.ID;
+    }
+
+    @Override
+    protected TableField<TIdentityPkRecord, Integer> TIdentityPK_VAL() {
+        return TIdentityPk.VAL;
     }
 
     @Override

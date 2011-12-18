@@ -13,6 +13,16 @@ package org.jooq.test.h2.generatedclasses;
 public final class Tables {
 
 	/**
+	 * The table PUBLIC.T_IDENTITY_PK
+	 */
+	public static org.jooq.test.h2.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table PUBLIC.T_IDENTITY
+	 */
+	public static org.jooq.test.h2.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
 	 * The table PUBLIC.T_BOOLEANS
 	 */
 	public static org.jooq.test.h2.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS;

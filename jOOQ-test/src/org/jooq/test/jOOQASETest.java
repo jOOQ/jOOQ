@@ -31,8 +31,10 @@
 
 package org.jooq.test;
 
-import static org.jooq.test.sybase.generatedclasses.Tables.V_AUTHOR;
-import static org.jooq.test.sybase.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.ase.generatedclasses.Tables.T_IDENTITY;
+import static org.jooq.test.ase.generatedclasses.Tables.T_IDENTITY_PK;
+import static org.jooq.test.ase.generatedclasses.Tables.V_AUTHOR;
+import static org.jooq.test.ase.generatedclasses.Tables.V_BOOK;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -53,6 +55,8 @@ import org.jooq.test.ase.generatedclasses.DboFactory;
 import org.jooq.test.ase.generatedclasses.tables.TAuthor;
 import org.jooq.test.ase.generatedclasses.tables.TBook;
 import org.jooq.test.ase.generatedclasses.tables.TBookStore;
+import org.jooq.test.ase.generatedclasses.tables.TIdentity;
+import org.jooq.test.ase.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.ase.generatedclasses.tables.TTriggers;
 import org.jooq.test.ase.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.ase.generatedclasses.tables.T_658Ref;
@@ -62,6 +66,8 @@ import org.jooq.test.ase.generatedclasses.tables.VLibrary;
 import org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.ase.generatedclasses.tables.records.TIdentityPkRecord;
+import org.jooq.test.ase.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.ase.generatedclasses.tables.records.T_658RefRecord;
@@ -90,6 +96,8 @@ public class jOOQASETest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
+        TIdentityRecord,
+        TIdentityPkRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -439,6 +447,36 @@ public class jOOQASETest extends jOOQAbstractTest<
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
         return TTriggers.COUNTER;
+    }
+
+    @Override
+    protected Table<TIdentityRecord> TIdentity() {
+        return T_IDENTITY;
+    }
+
+    @Override
+    protected TableField<TIdentityRecord, Integer> TIdentity_ID() {
+        return TIdentity.ID;
+    }
+
+    @Override
+    protected TableField<TIdentityRecord, Integer> TIdentity_VAL() {
+        return TIdentity.VAL;
+    }
+
+    @Override
+    protected UpdatableTable<TIdentityPkRecord> TIdentityPK() {
+        return T_IDENTITY_PK;
+    }
+
+    @Override
+    protected TableField<TIdentityPkRecord, Integer> TIdentityPK_ID() {
+        return TIdentityPk.ID;
+    }
+
+    @Override
+    protected TableField<TIdentityPkRecord, Integer> TIdentityPK_VAL() {
+        return TIdentityPk.VAL;
     }
 
     @Override

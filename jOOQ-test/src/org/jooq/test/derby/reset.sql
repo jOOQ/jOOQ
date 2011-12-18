@@ -12,6 +12,8 @@ DELETE FROM t_book/
 DELETE FROM t_author/
 DELETE FROM t_language/
 DELETE FROM t_booleans/
+DELETE FROM t_identity/
+DELETE FROM t_identity_pk/
 
 DROP SEQUENCE s_author_id RESTRICT/
 CREATE SEQUENCE s_author_id START WITH 1/

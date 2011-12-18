@@ -44,6 +44,8 @@ import static org.jooq.test.hsqldb.generatedclasses.Tables.T_ARRAYS;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.hsqldb.generatedclasses.Tables.T_IDENTITY;
+import static org.jooq.test.hsqldb.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_BOOK;
@@ -71,6 +73,8 @@ import org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_658RefRecord;
@@ -96,6 +100,8 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
+        TIdentityRecord,
+        TIdentityPkRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -449,6 +455,36 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
         return T_TRIGGERS.COUNTER;
+    }
+
+    @Override
+    protected Table<TIdentityRecord> TIdentity() {
+        return T_IDENTITY;
+    }
+
+    @Override
+    protected TableField<TIdentityRecord, Integer> TIdentity_ID() {
+        return T_IDENTITY.ID;
+    }
+
+    @Override
+    protected TableField<TIdentityRecord, Integer> TIdentity_VAL() {
+        return T_IDENTITY.VAL;
+    }
+
+    @Override
+    protected UpdatableTable<TIdentityPkRecord> TIdentityPK() {
+        return T_IDENTITY_PK;
+    }
+
+    @Override
+    protected TableField<TIdentityPkRecord, Integer> TIdentityPK_ID() {
+        return T_IDENTITY_PK.ID;
+    }
+
+    @Override
+    protected TableField<TIdentityPkRecord, Integer> TIdentityPK_VAL() {
+        return T_IDENTITY_PK.VAL;
     }
 
     @Override

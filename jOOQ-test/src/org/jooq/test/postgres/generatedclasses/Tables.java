@@ -78,6 +78,16 @@ public final class Tables {
 	public static org.jooq.test.postgres.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table public.t_identity
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
+	 * The table public.t_identity_pk
+	 */
+	public static org.jooq.test.postgres.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
 	 * The table public.t_triggers
 	 */
 	public static org.jooq.test.postgres.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS;

@@ -137,6 +137,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         TDirectoryRecord,
         TTriggersRecord,
         XUnusedRecord,
+        XUnusedRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -511,6 +513,36 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
         return T_TRIGGERS.COUNTER;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TIdentity() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentity_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentity_VAL() {
+        return null;
+    }
+
+    @Override
+    protected UpdatableTable<XUnusedRecord> TIdentityPK() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentityPK_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentityPK_VAL() {
+        return null;
     }
 
     @Override

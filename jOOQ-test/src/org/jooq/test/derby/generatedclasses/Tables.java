@@ -13,6 +13,16 @@ package org.jooq.test.derby.generatedclasses;
 public final class Tables {
 
 	/**
+	 * The table TEST.T_IDENTITY_PK
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table TEST.T_IDENTITY
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
 	 * The table TEST.T_BOOLEANS
 	 */
 	public static org.jooq.test.derby.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS;

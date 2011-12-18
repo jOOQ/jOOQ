@@ -94,6 +94,8 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
+        XUnusedRecord,
+        XUnusedRecord,
         T_658RefRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
@@ -447,6 +449,36 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
         return TTriggers.COUNTER;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TIdentity() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentity_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentity_VAL() {
+        return null;
+    }
+
+    @Override
+    protected UpdatableTable<XUnusedRecord> TIdentityPK() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentityPK_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TIdentityPK_VAL() {
+        return null;
     }
 
     @Override

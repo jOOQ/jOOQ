@@ -14,9 +14,12 @@ package org.jooq.test.sybase.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
+	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_t_identity_pk = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
+	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_t_identity = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 
 	// UNIQUE and PRIMARY KEY definitions
+	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> t_identity_pk__pk_t_identity_pk = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> t_booleans__pk_t_booleans = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> t_triggers__pk_t_triggers = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> t_725_lob_test__pk_t_725_lob_test = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.sybase.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);

@@ -2,6 +2,17 @@ DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 DROP VIEW IF EXISTS v_library/
 
+DROP ALIAS IF EXISTS f_arrays1/
+DROP ALIAS IF EXISTS f_arrays2/
+DROP ALIAS IF EXISTS f_arrays3/
+DROP ALIAS IF EXISTS f_author_exists/
+DROP ALIAS IF EXISTS f_one/
+DROP ALIAS IF EXISTS f_number/
+DROP ALIAS IF EXISTS f317/
+DROP ALIAS IF EXISTS p_create_author/
+DROP ALIAS IF EXISTS p_create_author_by_name/
+DROP ALIAS IF EXISTS f_get_one_cursor/
+
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 DROP SEQUENCE IF EXISTS s_triggers_sequence/
 
@@ -29,17 +40,22 @@ DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 DROP TABLE IF EXISTS t_877/
 DROP TABLE IF EXISTS t_booleans/
+DROP TABLE IF EXISTS t_identity/
+DROP TABLE IF EXISTS t_identity_pk/
 
-DROP ALIAS IF EXISTS f_arrays1/
-DROP ALIAS IF EXISTS f_arrays2/
-DROP ALIAS IF EXISTS f_arrays3/
-DROP ALIAS IF EXISTS f_author_exists/
-DROP ALIAS IF EXISTS f_one/
-DROP ALIAS IF EXISTS f_number/
-DROP ALIAS IF EXISTS f317/
-DROP ALIAS IF EXISTS p_create_author/
-DROP ALIAS IF EXISTS p_create_author_by_name/
-DROP ALIAS IF EXISTS f_get_one_cursor/
+CREATE TABLE t_identity_pk (
+  id INTEGER AUTO_INCREMENT,
+  val int,
+  
+  CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_identity (
+  id INTEGER AUTO_INCREMENT,
+  val int
+)
+/
 
 CREATE TABLE t_booleans (
   id int,

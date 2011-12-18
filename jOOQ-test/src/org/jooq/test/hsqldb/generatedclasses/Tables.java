@@ -103,6 +103,16 @@ public final class Tables {
 	public static org.jooq.test.hsqldb.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.hsqldb.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table PUBLIC.T_IDENTITY
+	 */
+	public static org.jooq.test.hsqldb.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.hsqldb.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
+	 * The table PUBLIC.T_IDENTITY_PK
+	 */
+	public static org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
 	 * The table PUBLIC.T_TRIGGERS
 	 */
 	public static org.jooq.test.hsqldb.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS;

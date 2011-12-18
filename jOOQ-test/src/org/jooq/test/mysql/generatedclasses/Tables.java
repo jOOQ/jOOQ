@@ -63,6 +63,11 @@ public final class Tables {
 	public static org.jooq.test.mysql.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.mysql.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table test.t_identity_pk
+	 */
+	public static org.jooq.test.mysql.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
 	 * The table test.t_triggers
 	 */
 	public static org.jooq.test.mysql.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS;

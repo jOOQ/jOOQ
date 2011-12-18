@@ -44,6 +44,7 @@ import static org.jooq.impl.Factory.vals;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -54,8 +55,8 @@ import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedSetMoreStep;
+import org.jooq.MergeNotMatchedSetMoreStep;
 import org.jooq.MergeNotMatchedValuesStep;
-import org.jooq.MergeNotMatchedWhereStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
@@ -79,8 +80,8 @@ implements
     MergeOnConditionStep<R>,
     MergeMatchedSetMoreStep<R>,
     MergeMatchedDeleteStep<R>,
-    MergeNotMatchedValuesStep<R>,
-    MergeNotMatchedWhereStep<R> {
+    MergeNotMatchedSetMoreStep<R>,
+    MergeNotMatchedValuesStep<R> {
 
     /**
      * Generated UID
@@ -219,14 +220,37 @@ implements
 
     @Override
     public final <T> MergeImpl<R> set(Field<T> field, Field<T> value) {
-        matchedUpdate.put(field, nullSafe(value));
+        if (matchedClause) {
+            matchedUpdate.put(field, nullSafe(value));
+        }
+        else if (notMatchedClause) {
+            notMatchedInsert.put(field, nullSafe(value));
+        }
+        else {
+            throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
+        }
+
         return this;
     }
 
     @Override
     public final MergeImpl<R> set(Map<? extends Field<?>, ?> map) {
-        matchedUpdate.set(map);
+        if (matchedClause) {
+            matchedUpdate.set(map);
+        }
+        else if (notMatchedClause) {
+            notMatchedInsert.set(map);
+        }
+        else {
+            throw new IllegalStateException("Cannot call where() on the current state of the MERGE statement");
+        }
+
         return this;
+    }
+
+    @Override
+    public final MergeImpl<R> whenNotMatchedThenInsert() {
+        return whenNotMatchedThenInsert(Collections.<Field<?>>emptyList());
     }
 
     @Override

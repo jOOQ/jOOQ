@@ -4434,14 +4434,17 @@ public abstract class jOOQAbstractTest<
         Field<String> f = val("Dan").as("f");
         Field<String> l = val("Brown").as("l");
 
+        // [#1000] Add a check for the alternative INSERT .. SET .. syntax
         MergeFinalStep<A> q =
         create().mergeInto(TAuthor())
                 .using(create().select(f, l))
                 .on(TAuthor_LAST_NAME().equal(l))
                 .whenMatchedThenUpdate()
                 .set(TAuthor_FIRST_NAME(), "James")
-                .whenNotMatchedThenInsert(TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
-                .values(3, f, l);
+                .whenNotMatchedThenInsert()
+                .set(TAuthor_ID(), 3)
+                .set(TAuthor_FIRST_NAME(), f)
+                .set(TAuthor_LAST_NAME(), l);
 
         q.execute();
         assertEquals(Arrays.asList("John", "Alfred", "Dan"),

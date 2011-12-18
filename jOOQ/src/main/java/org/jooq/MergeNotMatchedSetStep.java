@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * This type is used for the {@link Merge}'s DSL API.
@@ -56,28 +56,27 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
-public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R> {
+public interface MergeNotMatchedSetStep<R extends Record> {
 
     /**
-     * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
-     * <code>MERGE</code> statement.
+     * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
+     * <code>WHEN NOT MATCHED</code> clause
+     */
+    <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, T value);
+
+    /**
+     * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
+     * <code>WHEN NOT MATCHED</INSERT> clause
+     */
+    <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
+
+    /**
+     * Set multiple values for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED</code> clause.
      * <p>
-     * Unlike the {@link #whenNotMatchedThenInsert(Field...)} and
-     * {@link #whenNotMatchedThenInsert(Collection)} methods, this will give
-     * access to a MySQL-like API allowing for
-     * <code>INSERT SET a = x, b = y</code> syntax.
+     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
+     * types. Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>
      */
-    MergeNotMatchedSetStep<R> whenNotMatchedThenInsert();
-
-    /**
-     * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
-     * <code>MERGE</code> statement
-     */
-    MergeNotMatchedValuesStep<R> whenNotMatchedThenInsert(Field<?>... fields);
-
-    /**
-     * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
-     * <code>MERGE</code> statement
-     */
-    MergeNotMatchedValuesStep<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
+    MergeNotMatchedSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 }

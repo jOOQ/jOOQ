@@ -4188,6 +4188,54 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertConvert() throws Exception {
+        reset = false;
+
+        // [#1005] With the INSERT .. VALUES syntax, typesafety cannot be
+        // enforced. But the inserted values should at least be converted to the
+        // right types
+
+        // Explicit field list
+        assertEquals(1,
+        create().insertInto(TAuthor(),
+                    TAuthor_ID(),
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH(),
+                    TAuthor_YEAR_OF_BIRTH())
+                .values(
+                    "5",
+                    "Smith",
+                    0L,
+                    new BigDecimal("1980"))
+                .execute());
+
+        A author1 = create().selectFrom(TAuthor()).where(TAuthor_ID().equal(5)).fetchOne();
+        assertNotNull(author1);
+        assertEquals(37, (int) author1.getValue(TAuthor_ID()));
+        assertEquals("Smith", author1.getValue(TAuthor_LAST_NAME()));
+        assertEquals(new Date(0), author1.getValue(TAuthor_DATE_OF_BIRTH()));
+        assertEquals(1980, (int) author1.getValue(TAuthor_YEAR_OF_BIRTH()));
+
+        // Implicit field list
+        assertEquals(1,
+        create().insertInto(TAuthor())
+                .values(
+                    "37",
+                    "Erich",
+                    "Kästner",
+                    null,
+                    null,
+                    null)
+                .execute());
+
+        A author2 = create().selectFrom(TAuthor()).where(TAuthor_ID().equal(37)).fetchOne();
+        assertNotNull(author2);
+        assertEquals(37, (int) author2.getValue(TAuthor_ID()));
+        assertEquals("Erich", author2.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Kästner", author2.getValue(TAuthor_LAST_NAME()));
+    }
+
+    @Test
     public void testInsertSelect() throws Exception {
         reset = false;
 

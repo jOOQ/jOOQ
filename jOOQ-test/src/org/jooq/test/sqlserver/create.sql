@@ -2,6 +2,28 @@ DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
 
+DROP PROCEDURE p_arrays1/
+DROP PROCEDURE p_arrays2/
+DROP PROCEDURE p_arrays3/
+DROP PROCEDURE p_many_parameters/
+DROP FUNCTION f_arrays1/
+DROP FUNCTION f_arrays2/
+DROP FUNCTION f_arrays3/
+DROP PROCEDURE p_enhance_address1/
+DROP PROCEDURE p_enhance_address2/
+DROP PROCEDURE p_enhance_address3/
+DROP PROCEDURE p_unused/
+DROP PROCEDURE p_create_author/ 
+DROP PROCEDURE p_create_author_by_name/ 
+DROP PROCEDURE p_author_exists/
+DROP PROCEDURE p391/
+DROP FUNCTION f_many_parameters/
+DROP FUNCTION f_author_exists/
+DROP FUNCTION f_one/
+DROP FUNCTION f_number/
+DROP FUNCTION f317/
+DROP FUNCTION f378/
+
 DROP TRIGGER t_triggers_trigger/
 
 DROP TABLE t_triggers/
@@ -28,35 +50,22 @@ DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_booleans/
+DROP TABLE t_identity/
+DROP TABLE t_identity_pk/
 
-DROP PROCEDURE p_arrays1/
-DROP PROCEDURE p_arrays2/
-DROP PROCEDURE p_arrays3/
-DROP PROCEDURE p_many_parameters/
-DROP FUNCTION f_arrays1/
-DROP FUNCTION f_arrays2/
-DROP FUNCTION f_arrays3/
-DROP PROCEDURE p_enhance_address1/
-DROP PROCEDURE p_enhance_address2/
-DROP PROCEDURE p_enhance_address3/
-DROP PROCEDURE p_unused/
-DROP PROCEDURE p_create_author/ 
-DROP PROCEDURE p_create_author_by_name/ 
-DROP PROCEDURE p_author_exists/
-DROP PROCEDURE p391/
-DROP FUNCTION f_many_parameters/
-DROP FUNCTION f_author_exists/
-DROP FUNCTION f_one/
-DROP FUNCTION f_number/
-DROP FUNCTION f317/
-DROP FUNCTION f378/
+CREATE TABLE t_identity_pk (
+  id INTEGER IDENTITY(1,1) NOT NULL,
+  val int,
+  
+  CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
+)
+/
 
-DROP TYPE u_address_type/
-DROP TYPE u_street_type/
-DROP TYPE u_string_array/
-DROP TYPE u_number_array/
-DROP TYPE u_number_long_array/
-DROP TYPE u_date_array/
+CREATE TABLE t_identity (
+  id INTEGER IDENTITY(1,1) NOT NULL,
+  val int
+)
+/
 
 
 CREATE TABLE t_booleans (

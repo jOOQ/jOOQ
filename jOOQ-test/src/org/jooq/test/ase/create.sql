@@ -2,6 +2,16 @@ DROP VIEW v_library/
 DROP VIEW v_author/
 DROP VIEW v_book/
 
+DROP PROCEDURE p_unused/
+DROP PROCEDURE p_author_exists/
+DROP PROCEDURE p_create_author/ 
+DROP PROCEDURE p_create_author_by_name/ 
+DROP PROCEDURE p391/
+DROP FUNCTION f_author_exists/
+DROP FUNCTION f_one/
+DROP FUNCTION f_number/
+DROP FUNCTION f317/
+
 DROP TRIGGER t_triggers_trigger/
 
 DROP TABLE t_triggers/
@@ -28,16 +38,22 @@ DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_booleans/
+DROP TABLE t_identity/
+DROP TABLE t_identity_pk/
 
-DROP PROCEDURE p_unused/
-DROP PROCEDURE p_author_exists/
-DROP PROCEDURE p_create_author/ 
-DROP PROCEDURE p_create_author_by_name/ 
-DROP PROCEDURE p391/
-DROP FUNCTION f_author_exists/
-DROP FUNCTION f_one/
-DROP FUNCTION f_number/
-DROP FUNCTION f317/
+CREATE TABLE t_identity_pk (
+  id INTEGER IDENTITY NOT NULL,
+  val int,
+  
+  CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_identity (
+  id INTEGER IDENTITY NOT NULL,
+  val int
+)
+/
 
 CREATE TABLE t_booleans (
   id int,

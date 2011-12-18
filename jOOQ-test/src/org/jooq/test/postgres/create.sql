@@ -2,7 +2,33 @@ DROP VIEW IF EXISTS v_library/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
 
+DROP FUNCTION f_arrays(in_array IN integer[])/
+DROP FUNCTION f_arrays(in_array IN bigint[])/
+DROP FUNCTION f_arrays(in_array IN text[])/
+DROP FUNCTION p_arrays(in_array IN integer[], out_array OUT integer[])/
+DROP FUNCTION p_arrays(in_array IN bigint[], out_array OUT bigint[])/
+DROP FUNCTION p_arrays(in_array IN text[], out_array OUT text[])/
+DROP FUNCTION p_enhance_address1(address IN u_address_type, no OUT VARCHAR)/
+DROP FUNCTION p_enhance_address2(address OUT u_address_type)/
+DROP FUNCTION p_enhance_address3(address IN OUT u_address_type)/
+DROP FUNCTION p_unused(in1 VARCHAR, out1 OUT INTEGER, out2 IN OUT INTEGER)/
+DROP FUNCTION p_create_author()/ 
+DROP FUNCTION p_create_author_by_name(first_name VARCHAR, last_name VARCHAR)/ 
+DROP FUNCTION p_author_exists(author_name VARCHAR, result OUT INTEGER)/
+DROP FUNCTION p391(
+	i1 INTEGER, io1 IN OUT INTEGER, o1 OUT INTEGER,
+	o2 OUT INTEGER, io2 IN OUT INTEGER, i2 INTEGER)
+/
+DROP FUNCTION f_author_exists(author_name VARCHAR);/
+DROP FUNCTION f_one();/
+DROP FUNCTION f_number(n int);/
+DROP FUNCTION f317(p1 int, p2 int, p3 int, p4 int);/
+DROP FUNCTION p_get_two_cursors(books OUT refcursor, authors OUT refcursor)/
+DROP FUNCTION p_get_one_cursor(total OUT int, books OUT refcursor, book_ids in int[])/
+DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
+
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
+DROP FUNCTION p_triggers()/
 
 DROP TABLE IF EXISTS t_triggers CASCADE/
 DROP TABLE IF EXISTS t_arrays CASCADE/
@@ -30,32 +56,8 @@ DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 DROP TABLE IF EXISTS t_959/
 DROP TABLE IF EXISTS t_booleans/
-
-DROP FUNCTION p_triggers()/
-DROP FUNCTION f_arrays(in_array IN integer[])/
-DROP FUNCTION f_arrays(in_array IN bigint[])/
-DROP FUNCTION f_arrays(in_array IN text[])/
-DROP FUNCTION p_arrays(in_array IN integer[], out_array OUT integer[])/
-DROP FUNCTION p_arrays(in_array IN bigint[], out_array OUT bigint[])/
-DROP FUNCTION p_arrays(in_array IN text[], out_array OUT text[])/
-DROP FUNCTION p_enhance_address1(address IN u_address_type, no OUT VARCHAR)/
-DROP FUNCTION p_enhance_address2(address OUT u_address_type)/
-DROP FUNCTION p_enhance_address3(address IN OUT u_address_type)/
-DROP FUNCTION p_unused(in1 VARCHAR, out1 OUT INTEGER, out2 IN OUT INTEGER)/
-DROP FUNCTION p_create_author()/ 
-DROP FUNCTION p_create_author_by_name(first_name VARCHAR, last_name VARCHAR)/ 
-DROP FUNCTION p_author_exists(author_name VARCHAR, result OUT INTEGER)/
-DROP FUNCTION p391(
-	i1 INTEGER, io1 IN OUT INTEGER, o1 OUT INTEGER,
-	o2 OUT INTEGER, io2 IN OUT INTEGER, i2 INTEGER)
-/
-DROP FUNCTION f_author_exists(author_name VARCHAR);/
-DROP FUNCTION f_one();/
-DROP FUNCTION f_number(n int);/
-DROP FUNCTION f317(p1 int, p2 int, p3 int, p4 int);/
-DROP FUNCTION p_get_two_cursors(books OUT refcursor, authors OUT refcursor)/
-DROP FUNCTION p_get_one_cursor(total OUT int, books OUT refcursor, book_ids in int[])/
-DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
+DROP TABLE IF EXISTS t_identity/
+DROP TABLE IF EXISTS t_identity_pk/
 
 DROP TYPE IF EXISTS u_address_type CASCADE/
 DROP TYPE IF EXISTS u_street_type CASCADE/
@@ -88,6 +90,20 @@ CREATE TYPE u_address_type AS (
   country u_country,
   since DATE,
   code INTEGER
+)
+/
+
+CREATE TABLE t_identity_pk (
+  id serial not null,
+  val int,
+  
+  CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_identity (
+  id serial not null,
+  val int
 )
 /
 

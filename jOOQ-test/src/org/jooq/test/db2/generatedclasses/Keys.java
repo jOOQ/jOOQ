@@ -14,6 +14,8 @@ package org.jooq.test.db2.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
+	public static final org.jooq.Identity<org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = createIdentity(org.jooq.test.db2.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.db2.generatedclasses.tables.TIdentity.ID);
+	public static final org.jooq.Identity<org.jooq.test.db2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.db2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.db2.generatedclasses.tables.TIdentityPk.ID);
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.T_639NumbersTableRecord> T_639_NUMBERS_TABLE__PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.ID);
@@ -25,6 +27,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord> T_BOOK_STORE__UK_T_BOOK_STORE_NAME = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.db2.generatedclasses.tables.TBookStore.NAME);
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> T_BOOK_TO_BOOK_STORE__PK_B2BS = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, org.jooq.test.db2.generatedclasses.tables.TBookToBookStore.BOOK_ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord> T_BOOLEANS__PK_T_BOOLEANS = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.db2.generatedclasses.tables.TBooleans.ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TIdentityPkRecord> T_IDENTITY_PK__PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.db2.generatedclasses.tables.TIdentityPk.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord> T_TRIGGERS__PK_T_TRIGGERS = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.db2.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record> X_TEST_CASE_64_69__PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> X_TEST_CASE_71__PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.db2.generatedclasses.tables.XTestCase_71.ID);

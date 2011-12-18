@@ -58,6 +58,16 @@ public final class Tables {
 	public static org.jooq.test.sqlserver.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sqlserver.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table dbo.t_identity
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
+	 * The table dbo.t_identity_pk
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
 	 * The table dbo.t_triggers
 	 */
 	public static org.jooq.test.sqlserver.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS;

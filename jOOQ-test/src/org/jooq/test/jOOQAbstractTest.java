@@ -44,8 +44,10 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -212,6 +214,12 @@ public abstract class jOOQAbstractTest<
 
         // T_UNSIGNED table
         U extends TableRecord<U>,
+
+        // T_IDENTITY table
+        I extends TableRecord<I>,
+
+        // T_IDENTITY_PK table
+        IPK extends UpdatableRecord<IPK>,
 
         // Various tables related to trac ticket numbers
         T658 extends TableRecord<T658>,
@@ -564,6 +572,13 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<T, Integer> TTriggers_ID();
     protected abstract TableField<T, Integer> TTriggers_COUNTER();
 
+    protected abstract Table<I> TIdentity();
+    protected abstract TableField<I, Integer> TIdentity_ID();
+    protected abstract TableField<I, Integer> TIdentity_VAL();
+    protected abstract UpdatableTable<IPK> TIdentityPK();
+    protected abstract TableField<IPK, Integer> TIdentityPK_ID();
+    protected abstract TableField<IPK, Integer> TIdentityPK_VAL();
+
     protected abstract Field<? extends Number> FAuthorExistsField(String authorName);
     protected abstract Field<? extends Number> FOneField();
     protected abstract Field<? extends Number> FNumberField(Number n);
@@ -648,60 +663,113 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testInsertIdentity() throws Exception {
 
-        // TODO [#984] Restore this test
-        switch (getDialect()) {
-            case DB2:
-            case POSTGRES:
-            case ORACLE:
-            case SQLITE:
-            default:
-                log.info("SKIPPING", "IDENTITY tests");
-                if (true) return;
+        // Oracle and SQLite don't support identity columns
+        if (TIdentity() == null && TIdentityPK() == null) {
+            log.info("SKIPPING", "IDENTITY tests");
+            return;
         }
 
         reset = false;
 
-        create().insertInto(TBookStore(), TBookStore_NAME())
-                .values("Rösslitor")
-                .execute();
-        create().selectFrom(TBookStore()).fetch();
-        assertEquals(new BigInteger("4"), create().lastID());
+        // Identity tables with primary key
+        if (TIdentityPK() != null) {
+            testInsertIdentity0(TIdentityPK(), TIdentityPK_ID(), TIdentityPK_VAL());
+        }
 
-        create().delete(TBookStore())
-                .where(TBookStore_NAME().equal("Rösslitor"))
-                .execute();
+        // Identity tables without primary key
+        if (TIdentity() != null) {
 
-        create().insertInto(TBookStore(), TBookStore_NAME())
-                .values("Amazon")
-                .execute();
-        assertEquals(5, create().lastID().intValue());
-        assertEquals(5, create().lastID().intValue());
+            // TODO [#1003] This doesn't work for Sybase, SQL Server, Ingres, H2, Derby, ASE
+            testInsertIdentity0(TIdentity(), TIdentity_ID(), TIdentity_VAL());
+        }
+    }
 
+    /**
+     * Extracted method for very similar tests with T_IDENTITY, T_IDENTITY_PK
+     */
+    @SuppressWarnings("unchecked")
+    private <R extends TableRecord<R>> void testInsertIdentity0(Table<R> table, TableField<R, Integer> id, TableField<R, Integer> val) throws Exception {
 
-        // No new identity should be received. But unfortunately, dialects show
-        // no standard behaviour
-        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                .values(13, "Frisch")
-                .execute();
-        switch (getDialect()) {
-            case SQLITE:
-                assertEquals(new BigInteger("3"), create().lastID());
-                break;
+        // Plain insert
+        // ------------
+        assertEquals(1,
+        create().insertInto(table, val)
+                .values(10)
+                .execute());
 
-            case H2:
-            case SQLSERVER:
-                assertEquals(null, create().lastID());
-                break;
+        if (getDialect() != POSTGRES &&
+            getDialect() != DB2) {
 
-            case ASE:
-            case SYBASE:
-                assertEquals(BigInteger.ZERO, create().lastID());
-                break;
+            assertEquals(new BigInteger("1"), create().lastID());
+        }
 
-            case MYSQL:
-            default:
+        R r1 = create().selectFrom(table).fetchOne();
+
+        assertEquals(1, (int) r1.getValue(id));
+        assertEquals(10, (int) r1.getValue(val));
+
+        // INSERT .. RETURNING
+        // -------------------
+        R r2 =
+        create().insertInto(table, val)
+                .values(11)
+                .returning()
+                .fetchOne();
+
+        if (getDialect() != POSTGRES &&
+            getDialect() != DB2) {
+
+            assertEquals(new BigInteger("2"), create().lastID());
+            assertEquals(new BigInteger("2"), create().lastID());
+        }
+
+        assertEquals(2, (int) r2.getValue(id));
+        assertEquals(11, (int) r2.getValue(val));
+
+        // INSERT MULTIPLE .. RETURNING
+        // ----------------------------
+        // TODO [#832] Make this work for Sybase also
+        // TODO [#1004] Make this work for SQL Server also
+        // TODO ... and then, think about Ingres, H2 and Derby as well
+        if (getDialect() == SYBASE ||
+            getDialect() == SQLSERVER ||
+            getDialect() == INGRES ||
+            getDialect() == H2 ||
+            getDialect() == DERBY ||
+            getDialect() == ASE) {
+
+            log.info("SKIPPING", "Multi-record INSERT .. RETURNING statement");
+        }
+        else {
+            Result<R> r3 =
+            create().insertInto(table, val)
+                    .values(12)
+                    .values(13)
+                    .returning(id)
+                    .fetch();
+
+            assertEquals(2, r3.size());
+            assertNull(r3.getValue(0, val));
+            assertNull(r3.getValue(1, val));
+            assertEquals(3, (int) r3.getValue(0, id));
+            assertEquals(4, (int) r3.getValue(1, id));
+
+            // Record.storeUsing()
+            R r4 = create().newRecord(table);
+            r4.setValue(val, 20);
+            assertEquals(1, r4.storeUsing(table.getIdentity().getField()));
+
+            if (getDialect() != POSTGRES &&
+                getDialect() != DB2) {
+
                 assertEquals(new BigInteger("5"), create().lastID());
-                break;
+                assertEquals(new BigInteger("5"), create().lastID());
+            }
+
+            // TODO [#1002] Fix this
+    //        R r5 = create().fetchOne(table, id.equal(5));
+    //        assertEquals(r5, r4);
+
         }
     }
 
@@ -1187,6 +1255,16 @@ public abstract class jOOQAbstractTest<
                 tables++;
             }
 
+            // The additional T_IDENTITY table
+            if (TIdentity() != null) {
+                tables++;
+            }
+
+            // The additional T_IDENTITY_PK table
+            if (TIdentityPK() != null) {
+                tables++;
+            }
+
             // [#959] The T_959 table for enum collisions with Java keywords
             if (getDialect() == MYSQL ||
                 getDialect() == POSTGRES) {
@@ -1236,20 +1314,26 @@ public abstract class jOOQAbstractTest<
             }
         }
 
-        // Test correct source code generation for relations
-        // TODO [#984] Restore this test
-        if (false &&
-            getDialect() != ORACLE &&
-            getDialect() != SQLITE) {
+        // Test correct source code generation for identity columns
+        assertNull(TAuthor().getIdentity());
+        assertNull(TBook().getIdentity());
 
-            assertNull(TAuthor().getIdentity());
-            assertNull(TBook().getIdentity());
-            assertEquals(TBookStore(), TBookStore().getIdentity().getTable());
+        if (TIdentity() != null || TIdentityPK() != null) {
+            if (TIdentity() != null) {
+                assertEquals(TIdentity(), TIdentity().getIdentity().getTable());
+                assertEquals(TIdentity_ID(), TIdentity().getIdentity().getField());
+            }
+
+            if (TIdentityPK() != null) {
+                assertEquals(TIdentityPK(), TIdentityPK().getIdentity().getTable());
+                assertEquals(TIdentityPK_ID(), TIdentityPK().getIdentity().getField());
+            }
         }
         else {
             log.info("SKIPPING", "Identity tests");
         }
 
+        // Test correct source code generation for relations
         assertNotNull(TAuthor().getMainKey());
         assertNotNull(TAuthor().getKeys());
         assertTrue(TAuthor().getKeys().contains(TAuthor().getMainKey()));
@@ -4746,35 +4830,12 @@ public abstract class jOOQAbstractTest<
         store.setValue(TBookStore_NAME(), "Rösslitor");
         assertEquals(1, store.store());
 
-        // If IDENTITY columns are supported, then they should be fetched after insert
-        Number identity1 = new Integer(0);
-        Number identity2 = new Integer(0);
-
-        // TODO [#984] Move this test to a dedicated test method
-        if (false && TBookStore().getIdentity() != null) {
-            identity1 = store.getValue(TBookStore().getIdentity().getField());
-            assertNotNull(identity1);
-        }
-        else {
-            log.info("SKIPPING", "Identity check");
-        }
-
         store = create().fetchOne(TBookStore(), TBookStore_NAME().equal("Rösslitor"));
         assertEquals("Rösslitor", store.getValue(TBookStore_NAME()));
 
         // Updating the main unique key should result in a new record
         store.setValue(TBookStore_NAME(), "Amazon");
         assertEquals(1, store.store());
-
-        // TODO [#984] Move this test to a dedicated test method
-        if (false && TBookStore().getIdentity() != null) {
-            identity2 = store.getValue(TBookStore().getIdentity().getField());
-            assertNotNull(identity2);
-            assertEquals(identity1.intValue(), identity2.intValue() - 1);
-        }
-        else {
-            log.info("SKIPPING", "Identity check");
-        }
 
         store = create().fetchOne(TBookStore(), TBookStore_NAME().equal("Amazon"));
         assertEquals("Amazon", store.getValue(TBookStore_NAME()));

@@ -83,6 +83,16 @@ public final class Tables {
 	public static org.jooq.test.ase.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.ase.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table dbo.t_identity
+	 */
+	public static org.jooq.test.ase.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.ase.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
+	 * The table dbo.t_identity_pk
+	 */
+	public static org.jooq.test.ase.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.ase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
 	 * The table dbo.t_triggers
 	 */
 	public static org.jooq.test.ase.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.ase.generatedclasses.tables.TTriggers.T_TRIGGERS;

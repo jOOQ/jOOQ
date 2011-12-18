@@ -14,6 +14,7 @@ package org.jooq.test.mysql2.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
+	public static final org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_t_identity_pk = createIdentity(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 	public static final org.jooq.Identity<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 
 	// UNIQUE and PRIMARY KEY definitions
@@ -24,6 +25,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord> KEY_t_book_store_uk_t_book_store_name = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> KEY_t_book_to_book_store_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> KEY_t_booleans_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS.ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord> KEY_t_identity_pk_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> KEY_t_triggers_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> KEY_x_test_case_64_69_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> KEY_x_test_case_71_PRIMARY = createUniqueKey(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID);

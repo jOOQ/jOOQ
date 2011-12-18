@@ -13,6 +13,16 @@ package org.jooq.test.sybase.generatedclasses;
 public final class Tables {
 
 	/**
+	 * The table dba.t_identity_pk
+	 */
+	public static org.jooq.test.sybase.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table dba.t_identity
+	 */
+	public static org.jooq.test.sybase.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
 	 * The table dba.t_booleans
 	 */
 	public static org.jooq.test.sybase.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS;

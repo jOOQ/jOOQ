@@ -447,13 +447,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
      */
     @SuppressWarnings("unchecked")
     private final void selectReturning(Configuration configuration, Object... values) {
-        if (getInto() instanceof UpdatableTable) {
-            UpdatableTable<R> updatable = (UpdatableTable<R>) getInto();
+        if (values != null && values.length > 0) {
+            Table<R> into = getInto();
 
             // This shouldn't be null, as relevant dialects should
             // return empty generated keys ResultSet
-            if (updatable.getIdentity() != null) {
-                Field<Number> field = (Field<Number>) updatable.getIdentity().getField();
+            if (into.getIdentity() != null) {
+                Field<Number> field = (Field<Number>) into.getIdentity().getField();
                 Number[] ids = new Number[values.length];
                 for (int i = 0; i < values.length; i++) {
                     ids[i] = field.getDataType().convert(values[i]);
@@ -463,7 +463,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // additional query
                 if (returning.size() == 1 && returning.get(0).equals(field)) {
                     for (Number id : ids) {
-                        R typed = Util.newRecord(getInto(), configuration);
+                        R typed = Util.newRecord(into, configuration);
                         ((AbstractRecord) typed).setValue(field, new Value<Number>(id));
                         getReturnedRecords().add(typed);
                     }
@@ -473,9 +473,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 else {
                     returned =
                     create(configuration).select(returning)
-                                         .from(updatable)
+                                         .from(into)
                                          .where(field.in(ids))
-                                         .fetchInto(getInto());
+                                         .fetchInto(into);
                 }
             }
         }

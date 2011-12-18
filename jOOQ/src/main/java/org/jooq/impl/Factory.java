@@ -3604,6 +3604,46 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object)
+     */
+    public static <T> Field<T> value(T value) {
+        return val(value);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object, Class)
+     */
+    public static <T> Field<T> value(Object value, Class<? extends T> type) {
+        return val(value, type);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object, Field)
+     */
+    public static <T> Field<T> value(Object value, Field<T> field) {
+        return val(value, field);
+    }
+
+    /**
+     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * <code>val</code> is a reserved keyword.
+     *
+     * @see #val(Object, DataType)
+     */
+    public static <T> Field<T> value(Object value, DataType<T> type) {
+        return val(value, type);
+    }
+
+    /**
      * Get a value
      * <p>
      * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java

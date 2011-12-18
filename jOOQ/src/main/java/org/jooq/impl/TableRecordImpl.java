@@ -35,12 +35,13 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import org.jooq.ConditionProvider;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
+import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
@@ -121,7 +122,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
         }
 
         // [#814] Refresh identity and/or main unique key values
-        List<Field<?>> key = getKey();
+        // [#1002] Consider also identity columns of non-updatable records
+        Collection<Field<?>> key = getReturning();
         insert.setReturning(key);
         int result = insert.execute();
 
@@ -140,8 +142,15 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
     /**
      * Subclasses may override this method to provide an identity
      */
-    List<Field<?>> getKey() {
-        return Collections.emptyList();
+    Collection<Field<?>> getReturning() {
+        Collection<Field<?>> result = new LinkedHashSet<Field<?>>();
+
+        Identity<R, ?> identity = getTable().getIdentity();
+        if (identity != null) {
+            result.add(identity.getField());
+        }
+
+        return result;
     }
 
     @SuppressWarnings("unchecked")

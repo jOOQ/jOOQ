@@ -765,9 +765,8 @@ public abstract class jOOQAbstractTest<
             }
 
             // TODO [#1002] Fix this
-    //        R r5 = create().fetchOne(table, id.equal(5));
-    //        assertEquals(r5, r4);
-
+            R r5 = create().fetchOne(table, id.equal(5));
+            assertEquals(r5, r4);
         }
     }
 

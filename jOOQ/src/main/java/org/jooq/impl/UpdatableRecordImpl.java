@@ -35,13 +35,9 @@
  */
 package org.jooq.impl;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 import org.jooq.Field;
-import org.jooq.Identity;
 import org.jooq.Record;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
@@ -91,16 +87,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    List<Field<?>> getKey() {
-        Set<Field<?>> result = new LinkedHashSet<Field<?>>();
-
-        Identity<R, ?> identity = getTable().getIdentity();
-        if (identity != null) {
-            result.add(identity.getField());
-        }
-
+    Collection<Field<?>> getReturning() {
+        Collection<Field<?>> result = super.getReturning();
         result.addAll(getMainKey().getFields());
-        return new ArrayList<Field<?>>(result);
+        return result;
     }
 
     @Override

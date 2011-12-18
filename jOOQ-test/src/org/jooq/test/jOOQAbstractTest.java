@@ -678,8 +678,6 @@ public abstract class jOOQAbstractTest<
 
         // Identity tables without primary key
         if (TIdentity() != null) {
-
-            // TODO [#1003] This doesn't work for Sybase, SQL Server, Ingres, H2, Derby, ASE
             testInsertIdentity0(TIdentity(), TIdentity_ID(), TIdentity_VAL());
         }
     }

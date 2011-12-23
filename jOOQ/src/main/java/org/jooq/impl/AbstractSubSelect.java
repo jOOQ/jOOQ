@@ -305,8 +305,8 @@ implements
         toSQLReference0(local);
         String enclosed = local.render();
 
-        String subqueryName = "limit_" + Math.abs(enclosed.hashCode());
-        String rownumName = "rownum_" + Math.abs(enclosed.hashCode());
+        String subqueryName = "limit_" + Util.hash(enclosed);
+        String rownumName = "rownum_" + Util.hash(enclosed);
 
         context.sql("select * from (select ")
                .sql(subqueryName)
@@ -368,8 +368,8 @@ implements
         toSQLReference0(local);
         String enclosed = local.render();
 
-        String subqueryName = "limit_" + Math.abs(enclosed.hashCode());
-        String rownumName = "rownum_" + Math.abs(enclosed.hashCode());
+        String subqueryName = "limit_" + Util.hash(enclosed);
+        String rownumName = "rownum_" + Util.hash(enclosed);
 
         context.sql("select * from (select ")
                .sql(subqueryName)

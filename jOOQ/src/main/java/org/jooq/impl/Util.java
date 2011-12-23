@@ -628,4 +628,12 @@ final class Util {
     static QueryPartInternal internal(QueryPart part) {
         return part.internalAPI(QueryPartInternal.class);
     }
+
+    /**
+     * Return a non-negative hash code for a {@link QueryPart}, taking into
+     * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
+     */
+    static int hash(Object object) {
+        return 0x7FFFFFF & object.hashCode();
+    }
 }

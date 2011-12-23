@@ -322,7 +322,7 @@ implements
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
-                    int hash = Math.abs(using.hashCode());
+                    int hash = Util.hash(using);
 
                     context.sql(" as ")
                            .sql("dummy_")
@@ -335,7 +335,7 @@ implements
                         // Some fields are unnamed
                         // [#579] Correct this
                         String name = StringUtils.isBlank(field.getName())
-                            ? "dummy_" + hash + "_" + Math.abs(field.hashCode())
+                            ? "dummy_" + hash + "_" + Util.hash(field)
                             : field.getName();
 
                         context.sql(separator).literal(name);

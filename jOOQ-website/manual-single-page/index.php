@@ -111,6 +111,9 @@ function printContent() {
 <a title="ResultQuery and various ways of fetching data" href="#ResultQuery">ResultQuery and various ways of fetching data</a>
 </li>
 <li>
+<a title="Bind values" href="#BindValues">Bind values</a>
+</li>
+<li>
 <a title="QueryParts and the global architecture" href="#QueryPart">QueryParts and the global architecture</a>
 </li>
 <li>
@@ -1096,8 +1099,8 @@ d.execute();</pre>
 								The point of the standard MERGE statement is to take a TARGET table, and
 								merge (INSERT, UPDATE) data from a SOURCE table into it. DB2, Oracle,
 								SQL Server and Sybase also allow for DELETING some data and for adding
-								many additional clauses. Those non-standard extensions are currently
-								not supported. Here is an example:
+								many additional clauses. With jOOQ 2.0.1, only Oracle's MERGE extensions are supported. 
+								Here is an example:
 							</p>
 							
 							<table cellspacing="0" cellpadding="0" width="100%">
@@ -1151,82 +1154,204 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 							sort of result.
 						</p>
 							<h2>The ResultQuery provides many convenience methods</h2>
-<pre class="prettyprint lang-java">public interface ResultQuery&lt;R extends Record&gt; {
+							<p>These methods allow for fetching a jOOQ Result or parts of it.</p>
+							
+<pre class="prettyprint lang-java">// Fetch the whole result
+Result&lt;R&gt; fetch();
 
-  // These methods allow for fetching a jOOQ Result
-  // or parts of it.
-  // ----------------------------------------------
+// Fetch a single field from the result
+&lt;T&gt; List&lt;T&gt; fetch(Field&lt;T&gt; field);
+    List&lt;?&gt; fetch(int fieldIndex);
+&lt;T&gt; List&lt;T&gt; fetch(int fieldIndex, Class&lt;? extends T&gt; type);
+    List&lt;?&gt; fetch(String fieldName);
+&lt;T&gt; List&lt;T&gt; fetch(String fieldName, Class&lt;? extends T&gt; type);
 
-  // Fetch the whole result
-  Result&lt;R&gt; fetch();
+// Fetch the first Record
+R fetchAny();
 
-  // Fetch a single field from the result
-  &lt;T&gt; List&lt;T&gt; fetch(Field&lt;T&gt; field);
-      List&lt;?&gt; fetch(int fieldIndex);
-      List&lt;?&gt; fetch(String fieldName);
+// Fetch exactly one Record
+R fetchOne();
 
-  // Fetch the first Record
-  R fetchAny();
+// Fetch a single field of exactly one Record
+&lt;T&gt; T  fetchOne(Field&lt;T&gt; field);
+Object fetchOne(int fieldIndex);
+&lt;T&gt; T  fetchOne(int fieldIndex, Class&lt;? extends T&gt; type);
+Object fetchOne(String fieldName);
+&lt;T&gt; T  fetchOne(String fieldName, Class&lt;? extends T&gt; type);</pre>
 
-  // Fetch exactly one Record
-  R fetchOne();
+							<p>These methods transform the result into another form, if org.jooq.Result is not optimal</p>
+							
+<pre class="prettyprint lang-java">// Fetch the resulting records as Maps
+List&lt;Map&lt;String, Object&gt;&gt; fetchMaps();
+     Map&lt;String, Object&gt;  fetchOneMap();
 
-  // Fetch a single field of exactly one Record
-  &lt;T&gt; T  fetchOne(Field&lt;T&gt; field);
-  Object fetchOne(int fieldIndex);
-  Object fetchOne(String fieldName);
+// Fetch the result as a Map
+&lt;K&gt;    Map&lt;K, R&gt; fetchMap(Field&lt;K&gt; key);
+&lt;K, V&gt; Map&lt;K, V&gt; fetchMap(Field&lt;K&gt; key, Field&lt;V&gt; value);
 
-  // These methods transform the result into another
-  // form, if org.jooq.Result is not optimal
-  // -----------------------------------------------
+// Fetch the resulting records as arrays
+Object[][] fetchArrays();
+Object[]   fetchOneArray();
 
-  // Fetch the resulting records as Maps
-  List&lt;Map&lt;String, Object&gt;&gt; fetchMaps();
-  Map&lt;String, Object&gt; fetchOneMap();
+// Fetch a single field as an array
+&lt;T&gt;  T[] fetchArray(Field&lt;T&gt; field);
+Object[] fetchArray(int fieldIndex);
+&lt;T&gt;  T[] fetchArray(int fieldIndex, Class&lt;? extends T&gt; type);
+Object[] fetchArray(String fieldName);
+&lt;T&gt;  T[] fetchArray(String fieldName, Class&lt;? extends T&gt; type);</pre>
 
-  // Fetch the result as a Map
-  &lt;K&gt;    Map&lt;K, R&gt; fetchMap(Field&lt;K&gt; key);
-  &lt;K, V&gt; Map&lt;K, V&gt; fetchMap(Field&lt;K&gt; key, Field&lt;V&gt; value);
+							<p>These methods transform the result into a user-defined form, if org.jooq.Result is not optimal</p>
 
-  // Fetch the resulting records as arrays
-  Object[][] fetchArrays();
-  Object[] fetchOneArray();
+<pre class="prettyprint lang-java">// Fetch the resulting records into a custom POJO
+// type, which may or may not be JPA-annotated
+&lt;E&gt; List&lt;E&gt; fetchInto(Class&lt;? extends E&gt; type);
 
-  // Fetch a single field as an array
-  &lt;T&gt; T[] fetchArray(Field&lt;T&gt; field);
-  Object[] fetchArray(int fieldIndex);
-  Object[] fetchArray(String fieldName);
+// Fetch the resulting records into a custom
+// record handler, similar to how Spring JdbcTemplate's
+// RowMapper or the Ollin Framework works.
+&lt;H extends RecordHandler&lt;R&gt;&gt; H fetchInto(H handler);
 
-  // These methods transform the result into a user-
-  // defined form, if org.jooq.Result is not optimal
-  // -----------------------------------------------
+// These change the behaviour of fetching itself,
+// especially, when not all data should be
+// fetched at once
+// ----------------------------------------------
 
-  // Fetch the resulting records into a custom POJO
-  // type, which may or may not be JPA-annotated
-  &lt;E&gt; List&lt;E&gt; fetchInto(Class&lt;? extends E&gt; type);
+// Fetch a Cursor for lazy iteration
+Cursor&lt;R&gt; fetchLazy();
 
-  // Fetch the resulting records into a custom
-  // record handler, similar to how Spring JdbcTemplate's
-  // RowMapper or the Ollin Framework works.
-  &lt;H extends RecordHandler&lt;R&gt;&gt; H fetchInto(H handler);
+// Fetch data asynchronously and let client code
+// decide, when the data must be available.
+// This makes use of the java.util.concurrent API,
+// Similar to how Avaj&eacute; Ebean works.
+FutureResult&lt;R&gt; fetchLater();
+FutureResult&lt;R&gt; fetchLater(ExecutorService executor);</pre>
+						<h1 id="BindValues">
+<a name="BindValues"></a>1.8. Bind values</h1><p>
+							Variable binding has a great impact on how you design your SQL queries.
+							It will influence your SQL queries' security aspect as well as execution speed.
+						</p>
+							<h2>Bind values</h2>
+							<p>
+								Bind values are used in SQL / JDBC for various reasons. Among the most
+								obvious ones are:
+							</p>
+							<ul>
+								
+<li>
+									Protection against SQL injection. Instead of inlining values
+									possibly originating from user input, you bind those values to
+									your prepared statement and let the JDBC driver / database take
+									care of handling security aspects.
+								</li>
+								
+<li>
+									Increased speed. Advanced databases such as Oracle can keep
+									execution plans of similar queries in a dedicated cache to prevent
+									hard-parsing your query again and again. In many cases, the actual
+									value of a bind variable does not influence the execution plan, hence
+									it can be reused. Preparing a statement will thus be faster
+								</li>
+								
+<li>
+									On a JDBC level, you can also reuse the SQL string and prepared statement
+									object instead of constructing it again, as you can bind new values to
+									the prepared statement. This is currently not supported by jOOQ, though
+								</li>
+							
+</ul>
+							
+							<h3>Ways to introduce bind values with jOOQ</h3>
+							<p>
+								Bind values are omni-present in jOOQ. Whenever you create a condition,
+								you're actually also adding a bind value:
+							</p>
+<pre class="prettyprint lang-java">// In jOOQ, "Poe" will be the bind value bound to the condition
+LAST_NAME.equal("Poe");</pre>
 
-  // These change the behaviour of fetching itself,
-  // especially, when not all data should be
-  // fetched at once
-  // ----------------------------------------------
+							
+							<p>
+								The above notation is actually convenient way to explicitly create
+								a bind value for "Poe". You could also write this, instead:
+							</p>
+<pre class="prettyprint lang-java">// The Factory allows for explicitly creating bind values
+LAST_NAME.equal(Factory.val("Poe"));
 
-  // Fetch a Cursor for lazy iteration
-  Cursor&lt;R&gt; fetchLazy();
+// Or, when static importing Factory.val:
+LAST_NAME.equal(val("Poe"))</pre>							
+							
+							<p>
+								Once created, bind values are part of the query's syntax tree (see
+								<a href="#QueryPart" title="jOOQ Manual reference: QueryParts and the global architecture">the manual's section about jOOQ's architecture</a>
+							    for more information about jOOQ's internals),
+								and cannot be modified directly anymore. If you wish to reuse a query and
+								modify bind values between subsequent query executions, you can access them again
+								through the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface:
+							</p>
+							
+<pre class="prettyprint lang-java">// Access the first bind value from a query. Indexes are counted from 1, just as with JDBC
+Query query = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
+Param&lt;?&gt; param = query.getParam("1");
 
-  // Fetch data asynchronously and let client code
-  // decide, when the data must be available.
-  // This makes use of the java.util.concurrent API,
-  // Similar to how Avaj&eacute; Ebean works.
-  FutureResult&lt;R&gt; fetchLater();
-  FutureResult&lt;R&gt; fetchLater(ExecutorService executor);
+// You could now modify the Query's underlying bind value:
+if ("Poe".equal(param.getValue())) {
+    param.setConverted("Orwell");
 }</pre>
+
+							<p>
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Param.java" title="Internal API reference: org.jooq.Param">org.jooq.Param</a> type can also be named explicitly
+								using the Factory's param() methods:
+							</p>
+<pre class="prettyprint lang-java">// Create a query with a named parameter. You can then use that name for accessing the parameter again
+Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+Param&lt;?&gt; param1 = query.getParam("lastName");
+
+// Or, keep a reference to the typed parameter in order not to lose the &lt;T&gt; type information:
+Param&lt;String&gt; param2 = param("lastName", "Poe");
+Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param2));
+
+// You can now change the bind value directly on the Param reference:
+param2.setValue("Orwell");
+</pre>
+
+							<p>
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface also allows for
+								setting new bind values directly, without accessing the Param type:
+							</p>
+							
+<pre class="prettyprint lang-java">Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
+query1.bind(1, "Orwell");
+
+// Or, with named parameters
+Query query2 = create.select().from(T_AUTHOR).where(LAST_NAME.equal(param("lastName", "Poe")));
+query2.bind("lastName", "Orwell");</pre>
+
+							<p>
+								NOTE: Should you wish to use jOOQ only as a query builder and execute
+								queries with another tool, such as Spring Data instead, you can also
+								use the Factory's renderNamedParams() method, to actually render named
+								parameter names in generated SQL:
+							</p>
+							
+							<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">-- The named bind variable can be rendered
+
+SELECT *
+FROM T_AUTHOR
+WHERE LAST_NAME = :lastName
+</pre>
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.renderNamedParams(
+    create.select()
+          .from(T_AUTHOR)
+          .where(LAST_NAME.equal(
+                 param("lastName", "Poe"))));</pre>
+</td>
+</tr>
+</table>
 						<h1 id="QueryPart">
-<a name="QueryPart"></a>1.8. QueryParts and the global architecture</h1><p>When constructing Query objects in jOOQ, everything is
+<a name="QueryPart"></a>1.9. QueryParts and the global architecture</h1><p>When constructing Query objects in jOOQ, everything is
 							considered a QueryPart. The purpose of this quickly becomes clear when
 							checking out the QueryPart API essentials</p>
 							<h2>Everything is a QueryPart</h2>
@@ -1306,7 +1431,7 @@ public final void toSQL(RenderContext context) {
 </pre>
 							<p>For more complex examples, please refer to the codebase, directly</p>
 						<h1 id="Serializability">
-<a name="Serializability"></a>1.9. Serializability of QueryParts and Results</h1><p>Most of the jOOQ API implements the Serializable interface.
+<a name="Serializability"></a>1.10. Serializability of QueryParts and Results</h1><p>Most of the jOOQ API implements the Serializable interface.
 							This helps storing queries and partial queries in files, transferring
 							queries or result data over TCP/IP, etc. </p>
 							<h2>Attaching QueryParts</h2>
@@ -1357,7 +1482,7 @@ ConfigurationRegistry.setProvider(provider);</pre>
 							
 </ul>
 						<h1 id="Extend">
-<a name="Extend"></a>1.10. Extend jOOQ with custom types</h1><p>Maybe jOOQ is missing functionality that you would like to see,
+<a name="Extend"></a>1.11. Extend jOOQ with custom types</h1><p>Maybe jOOQ is missing functionality that you would like to see,
 							or you can't wait for the next release... In this case, you can extend
 							any of the following open jOOQ implementation classes</p>
 							<h2>Write your own QueryPart implementations</h2>
@@ -1497,6 +1622,7 @@ generator.database.input-schema=[your database schema / owner / name]
 
 #All elements that are generated from your schema (several Java regular expressions, separated by comma)
 #Watch out for case-sensitivity. Depending on your database, this might be important!
+#You can create case-insensitive regular expressions using this syntax: (?i:expr)
 generator.database.includes=.*
 
 #All elements that are excluded from your schema (several Java regular expressions, separated by comma). Excludes match before includes

@@ -194,7 +194,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        return retainAll(c);
+        return wrappedList.retainAll(c);
     }
 
     @Override

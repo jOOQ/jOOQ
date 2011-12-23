@@ -23,7 +23,7 @@ public enum BooleanTrueFalseLc implements org.jooq.EnumType {
 
 	@Override
 	public java.lang.String getName() {
-		return "BOOLEAN_TRUE_FALSE_LC";
+		return null;
 	}
 
 	@Override

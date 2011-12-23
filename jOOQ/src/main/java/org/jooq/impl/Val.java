@@ -255,8 +255,12 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // ... and also for enum types
             else if (EnumType.class.isAssignableFrom(type)) {
                 context.sql(getBindVariable(context));
-                context.sql("::");
-                context.literal(((EnumType) val).getName());
+
+                // [#968] Don't cast "synthetic" enum types
+                if (!StringUtils.isBlank(((EnumType) val).getName())) {
+                    context.sql("::");
+                    context.literal(((EnumType) val).getName());
+                }
             }
 
             else {

@@ -117,6 +117,9 @@ function printContent() {
 <a title="ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a>
 </li>
 <li>
+<a title="Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">Bind values</a>
+</li>
+<li>
 <a title="QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a>
 </li>
 <li>

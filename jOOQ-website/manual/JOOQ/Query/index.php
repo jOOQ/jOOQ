@@ -387,8 +387,8 @@ d.execute();</pre>
 								The point of the standard MERGE statement is to take a TARGET table, and
 								merge (INSERT, UPDATE) data from a SOURCE table into it. DB2, Oracle,
 								SQL Server and Sybase also allow for DELETING some data and for adding
-								many additional clauses. Those non-standard extensions are currently
-								not supported. Here is an example:
+								many additional clauses. With jOOQ 2.0.1, only Oracle's MERGE extensions are supported. 
+								Here is an example:
 							</p>
 							
 							<table cellspacing="0" cellpadding="0" width="100%">

@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
 </tr>
 </table>
 							<h2>Everything is a QueryPart</h2>
@@ -100,7 +100,7 @@ public final void toSQL(RenderContext context) {
 							<p>For more complex examples, please refer to the codebase, directly</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
 </tr>
 </table>
 <?php 

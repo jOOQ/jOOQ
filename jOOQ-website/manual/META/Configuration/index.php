@@ -94,6 +94,7 @@ generator.database.input-schema=[your database schema / owner / name]
 
 #All elements that are generated from your schema (several Java regular expressions, separated by comma)
 #Watch out for case-sensitivity. Depending on your database, this might be important!
+#You can create case-insensitive regular expressions using this syntax: (?i:expr)
 generator.database.includes=.*
 
 #All elements that are excluded from your schema (several Java regular expressions, separated by comma). Excludes match before includes

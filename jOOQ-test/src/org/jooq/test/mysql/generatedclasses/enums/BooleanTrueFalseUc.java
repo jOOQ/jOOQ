@@ -23,7 +23,7 @@ public enum BooleanTrueFalseUc implements org.jooq.EnumType {
 
 	@Override
 	public java.lang.String getName() {
-		return "BOOLEAN_TRUE_FALSE_UC";
+		return null;
 	}
 
 	@Override

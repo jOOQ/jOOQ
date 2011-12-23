@@ -48,4 +48,10 @@ public interface EnumDefinition extends Definition {
      * @return The literals defined in this enum
      */
     List<String> getLiterals();
+
+    /**
+     * @return Whether this enum type is "synthetic", i.e. not defined in the
+     *         database, but in code generation configurations.
+     */
+    boolean isSynthetic();
 }

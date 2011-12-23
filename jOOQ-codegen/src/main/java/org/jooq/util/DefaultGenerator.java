@@ -1275,7 +1275,14 @@ public class DefaultGenerator implements Generator {
                     out.println();
                     out.println("\t@Override");
                     out.println("\tpublic java.lang.String getName() {");
-                    out.println("\t\treturn \"" + e.getName() + "\";");
+
+                    if (e.isSynthetic()) {
+                        out.println("\t\treturn null;");
+                    }
+                    else {
+                        out.println("\t\treturn \"" + e.getName() + "\";");
+                    }
+
                     out.println("\t}");
                     out.println();
                     out.println("\t@Override");

@@ -36,7 +36,13 @@
 package org.jooq;
 
 /**
- * A SQL enum type
+ * A SQL enum type. This can be any of the following:
+ * <ul>
+ * <li>In {@link SQLDialect#MYSQL}, this can be a column-scope enum type</li>
+ * <li>In {@link SQLDialect#POSTGRES}, this can be a schema-scope enum type</li>
+ * <li>In all other dialects, this can be an enum type as defined in the code
+ * generation configuration [#968]</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
@@ -48,7 +54,8 @@ public interface EnumType {
     String getLiteral();
 
     /**
-     * The type name as registered in the database, if applicable
+     * The type name as registered in the database, if applicable (Postgres
+     * schema-scope enum type only). Otherwise, this returns <code>null</code>
      */
     String getName();
 }

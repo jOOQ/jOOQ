@@ -23,7 +23,7 @@ public enum Boolean_10 implements org.jooq.EnumType {
 
 	@Override
 	public java.lang.String getName() {
-		return "BOOLEAN_10";
+		return null;
 	}
 
 	@Override

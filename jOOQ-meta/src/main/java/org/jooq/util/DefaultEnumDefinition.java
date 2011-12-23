@@ -42,11 +42,17 @@ import java.util.List;
 public class DefaultEnumDefinition extends AbstractDefinition implements EnumDefinition {
 
     private final List<String> literals;
+    private final boolean isSynthetic;
 
     public DefaultEnumDefinition(Database database, String name, String comment) {
+        this(database, name, comment, false);
+    }
+
+    public DefaultEnumDefinition(Database database, String name, String comment, boolean isSynthetic) {
         super(database, name, comment);
 
-        literals = new ArrayList<String>();
+        this.literals = new ArrayList<String>();
+        this.isSynthetic = isSynthetic;
     }
 
     public void addLiteral(String literal) {
@@ -60,5 +66,10 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
     @Override
     public List<String> getLiterals() {
         return literals;
+    }
+
+    @Override
+    public boolean isSynthetic() {
+        return isSynthetic;
     }
 }

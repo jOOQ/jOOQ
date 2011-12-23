@@ -275,7 +275,7 @@ public abstract class AbstractDatabase implements Database {
         for (String property : properties.stringPropertyNames()) {
             if (property.startsWith("generator.database.enum-type.")) {
                 String name = property.replace("generator.database.enum-type.", "");
-                DefaultEnumDefinition e = new DefaultEnumDefinition(this, name, null);
+                DefaultEnumDefinition e = new DefaultEnumDefinition(this, name, null, true);
 
                 String literals = properties.getProperty(property);
 

@@ -23,7 +23,7 @@ public enum BooleanYnUc implements org.jooq.EnumType {
 
 	@Override
 	public java.lang.String getName() {
-		return "BOOLEAN_YN_UC";
+		return null;
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public enum BooleanYesNoLc implements org.jooq.EnumType {
 
 	@Override
 	public java.lang.String getName() {
-		return "BOOLEAN_YES_NO_LC";
+		return null;
 	}
 
 	@Override

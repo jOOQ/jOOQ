@@ -54,6 +54,7 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;
+import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder
@@ -109,7 +110,7 @@ class InsertImpl<R extends Record>
 
     @Override
     public final InsertImpl<R> values(Object... values) {
-        return values0(vals(values));
+        return values0(vals(convert(values)));
     }
 
     @Override
@@ -119,11 +120,52 @@ class InsertImpl<R extends Record>
 
     @Override
     public final InsertImpl<R> values(Collection<?> values) {
-        return values0(vals(values.toArray()));
+        return values0(vals(convert(values.toArray())));
+    }
+
+    /**
+     * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
+     * values as specified by the <code>INTO</code> clause's column list.
+     */
+    final Object[] convert(Object[] values) {
+        if (values != null) {
+            Object[] result = new Object[values.length];
+
+            for (int i = 0; i < values.length; i++) {
+
+                // TODO [#1008] Should fields be cast? Check this with
+                // appropriate integration tests
+                if (values[i] instanceof Field<?>) {
+                    result[i] = values[i];
+                }
+                else {
+                    result[i] = Convert.convert(values[i], getFields().get(i).getType());
+                }
+            }
+
+            return result;
+        }
+        else {
+            return null;
+        }
     }
 
     @SuppressWarnings("unchecked")
     private final InsertImpl<R> values0(List<Field<?>> values) {
+        if (getFields().size() != values.size()) {
+            throw new IllegalArgumentException("The number of values must match the number of fields");
+        }
+
+        getDelegate().newRecord();
+        for (int i = 0; i < getFields().size(); i++) {
+            // javac has trouble when inferring Object for T. Use Void instead
+            getDelegate().addValue((Field<Void>) getFields().get(i), (Field<Void>) values.get(i));
+        }
+
+        return this;
+    }
+
+    private final List<Field<?>> getFields() {
 
         // [#885] If this insert is called with an implicit field name set, take
         // the fields from the underlying table.
@@ -131,17 +173,7 @@ class InsertImpl<R extends Record>
             fields.addAll(into.getFields());
         }
 
-        if (fields.size() != values.size()) {
-            throw new IllegalArgumentException("The number of values must match the number of fields");
-        }
-
-        getDelegate().newRecord();
-        for (int i = 0; i < fields.size(); i++) {
-            // javac has trouble when inferring Object for T. Use Void instead
-            getDelegate().addValue((Field<Void>) fields.get(i), (Field<Void>) values.get(i));
-        }
-
-        return this;
+        return fields;
     }
 
     @Override

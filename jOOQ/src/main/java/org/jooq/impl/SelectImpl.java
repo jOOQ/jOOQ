@@ -104,7 +104,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     /**
      * The step that is currently receiving new conditions
      */
-    private transient ConditionStep         conditionStep    = ConditionStep.WHERE;
+    private transient ConditionStep         conditionStep;
 
     /**
      * The limit that has been added in a limit(int).offset(int) construct
@@ -295,6 +295,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl connectBy(Condition condition) {
+        conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectBy(condition);
         return this;
     }
@@ -311,6 +312,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
 
     @Override
     public final SelectImpl connectByNoCycle(Condition condition) {
+        conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectByNoCycle(condition);
         return this;
     }

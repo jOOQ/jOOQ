@@ -321,12 +321,12 @@ public final class Convert {
 
             // Date types can be converted among each other
             else if (java.util.Date.class.isAssignableFrom(fromClass)) {
-                return (T) toDate(((java.util.Date) from).getTime(), toClass);
+                return toDate(((java.util.Date) from).getTime(), toClass);
             }
 
             // Long may also be converted into a date type
             else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
-                return (T) toDate((Long) from, toClass);
+                return toDate((Long) from, toClass);
             }
         }
 
@@ -336,23 +336,24 @@ public final class Convert {
     /**
      * Convert a long timestamp to any date type
      */
-    private static Object toDate(long time, Class<?> toClass) {
+    @SuppressWarnings("unchecked")
+    private static <T> T toDate(long time, Class<T> toClass) {
         if (toClass == Date.class) {
-            return new Date(time);
+            return (T) new Date(time);
         }
         else if (toClass == Time.class) {
-            return new Time(time);
+            return (T) new Time(time);
         }
         else if (toClass == Timestamp.class) {
-            return new Timestamp(time);
+            return (T) new Timestamp(time);
         }
         else if (toClass == java.util.Date.class) {
-            return new java.util.Date(time);
+            return (T) new java.util.Date(time);
         }
         else if (toClass == Calendar.class) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(time);
-            return calendar;
+            return (T) calendar;
         }
 
         throw fail(time, toClass);

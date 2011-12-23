@@ -248,3 +248,7 @@ div.screenshot {
     word-wrap: break-word;
 	text-align: center;
 }
+
+.mono {
+    font-family: monospace;
+}

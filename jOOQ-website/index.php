@@ -68,20 +68,20 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
 	</tr>
 </table>
       
-      <h2>What is jOOQ?</h2>
-      <p>jOOQ stands for Java Object Oriented Querying. It combines these essential features:</p>
+    <h2>What is jOOQ?</h2>
+    <p>jOOQ stands for Java Object Oriented Querying. It combines these essential features:</p>
       
-      <ul>
-      	<li>Code Generation: jOOQ generates a simple Java representation of your database schema. Every table, view, stored procedure, enum, UDT is a class.</li>
-		<li>Active records: jOOQ implements an easy-to-use active record pattern. It is NOT an OR-mapper, but provides a 1:1 mapping between tables/views and classes. Between columns and members.</li>
-        <li>Typesafe SQL: jOOQ allows for writing compile-time typesafe querying using its built-in fluent API.</li>
-        <li>SQL standard: jOOQ supports all standard SQL language features including the more complex UNION's, nested SELECTs, joins, aliasing</li>
-      	<li>Vendor-specific feature support: jOOQ encourages the use of vendor-specific extensions such as stored procedures, UDT's and ARRAY's, recursive queries, and many more.</li>
-      </ul>
+    <ul>
+    <li>Code Generation: jOOQ generates a simple Java representation of your database schema. Every table, view, stored procedure, enum, UDT is a class.</li>
+	<li>Active records: jOOQ implements an easy-to-use active record pattern. It is NOT an OR-mapper, but provides a 1:1 mapping between tables/views and classes. Between columns and members.</li>
+    <li>Typesafe SQL: jOOQ allows for writing compile-time typesafe querying using its built-in fluent API.</li>
+    <li>SQL standard: jOOQ supports all standard SQL language features including the more complex UNION's, nested SELECTs, joins, aliasing</li>
+    <li>Vendor-specific feature support: jOOQ encourages the use of vendor-specific extensions such as stored procedures, UDT's and ARRAY's, recursive queries, and many more.</li>
+    </ul>
       
-      <h2>How does jOOQ help you?</h2>
-      <ul>
-          <li>Your database always comes FIRST! That's where the schema is, not in your Java code or some XML mapping file.</li>
+    <h2>How does jOOQ help you?</h2>
+    <ul>
+    <li>Your database always comes FIRST! That's where the schema is, not in your Java code or some XML mapping file.</li>
     <li>Your schema is generated in Java. You can use auto-completion in your IDE!</li>
     <li>Your "value objects" or "data transfer objects" are generated too. This keeps things DRY</li>
     <li>Your Java code won't compile anymore when you modify your schema. That means less runtime errors.</li>
@@ -90,9 +90,9 @@ create.select(FIRST_NAME, LAST_NAME, create.count())
     <li>You won't have syntax errors in your query.</li>
     <li>You won't forget to bind variables correctly. No SQL injection, either.</li>
     <li>You can forget about JDBC's verbosity (especially useful when dealing with UDTs, ARRAYs and stored procedures). </li>
-</ul>
-<h3>Or in short:</h3>
-<ul>
+    </ul>
+    <h3>Or in short:</h3>
+    <ul>
     <li>You can be productive again!</li>
     </ul>
     

@@ -9,6 +9,97 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.0.1 - December 23, 2011
+=================================================================
+
+This is a maintenance release for jOOQ 2.0. The main improvements
+include
+
+- Better integration for using jOOQ with Spring Data. This
+  includes support for named parameters, as well as allowing to
+  change bind values on previously constructed Query objects
+- The MERGE statement has been enhanced for better integration
+  with Oracle.
+- jOOQ is now ready to use with Scala / Groovy
+
+For more information about using jOOQ with Scala, see this blog
+post:
+http://lukaseder.wordpress.com/2011/12/11/the-ultimate-sql-dsl-jooq-in-scala/
+
+There is now also experimental support for a custom type mapping.
+This mapping allows to rewrite data types at code generation time
+as well as to specify custom enum data types (e.g. boolean Y/N).
+Not all integration tests run smoothly for custom data types,
+hence, this feature is not yet fully supported.
+
+Features and improvements
+-------------------------
+#691  - Add support for Oracle CURSOR REF IN / INOUT parameters
+#677  - Add type-mapping configuration, enforcing types for
+        columns
+#947  - Add custom type mapping support (experimental)
+#968  - Allow for custom enum types, configured in the code
+        generator (experimental)
+#974  - Add Schema.getTable(String), getSequence(String),
+        getUDT(String) for better runtime Schema meta-navigation
+#975  - Add Sequence.getName(), getSchema(), getDataType()
+#980  - Add support for named parameters, to better interact with
+        Spring
+#991  - Add Query.bind(String, Object) and bind(int, Object) to
+        easily modify existing bind values
+#992  - Document thrown DataTypeException in Convert methods
+#998  - Enhance MERGE statement for Oracle extensions: 
+        WHEN MATCHED THEN UPDATE .. WHERE .. DELETE WHERE ..
+        WHEN NOT MATCHED THEN INSERT .. WHERE .. 
+#1000 - Add support for MySQL's INSERT INTO .. SET .. syntax in
+        MERGE statement's WHEN NOT MATCHED THEN INSERT clause
+
+API changes (backwards-compatible)
+----------------------------------
+#981  - Cannot insertInto(table("my_table")), as plain SQL tables
+        return Table<Record>, not Table<TableRecord>. Relax
+        bound on R
+#988  - Change Factory.field(String) to return Field<Object>
+        instead of Field<?>
+#999  - Make MERGE's WHEN MATCHED .. and WHEN NOT MATCHED ..
+        clauses optional
+#1001 - Identity.getField() should return TableField<R, T>
+        instead of Field<T>
+#1006 - Add Factory.value(...) as a synonym for Factory.val(...)
+        for increased Scala / Groovy compatibility
+
+Bug fixes
+---------
+#973  - EnumType renders name() instead of getLiteral() in
+        formatXXX() methods
+#977  - EnumType renders name() instead of getLiteral() in
+        Convert.convert() method
+#979  - Record.from() sets all changed flags to true. That's not
+        necessarily correct in the event of storing the record
+        back to the DB
+#985  - AbstractRecord.equals() does not correctly compare
+        arrays. Compare them using Arrays.asList()
+#986  - Postgres / DB2 / Sybase ASE foreign-key namespace is
+        unique-per-table. jOOQ forces all foreign keys from all
+        tables into the same namespace
+#990  - Problems when encoding arbitrary byte[] as String(byte[])
+        in inlined SQL. This can cause issues when DEBUG-level
+        logging is activated
+#995  - Routines don't respect SchemaMapping - Github issue #8
+#1002 - TableRecord.storeUsing() doesn't update IDENTITY column
+        values, if the column is not part of the main unique key
+#1003 - Sybase / SQL Server / MySQL / Ingres / H2 / Derby's
+        INSERT .. RETURNING simulation returns null if a table
+        has an IDENTITY column, but no primary/unique key
+#1005 - The INSERT INTO .. VALUES .. syntax may cause type-safety
+        issues in some databases. VALUES should be converted
+        before binding
+
+Test cases
+----------
+#984  - Detach IDENTITY column tests from UNIQUE KEY tests,
+        create a dedicated test suite instead
+
 Version 2.0.0 - November 25, 2011
 =================================================================
 This release is a fresh start in many areas of jOOQ, adressing

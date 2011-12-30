@@ -67,6 +67,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
+            case SQLITE:
                 return argument.cast(BigDecimal.class).mul(literal(180)).div(pi());
 
             default:

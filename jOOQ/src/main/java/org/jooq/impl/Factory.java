@@ -36,6 +36,18 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Util.combine;
 
 import java.io.IOException;
@@ -94,6 +106,7 @@ import org.jooq.SelectSelectStep;
 import org.jooq.Sequence;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.SimpleSelectWhereStep;
+import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
@@ -325,6 +338,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #unnest(List)
      */
+    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> table(List<?> list) {
         return table(list.toArray());
     }
@@ -334,6 +348,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #unnest(Object[])
      */
+    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> table(Object[] array) {
         return table(val(array));
     }
@@ -343,6 +358,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #unnest(ArrayRecord)
      */
+    @Support(ORACLE)
     public static Table<?> table(ArrayRecord<?> array) {
         return table(val(array));
     }
@@ -352,6 +368,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #unnest(Field)
      */
+    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> table(Field<?> cursor) {
         return unnest(cursor);
     }
@@ -365,6 +382,7 @@ public class Factory implements FactoryOperations {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      */
+    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> unnest(List<?> list) {
         return table(list.toArray());
     }
@@ -378,6 +396,7 @@ public class Factory implements FactoryOperations {
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
      */
+    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> unnest(Object[] array) {
         return table(val(array));
     }
@@ -388,6 +407,7 @@ public class Factory implements FactoryOperations {
      * This wraps the argument array in a <code>TABLE</code> function for
      * Oracle. Currently, only Oracle knows typed arrays
      */
+    @Support(ORACLE)
     public static Table<?> unnest(ArrayRecord<?> array) {
         return table(val(array));
     }
@@ -409,6 +429,7 @@ public class Factory implements FactoryOperations {
      * involved with stored functions can only be of type <code>Object[]</code>.
      * Such arrays are converted into <code>VARCHAR</code> arrays by jOOQ.
      */
+    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> unnest(Field<?> cursor) {
         if (cursor == null) {
             throw new IllegalArgumentException();
@@ -467,6 +488,7 @@ public class Factory implements FactoryOperations {
      * @param sql The SQL
      * @return A table wrapping the plain SQL
      */
+    @Support
     public static Table<Record> table(String sql) {
         return table(sql, new Object[0]);
     }
@@ -498,6 +520,7 @@ public class Factory implements FactoryOperations {
      * @param sql The SQL
      * @return A table wrapping the plain SQL
      */
+    @Support
     public static Table<Record> table(String sql, Object... bindings) {
         return new SQLTable(sql, bindings);
     }
@@ -522,6 +545,7 @@ public class Factory implements FactoryOperations {
      * @param sql The SQL
      * @return A field wrapping the plain SQL
      */
+    @Support
     public static Field<Object> field(String sql) {
         return field(sql, new Object[0]);
     }
@@ -547,6 +571,7 @@ public class Factory implements FactoryOperations {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
+    @Support
     public static Field<Object> field(String sql, Object... bindings) {
         return field(sql, Object.class, bindings);
     }
@@ -572,6 +597,7 @@ public class Factory implements FactoryOperations {
      * @param type The field type
      * @return A field wrapping the plain SQL
      */
+    @Support
     public static <T> Field<T> field(String sql, Class<T> type) {
         return field(sql, type, new Object[0]);
     }
@@ -598,6 +624,7 @@ public class Factory implements FactoryOperations {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
+    @Support
     public static <T> Field<T> field(String sql, Class<T> type, Object... bindings) {
         return field(sql, getDataType(type), bindings);
     }
@@ -623,6 +650,7 @@ public class Factory implements FactoryOperations {
      * @param type The field type
      * @return A field wrapping the plain SQL
      */
+    @Support
     public static <T> Field<T> field(String sql, DataType<T> type) {
         return field(sql, type, new Object[0]);
     }
@@ -649,6 +677,7 @@ public class Factory implements FactoryOperations {
      * @param bindings The bindings for the field
      * @return A field wrapping the plain SQL
      */
+    @Support
     public static <T> Field<T> field(String sql, DataType<T> type, Object... bindings) {
         return new SQLField<T>(sql, type, bindings);
     }
@@ -662,6 +691,7 @@ public class Factory implements FactoryOperations {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @Support
     public static <T> Field<T> function(String name, Class<T> type, Field<?>... arguments) {
         return function(name, getDataType(type), nullSafe(arguments));
     }
@@ -675,6 +705,7 @@ public class Factory implements FactoryOperations {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @Support
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
         return new Function<T>(name, type, nullSafe(arguments));
     }
@@ -696,6 +727,7 @@ public class Factory implements FactoryOperations {
      * @param sql The SQL
      * @return A condition wrapping the plain SQL
      */
+    @Support
     public static Condition condition(String sql) {
         return condition(sql, new Object[0]);
     }
@@ -719,6 +751,7 @@ public class Factory implements FactoryOperations {
      * @param bindings The bindings
      * @return A condition wrapping the plain SQL
      */
+    @Support
     public static Condition condition(String sql, Object... bindings) {
         return new SQLCondition(sql, bindings);
     }
@@ -817,6 +850,7 @@ public class Factory implements FactoryOperations {
     /**
      * Return a <code>Condition</code> that will always evaluate to true
      */
+    @Support
     public static Condition trueCondition() {
         return new TrueCondition();
     }
@@ -824,6 +858,7 @@ public class Factory implements FactoryOperations {
     /**
      * Return a <code>Condition</code> that will always evaluate to false
      */
+    @Support
     public static Condition falseCondition() {
         return new FalseCondition();
     }
@@ -833,6 +868,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * <code>EXISTS ([query])</code>
      */
+    @Support
     public static Condition exists(Select<?> query) {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.EXISTS);
     }
@@ -842,6 +878,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * <code>NOT EXISTS ([query])</code>
      */
+    @Support
     public static Condition notExists(Select<?> query) {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.NOT_EXISTS);
     }
@@ -1111,7 +1148,6 @@ public class Factory implements FactoryOperations {
     public final int use(Schema schema) {
         int result = 0;
 
-        // SQL Server does not support such a syntax
         try {
             String schemaName = render(schema);
 
@@ -1134,6 +1170,14 @@ public class Factory implements FactoryOperations {
 
                 case POSTGRES:
                     result = query("set search_path = " + schemaName).execute();
+                    break;
+
+                // SQL Server do not support such a syntax
+                case SQLSERVER:
+                    break;
+
+                // SQLite doesn't have any schemata
+                case SQLITE:
                     break;
             }
         }
@@ -1192,6 +1236,7 @@ public class Factory implements FactoryOperations {
      *
      * @see Case
      */
+    @Support
     public static Case decode() {
         return new CaseImpl();
     }
@@ -1203,6 +1248,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #decode(Field, Field, Field, Field[])
      */
+    @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result) {
         return decode(value, search, result, new Object[0]);
     }
@@ -1214,6 +1260,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #decode(Field, Field, Field, Field[])
      */
+    @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
         return decode(val(value), val(search), val(result), vals(more).toArray(new Field[0]));
     }
@@ -1225,6 +1272,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #decode(Field, Field, Field, Field[])
      */
+    @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result) {
         return decode(nullSafe(value), nullSafe(search), nullSafe(result), new Field[0]);
     }
@@ -1255,6 +1303,7 @@ public class Factory implements FactoryOperations {
      *            If <code>more.length</code> is odd, then it is assumed that it
      *            contains more search/result pairs plus a default at the end.     *
      */
+    @Support
     public static <Z, T> Field<Z> decode(Field<T> value, Field<T> search, Field<Z> result, Field<?>... more) {
         return new Decode<T, Z>(nullSafe(value), nullSafe(search), nullSafe(result), nullSafe(more));
     }
@@ -1267,6 +1316,7 @@ public class Factory implements FactoryOperations {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
+    @Support
     public static <T> Field<T> cast(Object value, Field<T> as) {
         return val(value).cast(as);
     }
@@ -1278,6 +1328,7 @@ public class Factory implements FactoryOperations {
      * @param as The field whose type is used for the cast
      * @return The cast field
      */
+    @Support
     public static <T> Field<T> castNull(Field<T> as) {
         return NULL().cast(as);
     }
@@ -1290,6 +1341,7 @@ public class Factory implements FactoryOperations {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @Support
     public static <T> Field<T> cast(Object value, Class<? extends T> type) {
         return val(value).cast(type);
     }
@@ -1301,6 +1353,7 @@ public class Factory implements FactoryOperations {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @Support
     public static <T> Field<T> castNull(DataType<T> type) {
         return NULL().cast(type);
     }
@@ -1313,6 +1366,7 @@ public class Factory implements FactoryOperations {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
         return val(value).cast(type);
     }
@@ -1324,6 +1378,7 @@ public class Factory implements FactoryOperations {
      * @param type The type that is used for the cast
      * @return The cast field
      */
+    @Support
     public static <T> Field<T> castNull(Class<? extends T> type) {
         return NULL().cast(type);
     }
@@ -1353,6 +1408,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #coalesce(Field, Field...)
      */
+    @Support
     public static <T> Field<T> coalesce(T value, T... values) {
         return coalesce(val(value), vals(values).toArray(new Field[0]));
     }
@@ -1368,6 +1424,7 @@ public class Factory implements FactoryOperations {
      * </li>
      * </ul>
      */
+    @Support
     public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {
         return function("coalesce", nullSafeDataType(field), nullSafe(combine(field, fields)));
     }
@@ -1377,6 +1434,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nvl(Field, Field)
      */
+    @Support
     public static <T> Field<T> nvl(T value, T defaultValue) {
         return nvl(val(value), val(defaultValue));
     }
@@ -1386,6 +1444,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nvl(Field, Field)
      */
+    @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
         return nvl(val(value), nullSafe(defaultValue));
     }
@@ -1395,6 +1454,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nvl(Field, Field)
      */
+    @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
         return nvl(nullSafe(value), val(defaultValue));
     }
@@ -1427,6 +1487,7 @@ public class Factory implements FactoryOperations {
      * href="http://www.sqlite.org/lang_corefunc.html#ifnull">IFNULL</a></li>
      * </ul>
      */
+    @Support
     public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
         return new Nvl<T>(nullSafe(value), nullSafe(defaultValue));
     }
@@ -1436,6 +1497,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nvl2(Field, Field, Field)
      */
+    @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
         return nvl2(nullSafe(value), val(valueIfNotNull), val(valueIfNull));
     }
@@ -1445,6 +1507,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nvl2(Field, Field, Field)
      */
+    @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
         return nvl2(nullSafe(value), val(valueIfNotNull), nullSafe(valueIfNull));
     }
@@ -1454,6 +1517,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nvl2(Field, Field, Field)
      */
+    @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
         return nvl2(nullSafe(value), nullSafe(valueIfNotNull), val(valueIfNull));
     }
@@ -1470,6 +1534,7 @@ public class Factory implements FactoryOperations {
      * Other dialects:
      * <code>CASE WHEN [value] IS NULL THEN [valueIfNull] ELSE [valueIfNotNull] END</code>
      */
+    @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
         return new Nvl2<Z>(nullSafe(value), nullSafe(valueIfNotNull), nullSafe(valueIfNull));
     }
@@ -1479,6 +1544,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nullif(Field, Field)
      */
+    @Support
     public static <T> Field<T> nullif(T value, T other) {
         return nullif(val(value), val(other));
     }
@@ -1488,6 +1554,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nullif(Field, Field)
      */
+    @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
         return nullif(val(value), nullSafe(other));
     }
@@ -1497,6 +1564,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #nullif(Field, Field)
      */
+    @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
         return nullif(nullSafe(value), val(other));
     }
@@ -1511,6 +1579,7 @@ public class Factory implements FactoryOperations {
      * </ul>
      * <p>
      */
+    @Support
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
         return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
     }
@@ -1524,6 +1593,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #upper(Field)
      */
+    @Support
     public static Field<String> upper(String value) {
         return upper(val(value));
     }
@@ -1534,6 +1604,7 @@ public class Factory implements FactoryOperations {
      * This renders the upper function in all dialects:
      * <code><pre>upper([field])</pre></code>
      */
+    @Support
     public static Field<String> upper(Field<String> field) {
         return function("upper", SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -1543,6 +1614,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lower(Field)
      */
+    @Support
     public static Field<String> lower(String value) {
         return lower(val(value));
     }
@@ -1553,6 +1625,7 @@ public class Factory implements FactoryOperations {
      * This renders the lower function in all dialects:
      * <code><pre>lower([field])</pre></code>
      */
+    @Support
     public static Field<String> lower(Field<String> value) {
         return function("lower", SQLDataType.VARCHAR, nullSafe(value));
     }
@@ -1562,6 +1635,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #trim(Field)
      */
+    @Support
     public static Field<String> trim(String value) {
         return trim(val(value));
     }
@@ -1573,6 +1647,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>trim([field])</pre></code> ... or simulates it elsewhere using
      * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
      */
+    @Support
     public static Field<String> trim(Field<String> field) {
         return new Trim(nullSafe(field));
     }
@@ -1582,6 +1657,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rtrim(Field)
      */
+    @Support
     public static Field<String> rtrim(String value) {
         return rtrim(val(value));
     }
@@ -1592,6 +1668,7 @@ public class Factory implements FactoryOperations {
      * This renders the rtrim function in all dialects:
      * <code><pre>rtrim([field])</pre></code>
      */
+    @Support
     public static Field<String> rtrim(Field<String> field) {
         return function("rtrim", SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -1601,6 +1678,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #ltrim(Field)
      */
+    @Support
     public static Field<String> ltrim(String value) {
         return ltrim(val(value));
     }
@@ -1611,6 +1689,7 @@ public class Factory implements FactoryOperations {
      * This renders the ltrim function in all dialects:
      * <code><pre>ltrim([field])</pre></code>
      */
+    @Support
     public static Field<String> ltrim(Field<String> value) {
         return function("ltrim", SQLDataType.VARCHAR, nullSafe(value));
     }
@@ -1620,6 +1699,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length) {
         return rpad(nullSafe(field), val(length));
     }
@@ -1633,6 +1713,7 @@ public class Factory implements FactoryOperations {
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new Rpad(nullSafe(field), nullSafe(length));
     }
@@ -1642,6 +1723,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, char character) {
         return rpad(field, length, Character.toString(character));
     }
@@ -1651,6 +1733,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rpad(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), val(length), val(character));
     }
@@ -1664,6 +1747,7 @@ public class Factory implements FactoryOperations {
      * well, depending on the RDBMS:
      * <code><pre>concat([field], repeat([character], [length] - length([field])))</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -1673,6 +1757,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lpad(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length) {
         return lpad(nullSafe(field), val(length));
     }
@@ -1686,6 +1771,7 @@ public class Factory implements FactoryOperations {
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
     }
@@ -1695,6 +1781,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lpad(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
     }
@@ -1704,6 +1791,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #lpad(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
         return lpad(nullSafe(field), val(length), val(character));
     }
@@ -1717,6 +1805,7 @@ public class Factory implements FactoryOperations {
      * well, depending on the RDBMS:
      * <code><pre>concat(repeat([character], [length] - length([field])), [field])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -1726,6 +1815,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, int count) {
         return repeat(val(field), val(count));
     }
@@ -1735,6 +1825,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
         return repeat(val(field), nullSafe(count));
     }
@@ -1744,6 +1835,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #repeat(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, int count) {
         return repeat(nullSafe(field), val(count));
     }
@@ -1758,6 +1850,7 @@ public class Factory implements FactoryOperations {
      * RDBMS:
      * <code><pre>rpad([field], length([field]) * [count], [field])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, Field<? extends Number> count) {
         return new Repeat(nullSafe(field), nullSafe(count));
     }
@@ -1767,6 +1860,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #replace(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
         return replace(nullSafe(field), val(search));
     }
@@ -1780,6 +1874,7 @@ public class Factory implements FactoryOperations {
      * using the three-argument replace function:
      * <code><pre>replace([field], [search], '')</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search) {
         return new Replace(nullSafe(field), nullSafe(search));
     }
@@ -1789,6 +1884,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #replace(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
         return replace(nullSafe(field), val(search), val(replace));
     }
@@ -1800,6 +1896,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>replace([field], [search]) or
      * str_replace([field], [search])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, Field<String> search, Field<String> replace) {
         return new Replace(nullSafe(field), nullSafe(search), nullSafe(replace));
     }
@@ -1809,6 +1906,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #position(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, String search) {
         return position(val(in), val(search));
     }
@@ -1818,6 +1916,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #position(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, Field<String> search) {
         return position(val(in), nullSafe(search));
     }
@@ -1827,6 +1926,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #position(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(Field<String> in, String search) {
         return position(nullSafe(in), val(search));
     }
@@ -1841,6 +1941,7 @@ public class Factory implements FactoryOperations {
      * instr([in], [search]) or
      * charindex([search], [in])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(Field<String> in, Field<String> search) {
         return new Position(nullSafe(search), nullSafe(in));
     }
@@ -1850,6 +1951,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #ascii(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(String field) {
         return ascii(val(field));
     }
@@ -1860,6 +1962,7 @@ public class Factory implements FactoryOperations {
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(Field<String> field) {
         return new Ascii(nullSafe(field));
     }
@@ -1869,6 +1972,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #concat(Field...)
      */
+    @Support
     public static Field<String> concat(String... values) {
         return concat(vals((Object[]) values).toArray(new Field[0]));
     }
@@ -1883,6 +1987,7 @@ public class Factory implements FactoryOperations {
      * If any of the given fields is not a {@link String} field, they are cast
      * to <code>Field&lt;String&gt;</code> first using {@link #cast(Object, Class)}
      */
+    @Support
     public static Field<String> concat(Field<?>... fields) {
         return new Concat(nullSafe(fields));
     }
@@ -1892,6 +1997,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #substring(Field, Field)
      */
+    @Support
     public static Field<String> substring(Field<String> field, int startingPosition) {
         return substring(nullSafe(field), val(startingPosition));
     }
@@ -1903,6 +2009,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>substr([field], [startingPosition]) or
      * substring([field], [startingPosition])</pre></code>
      */
+    @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition) {
         return new Substring(nullSafe(field), nullSafe(startingPosition));
     }
@@ -1912,6 +2019,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #substring(Field, Field, Field)
      */
+    @Support
     public static Field<String> substring(Field<String> field, int startingPosition, int length) {
         return substring(nullSafe(field), val(startingPosition), val(length));
     }
@@ -1923,6 +2031,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>substr([field], [startingPosition], [length]) or
      * substring([field], [startingPosition], [length])</pre></code>
      */
+    @Support
     public static Field<String> substring(Field<String> field, Field<? extends Number> startingPosition, Field<? extends Number> length) {
         return new Substring(nullSafe(field), nullSafe(startingPosition), nullSafe(length));
     }
@@ -1933,6 +2042,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #charLength(String)
      */
+    @Support
     public static Field<Integer> length(String value) {
         return length(val(value));
     }
@@ -1943,6 +2053,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #charLength(Field)
      */
+    @Support
     public static Field<Integer> length(Field<String> field) {
         return charLength(field);
     }
@@ -1952,6 +2063,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> charLength(String value) {
         return charLength(val(value));
     }
@@ -1961,6 +2073,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> charLength(Field<String> field) {
         return new Function<Integer>(Term.CHAR_LENGTH, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -1970,6 +2083,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> bitLength(String value) {
         return bitLength(val(value));
     }
@@ -1979,6 +2093,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> bitLength(Field<String> field) {
         return new Function<Integer>(Term.BIT_LENGTH, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -1988,6 +2103,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> octetLength(String value) {
         return octetLength(val(value));
     }
@@ -1997,6 +2113,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> octetLength(Field<String> field) {
         return new Function<Integer>(Term.OCTET_LENGTH, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -2010,6 +2127,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
         return extract(val(value), datePart);
     }
@@ -2019,6 +2137,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart) {
         return new Extract(nullSafe(field), datePart);
     }
@@ -2049,6 +2168,7 @@ public class Factory implements FactoryOperations {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @Support({ DB2, MYSQL, ORACLE, SQLSERVER, SYBASE })
     public static Field<?> rollup(Field<?>... fields) {
         return new Rollup(nullSafe(fields));
     }
@@ -2074,6 +2194,7 @@ public class Factory implements FactoryOperations {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static Field<?> cube(Field<?>... fields) {
         return function("cube", Object.class, nullSafe(fields));
     }
@@ -2101,6 +2222,7 @@ public class Factory implements FactoryOperations {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @SuppressWarnings("unchecked")
+    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static Field<?> groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
@@ -2134,6 +2256,7 @@ public class Factory implements FactoryOperations {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @SuppressWarnings("unchecked")
+    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static Field<?> groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
@@ -2166,6 +2289,7 @@ public class Factory implements FactoryOperations {
      *            function
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
+    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static Field<?> groupingSets(Collection<Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
@@ -2194,6 +2318,7 @@ public class Factory implements FactoryOperations {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
+    @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, nullSafe(field));
     }
@@ -2214,6 +2339,7 @@ public class Factory implements FactoryOperations {
      * @see #cube(Field...)
      * @see #rollup(Field...)
      */
+    @Support({ ORACLE, SQLSERVER})
     public static Field<Integer> groupingId(Field<?>... fields) {
         return function("grouping_id", Integer.class, nullSafe(fields));
     }
@@ -2228,6 +2354,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitCount(Field)
      */
+    @Support({ H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Number value) {
         return bitCount(val(value));
     }
@@ -2249,6 +2376,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * More efficient algorithms are very welcome
      */
+    @Support({ H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(nullSafe(field));
     }
@@ -2258,6 +2386,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(T value) {
         return bitNot(val(value));
     }
@@ -2268,6 +2397,7 @@ public class Factory implements FactoryOperations {
      * Most dialects natively support this using <code>~[field]</code>. jOOQ
      * simulates this operator in some dialects using <code>-[field] - 1</code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
         return new Neg<T>(nullSafe(field), ExpressionOperator.BIT_NOT);
     }
@@ -2277,6 +2407,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitAnd(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
         return bitAnd(val(value1), val(value2));
     }
@@ -2286,6 +2417,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitAnd(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
         return bitAnd(val(value1), nullSafe(value2));
     }
@@ -2295,6 +2427,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitAnd(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
         return bitAnd(nullSafe(value1), val(value2));
     }
@@ -2309,6 +2442,7 @@ public class Factory implements FactoryOperations {
      * ... or the and function elsewhere:
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
     }
@@ -2319,6 +2453,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
         return bitNand(val(value1), val(value2));
     }
@@ -2329,6 +2464,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
         return bitNand(val(value1), nullSafe(value2));
     }
@@ -2339,6 +2475,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNand(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
         return bitNand(nullSafe(value1), val(value2));
     }
@@ -2355,6 +2492,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
     }
@@ -2364,6 +2502,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitOr(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
         return bitOr(val(value1), val(value2));
     }
@@ -2373,6 +2512,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitOr(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
         return bitOr(val(value1), nullSafe(value2));
     }
@@ -2382,6 +2522,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitOr(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
         return bitOr(nullSafe(value1), val(value2));
     }
@@ -2396,6 +2537,7 @@ public class Factory implements FactoryOperations {
      * ... or the or function elsewhere:
      * <code><pre>bitor([field1], [field2])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
     }
@@ -2406,6 +2548,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
         return bitNor(val(value1), val(value2));
     }
@@ -2415,6 +2558,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
         return bitNor(val(value1), nullSafe(value2));
     }
@@ -2424,6 +2568,7 @@ public class Factory implements FactoryOperations {
      * @see #bitNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
         return bitNor(nullSafe(value1), val(value2));
     }
@@ -2440,6 +2585,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
     }
@@ -2449,6 +2595,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitXor(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
         return bitXor(val(value1), val(value2));
     }
@@ -2458,6 +2605,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitXor(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
         return bitXor(val(value1), nullSafe(value2));
     }
@@ -2467,6 +2615,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #bitXor(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
         return bitXor(nullSafe(value1), val(value2));
     }
@@ -2481,6 +2630,7 @@ public class Factory implements FactoryOperations {
      * ... or the xor function elsewhere:
      * <code><pre>bitxor([field1], [field2])</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
     }
@@ -2491,6 +2641,7 @@ public class Factory implements FactoryOperations {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
         return bitXNor(val(value1), val(value2));
     }
@@ -2501,6 +2652,7 @@ public class Factory implements FactoryOperations {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
         return bitXNor(val(value1), nullSafe(value2));
     }
@@ -2511,6 +2663,7 @@ public class Factory implements FactoryOperations {
      * @see #bitXNor(Field, Field)
      * @see #bitNot(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
         return bitXNor(nullSafe(value1), val(value2));
     }
@@ -2525,6 +2678,7 @@ public class Factory implements FactoryOperations {
      * ... or the not xor function elsewhere:
      * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
     }
@@ -2535,6 +2689,7 @@ public class Factory implements FactoryOperations {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, T value2) {
         return shl(val(value1), val(value2));
     }
@@ -2545,6 +2700,7 @@ public class Factory implements FactoryOperations {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Field<T> value2) {
         return shl(val(value1), nullSafe(value2));
     }
@@ -2555,6 +2711,7 @@ public class Factory implements FactoryOperations {
      * @see #shl(Field, Field)
      * @see #power(Field, Number)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T>value1, T value2) {
         return shl(nullSafe(value1), val(value2));
     }
@@ -2568,6 +2725,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
     }
@@ -2578,6 +2736,7 @@ public class Factory implements FactoryOperations {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, T value2) {
         return shr(val(value1), val(value2));
     }
@@ -2588,6 +2747,7 @@ public class Factory implements FactoryOperations {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Field<T> value2) {
         return shr(val(value1), nullSafe(value2));
     }
@@ -2598,6 +2758,7 @@ public class Factory implements FactoryOperations {
      * @see #shr(Field, Field)
      * @see #power(Field, Number)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> value1, T value2) {
         return shr(nullSafe(value1), val(value2));
     }
@@ -2611,6 +2772,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
     }
@@ -2630,6 +2792,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #greatest(Field, Field...)
      */
+    @Support
     public static <T> Field<T> greatest(T value, T... values) {
         return greatest(val(value), vals(values).toArray(new Field[0]));
     }
@@ -2643,6 +2806,7 @@ public class Factory implements FactoryOperations {
      * <code>n &gt; 5</code>! Better implementation suggestions are very
      * welcome.
      */
+    @Support
     public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
         return new Greatest<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
     }
@@ -2658,6 +2822,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #least(Field, Field...)
      */
+    @Support
     public static <T> Field<T> least(T value, T... values) {
         return least(val(value), vals(values).toArray(new Field[0]));
     }
@@ -2671,6 +2836,7 @@ public class Factory implements FactoryOperations {
      * <code>n &gt; 5</code>! Better implementation suggestions are very
      * welcome.
      */
+    @Support
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
         return new Least<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
     }
@@ -2680,6 +2846,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sign(Field)
      */
+    @Support
     public static Field<Integer> sign(Number value) {
         return sign(val(value));
     }
@@ -2696,6 +2863,7 @@ public class Factory implements FactoryOperations {
      *      ELSE 0
      * END
      */
+    @Support
     public static Field<Integer> sign(Field<? extends Number> field) {
         return new Sign(nullSafe(field));
     }
@@ -2705,6 +2873,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #abs(Field)
      */
+    @Support
     public static <T extends Number> Field<T> abs(T value) {
         return abs(val(value));
     }
@@ -2715,6 +2884,7 @@ public class Factory implements FactoryOperations {
      * This renders the same on all dialects:
      * <code><pre>abs([field])</pre></code>
      */
+    @Support
     public static <T extends Number> Field<T> abs(Field<T> field) {
         return function("abs", nullSafeDataType(field), nullSafe(field));
     }
@@ -2724,6 +2894,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #round(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> round(T value) {
         return round(val(value));
     }
@@ -2736,6 +2907,7 @@ public class Factory implements FactoryOperations {
      * round([field], 0)</pre></code>
      * ... or simulates it elsewhere using floor and ceil
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> round(Field<T> field) {
         return new Round<T>(nullSafe(field));
     }
@@ -2745,6 +2917,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #round(Field, int)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> round(T value, int decimals) {
         return round(val(value), decimals);
     }
@@ -2756,6 +2929,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>round([field], [decimals])</pre></code>
      * ... or simulates it elsewhere using floor and ceil
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
         return new Round<T>(nullSafe(field), decimals);
     }
@@ -2765,6 +2939,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #floor(Field)
      */
+    @Support
     public static <T extends Number> Field<T> floor(T value) {
         return floor(val(value));
     }
@@ -2777,6 +2952,7 @@ public class Factory implements FactoryOperations {
      * ... or simulates it elsewhere using round:
      * <code><pre>round([this] - 0.499999999999999)</pre></code>
      */
+    @Support
     public static <T extends Number> Field<T> floor(Field<T> field) {
         return new Floor<T>(nullSafe(field));
     }
@@ -2786,6 +2962,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #ceil(Field)
      */
+    @Support
     public static <T extends Number> Field<T> ceil(T value) {
         return ceil(val(value));
     }
@@ -2799,6 +2976,7 @@ public class Factory implements FactoryOperations {
      * ... or simulates it elsewhere using round:
      * <code><pre>round([field] + 0.499999999999999)</pre></code>
      */
+    @Support
     public static <T extends Number> Field<T> ceil(Field<T> field) {
         return new Ceil<T>(nullSafe(field));
     }
@@ -2808,6 +2986,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sqrt(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Number value) {
         return sqrt(val(value));
     }
@@ -2820,6 +2999,7 @@ public class Factory implements FactoryOperations {
      * power (which in turn may also be simulated using ln and exp functions):
      * <code><pre>power([field], 0.5)</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
         return new Sqrt(nullSafe(field));
     }
@@ -2829,6 +3009,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #exp(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Number value) {
         return exp(val(value));
     }
@@ -2839,6 +3020,7 @@ public class Factory implements FactoryOperations {
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
         return function("exp", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -2848,6 +3030,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #ln(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Number value) {
         return ln(val(value));
     }
@@ -2859,6 +3042,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>ln([field]) or
      * log([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
         return new Ln(nullSafe(field));
     }
@@ -2868,6 +3052,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #log(Field, int)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Number value, int base) {
         return log(val(value), base);
     }
@@ -2880,6 +3065,7 @@ public class Factory implements FactoryOperations {
      * most RDBMS) using the natural logarithm:
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
         return new Ln(nullSafe(field), base);
     }
@@ -2889,6 +3075,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return power(val(value), val(exponent));
     }
@@ -2898,6 +3085,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
         return power(nullSafe(field), val(exponent));
     }
@@ -2907,6 +3095,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #power(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return power(val(value), nullSafe(exponent));
     }
@@ -2919,6 +3108,7 @@ public class Factory implements FactoryOperations {
      * elsewhere using ln and exp:
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
         return new Power(nullSafe(field), nullSafe(exponent));
     }
@@ -2928,6 +3118,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #acos(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Number value) {
         return acos(val(value));
     }
@@ -2938,6 +3129,7 @@ public class Factory implements FactoryOperations {
      * This renders the acos function where available:
      * <code><pre>acos([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
         return function("acos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -2947,6 +3139,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #asin(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Number value) {
         return asin(val(value));
     }
@@ -2957,6 +3150,7 @@ public class Factory implements FactoryOperations {
      * This renders the asin function where available:
      * <code><pre>asin([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
         return function("asin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -2966,6 +3160,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #atan(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Number value) {
         return atan(val(value));
     }
@@ -2976,6 +3171,7 @@ public class Factory implements FactoryOperations {
      * This renders the atan function where available:
      * <code><pre>atan([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return function("atan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -2985,6 +3181,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #atan2(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return atan2(val(x), val(y));
     }
@@ -2994,6 +3191,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #atan2(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return atan2(val(x), nullSafe(y));
     }
@@ -3003,6 +3201,7 @@ public class Factory implements FactoryOperations {
       *
      * @see #atan2(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return atan2(nullSafe(x), val(y));
     }
@@ -3014,6 +3213,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>atan2([x], [y]) or
      * atn2([x], [y])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
     }
@@ -3023,6 +3223,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #cos(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Number value) {
         return cos(val(value));
     }
@@ -3033,6 +3234,7 @@ public class Factory implements FactoryOperations {
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
         return function("cos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3042,6 +3244,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sin(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Number value) {
         return sin(val(value));
     }
@@ -3052,6 +3255,7 @@ public class Factory implements FactoryOperations {
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
         return function("sin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3061,6 +3265,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #tan(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Number value) {
         return tan(val(value));
     }
@@ -3071,6 +3276,7 @@ public class Factory implements FactoryOperations {
      * This renders the tan function where available:
      * <code><pre>tan([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function("tan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3080,6 +3286,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #cot(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Number value) {
         return cot(val(value));
     }
@@ -3091,6 +3298,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
         return new Cot(nullSafe(field));
     }
@@ -3100,6 +3308,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #sinh(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Number value) {
         return sinh(val(value));
     }
@@ -3111,6 +3320,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
         return new Sinh(nullSafe(field));
     }
@@ -3120,6 +3330,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #cosh(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Number value) {
         return cosh(val(value));
     }
@@ -3131,6 +3342,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
         return new Cosh(nullSafe(field));
     }
@@ -3140,6 +3352,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #tanh(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Number value) {
         return tanh(val(value));
     }
@@ -3152,6 +3365,7 @@ public class Factory implements FactoryOperations {
      * exp:
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(nullSafe(field));
     }
@@ -3161,6 +3375,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #coth(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Number value) {
         return coth(val(value));
     }
@@ -3171,6 +3386,7 @@ public class Factory implements FactoryOperations {
      * This is not supported by any RDBMS, but simulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
         return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));
@@ -3181,6 +3397,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #deg(Field)
      */
+    @Support
     public static Field<BigDecimal> deg(Number value) {
         return deg(val(value));
     }
@@ -3192,6 +3409,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
      * <code><pre>[field] * 180 / PI</pre></code>
      */
+    @Support
     public static Field<BigDecimal> deg(Field<? extends Number> field) {
         return new Degrees(nullSafe(field));
     }
@@ -3201,6 +3419,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #rad(Field)
      */
+    @Support
     public static Field<BigDecimal> rad(Number value) {
         return rad(val(value));
     }
@@ -3212,6 +3431,7 @@ public class Factory implements FactoryOperations {
      * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
      * <code><pre>[field] * PI / 180</pre></code>
      */
+    @Support
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
         return new Radians(nullSafe(field));
     }
@@ -3223,6 +3443,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the count(*) function
      */
+    @Support
     public static AggregateFunction<Integer> count() {
         return new Count(field("*", Integer.class), false);
     }
@@ -3230,6 +3451,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the count(field) function
      */
+    @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
         return new Count(nullSafe(field), false);
     }
@@ -3237,6 +3459,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the count(distinct field) function
      */
+    @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Count(nullSafe(field), true);
     }
@@ -3244,6 +3467,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the max value over a field: max(field)
      */
+    @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
         return new AggregateFunctionImpl<T>("max", nullSafeDataType(field), nullSafe(field));
     }
@@ -3251,6 +3475,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the min value over a field: min(field)
      */
+    @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
         return new AggregateFunctionImpl<T>("min", nullSafeDataType(field), nullSafe(field));
     }
@@ -3258,6 +3483,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the sum over a numeric field: sum(field)
      */
+    @Support
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>("sum", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3265,6 +3491,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the average over a numeric field: avg(field)
      */
+    @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3279,6 +3506,7 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
+    @Support({ HSQLDB, ORACLE, SYBASE })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>("median", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3300,6 +3528,7 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3321,6 +3550,7 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3342,6 +3572,7 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3361,6 +3592,7 @@ public class Factory implements FactoryOperations {
      * <li>Sybase SQL Anywhere</li>
      * </ul>
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -3375,6 +3607,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rowNumber() {
         return new WindowFunction<Integer>("row_number", SQLDataType.INTEGER);
     }
@@ -3385,6 +3618,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rank() {
         return new WindowFunction<Integer>("rank", SQLDataType.INTEGER);
     }
@@ -3395,6 +3629,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> denseRank() {
         return new WindowFunction<Integer>("dense_rank", SQLDataType.INTEGER);
     }
@@ -3405,6 +3640,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ POSTGRES, ORACLE, SYBASE })
     public static WindowOverStep<BigDecimal> percentRank() {
         return new WindowFunction<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
@@ -3415,6 +3651,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ POSTGRES, ORACLE, SYBASE })
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new WindowFunction<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
@@ -3425,6 +3662,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<BigDecimal> ntile(int number) {
         return new WindowFunction<BigDecimal>("ntile", SQLDataType.NUMERIC, field("" + number, Integer.class));
     }
@@ -3435,6 +3673,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new WindowFunction<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -3445,6 +3684,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new WindowFunction<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -3455,6 +3695,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field));
     }
@@ -3465,6 +3706,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset));
     }
@@ -3477,6 +3719,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, val(defaultValue));
     }
@@ -3489,6 +3732,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
     }
@@ -3499,6 +3743,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field));
     }
@@ -3509,6 +3754,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset));
     }
@@ -3521,6 +3767,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, val(defaultValue));
     }
@@ -3533,6 +3780,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
     }
@@ -3560,6 +3808,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #param(String, Object)
      */
+    @Support
     public static Param<Object> param(String name) {
         return param(name, Object.class);
     }
@@ -3569,6 +3818,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #param(String, Object)
      */
+    @Support
     public static <T> Param<T> param(String name, Class<? extends T> type) {
         return param(name, SQLDataType.getDataType(null, type));
     }
@@ -3578,6 +3828,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #param(String, Object)
      */
+    @Support
     public static <T> Param<T> param(String name, DataType<T> type) {
         return new Val<T>(null, type, name);
     }
@@ -3599,6 +3850,7 @@ public class Factory implements FactoryOperations {
      * @see Query#getParams()
      * @see #renderNamedParams(QueryPart)
      */
+    @Support
     public static <T> Param<T> param(String name, T value) {
         return new Val<T>(value, val(value).getDataType(), name);
     }
@@ -3609,6 +3861,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #val(Object)
      */
+    @Support
     public static <T> Field<T> value(T value) {
         return val(value);
     }
@@ -3619,6 +3872,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #val(Object, Class)
      */
+    @Support
     public static <T> Field<T> value(Object value, Class<? extends T> type) {
         return val(value, type);
     }
@@ -3629,6 +3883,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #val(Object, Field)
      */
+    @Support
     public static <T> Field<T> value(Object value, Field<T> field) {
         return val(value, field);
     }
@@ -3639,6 +3894,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #val(Object, DataType)
      */
+    @Support
     public static <T> Field<T> value(Object value, DataType<T> type) {
         return val(value, type);
     }
@@ -3668,6 +3924,7 @@ public class Factory implements FactoryOperations {
      * @return A field representing the constant value
      */
     @SuppressWarnings("unchecked")
+    @Support
     public static <T> Field<T> val(T value) {
 
         // null is intercepted immediately
@@ -3695,6 +3952,7 @@ public class Factory implements FactoryOperations {
      * @return A field representing the constant value
      * @see #val(Object, DataType)
      */
+    @Support
     public static <T> Field<T> val(Object value, Class<? extends T> type) {
         return val(value, getDataType(type));
     }
@@ -3708,6 +3966,7 @@ public class Factory implements FactoryOperations {
      * @return A field representing the constant value
      * @see #val(Object, DataType)
      */
+    @Support
     public static <T> Field<T> val(Object value, Field<T> field) {
         return val(value, nullSafeDataType(field));
     }
@@ -3726,6 +3985,7 @@ public class Factory implements FactoryOperations {
      * @return A field representing the constant value
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Support
     public static <T> Field<T> val(Object value, DataType<T> type) {
 
         // Prevent errors due to type erasure and unchecked invocation
@@ -3750,6 +4010,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get a list of values and fields
      */
+    @Support
     public static List<Field<?>> vals(Object... values) {
         FieldList result = new FieldList();
 
@@ -3789,6 +4050,7 @@ public class Factory implements FactoryOperations {
      * @return The literal as a field
      */
     @SuppressWarnings("unchecked")
+    @Support
     public static <T> Field<T> literal(T literal) {
         if (literal == null) {
             return (Field<T>) NULL();
@@ -3814,6 +4076,7 @@ public class Factory implements FactoryOperations {
      * @param type The literal's data type
      * @return The literal as a field
      */
+    @Support
     public static <T> Field<T> literal(Object literal, Class<T> type) {
         return literal(literal, getDataType(type));
     }
@@ -3835,6 +4098,7 @@ public class Factory implements FactoryOperations {
      * @return The literal as a field
      */
     @SuppressWarnings("unchecked")
+    @Support
     public static <T> Field<T> literal(Object literal, DataType<T> type) {
         if (literal == null) {
             return (Field<T>) NULL();
@@ -3889,6 +4153,7 @@ public class Factory implements FactoryOperations {
      *
      * @return A <code>0</code> literal as a <code>Field</code>
      */
+    @Support
     public static Field<Integer> zero() {
         return literal(0);
     }
@@ -3903,6 +4168,7 @@ public class Factory implements FactoryOperations {
      *
      * @return A <code>1</code> literal as a <code>Field</code>
      */
+    @Support
     public static Field<Integer> one() {
         return literal(1);
     }
@@ -3915,6 +4181,7 @@ public class Factory implements FactoryOperations {
      *
      * @return A <code>2</code> literal as a <code>Field</code>
      */
+    @Support
     public static Field<Integer> two() {
         return literal(2);
     }
@@ -3928,6 +4195,7 @@ public class Factory implements FactoryOperations {
      * <li>{@link Math#PI}</li>
      * </ul>
      */
+    @Support
     public static Field<BigDecimal> pi() {
         return new Pi();
     }
@@ -3941,6 +4209,7 @@ public class Factory implements FactoryOperations {
      * <li>{@link Math#E}</li>
      * </ul>
      */
+    @Support
     public static Field<BigDecimal> e() {
         return new Euler();
     }
@@ -3954,6 +4223,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Date> currentDate() {
         return new CurrentDate();
     }
@@ -3963,6 +4233,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Time> currentTime() {
         return new CurrentTime();
     }
@@ -3972,6 +4243,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support
     public static Field<Timestamp> currentTimestamp() {
         return new CurrentTimestamp();
     }
@@ -3981,6 +4253,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This translates into any dialect
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> currentUser() {
         return new CurrentUser();
     }
@@ -3988,6 +4261,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the rand() function
      */
+    @Support
     public static Field<BigDecimal> rand() {
         return new Rand();
     }
@@ -4130,6 +4404,7 @@ public class Factory implements FactoryOperations {
      * @return The <code>Factory</code>'s underlying default data type.
      */
     @SuppressWarnings("deprecation")
+    @Support
     public static <T> DataType<T> getDataType(Class<? extends T> type) {
         return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
     }

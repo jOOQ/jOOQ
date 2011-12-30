@@ -1515,13 +1515,14 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLiterals() throws Exception {
-        Record record = create().select(zero(), one(), two(), pi(), e()).fetchOne();
+        Record record = create().select(zero(), one(), two(), pi(), e(), rad(deg(pi()))).fetchOne();
 
         assertEquals(0, record.getValue(0));
         assertEquals(1, record.getValue(1));
         assertEquals(2, record.getValue(2));
         assertEquals("3.141", record.getValueAsString(3).substring(0, 5));
         assertEquals("2.718", record.getValueAsString(4).substring(0, 5));
+        assertEquals("3.141", record.getValueAsString(5).substring(0, 5));
     }
 
     @Test
@@ -6382,6 +6383,12 @@ public abstract class jOOQAbstractTest<
         assertEquals("abc", create().select(trim("abc  ")).fetchOne(0));
         assertEquals("abc", create().select(trim("  abc")).fetchOne(0));
         assertEquals("abc", create().select(trim("  abc  ")).fetchOne(0));
+        assertEquals("  abc", create().select(rtrim("  abc  ")).fetchOne(0));
+        assertEquals("abc  ", create().select(ltrim("  abc  ")).fetchOne(0));
+
+        // Lower / Upper
+        assertEquals("abc", create().select(lower("ABC")).fetchOne(0));
+        assertEquals("ABC", create().select(upper("abc")).fetchOne(0));
 
         // String concatenation
         assertEquals("abc", create().select(concat("a", "b", "c")).fetchOne(0));

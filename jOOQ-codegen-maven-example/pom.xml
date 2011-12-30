@@ -6,17 +6,17 @@
 		<version>7</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>org.jooq</groupId>
 	<artifactId>jooq-codegen-maven-example</artifactId>
 	<version>2.0.1</version>
 	<packaging>jar</packaging>
-		
+
 	<name>jOOQ Codegen Maven</name>
 	<description>jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, advanced data types, and Java in a fluent, intuitive DSL.</description>
 	<url>http://www.jooq.org</url>
-	
-	
+
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -24,7 +24,7 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-	
+
 	<scm>
 		<developerConnection>scm:svn:https://jooq.svn.sourceforge.net/svnroot/jooq</developerConnection>
 		<url>https://jooq.svn.sourceforge.net/svnroot/jooq</url>
@@ -35,7 +35,7 @@
 		<system>Trac</system>
 		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
 	</issueManagement>
-		
+
 	<developers>
 		<developer>
 			<name>Lukas Eder</name>
@@ -84,17 +84,17 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-		
+
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-		
+
 	<build>
 		<defaultGoal>deploy</defaultGoal>
 		<finalName>${project.artifactId}-${project.version}</finalName>
-		
+
 		<plugins>
-			
+
 			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
 			<plugin>
 				<groupId>org.jooq</groupId>
@@ -133,7 +133,7 @@
 							</generator>
 						</configuration>
 					</execution>
-					
+
 					<execution>
 						<id>exec2</id>
 						<goals>
@@ -145,7 +145,7 @@
 								<url>jdbc:jtds:sybase://lukas-hp:5000/TEST</url>
 								<schema>dbo</schema>
 								<user>sa</user>
-								
+
 								<!-- [#951] This checks the possibility of empty passwords -->
 								<password></password>
 							</jdbc>
@@ -168,7 +168,7 @@
 							</generator>
 						</configuration>
 					</execution>
-										
+
 					<execution>
 						<id>exec3</id>
 						<goals>
@@ -187,11 +187,11 @@
 									<name>org.jooq.util.mysql.MySQLDatabase</name>
 									<includes>.*</includes>
 									<excludes>t_book_details</excludes>
-									
+
 									<!-- [#958] This checks the schema-rewriting functionality -->
 									<inputSchema>test</inputSchema>
 									<outputSchema>test2</outputSchema>
-									
+
 									<!-- [#968] custom enum types -->
 									<enumTypes>
 										<enumType>
@@ -223,7 +223,7 @@
 											<literals>true,false</literals>
 										</enumType>
 									</enumTypes>
-									
+
 									<!-- [#968] [#677] forced column types -->
 									<forcedTypes>
 										<forcedType>
@@ -260,6 +260,7 @@
 									<relations>true</relations>
 									<deprecated>false</deprecated>
 									<instanceFields>true</instanceFields>
+									<generatedAnnotation>false</generatedAnnotation>
 								</generate>
 								<target>
 									<packageName>org.jooq.util.maven.example.mysql</packageName>
@@ -287,7 +288,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
+
 			<!-- Plugins used for Maven Central -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -303,7 +304,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -370,7 +371,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>

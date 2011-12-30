@@ -61,6 +61,7 @@ public class GenerationTask extends Task {
 		properties.setProperty("generator.generate.records", "true");
 		properties.setProperty("generator.generate.relations", "false");
 		properties.setProperty("generator.generate.instance-fields", "true");
+		properties.setProperty("generator.generate.generated-annotation", "true");
 		properties.setProperty("generator.generate.unsigned-types", "true");
 
 		properties.setProperty("generator.target.directory", ".");
@@ -124,6 +125,10 @@ public class GenerationTask extends Task {
 
     public void setGeneratorgenerateunsignedtypes(String value) {
         properties.setProperty("generator.generate.unsigned-types", value);
+    }
+
+    public void setGeneratorgenerategeneratedannotation(String value) {
+        properties.setProperty("generator.generate.generated-annotation", value);
     }
 
 	public void setGeneratortargetpackage(String value) {

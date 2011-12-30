@@ -67,6 +67,7 @@ class Radians extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
+            case SQLITE:
                 return argument.cast(BigDecimal.class).mul(pi()).div(literal(180));
 
             default:

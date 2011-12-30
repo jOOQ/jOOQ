@@ -53,11 +53,13 @@ public interface SortField<T> extends NamedTypeProviderQueryPart<T> {
     /**
      * Add a <code>NULLS FIRST</code> clause to this sort field
      */
+    @Support
     SortField<T> nullsFirst();
 
     /**
      * Add a <code>NULLS LAST</code> clause to this sort field
      */
+    @Support
     SortField<T> nullsLast();
 
 }

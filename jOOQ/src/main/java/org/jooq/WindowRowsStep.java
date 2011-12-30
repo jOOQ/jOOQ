@@ -35,6 +35,11 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SYBASE;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -60,58 +65,68 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> rowsUnboundedPreceding();
 
     /**
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> rowsPreceding(int number);
 
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> rowsCurrentRow();
 
     /**
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> rowsUnboundedFollowing();
 
     /**
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> rowsFollowing(int number);
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowRowsAndStep<T> rowsBetweenUnboundedPreceding();
 
     /**
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowRowsAndStep<T> rowsBetweenPreceding(int number);
 
     /**
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to
      * the window function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowRowsAndStep<T> rowsBetweenCurrentRow();
 
     /**
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowRowsAndStep<T> rowsBetweenUnboundedFollwing();
 
     /**
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowRowsAndStep<T> rowsBetweenFollowing(int number);
 }

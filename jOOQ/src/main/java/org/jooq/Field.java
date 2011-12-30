@@ -81,6 +81,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @return The field alias
      */
     @Override
+    @Support
     Field<T> as(String alias);
 
     /**

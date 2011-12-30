@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +54,7 @@ public interface StoreQuery<R extends Record> extends Query {
      *
      * @param record The record holding values that are stored by the query
      */
+    @Support
     void setRecord(R record);
 
     /**
@@ -60,6 +63,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param field The field
      * @param value The value
      */
+    @Support
     <T> void addValue(Field<T> field, T value);
 
     /**
@@ -69,6 +73,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param value The value. If value is <code>null</code>, this results in
      *            calling {@link #addValue(Field, Object)} with null as a value.
      */
+    @Support
     <T> void addValue(Field<T> field, Field<T> value);
 
     /**
@@ -78,6 +83,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
+    @Support
     void addValues(Map<? extends Field<?>, ?> map);
 
     /**
@@ -88,6 +94,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param field The field
      * @param value The value
      */
+    @Support(ORACLE)
     <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, T... value);
 
     /**
@@ -98,6 +105,7 @@ public interface StoreQuery<R extends Record> extends Query {
      * @param field The field
      * @param value The value
      */
+    @Support(ORACLE)
     <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, List<T> value);
 
 }

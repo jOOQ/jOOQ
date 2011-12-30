@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -88,6 +90,7 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      *
      * @see LockProvider#setForUpdateWait(int) see LockProvider for more details
      */
+    @Support(ORACLE)
     SelectFinalStep wait(int seconds);
 
     /**
@@ -96,6 +99,7 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      *
      * @see LockProvider#setForUpdateNoWait() see LockProvider for more details
      */
+    @Support(ORACLE)
     SelectFinalStep noWait();
 
     /**
@@ -105,5 +109,6 @@ public interface SelectForUpdateWaitStep extends SelectFinalStep {
      * @see LockProvider#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
+    @Support(ORACLE)
     SelectFinalStep skipLocked();
 }

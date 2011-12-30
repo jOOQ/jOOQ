@@ -35,6 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.util.Collection;
 
 /**
@@ -62,17 +68,20 @@ public interface MergeNotMatchedValuesStep<R extends Record> {
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedWhereStep<R> values(Object... values);
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedWhereStep<R> values(Field<?>... values);
 
     /**
      * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

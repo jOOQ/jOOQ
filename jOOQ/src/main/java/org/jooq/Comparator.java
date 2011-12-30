@@ -42,13 +42,29 @@ package org.jooq;
  * @author Lukas Eder
  */
 public enum Comparator {
+
+    @Support
     EQUALS("="),
+
+    @Support
     NOT_EQUALS("<>"),
+
+    @Support
     LESS("<"),
+
+    @Support
     LESS_OR_EQUAL("<="),
+
+    @Support
     GREATER(">"),
+
+    @Support
     GREATER_OR_EQUAL(">="),
+
+    @Support
     LIKE("like"),
+
+    @Support
     NOT_LIKE("not like");
 
     private final String sql;

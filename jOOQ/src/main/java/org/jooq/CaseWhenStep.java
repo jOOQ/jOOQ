@@ -59,6 +59,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     CaseWhenStep<V, T> when(V compareValue, T result);
 
     /**
@@ -70,6 +71,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
     /**
@@ -81,6 +83,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     CaseWhenStep<V, T> when(Field<V> compareValue, T result);
 
     /**
@@ -92,6 +95,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 
     /**
@@ -100,6 +104,7 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @Support
     Field<T> otherwise(T result);
 
     /**
@@ -108,5 +113,6 @@ public interface CaseWhenStep<V, T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @Support
     Field<T> otherwise(Field<T> result);
 }

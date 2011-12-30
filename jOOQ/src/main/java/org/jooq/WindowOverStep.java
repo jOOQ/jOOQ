@@ -35,6 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 
 /**
  * This type is used for the window function DSL API.
@@ -57,6 +63,7 @@ public interface WindowOverStep<T> {
     /**
      * Add an <code>OVER</code> clause
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 
 }

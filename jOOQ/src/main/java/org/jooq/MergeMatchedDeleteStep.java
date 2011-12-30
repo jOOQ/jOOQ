@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -67,5 +69,6 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatche
      *      href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm">http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm</a>
      *      for a full definition of the Oracle <code>MERGE</code> statement
      */
+    @Support(ORACLE)
     MergeNotMatchedStep<R> deleteWhere(Condition condition);
 }

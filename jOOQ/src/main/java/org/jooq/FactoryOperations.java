@@ -35,6 +35,19 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -115,6 +128,7 @@ public interface FactoryOperations extends Configuration {
      * Create a new <code>Loader</code> object to load data from a CSV or XML
      * source
      */
+    @Support
     <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table);
 
     // -------------------------------------------------------------------------
@@ -138,6 +152,7 @@ public interface FactoryOperations extends Configuration {
      * @param sql The SQL
      * @return A query wrapping the plain SQL
      */
+    @Support
     Query query(String sql);
 
     /**
@@ -158,6 +173,7 @@ public interface FactoryOperations extends Configuration {
      * @param bindings The bindings
      * @return A query wrapping the plain SQL
      */
+    @Support
     Query query(String sql, Object... bindings);
 
     // -------------------------------------------------------------------------
@@ -173,6 +189,7 @@ public interface FactoryOperations extends Configuration {
      * @return The resulting jOOQ Result
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     Result<Record> fetch(ResultSet rs) throws DataAccessException;
 
     // -------------------------------------------------------------------------
@@ -186,6 +203,7 @@ public interface FactoryOperations extends Configuration {
      * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
      * </pre></code>
      */
+    @Support
     <R extends Record> SimpleSelectWhereStep<R> selectFrom(Table<R> table);
 
     /**
@@ -202,6 +220,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     SelectSelectStep select(Field<?>... fields);
 
     /**
@@ -220,6 +239,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @see Factory#zero()
      */
+    @Support
     SelectSelectStep selectZero();
 
     /**
@@ -238,6 +258,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @see Factory#one()
      */
+    @Support
     SelectSelectStep selectOne();
 
     /**
@@ -254,6 +275,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     SelectSelectStep selectCount();
 
     /**
@@ -269,6 +291,7 @@ public interface FactoryOperations extends Configuration {
      *       .orderBy(field2);
      * </pre></code>
      */
+    @Support
     SelectSelectStep selectDistinct(Field<?>... fields);
 
     /**
@@ -284,6 +307,7 @@ public interface FactoryOperations extends Configuration {
      *       .orderBy(field2);
      * </pre></code>
      */
+    @Support
     SelectSelectStep select(Collection<? extends Field<?>> fields);
 
     /**
@@ -299,11 +323,13 @@ public interface FactoryOperations extends Configuration {
      *       .orderBy(field2);
      * </pre></code>
      */
+    @Support
     SelectSelectStep selectDistinct(Collection<? extends Field<?>> fields);
 
     /**
      * Create a new {@link SelectQuery}
      */
+    @Support
     SelectQuery selectQuery();
 
     /**
@@ -312,6 +338,7 @@ public interface FactoryOperations extends Configuration {
      * @param table The table to select data from
      * @return The new {@link SelectQuery}
      */
+    @Support
     <R extends Record> SimpleSelectQuery<R> selectQuery(TableLike<R> table);
 
     /**
@@ -320,6 +347,7 @@ public interface FactoryOperations extends Configuration {
      * @param into The table to insert data into
      * @return The new {@link InsertQuery}
      */
+    @Support
     <R extends Record> InsertQuery<R> insertQuery(Table<R> into);
 
     /**
@@ -342,6 +370,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     <R extends Record> InsertSetStep<R> insertInto(Table<R> into);
 
     /**
@@ -359,6 +388,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Field<?>... fields);
 
     /**
@@ -376,6 +406,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     <R extends Record> InsertValuesStep<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields);
 
     /**
@@ -391,6 +422,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select);
 
     /**
@@ -399,6 +431,7 @@ public interface FactoryOperations extends Configuration {
      * @param table The table to update data into
      * @return The new {@link UpdateQuery}
      */
+    @Support
     <R extends Record> UpdateQuery<R> updateQuery(Table<R> table);
 
     /**
@@ -414,6 +447,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     <R extends Record> UpdateSetStep<R> update(Table<R> table);
 
     /**
@@ -479,6 +513,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table);
 
     /**
@@ -487,6 +522,7 @@ public interface FactoryOperations extends Configuration {
      * @param table The table to delete data from
      * @return The new {@link DeleteQuery}
      */
+    @Support
     <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table);
 
     /**
@@ -500,6 +536,7 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Support
     <R extends Record> DeleteWhereStep<R> delete(Table<R> table);
 
     /**
@@ -517,6 +554,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @see Statement#executeBatch()
      */
+    @Support
     Batch batch(Query... queries);
 
     /**
@@ -545,6 +583,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @see Statement#executeBatch()
      */
+    @Support
     BatchBindStep batch(Query query);
 
     // -------------------------------------------------------------------------
@@ -581,6 +620,7 @@ public interface FactoryOperations extends Configuration {
      *         dialects, if no such number is available.
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support({ASE, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE})
     BigInteger lastID() throws DataAccessException;
 
     /**
@@ -589,6 +629,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -597,6 +638,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support({ DB2, H2, INGRES, ORACLE, POSTGRES, SYBASE })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -713,6 +755,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends Record> Result<R> fetch(Table<R> table) throws DataAccessException;
 
     /**
@@ -721,6 +764,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -730,6 +774,7 @@ public interface FactoryOperations extends Configuration {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends Record> R fetchOne(Table<R> table) throws DataAccessException;
 
     /**
@@ -739,6 +784,7 @@ public interface FactoryOperations extends Configuration {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -748,6 +794,7 @@ public interface FactoryOperations extends Configuration {
      * @return The record or <code>null</code> if no record was returned
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends Record> R fetchAny(Table<R> table) throws DataAccessException;
 
     /**
@@ -757,6 +804,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of inserted records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>> int executeInsert(Table<R> table, R record) throws DataAccessException;
 
     /**
@@ -766,6 +814,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>> int executeUpdate(Table<R> table, R record) throws DataAccessException;
 
     /**
@@ -775,6 +824,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>, T> int executeUpdate(Table<R> table, R record, Condition condition)
         throws DataAccessException;
 
@@ -785,6 +835,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>> int executeUpdateOne(Table<R> table, R record) throws DataAccessException;
 
     /**
@@ -794,6 +845,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of updated records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>, T> int executeUpdateOne(Table<R> table, R record, Condition condition)
         throws DataAccessException;
 
@@ -803,6 +855,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>> int executeDelete(Table<R> table) throws DataAccessException;
 
     /**
@@ -812,6 +865,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>, T> int executeDelete(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -820,6 +874,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>> int executeDeleteOne(Table<R> table) throws DataAccessException;
 
     /**
@@ -829,6 +884,7 @@ public interface FactoryOperations extends Configuration {
      * @return The number of deleted records
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     <R extends TableRecord<R>, T> int executeDeleteOne(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
@@ -852,6 +908,7 @@ public interface FactoryOperations extends Configuration {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     Result<Record> fetch(String sql) throws DataAccessException;
 
     /**
@@ -877,6 +934,7 @@ public interface FactoryOperations extends Configuration {
      * @return A query wrapping the plain SQL
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     Result<Record> fetch(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -897,6 +955,7 @@ public interface FactoryOperations extends Configuration {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     List<Result<Record>> fetchMany(String sql) throws DataAccessException;
 
     /**
@@ -919,6 +978,7 @@ public interface FactoryOperations extends Configuration {
      * @return A query wrapping the plain SQL
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException;
 
     /**
@@ -942,6 +1002,7 @@ public interface FactoryOperations extends Configuration {
      * @return The results from the executed query
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     Record fetchOne(String sql) throws DataAccessException;
 
     /**
@@ -967,5 +1028,6 @@ public interface FactoryOperations extends Configuration {
      * @return A query wrapping the plain SQL
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     Record fetchOne(String sql, Object... bindings) throws DataAccessException;
 }

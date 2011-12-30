@@ -85,10 +85,12 @@ public interface SelectSelectStep extends SelectFromStep {
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
+    @Support
     SelectSelectStep select(Field<?>... fields);
 
     /**
      * Add additional fields to the <code>SELECT</code> clause of this query
      */
+    @Support
     SelectSelectStep select(Collection<? extends Field<?>> fields);
 }

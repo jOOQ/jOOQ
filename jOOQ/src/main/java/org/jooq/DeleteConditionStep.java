@@ -56,6 +56,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
+    @Support
     DeleteConditionStep<R> and(Condition condition);
 
     /**

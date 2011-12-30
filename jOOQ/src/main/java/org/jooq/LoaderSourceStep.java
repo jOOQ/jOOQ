@@ -55,45 +55,54 @@ public interface LoaderSourceStep<R extends TableRecord<R>> {
     /**
      * Load CSV data
      */
+    @Support
     LoaderCSVStep<R> loadCSV(File file) throws FileNotFoundException;
 
     /**
      * Load CSV data
      */
+    @Support
     LoaderCSVStep<R> loadCSV(String data);
 
     /**
      * Load CSV data
      */
+    @Support
     LoaderCSVStep<R> loadCSV(InputStream stream);
 
     /**
      * Load CSV data
      */
+    @Support
     LoaderCSVStep<R> loadCSV(Reader reader);
 
     /**
      * Load XML data
      */
+    @Support
     LoaderXMLStep<R> loadXML(File file) throws FileNotFoundException;
 
     /**
      * Load XML data
      */
+    @Support
     LoaderXMLStep<R> loadXML(String data);
 
     /**
      * Load XML data
      */
+    @Support
     LoaderXMLStep<R> loadXML(InputStream stream);
 
     /**
      * Load XML data
      */
+    @Support
     LoaderXMLStep<R> loadXML(Reader reader);
 
     /**
      * Load XML data
      */
+    @Support
     LoaderXMLStep<R> loadXML(InputSource source);
 }

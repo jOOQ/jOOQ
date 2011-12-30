@@ -2693,10 +2693,9 @@ public abstract class jOOQAbstractTest<
             case HSQLDB:
             case DERBY:
 
-            // DB2 supports currval, but there seems to be a minor issue:
-            // https://sourceforge.net/apps/trac/jooq/ticket/241
+            // Ingres has smoe weird issue, claiming that NEXT VALUE was not
+            // requested before CURRENT VALUE
             case INGRES:
-            case DB2:
                 log.info("SKIPPING", "Sequence CURRVAL tests");
                 break;
 

@@ -85,6 +85,7 @@ public interface SelectHavingConditionStep extends SelectOrderByStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep and(Condition condition);
 
     /**
@@ -98,6 +99,7 @@ public interface SelectHavingConditionStep extends SelectOrderByStep {
      *
      * @see Factory#condition(String)
      */
+    @Support
     SelectHavingConditionStep and(String sql);
 
     /**
@@ -111,30 +113,35 @@ public interface SelectHavingConditionStep extends SelectOrderByStep {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SelectHavingConditionStep and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep or(Condition condition);
 
     /**
@@ -148,6 +155,7 @@ public interface SelectHavingConditionStep extends SelectOrderByStep {
      *
      * @see Factory#condition(String)
      */
+    @Support
     SelectHavingConditionStep or(String sql);
 
     /**
@@ -161,23 +169,27 @@ public interface SelectHavingConditionStep extends SelectOrderByStep {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SelectHavingConditionStep or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectHavingConditionStep orNotExists(Select<?> select);
 }

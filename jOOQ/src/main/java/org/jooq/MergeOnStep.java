@@ -35,6 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import org.jooq.impl.Factory;
 
 /**
@@ -61,6 +67,7 @@ public interface MergeOnStep<R extends Record> {
     /**
      * Provide join conditions and proceed to the next step
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> on(Condition... conditions);
 
     /**
@@ -73,6 +80,7 @@ public interface MergeOnStep<R extends Record> {
      *
      * @see Factory#condition(String)
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> on(String sql);
 
     /**
@@ -85,5 +93,6 @@ public interface MergeOnStep<R extends Record> {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> on(String sql, Object... bindings);
 }

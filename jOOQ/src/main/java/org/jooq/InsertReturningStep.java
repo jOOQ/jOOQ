@@ -77,6 +77,7 @@ public interface InsertReturningStep<R extends Record> {
      *
      * @see InsertResultStep
      */
+    @Support
     InsertResultStep<R> returning();
 
     /**
@@ -86,6 +87,7 @@ public interface InsertReturningStep<R extends Record> {
      * @param fields Fields to be returned
      * @see InsertResultStep
      */
+    @Support
     InsertResultStep<R> returning(Field<?>... fields);
 
     /**
@@ -95,5 +97,6 @@ public interface InsertReturningStep<R extends Record> {
      * @param fields Fields to be returned
      * @see InsertResultStep
      */
+    @Support
     InsertResultStep<R> returning(Collection<? extends Field<?>> fields);
 }

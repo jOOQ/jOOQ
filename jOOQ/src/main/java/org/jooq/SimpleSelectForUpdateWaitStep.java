@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting specific
  * {@link Record} types.
@@ -64,6 +66,7 @@ public interface SimpleSelectForUpdateWaitStep<R extends Record> extends SimpleS
      *
      * @see LockProvider#setForUpdateWait(int) see LockProvider for more details
      */
+    @Support(ORACLE)
     SimpleSelectFinalStep<R> wait(int seconds);
 
     /**
@@ -72,6 +75,7 @@ public interface SimpleSelectForUpdateWaitStep<R extends Record> extends SimpleS
      *
      * @see LockProvider#setForUpdateNoWait() see LockProvider for more details
      */
+    @Support(ORACLE)
     SimpleSelectFinalStep<R> noWait();
 
     /**
@@ -81,5 +85,6 @@ public interface SimpleSelectForUpdateWaitStep<R extends Record> extends SimpleS
      * @see LockProvider#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
+    @Support(ORACLE)
     SimpleSelectFinalStep<R> skipLocked();
 }

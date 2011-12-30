@@ -62,6 +62,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> and(Condition condition);
 
     /**
@@ -75,6 +76,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      *
      * @see Factory#condition(String)
      */
+    @Support
     SimpleSelectConditionStep<R> and(String sql);
 
     /**
@@ -88,30 +90,35 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SimpleSelectConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> or(Condition condition);
 
     /**
@@ -125,6 +132,7 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      *
      * @see Factory#condition(String)
      */
+    @Support
     SimpleSelectConditionStep<R> or(String sql);
 
     /**
@@ -138,23 +146,27 @@ public interface SimpleSelectConditionStep<R extends Record> extends SimpleSelec
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SimpleSelectConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SimpleSelectConditionStep<R> orNotExists(Select<?> select);
 }

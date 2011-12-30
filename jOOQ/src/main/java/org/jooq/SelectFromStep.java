@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 import java.util.Collection;
 
 import org.jooq.impl.Factory;
@@ -86,11 +88,13 @@ public interface SelectFromStep extends SelectJoinStep {
     /**
      * Add a <code>FROM</code> clause to the query
      */
+    @Support
     SelectJoinStep from(TableLike<?>... table);
 
     /**
      * Add a <code>FROM</code> clause to the query
      */
+    @Support
     SelectJoinStep from(Collection<TableLike<?>> tables);
 
     /**
@@ -103,6 +107,7 @@ public interface SelectFromStep extends SelectJoinStep {
      *
      * @see Factory#table(String)
      */
+    @Support
     SelectJoinStep from(String sql);
 
     /**
@@ -115,6 +120,7 @@ public interface SelectFromStep extends SelectJoinStep {
      *
      * @see Factory#table(String, Object...)
      */
+    @Support
     SelectJoinStep from(String sql, Object... bindings);
 
     /**
@@ -129,5 +135,6 @@ public interface SelectFromStep extends SelectJoinStep {
      *       .execute();
      * </pre></code>
      */
+    @Support(ORACLE)
     SelectFromStep hint(String hint);
 }

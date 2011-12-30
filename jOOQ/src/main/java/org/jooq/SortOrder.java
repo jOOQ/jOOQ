@@ -46,11 +46,13 @@ public enum SortOrder {
     /**
      * Ascending sort order
      */
+    @Support
     ASC("asc"),
 
     /**
      * Descending sort order
      */
+    @Support
     DESC("desc");
 
     private final String sql;

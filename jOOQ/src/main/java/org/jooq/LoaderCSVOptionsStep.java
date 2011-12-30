@@ -54,15 +54,18 @@ public interface LoaderCSVOptionsStep<R extends TableRecord<R>> extends LoaderLo
      *
      * @param number The number of rows to ignore.
      */
+    @Support
     LoaderCSVOptionsStep<R> ignoreRows(int number);
 
     /**
      * Specify the quote character. By default, this is <code>"</code>
      */
+    @Support
     LoaderCSVOptionsStep<R> quote(char quote);
 
     /**
      * Specify the separator character. By default, this is <code>,</code>
      */
+    @Support
     LoaderCSVOptionsStep<R> separator(char separator);
 }

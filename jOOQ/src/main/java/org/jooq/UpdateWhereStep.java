@@ -59,11 +59,13 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
     /**
      * Add conditions to the query
      */
+    @Support
     UpdateConditionStep<R> where(Condition... conditions);
 
     /**
      * Add conditions to the query
      */
+    @Support
     UpdateConditionStep<R> where(Collection<Condition> conditions);
 
     /**
@@ -76,6 +78,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
      *
      * @see Factory#condition(String)
      */
+    @Support
     UpdateConditionStep<R> where(String sql);
 
     /**
@@ -88,15 +91,18 @@ public interface UpdateWhereStep<R extends Record> extends UpdateFinalStep<R> {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     UpdateConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add an EXISTS clause to the query
      */
+    @Support
     UpdateConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query
      */
+    @Support
     UpdateConditionStep<R> whereNotExists(Select<?> select);
 }

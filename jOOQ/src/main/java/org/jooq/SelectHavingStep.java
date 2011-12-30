@@ -86,11 +86,13 @@ public interface SelectHavingStep extends SelectOrderByStep {
     /**
      * Add a <code>HAVING</code> clause to the query
      */
+    @Support
     SelectHavingConditionStep having(Condition... conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query
      */
+    @Support
     SelectHavingConditionStep having(Collection<Condition> conditions);
 
     /**
@@ -103,6 +105,7 @@ public interface SelectHavingStep extends SelectOrderByStep {
      *
      * @see Factory#condition(String)
      */
+    @Support
     SelectHavingConditionStep having(String sql);
 
     /**
@@ -115,5 +118,6 @@ public interface SelectHavingStep extends SelectOrderByStep {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SelectHavingConditionStep having(String sql, Object... bindings);
 }

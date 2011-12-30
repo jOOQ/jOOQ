@@ -52,5 +52,6 @@ public interface LoaderLoadStep<R extends TableRecord<R>> {
      * <code>Loader</code> object. They can be accessed using
      * {@link Loader#errors()}
      */
+    @Support
     Loader<R> execute() throws IOException;
 }

@@ -42,7 +42,13 @@ package org.jooq;
  */
 public final class Constants {
 
+    /**
+     * The latest jOOQ version
+     */
     public static final String VERSION = "2.0.2";
 
+    /**
+     * No further instances
+     */
     private Constants() {}
 }

@@ -59,6 +59,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     <T> CaseWhenStep<V, T> when(V compareValue, T result);
 
     /**
@@ -71,6 +72,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result);
 
     /**
@@ -83,6 +85,7 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result);
 
     /**
@@ -95,5 +98,6 @@ public interface CaseValueStep<V> {
      * @param result The result value if values are equal
      * @return An intermediary step for case statement construction
      */
+    @Support
     <T> CaseWhenStep<V, T> when(Field<V> compareValue, Field<T> result);
 }

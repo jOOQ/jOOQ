@@ -62,8 +62,8 @@ import org.jooq.exception.DataAccessException;
  * <li>Sybase and SQLite allow for retrieving IDENTITY values as
  * <code>@@identity</code> or <code>last_inserted_rowid()</code> values. Those
  * values are fetched in a separate <code>SELECT</code> statement. If other
- * fields are requested, a second statement is issued. Client code must assure
- * transactional integrity between the two statements.</li>
+ * fields are requested, another statement is issued. Client code must assure
+ * transactional integrity between these statements.</li>
  * </ul>
  *
  * @author Lukas Eder
@@ -78,6 +78,7 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     Result<R> fetch() throws DataAccessException;
 
     /**
@@ -86,5 +87,6 @@ public interface InsertResultStep<R extends Record> extends Insert<R> {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support
     R fetchOne() throws DataAccessException;
 }

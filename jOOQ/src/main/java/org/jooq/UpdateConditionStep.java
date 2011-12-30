@@ -58,6 +58,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator
      */
+    @Support
     UpdateConditionStep<R> and(Condition condition);
 
     /**
@@ -71,6 +72,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      *
      * @see Factory#condition(String)
      */
+    @Support
     UpdateConditionStep<R> and(String sql);
 
     /**
@@ -84,30 +86,35 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     UpdateConditionStep<R> and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
+    @Support
     UpdateConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @Support
     UpdateConditionStep<R> andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @Support
     UpdateConditionStep<R> andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
+    @Support
     UpdateConditionStep<R> or(Condition condition);
 
     /**
@@ -121,6 +128,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      *
      * @see Factory#condition(String)
      */
+    @Support
     UpdateConditionStep<R> or(String sql);
 
     /**
@@ -134,23 +142,27 @@ public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     UpdateConditionStep<R> or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
+    @Support
     UpdateConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @Support
     UpdateConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @Support
     UpdateConditionStep<R> orNotExists(Select<?> select);
 }

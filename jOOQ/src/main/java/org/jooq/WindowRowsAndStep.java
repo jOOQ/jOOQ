@@ -35,6 +35,11 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SYBASE;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -60,29 +65,34 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> andUnboundedPreceding();
 
     /**
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> andPreceding(int number);
 
     /**
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> andCurrentRow();
 
     /**
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> andUnboundedFollowing();
 
     /**
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * function.
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowFinalStep<T> andFollowing(int number);
 }

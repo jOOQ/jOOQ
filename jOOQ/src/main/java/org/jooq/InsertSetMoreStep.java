@@ -62,5 +62,6 @@ public interface InsertSetMoreStep<R extends Record> extends InsertSetStep<R>, I
      *
      * @see InsertQuery#newRecord()
      */
+    @Support
     InsertSetStep<R> newRecord();
 }

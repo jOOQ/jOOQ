@@ -57,11 +57,13 @@ public interface UpdateSetStep<R extends Record> {
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
+    @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
+    @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -71,5 +73,6 @@ public interface UpdateSetStep<R extends Record> {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
+    @Support
     UpdateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 }

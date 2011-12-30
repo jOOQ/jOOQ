@@ -70,6 +70,7 @@ public interface Case {
      * @param value The value to do the case statement on
      * @return An intermediary step for case statement construction
      */
+    @Support
     <V> CaseValueStep<V> value(V value);
 
     /**
@@ -84,6 +85,7 @@ public interface Case {
      * @param value The value to do the case statement on
      * @return An intermediary step for case statement construction
      */
+    @Support
     <V> CaseValueStep<V> value(Field<V> value);
 
     /**
@@ -99,6 +101,7 @@ public interface Case {
      * @param result The result if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @Support
     <T> CaseConditionStep<T> when(Condition condition, T result);
 
     /**
@@ -114,5 +117,6 @@ public interface Case {
      * @param result The result if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @Support
     <T> CaseConditionStep<T> when(Condition condition, Field<T> result);
 }

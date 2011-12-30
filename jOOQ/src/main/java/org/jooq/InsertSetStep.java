@@ -63,11 +63,13 @@ public interface InsertSetStep<R extends Record> {
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
+    @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
      */
+    @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -77,20 +79,24 @@ public interface InsertSetStep<R extends Record> {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
+    @Support
     InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
     /**
      * Add values to the insert statement with implicit field names
      */
+    @Support
     InsertValuesStep<R> values(Object... values);
 
     /**
      * Add values to the insert statement with implicit field names
      */
+    @Support
     InsertValuesStep<R> values(Field<?>... values);
 
     /**
      * Add values to the insert statement with implicit field names
      */
+    @Support
     InsertValuesStep<R> values(Collection<?> values);
 }

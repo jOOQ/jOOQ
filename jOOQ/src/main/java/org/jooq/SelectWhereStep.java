@@ -86,11 +86,13 @@ public interface SelectWhereStep extends SelectConnectByStep {
     /**
      * Add a <code>WHERE</code> clause to the query
      */
+    @Support
     SelectConditionStep where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query
      */
+    @Support
     SelectConditionStep where(Collection<Condition> conditions);
 
     /**
@@ -103,6 +105,7 @@ public interface SelectWhereStep extends SelectConnectByStep {
      *
      * @see Factory#condition(String)
      */
+    @Support
     SelectConditionStep where(String sql);
 
     /**
@@ -115,15 +118,18 @@ public interface SelectWhereStep extends SelectConnectByStep {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SelectConditionStep where(String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the query
      */
+    @Support
     SelectConditionStep whereExists(Select<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the query
      */
+    @Support
     SelectConditionStep whereNotExists(Select<?> select);
 }

@@ -36,6 +36,14 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+
 import java.util.Collection;
 
 /**
@@ -50,6 +58,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param fields
      */
+    @Support
     void addSelect(Field<?>... fields);
 
     /**
@@ -57,11 +66,13 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param fields
      */
+    @Support
     void addSelect(Collection<? extends Field<?>> fields);
 
     /**
      * Add "distinct" keyword to the select clause
      */
+    @Support
     void setDistinct(boolean distinct);
 
     /**
@@ -69,6 +80,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param from The added tables
      */
+    @Support
     void addFrom(TableLike<?>... from);
 
     /**
@@ -76,6 +88,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param from The added tables
      */
+    @Support
     void addFrom(Collection<TableLike<?>> from);
 
     /**
@@ -84,6 +97,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param table The joined table
      * @param conditions The joining conditions
      */
+    @Support
     void addJoin(TableLike<?> table, Condition... conditions);
 
     /**
@@ -93,6 +107,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param type The type of join
      * @param conditions The joining conditions
      */
+    @Support
     void addJoin(TableLike<?> table, JoinType type, Condition... conditions);
 
     /**
@@ -101,6 +116,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param table The joined table
      * @param fields The fields for the <code>USING</code> clause
      */
+    @Support({ DERBY, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE })
     void addJoinUsing(TableLike<?> table, Collection<? extends Field<?>> fields);
 
     /**
@@ -110,6 +126,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param type The type of join
      * @param fields The fields for the <code>USING</code> clause
      */
+    @Support({ DERBY, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE })
     void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields);
 
     /**
@@ -117,6 +134,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param fields The grouping fields
      */
+    @Support
     void addGroupBy(Field<?>... fields);
 
     /**
@@ -124,6 +142,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param fields The grouping fields
      */
+    @Support
     void addGroupBy(Collection<? extends Field<?>> fields);
 
     /**
@@ -132,6 +151,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param conditions The condition
      */
+    @Support
     void addHaving(Condition... conditions);
 
     /**
@@ -140,6 +160,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param conditions The condition
      */
+    @Support
     void addHaving(Collection<Condition> conditions);
 
     /**
@@ -149,6 +170,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param operator The operator to use to add the conditions to the existing conditions
      * @param conditions The condition
      */
+    @Support
     void addHaving(Operator operator, Condition... conditions);
 
     /**
@@ -158,6 +180,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param operator The operator to use to add the conditions to the existing conditions
      * @param conditions The condition
      */
+    @Support
     void addHaving(Operator operator, Collection<Condition> conditions);
 
     /**
@@ -172,21 +195,25 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *       .execute();
      * </pre></code>
      */
+    @Support(ORACLE)
     void addHint(String hint);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
+    @Support(ORACLE)
     void addConnectBy(Condition condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the query
      */
+    @Support(ORACLE)
     void addConnectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause
      */
+    @Support(ORACLE)
     void setConnectByStartWith(Condition condition);
 }

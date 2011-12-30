@@ -57,6 +57,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @Support
     CaseConditionStep<T> when(Condition condition, T result);
 
     /**
@@ -67,6 +68,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if the condition holds true
      * @return An intermediary step for case statement construction
      */
+    @Support
     CaseConditionStep<T> when(Condition condition, Field<T> result);
 
     /**
@@ -75,6 +77,7 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @Support
     Field<T> otherwise(T result);
 
     /**
@@ -83,5 +86,6 @@ public interface CaseConditionStep<T> extends Field<T> {
      * @param result The result value if no other value matches the case
      * @return The resulting field from case statement construction
      */
+    @Support
     Field<T> otherwise(Field<T> result);
 }

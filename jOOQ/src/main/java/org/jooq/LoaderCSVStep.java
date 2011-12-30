@@ -53,6 +53,7 @@ public interface LoaderCSVStep<R extends TableRecord<R>> {
      * at index <code>i</code>. If <code>fields[i] == null</code>, then the CSV
      * column is skipped.
      */
+    @Support
     LoaderCSVOptionsStep<R> fields(Field<?>... fields);
 
     /**
@@ -62,6 +63,7 @@ public interface LoaderCSVStep<R extends TableRecord<R>> {
      * <code>new ArrayList(fields).get(i) == null</code>, then the CSV column is
      * skipped.
      */
+    @Support
     LoaderCSVOptionsStep<R> fields(Collection<? extends Field<?>> fields);
 
 }

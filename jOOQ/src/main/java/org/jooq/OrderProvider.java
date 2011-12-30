@@ -35,6 +35,18 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.util.Collection;
 
 /**
@@ -49,6 +61,7 @@ public interface OrderProvider {
      *
      * @param fields The ordering fields
      */
+    @Support
     void addOrderBy(Field<?>... fields);
 
     /**
@@ -56,6 +69,7 @@ public interface OrderProvider {
      *
      * @param fields The ordering fields
      */
+    @Support
     void addOrderBy(SortField<?>... fields);
 
     /**
@@ -63,6 +77,7 @@ public interface OrderProvider {
      *
      * @param fields The ordering fields
      */
+    @Support
     void addOrderBy(Collection<SortField<?>> fields);
 
     /**
@@ -72,6 +87,7 @@ public interface OrderProvider {
      *
      * @param fieldIndexes The ordering fields
      */
+    @Support
     void addOrderBy(int... fieldIndexes);
 
     /**
@@ -81,6 +97,7 @@ public interface OrderProvider {
      *
      * @param numberOfRows The number of rows to return
      */
+    @Support
     void addLimit(int numberOfRows);
 
     /**
@@ -89,6 +106,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
+    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
     void addLimit(int offset, int numberOfRows);
 
 }

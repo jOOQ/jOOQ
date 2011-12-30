@@ -35,6 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.util.Collection;
 
 /**
@@ -67,17 +73,20 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * access to a MySQL-like API allowing for
      * <code>INSERT SET a = x, b = y</code> syntax.
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedSetStep<R> whenNotMatchedThenInsert();
 
     /**
      * Add the <code>WHEN NOT MATCHED THEN INSERT</code> clause to the
      * <code>MERGE</code> statement
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedValuesStep<R> whenNotMatchedThenInsert(Field<?>... fields);
 
     /**
      * Add the <code>WHEN MATCHED THEN UPDATE</code> clause to the
      * <code>MERGE</code> statement
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedValuesStep<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
 }

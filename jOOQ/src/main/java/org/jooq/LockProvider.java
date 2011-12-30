@@ -35,6 +35,17 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.util.Collection;
 
 /**
@@ -87,6 +98,7 @@ public interface LockProvider {
      *
      * @param forUpdate The flag's value
      */
+    @Support({ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE})
     void setForUpdate(boolean forUpdate);
 
     /**
@@ -109,6 +121,7 @@ public interface LockProvider {
      *
      * @param fields The fields that should be locked
      */
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Field<?>... fields);
 
     /**
@@ -117,6 +130,7 @@ public interface LockProvider {
      * <p>
      * @see #setForUpdateOf(Field...)
      */
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })
     void setForUpdateOf(Collection<? extends Field<?>> fields);
 
     /**
@@ -145,6 +159,7 @@ public interface LockProvider {
      *
      * @param tables The tables that should be locked
      */
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
     void setForUpdateOf(Table<?>... tables);
 
     /**
@@ -163,6 +178,7 @@ public interface LockProvider {
      *
      * @param seconds The number of seconds to wait for a lock
      */
+    @Support(ORACLE)
     void setForUpdateWait(int seconds);
 
     /**
@@ -178,6 +194,7 @@ public interface LockProvider {
      * <li>Oracle</li>
      * </ul>
      */
+    @Support(ORACLE)
     void setForUpdateNoWait();
 
     /**
@@ -193,6 +210,7 @@ public interface LockProvider {
      * <li>Oracle</li>
      * </ul>
      */
+    @Support(ORACLE)
     void setForUpdateSkipLocked();
 
     /**
@@ -216,5 +234,6 @@ public interface LockProvider {
      *
      * @param forShare The flag's value
      */
+    @Support({ MYSQL, POSTGRES })
     void setForShare(boolean forShare);
 }

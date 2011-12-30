@@ -35,6 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -59,6 +65,7 @@ public interface MergeUsingStep<R extends Record> {
     /**
      * Add the <code>USING</code> clause to the <code>MERGE</code> statement
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -68,5 +75,6 @@ public interface MergeUsingStep<R extends Record> {
      * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
      * Server, where derived tables need to be aliased.
      */
+    @Support({ DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnStep<R> usingDual();
 }

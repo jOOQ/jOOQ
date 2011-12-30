@@ -84,10 +84,12 @@ public interface SelectGroupByStep extends SelectHavingStep {
     /**
      * Add a <code>GROUP BY</code> clause to the query
      */
+    @Support
     SelectHavingStep groupBy(Field<?>... fields);
 
     /**
      * Add a <code>GROUP BY</code> clause to the query
      */
+    @Support
     SelectHavingStep groupBy(Collection<? extends Field<?>> fields);
 }

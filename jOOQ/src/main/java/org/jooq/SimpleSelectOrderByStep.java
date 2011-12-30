@@ -61,16 +61,19 @@ public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectL
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
+    @Support
     SimpleSelectLimitStep<R> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
+    @Support
     SimpleSelectLimitStep<R> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
+    @Support
     SimpleSelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
 
     /**
@@ -78,5 +81,6 @@ public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectL
      * <p>
      * Indexes start at <code>1</code> in SQL!
      */
+    @Support
     SimpleSelectLimitStep<R> orderBy(int... fieldIndexes);
 }

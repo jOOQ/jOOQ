@@ -35,6 +35,13 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.sql.Connection;
 
 /**
@@ -58,12 +65,12 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyIgnore()}
      */
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     LoaderOptionsStep<R> onDuplicateKeyUpdate();
 
     /**
      * Instruct the <code>Loader</code> to skip duplicate records if the main
-     * unique key's value is already in the database. This is only supported if
-     * {@link InsertQuery#onDuplicateKeyUpdate(boolean)} is supported, too.
+     * unique key's value is already in the database.
      * <p>
      * If the loaded table does not have a main key, then all records are
      * inserted.
@@ -72,6 +79,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * the default. This cannot be combined with {@link #onDuplicateKeyError()}
      * or {@link #onDuplicateKeyUpdate()}
      */
+    @Support
     LoaderOptionsStep<R> onDuplicateKeyIgnore();
 
     /**
@@ -86,6 +94,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * be combined with {@link #onDuplicateKeyIgnore()} or
      * {@link #onDuplicateKeyUpdate()}
      */
+    @Support
     LoaderOptionsStep<R> onDuplicateKeyError();
 
     /**
@@ -97,6 +106,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * If you don't specify a behaviour, {@link #onErrorAbort()} will be the
      * default. This cannot be combined with {@link #onErrorAbort()}
      */
+    @Support
     LoaderOptionsStep<R> onErrorIgnore();
 
     /**
@@ -110,6 +120,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * If you don't specify a behaviour, this will be the default. This cannot
      * be combined with {@link #onErrorIgnore()}
      */
+    @Support
     LoaderOptionsStep<R> onErrorAbort();
 
     /**
@@ -130,6 +141,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
      */
+    @Support
     LoaderOptionsStep<R> commitEach();
 
     /**
@@ -151,6 +163,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      *
      * @param number The number of records that are committed together.
      */
+    @Support
     LoaderOptionsStep<R> commitAfter(int number);
 
     /**
@@ -168,6 +181,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * If you don't specify a COMMIT OPTION, {@link #commitNone()} will be the
      * default, leaving transaction handling up to you.
      */
+    @Support
     LoaderOptionsStep<R> commitAll();
 
     /**
@@ -182,6 +196,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * container-managed transactions, too, or your
      * {@link Connection#getAutoCommit()} value is set to true.
      */
+    @Support
     LoaderOptionsStep<R> commitNone();
 
 }

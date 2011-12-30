@@ -51,6 +51,7 @@ public interface ConditionProvider {
      *
      * @param conditions The condition
      */
+    @Support
     void addConditions(Condition... conditions);
 
     /**
@@ -59,6 +60,7 @@ public interface ConditionProvider {
      *
      * @param conditions The condition
      */
+    @Support
     void addConditions(Collection<Condition> conditions);
 
     /**
@@ -67,6 +69,7 @@ public interface ConditionProvider {
      *
      * @param conditions The condition
      */
+    @Support
     void addConditions(Operator operator, Condition... conditions);
 
     /**
@@ -75,6 +78,7 @@ public interface ConditionProvider {
      *
      * @param conditions The condition
      */
+    @Support
     void addConditions(Operator operator, Collection<Condition> conditions);
 
 }

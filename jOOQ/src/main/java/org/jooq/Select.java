@@ -48,21 +48,25 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
     /**
      * Combine with other selects
      */
+    @Support
     Select<R> union(Select<R> select);
 
     /**
      * Combine with other selects
      */
+    @Support
     Select<R> unionAll(Select<R> select);
 
     /**
      * Combine with other selects
      */
+    @Support
     Select<R> except(Select<R> select);
 
     /**
      * Combine with other selects
      */
+    @Support
     Select<R> intersect(Select<R> select);
 
     /**

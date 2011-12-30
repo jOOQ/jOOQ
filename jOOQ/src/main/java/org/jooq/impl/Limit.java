@@ -73,20 +73,7 @@ class Limit extends AbstractQueryPart {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
-            case MYSQL: {
-                if (context.inline()) {
-                    context.sql("limit ")
-                           .sql(getOffset())
-                           .sql(", ")
-                           .sql(getNumberOfRows());
-                }
-                else {
-                    context.sql("limit ?, ?");
-                }
-
-                break;
-            }
-
+            case MYSQL:    // No break
             case H2:       // No break
             case HSQLDB:   // No break
             case POSTGRES: // No break
@@ -194,7 +181,6 @@ class Limit extends AbstractQueryPart {
 
             // OFFSET .. LIMIT support provided by the following dialects
             // ----------------------------------------------------------
-            case MYSQL:
             case DERBY: {
                 context.bind(val(getOffset()));
                 context.bind(val(getNumberOfRows()));
@@ -203,6 +189,7 @@ class Limit extends AbstractQueryPart {
 
             // LIMIT .. OFFSET support provided by the following dialects
             // ----------------------------------------------------------
+            case MYSQL:
             case HSQLDB:
             case H2:
             case POSTGRES:

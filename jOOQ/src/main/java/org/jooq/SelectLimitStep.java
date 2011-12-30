@@ -35,6 +35,18 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -89,6 +101,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * This is the same as calling {@link #limit(int, int)} with offset = 0, or
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
+    @Support
     SelectOffsetStep limit(int numberOfRows);
 
     /**
@@ -99,5 +112,6 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
+    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
     SelectFinalStep limit(int offset, int numberOfRows);
 }

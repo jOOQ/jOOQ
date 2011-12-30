@@ -36,6 +36,13 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -59,6 +66,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * If this call is done on a fresh insert statement (without any values
      * yet), then this call has no effect either.
      */
+    @Support
     void newRecord();
 
     /**
@@ -69,6 +77,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @param record The record to add to this insert statement.
      */
+    @Support
     void addRecord(R record);
 
     /**
@@ -77,6 +86,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     void onDuplicateKeyUpdate(boolean flag);
 
     /**
@@ -85,6 +95,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> void addValueForUpdate(Field<T> field, T value);
 
     /**
@@ -93,6 +104,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> void addValueForUpdate(Field<T> field, Field<T> value);
 
     /**
@@ -105,6 +117,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see InsertOnDuplicateStep#onDuplicateKeyUpdate()
      */
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**
@@ -113,6 +126,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see #getReturnedRecords()
      */
+    @Support
     void setReturning();
 
     /**
@@ -122,6 +136,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * @param identity The table's identity
      * @see #getReturnedRecords()
      */
+    @Support
     void setReturning(Identity<R, ? extends Number> identity);
 
     /**
@@ -131,6 +146,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * @param fields Fields to be returned
      * @see #getReturnedRecords()
      */
+    @Support
     void setReturning(Field<?>... fields);
 
     /**
@@ -140,6 +156,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * @param fields Fields to be returned
      * @see #getReturnedRecords()
      */
+    @Support
     void setReturning(Collection<? extends Field<?>> fields);
 
     /**
@@ -168,6 +185,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      *
      * @see #getReturnedRecords()
      */
+    @Support
     R getReturnedRecord();
 
     /**
@@ -193,6 +211,7 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
      * <p>
      * This currently only works well for DB2, HSQLDB, MySQL, and Postgres
      */
+    @Support
     Result<R> getReturnedRecords();
 
 }

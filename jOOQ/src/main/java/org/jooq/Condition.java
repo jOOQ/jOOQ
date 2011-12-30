@@ -52,6 +52,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @Support
     Condition and(Condition other);
 
     /**
@@ -67,6 +68,7 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      * @see Factory#condition(String)
      */
+    @Support
     Condition and(String sql);
 
     /**
@@ -83,6 +85,7 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      * @see Factory#condition(String, Object...)
      */
+    @Support
     Condition and(String sql, Object... bindings);
 
     /**
@@ -92,6 +95,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @Support
     Condition andNot(Condition other);
 
     /**
@@ -101,6 +105,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @Support
     Condition andExists(Select<?> select);
 
     /**
@@ -110,6 +115,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @Support
     Condition andNotExists(Select<?> select);
 
     /**
@@ -119,6 +125,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @Support
     Condition or(Condition other);
 
     /**
@@ -134,6 +141,7 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      * @see Factory#condition(String)
      */
+    @Support
     Condition or(String sql);
 
     /**
@@ -150,6 +158,7 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      * @see Factory#condition(String, Object...)
      */
+    @Support
     Condition or(String sql, Object... bindings);
 
     /**
@@ -159,6 +168,7 @@ public interface Condition extends QueryPart {
      * @param other The other condition
      * @return The combined condition
      */
+    @Support
     Condition orNot(Condition other);
 
     /**
@@ -168,6 +178,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @Support
     Condition orExists(Select<?> select);
 
     /**
@@ -177,6 +188,7 @@ public interface Condition extends QueryPart {
      * @param select The EXISTS's subquery
      * @return The combined condition
      */
+    @Support
     Condition orNotExists(Select<?> select);
 
     /**
@@ -184,5 +196,6 @@ public interface Condition extends QueryPart {
      *
      * @return This condition, inverted
      */
+    @Support
     Condition not();
 }

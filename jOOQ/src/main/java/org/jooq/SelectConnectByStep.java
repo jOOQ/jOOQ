@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -82,6 +84,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
+    @Support(ORACLE)
     SelectConnectByConditionStep connectBy(Condition condition);
 
     /**
@@ -92,6 +95,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @Support(ORACLE)
     SelectConnectByConditionStep connectBy(String sql);
 
     /**
@@ -102,12 +106,14 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @Support(ORACLE)
     SelectConnectByConditionStep connectBy(String sql, Object... bindings);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
      * query
      */
+    @Support(ORACLE)
     SelectConnectByConditionStep connectByNoCycle(Condition condition);
 
     /**
@@ -119,6 +125,7 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @Support(ORACLE)
     SelectConnectByConditionStep connectByNoCycle(String sql);
 
     /**
@@ -130,5 +137,6 @@ public interface SelectConnectByStep extends SelectGroupByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
+    @Support(ORACLE)
     SelectConnectByConditionStep connectByNoCycle(String sql, Object... bindings);
 }

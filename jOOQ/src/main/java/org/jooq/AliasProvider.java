@@ -56,5 +56,6 @@ public interface AliasProvider<Z extends AliasProvider<Z>> extends QueryPart {
      * @param alias The alias name
      * @return The aliased QueryPart
      */
+    @Support
     Z as(String alias);
 }

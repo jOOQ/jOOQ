@@ -63,11 +63,13 @@ public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrd
     /**
      * Add a <code>WHERE</code> clause to the query
      */
+    @Support
     SimpleSelectConditionStep<R> where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query
      */
+    @Support
     SimpleSelectConditionStep<R> where(Collection<Condition> conditions);
 
     /**
@@ -80,6 +82,7 @@ public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrd
      *
      * @see Factory#condition(String)
      */
+    @Support
     SimpleSelectConditionStep<R> where(String sql);
 
     /**
@@ -92,15 +95,18 @@ public interface SimpleSelectWhereStep<R extends Record> extends SimpleSelectOrd
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SimpleSelectConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the query
      */
+    @Support
     SimpleSelectConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the query
      */
+    @Support
     SimpleSelectConditionStep<R> whereNotExists(Select<?> select);
 }

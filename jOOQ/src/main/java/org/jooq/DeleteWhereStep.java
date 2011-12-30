@@ -57,11 +57,13 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
     /**
      * Add conditions to the query
      */
+    @Support
     DeleteConditionStep<R> where(Condition... conditions);
 
     /**
      * Add conditions to the query
      */
+    @Support
     DeleteConditionStep<R> where(Collection<Condition> conditions);
 
     /**
@@ -74,6 +76,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
      *
      * @see Factory#condition(String)
      */
+    @Support
     DeleteConditionStep<R> where(String sql);
 
     /**
@@ -86,15 +89,18 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     DeleteConditionStep<R> where(String sql, Object... bindings);
 
     /**
      * Add an EXISTS clause to the query
      */
+    @Support
     DeleteConditionStep<R> whereExists(Select<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query
      */
+    @Support
     DeleteConditionStep<R> whereNotExists(Select<?> select);
 }

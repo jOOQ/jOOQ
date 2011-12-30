@@ -35,6 +35,13 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import org.jooq.impl.Factory;
 
 /**
@@ -76,5 +83,6 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <p>
      * These are the dialects that fulfill the above requirements:
      */
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 }

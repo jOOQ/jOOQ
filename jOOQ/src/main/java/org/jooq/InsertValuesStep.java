@@ -59,15 +59,18 @@ public interface InsertValuesStep<R extends Record> extends InsertOnDuplicateSte
     /**
      * Add values to the insert statement
      */
+    @Support
     InsertValuesStep<R> values(Object... values);
 
     /**
      * Add values to the insert statement
      */
+    @Support
     InsertValuesStep<R> values(Field<?>... values);
 
     /**
      * Add values to the insert statement
      */
+    @Support
     InsertValuesStep<R> values(Collection<?> values);
 }

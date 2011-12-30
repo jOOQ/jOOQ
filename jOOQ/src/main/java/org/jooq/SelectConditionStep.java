@@ -85,6 +85,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep and(Condition condition);
 
     /**
@@ -98,6 +99,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      *
      * @see Factory#condition(String)
      */
+    @Support
     SelectConditionStep and(String sql);
 
     /**
@@ -111,30 +113,35 @@ public interface SelectConditionStep extends SelectConnectByStep {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SelectConditionStep and(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep andExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#AND} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep andNotExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep or(Condition condition);
 
     /**
@@ -148,6 +155,7 @@ public interface SelectConditionStep extends SelectConnectByStep {
      *
      * @see Factory#condition(String)
      */
+    @Support
     SelectConditionStep or(String sql);
 
     /**
@@ -161,24 +169,28 @@ public interface SelectConditionStep extends SelectConnectByStep {
      *
      * @see Factory#condition(String, Object...)
      */
+    @Support
     SelectConditionStep or(String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator and proceed to the next step.
      */
+    @Support
     SelectConditionStep orNotExists(Select<?> select);
 
 }

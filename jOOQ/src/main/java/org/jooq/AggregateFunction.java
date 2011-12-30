@@ -35,6 +35,12 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 /**
  * An aggregate function is a special field that is usually used in a
  * <code>GROUP BY</code> context. It is also the base for window function
@@ -55,5 +61,6 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * Sybase.
      */
     @Override
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> over();
 }

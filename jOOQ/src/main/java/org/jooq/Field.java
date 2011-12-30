@@ -36,6 +36,19 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
@@ -116,6 +129,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @return The cast field
      * @see #cast(DataType)
      */
+    @Support
     <Z> Field<Z> cast(Field<Z> field);
 
     /**
@@ -124,6 +138,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param <Z> The generic type of the cast field
      * @param type
      */
+    @Support
     <Z> Field<Z> cast(DataType<Z> type);
 
     /**
@@ -138,6 +153,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @return The cast field
      * @see #cast(DataType)
      */
+    @Support
     <Z> Field<Z> cast(Class<? extends Z> type);
 
     // ------------------------------------------------------------------------
@@ -149,6 +165,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @return This field as an ascending sort field
      */
+    @Support
     SortField<T> asc();
 
     /**
@@ -156,6 +173,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @return This field as a descending sort field
      */
+    @Support
     SortField<T> desc();
 
     /**
@@ -175,6 +193,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @Support
     SortField<Integer> sortAsc(Collection<T> sortList);
 
     /**
@@ -194,6 +213,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @Support
     SortField<Integer> sortAsc(T... sortList);
 
     /**
@@ -213,6 +233,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @Support
     SortField<Integer> sortDesc(Collection<T> sortList);
 
     /**
@@ -232,6 +253,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortList The list containing sort value preferences
      * @return The sort field
      */
+    @Support
     SortField<Integer> sortDesc(T... sortList);
 
     /**
@@ -251,6 +273,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @param sortMap The list containing sort value preferences
      * @return The sort field
      */
+    @Support
     <Z> SortField<Z> sort(Map<T, Z> sortMap);
 
     // ------------------------------------------------------------------------
@@ -263,6 +286,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This renders the same on all dialects:
      * <code><pre>-[this]</pre></code>
      */
+    @Support
     Field<T> neg();
 
     /**
@@ -273,11 +297,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <li>If this is a date time field, then [value] days are added to this date</li>
      * </ul>
      */
+    @Support
     Field<T> add(Number value);
 
     /**
      * An arithmetic expression adding this to value
      */
+    @Support
     Field<T> add(Field<? extends Number> value);
 
     /**
@@ -290,31 +316,37 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * this date</li>
      * </ul>
      */
+    @Support
     Field<T> sub(Number value);
 
     /**
      * An arithmetic expression subtracting value from this
      */
+    @Support
     Field<T> sub(Field<? extends Number> value);
 
     /**
      * An arithmetic expression multiplying this with value
      */
+    @Support
     Field<T> mul(Number value);
 
     /**
      * An arithmetic expression multiplying this with value
      */
+    @Support
     Field<T> mul(Field<? extends Number> value);
 
     /**
      * An arithmetic expression dividing this by value
      */
+    @Support
     Field<T> div(Number value);
 
     /**
      * An arithmetic expression dividing this by value
      */
+    @Support
     Field<T> div(Field<? extends Number> value);
 
     /**
@@ -325,6 +357,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * ... or the modulo function elsewhere:
      * <code><pre>mod([this], [value])</pre></code>
      */
+    @Support
     Field<T> mod(Number value);
 
     /**
@@ -335,6 +368,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * ... or the modulo function elsewhere:
      * <code><pre>mod([this], [value])</pre></code>
      */
+    @Support
     Field<T> mod(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
@@ -344,271 +378,333 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     /**
      * <code>this is null</code>
      */
+    @Support
     Condition isNull();
 
     /**
      * <code>this is not null</code>
      */
+    @Support
     Condition isNotNull();
 
     /**
      * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
      */
+    @Support
     Condition isTrue();
 
     /**
      * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
      */
+    @Support
     Condition isFalse();
 
     /**
      * <code>this like value</code>
      */
+    @Support
     Condition like(Field<T> value);
 
     /**
      * <code>this like value</code>
      */
+    @Support
     Condition like(T value);
 
     /**
      * <code>this not like value</code>
      */
+    @Support
     Condition notLike(Field<T> value);
 
     /**
      * <code>this not like value</code>
      */
+    @Support
     Condition notLike(T value);
 
     /**
      * <code>this in (values...)</code>
      */
+    @Support
     Condition in(Collection<T> values);
 
     /**
      * <code>this in (values...)</code>
      */
+    @Support
     Condition in(T... values);
 
     /**
      * <code>this in (values...)</code>
      */
+    @Support
     Condition in(Field<?>... values);
 
     /**
      * <code>this in (select...)</code>
      */
+    @Support
     Condition in(Select<?> query);
 
     /**
      * <code>this not in (values...)</code>
      */
+    @Support
     Condition notIn(Collection<T> values);
 
     /**
      * <code>this not in (values...)</code>
      */
+    @Support
     Condition notIn(T... values);
 
     /**
      * <code>this not in (values...)</code>
      */
+    @Support
     Condition notIn(Field<?>... values);
 
     /**
      * <code>this not in (select...)</code>
      */
+    @Support
     Condition notIn(Select<?> query);
 
     /**
      * <code>this between minValue and maxValue</code>
      */
+    @Support
     Condition between(T minValue, T maxValue);
 
     /**
      * <code>this between minValue and maxValue</code>
      */
+    @Support
     Condition between(Field<T> minValue, Field<T> maxValue);
 
     /**
      * <code>this = value</code>
+     * <p>
+     * If <code>value == null</code>, then this will return a condition
+     * equivalent to {@link #isNull()} for convenience. SQL's ternary
+     * <code>NULL</code> logic is rarely of use for Java programmers.
      */
+    @Support
     Condition equal(T value);
 
     /**
      * <code>this = field</code>
      */
+    @Support
     Condition equal(Field<T> field);
 
     /**
      * <code>this = (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equal(Select<?> query);
 
     /**
      * <code>this = any (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAny(Select<?> query);
 
     /**
      * <code>this = some (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalSome(Select<?> query);
 
     /**
      * <code>this = all (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(Select<?> query);
 
     /**
      * <code>this != value</code>
+     * <p>
+     * If <code>value == null</code>, then this will return a condition
+     * equivalent to {@link #isNotNull()} for convenience. SQL's ternary
+     * <code>NULL</code> logic is rarely of use for Java programmers.
      */
+    @Support
     Condition notEqual(T value);
 
     /**
      * <code>this != field</code>
      */
+    @Support
     Condition notEqual(Field<T> field);
 
     /**
      * <code>this != (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqual(Select<?> query);
 
     /**
      * <code>this != any (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAny(Select<?> query);
 
     /**
      * <code>this != some (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualSome(Select<?> query);
 
     /**
      * <code>this != all (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(Select<?> query);
 
     /**
      * <code>this < value</code>
      */
+    @Support
     Condition lessThan(T value);
 
     /**
      * <code>this < field</code>
      */
+    @Support
     Condition lessThan(Field<T> field);
 
     /**
      * <code>this < (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThan(Select<?> query);
 
     /**
      * <code>this < any (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAny(Select<?> query);
 
     /**
      * <code>this < some (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanSome(Select<?> query);
 
     /**
      * <code>this < all (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(Select<?> query);
 
     /**
      * <code>this <= value</code>
      */
+    @Support
     Condition lessOrEqual(T value);
 
     /**
      * <code>this <= field</code>
      */
+    @Support
     Condition lessOrEqual(Field<T> field);
 
     /**
      * <code>this <= (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqual(Select<?> query);
 
     /**
      * <code>this <= any (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAny(Select<?> query);
 
     /**
      * <code>this <= some (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualSome(Select<?> query);
 
     /**
      * <code>this <= all (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(Select<?> query);
 
     /**
      * <code>this > value</code>
      */
+    @Support
     Condition greaterThan(T value);
 
     /**
      * <code>this > field</code>
      */
+    @Support
     Condition greaterThan(Field<T> field);
 
     /**
      * <code>this > (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThan(Select<?> query);
 
     /**
      * <code>this > any (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAny(Select<?> query);
 
     /**
      * <code>this > some (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanSome(Select<?> query);
 
     /**
      * <code>this > all (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(Select<?> query);
 
     /**
      * <code>this >= value</code>
      */
+    @Support
     Condition greaterOrEqual(T value);
 
     /**
      * <code>this >= field</code>
      */
+    @Support
     Condition greaterOrEqual(Field<T> field);
 
     /**
      * <code>this >= (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqual(Select<?> query);
 
     /**
      * <code>this >= any (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAny(Select<?> query);
 
     /**
      * <code>this >= some (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualSome(Select<?> query);
 
     /**
      * <code>this >= all (Select<?> ...)</code>
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(Select<?> query);
 
     // ------------------------------------------------------------------------
@@ -624,6 +720,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sign(Field)
      */
+    @Support
     Field<Integer> sign();
 
     /**
@@ -633,6 +730,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#abs(Field)
      */
+    @Support
     Field<T> abs();
 
     /**
@@ -642,6 +740,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#round(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<T> round();
 
     /**
@@ -651,6 +750,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#round(Field, int)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<T> round(int decimals);
 
     /**
@@ -660,6 +760,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#floor(Field)
      */
+    @Support
     Field<T> floor();
 
     /**
@@ -669,6 +770,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#ceil(Field)
      */
+    @Support
     Field<T> ceil();
 
     /**
@@ -678,6 +780,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sqrt(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sqrt();
 
     /**
@@ -687,6 +790,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#exp(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> exp();
 
     /**
@@ -696,6 +800,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#ln(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> ln();
 
     /**
@@ -705,6 +810,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#log(Field, int)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> log(int base);
 
     /**
@@ -714,6 +820,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#power(Field, Number)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> power(Number exponent);
 
     /**
@@ -723,6 +830,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#acos(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> acos();
 
     /**
@@ -732,6 +840,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#asin(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> asin();
 
     /**
@@ -741,6 +850,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#atan(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan();
 
     /**
@@ -750,6 +860,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#atan2(Field, Number)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Number y);
 
     /**
@@ -759,6 +870,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#atan2(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Field<? extends Number> y);
 
     /**
@@ -768,6 +880,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#cos(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cos();
 
     /**
@@ -777,6 +890,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sin(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sin();
 
     /**
@@ -786,6 +900,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#tan(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> tan();
 
     /**
@@ -795,6 +910,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#cot(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cot();
 
     /**
@@ -804,6 +920,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sinh(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sinh();
 
     /**
@@ -813,6 +930,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#cosh(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cosh();
 
     /**
@@ -822,6 +940,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#tanh(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> tanh();
 
     /**
@@ -831,6 +950,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#coth(Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> coth();
 
     /**
@@ -840,6 +960,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#deg(Field)
      */
+    @Support
     Field<BigDecimal> deg();
 
     /**
@@ -849,6 +970,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rad(Field)
      */
+    @Support
     Field<BigDecimal> rad();
 
     /**
@@ -858,6 +980,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#count(Field)
      */
+    @Support
     Field<Integer> count();
 
     /**
@@ -867,6 +990,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#countDistinct(Field)
      */
+    @Support
     Field<Integer> countDistinct();
 
     /**
@@ -876,6 +1000,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#max(Field)
      */
+    @Support
     Field<T> max();
 
     /**
@@ -885,6 +1010,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#min(Field)
      */
+    @Support
     Field<T> min();
 
     /**
@@ -894,6 +1020,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#sum(Field)
      */
+    @Support
     Field<BigDecimal> sum();
 
     /**
@@ -903,6 +1030,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#avg(Field)
      */
+    @Support
     Field<BigDecimal> avg();
 
     /**
@@ -912,6 +1040,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#median(Field)
      */
+    @Support({ HSQLDB, ORACLE, SYBASE })
     Field<BigDecimal> median();
 
     /**
@@ -921,6 +1050,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#stddevPop(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> stddevPop();
 
     /**
@@ -930,6 +1060,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#stddevSamp(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> stddevSamp();
 
     /**
@@ -939,6 +1070,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#varPop(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> varPop();
 
     /**
@@ -948,6 +1080,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#varSamp(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> varSamp();
 
     /**
@@ -958,6 +1091,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#count(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<Integer> countOver();
 
     /**
@@ -968,6 +1102,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#max(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> maxOver();
 
     /**
@@ -978,6 +1113,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#min(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<T> minOver();
 
     /**
@@ -988,6 +1124,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#sum(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> sumOver();
 
     /**
@@ -998,6 +1135,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#avg(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> avgOver();
 
     /**
@@ -1008,6 +1146,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#firstValue(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -1018,6 +1157,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lastValue(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -1028,6 +1168,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lead(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -1038,6 +1179,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lead(Field, int)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -1048,6 +1190,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lead(Field, int, Object)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -1058,6 +1201,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lead(Field, int, Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -1068,6 +1212,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lag(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -1078,6 +1223,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lag(Field, int)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -1088,6 +1234,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lag(Field, int, Object)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -1098,6 +1245,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#lag(Field, int, Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**
@@ -1108,6 +1256,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#stddevPop(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> stddevPopOver();
 
     /**
@@ -1118,6 +1267,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#stddevSamp(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> stddevSampOver();
 
     /**
@@ -1128,6 +1278,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#varPop(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> varPopOver();
 
     /**
@@ -1138,6 +1289,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * @see Factory#varSamp(Field)
      * @see AggregateFunction#over()
      */
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowPartitionByStep<BigDecimal> varSampOver();
 
     /**
@@ -1147,6 +1299,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#upper(Field)
      */
+    @Support
     Field<String> upper();
 
     /**
@@ -1156,6 +1309,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lower(Field)
      */
+    @Support
     Field<String> lower();
 
     /**
@@ -1165,6 +1319,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#trim(Field)
      */
+    @Support
     Field<String> trim();
 
     /**
@@ -1174,6 +1329,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rtrim(Field)
      */
+    @Support
     Field<String> rtrim();
 
     /**
@@ -1183,6 +1339,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#ltrim(Field)
      */
+    @Support
     Field<String> ltrim();
 
     /**
@@ -1192,6 +1349,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(Field<? extends Number> length);
 
     /**
@@ -1201,6 +1359,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, int)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(int length);
 
     /**
@@ -1210,6 +1369,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -1219,6 +1379,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#rpad(Field, int, char)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(int length, char character);
 
     /**
@@ -1228,6 +1389,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(Field<? extends Number> length);
 
     /**
@@ -1237,6 +1399,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, int)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(int length);
 
     /**
@@ -1246,6 +1409,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
 
     /**
@@ -1255,6 +1419,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#lpad(Field, int, char)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(int length, char character);
 
     /**
@@ -1264,6 +1429,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#repeat(Field, int)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> repeat(Number count);
 
     /**
@@ -1273,6 +1439,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#repeat(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> repeat(Field<? extends Number> count);
 
     /**
@@ -1282,6 +1449,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(Field<String> search);
 
     /**
@@ -1291,6 +1459,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, String)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(String search);
 
     /**
@@ -1300,6 +1469,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, Field, Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
 
     /**
@@ -1309,6 +1479,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#replace(Field, String, String)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(String search, String replace);
 
     /**
@@ -1318,6 +1489,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#position(Field, String)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> position(String search);
 
     /**
@@ -1327,6 +1499,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#position(Field, Field)
      */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> position(Field<String> search);
 
     /**
@@ -1336,6 +1509,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#ascii(Field)
      */
+    @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> ascii();
 
     /**
@@ -1345,6 +1519,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#concat(Field...)
      */
+    @Support
     Field<String> concat(Field<?>... fields);
 
     /**
@@ -1354,6 +1529,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#concat(String...)
      */
+    @Support
     Field<String> concat(String... values);
 
     /**
@@ -1363,6 +1539,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#substring(Field, int)
      */
+    @Support
     Field<String> substring(int startingPosition);
 
     /**
@@ -1372,6 +1549,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#substring(Field, Field)
      */
+    @Support
     Field<String> substring(Field<? extends Number> startingPosition);
 
     /**
@@ -1381,6 +1559,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#substring(Field, int, int)
      */
+    @Support
     Field<String> substring(int startingPosition, int length);
 
     /**
@@ -1390,6 +1569,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#substring(Field, Field, Field)
      */
+    @Support
     Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length);
 
     /**
@@ -1399,6 +1579,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#length(Field)
      */
+    @Support
     Field<Integer> length();
 
     /**
@@ -1408,6 +1589,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#charLength(Field)
      */
+    @Support
     Field<Integer> charLength();
 
     /**
@@ -1417,6 +1599,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#bitLength(Field)
      */
+    @Support
     Field<Integer> bitLength();
 
     /**
@@ -1426,6 +1609,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#octetLength(Field)
      */
+    @Support
     Field<Integer> octetLength();
 
     /**
@@ -1435,6 +1619,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#extract(Field, DatePart)
      */
+    @Support
     Field<Integer> extract(DatePart datePart);
 
     /**
@@ -1444,6 +1629,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#greatest(Field, Field...)
      */
+    @Support
     Field<T> greatest(T... others);
 
     /**
@@ -1453,6 +1639,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#greatest(Field, Field...)
      */
+    @Support
     Field<T> greatest(Field<?>... others);
 
     /**
@@ -1462,6 +1649,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#least(Field, Field...)
      */
+    @Support
     Field<T> least(T... others);
 
     /**
@@ -1471,6 +1659,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#least(Field, Field...)
      */
+    @Support
     Field<T> least(Field<?>... others);
 
     /**
@@ -1480,6 +1669,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#nvl(Field, Object)
      */
+    @Support
     Field<T> nvl(T defaultValue);
 
     /**
@@ -1489,6 +1679,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#nvl(Field, Field)
      */
+    @Support
     Field<T> nvl(Field<T> defaultValue);
 
     /**
@@ -1498,6 +1689,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#nvl2(Field, Object, Object)
      */
+    @Support
     <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull);
 
     /**
@@ -1507,6 +1699,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#nvl2(Field, Field, Field)
      */
+    @Support
     <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull);
 
     /**
@@ -1516,6 +1709,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#nullif(Field, Object)
      */
+    @Support
     Field<T> nullif(T other);
 
     /**
@@ -1525,6 +1719,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#nullif(Field, Field)
      */
+    @Support
     Field<T> nullif(Field<T> other);
 
     /**
@@ -1534,6 +1729,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#decode(Object, Object, Object)
      */
+    @Support
     <Z> Field<Z> decode(T search, Z result);
 
     /**
@@ -1543,6 +1739,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#decode(Object, Object, Object, Object...)
      */
+    @Support
     <Z> Field<Z> decode(T search, Z result, Object... more);
 
     /**
@@ -1552,6 +1749,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#decode(Field, Field, Field)
      */
+    @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result);
 
     /**
@@ -1561,6 +1759,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#decode(Field, Field, Field, Field...)
      */
+    @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
 
     /**
@@ -1570,6 +1769,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#coalesce(Object, Object...)
      */
+    @Support
     Field<T> coalesce(T option, T... options);
 
     /**
@@ -1579,6 +1779,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      *
      * @see Factory#coalesce(Field, Field...)
      */
+    @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);
 
 }

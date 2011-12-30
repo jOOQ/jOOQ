@@ -603,6 +603,7 @@ public interface FactoryOperations extends Configuration {
      * Note, this statement is only supported in DSL mode. Immediate execution
      * is omitted for future extensibility of this command.
      */
+    @Support
     <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
@@ -695,6 +696,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES })
     int use(Schema schema) throws DataAccessException;
 
     /**
@@ -703,6 +705,7 @@ public interface FactoryOperations extends Configuration {
      * @see #use(Schema)
      * @throws DataAccessException if something went wrong executing the query
      */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES })
     int use(String schema) throws DataAccessException;
 
     // -------------------------------------------------------------------------

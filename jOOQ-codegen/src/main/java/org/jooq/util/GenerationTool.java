@@ -148,6 +148,7 @@ public class GenerationTool {
 			generator.setGenerateDeprecated(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.deprecated")));
 			generator.setGenerateInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
 			generator.setGenerateUnsignedTypes(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.unsigned-types")));
+			generator.setGenerateGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
 
 			// Generator properties that should in fact be strategy properties
 			strategy.setInstanceFields(generator.generateInstanceFields());

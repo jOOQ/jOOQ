@@ -39,6 +39,8 @@ package org.jooq.util;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.annotation.Generated;
+
 /**
  * The Generator provides a basic interface for java code generation
  *
@@ -100,6 +102,16 @@ public interface Generator {
      * Whether unsigned data types should be generated
      */
     void setGenerateUnsignedTypes(boolean generateUnsignedTypes);
+
+    /**
+     * Whether the {@link Generated} annotation should be generated
+     */
+    boolean generateGeneratedAnnotation();
+
+    /**
+     * Whether the {@link Generated} annotation should be generated
+     */
+    void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     /**
      * The target directory

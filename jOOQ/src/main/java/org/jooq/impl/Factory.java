@@ -97,6 +97,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.SchemaMapping;
@@ -117,6 +118,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
@@ -818,6 +820,22 @@ public class Factory implements FactoryOperations {
     @Override
     public final Record fetchOne(String sql, Object... bindings) {
         return new SQLResultQuery(this, sql, bindings).fetchOne();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
+        return resultQuery(sql, new Object[0]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) throws DataAccessException {
+        return new SQLResultQuery(this, sql, bindings);
     }
 
     // -------------------------------------------------------------------------

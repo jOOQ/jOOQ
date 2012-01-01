@@ -63,6 +63,7 @@ import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.SchemaMapping;
@@ -378,6 +379,16 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     @Override
     public final Record fetchOne(String sql, Object... bindings) {
         return getDelegate().fetchOne(sql, bindings);
+    }
+
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
+        return getDelegate().resultQuery(sql);
+    }
+
+    @Override
+    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) throws DataAccessException {
+        return getDelegate().resultQuery(sql, bindings);
     }
 
     @Override

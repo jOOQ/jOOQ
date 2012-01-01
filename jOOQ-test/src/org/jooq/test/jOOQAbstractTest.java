@@ -126,6 +126,7 @@ import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RenderContext;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.SchemaMapping;
@@ -1719,6 +1720,64 @@ public abstract class jOOQAbstractTest<
                 .from(table)
                 .where(id.in(10, 11))
                 .fetchOne(0));
+    }
+
+    @Test
+    public void testPlainSQLResultQuery() throws Exception {
+        String sql = create().select(param("p", Integer.class).as("p")).getSQL();
+        ResultQuery<Record> q = create().resultQuery(sql, 10);
+
+        Result<Record> fetch1 = q.fetch();
+        assertEquals(1, fetch1.size());
+        assertEquals(1, fetch1.getFields().size());
+        assertEquals("p", fetch1.getField(0).getName());
+        assertEquals("p", fetch1.getField("p").getName());
+        assertEquals(10, fetch1.getValue(0, 0));
+        assertEquals(10, fetch1.getValue(0, "p"));
+        assertEquals(10, fetch1.getValue(0, fetch1.getField("p")));
+
+        List<?> fetch2 = q.fetch("p");
+        assertEquals(1, fetch2.size());
+        assertEquals(10, fetch2.get(0));
+
+        List<Long> fetch3 = q.fetch(0, Long.class);
+        assertEquals(1, fetch3.size());
+        assertEquals(10L, (long) fetch3.get(0));
+
+        Record fetch4 = q.fetchAny();
+        assertEquals(1, fetch4.getFields().size());
+        assertEquals("p", fetch4.getField(0).getName());
+        assertEquals("p", fetch4.getField("p").getName());
+        assertEquals(10, fetch4.getValue(0));
+        assertEquals(10, fetch4.getValue("p"));
+        assertEquals(10, fetch4.getValue(fetch4.getField("p")));
+
+        Object[] fetch5 = q.fetchArray("p");
+        assertEquals(1, fetch5.length);
+        assertEquals(10, fetch5[0]);
+
+        Object[] fetch6 = q.fetchArray(0);
+        assertEquals(1, fetch6.length);
+        assertEquals(10, fetch6[0]);
+
+        Long[] fetch7 = q.fetchArray(0, Long.class);
+        assertEquals(1, fetch7.length);
+        assertEquals(10L, (long) fetch7[0]);
+
+        List<TestPlainSQLResultQuery> fetch8 = q.fetchInto(TestPlainSQLResultQuery.class);
+        assertEquals(1, fetch8.size());
+        assertEquals(10, fetch8.get(0).p);
+
+        q.fetchInto(new RecordHandler<Record>() {
+            @Override
+            public void next(Record record) {
+                assertEquals(1, record.getFields().size());
+            }
+        });
+    }
+
+    public static class TestPlainSQLResultQuery {
+        public int p;
     }
 
     @Test

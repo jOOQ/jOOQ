@@ -114,6 +114,7 @@ import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.FutureResult;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetMoreStep;
@@ -1768,12 +1769,40 @@ public abstract class jOOQAbstractTest<
         assertEquals(1, fetch8.size());
         assertEquals(10, fetch8.get(0).p);
 
+        final Integer[] count = new Integer[] { 0 };
         q.fetchInto(new RecordHandler<Record>() {
             @Override
             public void next(Record record) {
                 assertEquals(1, record.getFields().size());
+                assertEquals(10, record.getValue(0));
+                count[0] += 1;
             }
         });
+
+        assertEquals(1, (int) count[0]);
+
+        FutureResult<Record> fetch9 = q.fetchLater();
+        Thread.sleep(50);
+        assertTrue(fetch9.isDone());
+        assertEquals(1, fetch9.get().size());
+        assertEquals(10, fetch9.get().getValue(0, 0));
+
+        Cursor<Record> fetch10 = q.fetchLazy();
+        assertFalse(fetch10.isClosed());
+        assertTrue(fetch10.hasNext());
+        assertEquals(1, fetch10.getFields().size());
+        assertEquals("p", fetch10.getField(0).getName());
+        assertEquals(10, fetch10.fetchOne().getValue(0));
+        assertFalse(fetch10.isClosed());
+        assertFalse(fetch10.hasNext());
+        assertTrue(fetch10.isClosed());
+
+        List<Result<Record>> fetch11 = q.fetchMany();
+        assertEquals(1, fetch11.size());
+        assertEquals(1, fetch11.get(0).size());
+        assertEquals(fetch1, fetch11.get(0));
+
+        assertEquals(fetch1.get(0), q.fetchOne());
     }
 
     public static class TestPlainSQLResultQuery {

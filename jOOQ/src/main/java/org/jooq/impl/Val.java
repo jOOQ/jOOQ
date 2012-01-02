@@ -35,6 +35,13 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
@@ -124,42 +131,49 @@ class Val<T> extends AbstractField<T> implements Param<T> {
      * Render the bind variable including a cast, if necessary
      */
     private void toSQLCast(RenderContext context) {
-        switch (context.getDialect()) {
 
-            // [#822] Some RDBMS need precision / scale information on BigDecimals
-            case DB2:
-            case DERBY:
-            case HSQLDB: {
+        // [#822] Some RDBMS need precision / scale information on BigDecimals
+        if (getType() == BigDecimal.class && asList(DB2, DERBY, HSQLDB).contains(context.getDialect())) {
 
-                // Add precision / scale on BigDecimals
-                if (getType() == BigDecimal.class) {
-                    int scale = ((BigDecimal) getValue()).scale();
-                    int precision = scale + ((BigDecimal) getValue()).precision();
+            // Add precision / scale on BigDecimals
+            int scale = ((BigDecimal) getValue()).scale();
+            int precision = scale + ((BigDecimal) getValue()).precision();
 
-                    context.sql("cast(")
-                           .sql(getBindVariable(context))
-                           .sql(" as ")
-                           .sql(getDataType(context).getCastTypeName(context, precision, scale))
-                           .sql(")");
-                    break;
-                }
+            toSQLCast(context, getDataType(context), precision, scale);
+        }
 
-                // No break, fall through
-                else {
-                }
+        // [#1028] Most databases don't know an OTHER type (except H2, HSQLDB).
+        else if (SQLDataType.OTHER == getDataType(context)) {
+
+            // If the bind value is set, it can be used to derive the cast type
+            if (value != null) {
+                toSQLCast(context, FieldTypeHelper.getDataType(context.getDialect(), value.getClass()), 0, 0);
             }
 
-            // These dialects don't need precision / scale info on BigDecimals
-            case H2:
-            case INGRES:
-            case SYBASE: {
-                context.sql("cast(")
-                       .sql(getBindVariable(context))
-                       .sql(" as ")
-                       .sql(getDataType(context).getCastTypeName(context))
-                       .sql(")");
+            // [#632] [#722] Current integration tests show that Ingres and
+            // Sybase can do without casting in most cases.
+            else if (asList(INGRES, SYBASE).contains(context.getDialect())) {
+                context.sql(getBindVariable(context));
+            }
+
+            // Derby and DB2 must have a type associated with NULL. Use VARCHAR
+            // as a workaround. That's probably not correct in all cases, though
+            else {
+                toSQLCast(context, FieldTypeHelper.getDataType(context.getDialect(), String.class), 0, 0);
             }
         }
+
+        else {
+            toSQLCast(context, getDataType(context), 0, 0);
+        }
+    }
+
+    private void toSQLCast(RenderContext context, DataType<?> type, int precision, int scale) {
+        context.sql("cast(")
+               .sql(getBindVariable(context))
+               .sql(" as ")
+               .sql(type.getCastTypeName(context, precision, scale))
+               .sql(")");
     }
 
     /**

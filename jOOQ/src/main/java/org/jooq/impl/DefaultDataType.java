@@ -50,7 +50,7 @@ class DefaultDataType<T> extends AbstractDataType<T> {
      */
     private static final long serialVersionUID = -2612295936942892367L;
 
-    protected DefaultDataType(SQLDialect dialect, Class<? extends T> type, String typeName, String castTypeName) {
+    DefaultDataType(SQLDialect dialect, Class<? extends T> type, String typeName, String castTypeName) {
         super(dialect, null, type, typeName, castTypeName);
     }
 }

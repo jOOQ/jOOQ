@@ -6880,7 +6880,6 @@ public abstract class jOOQAbstractTest<
         assertEquals("ON STOCK", ((EnumType) value).getLiteral());
     }
 
-    @Test
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
         reset = false;
 
@@ -9048,12 +9047,15 @@ public abstract class jOOQAbstractTest<
         assertEquals("asdf", result2.getValue(1, 1));
 
         // [#1028] Named params without any associated type information
-        select = create().select(param("p"));
+        // [#1029] TODO Fix this for Postgres!
+        select = create().select(param("p1"), param("p2"));
         select.bind(1, "10");
+        select.bind(2, null);
         Result<?> result3 = select.fetch();
 
         assertEquals(1, result3.size());
         assertEquals("10", result3.getValue(0, 0));
+        assertEquals(null, result3.getValue(0, 1));
     }
 
     @Test

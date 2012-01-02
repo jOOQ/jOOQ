@@ -35,6 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Blob;
@@ -120,12 +124,12 @@ class DefaultBindContext extends AbstractBindContext {
 
             // [#725] For SQL Server, unknown types should be set to null
             // explicitly, too
-            else if (configuration.getDialect() == SQLDialect.SQLSERVER) {
+            else if (configuration.getDialect() == SQLSERVER) {
                 stmt.setNull(nextIndex(), sqlType);
             }
 
             // [#730] For Sybase, unknown types can be set to null using varchar
-            else if (configuration.getDialect() == SQLDialect.SYBASE) {
+            else if (configuration.getDialect() == SYBASE) {
                 stmt.setNull(nextIndex(), Types.VARCHAR);
             }
 
@@ -141,7 +145,7 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBoolean(nextIndex(), (Boolean) value);
         }
         else if (type == BigDecimal.class) {
-            if (dialect == SQLDialect.SQLITE) {
+            if (dialect == SQLITE) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {
@@ -149,7 +153,7 @@ class DefaultBindContext extends AbstractBindContext {
             }
         }
         else if (type == BigInteger.class) {
-            if (dialect == SQLDialect.SQLITE) {
+            if (dialect == SQLITE) {
                 stmt.setString(nextIndex(), value.toString());
             }
             else {

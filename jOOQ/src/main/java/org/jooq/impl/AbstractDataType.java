@@ -311,11 +311,13 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public final String getCastTypeName(Configuration configuration, int precision, int scale) {
-
-        // Remove existing precision / scale information, first
-        String result = getCastTypeName(configuration).replaceAll("\\([^\\)]*\\)", "");
+        String result = getCastTypeName(configuration);
 
         if (precision != 0) {
+
+            // Remove existing precision / scale information, first
+            result = result.replaceAll("\\([^\\)]*\\)", "");
+
             if (scale != 0) {
                 result += "(" + precision + ", " + scale + ")";
             }
@@ -417,14 +419,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
             }
 
             if (result == null) {
-
-                // Object has a default fallback, if it is not registered explicitly
-                if (type == Object.class) {
-                    return new DefaultDataType<T>(dialect, (Class<? extends T>) Object.class, "", "");
-                }
-
-                // Default fallback types
-                else if (sqlDataTypesByType.get(type) != null) {
+                if (sqlDataTypesByType.get(type) != null) {
                     return (DataType<T>) sqlDataTypesByType.get(type);
                 }
 

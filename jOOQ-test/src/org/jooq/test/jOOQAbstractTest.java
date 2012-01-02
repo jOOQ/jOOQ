@@ -1725,21 +1725,21 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testPlainSQLResultQuery() throws Exception {
-        String sql = create().select(param("p", Integer.class).as("p")).getSQL();
-        ResultQuery<Record> q = create().resultQuery(sql, 10);
+        String sql = create().select(param("p", String.class).as("p")).getSQL();
+        ResultQuery<Record> q = create().resultQuery(sql, "10");
 
         Result<Record> fetch1 = q.fetch();
         assertEquals(1, fetch1.size());
         assertEquals(1, fetch1.getFields().size());
         assertEquals("p", fetch1.getField(0).getName());
         assertEquals("p", fetch1.getField("p").getName());
-        assertEquals(10, fetch1.getValue(0, 0));
-        assertEquals(10, fetch1.getValue(0, "p"));
-        assertEquals(10, fetch1.getValue(0, fetch1.getField("p")));
+        assertEquals("10", fetch1.getValue(0, 0));
+        assertEquals("10", fetch1.getValue(0, "p"));
+        assertEquals("10", fetch1.getValue(0, fetch1.getField("p")));
 
         List<?> fetch2 = q.fetch("p");
         assertEquals(1, fetch2.size());
-        assertEquals(10, fetch2.get(0));
+        assertEquals("10", fetch2.get(0));
 
         List<Long> fetch3 = q.fetch(0, Long.class);
         assertEquals(1, fetch3.size());
@@ -1749,17 +1749,17 @@ public abstract class jOOQAbstractTest<
         assertEquals(1, fetch4.getFields().size());
         assertEquals("p", fetch4.getField(0).getName());
         assertEquals("p", fetch4.getField("p").getName());
-        assertEquals(10, fetch4.getValue(0));
-        assertEquals(10, fetch4.getValue("p"));
-        assertEquals(10, fetch4.getValue(fetch4.getField("p")));
+        assertEquals("10", fetch4.getValue(0));
+        assertEquals("10", fetch4.getValue("p"));
+        assertEquals("10", fetch4.getValue(fetch4.getField("p")));
 
         Object[] fetch5 = q.fetchArray("p");
         assertEquals(1, fetch5.length);
-        assertEquals(10, fetch5[0]);
+        assertEquals("10", fetch5[0]);
 
         Object[] fetch6 = q.fetchArray(0);
         assertEquals(1, fetch6.length);
-        assertEquals(10, fetch6[0]);
+        assertEquals("10", fetch6[0]);
 
         Long[] fetch7 = q.fetchArray(0, Long.class);
         assertEquals(1, fetch7.length);
@@ -1774,7 +1774,7 @@ public abstract class jOOQAbstractTest<
             @Override
             public void next(Record record) {
                 assertEquals(1, record.getFields().size());
-                assertEquals(10, record.getValue(0));
+                assertEquals("10", record.getValue(0));
                 count[0] += 1;
             }
         });
@@ -1785,22 +1785,17 @@ public abstract class jOOQAbstractTest<
         Thread.sleep(50);
         assertTrue(fetch9.isDone());
         assertEquals(1, fetch9.get().size());
-        assertEquals(10, fetch9.get().getValue(0, 0));
+        assertEquals("10", fetch9.get().getValue(0, 0));
 
         Cursor<Record> fetch10 = q.fetchLazy();
         assertFalse(fetch10.isClosed());
         assertTrue(fetch10.hasNext());
         assertEquals(1, fetch10.getFields().size());
         assertEquals("p", fetch10.getField(0).getName());
-        assertEquals(10, fetch10.fetchOne().getValue(0));
+        assertEquals("10", fetch10.fetchOne().getValue(0));
         assertFalse(fetch10.isClosed());
         assertFalse(fetch10.hasNext());
         assertTrue(fetch10.isClosed());
-
-        List<Result<Record>> fetch11 = q.fetchMany();
-        assertEquals(1, fetch11.size());
-        assertEquals(1, fetch11.get(0).size());
-        assertEquals(fetch1, fetch11.get(0));
 
         assertEquals(fetch1.get(0), q.fetchOne());
     }
@@ -9051,6 +9046,14 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, result2.getValue(1, 0));
         assertEquals("asdf", result2.getValue(0, 1));
         assertEquals("asdf", result2.getValue(1, 1));
+
+        // [#1028] Named params without any associated type information
+        select = create().select(param("p"));
+        select.bind(1, "10");
+        Result<?> result3 = select.fetch();
+
+        assertEquals(1, result3.size());
+        assertEquals("10", result3.getValue(0, 0));
     }
 
     @Test

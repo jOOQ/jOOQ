@@ -1177,6 +1177,7 @@ public class Factory implements FactoryOperations {
                     result = query("set schema " + schemaName).execute();
                     break;
 
+                case ASE:
                 case MYSQL:
                 case SYBASE:
                     result = query("use " + schemaName).execute();

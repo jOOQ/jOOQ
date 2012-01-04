@@ -143,7 +143,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         }
 
         // [#1028] Most databases don't know an OTHER type (except H2, HSQLDB).
-        else if (SQLDataType.OTHER == getDataType(context)) {
+        else if (SQLDataType.OTHER == getDataType(context).getSQLDataType()) {
 
             // If the bind value is set, it can be used to derive the cast type
             if (value != null) {

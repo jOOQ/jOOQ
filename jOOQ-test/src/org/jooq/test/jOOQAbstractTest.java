@@ -4492,6 +4492,7 @@ public abstract class jOOQAbstractTest<
         reset = false;
 
         // Always do an update of everything
+        // --------------------------------
         create().mergeInto(TAuthor())
                 .using(create().selectOne())
                 .on("1 = 1")
@@ -4507,6 +4508,7 @@ public abstract class jOOQAbstractTest<
                 .fetch(TAuthor_FIRST_NAME()));
 
         // Always do an update of the first author
+        // --------------------------------
         create().mergeInto(TAuthor())
                 .using(create().selectOne())
                 .on(TAuthor_ID().equal(1))
@@ -4517,14 +4519,15 @@ public abstract class jOOQAbstractTest<
                 .execute();
 
         assertEquals(Arrays.asList("John", "Alfred"),
-            create().selectFrom(TAuthor())
-                    .orderBy(TAuthor_ID())
-                    .fetch(TAuthor_FIRST_NAME()));
+        create().selectFrom(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch(TAuthor_FIRST_NAME()));
 
         Field<String> f = val("Dan").as("f");
         Field<String> l = val("Brown").as("l");
 
         // [#1000] Add a check for the alternative INSERT .. SET .. syntax
+        // --------------------------------
         MergeFinalStep<A> q =
         create().mergeInto(TAuthor())
                 .using(create().select(f, l))
@@ -4536,14 +4539,49 @@ public abstract class jOOQAbstractTest<
                 .set(TAuthor_FIRST_NAME(), f)
                 .set(TAuthor_LAST_NAME(), l);
 
+        // Execute an insert
         q.execute();
         assertEquals(Arrays.asList("John", "Alfred", "Dan"),
         create().selectFrom(TAuthor())
                 .orderBy(TAuthor_ID())
                 .fetch(TAuthor_FIRST_NAME()));
 
+        // Execute an update
         q.execute();
         assertEquals(Arrays.asList("John", "Alfred", "James"),
+        create().selectFrom(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch(TAuthor_FIRST_NAME()));
+
+        f = val("Herman").as("f");
+        l = val("Hesse").as("l");
+
+        // Check if INSERT-only MERGE works
+        // --------------------------------
+        q =
+        create().mergeInto(TAuthor())
+                .using(create().select(f, l))
+                .on(TAuthor_LAST_NAME().equal(l))
+                .whenNotMatchedThenInsert(
+                    TAuthor_ID(),
+                    TAuthor_FIRST_NAME(),
+                    TAuthor_LAST_NAME(),
+                    TAuthor_DATE_OF_BIRTH())
+
+                // [#1010] Be sure that this type-unsafe clause can deal with
+                // any convertable type
+                .values("4", f, l, 0L);
+
+        // Execute an insert
+        q.execute();
+        assertEquals(Arrays.asList("John", "Alfred", "James", "Herman"),
+        create().selectFrom(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch(TAuthor_FIRST_NAME()));
+
+        // Execute nothing
+        q.execute();
+        assertEquals(Arrays.asList("John", "Alfred", "James", "Herman"),
         create().selectFrom(TAuthor())
                 .orderBy(TAuthor_ID())
                 .fetch(TAuthor_FIRST_NAME()));

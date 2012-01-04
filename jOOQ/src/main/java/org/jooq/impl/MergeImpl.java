@@ -41,7 +41,9 @@ import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
+import static org.jooq.impl.Util.convert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -270,18 +272,19 @@ implements
 
     @Override
     public final MergeImpl<R> values(Object... values) {
-        return values(Arrays.asList(values));
+        List<Field<?>> fields = new ArrayList<Field<?>>(notMatchedInsert.keySet());
+        notMatchedInsert.putValues(vals(convert(fields, values)));
+        return this;
     }
 
     @Override
     public final MergeImpl<R> values(Field<?>... values) {
-        return values(Arrays.asList(values));
+        return values((Object[]) values);
     }
 
     @Override
     public final MergeImpl<R> values(Collection<?> values) {
-        notMatchedInsert.putValues(vals(values.toArray()));
-        return this;
+        return values(values.toArray());
     }
 
     @Override

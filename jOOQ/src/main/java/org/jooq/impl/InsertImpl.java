@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.vals;
+import static org.jooq.impl.Util.convert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +55,6 @@ import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;
-import org.jooq.tools.Convert;
 
 /**
  * @author Lukas Eder
@@ -110,7 +110,7 @@ class InsertImpl<R extends Record>
 
     @Override
     public final InsertImpl<R> values(Object... values) {
-        return values0(vals(convert(values)));
+        return values0(vals(convert(getFields(), values)));
     }
 
     @Override
@@ -120,34 +120,7 @@ class InsertImpl<R extends Record>
 
     @Override
     public final InsertImpl<R> values(Collection<?> values) {
-        return values0(vals(convert(values.toArray())));
-    }
-
-    /**
-     * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
-     * values as specified by the <code>INTO</code> clause's column list.
-     */
-    final Object[] convert(Object[] values) {
-        if (values != null) {
-            Object[] result = new Object[values.length];
-
-            for (int i = 0; i < values.length; i++) {
-
-                // TODO [#1008] Should fields be cast? Check this with
-                // appropriate integration tests
-                if (values[i] instanceof Field<?>) {
-                    result[i] = values[i];
-                }
-                else {
-                    result[i] = Convert.convert(values[i], getFields().get(i).getType());
-                }
-            }
-
-            return result;
-        }
-        else {
-            return null;
-        }
+        return values0(vals(convert(getFields(), values.toArray())));
     }
 
     @SuppressWarnings("unchecked")

@@ -67,6 +67,7 @@ import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.Type;
 import org.jooq.exception.DataAccessException;
+import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -155,6 +156,33 @@ final class Util {
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
+        }
+    }
+
+    /**
+     * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
+     * values as specified by the <code>INTO</code> clause's column list.
+     */
+    public static final Object[] convert(List<Field<?>> fields, Object[] values) {
+        if (values != null) {
+            Object[] result = new Object[values.length];
+
+            for (int i = 0; i < values.length; i++) {
+
+                // TODO [#1008] Should fields be cast? Check this with
+                // appropriate integration tests
+                if (values[i] instanceof Field<?>) {
+                    result[i] = values[i];
+                }
+                else {
+                    result[i] = Convert.convert(values[i], fields.get(i).getType());
+                }
+            }
+
+            return result;
+        }
+        else {
+            return null;
         }
     }
 

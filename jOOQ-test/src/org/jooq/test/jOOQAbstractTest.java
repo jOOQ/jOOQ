@@ -776,6 +776,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testUse() throws Exception {
         switch (getDialect()) {
+            case ASE:
             case SQLITE:
             case SQLSERVER:
                 log.info("SKIPPING", "USE test");

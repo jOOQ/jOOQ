@@ -40,22 +40,27 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Param;
 import org.jooq.RenderContext;
 
-class SQLCondition extends AbstractCondition {
+class SQLCondition extends AbstractCondition implements BindingProvider {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7661748411414898501L;
+    private static final long    serialVersionUID = -7661748411414898501L;
 
-    private final String      sql;
-    private final Object[]    bindings;
+    private final String         sql;
+    private final List<Param<?>> bindings;
 
     SQLCondition(String sql, Object[] bindings) {
         this.sql = sql;
-        this.bindings = (bindings == null) ? new Object[0] : bindings;
+        this.bindings = Util.bindings(bindings);
     }
+
+    // ------------------------------------------------------------------------
+    // Condition API
+    // ------------------------------------------------------------------------
 
     @Override
     public final List<Attachable> getAttachables() {
@@ -72,6 +77,15 @@ class SQLCondition extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        context.bindValues(bindings);
+        context.bind(bindings);
+    }
+
+    // ------------------------------------------------------------------------
+    // QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Param<?>> getBindings() {
+        return bindings;
     }
 }

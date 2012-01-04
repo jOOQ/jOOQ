@@ -41,24 +41,29 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
+import org.jooq.Param;
 import org.jooq.RenderContext;
 
-class SQLField<T> extends AbstractField<T> {
+class SQLField<T> extends AbstractField<T> implements BindingProvider {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6937002867156868761L;
+    private static final long    serialVersionUID = 6937002867156868761L;
 
-    private final String      sql;
-    private final Object[]    bindings;
+    private final String         sql;
+    private final List<Param<?>> bindings;
 
     SQLField(String sql, DataType<T> type, Object[] bindings) {
         super(sql, type);
 
         this.sql = sql;
-        this.bindings = (bindings == null) ? new Object[0] : bindings;
+        this.bindings = Util.bindings(bindings);
     }
+
+    // ------------------------------------------------------------------------
+    // Field API
+    // ------------------------------------------------------------------------
 
     @Override
     public final List<Attachable> getAttachables() {
@@ -72,11 +77,20 @@ class SQLField<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) {
-        context.bindValues(bindings);
+        context.bind(bindings);
     }
 
     @Override
     public final boolean isNullLiteral() {
         return "null".equalsIgnoreCase(("" + sql).trim());
+    }
+
+    // ------------------------------------------------------------------------
+    // QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Param<?>> getBindings() {
+        return bindings;
     }
 }

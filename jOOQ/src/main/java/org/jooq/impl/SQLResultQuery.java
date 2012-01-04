@@ -43,6 +43,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 
@@ -51,22 +52,26 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class SQLResultQuery extends AbstractResultQuery<Record> {
+class SQLResultQuery extends AbstractResultQuery<Record> implements BindingProvider {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1740879770879469220L;
+    private static final long    serialVersionUID = 1740879770879469220L;
 
-    private final String      sql;
-    private final Object[]    bindings;
+    private final String         sql;
+    private final List<Param<?>> bindings;
 
     public SQLResultQuery(Configuration configuration, String sql, Object[] bindings) {
         super(configuration);
 
         this.sql = sql;
-        this.bindings = bindings;
+        this.bindings = Util.bindings(bindings);
     }
+
+    // ------------------------------------------------------------------------
+    // ResultQuery API
+    // ------------------------------------------------------------------------
 
     @Override
     public final void toSQL(RenderContext context) {
@@ -75,7 +80,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
 
     @Override
     public final void bind(BindContext context) {
-        context.bindValues(bindings);
+        context.bind(bindings);
     }
 
     @Override
@@ -97,5 +102,14 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     @Override
     final boolean isSelectingRefCursor() {
         return false;
+    }
+
+    // ------------------------------------------------------------------------
+    // QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Param<?>> getBindings() {
+        return bindings;
     }
 }

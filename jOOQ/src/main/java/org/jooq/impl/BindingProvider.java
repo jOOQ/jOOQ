@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -35,65 +35,25 @@
  */
 package org.jooq.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
-import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
-import org.jooq.tools.StringUtils;
 
 /**
- * A stub {@link BindContext} that acts as a collector of {@link Param}
- * {@link QueryPart}'s
+ * An internal interface implemented by those {@link QueryPart} types that
+ * contain bind values (bound as {@link Param})
+ * <p>
+ * This interface is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */
-class ParamCollector extends AbstractBindContext {
+interface BindingProvider extends QueryPartInternal {
 
     /**
-     * Generated UID
+     * Get the list of bind values (bound as {@link Param}), contained in this
+     * {@link QueryPart}
      */
-    private static final long   serialVersionUID = -3741599479523459297L;
-
-    final Map<String, Param<?>> result           = new LinkedHashMap<String, Param<?>>();
-
-    ParamCollector(Configuration configuration) {
-        super(configuration);
-    }
-
-    @Override
-    public final PreparedStatement statement() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected final void bindInternal(QueryPartInternal internal) {
-        if (internal instanceof BindingProvider) {
-            BindingProvider provider = (BindingProvider) internal;
-
-            for (Param<?> param : provider.getBindings()) {
-                String i = String.valueOf(nextIndex());
-
-                if (StringUtils.isBlank(param.getParamName())) {
-                    result.put(i, param);
-                }
-                else {
-                    result.put(param.getParamName(), param);
-                }
-            }
-        }
-        else {
-            super.bindInternal(internal);
-        }
-    }
-
-    @Override
-    protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
-        throw new UnsupportedOperationException();
-    }
+    List<Param<?>> getBindings();
 }

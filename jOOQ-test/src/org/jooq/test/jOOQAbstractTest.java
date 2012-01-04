@@ -9045,10 +9045,17 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, result2.getValue(1, 0));
         assertEquals("asdf", result2.getValue(0, 1));
         assertEquals("asdf", result2.getValue(1, 1));
+    }
+
+    @Test
+    public void testUnknownBindTypes() throws Exception {
 
         // [#1028] Named params without any associated type information
         // [#1029] TODO Fix this for Postgres!
-        select = create().select(param("p1"), param("p2"));
+        Select<?> select = create().select(
+            param("p1"),
+            param("p2"));
+
         select.bind(1, "10");
         select.bind(2, null);
         Result<?> result3 = select.fetch();
@@ -9073,7 +9080,7 @@ public abstract class jOOQAbstractTest<
         // Should execute fine, but no results due to IN (null, null) filter
         assertEquals(0, select.fetch().size());
 
-        // Set both parameters to the same value
+        // Set both condition parameters to the same value
         Result<?> result1 =
         select.bind("p2", 1L)
               .bind(3, "1")
@@ -9082,7 +9089,7 @@ public abstract class jOOQAbstractTest<
         assertEquals(1, result1.getValue(0, 0));
         assertNull(result1.getValue(0, 1));
 
-        // Set more parameters
+        // Set selection parameter, too
         Result<?> result2 =
         select.bind(1, "asdf")
               .bind("p3", "2")
@@ -9092,6 +9099,39 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, result2.getValue(1, 0));
         assertEquals("asdf", result2.getValue(0, 1));
         assertEquals("asdf", result2.getValue(1, 1));
+    }
+
+    @Test
+    public void testQueryBindValuesWithPlainSQL() throws Exception {
+        Select<?> select =
+        create().select(TAuthor_ID())
+                .from(TAuthor())
+                .where(TAuthor_ID().in(
+
+                    // [#724] Check for API misuse
+                    field("?", Integer.class, (Object[]) null),
+                    field("?", Integer.class, (Object[]) null)))
+                .and(TAuthor_ID().getName() + " != ? or 'abc' = '???'", 37)
+                .orderBy(TAuthor_ID().asc());
+
+        // Should execute fine, but no results due to IN (null, null) filter
+        assertEquals(0, select.fetch().size());
+
+        // Set both parameters to the same value
+        Result<?> result1 =
+        select.bind(1, 1L)
+              .bind(2, 1)
+              .fetch();
+        assertEquals(1, result1.size());
+        assertEquals(1, result1.getValue(0, 0));
+
+        // Set selection parameter, too
+        Result<?> result2 =
+        select.bind(2, 2)
+              .fetch();
+        assertEquals(2, result2.size());
+        assertEquals(1, result2.getValue(0, 0));
+        assertEquals(2, result2.getValue(1, 0));
     }
 
     @Test

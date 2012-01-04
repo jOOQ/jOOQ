@@ -62,7 +62,7 @@ import org.jooq.tools.StringUtils;
 /**
  * @author Lukas Eder
  */
-class Val<T> extends AbstractField<T> implements Param<T> {
+class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
     private static final long serialVersionUID = 6807729087019209084L;
     private final String      paramName;
@@ -319,5 +319,14 @@ class Val<T> extends AbstractField<T> implements Param<T> {
     @Override
     public final String getParamName() {
         return paramName;
+    }
+
+    // ------------------------------------------------------------------------
+    // BindingProvider API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Param<?>> getBindings() {
+        return Arrays.<Param<?>>asList(this);
     }
 }

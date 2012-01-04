@@ -41,27 +41,32 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Param;
 import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
  */
-class SQLQuery extends AbstractQuery {
+class SQLQuery extends AbstractQuery implements BindingProvider {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1740879770879469220L;
+    private static final long    serialVersionUID = 1740879770879469220L;
 
-    private final String      sql;
-    private final Object[]    bindings;
+    private final String         sql;
+    private final List<Param<?>> bindings;
 
     public SQLQuery(Configuration configuration, String sql, Object[] bindings) {
         super(configuration);
 
         this.sql = sql;
-        this.bindings = bindings;
+        this.bindings = Util.bindings(bindings);
     }
+
+    // ------------------------------------------------------------------------
+    // Query API
+    // ------------------------------------------------------------------------
 
     @Override
     public final void toSQL(RenderContext context) {
@@ -70,11 +75,20 @@ class SQLQuery extends AbstractQuery {
 
     @Override
     public final void bind(BindContext context) {
-        context.bindValues(bindings);
+        context.bind(bindings);
     }
 
     @Override
     public final List<Attachable> getAttachables() {
         return Collections.emptyList();
+    }
+
+    // ------------------------------------------------------------------------
+    // QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Param<?>> getBindings() {
+        return bindings;
     }
 }

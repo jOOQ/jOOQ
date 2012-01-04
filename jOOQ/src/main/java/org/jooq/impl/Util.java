@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -59,6 +57,7 @@ import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
+import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
@@ -162,28 +161,44 @@ final class Util {
     /**
      * Create SQL
      */
-    static void toSQLReference(RenderContext context, String sql, Object[] bindings) {
+    static void toSQLReference(RenderContext context, String sql, List<Param<?>> bindings) {
 
         // Replace bind variables by their associated bind values
         if (context.inline()) {
 
-            // [#724] When bindings is null, this is probably due to API-misuse
-            // The user probably meant new Object[] { null }
-            if (bindings == null) {
-                toSQLReference(context, sql, new Object[] { null });
-            }
-            else {
+            // [#1031] [#1032] Skip ? inside of string literals, e.g.
+            // insert into x values ('Hello? Anybody out there?');
+            int bindIndex = 0;
+            char[] sqlChars = sql.toCharArray();
+            boolean stringLiteral = false;
 
-                // TODO: Skip ? inside of string literals, e.g.
-                // insert into x values ('Hello? Anybody out there?');
-                String[] split = sql.split("\\?");
+            for (int i = 0; i < sqlChars.length; i++) {
 
-                for (int i = 0; i < split.length; i++) {
-                    context.sql(split[i]);
+                // String literal delimiter
+                if (sqlChars[i] == '\'') {
 
-                    if (i < bindings.length) {
-                        context.sql(val(bindings[i]));
+                    // Delimiter is actually an escaping apostrophe
+                    if (i + 1 < sqlChars.length && sqlChars[i + 1] == '\'') {
+
+                        // Skip subsequent character
+                        context.sql(sqlChars[i++]);
+                        context.sql(sqlChars[i]);
                     }
+
+                    else {
+                        stringLiteral = !stringLiteral;
+                        context.sql(sqlChars[i]);
+                    }
+                }
+
+                // Replace bind variables only outside of string literals
+                else if (sqlChars[i] == '?' && !stringLiteral && bindIndex < bindings.size()) {
+                    context.sql(bindings.get(bindIndex++));
+                }
+
+                // Any other character
+                else {
+                    context.sql(sqlChars[i]);
                 }
             }
         }
@@ -195,11 +210,32 @@ final class Util {
     }
 
     /**
+     * Create {@link Param} objects from bind values
+     */
+    static List<Param<?>> bindings(Object... bindings) {
+        // [#724] When bindings is null, this is probably due to API-misuse
+        // The user probably meant new Object[] { null }
+        if (bindings == null) {
+            return bindings(new Object[] { null });
+        }
+        else {
+            List<Param<?>> result = new ArrayList<Param<?>>();
+
+            for (Object binding : bindings) {
+                Class<?> type = binding != null ? binding.getClass() : Object.class;
+                result.add(new Val<Object>(binding, Factory.getDataType(type)));
+            }
+
+            return result;
+        }
+    }
+
+    /**
      * Create SQL wrapped in parentheses
      *
-     * @see #toSQLReference(RenderContext, String, Object[])
+     * @see #toSQLReference(RenderContext, String, List)
      */
-    static void toSQLReferenceWithParentheses(RenderContext context, String sql, Object[] bindings) {
+    static void toSQLReferenceWithParentheses(RenderContext context, String sql, List<Param<?>> bindings) {
         context.sql("(");
         toSQLReference(context, sql, bindings);
         context.sql(")");

@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -47,19 +48,23 @@ import org.jooq.Table;
 /**
  * @author Lukas Eder
  */
-class SQLTable extends AbstractTable<Record> {
+class SQLTable extends AbstractTable<Record> implements BindingProvider {
 
     private static final long    serialVersionUID = -5122023013463718796L;
 
     private final String         sql;
-    private final Object[]       bindings;
+    private final List<Param<?>> bindings;
 
     public SQLTable(String sql, Object[] bindings) {
         super("sql");
 
         this.sql = sql;
-        this.bindings = (bindings == null) ? new Object[0] : bindings;
+        this.bindings = Util.bindings(bindings);
     }
+
+    // ------------------------------------------------------------------------
+    // SQLTable API
+    // ------------------------------------------------------------------------
 
     @Override
     public final List<Attachable> getAttachables0() {
@@ -83,11 +88,20 @@ class SQLTable extends AbstractTable<Record> {
 
     @Override
     public final void bind(BindContext context) {
-        context.bindValues(bindings);
+        context.bind(bindings);
     }
 
     @Override
     protected final FieldList getFieldList() {
         return new FieldList();
+    }
+
+    // ------------------------------------------------------------------------
+    // QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Param<?>> getBindings() {
+        return bindings;
     }
 }

@@ -743,6 +743,13 @@ public class jOOQTest {
     }
 
     @Test
+    public void testPlainSQLDebugLogging() throws Exception {
+        // Some corner case for correct tokenisation of string literals and bind variables
+        Field<?> f = field("Hello ? 'Hello ?' Is there anybody '' ? ' out there '' ? '", "A", "B");
+        assertEquals("Hello 'A' 'Hello ?' Is there anybody '' 'B' ' out there '' ? '", r_refI().render(f));
+    }
+
+    @Test
     public void testCustomCondition() throws Exception {
         Condition c = new CustomCondition() {
             private static final long serialVersionUID = 6302350477408137757L;

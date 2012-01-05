@@ -48,8 +48,8 @@ DROP PROCEDURE p_enhance_address1/
 DROP PROCEDURE p_enhance_address2/
 DROP PROCEDURE p_enhance_address3/
 DROP PROCEDURE p_unused/
-DROP PROCEDURE p_create_author/ 
-DROP PROCEDURE p_create_author_by_name/ 
+DROP PROCEDURE p_create_author/
+DROP PROCEDURE p_create_author_by_name/
 DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
 DROP FUNCTION f_author_exists/
@@ -91,20 +91,20 @@ CREATE OR REPLACE TYPE u_author_type AS OBJECT (
   id number(7),
   first_name varchar2(50),
   last_name varchar2(50),
-  
+
   member procedure load,
   member procedure get_books (book1 OUT u_book_type, book2 OUT u_book_type),
-  
+
   member function count_books return number
 )
 /
 
-CREATE OR REPLACE TYPE BODY u_author_type AS 
+CREATE OR REPLACE TYPE BODY u_author_type AS
   member procedure load is
   	x number(7);
   begin
   	x := id;
-	
+
     if x is not null then
       select a.first_name, a.last_name
 	  into first_name, last_name
@@ -112,17 +112,17 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
       where a.id = x;
     end if;
   end load;
-    
+
   member procedure get_books (book1 OUT u_book_type, book2 OUT u_book_type) is
     x number(7);
     b1 u_book_type := u_book_type(null, null);
     b2 u_book_type := u_book_type(null, null);
   begin
     x := id;
-    
+
     -- execute a load to check whether the author is also reloaded
     self.load;
-    
+
     if x is not null then
       select b.id, b.title
       into b1.id, b1.title
@@ -144,7 +144,7 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
       ) b
       where b.r = 2;
     end if;
-      
+
     book1 := b1;
     book2 := b2;
   end get_books;
@@ -154,12 +154,12 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
     r number(7);
   begin
     x := id;
-    
-    select count(*) 
+
+    select count(*)
     into r
     from t_book
     where author_id = x;
-    
+
     return r;
   end count_books;
 end;
@@ -213,7 +213,7 @@ CREATE TABLE t_booleans (
   vc_boolean varchar2(1),
   c_boolean char(1),
   n_boolean number(7),
-  
+
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )
 /
@@ -222,7 +222,7 @@ CREATE TABLE t_triggers (
   id_generated number(7) not null,
   id number(7) not null,
   counter number(7) not null,
-  
+
   CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
@@ -234,9 +234,9 @@ REFERENCING NEW AS new
 FOR EACH ROW
 BEGIN
 	select s_triggers_sequence.nextval
-	  into :new.id_generated 
+	  into :new.id_generated
 	  from dual;
-	
+
 	:new.id := :new.id_generated;
 	:new.counter := :new.id_generated * 2;
 END t_triggers_trigger;
@@ -258,7 +258,7 @@ CREATE TABLE t_language (
   description VARCHAR2(50),
   description_english VARCHAR2(50),
   id NUMBER(7) NOT NULL,
-  
+
   CONSTRAINT pk_t_language PRIMARY KEY (ID)
 )
 /
@@ -269,21 +269,21 @@ COMMENT ON COLUMN t_language.description IS 'The language description'/
 
 CREATE TABLE t_658_11 (
   id CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_11 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_21 (
   id number(7) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_21 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_31 (
   id number(15) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_31 PRIMARY KEY (id)
 )
 /
@@ -291,7 +291,7 @@ CREATE TABLE t_658_31 (
 CREATE TABLE t_658_12 (
   id CHAR(3) NOT NULL,
   cd CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_12 PRIMARY KEY (id)
 )
 /
@@ -299,7 +299,7 @@ CREATE TABLE t_658_12 (
 CREATE TABLE t_658_22 (
   id number(7) NOT NULL,
   cd number(7) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_22 PRIMARY KEY (id)
 )
 /
@@ -307,7 +307,7 @@ CREATE TABLE t_658_22 (
 CREATE TABLE t_658_32 (
   id number(15) NOT NULL,
   cd number(15) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_32 PRIMARY KEY (id)
 )
 /
@@ -332,7 +332,7 @@ CREATE TABLE t_658_ref (
 CREATE TABLE t_725_lob_test (
   ID NUMBER(7) NOT NULL,
   LOB BLOB NULL,
-  
+
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
 )
 /
@@ -351,7 +351,7 @@ CREATE TABLE t_author (
   date_of_birth DATE,
   year_of_birth NUMBER(7),
   address u_address_type,
-  
+
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
 /
@@ -365,7 +365,7 @@ COMMENT ON COLUMN t_author.address IS 'The author''s address'/
 
 CREATE TABLE t_book_details (
   ID NUMBER(7),
-    
+
   CONSTRAINT pk_t_book_details PRIMARY KEY (ID)
 )
 /
@@ -382,11 +382,11 @@ CREATE TABLE t_book (
   language_id NUMBER(7) NOT NULL,
   content_text CLOB,
   content_pdf BLOB,
-  
+
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID) ON DELETE CASCADE,
   CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID) ON DELETE CASCADE,
-  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID) ON DELETE CASCADE, 
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID) ON DELETE CASCADE,
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID) ON DELETE CASCADE
 )
 /
@@ -402,7 +402,7 @@ COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'/
 
 CREATE TABLE t_book_store (
   name VARCHAR2(400) NOT NULL,
-  
+
   CONSTRAINT uk_t_book_store_name UNIQUE(name)
 )
 /
@@ -416,7 +416,7 @@ CREATE TABLE t_book_to_book_store (
   book_store_name VARCHAR2(400) NOT NULL,
   book_id NUMBER(7) NOT NULL,
   stock NUMBER(7),
-  
+
   CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name)
@@ -438,7 +438,7 @@ CREATE TABLE t_arrays (
   number_array u_number_array,
   number_long_array u_number_long_array,
   date_array u_date_array,
-  
+
   CONSTRAINT pk_t_arrays PRIMARY KEY (ID)
 )
 /
@@ -455,10 +455,10 @@ CREATE TABLE x_unused (
   META_DATA NUMBER(7),
   TYPE0 NUMBER(7),
   PRIMARY_KEY NUMBER(7),
-  PRIMARYKEY NUMBER(7),	
-  name_ref VARCHAR2(10),	
+  PRIMARYKEY NUMBER(7),
+  name_ref VARCHAR2(10),
   "FIELD 737" NUMBER(25, 2),
- 
+
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
   CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
@@ -479,7 +479,7 @@ CREATE TABLE t_639_numbers_table (
   LONG_DECIMAL DECIMAL(18, 0),
   BIG_INTEGER DECIMAL(22, 0),
   BIG_DECIMAL DECIMAL(22, 5),
-  
+
   CONSTRAINT pk_t_639_numbers_table PRIMARY KEY(ID)
 )
 /
@@ -487,7 +487,7 @@ CREATE TABLE t_639_numbers_table (
 CREATE TABLE x_test_case_64_69 (
   id NUMBER(7) NOT NULL,
   unused_id NUMBER(7),
-   
+
   CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_64_69 FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
 )
@@ -496,7 +496,7 @@ CREATE TABLE x_test_case_64_69 (
 CREATE TABLE x_test_case_71 (
   id NUMBER(7) NOT NULL,
   test_case_64_69_id NUMBER(4),
- 
+
   CONSTRAINT pk_x_test_case_71 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
 )
@@ -506,7 +506,7 @@ CREATE TABLE x_test_case_85 (
   id NUMBER(7) NOT NULL,
   x_unused_id NUMBER(7),
   x_unused_name VARCHAR2(10),
-	
+
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES X_UNUSED(id, name)
 )
@@ -517,7 +517,7 @@ CREATE OR REPLACE VIEW v_library (author, title) AS
 SELECT a.first_name || ' ' || a.last_name, b.title
 FROM t_author a JOIN t_book b ON b.author_id = a.id
 /
-  
+
 CREATE VIEW v_author AS
 SELECT * FROM t_author
 /
@@ -548,7 +548,7 @@ END p_enhance_address1;
 CREATE OR REPLACE PROCEDURE p_enhance_address2 (address OUT u_address_type)
 IS
 BEGIN
-	SELECT address 
+	SELECT address
 	INTO address
 	FROM t_author
 	WHERE first_name = 'George';
@@ -579,22 +579,22 @@ END p_create_author;
 
 CREATE OR REPLACE PROCEDURE p_arrays1 (in_array u_number_array, out_array OUT u_number_array)
 IS
-BEGIN 
-    out_array := in_array;  
+BEGIN
+    out_array := in_array;
 END p_arrays1;
 /
 
 CREATE OR REPLACE PROCEDURE p_arrays2 (in_array u_number_long_array, out_array OUT u_number_long_array)
 IS
-BEGIN 
-    out_array := in_array;  
+BEGIN
+    out_array := in_array;
 END p_arrays2;
 /
 
 CREATE OR REPLACE PROCEDURE p_arrays3 (in_array u_string_array, out_array OUT u_string_array)
 IS
-BEGIN 
-    out_array := in_array;  
+BEGIN
+    out_array := in_array;
 END p_arrays3;
 /
 
@@ -784,7 +784,7 @@ END f_many_parameters;
 CREATE OR REPLACE FUNCTION f_arrays1 (in_array u_number_array)
 RETURN u_number_array
 IS
-BEGIN 
+BEGIN
     return in_array;
 END f_arrays1;
 /
@@ -792,7 +792,7 @@ END f_arrays1;
 CREATE OR REPLACE FUNCTION f_arrays2 (in_array u_number_long_array)
 RETURN u_number_long_array
 IS
-BEGIN 
+BEGIN
     return in_array;
 END f_arrays2;
 /
@@ -800,7 +800,7 @@ END f_arrays2;
 CREATE OR REPLACE FUNCTION f_arrays3 (in_array u_string_array)
 RETURN u_string_array
 IS
-BEGIN 
+BEGIN
     return in_array;
 END f_arrays3;
 /
@@ -811,10 +811,10 @@ IS
 BEGIN
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
     INTO v_result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name;
-      
+
   result := v_result;
 END p_author_exists;
 /
@@ -846,7 +846,7 @@ CREATE TYPE t_address_type AS TABLE OF u_address_type
 /
 
 CREATE OR REPLACE PROCEDURE p_get_two_cursors (
-	books   OUT library_types.t_cursor_type, 
+	books   OUT library_types.t_cursor_type,
 	authors OUT library_types.t_cursor_type)
 IS
 BEGIN
@@ -857,7 +857,7 @@ END p_get_two_cursors;
 
 CREATE OR REPLACE PROCEDURE p_get_one_cursor (
     total   OUT NUMBER,
-	books   OUT library_types.t_cursor_type, 
+	books   OUT library_types.t_cursor_type,
 	book_ids IN u_number_array)
 IS
 BEGIN
@@ -877,7 +877,7 @@ BEGIN
 	ELSE
 		OPEN books FOR SELECT * FROM t_book WHERE id IN (SELECT * FROM TABLE(book_ids)) ORDER BY id ASC;
 	END IF;
-	
+
 	RETURN books;
 END f_get_one_cursor;
 /
@@ -901,12 +901,12 @@ BEGIN
 	LOOP
 	    FETCH c INTO book;
 	    EXIT WHEN c%notfound;
-	    
+
 	    result := result + 1;
 	END LOOP;
-	
+
 	CLOSE c;
-	
+
 	RETURN result;
 END f691cursor_in;
 /
@@ -918,10 +918,10 @@ IS
 BEGIN
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
     INTO v_result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name;
-      
+
   return v_result;
 END f_author_exists;
 /
@@ -977,7 +977,7 @@ CREATE OR REPLACE PACKAGE library AS
 	FUNCTION pkg_f_author_exists (author_name VARCHAR2, unused NUMBER) RETURN NUMBER;
 	FUNCTION pkg_f_unused RETURN NUMBER;
 	FUNCTION pkg_f378 (i NUMBER, io IN OUT NUMBER, o OUT NUMBER) RETURN NUMBER;
-	
+
 	PROCEDURE pkg_p_many_parameters (
 	  f000 number, f001 number, f002 number, f003 number, f004 number,
 	  f005 number, f006 number, f007 number, f008 number, f009 number,
@@ -999,7 +999,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f085 number, f086 number, f087 number, f088 number, f089 number,
 	  f090 number, f091 number, f092 number, f093 number, f094 number,
 	  f095 number, f096 number, f097 number, f098 number, f099 number,
-	
+
 	  f100 number, f101 number, f102 number, f103 number, f104 number,
 	  f105 number, f106 number, f107 number, f108 number, f109 number,
 	  f110 number, f111 number, f112 number, f113 number, f114 number,
@@ -1020,7 +1020,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f185 number, f186 number, f187 number, f188 number, f189 number,
 	  f190 number, f191 number, f192 number, f193 number, f194 number,
 	  f195 number, f196 number, f197 number, f198 number, f199 number,
-	
+
 	  f200 number, f201 number, f202 number, f203 number, f204 number,
 	  f205 number, f206 number, f207 number, f208 number, f209 number,
 	  f210 number, f211 number, f212 number, f213 number, f214 number,
@@ -1041,7 +1041,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f285 number, f286 number, f287 number, f288 number, f289 number,
 	  f290 number, f291 number, f292 number, f293 number, f294 number,
 	  f295 number, f296 number, f297 number, f298 number, f299 number,
-	
+
 	  f300 number, f301 number, f302 number, f303 number, f304 number,
 	  f305 number, f306 number, f307 number, f308 number, f309 number,
 	  f310 number, f311 number, f312 number, f313 number, f314 number,
@@ -1085,7 +1085,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f085 number, f086 number, f087 number, f088 number, f089 number,
 	  f090 number, f091 number, f092 number, f093 number, f094 number,
 	  f095 number, f096 number, f097 number, f098 number, f099 number,
-	
+
 	  f100 number, f101 number, f102 number, f103 number, f104 number,
 	  f105 number, f106 number, f107 number, f108 number, f109 number,
 	  f110 number, f111 number, f112 number, f113 number, f114 number,
@@ -1106,7 +1106,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f185 number, f186 number, f187 number, f188 number, f189 number,
 	  f190 number, f191 number, f192 number, f193 number, f194 number,
 	  f195 number, f196 number, f197 number, f198 number, f199 number,
-	
+
 	  f200 number, f201 number, f202 number, f203 number, f204 number,
 	  f205 number, f206 number, f207 number, f208 number, f209 number,
 	  f210 number, f211 number, f212 number, f213 number, f214 number,
@@ -1127,7 +1127,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f285 number, f286 number, f287 number, f288 number, f289 number,
 	  f290 number, f291 number, f292 number, f293 number, f294 number,
 	  f295 number, f296 number, f297 number, f298 number, f299 number,
-	
+
 	  f300 number, f301 number, f302 number, f303 number, f304 number,
 	  f305 number, f306 number, f307 number, f308 number, f309 number,
 	  f310 number, f311 number, f312 number, f313 number, f314 number,
@@ -1149,7 +1149,7 @@ CREATE OR REPLACE PACKAGE library AS
 	  f390 number, f391 number, f392 number, f393 number, f394 number,
 	  f395 number, f396 number, f397 number, f398 number, f399 number
 	) return number;
-	
+
 END library;
 /
 
@@ -1173,17 +1173,17 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	BEGIN
 		return test.f_author_exists(author_name);
 	END pkg_f_author_exists;
-	
+
 	FUNCTION pkg_f_unused RETURN NUMBER IS
 	BEGIN
 		return 0;
 	END pkg_f_unused;
-	
+
 	FUNCTION pkg_f378 (i NUMBER, io IN OUT NUMBER, o OUT NUMBER) RETURN NUMBER IS
 	BEGIN
 	  return test.f378 (i, io, o);
 	END pkg_f378;
-	
+
 	PROCEDURE pkg_p_many_parameters (
 	  f000 number, f001 number, f002 number, f003 number, f004 number,
 	  f005 number, f006 number, f007 number, f008 number, f009 number,
@@ -1205,7 +1205,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f085 number, f086 number, f087 number, f088 number, f089 number,
 	  f090 number, f091 number, f092 number, f093 number, f094 number,
 	  f095 number, f096 number, f097 number, f098 number, f099 number,
-	
+
 	  f100 number, f101 number, f102 number, f103 number, f104 number,
 	  f105 number, f106 number, f107 number, f108 number, f109 number,
 	  f110 number, f111 number, f112 number, f113 number, f114 number,
@@ -1226,7 +1226,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f185 number, f186 number, f187 number, f188 number, f189 number,
 	  f190 number, f191 number, f192 number, f193 number, f194 number,
 	  f195 number, f196 number, f197 number, f198 number, f199 number,
-	
+
 	  f200 number, f201 number, f202 number, f203 number, f204 number,
 	  f205 number, f206 number, f207 number, f208 number, f209 number,
 	  f210 number, f211 number, f212 number, f213 number, f214 number,
@@ -1247,7 +1247,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f285 number, f286 number, f287 number, f288 number, f289 number,
 	  f290 number, f291 number, f292 number, f293 number, f294 number,
 	  f295 number, f296 number, f297 number, f298 number, f299 number,
-	
+
 	  f300 number, f301 number, f302 number, f303 number, f304 number,
 	  f305 number, f306 number, f307 number, f308 number, f309 number,
 	  f310 number, f311 number, f312 number, f313 number, f314 number,
@@ -1295,7 +1295,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f085 number, f086 number, f087 number, f088 number, f089 number,
 	  f090 number, f091 number, f092 number, f093 number, f094 number,
 	  f095 number, f096 number, f097 number, f098 number, f099 number,
-	
+
 	  f100 number, f101 number, f102 number, f103 number, f104 number,
 	  f105 number, f106 number, f107 number, f108 number, f109 number,
 	  f110 number, f111 number, f112 number, f113 number, f114 number,
@@ -1316,7 +1316,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f185 number, f186 number, f187 number, f188 number, f189 number,
 	  f190 number, f191 number, f192 number, f193 number, f194 number,
 	  f195 number, f196 number, f197 number, f198 number, f199 number,
-	
+
 	  f200 number, f201 number, f202 number, f203 number, f204 number,
 	  f205 number, f206 number, f207 number, f208 number, f209 number,
 	  f210 number, f211 number, f212 number, f213 number, f214 number,
@@ -1337,7 +1337,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f285 number, f286 number, f287 number, f288 number, f289 number,
 	  f290 number, f291 number, f292 number, f293 number, f294 number,
 	  f295 number, f296 number, f297 number, f298 number, f299 number,
-	
+
 	  f300 number, f301 number, f302 number, f303 number, f304 number,
 	  f305 number, f306 number, f307 number, f308 number, f309 number,
 	  f310 number, f311 number, f312 number, f313 number, f314 number,
@@ -1358,7 +1358,7 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	  f385 number, f386 number, f387 number, f388 number, f389 number,
 	  f390 number, f391 number, f392 number, f393 number, f394 number,
 	  f395 number, f396 number, f397 number, f398 number, f399 number
-	) 
+	)
 	return number
 	IS
 	BEGIN
@@ -1366,3 +1366,52 @@ CREATE OR REPLACE PACKAGE BODY library AS
 	END pkg_f_many_parameters;
 END library;
 /
+
+
+
+DROP TABLE T_976/
+DROP TYPE T_976_OBJECT_TYPE/
+DROP TYPE T_976_VARRAY_TYPE/
+DROP PROCEDURE P_976/
+DROP FUNCTION F_976/
+DROP PACKAGE PKG_976/
+
+CREATE PACKAGE PKG_976 AS
+  PROCEDURE P_976 (I IN DATE, O OUT DATE);
+  FUNCTION F_976 (I IN DATE) RETURN DATE;
+END PKG_976;
+/
+
+CREATE PACKAGE BODY PKG_976 AS
+  PROCEDURE P_976 (I IN DATE, O OUT DATE) IS
+  BEGIN
+	  O := I;
+  END P_976;
+  FUNCTION F_976 (I IN DATE) RETURN DATE IS
+  BEGIN
+	  RETURN I;
+  END F_976;
+END PKG_976;
+/
+
+CREATE PROCEDURE P_976 (I IN DATE, O OUT DATE) IS
+BEGIN
+  O := I;
+END P_976;
+/
+CREATE FUNCTION F_976 (I IN DATE) RETURN DATE IS
+BEGIN
+  RETURN I;
+END F_976;
+/
+
+CREATE TYPE T_976_VARRAY_TYPE AS VARRAY(10) OF DATE/
+CREATE TYPE T_976_OBJECT_TYPE AS OBJECT(D DATE)/
+CREATE TABLE T_976 (
+  ID NUMBER(7),
+  D DATE,
+  T T_976_VARRAY_TYPE,
+  O T_976_OBJECT_TYPE,
+
+  CONSTRAINT pk_t_976 PRIMARY KEY (ID)
+)/

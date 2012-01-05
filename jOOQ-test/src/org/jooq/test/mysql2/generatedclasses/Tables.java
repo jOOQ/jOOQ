@@ -36,22 +36,22 @@ public final class Tables {
 	public static org.jooq.test.mysql2.generatedclasses.tables.T_959 T_959 = org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959;
 
 	/**
-	 * The table test.t_author
+	 * An entity holding authors of books
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * The table test.t_book
+	 * An entity holding books
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TBook T_BOOK = org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * The table test.t_book_store
+	 * A book store
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * The table test.t_book_to_book_store
+	 * An m:n relation between books and book stores
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
@@ -76,37 +76,37 @@ public final class Tables {
 	public static org.jooq.test.mysql2.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
-	 * The table test.v_author
+	 * VIEW
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR;
 
 	/**
-	 * The table test.v_book
+	 * VIEW
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.VBook V_BOOK = org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
-	 * The table test.v_library
+	 * VIEW
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
-	 * The table test.x_test_case_64_69
+	 * An unused table in the same schema.
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
 
 	/**
-	 * The table test.x_test_case_71
+	 * An unused table in the same schema.
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71;
 
 	/**
-	 * The table test.x_test_case_85
+	 * An unused table in the same schema.
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * The table test.x_unused
+	 * An unused table in the same schema.
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED;
 

@@ -16,7 +16,7 @@ public final class Tables {
 	public static org.jooq.examples.mysql.sakila.tables.Actor ACTOR = org.jooq.examples.mysql.sakila.tables.Actor.ACTOR;
 
 	/**
-	 * The table sakila.actor_info
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.ActorInfo ACTOR_INFO = org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO;
 
@@ -46,7 +46,7 @@ public final class Tables {
 	public static org.jooq.examples.mysql.sakila.tables.Customer CUSTOMER = org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER;
 
 	/**
-	 * The table sakila.customer_list
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.CustomerList CUSTOMER_LIST = org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST;
 
@@ -66,7 +66,7 @@ public final class Tables {
 	public static org.jooq.examples.mysql.sakila.tables.FilmCategory FILM_CATEGORY = org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY;
 
 	/**
-	 * The table sakila.film_list
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.FilmList FILM_LIST = org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST;
 
@@ -86,7 +86,7 @@ public final class Tables {
 	public static org.jooq.examples.mysql.sakila.tables.Language LANGUAGE = org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE;
 
 	/**
-	 * The table sakila.nicer_but_slower_film_list
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList NICER_BUT_SLOWER_FILM_LIST = org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST;
 
@@ -101,12 +101,12 @@ public final class Tables {
 	public static org.jooq.examples.mysql.sakila.tables.Rental RENTAL = org.jooq.examples.mysql.sakila.tables.Rental.RENTAL;
 
 	/**
-	 * The table sakila.sales_by_film_category
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory SALES_BY_FILM_CATEGORY = org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY;
 
 	/**
-	 * The table sakila.sales_by_store
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.SalesByStore SALES_BY_STORE = org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE;
 
@@ -116,7 +116,7 @@ public final class Tables {
 	public static org.jooq.examples.mysql.sakila.tables.Staff STAFF = org.jooq.examples.mysql.sakila.tables.Staff.STAFF;
 
 	/**
-	 * The table sakila.staff_list
+	 * VIEW
 	 */
 	public static org.jooq.examples.mysql.sakila.tables.StaffList STAFF_LIST = org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST;
 

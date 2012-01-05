@@ -51,22 +51,22 @@ public final class Tables {
 	public static org.jooq.test.h2.generatedclasses.tables.T_877 T_877 = org.jooq.test.h2.generatedclasses.tables.T_877.T_877;
 
 	/**
-	 * The table PUBLIC.T_AUTHOR
+	 * An entity holding authors of books
 	 */
 	public static org.jooq.test.h2.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * The table PUBLIC.T_BOOK
+	 * An entity holding books
 	 */
 	public static org.jooq.test.h2.generatedclasses.tables.TBook T_BOOK = org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * The table PUBLIC.T_BOOK_STORE
+	 * A book store
 	 */
 	public static org.jooq.test.h2.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * The table PUBLIC.T_BOOK_TO_BOOK_STORE
+	 * An m:n relation between books and book stores
 	 */
 	public static org.jooq.test.h2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 

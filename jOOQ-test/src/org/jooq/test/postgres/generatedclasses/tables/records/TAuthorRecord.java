@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
  */
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1302758720;
+	private static final long serialVersionUID = 1390927494;
 
 	/**
 	 * An uncommented item
@@ -33,10 +33,10 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
+			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
 			.fetch();
 	}
 
@@ -45,10 +45,10 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+	public java.util.List<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
 		return create()
 			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
+			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
 			.fetch();
 	}
 

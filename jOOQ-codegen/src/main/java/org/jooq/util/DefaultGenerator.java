@@ -734,7 +734,14 @@ public class DefaultGenerator implements Generator {
             for (TableDefinition table : database.getTables()) {
                 out.println();
                 out.println("\t/**");
-                out.println("\t * The table " + table.getQualifiedName());
+
+                if (!StringUtils.isBlank(table.getComment())) {
+                    out.println("\t * " + table.getComment());
+                }
+                else {
+                    out.println("\t * The table " + table.getQualifiedName());
+                }
+
                 out.println("\t */");
 
                 out.print("\tpublic static ");

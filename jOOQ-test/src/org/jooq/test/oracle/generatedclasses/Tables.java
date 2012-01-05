@@ -16,22 +16,22 @@ public final class Tables {
 	public static org.jooq.test.oracle.generatedclasses.tables.TArrays T_ARRAYS = org.jooq.test.oracle.generatedclasses.tables.TArrays.T_ARRAYS;
 
 	/**
-	 * The table TEST.T_AUTHOR
+	 * An entity holding authors of books
 	 */
 	public static org.jooq.test.oracle.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.oracle.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * The table TEST.T_BOOK
+	 * An entity holding books
 	 */
 	public static org.jooq.test.oracle.generatedclasses.tables.TBook T_BOOK = org.jooq.test.oracle.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * The table TEST.T_BOOK_STORE
+	 * A book store
 	 */
 	public static org.jooq.test.oracle.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.oracle.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * The table TEST.T_BOOK_TO_BOOK_STORE
+	 * An m:n relation between books and book stores
 	 */
 	public static org.jooq.test.oracle.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.oracle.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
@@ -106,7 +106,7 @@ public final class Tables {
 	public static org.jooq.test.oracle.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.oracle.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * The table TEST.X_UNUSED
+	 * An unused table in the same schema.
 	 */
 	public static org.jooq.test.oracle.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.oracle.generatedclasses.tables.XUnused.X_UNUSED;
 

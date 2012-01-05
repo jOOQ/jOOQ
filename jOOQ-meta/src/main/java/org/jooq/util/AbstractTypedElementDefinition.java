@@ -35,9 +35,11 @@
  */
 package org.jooq.util;
 
+import static org.jooq.impl.FieldTypeHelper.getDialectDataType;
+
 import org.jooq.DataType;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.FieldTypeHelper;
+import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -78,6 +80,8 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             Database db = container.getDatabase();
 
             for (String property : db.getPropertyNames()) {
+
+                // [#677] Forced types for matching regular expressions
                 if (property.startsWith("generator.database.forced-type.")) {
                     if (getQualifiedName().matches(db.getProperty(property))) {
                         String forcedType = property.replace("generator.database.forced-type.", "");
@@ -90,7 +94,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                         int s = definedType.getScale();
 
                         try {
-                            forcedDataType = FieldTypeHelper.getDialectDataType(db.getDialect(), forcedType, p, s);
+                            forcedDataType = getDialectDataType(db.getDialect(), forcedType, p, s);
                         } catch (SQLDialectNotSupportedException ignore) {}
 
                         // [#677] SQLDataType matches are actual type-rewrites
@@ -102,6 +106,22 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                         else {
                             type = new DefaultDataTypeDefinition(db, t, p, s, forcedType);
                         }
+                    }
+                }
+            }
+
+            // [#976] Mapping DATE as TIMESTAMP
+            if ("true".equalsIgnoreCase(db.getProperty("generator.database.date-as-timestamp"))) {
+                DataType<?> dataType = null;
+
+                try {
+                    dataType = getDialectDataType(db.getDialect(), definedType.getType(), 0, 0);
+                } catch (SQLDialectNotSupportedException ignore) {}
+
+                if (dataType != null) {
+                    if (dataType.getSQLDataType() == SQLDataType.DATE) {
+                        DataType<?> forcedDataType = getDialectDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
+                        type = new DefaultDataTypeDefinition(db, forcedDataType.getTypeName(), 0, 0);
                     }
                 }
             }

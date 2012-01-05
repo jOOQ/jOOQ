@@ -60,6 +60,8 @@ import static org.jooq.test.oracle.generatedclasses.Tables.V_LIBRARY;
 import static org.jooq.test.oracle.generatedclasses.UDTs.U_AUTHOR_TYPE;
 import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.countBooks;
 import static org.jooq.test.oracle.generatedclasses.udt.UAuthorType.load;
+import static org.jooq.test.oracle2.generatedclasses.Tables.T_976;
+import static org.jooq.test.oracle2.generatedclasses.udt.T_976ObjectType.T_976_OBJECT_TYPE;
 import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
 import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
 import static org.jooq.util.oracle.OracleFactory.level;
@@ -70,6 +72,7 @@ import static org.jooq.util.oracle.OracleFactory.sysConnectByPath;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -115,6 +118,9 @@ import org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.u_author_type.GetBooks;
+import org.jooq.test.oracle2.generatedclasses.tables.records.T_976Record;
+import org.jooq.test.oracle2.generatedclasses.udt.records.T_976ObjectTypeRecord;
+import org.jooq.test.oracle2.generatedclasses.udt.records.T_976VarrayTypeRecord;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
@@ -922,5 +928,51 @@ public class jOOQOracleTest extends jOOQAbstractTest<
              .execute());
 
         // No tests on results
+    }
+
+    @Test
+    public void testOracleDateAsTimestamp() throws Exception {
+        Timestamp now = new Timestamp(System.currentTimeMillis() / 1000 * 1000);
+
+        // A record with nulls
+        // -------------------
+        T_976Record record = ora().newRecord(T_976);
+        record.setId(1);
+        assertEquals(1, record.store());
+        assertNull(record.getD());
+        assertNull(record.getT());
+        assertNull(record.getO());
+
+        record.refresh();
+        assertNull(record.getD());
+        assertNull(record.getT());
+        assertNull(record.getO());
+        assertEquals(record, ora().fetchOne(T_976, T_976.ID.equal(1)));
+
+        // A record with values
+        // --------------------
+        T_976ObjectTypeRecord o = ora().newRecord(T_976_OBJECT_TYPE);
+        o.setD(now);
+        // [#1034] TODO: Check proper use of Timestamp in array records
+        T_976VarrayTypeRecord t = new T_976VarrayTypeRecord(ora());
+//        t.set(now, now);
+
+        record = ora().newRecord(T_976);
+        record.setId(2);
+        record.setD(now);
+        record.setO(o);
+        record.setT(t);
+        record.store();
+        assertEquals(record, ora().fetchOne(T_976, T_976.ID.equal(2)));
+
+        // Procedures and packages
+        // -----------------------
+        assertEquals(now, org.jooq.test.oracle2.generatedclasses.Routines.p_976(ora(), now));
+        assertEquals(now, org.jooq.test.oracle2.generatedclasses.Routines.f_976(ora(), now));
+        assertEquals(now, ora().select(org.jooq.test.oracle2.generatedclasses.Routines.f_976(now)).fetchOne(0));
+
+        assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.Pkg_976.p_976(ora(), now));
+        assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.Pkg_976.f_976(ora(), now));
+        assertEquals(now, ora().select(org.jooq.test.oracle2.generatedclasses.packages.Pkg_976.f_976(now)).fetchOne(0));
     }
 }

@@ -89,7 +89,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
-public interface SelectOffsetStep extends SelectFinalStep {
+public interface SelectOffsetStep extends SelectForUpdateStep {
 
     /**
      * Add an <code>OFFSET</code> clause to the query
@@ -100,5 +100,5 @@ public interface SelectOffsetStep extends SelectFinalStep {
      * <code>SELECT</code> statements.
      */
     @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
-    SelectFinalStep offset(int offset);
+    SelectForUpdateStep offset(int offset);
 }

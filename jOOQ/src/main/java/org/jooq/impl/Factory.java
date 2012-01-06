@@ -336,6 +336,16 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
+     * A synonym for {@link Select#asTable()}. It might look a bit more fluent
+     * like this, to some users
+     *
+     * @see Select#asTable()
+     */
+    public static <R extends Record> Table<R> table(Select<R> select) {
+        return select.asTable();
+    }
+
+    /**
      * A synonym for {@link #unnest(List)}
      *
      * @see #unnest(List)

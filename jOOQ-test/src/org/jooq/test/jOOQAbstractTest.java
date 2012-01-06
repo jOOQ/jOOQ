@@ -2942,10 +2942,11 @@ public abstract class jOOQAbstractTest<
             return;
         }
 
-        Table<B> nested = create()
+        Table<B> nested = table(create()
             .selectFrom(TBook())
             .orderBy(TBook_ID().desc())
-            .limit(2).asTable("nested");
+            .limit(2))
+            .as("nested");
 
         Field<Integer> nestedID = nested.getField(TBook_AUTHOR_ID());
         Record record = create().select(nestedID, count())
@@ -9297,12 +9298,11 @@ public abstract class jOOQAbstractTest<
         Field<Integer> lang = TBook_LANGUAGE_ID().cast(Integer.class).as("lang");
         Result<Record> result3 =
         create().select()
-                .from(create().select(TBook_AUTHOR_ID(), lang)
-                              .from(TBook())
-                              .asTable()
-                              .pivot(count())
-                              .of(lang)
-                              .in(1, 2, 3, 4))
+                .from(table(create().select(TBook_AUTHOR_ID(), lang)
+                                    .from(TBook()))
+                .pivot(count())
+                .of(lang)
+                .in(1, 2, 3, 4))
                 .fetch();
 
         assertEquals(2, result3.size());

@@ -104,9 +104,13 @@ public interface QueryPartInternal extends QueryPart {
      * Reproduce the SQL dialect this {@link QueryPart} was created with
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
-     *
+     * 
      * @return The SQL dialect
+     * @deprecated - 2.0.2 - The attached SQL dialect of a {@link QueryPart}
+     *             should no longer be referenced, as query parts become more
+     *             and more {@link Configuration} - independent
      */
+    @Deprecated
     SQLDialect getDialect();
 
     /**

@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.math.BigDecimal;
@@ -114,7 +115,9 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     // [#722] TODO This is probably not entirely right.
                     case INGRES:
 
-                    // [#632] Sybase needs explicit casting in very rare cases.
+                    // [#1029] Postgres and [#632] Sybase need explicit casting 
+                    // in very rare cases.
+                    case POSTGRES:
                     case SYBASE: {
                         toSQLCast(context);
                         return;
@@ -124,7 +127,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
         }
 
         // Most RDBMS can handle constants as typeless literals
-        toSQL(context, getValue(), this.getType());
+        toSQL(context, getValue(), getType());
     }
 
     /**
@@ -163,6 +166,13 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             }
         }
 
+        // [#1029] Postgres generally doesn't need the casting. Only in the
+        // above case where the type is OTHER
+        else if (context.getDialect() == POSTGRES) {
+            toSQL(context, getValue(), getType());
+        }
+
+        // In all other cases, the bind variable can be cast normally
         else {
             toSQLCast(context, getDataType(context), 0, 0);
         }

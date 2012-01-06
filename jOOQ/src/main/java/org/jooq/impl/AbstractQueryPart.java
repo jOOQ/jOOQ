@@ -101,6 +101,7 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
     // -------------------------------------------------------------------------
 
     @Override
+    @Deprecated
     public final SQLDialect getDialect() {
         return getConfiguration().getDialect();
     }

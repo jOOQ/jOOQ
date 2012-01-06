@@ -83,7 +83,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface SelectFromStep extends SelectJoinStep {
+public interface SelectFromStep extends SelectWhereStep {
 
     /**
      * Add a <code>FROM</code> clause to the query

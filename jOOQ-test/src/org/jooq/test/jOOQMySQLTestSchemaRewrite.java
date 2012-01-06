@@ -37,11 +37,13 @@
 package org.jooq.test;
 
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_639_NUMBERS_TABLE;
+import static org.jooq.test.mysql2.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_785;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.mysql2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_UNSIGNED;
@@ -65,10 +67,10 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.test.mysql2.generatedclasses.Routines;
 import org.jooq.test.mysql2.generatedclasses.Test2Factory;
-import org.jooq.test.mysql2.generatedclasses.tables.T_658Ref;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord;
@@ -92,6 +94,7 @@ public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
         TAuthorRecord,
         TBookRecord,
         TBookStoreRecord,
+        TBookToBookStoreRecord,
         VLibraryRecord,
         XUnusedRecord,
         XUnusedRecord,
@@ -180,8 +183,28 @@ public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
     }
 
     @Override
+    protected UpdatableTable<TBookToBookStoreRecord> TBookToBookStore() {
+        return T_BOOK_TO_BOOK_STORE;
+    }
+
+    @Override
+    protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_BOOK_ID() {
+        return T_BOOK_TO_BOOK_STORE.BOOK_ID;
+    }
+
+    @Override
+    protected TableField<TBookToBookStoreRecord, String> TBookToBookStore_BOOK_STORE_NAME() {
+        return T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
+    }
+
+    @Override
+    protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
+        return T_BOOK_TO_BOOK_STORE.STOCK;
+    }
+
+    @Override
     protected Table<T_658RefRecord> T658() {
-        return T_658Ref.T_658_REF;
+        return T_658_REF;
     }
 
     @Override

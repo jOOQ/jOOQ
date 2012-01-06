@@ -36,6 +36,9 @@
 
 package org.jooq.impl;
 
+import java.util.Collection;
+
+import org.jooq.Field;
 import org.jooq.RenderContext;
 
 /**
@@ -47,6 +50,14 @@ class SelectFieldList extends FieldList {
 
     SelectFieldList() {
         super();
+    }
+
+    SelectFieldList(Collection<? extends Field<?>> wrappedList) {
+        super(wrappedList);
+    }
+
+    SelectFieldList(Field<?>... wrappedList) {
+        super(wrappedList);
     }
 
     @Override

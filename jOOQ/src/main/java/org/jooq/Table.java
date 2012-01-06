@@ -36,6 +36,9 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -85,4 +88,33 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *         This is never <code>null</code>.
      */
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
+
+    /**
+     * Create a new <code>TABLE</code> reference from this table, pivoting it
+     * into another form
+     * <p>
+     * This has been observed to work with
+     * <ul>
+     * <li> {@link SQLDialect#ORACLE}</li>
+     * <li> {@link SQLDialect#SQLSERVER} (not yet officially supported)</li>
+     * </ul>
+     *
+     * @param aggregateFunctions The aggregate functions used for pivoting.
+     * @return A DSL object to create the <code>PIVOT</code> expression
+     */
+    @Support({ ORACLE })
+    PivotForStep pivot(Field<?>... aggregateFunctions);
+
+    /**
+     * Create a new <code>TABLE</code> reference from this table, pivoting it
+     * into another form
+     * <p>
+     * For more details, see {@link #pivot(Field...)}
+     *
+     * @param aggregateFunctions The aggregate functions used for pivoting.
+     * @return A DSL object to create the <code>PIVOT</code> expression
+     * @see #pivot(Field...)
+     */
+    @Support({ ORACLE })
+    PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
 }

@@ -73,6 +73,7 @@ import org.jooq.RecordHandler;
 import org.jooq.Result;
 import org.jooq.Store;
 import org.jooq.Table;
+import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONObject;
@@ -1228,6 +1229,18 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         return StringUtils.replaceEach(string,
             new String[] { "\"", "'", "<", ">", "&" },
             new String[] { "&quot;", "&apos;", "&lt;", "&gt;", "&amp;"});
+    }
+
+    @Override
+    public final Object[][] intoArray() throws MappingException {
+        int size = size();
+        Object[][] array = new Object[size][];
+
+        for (int i = 0; i < size; i++) {
+            array[i] = get(i).intoArray();
+        }
+
+        return array;
     }
 
     @Override

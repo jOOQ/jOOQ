@@ -45,6 +45,7 @@ import static org.jooq.impl.Util.getMatchingSetters;
 import static org.jooq.impl.Util.hasColumnAnnotations;
 import static org.jooq.impl.Util.isJPAAvailable;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
@@ -525,47 +526,74 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
+    public final Object[] intoArray() {
+        return into(Object[].class);
+    }
+
+    @Override
     public final <T> T into(Class<? extends T> type) {
         try {
-            T result = type.newInstance();
-            boolean useAnnotations = isJPAAvailable() && hasColumnAnnotations(type);
-
-            for (Field<?> field : getFields()) {
-                List<java.lang.reflect.Field> members;
-                List<java.lang.reflect.Method> methods;
-
-                // Annotations are available and present
-                if (useAnnotations) {
-                    members = getAnnotatedMembers(type, field.getName());
-                    methods = getAnnotatedSetters(type, field.getName());
-                }
-
-                // No annotations are present
-                else {
-                    members = getMatchingMembers(type, field.getName());
-                    methods = getMatchingSetters(type, field.getName());
-                }
-
-                for (java.lang.reflect.Field member : members) {
-
-                    // [#935] Avoid setting final fields
-                    if ((member.getModifiers() & Modifier.FINAL) == 0) {
-                        into(result, member, field);
-                    }
-                }
-
-                for (java.lang.reflect.Method method : methods) {
-                    method.invoke(result, getValue(field, method.getParameterTypes()[0]));
-                }
+            if (type.isArray()) {
+                return intoArray(type);
             }
-
-            return result;
+            else {
+                return intoPOJO(type);
+            }
         }
 
         // All reflection exceptions are intercepted
         catch (Exception e) {
             throw new MappingException("An error ocurred when mapping record to " + type, e);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final <T> T intoArray(Class<? extends T> type) {
+        int size = getFields().size();
+        Class<?> componentType = type.getComponentType();
+        Object[] result = (Object[]) Array.newInstance(componentType, size);
+
+        for (int i = 0; i < size; i++) {
+            result[i] = Convert.convert(getValue(i), componentType);
+        }
+
+        return (T) result;
+    }
+
+    private final <T> T intoPOJO(Class<? extends T> type) throws Exception {
+        T result = type.newInstance();
+        boolean useAnnotations = isJPAAvailable() && hasColumnAnnotations(type);
+
+        for (Field<?> field : getFields()) {
+            List<java.lang.reflect.Field> members;
+            List<java.lang.reflect.Method> methods;
+
+            // Annotations are available and present
+            if (useAnnotations) {
+                members = getAnnotatedMembers(type, field.getName());
+                methods = getAnnotatedSetters(type, field.getName());
+            }
+
+            // No annotations are present
+            else {
+                members = getMatchingMembers(type, field.getName());
+                methods = getMatchingSetters(type, field.getName());
+            }
+
+            for (java.lang.reflect.Field member : members) {
+
+                // [#935] Avoid setting final fields
+                if ((member.getModifiers() & Modifier.FINAL) == 0) {
+                    into(result, member, field);
+                }
+            }
+
+            for (java.lang.reflect.Method method : methods) {
+                method.invoke(result, getValue(field, method.getParameterTypes()[0]));
+            }
+        }
+
+        return result;
     }
 
     @Override

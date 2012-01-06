@@ -338,14 +338,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[][] fetchArrays() {
-        Result<R> fetch = fetch();
-        Object[][] array = new Object[fetch.size()][];
-
-        for (int i = 0; i < fetch.size(); i++) {
-            array[i] = convertToArray(fetch.get(i));
-        }
-
-        return array;
+        return fetch().intoArray();
     }
 
     @Override
@@ -378,7 +371,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[] fetchOneArray() {
-        return convertToArray(fetchOne());
+        return fetchOne().intoArray();
     }
 
     @Override
@@ -407,17 +400,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final FutureResult<R> fetchLater(ExecutorService executor) {
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
         return new FutureResultImpl<R>(future);
-    }
-
-    private final Object[] convertToArray(R record) {
-        final List<Field<?>> fields = record.getFields();
-        Object[] array = new Object[fields.size()];
-
-        for (int i = 0; i < fields.size(); i++) {
-            array[i] = record.getValue(i);
-        }
-
-        return array;
     }
 
     @Override

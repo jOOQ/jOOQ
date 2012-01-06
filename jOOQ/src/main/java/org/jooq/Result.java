@@ -1726,6 +1726,26 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     Document exportXML();
 
     /**
+     * Convert this result into an array of arrays
+     * <p>
+     * The resulting array has the same number of first-dimension elements as this result has records. It has the same number of second-dimension elements as this result's records have fields.
+     * The resulting array contains data as such:
+     * <p>
+     * <code><pre>
+     * // For arbitrary values of i, j
+     * result.getValue(i, j) == result.intoArray()[i][j]
+     * </pre></code>
+     * <p>
+     * This is the same as calling <code>into(Object[].class)</code>
+     *
+     * @return This result as an array of arrays
+     * @throws MappingException wrapping any conversion exception that might
+     *             have occurred while mapping records
+     * @see Record#intoArray()
+     */
+    Object[][] intoArray() throws MappingException;
+
+    /**
      * Map resulting records onto a custom type.
      * <p>
      * This is the same as calling <code>record.into(type)</code> on every

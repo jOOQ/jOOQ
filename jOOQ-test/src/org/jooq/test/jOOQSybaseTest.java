@@ -38,6 +38,7 @@ import static org.jooq.test.sybase.generatedclasses.Tables.T_785;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK_STORE;
+import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_TRIGGERS;
@@ -66,6 +67,7 @@ import org.jooq.test.sybase.generatedclasses.Sequences;
 import org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord;
+import org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord;
@@ -91,6 +93,7 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
         TAuthorRecord,
         TBookRecord,
         TBookStoreRecord,
+        TBookToBookStoreRecord,
         VLibraryRecord,
         XUnusedRecord,
         XUnusedRecord,
@@ -172,6 +175,26 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     @Override
     protected TableField<TBookStoreRecord, String> TBookStore_NAME() {
         return T_BOOK_STORE.NAME;
+    }
+
+    @Override
+    protected UpdatableTable<TBookToBookStoreRecord> TBookToBookStore() {
+        return T_BOOK_TO_BOOK_STORE;
+    }
+
+    @Override
+    protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_BOOK_ID() {
+        return T_BOOK_TO_BOOK_STORE.BOOK_ID;
+    }
+
+    @Override
+    protected TableField<TBookToBookStoreRecord, String> TBookToBookStore_BOOK_STORE_NAME() {
+        return T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME;
+    }
+
+    @Override
+    protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
+        return T_BOOK_TO_BOOK_STORE.STOCK;
     }
 
     @Override

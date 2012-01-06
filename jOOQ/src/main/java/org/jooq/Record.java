@@ -989,7 +989,30 @@ public interface Record extends FieldProvider, Store<Object> {
     <T> void setValue(Field<T> field, T value);
 
     /**
+     * Convert this record into an array.
+     * <p>
+     * The resulting array has the same number of elements as this record has
+     * fields. The resulting array contains data as such:
+     * <p>
+     * <code><pre>
+     * // For arbitrary values of i
+     * record.getValue(i) == record.intoArray()[i]
+     * </pre></code>
+     * <p>
+     * This is the same as calling <code>into(Object[].class)</code>
+     *
+     * @return This record as an array
+     */
+    Object[] intoArray();
+
+    /**
      * Map resulting records onto a custom type. The mapping algorithm is this:
+     * <h3>If <code>type</code> is an array:</h3> The resulting array is of the
+     * nature described in {@link #intoArray()}. Arrays more specific than
+     * <code>Object[]</code> can be specified as well, e.g.
+     * <code>String[]</code>. If conversion fails, a {@link MappingException}
+     * is thrown, wrapping conversion exceptions.
+     * <p>
      * <h3>If any JPA {@link Column} annotations are found on the provided
      * <code>type</code>, only those are used:</h3>
      * <ul>

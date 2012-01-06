@@ -202,6 +202,9 @@ public abstract class jOOQAbstractTest<
         // T_BOOK_STORE table
         S extends UpdatableRecord<S>,
 
+        // T_BOOK_TO_BOOK_STORE table
+        B2S extends UpdatableRecord<B2S>,
+
         // V_LIBRARY view
         L extends TableRecord<L>,
 
@@ -234,6 +237,7 @@ public abstract class jOOQAbstractTest<
     protected static final List<String>    BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
     protected static final List<String>    BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");
     protected static final List<String>    BOOK_LAST_NAMES    = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
+    protected static final List<Integer>   AUTHOR_IDS         = Arrays.asList(1, 2);
     protected static final List<String>    AUTHOR_FIRST_NAMES = Arrays.asList("George", "Paulo");
     protected static final List<String>    AUTHOR_LAST_NAMES  = Arrays.asList("Orwell", "Coelho");
 
@@ -562,6 +566,11 @@ public abstract class jOOQAbstractTest<
     protected abstract Table<?> VBook();
     protected abstract TableField<L, String> VLibrary_TITLE();
     protected abstract TableField<L, String> VLibrary_AUTHOR();
+
+    protected abstract UpdatableTable<B2S> TBookToBookStore();
+    protected abstract TableField<B2S, Integer> TBookToBookStore_BOOK_ID();
+    protected abstract TableField<B2S, String> TBookToBookStore_BOOK_STORE_NAME();
+    protected abstract TableField<B2S, Integer> TBookToBookStore_STOCK();
 
     protected abstract UpdatableTable<D> TDirectory();
     protected abstract TableField<D, Integer> TDirectory_ID();
@@ -1135,6 +1144,8 @@ public abstract class jOOQAbstractTest<
         for (int j = 0; j < books.size(); j++) {
             for (int i = 0; i < TBook().getFields().size(); i++) {
                 assertEquals(books.getValue(j, i), booksArray[j][i]);
+                assertEquals(books.getValue(j, i), books.intoArray()[j][i]);
+                assertEquals(books.get(j).getValue(i), books.get(j).intoArray()[i]);
             }
         }
 
@@ -9089,8 +9100,7 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testUnknownBindTypes() throws Exception {
 
-        // [#1028] Named params without any associated type information
-        // [#1029] TODO Fix this for Postgres!
+        // [#1028] [#1029] Named params without any associated type information
         Select<?> select = create().select(
             param("p1"),
             param("p2"));
@@ -9171,6 +9181,136 @@ public abstract class jOOQAbstractTest<
         assertEquals(2, result2.size());
         assertEquals(1, result2.getValue(0, 0));
         assertEquals(2, result2.getValue(1, 0));
+    }
+
+    @Test
+    public void testPivotClause() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DB2:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "PIVOT clause tests");
+                return;
+        }
+
+        // Simple pivoting, no aliasing
+        // ----------------------------
+
+        Result<Record> result1 =
+        create().select()
+                .from(TBookToBookStore()
+                .pivot(count())
+                .of(TBookToBookStore_BOOK_STORE_NAME())
+                .in("Orell Füssli",
+                    "Ex Libris",
+                    "Buchhandlung im Volkshaus"))
+                .orderBy(
+                    literal(1).asc(),
+                    literal(2).asc())
+                .fetch();
+
+        assertEquals(6, result1.size());
+        assertEquals(TBookToBookStore_BOOK_ID().getName(), result1.getField(0).getName());
+        assertEquals(TBookToBookStore_STOCK().getName(), result1.getField(1).getName());
+        assertTrue(result1.getField(2).getName().contains("Orell Füssli"));
+        assertTrue(result1.getField(3).getName().contains("Ex Libris"));
+        assertTrue(result1.getField(4).getName().contains("Buchhandlung im Volkshaus"));
+        assertEquals(
+            asList(1, 1, 0, 1, 0),
+            asList(result1.get(0).into(Integer[].class)));
+        assertEquals(
+            asList(1, 10, 1, 0, 0),
+            asList(result1.get(1).into(Integer[].class)));
+        assertEquals(
+            asList(2, 10, 1, 0, 0),
+            asList(result1.get(2).into(Integer[].class)));
+        assertEquals(
+            asList(3, 1, 0, 0, 1),
+            asList(result1.get(3).into(Integer[].class)));
+        assertEquals(
+            asList(3, 2, 0, 1, 0),
+            asList(result1.get(4).into(Integer[].class)));
+        assertEquals(
+            asList(3, 10, 1, 0, 0),
+            asList(result1.get(5).into(Integer[].class)));
+
+        // Pivoting with plenty of aliasing and several aggregate functions
+        // ----------------------------------------------------------------
+
+        Result<Record> result2 =
+        create().select()
+                .from(TBookToBookStore()
+                .pivot(avg(TBookToBookStore_STOCK()).as("AVG"),
+                       max(TBookToBookStore_STOCK()).as("MAX"),
+                       sum(TBookToBookStore_STOCK()).as("SUM"),
+                       count(TBookToBookStore_STOCK()).as("CNT"))
+                .of(TBookToBookStore_BOOK_STORE_NAME())
+                .in(val("Orell Füssli").as("BS1"),
+                    val("Ex Libris").as("BS2"),
+                    val("Buchhandlung im Volkshaus").as("BS3")))
+                .orderBy(val(1).asc())
+                .fetch();
+
+        assertEquals(3, result2.size());
+        assertEquals(TBookToBookStore_BOOK_ID().getName(), result2.getField(0).getName());
+        assertEquals("BS1_AVG", result2.getField(1).getName());
+        assertEquals("BS1_MAX", result2.getField(2).getName());
+        assertEquals("BS1_SUM", result2.getField(3).getName());
+        assertEquals("BS1_CNT", result2.getField(4).getName());
+        assertEquals("BS2_AVG", result2.getField(5).getName());
+        assertEquals("BS2_MAX", result2.getField(6).getName());
+        assertEquals("BS2_SUM", result2.getField(7).getName());
+        assertEquals("BS2_CNT", result2.getField(8).getName());
+        assertEquals("BS3_AVG", result2.getField(9).getName());
+        assertEquals("BS3_MAX", result2.getField(10).getName());
+        assertEquals("BS3_SUM", result2.getField(11).getName());
+        assertEquals("BS3_CNT", result2.getField(12).getName());
+        assertEquals(
+            asList(1,
+                   10, 10, 10, 1,
+                   1, 1, 1, 1,
+                   null, null, null, 0),
+            asList(result2.get(0).into(Integer[].class)));
+        assertEquals(
+            asList(2,
+                   10, 10, 10, 1,
+                   null, null, null, 0,
+                   null, null, null, 0),
+            asList(result2.get(1).into(Integer[].class)));
+        assertEquals(
+            asList(3,
+                   10, 10, 10, 1,
+                   2, 2, 2, 1,
+                   1, 1, 1, 1),
+            asList(result2.get(2).into(Integer[].class)));
+
+
+        // Check aliasing of fields in source table
+        Field<Integer> lang = TBook_LANGUAGE_ID().cast(Integer.class).as("lang");
+        Result<Record> result3 =
+        create().select()
+                .from(create().select(TBook_AUTHOR_ID(), lang)
+                              .from(TBook())
+                              .asTable()
+                              .pivot(count())
+                              .of(lang)
+                              .in(1, 2, 3, 4))
+                .fetch();
+
+        assertEquals(2, result3.size());
+        assertEquals(5, result3.getFields().size());
+        assertEquals(AUTHOR_IDS, result3.getValues(0));
+        assertEquals(
+            asList(1, 2, 0, 0, 0),
+            asList(result3.get(0).into(Integer[].class)));
     }
 
     @Test

@@ -36,10 +36,12 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Record;
@@ -118,5 +120,15 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
      */
     protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table) {
         return new TableFieldImpl<R, T>(name, type, table);
+    }
+
+    @Override
+    public final Pivot<Object> pivot(Field<?>... aggregateFunctions) {
+        return new Pivot<Object>(this, aggregateFunctions);
+    }
+
+    @Override
+    public final Pivot<Object> pivot(Collection<? extends Field<?>> aggregateFunctions) {
+        return pivot(aggregateFunctions.toArray(new Field[0]));
     }
 }

@@ -55,7 +55,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-public class Pivot<T>
+class Pivot<T>
 extends AbstractTable<Record>
 implements
     PivotForStep,

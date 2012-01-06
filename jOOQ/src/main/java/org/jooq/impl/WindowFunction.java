@@ -346,7 +346,7 @@ implements
     }
 
     @Override
-    public final WindowFunction<T> rowsBetweenUnboundedFollwing() {
+    public final WindowFunction<T> rowsBetweenUnboundedFollowing() {
         rowsUnboundedFollowing();
         return this;
     }

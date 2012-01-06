@@ -121,7 +121,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * the window function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
-    WindowRowsAndStep<T> rowsBetweenUnboundedFollwing();
+    WindowRowsAndStep<T> rowsBetweenUnboundedFollowing();
 
     /**
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to

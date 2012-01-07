@@ -9209,7 +9209,7 @@ public abstract class jOOQAbstractTest<
         create().select()
                 .from(TBookToBookStore()
                 .pivot(count())
-                .of(TBookToBookStore_BOOK_STORE_NAME())
+                .over(TBookToBookStore_BOOK_STORE_NAME())
                 .in("Orell Füssli",
                     "Ex Libris",
                     "Buchhandlung im Volkshaus"))
@@ -9253,7 +9253,7 @@ public abstract class jOOQAbstractTest<
                        max(TBookToBookStore_STOCK()).as("MAX"),
                        sum(TBookToBookStore_STOCK()).as("SUM"),
                        count(TBookToBookStore_STOCK()).as("CNT"))
-                .of(TBookToBookStore_BOOK_STORE_NAME())
+                .over(TBookToBookStore_BOOK_STORE_NAME())
                 .in(val("Orell Füssli").as("BS1"),
                     val("Ex Libris").as("BS2"),
                     val("Buchhandlung im Volkshaus").as("BS3")))
@@ -9301,7 +9301,7 @@ public abstract class jOOQAbstractTest<
                 .from(table(create().select(TBook_AUTHOR_ID(), lang)
                                     .from(TBook()))
                 .pivot(count())
-                .of(lang)
+                .over(lang)
                 .in(1, 2, 3, 4))
                 .fetch();
 

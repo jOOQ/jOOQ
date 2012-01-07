@@ -48,12 +48,12 @@ public interface PivotForStep {
     /**
      * Add a list of fields to the <code>PIVOT</code> clause. Normally, the
      * keyword used here would be <code>FOR</code>, but <code>for</code> is a
-     * reserved word in Java and cannot be used. <code>of</code> is close
+     * reserved word in Java and cannot be used. <code>over</code> is close
      * enough.
      *
      * @param field The pivoting field
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
     @Support({ ORACLE })
-    <T> PivotInStep<T> of(Field<T> field);
+    <T> PivotInStep<T> over(Field<T> field);
 }

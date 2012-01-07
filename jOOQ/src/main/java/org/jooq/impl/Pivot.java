@@ -68,7 +68,7 @@ implements
 
     private final Table<?>    table;
     private final FieldList   aggregateFunctions;
-    private Field<T>          of;
+    private Field<T>          over;
     private FieldList         in;
 
     Pivot(Table<?> table, Field<?>... aggregateFunctions) {
@@ -100,7 +100,7 @@ implements
                .declareFields(true)
                .sql(aggregateFunctions)
                .sql(" for ")
-               .literal(of.getName())
+               .literal(over.getName())
                .sql(" in (")
                .sql(in)
                .declareFields(declare)
@@ -130,7 +130,7 @@ implements
 
     @Override
     protected final List<Attachable> getAttachables0() {
-        return getAttachables(table, aggregateFunctions, of, in);
+        return getAttachables(table, aggregateFunctions, over, in);
     }
 
     // ------------------------------------------------------------------------
@@ -139,9 +139,9 @@ implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public final <Z> Pivot<Z> of(Field<Z> field) {
+    public final <Z> Pivot<Z> over(Field<Z> field) {
         // The previous bound of <T> is Object, but that's irrelevant
-        this.of = (Field<T>) field;
+        this.over = (Field<T>) field;
         return (Pivot<Z>) this;
     }
 

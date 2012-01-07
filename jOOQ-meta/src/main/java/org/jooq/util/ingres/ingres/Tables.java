@@ -28,6 +28,16 @@ public final class Tables {
 	public static org.jooq.util.ingres.ingres.tables.Iiconstraints IICONSTRAINTS = org.jooq.util.ingres.ingres.tables.Iiconstraints.IICONSTRAINTS;
 
 	/**
+	 * The table $ingres.iidb_comments
+	 */
+	public static org.jooq.util.ingres.ingres.tables.IidbComments IIDB_COMMENTS = org.jooq.util.ingres.ingres.tables.IidbComments.IIDB_COMMENTS;
+
+	/**
+	 * The table $ingres.iidb_subcomments
+	 */
+	public static org.jooq.util.ingres.ingres.tables.IidbSubcomments IIDB_SUBCOMMENTS = org.jooq.util.ingres.ingres.tables.IidbSubcomments.IIDB_SUBCOMMENTS;
+
+	/**
 	 * The table $ingres.iiindex_columns
 	 */
 	public static org.jooq.util.ingres.ingres.tables.IiindexColumns IIINDEX_COLUMNS = org.jooq.util.ingres.ingres.tables.IiindexColumns.IIINDEX_COLUMNS;

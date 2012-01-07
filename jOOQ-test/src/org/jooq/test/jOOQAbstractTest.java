@@ -5881,6 +5881,108 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testOuterJoin() throws Exception {
+        // Test LEFT OUTER JOIN
+        // --------------------
+        Result<Record> result1 =
+        create().select(
+                    TAuthor_ID(),
+                    TBook_ID(),
+                    TBookToBookStore_BOOK_STORE_NAME())
+                .from(TAuthor())
+                .leftOuterJoin(TBook()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
+                .leftOuterJoin(TBookToBookStore()).on(TBook_ID().equal(TBookToBookStore_BOOK_ID()))
+                .orderBy(
+                    TAuthor_ID().asc(),
+                    TBook_ID().asc(),
+                    TBookToBookStore_BOOK_STORE_NAME().asc().nullsLast())
+                .fetch();
+
+        assertEquals(
+            asList(1, 1, 1, 2, 2, 2, 2),
+            result1.getValues(0, Integer.class));
+        assertEquals(
+            asList(1, 1, 2, 3, 3, 3, 4),
+            result1.getValues(1, Integer.class));
+        assertEquals(
+            asList("Ex Libris", "Orell Füssli", "Orell Füssli", "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli", null),
+            result1.getValues(2));
+
+        // Test RIGHT OUTER JOIN
+        // ---------------------
+
+        switch (getDialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "RIGHT OUTER JOIN tests");
+                break;
+
+            default: {
+                Result<Record> result2 =
+                    create().select(
+                                TAuthor_ID(),
+                                TBook_ID(),
+                                TBookToBookStore_BOOK_STORE_NAME())
+                            .from(TBookToBookStore())
+                            .rightOuterJoin(TBook()).on(TBook_ID().equal(TBookToBookStore_BOOK_ID()))
+                            .rightOuterJoin(TAuthor()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
+                            .orderBy(
+                                TAuthor_ID().asc(),
+                                TBook_ID().asc(),
+                                TBookToBookStore_BOOK_STORE_NAME().asc().nullsLast())
+                            .fetch();
+
+                assertEquals(result1, result2);
+                assertEquals(
+                    asList(1, 1, 1, 2, 2, 2, 2),
+                    result2.getValues(0, Integer.class));
+                assertEquals(
+                    asList(1, 1, 2, 3, 3, 3, 4),
+                    result2.getValues(1, Integer.class));
+                assertEquals(
+                    asList("Ex Libris", "Orell Füssli", "Orell Füssli", "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli", null),
+                    result2.getValues(2));
+
+                break;
+            }
+        }
+
+        // Test FULL OUTER JOIN
+        // --------------------
+
+        switch (getDialect()) {
+            case ASE:
+            case DERBY:
+            case H2:
+            case MYSQL:
+            case SQLITE:
+                log.info("SKIPPING", "FULL OUTER JOIN tests");
+                break;
+
+            default: {
+                Select<?> z = create().select(zero().as("z"));
+                Select<?> o = create().select(one().as("o"));
+
+                Result<Record> result3 =
+                create().select()
+                        .from(z)
+                        .fullOuterJoin(o).on(z.getField("z").cast(Integer.class).equal(o.getField("o").cast(Integer.class)))
+                        .fetch();
+
+                assertEquals("z", result3.getField(0).getName());
+                assertEquals("o", result3.getField(1).getName());
+
+                // Interestingly, ordering doesn't work with Oracle, in this
+                // example... Seems to be an Oracle bug??
+                @SuppressWarnings("unchecked")
+                List<List<Integer>> list = asList(asList(0, null), asList(null, 1));
+                assertTrue(list.contains(asList(result3.get(0).into(Integer[].class))));
+                assertTrue(list.contains(asList(result3.get(1).into(Integer[].class))));
+                break;
+            }
+        }
+    }
+
+    @Test
     public void testAliasing() throws Exception {
         Table<B> b = TBook().as("b");
         Field<Integer> b_ID = b.getField(TBook_ID());

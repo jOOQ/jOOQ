@@ -452,6 +452,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition equalAny(T... array) {
+        return equalAny(val(array));
+    }
+
+    @Override
+    public final Condition equalAny(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.EQUALS_ANY);
+    }
+
+    @Override
     public final Condition equalSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS_SOME);
     }
@@ -459,6 +469,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition equalAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS_ALL);
+    }
+
+    @Override
+    public final Condition equalAll(T... array) {
+        return equalAll(val(array));
+    }
+
+    @Override
+    public final Condition equalAll(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.EQUALS_ALL);
     }
 
     @Override
@@ -478,7 +498,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notEqualAny(Select<?> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS_ALL);
+        return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS_ANY);
+    }
+
+    @Override
+    public final Condition notEqualAny(T... array) {
+        return notEqualAny(val(array));
+    }
+
+    @Override
+    public final Condition notEqualAny(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.NOT_EQUALS_ANY);
     }
 
     @Override
@@ -489,6 +519,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition notEqualAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS_ALL);
+    }
+
+    @Override
+    public final Condition notEqualAll(T... array) {
+        return notEqualAll(val(array));
+    }
+
+    @Override
+    public final Condition notEqualAll(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.NOT_EQUALS_ALL);
     }
 
     @Override
@@ -512,6 +552,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition lessThanAny(T... array) {
+        return lessThanAny(val(array));
+    }
+
+    @Override
+    public final Condition lessThanAny(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_THAN_ANY);
+    }
+
+    @Override
     public final Condition lessThanSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_THAN_SOME);
     }
@@ -519,6 +569,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition lessThanAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_THAN_ALL);
+    }
+
+    @Override
+    public final Condition lessThanAll(T... array) {
+        return lessThanAll(val(array));
+    }
+
+    @Override
+    public final Condition lessThanAll(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_THAN_ALL);
     }
 
     @Override
@@ -542,6 +602,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition lessOrEqualAny(T... array) {
+        return lessOrEqualAny(val(array));
+    }
+
+    @Override
+    public final Condition lessOrEqualAny(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_OR_EQUAL_ANY);
+    }
+
+    @Override
     public final Condition lessOrEqualSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL_SOME);
     }
@@ -549,6 +619,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition lessOrEqualAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL_ALL);
+    }
+
+    @Override
+    public final Condition lessOrEqualAll(T... array) {
+        return lessOrEqualAll(val(array));
+    }
+
+    @Override
+    public final Condition lessOrEqualAll(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.LESS_OR_EQUAL_ALL);
     }
 
     @Override
@@ -572,6 +652,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition greaterThanAny(T... array) {
+        return greaterThanAny(val(array));
+    }
+
+    @Override
+    public final Condition greaterThanAny(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_THAN_ANY);
+    }
+
+    @Override
     public final Condition greaterThanSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_THAN_SOME);
     }
@@ -579,6 +669,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition greaterThanAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_THAN_ALL);
+    }
+
+    @Override
+    public final Condition greaterThanAll(T... array) {
+        return greaterThanAll(val(array));
+    }
+
+    @Override
+    public final Condition greaterThanAll(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_THAN_ALL);
     }
 
     @Override
@@ -602,6 +702,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition greaterOrEqualAny(T... array) {
+        return greaterOrEqualAny(val(array));
+    }
+
+    @Override
+    public final Condition greaterOrEqualAny(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_OR_EQUAL_ANY);
+    }
+
+    @Override
     public final Condition greaterOrEqualSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL_SOME);
     }
@@ -609,6 +719,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition greaterOrEqualAll(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL_ALL);
+    }
+
+    @Override
+    public final Condition greaterOrEqualAll(T... array) {
+        return greaterOrEqualAll(val(array));
+    }
+
+    @Override
+    public final Condition greaterOrEqualAll(Field<T[]> array) {
+        return new ArrayAsSubqueryCondition<T>(nullSafe(array), this, SubQueryOperator.GREATER_OR_EQUAL_ALL);
     }
 
     // ------------------------------------------------------------------------

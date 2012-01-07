@@ -3084,6 +3084,8 @@ public abstract class jOOQAbstractTest<
                 break;
 
             default: {
+
+                // Testing = ALL(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
                     .where(TBook_ID().equalAll(create().selectOne()))
@@ -3093,6 +3095,7 @@ public abstract class jOOQAbstractTest<
                     .where(TBook_ID().equalAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
+                // Testing = ANY(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
                     .where(TBook_ID().equalAny(create().selectOne()))
@@ -3102,6 +3105,7 @@ public abstract class jOOQAbstractTest<
                     .where(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
+                // Testing = SOME(subquery)
                 assertEquals(Arrays.asList(1), create().select()
                     .from(TBook())
                     .where(TBook_ID().equalSome(create().selectOne()))
@@ -3111,6 +3115,31 @@ public abstract class jOOQAbstractTest<
                     .where(TBook_ID().equalSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
+                // [#1048] TODO: Simulate this for other dialects
+                if (asList(H2, HSQLDB, POSTGRES).contains(getDialect())) {
+                    // Testing = ALL(array)
+                    assertEquals(Arrays.asList(1), create().select(TBook_ID())
+                        .from(TBook())
+                        .where(TBook_ID().equalAll(1))
+                        .orderBy(TBook_ID()).fetch(TBook_ID()));
+                    assertEquals(Arrays.asList(), create().select(TBook_ID())
+                        .from(TBook())
+                        .where(TBook_ID().equalAll(1, 2))
+                        .orderBy(TBook_ID()).fetch(TBook_ID()));
+
+                    // Testing = ANY(array)
+                    assertEquals(Arrays.asList(1), create().select(TBook_ID())
+                        .from(TBook())
+                        .where(TBook_ID().equalAny(1))
+                        .orderBy(TBook_ID()).fetch(TBook_ID()));
+                    assertEquals(Arrays.asList(1, 2), create().select(TBook_ID())
+                        .from(TBook())
+                        .where(TBook_ID().equalAny(1, 2))
+                        .orderBy(TBook_ID()).fetch(TBook_ID()));
+                }
+
+                // Inducing the above to work the same way as all other operators
+                // Check all operators in a single query
                 assertEquals(Arrays.asList(3), create()
                     .select()
                     .from(TBook())

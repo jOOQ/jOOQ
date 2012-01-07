@@ -3474,7 +3474,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<Integer> count() {
-        return new Count(field("*", Integer.class), false);
+        return count(field("*", Integer.class));
     }
 
     /**
@@ -3482,7 +3482,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
-        return new Count(nullSafe(field), false);
+        return new AggregateFunctionImpl<Integer>("count", SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -3490,7 +3490,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new Count(nullSafe(field), true);
+        return new AggregateFunctionImpl<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -3502,11 +3502,27 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Get the max value over a field: max(distinct field)
+     */
+    @Support
+    public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
+        return new AggregateFunctionImpl<T>("max", true, nullSafeDataType(field), nullSafe(field));
+    }
+
+    /**
      * Get the min value over a field: min(field)
      */
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
         return new AggregateFunctionImpl<T>("min", nullSafeDataType(field), nullSafe(field));
+    }
+
+    /**
+     * Get the min value over a field: min(distinct field)
+     */
+    @Support
+    public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
+        return new AggregateFunctionImpl<T>("min", true, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -3518,11 +3534,27 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Get the sum over a numeric field: sum(distinct field)
+     */
+    @Support
+    public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
      * Get the average over a numeric field: avg(field)
      */
     @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
+     * Get the average over a numeric field: avg(distinct field)
+     */
+    @Support
+    public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
+        return new AggregateFunctionImpl<BigDecimal>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**

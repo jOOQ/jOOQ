@@ -6081,10 +6081,28 @@ public abstract class jOOQAbstractTest<
 
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
-        assertTrue(Arrays.asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 5)));
-        assertTrue(Arrays.asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 8)));
-        assertTrue(Arrays.asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 5)));
-        assertTrue(Arrays.asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 8)));
+        assertTrue(asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 5)));
+        assertTrue(asList(1.0, 1.5, 2.0).contains(result.getValueAsDouble(0, 8)));
+        assertTrue(asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 5)));
+        assertTrue(asList(3.0, 3.5, 4.0).contains(result.getValueAsDouble(1, 8)));
+
+        // [#1042] DISTINCT keyword
+        // ------------------------
+
+        // DB2 doesn't support multiple DISTINCT keywords in the same query...
+        int distinct1 = create().select(countDistinct(TBook_AUTHOR_ID())).from(TBook()).fetchOne(0, Integer.class);
+        int distinct2 = create().select(minDistinct(TBook_AUTHOR_ID())).from(TBook()).fetchOne(0, Integer.class);
+        int distinct3 = create().select(maxDistinct(TBook_AUTHOR_ID())).from(TBook()).fetchOne(0, Integer.class);
+        int distinct4 = create().select(sumDistinct(TBook_AUTHOR_ID())).from(TBook()).fetchOne(0, Integer.class);
+        double distinct5 = create().select(avgDistinct(TBook_AUTHOR_ID())).from(TBook()).fetchOne(0, Double.class);
+
+        assertEquals(2, distinct1);
+        assertEquals(1, distinct2);
+        assertEquals(2, distinct3);
+        assertEquals(3, distinct4);
+        // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
+        // This may need to be corrected by jOOQ
+        assertTrue(asList(1.0, 1.5, 2.0).contains(distinct5));
 
         // Statistical aggregate functions, available in some dialects:
         // ------------------------------------------------------------
@@ -8565,6 +8583,7 @@ public abstract class jOOQAbstractTest<
                 .from(TBook())
                 .join(table)
                 .on(table.getField(0).cast(Integer.class).equal(TBook_ID()))
+                .orderBy(TBook_ID())
                 .fetch();
 
             assertEquals(2, result.size());
@@ -8580,6 +8599,7 @@ public abstract class jOOQAbstractTest<
                 .from(TBook())
                 .join(table.as("t"))
                 .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
+                .orderBy(TBook_ID())
                 .fetch();
 
             assertEquals(2, result.size());

@@ -52,6 +52,10 @@ import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 
 /**
+ * A pivot table implementation
+ * <p>
+ * Future versions of jOOQ could simulate Oracle's <code>PIVOT</code> clause by
+ * rendering a subquery instead.
  *
  * @author Lukas Eder
  */

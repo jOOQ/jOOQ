@@ -38,6 +38,8 @@ package org.jooq.impl;
 import org.jooq.AggregateFunction;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QueryPart;
+import org.jooq.RenderContext;
 
 class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<T> {
 
@@ -46,12 +48,26 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
      */
     private static final long serialVersionUID = 1952351506930280715L;
 
+    private final boolean     distinct;
+
     AggregateFunctionImpl(String name, DataType<T> type, Field<?>... arguments) {
-        super(name, type, arguments);
+        this(name, false, type, arguments);
     }
 
     AggregateFunctionImpl(Term term, DataType<T> type, Field<?>... arguments) {
+        this(term, false, type, arguments);
+    }
+
+    AggregateFunctionImpl(String name, boolean distinct, DataType<T> type, Field<?>... arguments) {
+        super(name, type, arguments);
+
+        this.distinct = distinct;
+    }
+
+    AggregateFunctionImpl(Term term, boolean distinct, DataType<T> type, Field<?>... arguments) {
         super(term, type, arguments);
+
+        this.distinct = distinct;
     }
 
     @Override
@@ -62,5 +78,14 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
         else {
             return new WindowFunction<T>(getName(), getDataType(), getArguments());
         }
+    }
+
+    @Override
+    protected final void toSQLField(RenderContext context, QueryPart field) {
+        if (distinct) {
+            context.sql("distinct ");
+        }
+
+        super.toSQLField(context, field);
     }
 }

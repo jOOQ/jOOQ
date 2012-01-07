@@ -512,6 +512,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equalAny(Select<?> query);
 
     /**
+     * <code>this = any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition equalAny(T... array);
+
+    /**
+     * <code>this = any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition equalAny(Field<T[]> array);
+
+    /**
      * <code>this = some (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -522,6 +540,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(Select<?> query);
+
+    /**
+     * <code>this = all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition equalAll(T... array);
+
+    /**
+     * <code>this = all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition equalAll(Field<T[]> array);
 
     /**
      * <code>this != value</code>
@@ -552,6 +588,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition notEqualAny(Select<?> query);
 
     /**
+     * <code>this != any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition notEqualAny(T... array);
+
+    /**
+     * <code>this != any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition notEqualAny(Field<T[]> array);
+
+    /**
      * <code>this != some (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -562,6 +616,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(Select<?> query);
+
+    /**
+     * <code>this != all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition notEqualAll(T... array);
+
+    /**
+     * <code>this != all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition notEqualAll(Field<T[]> array);
 
     /**
      * <code>this < value</code>
@@ -588,6 +660,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition lessThanAny(Select<?> query);
 
     /**
+     * <code>this < any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessThanAny(T... array);
+
+    /**
+     * <code>this < any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessThanAny(Field<T[]> array);
+
+    /**
      * <code>this < some (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -598,6 +688,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(Select<?> query);
+
+    /**
+     * <code>this < all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessThanAll(T... array);
+
+    /**
+     * <code>this < all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessThanAll(Field<T[]> array);
 
     /**
      * <code>this <= value</code>
@@ -624,6 +732,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition lessOrEqualAny(Select<?> query);
 
     /**
+     * <code>this <= any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessOrEqualAny(T... array);
+
+    /**
+     * <code>this <= any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessOrEqualAny(Field<T[]> array);
+
+    /**
      * <code>this <= some (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -634,6 +760,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(Select<?> query);
+
+    /**
+     * <code>this <= all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessOrEqualAll(T... array);
+
+    /**
+     * <code>this <= all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition lessOrEqualAll(Field<T[]> array);
 
     /**
      * <code>this > value</code>
@@ -660,6 +804,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition greaterThanAny(Select<?> query);
 
     /**
+     * <code>this > any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterThanAny(T... array);
+
+    /**
+     * <code>this > any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterThanAny(Field<T[]> array);
+
+    /**
      * <code>this > some (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -670,6 +832,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(Select<?> query);
+
+    /**
+     * <code>this > all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterThanAll(T... array);
+
+    /**
+     * <code>this > all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterThanAll(Field<T[]> array);
 
     /**
      * <code>this >= value</code>
@@ -696,6 +876,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition greaterOrEqualAny(Select<?> query);
 
     /**
+     * <code>this >= any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterOrEqualAny(T... array);
+
+    /**
+     * <code>this >= any (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterOrEqualAny(Field<T[]> array);
+
+    /**
      * <code>this >= some (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -706,6 +904,24 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(Select<?> query);
+
+    /**
+     * <code>this >= all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterOrEqualAll(T... array);
+
+    /**
+     * <code>this >= all (array)</code>
+     * <p>
+     * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
+     * will render a subselect unnesting the array.
+     */
+    @Support({ H2, HSQLDB, POSTGRES })
+    Condition greaterOrEqualAll(Field<T[]> array);
 
     // ------------------------------------------------------------------------
     // Pre-2.0 API. This API is maintained for backwards-compatibility. It will

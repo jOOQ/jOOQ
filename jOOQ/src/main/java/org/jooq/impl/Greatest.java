@@ -67,6 +67,7 @@ class Greatest<T> extends AbstractFunction<T> {
         switch (configuration.getDialect()) {
             // This implementation has O(2^n) complexity. Better implementations
             // are very welcome
+            // [#1049] TODO Fix this!
 
             case ASE:
             case DERBY:

@@ -31,22 +31,22 @@ public final class Tables {
 	public static org.jooq.test.ingres.generatedclasses.tables.T_785 T_785 = org.jooq.test.ingres.generatedclasses.tables.T_785.T_785;
 
 	/**
-	 * The table test.t_author
+	 * An entity holding authors of books
 	 */
 	public static org.jooq.test.ingres.generatedclasses.tables.TAuthor T_AUTHOR = org.jooq.test.ingres.generatedclasses.tables.TAuthor.T_AUTHOR;
 
 	/**
-	 * The table test.t_book
+	 * An entity holding books
 	 */
 	public static org.jooq.test.ingres.generatedclasses.tables.TBook T_BOOK = org.jooq.test.ingres.generatedclasses.tables.TBook.T_BOOK;
 
 	/**
-	 * The table test.t_book_store
+	 * A book store
 	 */
 	public static org.jooq.test.ingres.generatedclasses.tables.TBookStore T_BOOK_STORE = org.jooq.test.ingres.generatedclasses.tables.TBookStore.T_BOOK_STORE;
 
 	/**
-	 * The table test.t_book_to_book_store
+	 * An m:n relation between books and book stores
 	 */
 	public static org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
@@ -101,7 +101,7 @@ public final class Tables {
 	public static org.jooq.test.ingres.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.ingres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * The table test.x_unused
+	 * An unused table in the same schema.
 	 */
 	public static org.jooq.test.ingres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.ingres.generatedclasses.tables.XUnused.X_UNUSED;
 

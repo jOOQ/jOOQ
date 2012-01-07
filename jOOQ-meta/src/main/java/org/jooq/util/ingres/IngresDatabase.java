@@ -38,6 +38,7 @@ package org.jooq.util.ingres;
 import static org.jooq.impl.Factory.trim;
 import static org.jooq.util.ingres.ingres.tables.IiconstraintIndexes.IICONSTRAINT_INDEXES;
 import static org.jooq.util.ingres.ingres.tables.Iiconstraints.IICONSTRAINTS;
+import static org.jooq.util.ingres.ingres.tables.IidbComments.IIDB_COMMENTS;
 import static org.jooq.util.ingres.ingres.tables.IiindexColumns.IIINDEX_COLUMNS;
 import static org.jooq.util.ingres.ingres.tables.Iiindexes.IIINDEXES;
 import static org.jooq.util.ingres.ingres.tables.IirefConstraints.IIREF_CONSTRAINTS;
@@ -67,6 +68,7 @@ import org.jooq.util.UDTDefinition;
 import org.jooq.util.ingres.ingres.$ingresFactory;
 import org.jooq.util.ingres.ingres.tables.IiconstraintIndexes;
 import org.jooq.util.ingres.ingres.tables.Iiconstraints;
+import org.jooq.util.ingres.ingres.tables.IidbComments;
 import org.jooq.util.ingres.ingres.tables.IiindexColumns;
 import org.jooq.util.ingres.ingres.tables.Iiindexes;
 import org.jooq.util.ingres.ingres.tables.IirefConstraints;
@@ -205,13 +207,22 @@ public class IngresDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (Record record : create().select(trim(Iitables.TABLE_NAME))
+        for (Record record : create().select(
+                    trim(Iitables.TABLE_NAME),
+                    trim(IidbComments.LONG_REMARK))
                 .from(IITABLES)
+                .leftOuterJoin(IIDB_COMMENTS)
+                .on(Iitables.TABLE_NAME.equal(IidbComments.OBJECT_NAME))
+                .and(Iitables.TABLE_OWNER.equal(IidbComments.OBJECT_OWNER))
+                .and(IidbComments.OBJECT_TYPE.equal("T"))
+                .and(IidbComments.TEXT_SEQUENCE.equal(1L))
                 .where(Iitables.TABLE_OWNER.equal(getInputSchema()))
                 .orderBy(trim(Iitables.TABLE_NAME))
                 .fetch()) {
 
-            result.add(new IngresTableDefinition(this, record.getValue(trim(Iitables.TABLE_NAME))));
+            result.add(new IngresTableDefinition(this,
+                record.getValue(trim(Iitables.TABLE_NAME)),
+                record.getValue(trim(IidbComments.LONG_REMARK))));
         }
 
         return result;

@@ -37,6 +37,7 @@ package org.jooq.util.ingres;
 
 import static org.jooq.impl.Factory.trim;
 import static org.jooq.util.ingres.ingres.tables.Iicolumns.IICOLUMNS;
+import static org.jooq.util.ingres.ingres.tables.IidbSubcomments.IIDB_SUBCOMMENTS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,14 +51,15 @@ import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.ingres.ingres.tables.Iicolumns;
+import org.jooq.util.ingres.ingres.tables.IidbSubcomments;
 
 /**
  * @author Lukas Eder
  */
 public class IngresTableDefinition extends AbstractTableDefinition {
 
-    public IngresTableDefinition(Database database, String name) {
-        super(database, name, null);
+    public IngresTableDefinition(Database database, String name, String comment) {
+        super(database, name, comment);
     }
 
     @Override
@@ -71,8 +73,15 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                     Iicolumns.COLUMN_LENGTH,
                     Iicolumns.COLUMN_SCALE,
                     Iicolumns.COLUMN_ALWAYS_IDENT,
-                    Iicolumns.COLUMN_BYDEFAULT_IDENT)
+                    Iicolumns.COLUMN_BYDEFAULT_IDENT,
+                    trim(IidbSubcomments.LONG_REMARK))
                 .from(IICOLUMNS)
+                .leftOuterJoin(IIDB_SUBCOMMENTS)
+                .on(IidbSubcomments.OBJECT_NAME.equal(Iicolumns.TABLE_NAME))
+                .and(IidbSubcomments.OBJECT_OWNER.equal(Iicolumns.TABLE_OWNER))
+                .and(IidbSubcomments.SUBOBJECT_NAME.equal(Iicolumns.COLUMN_NAME))
+                .and(IidbSubcomments.SUBOBJECT_TYPE.equal("C"))
+                .and(IidbSubcomments.TEXT_SEQUENCE.equal(1L))
                 .where(Iicolumns.TABLE_OWNER.equal(getSchemaName()))
                 .and(trim(Iicolumns.TABLE_NAME).equal(getName()))
                 .orderBy(Iicolumns.COLUMN_SEQUENCE)
@@ -120,7 +129,7 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                 type,
                 record.getValueAsBoolean(Iicolumns.COLUMN_ALWAYS_IDENT, false) ||
                 record.getValueAsBoolean(Iicolumns.COLUMN_BYDEFAULT_IDENT, false),
-                null);
+                record.getValue(trim(IidbSubcomments.LONG_REMARK)));
             result.add(column);
         }
 

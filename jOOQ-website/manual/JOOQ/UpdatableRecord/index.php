@@ -25,7 +25,7 @@ function printContent() {
 </table>
 							<h2>CRUD Operations</h2>
 							<p>As of jOOQ 1.5, the UpdatableRecord essentially contains three additional
-							 methods <a href="http://de.wikipedia.org/wiki/CRUD">CRUD</a> 
+							 methods <a href="http://de.wikipedia.org/wiki/CRUD">CRUD</a>
 							 (Create Read Update Delete) operations: </p>
 <pre class="prettyprint lang-java">// Store any changes made to this record to the database.
 // The record executes an INSERT if the PRIMARY KEY is NULL or has been changed. Otherwise, an UPDATE is performed.
@@ -48,19 +48,19 @@ book.store();
 
 // Delete it
 book.delete();</pre>
-							<p>These operations are very simple utilities. They do not 
-							reflect the functionality offered by <a href="http://www.hibernate.org/">Hibernate</a> 
+							<p>These operations are very simple utilities. They do not
+							reflect the functionality offered by <a href="http://www.hibernate.org/">Hibernate</a>
 							or other persistence managers. </p>
-							
+
 							<h2>Performing CRUD on non-updatable records</h2>
 							<p>
 								If the jOOQ code-generator cannot detect any PRIMARY KEY, or UNIQUE KEY
 								on your tables, then the generated artefacts implement TableRecord,
 								instead of UpdatableRecord. A TableRecord can perform the same CRUD
 								operations as we have seen before, if you provide it with the necessary
-								key fields. The API looks like this: 
+								key fields. The API looks like this:
 							</p>
-							
+
 <pre class="prettyprint lang-java">// INSERT or UPDATE the record using the provided keys
 int storeUsing(TableField&lt;R, ?&gt;... keys)
 
@@ -69,12 +69,12 @@ int deleteUsing(TableField&lt;R, ?&gt;... keys);
 
 // Reflects changes made in the database to this Record
 void refreshUsing(TableField&lt;R, ?&gt;... keys);</pre>
-						
+
 							<p>
-								This is useful if your RDBMS does not support referential constraints (e.g. MySQL's 
-								<a href="http://en.wikipedia.org/wiki/MyISAM">MyISAM</a>), or if you want to 
-								store records to an unconstrained view. An example lifecycle of a book without 
-								any keys can then be implemented as such: 
+								This is useful if your RDBMS does not support referential constraints (e.g. MySQL's
+								<a href="http://en.wikipedia.org/wiki/MyISAM">MyISAM</a>), or if you want to
+								store records to an unconstrained view. An example lifecycle of a book without
+								any keys can then be implemented as such:
 							</p>
 <pre class="prettyprint lang-java">// Create a new record and insert it into the database
 TBookRecord book = create.newRecord(T_BOOK);

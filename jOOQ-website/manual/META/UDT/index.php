@@ -28,7 +28,7 @@ function printContent() {
 							<p>
 								In recent years, most RDBMS have started to implement some support for
 								advanced data types. This support has not been adopted very well by
-								database users in the Java world, for several reasons: 
+								database users in the Java world, for several reasons:
 							</p>
 							<ul>
 								
@@ -49,10 +49,10 @@ function printContent() {
 								 this becomes more and more obvious.
 							</p>
 							<p>It is a central strategy for jOOQ, to standardise access to these
-								kinds of types (as well as to 
+								kinds of types (as well as to
 								<a href="<?=$root?>/manual/META/PROCEDURE/" title="jOOQ Manual reference: Procedures and packages">stored procedures</a>, of course) across all
 								RDBMS, where these types are supported. </p>
-								
+
 							<h2>UDT types</h2>
 							<p>User Defined Types (UDT) are helpful in major RDMBS with lots
 							of proprietary functionality. The biggest player is clearly Oracle.
@@ -76,7 +76,7 @@ function printContent() {
 								</li>
 							
 </ul>
-							
+
 							<p>In Oracle, you would define UDTs like this: </p>
 <pre class="prettyprint lang-sql">CREATE TYPE u_street_type AS OBJECT (
   street VARCHAR2(100),
@@ -103,19 +103,19 @@ CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</pr
 
 							<p>
 								Standard JDBC UDT support encourages JDBC-driver developers to implement
-								interfaces such as 
-								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/SQLData.html" title="External API reference: java.sql.SQLData">java.sql.SQLData</a>, 
+								interfaces such as
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/SQLData.html" title="External API reference: java.sql.SQLData">java.sql.SQLData</a>,
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/SQLInput.html" title="External API reference: java.sql.SQLInput">java.sql.SQLInput</a> and
-								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/SQLOutput.html" title="External API reference: java.sql.SQLOutput">java.sql.SQLOutput</a>. 
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/SQLOutput.html" title="External API reference: java.sql.SQLOutput">java.sql.SQLOutput</a>.
 								Those interfaces are non-trivial to implement, or
-								to hook into. Also access to 
-								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Struct.html" title="External API reference: java.sql.Struct">java.sql.Struct</a> 
+								to hook into. Also access to
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Struct.html" title="External API reference: java.sql.Struct">java.sql.Struct</a>
 								is not really simple. Due
 								to the lack of a well-defined JDBC standard, Oracle's JDBC driver
 								rolls their own proprietary methods of dealing with these types. jOOQ
 								goes a different way, it hides those facts from you entirely. With
-								jOOQ, the above UDT's will be generated in simple 
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDT.java" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and 
+								jOOQ, the above UDT's will be generated in simple
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDT.java" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDTRecord.java" title="Internal API reference: org.jooq.UDTRecord">UDT record classes</a> as such:
 							</p>
 <pre class="prettyprint lang-java">// There is an analogy between UDT/Table and UDTRecord/TableRecord...
@@ -189,10 +189,10 @@ address = Procedures.pCheckAddress(connection, address);</pre>
 								&lt;T&gt; generic type parameter is existent. It integrates well with tables
 									and stored procedures.
 							</p>
-							
+
 							<h3>Example: General ARRAY types</h3>
 							<p>An example usage of ARRAYs is given here for the Postgres dialect </p>
-							
+
 <pre class="prettyprint lang-sql">CREATE TABLE t_arrays (
   id integer not null primary key,
   string_array VARCHAR(20)[],
@@ -224,7 +224,7 @@ public final class Functions {
 								types. Hence, it is important to provide access to VARRAY types and
 								generated objects from those types as well. The example above would
 								read like this in Oracle: </p>
-								
+
 <pre class="prettyprint lang-sql">CREATE TYPE u_string_array AS VARRAY(4) OF VARCHAR2(20)
 CREATE TYPE u_number_array AS VARRAY(4) OF NUMBER(7)
 
@@ -239,10 +239,10 @@ RETURN u_string_array</pre>
 
 							<p>Note that it becomes clear immediately, that a mapping from
 								U_STRING_ARRAY to String[] is obvious. But a mapping from String[] to
-								U_STRING_ARRAY is not. These are the generated 
+								U_STRING_ARRAY is not. These are the generated
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ArrayRecord.java" title="Internal API reference: org.jooq.ArrayRecord">org.jooq.ArrayRecord</a> and other
 								artefacts in Oracle: </p>
-								
+
 <pre class="prettyprint lang-java">public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]
 public class UNumberArrayRecord extends ArrayRecordImpl&lt;Integer&gt; { // [...]
 
@@ -257,12 +257,12 @@ public final class Functions {
     public static Field&lt;UStringArrayRecord&gt; fArrays3(Field&lt;UStringArrayRecord&gt; inArray) {          // [...]
 }</pre>
 
-							
+
 							<h2>ENUM types</h2>
 							<p>True ENUM types are a rare species in the RDBMS world. Currently,
 								MySQL and Postgres are the only RDMBS supported by jOOQ, that provide
 								ENUM types. </p>
-								
+
 							<ul>
 								
 <li>In MySQL, an ENUM type is declared directly upon a column. It cannot be reused as a type. See the <a href="http://dev.mysql.com/doc/refman/5.5/en/enum.html">documentation.</a> 
@@ -274,7 +274,7 @@ public final class Functions {
 <li>Other RDMBS know about "ENUM constraints", such as the Oracle CHECK constraint. These are not true ENUMS, however. jOOQ refrains from using their information for source code generation </li>
 							
 </ul>
-							
+
 							<p>Some examples: </p>
 <pre class="prettyprint lang-sql">-- An example enum type
 CREATE TYPE u_book_status AS ENUM ('SOLD OUT', 'ON STOCK', 'ORDERED')
@@ -315,7 +315,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 }</pre>
 
 							<p>Note that jOOQ allows you to simulate ENUM types where this makes
-								sense in your data model. See the section on 
+								sense in your data model. See the section on
 								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a> for more
 								details. </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">

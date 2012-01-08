@@ -26,7 +26,7 @@ function printContent() {
 </table>
 							<h2>The ResultQuery provides many convenience methods</h2>
 							<p>These methods allow for fetching a jOOQ Result or parts of it.</p>
-							
+
 <pre class="prettyprint lang-java">// Fetch the whole result
 Result&lt;R&gt; fetch();
 
@@ -51,7 +51,7 @@ Object fetchOne(String fieldName);
 &lt;T&gt; T  fetchOne(String fieldName, Class&lt;? extends T&gt; type);</pre>
 
 							<p>These methods transform the result into another form, if org.jooq.Result is not optimal</p>
-							
+
 <pre class="prettyprint lang-java">// Fetch the resulting records as Maps
 List&lt;Map&lt;String, Object&gt;&gt; fetchMaps();
      Map&lt;String, Object&gt;  fetchOneMap();

@@ -37,29 +37,29 @@ function printContent() {
 
 							<p>This is reflected by the fact that an EXISTS clause is usually
 								created directly from the Factory: </p>
-								
+
 <pre class="prettyprint lang-java">Condition exists(Select&lt;?&gt; query);
 Condition notExists(Select&lt;?&gt; query);</pre>
 
 							<p>When you create such a Condition, it can then be connected to any
 								other condition using AND, OR operators (see also the manual's section
-								on 
+								on
 								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>). There are also quite a few
 								convenience methods, where they might be useful. For instance in the
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
-								
+
 <pre class="prettyprint lang-java">Condition andExists(Select&lt;?&gt; select);
 Condition andNotExists(Select&lt;?&gt; select);
 Condition orExists(Select&lt;?&gt; select);
 Condition orNotExists(Select&lt;?&gt; select);</pre>
 
 							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>:</p>
-							
+
 <pre class="prettyprint lang-java">SelectConditionStep whereExists(Select&lt;?&gt; select);
 SelectConditionStep whereNotExists(Select&lt;?&gt; select);</pre>
 
 							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a>: </p>
-							
+
 <pre class="prettyprint lang-java">SelectConditionStep andExists(Select&lt;?&gt; select);
 SelectConditionStep andNotExists(Select&lt;?&gt; select);
 SelectConditionStep orExists(Select&lt;?&gt; select);
@@ -71,8 +71,8 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</pre>
 <td class="left" width="50%">
 <pre class="prettyprint lang-sql">SELECT *
   FROM T_AUTHOR
- WHERE NOT EXISTS (SELECT 1 
-                     FROM T_BOOK 
+ WHERE NOT EXISTS (SELECT 1
+                     FROM T_BOOK
                     WHERE T_BOOK.AUTHOR_ID = T_AUTHOR.ID)</pre>
 </td><td class="right" width="50%">
 <pre class="prettyprint lang-java">create.select()

@@ -28,7 +28,7 @@ function printContent() {
 							<p>The CASE clause is part of the standard SQL syntax. While some RDBMS
 								also offer an IF clause, or a DECODE function, you can always rely on
 								the two types of CASE syntax: </p>
-								
+
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
@@ -65,26 +65,26 @@ create.decode().value(T_AUTHOR.FIRST_NAME)
 								are reserved words in Java. jOOQ chose to use decode() from the Oracle
 								DECODE function, and otherwise(), which means the same as else. Please
 								note that in the above examples, all values were always constants. You
-								can of course also use Field instead of the various constants. 
+								can of course also use Field instead of the various constants.
 							</p>
 							<p>A CASE clause can be used anywhere where you can place a Field. For
 								instance, you can SELECT the above expression, if you're selecting
 								from T_AUTHOR: </p>
 <pre class="prettyprint lang-sql">SELECT T_AUTHOR.FIRST_NAME, [... CASE EXPR ...] AS nationality
   FROM T_AUTHOR</pre>
-  
-  
+
+
   							<h2>CASE clauses in an ORDER BY clause</h2>
 							<p>Sort indirection is often implemented with a CASE clause of a
 								SELECT's ORDER BY clause. In SQL, this reads: </p>
-								
+
 <pre class="prettyprint lang-sql">SELECT *
 FROM T_AUTHOR
 ORDER BY CASE FIRST_NAME WHEN 'Paulo'  THEN 1
                          WHEN 'George' THEN 2
                                        ELSE null
          END</pre>
-         
+
 							<p>This will order your authors such that all 'Paulo' come first, then
 								all 'George' and everyone else last (depending on your RDBMS' handling
 								of NULL values in sorting). This is a very common task, such that jOOQ

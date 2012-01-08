@@ -12,7 +12,7 @@ function getActiveMenu() {
 function getSlogan() {
 	return "
 							jOOQ also generates convenience artefacts for sequences, where this is
-							supported: DB2, Derby, H2, HSQLDB, Oracle, Postgres, and more. 
+							supported: DB2, Derby, H2, HSQLDB, Oracle, Postgres, and more.
 						";
 }
 function printContent() {
@@ -24,22 +24,22 @@ function printContent() {
 </tr>
 </table>
 							<h2>Sequences as a source for identity values</h2>
-							<p> Sequences implement the 
+							<p> Sequences implement the
 							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Sequence.java" title="Internal API reference: org.jooq.Sequence">org.jooq.Sequence</a> interface, providing essentially this functionality:</p>
-							
+
 <pre class="prettyprint lang-java">// Get a field for the CURRVAL sequence property
 Field&lt;T&gt; currval();
 
 // Get a field for the NEXTVAL sequence property
-Field&lt;T&gt; nextval();</pre>		
+Field&lt;T&gt; nextval();</pre>
 							<p>So if you have a sequence like this in Oracle: </p>
-							<pre class="prettyprint lang-sql">CREATE SEQUENCE s_author_id</pre>		
-							<p>This is what jOOQ will generate: </p>	
+							<pre class="prettyprint lang-sql">CREATE SEQUENCE s_author_id</pre>
+							<p>This is what jOOQ will generate: </p>
 <pre class="prettyprint lang-java">public final class Sequences {
 
     // A static sequence instance
     public static final Sequence&lt;BigInteger&gt; S_AUTHOR_ID = // [...]
-}</pre>		
+}</pre>
 
 							<p>Which you can use in a select statement as such: </p>
 <pre class="prettyprint lang-java">Field&lt;BigInteger&gt; s = Sequences.S_AUTHOR_ID.nextval();

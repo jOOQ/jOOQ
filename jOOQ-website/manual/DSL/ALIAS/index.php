@@ -29,17 +29,17 @@ function printContent() {
 <pre class="prettyprint lang-sql">SELECT a.ID, b.ID
   FROM T_AUTHOR a
   JOIN T_BOOK b on a.ID = b.AUTHOR_ID</pre>
-  
+
   							<p>
   								In this example, we are aliasing Tables, calling them a and b.
   								The way aliasing works depends on how you generate your meta model
-  								using jooq-codegen (see the manual's section about 
+  								using jooq-codegen (see the manual's section about
   								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their corresponding records">generating tables</a>). Things become
   								simpler when you choose the instance/dynamic model, instead of the
   								static one.
-  								Here is how you can create Table aliases in jOOQ: 
+  								Here is how you can create Table aliases in jOOQ:
   							</p>
-  							
+
 <pre class="prettyprint lang-java">Table&lt;TBookRecord&gt; book = T_BOOK.as("b");
 Table&lt;TAuthorRecord&gt; author = T_AUTHOR.as("a");
 
@@ -51,7 +51,7 @@ TAuthor author = T_AUTHOR.as("a");</pre>
 								not use the original T_BOOK or T_AUTHOR meta-model objects anymore.
 								Instead, you have to get the fields from the new book and author Table
 								aliases: </p>
-								
+
 <pre class="prettyprint lang-java">Field&lt;Integer&gt; bookID = book.getField(TBook.ID);
 Field&lt;Integer&gt; authorID = author.getField(TAuthor.ID);
 
@@ -65,20 +65,20 @@ Field&lt;Integer&gt; authorID = author.ID;</pre>
 <pre class="prettyprint lang-java">create.select(authorID, bookID)
       .from(author)
       .join(book).on(authorID.equal(book.getField(T_BOOK.AUTHOR_ID)));
-      
+
 // Or with the instance field model:
 create.select(author.ID, book.ID)
       .from(author)
       .join(book).on(author.ID.equal(book.AUTHOR_ID))</pre>
-      
-      
+
+
       						<h3>Aliasing nested selects as tables</h3>
 							<p>There is an interesting, more advanced example of how you can select
-								from an aliased nested select in the manual's section about 
+								from an aliased nested select in the manual's section about
 								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">nested selects</a>
 </p>
-								
-								
+
+
 							<h2>Aliasing fields</h2>
 							<p>Fields can also be aliased independently from Tables. Most often,
 								this is done when using functions or aggregate operators. Here is an

@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
 </tr>
 </table>
 							<h2>Exporting with jOOQ</h2>
@@ -27,7 +27,7 @@ function printContent() {
 								application server, you might be interested in using jOOQ's exporting
 								functionality (see also importing functionality). You can export any
 								Result&lt;Record&gt; into any of these formats: </p>
-								
+
 							<h3>XML</h3>
 							<p>Export your results as XML: </p>
 <pre class="prettyprint lang-java">// Fetch books and format them as XML
@@ -68,13 +68,13 @@ String csv = create.selectFrom(T_BOOK).fetch().formatCSV();</pre>
 
 							<h3>JSON</h3>
 							<p>Export your results as JSON: </p>
-							
+
 <pre class="prettyprint lang-java">// Fetch books and format them as JSON
 String json = create.selectFrom(T_BOOK).fetch().formatJSON();</pre>
 							<p>The above query will result in a JSON document looking like the following one: </p>
 <pre>{fields:["ID","AUTHOR_ID","TITLE"],
  records:[[1,1,"1984"],[2,1,"Animal Farm"]]}</pre>
- 
+
  							<h3>HTML </h3>
  							<p>Export your results as HTML: </p>
 <pre class="prettyprint lang-java">// Fetch books and format them as HTML
@@ -116,7 +116,7 @@ String text = create.selectFrom(T_BOOK).fetch().format();</pre>
 +---+---------+-----------+</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
 </tr>
 </table>
 <?php 

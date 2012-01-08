@@ -52,7 +52,7 @@ function printContent() {
 								</li>
 							
 </ul>
-							
+
 							<h3>Ways to introduce bind values with jOOQ</h3>
 							<p>
 								Bind values are omni-present in jOOQ. Whenever you create a condition,
@@ -61,7 +61,7 @@ function printContent() {
 <pre class="prettyprint lang-java">// In jOOQ, "Poe" will be the bind value bound to the condition
 LAST_NAME.equal("Poe");</pre>
 
-							
+
 							<p>
 								The above notation is actually convenient way to explicitly create
 								a bind value for "Poe". You could also write this, instead:
@@ -70,8 +70,8 @@ LAST_NAME.equal("Poe");</pre>
 LAST_NAME.equal(Factory.val("Poe"));
 
 // Or, when static importing Factory.val:
-LAST_NAME.equal(val("Poe"))</pre>							
-							
+LAST_NAME.equal(val("Poe"))</pre>
+
 							<p>
 								Once created, bind values are part of the query's syntax tree (see
 								<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">the manual's section about jOOQ's architecture</a>
@@ -80,7 +80,7 @@ LAST_NAME.equal(val("Poe"))</pre>
 								modify bind values between subsequent query executions, you can access them again
 								through the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface:
 							</p>
-							
+
 <pre class="prettyprint lang-java">// Access the first bind value from a query. Indexes are counted from 1, just as with JDBC
 Query query = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
 Param&lt;?&gt; param = query.getParam("1");
@@ -110,7 +110,7 @@ param2.setValue("Orwell");
 								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface also allows for
 								setting new bind values directly, without accessing the Param type:
 							</p>
-							
+
 <pre class="prettyprint lang-java">Query query1 = create.select().from(T_AUTHOR).where(LAST_NAME.equal("Poe"));
 query1.bind(1, "Orwell");
 
@@ -124,7 +124,7 @@ query2.bind("lastName", "Orwell");</pre>
 								use the Factory's renderNamedParams() method, to actually render named
 								parameter names in generated SQL:
 							</p>
-							
+
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">

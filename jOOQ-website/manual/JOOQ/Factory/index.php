@@ -14,7 +14,7 @@ function getSlogan() {
 							jOOQ hides most implementation facts from you by letting you
 							use the jOOQ Factory as a single entry point to all of the jOOQ API.
 							This way, you can discover all of the API using syntax auto-completion, for
-							instance. 
+							instance.
 						";
 }
 function printContent() {
@@ -27,8 +27,8 @@ function printContent() {
 </table>
 							<h2>The Factory and the jOOQ API</h2>
 							<p>
-								jOOQ exposes a lot of interfaces and hides most implementation facts 
-								from client code. The reasons for this are: 
+								jOOQ exposes a lot of interfaces and hides most implementation facts
+								from client code. The reasons for this are:
 							</p>
 							<ul>
 								
@@ -40,40 +40,40 @@ function printContent() {
 							
 </ul>
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a> 
-								class is the main class from where you will create all jOOQ objects. 
-								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a> 
-								and needs to be instanciated with the Configuration's properties: 
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a>
+								class is the main class from where you will create all jOOQ objects.
+								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a>
+								and needs to be instanciated with the Configuration's properties:
 							</p>
 							<ul>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> : 
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> :
 								The dialect of your database. This may be any of the currently
 								supported database types</li>
 								
 <li>
-<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a> : 
+<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a> :
 								A JDBC Connection that will be re-used for the whole
     							lifecycle of your Factory</li>
     							
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a> : 
-    							An optional mapping of schemata. Check out the 
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a> :
+    							An optional mapping of schemata. Check out the
     							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">SchemaMapping</a>
-    							page for details</li> 
+    							page for details</li>
 							
 </ul>
 							<p>If you are planning on using several RDBMS (= SQLDialects) or
 								several distinct JDBC Connections in your software, this will mean
 								that you have to create a new Factory every time. </p>
-							
+
 							<h3>Factory subclasses</h3>
 							<p>
 								There are a couple of subclasses for the general Factory. Each SQL
 								dialect has its own dialect-specific factory. For instance, if you're
 								only using the MySQL dialect, you can choose to create a new Factory
-								using any of the following types: 
+								using any of the following types:
 							</p>
 <pre class="prettyprint lang-java">// A general, dialect-unspecific factory
 Factory create = new Factory(connection, SQLDialect.MYSQL);
@@ -83,7 +83,7 @@ MySQLFactory create = new MySQLFactory(connection);</pre>
 							<p>
 								The advantage of using a dialect-specific Factory lies in the fact,
 								that you have access to more proprietary RDMBS functionality. This may
-								include: 
+								include:
 							</p>
 							<ul>
 								
@@ -99,9 +99,9 @@ MySQLFactory create = new MySQLFactory(connection);</pre>
 								Another type of Factory subclasses are each generated schema's
 								factories. If you generate your schema TEST, then you will have access
 								to a TestFactory. This will be useful in the future, when access to
-								schema artefacts will be unified. Currently, this has no use. 
+								schema artefacts will be unified. Currently, this has no use.
 							</p>
-							
+
 							<h3>Static Factory methods</h3>
 							<p>
 								With jOOQ 2.0, static factory methods have been introduced in order to
@@ -112,19 +112,19 @@ MySQLFactory create = new MySQLFactory(connection);</pre>
 							<p>
 								This will allow to access functions even more fluently:
 							</p>
-							
+
 <pre class="prettyprint lang-java">concat(trim(FIRST_NAME), trim(LAST_NAME));
 // ... which is in fact the same as:
 Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<p>
 								Objects created statically from the Factory do not need a reference to
-								any factory, as they can be constructed independently from your Configuration 
+								any factory, as they can be constructed independently from your Configuration
 								(connection, dialect, schema mapping). They will access that information at
-								render / bind time. See 
+								render / bind time. See
 								<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">more details on the QueryParts' internals</a>
 							
 </p>
-							
+
 							<h3>Potential problems</h3>
 							<p>
 								The jOOQ Factory expects its underlying
@@ -133,13 +133,13 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 								for
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/PreparedStatement.html" title="External API reference: java.sql.PreparedStatement">java.sql.PreparedStatement</a>
 								creation. You are responsible yourself for the
-								lifecycle dependency between Factory and Connection. This means: 
+								lifecycle dependency between Factory and Connection. This means:
 							</p>
 							<ul>
 								
 <li>jOOQ will never close the Connection.</li>
 								
-<li>jOOQ will never commit or rollback on the Connection 
+<li>jOOQ will never commit or rollback on the Connection
 									(Except for CSV-imports, if explicitly configured in the <a href="<?=$root?>/manual/ADVANCED/Import/" title="jOOQ Manual reference: Importing data from XML, CSV">Import API</a>)</li>
 								
 <li>jOOQ will never start any transactions.</li>
@@ -154,7 +154,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 									executed directly on the underlying RDBMS.</li>
 								
 <li>jOOQ does not make assumptions about the origin of the Connection.
-									If it is container managed, that is fine.</li> 
+									If it is container managed, that is fine.</li>
 							
 </ul>
 							<p>
@@ -163,7 +163,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 								return it to your container, you will have to take care of that
 								yourself. jOOQ's Factory will always expect its Connection to be in a
 								ready state for creating new PreparedStatements. If it is not, you have
-								to create a new Factory. 
+								to create a new Factory.
 							</p>
 							<p>
 								Please keep in mind that many jOOQ objects will reference your Factory

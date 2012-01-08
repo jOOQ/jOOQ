@@ -24,27 +24,27 @@ function printContent() {
 </tr>
 </table>
 					<h2>Overview</h2>
-					<p>jOOQ ships with its own DSL (or 
+					<p>jOOQ ships with its own DSL (or
 						<a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Domain Specific Language">Domain Specific Language</a>) that
 						simulates SQL as good as possible in Java. This means, that you can
 						write SQL statements almost as if Java natively supported that syntax
 						just like .NET's C# does with <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL.</a>
 </p>
-						
+
 					<p>Here is an example to show you what that means. When you want to write a query like this in SQL: </p>
 					<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
-<pre class="prettyprint lang-sql">-- Select all books by authors born after 1920, 
+<pre class="prettyprint lang-sql">-- Select all books by authors born after 1920,
 -- named "Paulo" from a catalogue:
-SELECT * 
-  FROM t_author a 
-  JOIN t_book b ON a.id = b.author_id 
- WHERE a.year_of_birth &gt; 1920 
+SELECT *
+  FROM t_author a
+  JOIN t_book b ON a.id = b.author_id
+ WHERE a.year_of_birth &gt; 1920
    AND a.first_name = 'Paulo'
  ORDER BY b.title</pre>
 </td><td class="right" width="50%">
-<pre class="prettyprint lang-java">Result&lt;Record&gt; result = 
+<pre class="prettyprint lang-java">Result&lt;Record&gt; result =
 create.select()
       .from(T_AUTHOR.as("a"))
       .join(T_BOOK.as("b")).on(a.ID.equal(b.AUTHOR_ID))
@@ -55,7 +55,7 @@ create.select()
 </td>
 </tr>
 </table>
-					
+
 					<p>
 						You couldn't come much closer to SQL itself in Java, without re-writing the compiler.
 						We'll see how the aliasing works later in the section about

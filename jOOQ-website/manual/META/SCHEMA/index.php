@@ -10,7 +10,7 @@ function getActiveMenu() {
 	return "manual";
 }
 function getSlogan() {
-	return "The schema is the top-level generated object in jOOQ. In many 
+	return "The schema is the top-level generated object in jOOQ. In many
 							RDBMS, the schema coincides with the owner of tables and other objects
 						";
 }
@@ -30,20 +30,20 @@ function printContent() {
 								the schema name for all dependent generated artefacts. jOOQ queries try
 								to always fully qualify an entity within the database using that Schema
 							</p>
-							
+
 							<p>
 								Currently, it is not possible to link generated artefacts from various
 								schemata. If you have a stored function from Schema A, which returns a
 								UDT from Schema B, the types cannot be linked. This enhancement is on
 								the roadmap, though: <a href="https://sourceforge.net/apps/trac/jooq/ticket/282" title="Trac ticket: #282">#282</a>.
 							</p>
-							
+
 							<p>
 								When you have several schemata that are logically equivalent (i.e. they
 								contain identical entities, but the schemata stand for different
 								users/customers/clients, etc), there is a solution for that. Check out
-								the manual's section on support for 
-								<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">multiple equivalent schemata</a> 
+								the manual's section on support for
+								<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">multiple equivalent schemata</a>
 							
 </p>
 

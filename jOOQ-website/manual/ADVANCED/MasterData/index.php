@@ -31,9 +31,9 @@ function printContent() {
 								table" in the configuration. At code-generation time, this table will
 								be treated specially, and a Java enum type is generated from its data.
 							</p>
-							
+
 							<h2>Configure master data tables</h2>
-							<p>As previously discussed in the 
+							<p>As previously discussed in the
 							  <a href="<?=$root?>/manual/META/Configuration/" title="jOOQ Manual reference: Configuration and setup of the generator">configuration and setup</a>
 							   section, you can configure master data tables as follows: </p>
 <pre class="prettyprint">#Generate a master data table enum classes (several Java regular expressions, separated by comma)
@@ -91,18 +91,18 @@ generator.generate.master-data-table-description.[master data table]=[column use
 <li>An optional description column of any type </li>
 							
 </ul>
-							
+
 							<h2>Using MasterDataTypes</h2>
 							<p>The point of MasterDataTypes in jOOQ is that they behave exactly
 								like true ENUM types. When the above T_LANGUAGE table is referenced by
 								T_BOOK, instead of generating foreign key navigation methods and a
 								LANGUAGE_ID Field&lt;Integer&gt;, a Field&lt;TLanguage&gt; is
 								generated: </p>
-								
+
 <pre class="prettyprint lang-java">public class TBook extends UpdatableTableImpl&lt;TBookRecord&gt; {
 
   // [...]
-  public static final TableField&lt;TBookRecord, TLanguage&gt; LANGUAGE_ID = 
+  public static final TableField&lt;TBookRecord, TLanguage&gt; LANGUAGE_ID =
                   new TableFieldImpl&lt;TBookRecord, TLanguage&gt;( /* ... */ );
 }</pre>
 

@@ -34,7 +34,7 @@ function printContent() {
 						
 <li>org.jooq.impl: the jOOQ implementation and factories. Most
 							implementation classes are package private, you can only access
-							them using the <a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">org.jooq.impl.Factory</a> 
+							them using the <a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">org.jooq.impl.Factory</a>
 						
 </li>
 					

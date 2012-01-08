@@ -44,16 +44,16 @@ function printContent() {
 <li>BOOKS_R_US: The schema instance for Books R Us </li>
 							
 </ul>
-							
-							
+
+
 							<h2>Mapping DEV to MY_BOOK_WORLD with jOOQ</h2>
 							<p>When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
-								achieved with the 
+								achieved with the
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a>
 								class, that you can equip your Factory
 								with. Take the following example: </p>
-								
+
 <pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
 mapping.add(DEV, "MY_BOOK_WORLD");
 
@@ -67,14 +67,14 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								will in fact produce this SQL statement: </p>
 							<pre class="prettyprint lang-sql">SELECT * FROM MY_BOOK_WORLD.T_AUTHOR</pre>
 							<p>Even if T_AUTHOR was generated from DEV. </p>
-							
+
 							<h2>Mapping several schemata</h2>
 							<p>Your development database may not be restricted to hold only one DEV
 								schema. You may also have a LOG schema and a MASTER schema. Let's say
 								the MASTER schema is shared among all customers, but each customer has
 								their own LOG schema instance. Then you can enhance your SchemaMapping
 								like this: </p>
-								
+
 <pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
 mapping.add(DEV, "MY_BOOK_WORLD");
 mapping.add(LOG, "MY_BOOK_WORLD_LOG");</pre>
@@ -83,13 +83,13 @@ mapping.add(LOG, "MY_BOOK_WORLD_LOG");</pre>
 								to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you
 								want to change your mapping configuration, you will have to create a
 								new Factory</p>
-								
-								
+
+
 							<h2>Using a default schema</h2>
 							<p>Another option to switch schema names is to use a default schema for
 								the Factory's underlying Connection. Many RDBMS support a USE or SET
 								SCHEMA command, which you can call like this: </p>
-								
+
 <pre class="prettyprint lang-java">// Set the default schema
 Schema MY_BOOK_WORLD = ...
 create.use(MY_BOOK_WORLD);
@@ -97,7 +97,7 @@ create.use(MY_BOOK_WORLD);
 // Run queries with factory having a default schema
 create.selectFrom(T_AUTHOR).fetch();</pre>
 							<p>Queries generated from the above Factory will produce this kind of SQL statement: </p>
-							
+
 <pre class="prettyprint lang-sql">-- the schema name is omitted from all SQL constructs.
 SELECT * FROM T_AUTHOR</pre>
 
@@ -110,7 +110,7 @@ SELECT * FROM T_AUTHOR</pre>
 								something MY_BOOK_WORLD.MY_APP__T_AUTHOR, where MY_APP__ is a prefix
 								applied to all of your tables. This can be achieved by creating the
 								following mapping: </p>
-								
+
 <pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
 mapping.add(DEV, "MY_BOOK_WORLD");
 mapping.add(T_AUTHOR, "MY_APP__T_AUTHOR");

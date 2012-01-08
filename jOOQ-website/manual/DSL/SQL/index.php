@@ -73,7 +73,7 @@ function printContent() {
 
 							<p>To construct artefacts wrapping plain SQL, you should use any of
 								these methods from the Factory class: </p>
-								
+
 <pre class="prettyprint lang-java">// A condition
 Condition condition(String sql);
 Condition condition(String sql, Object... bindings);
@@ -101,6 +101,10 @@ Query query(String sql);
 Query query(String sql, Object... bindings);
 
 // A query with results
+ResultQuery&lt;Record&gt; resultQuery(String sql);
+ResultQuery&lt;Record&gt; resultQuery(String sql, Object... bindings);
+
+// A query with results. This is the same as resultQuery(...).fetch();
 Result&lt;Record&gt; fetch(String sql);
 Result&lt;Record&gt; fetch(String sql, Object... bindings);</pre>
 

@@ -32,7 +32,7 @@ function printContent() {
 								java.math.BigInteger, Long, Integer, Short, Byte, Double, Float. </p>
 							<p>Sometimes, this automatic mapping might not be what you needed, or
 								jOOQ cannot know the type of a field (because you created it from a
-								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">nested select</a>). 
+								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">nested select</a>).
 								In those cases you would write SQL type CASTs like
 								this: </p>
 <pre class="prettyprint lang-sql">-- Let's say, your Postgres column LAST_NAME was VARCHAR(30)

@@ -6,38 +6,38 @@
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="release" description="Release a new version">
-		<property name="version" value="2.0.1"/>
+		<property name="version" value="2.0.2"/>
 		<property name="version-joou" value="0.9.0"/>
-		
+
 		<mkdir dir="${dir.release}/versions" />
 		<mkdir dir="${dir.release}/${version}" />
 		<mkdir dir="${dir.release}/${version}/lib" />
 		<mkdir dir="${dir.release}/${version}/src" />
-		
+
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
-		
+
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
-		
+
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
-		
+
 		<copy todir="${dir.release}/${version}">
 			<fileset dir="${dir.release}/template">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
-		
+
 		<mkdir dir="${dir.release}/${version}/third-party/lib" />
 		<mkdir dir="${dir.release}/${version}/third-party/src" />
 
 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1.jar"/>
 		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\org\slf4j\slf4j-api\1.6.1\slf4j-api-1.6.1-sources.jar"/>
-		
+
 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16.jar"/>
 		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\log4j\log4j\1.2.16\log4j-1.2.16-sources.jar"/>
 
@@ -55,7 +55,7 @@
 				<include name="lib/**"/>
 			</fileset>
 		</zip>
-		
+
 		<delete dir="${dir.release}/${version}"/>
 	</target>
 </project>

@@ -26,12 +26,12 @@ function printContent() {
 </table>
 							<h2>Stored procedures in modern RDBMS</h2>
 							<p>This is one of the most important reasons why you should consider
-								jOOQ. Read also my 
+								jOOQ. Read also my
 								<a href="http://java.dzone.com/articles/2011-great-year-stored" title="Article on stored procedures and how to use them with jOOQ">article on dzone</a>
 								about why stored procedures become
 								more and more important in future versions of RDMBS. In this section
 								of the manual, we will learn how jOOQ handles stored procedures in
-								code generation. Especially before 
+								code generation. Especially before
 								<a href="<?=$root?>/manual/META/UDT/" title="jOOQ Manual reference: UDT's including ARRAY and ENUM types">UDT and ARRAY support</a> was
 								introduced to major RDBMS, these procedures tend to have dozens of
 								parameters, with IN, OUT, IN OUT parameters mixed in all variations.
@@ -39,7 +39,7 @@ function printContent() {
 								jOOQ heavily facilitates the use of stored procedures and functions
 								via its source code generation. Essentially, it comes down to this:
 							</p>
-							
+
 							<h3>"Standalone" stored procedures and functions</h3>
 							<p>Let's say you have these stored procedures and functions in your Oracle database </p>
 <pre class="prettyprint lang-sql">-- Check whether there is an author in T_AUTHOR by that name
@@ -50,7 +50,7 @@ CREATE OR REPLACE PROCEDURE p_author_exists (author_name VARCHAR2, result OUT NU
 
 -- Check whether there is an author in T_AUTHOR by that name and get his ID
 CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT NUMBER, id OUT NUMBER);</pre>
-							
+
 							<p>jOOQ will essentially generate two artefacts for every procedure/function: </p>
 							<ul>
 								
@@ -60,7 +60,7 @@ CREATE OR REPLACE PROCEDURE p_author_exists_2 (author_name VARCHAR2, result OUT 
 							
 </ul>
 							<p>Let's see what these things look like, in Java. The classes (simplified for the example): </p>
-							
+
 <pre class="prettyprint lang-java">// The function has a generic type parameter &lt;T&gt; bound to its return value
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine&lt;BigDecimal&gt; {
 
@@ -100,7 +100,7 @@ public class PAuthorExists_2 extends org.jooq.impl.AbstractRoutine&lt;java.lang.
 }</pre>
 
 							<p>An example invocation of such a stored procedure might look like this: </p>
-							
+
 <pre class="prettyprint lang-java">PAuthorExists p = new PAuthorExists();
 p.setAuthorName("Paulo");
 p.execute(configuration);
@@ -110,8 +110,8 @@ assertEquals(BigDecimal.ONE, p.getResult());</pre>
 								The above configuration is a
 								<a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">Factory</a>,
 								holding a reference to a JDBC connection, as discussed in a previous section.
-								
-								If you use the generated convenience methods, however, things are much simpler, still: 
+
+								If you use the generated convenience methods, however, things are much simpler, still:
 							</p>
 <pre class="prettyprint lang-java">// Every schema has a single Routines class with convenience methods
 public final class Routines {
@@ -151,7 +151,7 @@ public final class Routines {
 <a href="http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/" title="Blog post about the difference between procedures and functions in various RDBMS">lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/</a>
 							
 </p>
-							
+
 							<h3>Packages in Oracle</h3>
 							<p>
 								Oracle uses the concept of a PACKAGE to group several
@@ -178,7 +178,7 @@ public final class Routines {
 								one for
 								standalone procedures/functions.
 							</p>
-							
+
 							<h3>Member functions and procedures in Oracle</h3>
 							<p>
 								Oracle UDT's can have object-oriented structures including member functions
@@ -188,7 +188,7 @@ public final class Routines {
   id NUMBER(7),
   first_name VARCHAR2(50),
   last_name VARCHAR2(50),
-  
+
   MEMBER PROCEDURE LOAD,
   MEMBER FUNCTION count_books RETURN NUMBER
 )
@@ -200,7 +200,7 @@ public final class Routines {
 								These member functions and procedures can simply be mapped to Java
 								methods:
 							</p>
-							
+
 <pre class="prettyprint lang-java">
 // Create an empty, attached UDT record from the Factory
 UAuthorType author = create.newRecord(U_AUTHOR_TYPE);
@@ -216,7 +216,7 @@ assertNotNull(author.getLastName());</pre>
 							<p>For more details about UDT's see the Manual's section on
 							<a href="<?=$root?>/manual/META/UDT/" title="jOOQ Manual reference: UDT's including ARRAY and ENUM types">User Defined Types</a>
 </p>
-							
+
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>

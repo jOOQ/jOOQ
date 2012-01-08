@@ -56,7 +56,7 @@ function printContent() {
 								</li>
 							
 </ul>
-							
+
 							<h2>Dependencies</h2>
 							<p>All of jOOQ's dependencies are "optional", i.e. you can run
 								jOOQ without any of those libraries.
@@ -69,8 +69,8 @@ function printContent() {
 								Other optional dependencies are the JPA API, and the Oracle JDBC driver,
 								which is needed for Oracle's advanced data types, only
 							</p>
-							
-							
+
+
 							<h2>Configure jOOQ</h2>
 							<p>You need to tell jOOQ some things about your database connection.
 								Here's an example of how to do it for a MySQL database </p>
@@ -100,12 +100,12 @@ generator.database.includes=.*
 #All elements that are excluded from your schema (several Java regular expressions, separated by comma). Excludes match before includes
 generator.database.excludes=
 
-#Primary key / foreign key relations should be generated and used. 
+#Primary key / foreign key relations should be generated and used.
 #This will be a prerequisite for various advanced features
 #Defaults to false
 generator.generate.relations=true
 
-#Generate deprecated code for backwards compatibility 
+#Generate deprecated code for backwards compatibility
 #Defaults to true
 generator.generate.deprecated=false
 
@@ -121,9 +121,17 @@ generator.target.directory=[/path/to/your/dir]</pre>
 #If not specified, this will be the same as the input-schema.
 generator.database.output-schema=[your database schema / owner / name]
 
+#Generate java.sql.Timestamp fields for DATE columns. This is particularly useful for Oracle databases
+#Defaults to false
+generator.database.date-as-timestamp=true
+
 #Generate instance fields in your tables, as opposed to static fields. This simplifies aliasing
 #Defaults to true
 generator.generate.instance-fields=true
+
+#Generate the javax.annotation.Generated annotation to indicate jOOQ version used for source code
+#generation. Defaults to true
+generator.generate.generated-annotation=true
 
 #Generate jOOU data types for your unsigned data types, which are not natively supported in Java
 #Defaults to true
@@ -135,11 +143,11 @@ generator.generate.master-data-tables=[a list of tables]
 #For every master data table, specify two special columns
 generator.generate.master-data-table-literal.[master data table]=[column used for enum literals]
 generator.generate.master-data-table-description.[master data table]=[column used for documentation]</pre>
-							<p>Check out the manual's section about 
+							<p>Check out the manual's section about
 								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
 								 to find out more
 								about those advanced configuration parameters. </p>
-								
+
 							<h2>Run jOOQ code generation</h2>
 							<p>Code generation works by calling this class with the above property file as argument.</p>
 							<pre class="prettyprint">org.jooq.util.GenerationTool /jooq-config.properties</pre>
@@ -157,7 +165,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							<h3>A command-line example (For Windows, unix/linux/etc will be similar)</h3>
 							<ul>
 								
-<li>Put the property file, jooq*.jar and the JDBC driver into 
+<li>Put the property file, jooq*.jar and the JDBC driver into
 									a directory, e.g. C:\temp\jooq</li>
 							    
 <li>Go to C:\temp\jooq</li>
@@ -166,7 +174,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							
 </ul>
 							<p>Note that the property file must be passed as a classpath resource</p>
-							
+
 							<h3>Run code generation from Eclipse</h3>
 							<p>Of course, you can also run code generation from your IDE. In
 								Eclipse, set up a project like this. Note that this example uses
@@ -176,7 +184,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							
 <img alt="Eclipse configuration" class="screenshot" src="<?=$root?>/img/eclipse-example-01.png">
 							</div>
-							
+
 							<p>Once the project is set up correctly with all required artefacts on
 								the classpath, you can configure an Eclipse Run Configuration for
 								org.jooq.util.GenerationTool. </p>
@@ -184,30 +192,30 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							
 <img alt="Eclipse configuration" class="screenshot" src="<?=$root?>/img/eclipse-example-02.png">
 							</div>
-							
+
 							<p>With the properties file as an argument </p>
 							<div class="screenshot">
 							
 <img alt="Eclipse configuration" class="screenshot" src="<?=$root?>/img/eclipse-example-03.png">
 							</div>
-							
+
 							<p>And the classpath set up correctly</p>
 							<div class="screenshot">
 							
 <img alt="Eclipse configuration" class="screenshot" src="<?=$root?>/img/eclipse-example-04.png">
 							</div>
-							
+
 							<p>Finally, run the code generation and see your generated artefacts</p>
 							<div class="screenshot">
 							
 <img alt="Eclipse configuration" class="screenshot" src="<?=$root?>/img/eclipse-example-05.png">
 							</div>
-							
+
 							<h3>Run generation with ant</h3>
 							<p>
-								You can also use an ant task to generate your classes. As a rule of thumb, 
-								remove the dots "." and dashes "-" from the .properties file's property names to get the 
-								ant task's arguments: 
+								You can also use an ant task to generate your classes. As a rule of thumb,
+								remove the dots "." and dashes "-" from the .properties file's property names to get the
+								ant task's arguments:
 							</p>
 <pre class="prettyprint lang-xml">&lt;!-- Task definition --&gt;
 &lt;taskdef name="generate-classes" classname="org.jooq.util.GenerationTask"&gt;
@@ -225,7 +233,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 
 &lt;!-- Run the code generation task --&gt;
 &lt;target name="generate-test-classes"&gt;
-  &lt;generate-classes 
+  &lt;generate-classes
       jdbcurl="jdbc:mysql://localhost/test"
       jdbcuser="root"
       jdbcpassword=""
@@ -233,19 +241,19 @@ generator.generate.master-data-table-description.[master data table]=[column use
       generatortargetpackage="org.jooq.test.generatedclasses"
       generatortargetdirectory="${basedir}/src"/&gt;
 &lt;/target&gt;</pre>
-					
-										
+
+
 							<h3>Integrate generation with Maven</h3>
 							<p>Using the official jOOQ-codegen-maven plugin, you can integrate
 								source code generation in your Maven build process: </p>
-							
+
 <pre class="prettyprint lang-xml">&lt;plugin&gt;
 
   &lt;!-- Specify the maven code generator plugin --&gt;
   &lt;groupId&gt;org.jooq&lt;/groupId&gt;
   &lt;artifactId&gt;jooq-codegen-maven&lt;/artifactId&gt;
   &lt;version&gt;1.6.7&lt;/version&gt;
-  
+
   &lt;!-- The plugin should hook into the generate goal --&gt;
   &lt;executions&gt;
     &lt;execution&gt;
@@ -254,7 +262,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
       &lt;/goals&gt;
     &lt;/execution&gt;
   &lt;/executions&gt;
-  
+
   &lt;!-- Manage the plugin's dependency. In this example, we'll use a Postgres database --&gt;
   &lt;dependencies&gt;
     &lt;dependency&gt;
@@ -263,10 +271,10 @@ generator.generate.master-data-table-description.[master data table]=[column use
       &lt;version&gt;8.4-702.jdbc4&lt;/version&gt;
     &lt;/dependency&gt;
   &lt;/dependencies&gt;
-  
+
   &lt;!-- Specify the plugin configuration --&gt;
   &lt;configuration&gt;
-  
+
     &lt;!-- JDBC connection parameters --&gt;
     &lt;jdbc&gt;
       &lt;driver&gt;org.postgresql.Driver&lt;/driver&gt;
@@ -274,7 +282,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
       &lt;user&gt;postgres&lt;/user&gt;
       &lt;password&gt;test&lt;/password&gt;
     &lt;/jdbc&gt;
-    
+
     &lt;!-- Generator parameters --&gt;
     &lt;generator&gt;
       &lt;name&gt;org.jooq.util.DefaultGenerator&lt;/name&gt;
@@ -306,7 +314,7 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							<p>See the full example of a pom.xml including the jOOQ-codegen artefact here:
 							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml" title="jOOQ-codegen-maven example pom.xml file">https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a>
 </p>
-									
+
 							<h3>Use jOOQ generated classes in your application</h3>
 							<p>Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you

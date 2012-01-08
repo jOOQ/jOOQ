@@ -28,7 +28,7 @@ function printContent() {
 								your SQL statements to the Oracle database. For example: </p>
 <pre class="prettyprint lang-sql">SELECT /*+ALL_ROWS*/ FIRST_NAME, LAST_NAME
   FROM T_AUTHOR</pre>
-  
+
   							<p>This can be done in jOOQ using the .hint() clause in your SELECT statement: </p>
 <pre class="prettyprint lang-java">create.select(FIRST_NAME, LAST_NAME)
       .hint("/*+ALL_ROWS*/")

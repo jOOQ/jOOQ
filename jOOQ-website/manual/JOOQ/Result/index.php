@@ -36,21 +36,21 @@ function printContent() {
 								set. Depending on the type of SELECT statement,
 								&lt;R&gt; can be bound
 								to a sub-type of Record, for instance to an
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdatableRecord.java" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>. 
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdatableRecord.java" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>.
 								See the section on
 								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>
-								for further details. 
+								for further details.
 							</p>
-							
+
 							<h2>The Cursor</h2>
 							<p>
-								A similar object is the 
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Cursor.java" title="Internal API reference: org.jooq.Cursor">Cursor</a>&lt;R extends Record&gt;. 
-								Unlike the Result, the cursor has not fetched all data from the database yet. 
-								This means, you save memory (and potentially speed), but you can only access 
-								data sequentially and you have to keep a JDBC ResultSet alive. Cursors behave 
-								very much like the <a href="http://download.oracle.com/javase/6/docs/api/java/util/Iterator.html" title="External API reference: java.util.Iterator">java.util.Iterator</a>, 
-								by providing a very simple API. Some sample methods are: 
+								A similar object is the
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Cursor.java" title="Internal API reference: org.jooq.Cursor">Cursor</a>&lt;R extends Record&gt;.
+								Unlike the Result, the cursor has not fetched all data from the database yet.
+								This means, you save memory (and potentially speed), but you can only access
+								data sequentially and you have to keep a JDBC ResultSet alive. Cursors behave
+								very much like the <a href="http://download.oracle.com/javase/6/docs/api/java/util/Iterator.html" title="External API reference: java.util.Iterator">java.util.Iterator</a>,
+								by providing a very simple API. Some sample methods are:
 							</p>
 <pre class="prettyprint lang-java">// Check whether there are any more records to be fetched
 boolean hasNext() throws SQLException;
@@ -68,7 +68,7 @@ void close() throws SQLException;</pre>
 								physical tables in your database. But any anonymous or ad-hoc tuple can
 								be represented by the plain Record. A record mainly provides access to
 								its data and adds convenience methods for data type conversion. These
-								are the main access ways: 
+								are the main access ways:
 							</p>
 <pre class="prettyprint lang-java">// If you can keep a reference of the selected field, then you can get the corresponding value type-safely
 &lt;T&gt; T getValue(Field&lt;T&gt; field);
@@ -86,7 +86,7 @@ Object getValue(int index);</pre>
 								Records. Then you might use field names or indexes, as with JDBC.
 								However, of course, the type information will then be lost as well. If
 								you know what type you want to get, you can always use the Record's
-								convenience methods for type conversion, however. Some examples: 
+								convenience methods for type conversion, however. Some examples:
 							</p>
 <pre class="prettyprint lang-java">// These methods will try to convert a value to a BigDecimal.
 // This will work for all numeric types and for CHAR/VARCHAR types, if they contain numeric values:
@@ -99,7 +99,7 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 
 							<p>
 								For more information about the type conversions that are supported by
-								jOOQ, read the Javadoc on 
+								jOOQ, read the Javadoc on
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/tools/Convert.java" title="Internal API reference: org.jooq.tools.Convert">org.jooq.tools.Convert</a>
 							
 </p>

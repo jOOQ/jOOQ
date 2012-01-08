@@ -29,19 +29,19 @@ function printContent() {
 							<h2>Interaction with stored procedures</h2>
 							<p>The main way to interact with your RDBMS's stored procedures and
 								functions is by using the generated artefacts. See the manual's
-								section about 
+								section about
 								<a href="<?=$root?>/manual/META/PROCEDURE/" title="jOOQ Manual reference: Procedures and packages">generating procedures and packages</a>
 							    for more details
 								about the source code generation for stored procedures and functions.
 							</p>
-							
+
 							<h2>Stored functions</h2>
 							<p>When it comes to DSL, stored functions can be very handy in SQL
 								statements as well. Every stored function (this also applies to
 								FUNCTIONS in Oracle PACKAGES) can generate a Field representing a call
 								to that function. Typically, if you have this type of function in your
 								database: </p>
-								
+
 <pre class="prettyprint lang-sql">CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2)
 RETURN NUMBER;</pre>
 
@@ -55,7 +55,7 @@ public static Field&lt;BigDecimal&gt; fAuthorExists(String authorName) { // [...
 							<p>Let's say, you have a T_PERSON table with persons' names in it, and
 								you want to know whether there exists an author with precisely that
 								name, you can reuse the above stored function in a SQL query: </p>
-								
+
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
@@ -78,7 +78,7 @@ create.select(T_PERSON.NAME)
 </td>
 </tr>
 </table>
-							
+
 							<h2>Stored procedures</h2>
 							<p>The notion of a stored procedure is implemented in most RDBMS by the
 								fact, that the procedure has no RETURN VALUE (like void in Java), but

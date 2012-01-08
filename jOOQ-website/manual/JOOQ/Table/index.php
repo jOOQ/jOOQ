@@ -14,7 +14,7 @@ function getSlogan() {
 							Tables and their Fields are probably the most important objects in
 							jOOQ. Tables represent any entity in your underlying RDBMS, that holds
 							data for selection, insertion, updates, and deletion. In other words,
-							views are also considered tables by jOOQ. 
+							views are also considered tables by jOOQ.
 						";
 }
 function printContent() {
@@ -34,7 +34,7 @@ function printContent() {
 								class (see also
 								<a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results and Records">Results and Records</a>
 								). For anonymous or ad-hoc tables,
-								&lt;R&gt; will always bind to Record itself. 
+								&lt;R&gt; will always bind to Record itself.
 							</p>
 							<p>
 								Unlike in the
@@ -53,9 +53,9 @@ function printContent() {
 								mapped to the Java world in a convenient way. If
 								&lt;R&gt; would play a role as important
 								as in JPA, jOOQ would suffer from the same verbosity, or inflexibility
-								that JPA CriteriaQueries may have. 
+								that JPA CriteriaQueries may have.
 							</p>
-							
+
 							<h2>The Field</h2>
 							<p>The formal definition of a Field starts with </p>
 							<pre class="prettyprint lang-java">public interface Field&lt;T&gt; // [...]</pre>
@@ -81,7 +81,7 @@ function printContent() {
 									&lt;String&gt;
 									with Field
 									&lt;Integer&gt;</li>
-						
+
 								
 <li>It
 									allows you to fetch correctly cast and converted values from
@@ -93,33 +93,33 @@ function printContent() {
 									does the difficult non-standardised JDBC data type conversions for you.
 								</li>
 							
-</ul> 
-							
+</ul>
+
 							<h2>Fields and tables put into action</h2>
 							<p>The Field itself is a very broad concept. Other tools, or databases
 								refer to it as expression or column. When you just want to </p>
-								
+
 							<pre class="prettyprint lang-sql">SELECT 1 FROM DUAL</pre>
 							<p>
 								Then 1 is considered a Field or more explicitly, a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Constant.java" title="Internal API reference: org.jooq.impl.Constant">org.jooq.impl.Constant</a>, 
-								which implements Field, and DUAL is considered a Table or more explicitly 
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Constant.java" title="Internal API reference: org.jooq.impl.Constant">org.jooq.impl.Constant</a>,
+								which implements Field, and DUAL is considered a Table or more explicitly
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Dual.java" title="Internal API reference: org.jooq.impl.Dual">org.jooq.impl.Dual</a>, which implements Table
 							</p>
 							<p>
-								More advanced uses become clear quickly, when you do things like 
+								More advanced uses become clear quickly, when you do things like
 							</p>
 							<pre class="prettyprint lang-sql">SELECT 1 + 1 FROM DUAL</pre>
 							<p>
-								Where 1 + 1 itself is a Field or more explicitly, an 
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Expression.java" title="Internal API reference: org.jooq.impl.Expression">org.jooq.impl.Expression</a> 
-								joining two Constants together. 
+								Where 1 + 1 itself is a Field or more explicitly, an
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Expression.java" title="Internal API reference: org.jooq.impl.Expression">org.jooq.impl.Expression</a>
+								joining two Constants together.
 							</p>
 							<p>
 								See some details about how to create these queries in the
-								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Query section</a> of the manual 
+								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Query section</a> of the manual
 							</p>
-							
+
 							<h2>TableFields</h2>
 							<p>
 								A specific type of field is the
@@ -136,7 +136,7 @@ function printContent() {
 								corresponding Java class.
 							</p>
 							<p>
-								TableFields join both &lt;R&gt; and &lt;T&gt; generic parameters into their specification: 
+								TableFields join both &lt;R&gt; and &lt;T&gt; generic parameters into their specification:
 							</p>
 							<pre class="prettyprint lang-java">public interface TableField&lt;R extends Record, T&gt; // [...]</pre>
 							<p>

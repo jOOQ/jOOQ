@@ -24,12 +24,12 @@ function printContent() {
 </table>
 							<h2>Attaching QueryParts</h2>
 							<p>
-								The only transient element in any jOOQ object is the 
+								The only transient element in any jOOQ object is the
 								<a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">The Factory class</a>'s
-								underlying 
+								underlying
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a>. When you want to execute queries after
-								de-serialisation, or when you want to store/refresh/delete 
-								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>, 
+								de-serialisation, or when you want to store/refresh/delete
+								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>,
 								you will have to "import" or "re-attach" them to a Factory
 							</p>
 <pre class="prettyprint lang-java">// Deserialise a SELECT statement
@@ -42,8 +42,8 @@ select.execute();
 // In order to execute the above select, attach it first
 Factory create = new Factory(connection, SQLDialect.ORACLE);
 create.attach(select);</pre>
-					
-					
+
+
 							<h2>Automatically attaching QueryParts</h2>
 							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
 <pre class="prettyprint lang-java">// Create your own custom ConfigurationProvider that will make

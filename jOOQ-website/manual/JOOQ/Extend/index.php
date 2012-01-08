@@ -34,8 +34,8 @@ public abstract class CustomCondition extends AbstractCondition {
 
 							<p>These two classes are declared public and covered by integration
 								tests. When you extend these classes, you will have to provide your
-								own implementations for the <a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">QueryParts</a>' 
-								bind(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/BindContext.java" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and 
+								own implementations for the <a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">QueryParts</a>'
+								bind(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/BindContext.java" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and
 								toSQL(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/RenderContext.java" title="Internal API reference: org.jooq.RenderContext">RenderContext</a>) methods:</p>
 <pre class="prettyprint lang-java">// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
 // in the correct order, passing the render context.
@@ -55,7 +55,7 @@ public void bind(BindContext context) throws DataAccessException;</pre>
 								couple of QueryParts, to see how it's done.</p>
 							<h2>Plain SQL as an alternative</h2>
 							<p>If you don't need integration of rather complex QueryParts into
-								jOOQ, then you might be safer using simple 
+								jOOQ, then you might be safer using simple
 								<a href="<?=$root?>/manual/DSL/SQL/" title="jOOQ Manual reference: When it's just easier: Plain SQL">Plain SQL</a> functionality,
 								where you can provide jOOQ with a simple String representation of your
 								embedded SQL. </p>

@@ -213,6 +213,9 @@ function printContent() {
 <a title="The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a>
 </li>
 <li>
+<a title="The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a>
+</li>
+<li>
 <a title="Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a>
 </li>
 <li>

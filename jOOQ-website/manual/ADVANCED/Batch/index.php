@@ -35,7 +35,7 @@ function printContent() {
 <li>Execute one query several times with bind values</li>
 							
 </ol>
-	
+
 							<p>In code, this looks like the following snippet:</p>
 <pre class="prettyprint lang-java">// 1. several queries
 // ------------------
@@ -66,8 +66,8 @@ stmt.setString(2, "John Vlissides");
 stmt.addBatch();
 
 int[] result = stmt.executeBatch();</pre>
-								
-								
+
+
 							<h2>This will also be supported by jOOQ</h2>
 							<p>Version 1.6.9 of jOOQ now supports executing queries in batch
 								mode as follows:</p>

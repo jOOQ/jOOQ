@@ -37,16 +37,16 @@ function printContent() {
 <li>they can bind variables using the bind(BindContext) method</li>
 							
 </ul>
-							
+
 							<p>Both of these methods are contained in jOOQ's internal API's
-							   <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPartInternal.java" title="Internal API reference: org.jooq.QueryPartInternal">org.jooq.QueryPartInternal</a>, which is 
+							   <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPartInternal.java" title="Internal API reference: org.jooq.QueryPartInternal">org.jooq.QueryPartInternal</a>, which is
 							   internally implemented by every QueryPart. QueryPart internals are best
 							   illustrated with an example.</p>
-							   
+
 						   <h2>Example: CompareCondition</h2>
 						   <p>A simple example can be provided by checking out jOOQ's internal
-								representation of a 
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/CompareCondition.java" title="Internal API reference: org.jooq.impl.CompareCondition">org.jooq.impl.CompareCondition</a>. 
+								representation of a
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/CompareCondition.java" title="Internal API reference: org.jooq.impl.CompareCondition">org.jooq.impl.CompareCondition</a>.
 								It is used for any condition
 								comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 								condition here: </p>
@@ -56,7 +56,7 @@ JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 -- [...]</pre>
 
 							<p>This is how jOOQ implements such a condition: </p>
-							
+
 <pre class="prettyprint lang-java">@Override
 public final void bind(BindContext context) throws SQLException {
     // The CompareCondition itself does not bind any variables.
@@ -67,7 +67,7 @@ public final void bind(BindContext context) throws SQLException {
 @Override
 public final void toSQL(RenderContext context) {
     // The CompareCondition delegates rendering of the Fields to the Fields
-    // themselves and connects them using the Condition's comparator operator:    
+    // themselves and connects them using the Condition's comparator operator:
     context.sql(field1)
            .sql(" ");
 
@@ -87,7 +87,7 @@ public final void toSQL(RenderContext context) {
                 throw new IllegalStateException("Cannot compare null with " + comparator);
         }
     }
-    
+
     // By default, also delegate the right hand side's SQL rendering to the
     // underlying field
     else {

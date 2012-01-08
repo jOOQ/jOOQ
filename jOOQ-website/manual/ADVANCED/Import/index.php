@@ -27,19 +27,19 @@ function printContent() {
 								application server, you might be interested in using jOOQ's importing
 								functionality (see also exporting functionality). You can import data
 								directly into a table from any of these formats: </p>
-								
+
 							<h3>CSV</h3>
 							<p>The below CSV data represents two author records that may have been
 								exported previously, by jOOQ's exporting functionality, and then
 								modified in Microsoft Excel or any other spreadsheet tool: </p>
-								
+
 <pre>ID;AUTHOR_ID;TITLE
 1;1;1984
 2;1;Animal Farm</pre>
 
 							<p>With jOOQ, you can load this data using various parameters from the
 								loader API. A simple load may look like this: </p>
-								
+
 <pre class="prettyprint lang-java">Factory create = new Factory(connection, SQLDialect.ORACLE);
 
 // Load data into the T_AUTHOR table from an input stream
@@ -48,7 +48,7 @@ create.loadInto(T_AUTHOR)
       .loadCSV(inputstream)
       .fields(ID, AUTHOR_ID, TITLE)
       .execute();</pre>
-      
+
       						<p>Here are various other examples: </p>
 <pre class="prettyprint lang-java">// Ignore the AUTHOR_ID column from the CSV file when inserting
 create.loadInto(T_AUTHOR)
@@ -92,34 +92,34 @@ create.loadInto(T_AUTHOR)
       .loadCSV(inputstream)
       .fields(ID, null, TITLE)
       .execute();</pre>
-      
+
 							<p>Any of the above configuration methods can be combined to achieve
 								the type of load you need. Please refer to the API's Javadoc to learn
 								about more details. Errors that occur during the load are reported by
 								the execute method's result: </p>
-								
+
 <pre class="prettyprint lang-java">Loader&lt;TAuthor&gt; loader = /* .. */ .execute();
 
 // The number of processed rows
 int processed = loader.processed();
- 
+
 // The number of stored rows (INSERT or UPDATE)
 int stored = loader.stored();
- 
+
 // The number of ignored rows (due to errors, or duplicate rule)
 int ignored = loader.ignored();
- 
+
 // The errors that may have occurred during loading
 List&lt;LoaderError&gt; errors = loader.errors();
 LoaderError error = errors.get(0);
- 
+
 // The exception that caused the error
 SQLException exception = error.exception();
- 
+
 // The row that caused the error
 int rowIndex = error.rowIndex();
 String[] row = error.row();
- 
+
 // The query that caused the error
 Query query = error.query();</pre>
 

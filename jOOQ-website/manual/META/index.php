@@ -23,16 +23,16 @@ function printContent() {
 </table>
 					<h2>Overview</h2>
 					<p>
-						In the previous chapter, we have seen how to use the 
-						<a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">Factory</a> in order to create 
-						<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Queries</a> and fetch data in 
+						In the previous chapter, we have seen how to use the
+						<a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">Factory</a> in order to create
+						<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Queries</a> and fetch data in
 						<a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results and Records">Results</a>. The strength of jOOQ not
-						only lies in its object-oriented 
-						<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">Query model</a>, 
+						only lies in its object-oriented
+						<a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">Query model</a>,
 						but also in the fact
 						that Java source code is generated from your database schema into the
 						META data model. jOOQ follows the paradigm, that your database comes
-						first (see also <a href="<?=$root?>/">home page</a>). 
+						first (see also <a href="<?=$root?>/">home page</a>).
 						This means that you should not modify
 						generated source code, but only adapt entities in your database. Every
 						change in your database is reflected in a corresponding change in your

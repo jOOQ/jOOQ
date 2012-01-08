@@ -21,7 +21,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">next</a></td>
 </tr>
 </table>
 							<h2>CONNECT BY .. STARTS WITH</h2>
@@ -29,7 +29,7 @@ function printContent() {
 								you can take advantage of some Oracle-specific features, such as the
 								CONNECT BY clause, used for hierarchical queries. The formal syntax
 								definition is as follows: </p>
-								
+
 <pre class="prettyprint lang-sql">--   SELECT ..
 --     FROM ..
 --    WHERE ..
@@ -56,7 +56,7 @@ create.select(create.rownum())
     .startWith(DIRECTORY.PARENT_ID.isNull())
     .orderBy(ora.literal(1))
     .fetch(0);</pre>
-    
+
     						<p>The output might then look like this</p>
 <pre>+------------------------------------------------+
 |substring                                       |
@@ -71,7 +71,7 @@ create.select(create.rownum())
 </pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">next</a></td>
 </tr>
 </table>
 <?php 

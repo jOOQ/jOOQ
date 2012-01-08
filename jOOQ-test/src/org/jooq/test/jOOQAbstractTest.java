@@ -3105,16 +3105,6 @@ public abstract class jOOQAbstractTest<
                     .where(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
-                // Testing = SOME(subquery)
-                assertEquals(Arrays.asList(1), create().select()
-                    .from(TBook())
-                    .where(TBook_ID().equalSome(create().selectOne()))
-                    .orderBy(TBook_ID()).fetch(TBook_ID()));
-                assertEquals(Arrays.asList(1, 2), create().select()
-                    .from(TBook())
-                    .where(TBook_ID().equalSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
-                    .orderBy(TBook_ID()).fetch(TBook_ID()));
-
                 // [#1048] TODO: Simulate this for other dialects
                 if (asList(H2, HSQLDB, POSTGRES).contains(getDialect())) {
                     // Testing = ALL(array)
@@ -3146,27 +3136,21 @@ public abstract class jOOQAbstractTest<
                     .where(TBook_ID().equal(create().select(val(3))))
                     .and(TBook_ID().equalAll(create().select(val(3))))
                     .and(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
-                    .and(TBook_ID().equalSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
                     .and(TBook_ID().notEqual(create().select(val(1))))
                     .and(TBook_ID().notEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
                     .and(TBook_ID().notEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().notEqualSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
                     .and(TBook_ID().greaterOrEqual(create().select(val(1))))
                     .and(TBook_ID().greaterOrEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .and(TBook_ID().greaterOrEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().greaterOrEqualSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
                     .and(TBook_ID().greaterThan(create().select(val(1))))
                     .and(TBook_ID().greaterThanAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .and(TBook_ID().greaterThanAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().greaterThanSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
                     .and(TBook_ID().lessOrEqual(create().select(val(3))))
                     .and(TBook_ID().lessOrEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
                     .and(TBook_ID().lessOrEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().lessOrEqualSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
                     .and(TBook_ID().lessThan(create().select(val(4))))
                     .and(TBook_ID().lessThanAll(create().select(val(4))))
                     .and(TBook_ID().lessThanAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
-                    .and(TBook_ID().lessThanSome(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
                     .fetch(TBook_ID()));
 
                 break;

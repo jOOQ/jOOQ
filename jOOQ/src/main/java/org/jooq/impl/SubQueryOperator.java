@@ -47,26 +47,32 @@ enum SubQueryOperator {
     NOT_IN("not in"),
     EQUALS("="),
     EQUALS_ANY("= any"),
+    @Deprecated
     EQUALS_SOME("= some"),
     EQUALS_ALL("= all"),
     NOT_EQUALS("<>"),
     NOT_EQUALS_ANY("<> any"),
+    @Deprecated
     NOT_EQUALS_SOME("<> some"),
     NOT_EQUALS_ALL("<> all"),
     LESS("<"),
     LESS_THAN_ANY("< any"),
+    @Deprecated
     LESS_THAN_SOME("< some"),
     LESS_THAN_ALL("< all"),
     LESS_OR_EQUAL("<="),
     LESS_OR_EQUAL_ANY("<= any"),
+    @Deprecated
     LESS_OR_EQUAL_SOME("<= some"),
     LESS_OR_EQUAL_ALL("<= all"),
     GREATER(">"),
     GREATER_THAN_ANY("> any"),
+    @Deprecated
     GREATER_THAN_SOME("> some"),
     GREATER_THAN_ALL("> all"),
     GREATER_OR_EQUAL(">="),
     GREATER_OR_EQUAL_ANY(">= any"),
+    @Deprecated
     GREATER_OR_EQUAL_SOME(">= some"),
     GREATER_OR_EQUAL_ALL(">= all"), ;
 

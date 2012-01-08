@@ -531,7 +531,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * <code>this = some (Select<?> ...)</code>
+     *
+     * @deprecated - 2.0.2 - Use {@link #equalAny(Select)} instead
      */
+    @Deprecated
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalSome(Select<?> query);
 
@@ -607,7 +610,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * <code>this != some (Select<?> ...)</code>
+     *
+     * @deprecated - 2.0.2 - Use {@link #notEqualAny(Select)} instead
      */
+    @Deprecated
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualSome(Select<?> query);
 
@@ -679,7 +685,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * <code>this < some (Select<?> ...)</code>
+     *
+     * @deprecated - 2.0.2 - Use {@link #lessThanAny(Select)} instead
      */
+    @Deprecated
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanSome(Select<?> query);
 
@@ -751,7 +760,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * <code>this <= some (Select<?> ...)</code>
+     *
+     * @deprecated - 2.0.2 - Use {@link #lessOrEqualAny(Select)} instead
      */
+    @Deprecated
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualSome(Select<?> query);
 
@@ -823,7 +835,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * <code>this > some (Select<?> ...)</code>
+     *
+     * @deprecated - 2.0.2 - Use {@link #greaterThanAny(Select)} instead
      */
+    @Deprecated
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanSome(Select<?> query);
 
@@ -895,7 +910,10 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * <code>this >= some (Select<?> ...)</code>
+     *
+     * @deprecated - 2.0.2 - Use {@link #greaterOrEqualAny(Select)} instead
      */
+    @Deprecated
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualSome(Select<?> query);
 

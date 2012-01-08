@@ -462,6 +462,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    @Deprecated
     public final Condition equalSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS_SOME);
     }
@@ -512,6 +513,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    @Deprecated
     public final Condition notEqualSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.NOT_EQUALS_SOME);
     }
@@ -562,6 +564,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    @Deprecated
     public final Condition lessThanSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_THAN_SOME);
     }
@@ -612,6 +615,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    @Deprecated
     public final Condition lessOrEqualSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.LESS_OR_EQUAL_SOME);
     }
@@ -662,6 +666,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    @Deprecated
     public final Condition greaterThanSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_THAN_SOME);
     }
@@ -712,6 +717,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    @Deprecated
     public final Condition greaterOrEqualSome(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.GREATER_OR_EQUAL_SOME);
     }

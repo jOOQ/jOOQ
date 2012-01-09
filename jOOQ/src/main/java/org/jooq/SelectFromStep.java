@@ -95,7 +95,7 @@ public interface SelectFromStep extends SelectWhereStep {
      * Add a <code>FROM</code> clause to the query
      */
     @Support
-    SelectJoinStep from(Collection<TableLike<?>> tables);
+    SelectJoinStep from(Collection<? extends TableLike<?>> tables);
 
     /**
      * Add a <code>FROM</code> clause to the query

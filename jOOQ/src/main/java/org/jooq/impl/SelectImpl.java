@@ -153,7 +153,7 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     }
 
     @Override
-    public final SelectImpl from(Collection<TableLike<?>> tables) {
+    public final SelectImpl from(Collection<? extends TableLike<?>> tables) {
         getQuery().addFrom(tables);
         return this;
     }

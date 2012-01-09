@@ -72,7 +72,7 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
     }
 
     @Override
-    public final void addFrom(Collection<TableLike<?>> from) {
+    public final void addFrom(Collection<? extends TableLike<?>> from) {
         for (TableLike<?> provider : from) {
             getFrom().add(provider.asTable());
         }

@@ -89,7 +89,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param from The added tables
      */
     @Support
-    void addFrom(Collection<TableLike<?>> from);
+    void addFrom(Collection<? extends TableLike<?>> from);
 
     /**
      * Joins the existing table product to a new table using a condition

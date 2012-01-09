@@ -3105,28 +3105,25 @@ public abstract class jOOQAbstractTest<
                     .where(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
                     .orderBy(TBook_ID()).fetch(TBook_ID()));
 
-                // [#1048] TODO: Simulate this for other dialects
-                if (asList(H2, HSQLDB, POSTGRES).contains(getDialect())) {
-                    // Testing = ALL(array)
-                    assertEquals(Arrays.asList(1), create().select(TBook_ID())
-                        .from(TBook())
-                        .where(TBook_ID().equalAll(1))
-                        .orderBy(TBook_ID()).fetch(TBook_ID()));
-                    assertEquals(Arrays.asList(), create().select(TBook_ID())
-                        .from(TBook())
-                        .where(TBook_ID().equalAll(1, 2))
-                        .orderBy(TBook_ID()).fetch(TBook_ID()));
+                // Testing = ALL(array)
+                assertEquals(Arrays.asList(1), create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().equalAll(1))
+                    .orderBy(TBook_ID()).fetch(TBook_ID()));
+                assertEquals(Arrays.asList(), create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().equalAll(1, 2))
+                    .orderBy(TBook_ID()).fetch(TBook_ID()));
 
-                    // Testing = ANY(array)
-                    assertEquals(Arrays.asList(1), create().select(TBook_ID())
-                        .from(TBook())
-                        .where(TBook_ID().equalAny(1))
-                        .orderBy(TBook_ID()).fetch(TBook_ID()));
-                    assertEquals(Arrays.asList(1, 2), create().select(TBook_ID())
-                        .from(TBook())
-                        .where(TBook_ID().equalAny(1, 2))
-                        .orderBy(TBook_ID()).fetch(TBook_ID()));
-                }
+                // Testing = ANY(array)
+                assertEquals(Arrays.asList(1), create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().equalAny(1))
+                    .orderBy(TBook_ID()).fetch(TBook_ID()));
+                assertEquals(Arrays.asList(1, 2), create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().equalAny(1, 2))
+                    .orderBy(TBook_ID()).fetch(TBook_ID()));
 
                 // Inducing the above to work the same way as all other operators
                 // Check all operators in a single query
@@ -3135,22 +3132,34 @@ public abstract class jOOQAbstractTest<
                     .from(TBook())
                     .where(TBook_ID().equal(create().select(val(3))))
                     .and(TBook_ID().equalAll(create().select(val(3))))
+                    .and(TBook_ID().equalAll(3, 3))
                     .and(TBook_ID().equalAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
+                    .and(TBook_ID().equalAny(3, 4))
                     .and(TBook_ID().notEqual(create().select(val(1))))
                     .and(TBook_ID().notEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
+                    .and(TBook_ID().notEqualAll(1, 4, 4))
                     .and(TBook_ID().notEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
+                    .and(TBook_ID().notEqualAny(1, 4, 4))
                     .and(TBook_ID().greaterOrEqual(create().select(val(1))))
                     .and(TBook_ID().greaterOrEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
+                    .and(TBook_ID().greaterOrEqualAll(1, 2))
                     .and(TBook_ID().greaterOrEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
+                    .and(TBook_ID().greaterOrEqualAny(1, 4))
                     .and(TBook_ID().greaterThan(create().select(val(1))))
                     .and(TBook_ID().greaterThanAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 2))))
+                    .and(TBook_ID().greaterThanAll(1, 2))
                     .and(TBook_ID().greaterThanAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
+                    .and(TBook_ID().greaterThanAny(1, 4))
                     .and(TBook_ID().lessOrEqual(create().select(val(3))))
                     .and(TBook_ID().lessOrEqualAll(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(3, 4))))
+                    .and(TBook_ID().lessOrEqualAll(3, 4))
                     .and(TBook_ID().lessOrEqualAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
+                    .and(TBook_ID().lessOrEqualAny(1, 4))
                     .and(TBook_ID().lessThan(create().select(val(4))))
                     .and(TBook_ID().lessThanAll(create().select(val(4))))
+                    .and(TBook_ID().lessThanAll(4, 5))
                     .and(TBook_ID().lessThanAny(create().select(TBook_ID()).from(TBook()).where(TBook_ID().in(1, 4))))
+                    .and(TBook_ID().lessThanAny(1, 4))
                     .fetch(TBook_ID()));
 
                 break;
@@ -8752,76 +8761,8 @@ public abstract class jOOQAbstractTest<
         }
         else if (TArrays_NUMBER() != null) {
             Result<Record> result;
-
-            // An empty array
-            // --------------
-            Integer[] array = new Integer[0];
-            result = create().select().from(table(new Integer[0])).fetch();
-
-            assertEquals(0, result.size());
-            assertEquals(1, result.getFields().size());
-
-            // An array containing null
-            // ------------------------
-            array = new Integer[] { null };
-            result = create().select().from(table(array)).fetch();
-
-            assertEquals(1, result.size());
-            assertEquals(1, result.getFields().size());
-            assertEquals(null, result.getValue(0, 0));
-
-            // An array containing two values
-            // ------------------------------
-            array = new Integer[] { null, 1 };
-            result = create().select().from(table(array)).fetch();
-
-            assertEquals(2, result.size());
-            assertEquals(1, result.getFields().size());
-            assertEquals(null, result.getValue(0, 0));
-            assertEquals(1, result.getValue(1, 0));
-
-            // An array containing three values
-            // --------------------------------
-            array = new Integer[] { null, 1, 2 };
-            result = create().select().from(table(array)).fetch();
-
-            assertEquals(3, result.size());
-            assertEquals(1, result.getFields().size());
-            assertEquals(null, result.getValue(0, 0));
-            assertEquals(1, result.getValue(1, 0));
-            assertEquals(2, result.getValue(2, 0));
-
-            // Joining an unnested array table
-            // -------------------------------
-            array = new Integer[] { 2, 3 };
-            Table<?> table = table(array);
-            result = create()
-                .select(TBook_ID(), TBook_TITLE())
-                .from(TBook())
-                .join(table)
-                .on(table.getField(0).cast(Integer.class).equal(TBook_ID()))
-                .fetch();
-
-            assertEquals(2, result.size());
-            assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
-            assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
-            assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
-            assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
-
-            // Joining an aliased unnested array table
-            // ---------------------------------------
-            result = create()
-                .select(TBook_ID(), TBook_TITLE())
-                .from(TBook())
-                .join(table.as("t"))
-                .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
-                .fetch();
-
-            assertEquals(2, result.size());
-            assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
-            assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
-            assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
-            assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
+            Table<?> table;
+            Integer[] array;
 
             // Cross join the array table with the unnested string array value
             // ---------------------------------------------------------------
@@ -8881,6 +8822,80 @@ public abstract class jOOQAbstractTest<
         else {
             log.info("SKIPPING", "ARRAY TABLE tests");
         }
+    }
+
+    @Test
+    public void testArrayTableSimulation() throws Exception {
+        Result<Record> result;
+
+        // An empty array
+        // --------------
+        Integer[] array = new Integer[0];
+        result = create().select().from(table(new Integer[0])).fetch();
+
+        assertEquals(0, result.size());
+        assertEquals(1, result.getFields().size());
+
+        // An array containing null
+        // ------------------------
+        array = new Integer[] { null };
+        result = create().select().from(table(array)).fetch();
+
+        assertEquals(1, result.size());
+        assertEquals(1, result.getFields().size());
+        assertEquals(null, result.getValue(0, 0));
+
+        // An array containing two values (some DB's can't guarantee ordering)
+        // -------------------------------------------------------------------
+        array = new Integer[] { null, 1 };
+        result = create().select().from(table(array)).fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(1, result.getFields().size());
+        assertTrue(asList(array).containsAll(result.getValues(0)));
+
+        // An array containing three values (some DB's can't guarantee ordering)
+        // ---------------------------------------------------------------------
+        array = new Integer[] { null, 1, 2 };
+        result = create().select().from(table(array)).fetch();
+
+        assertEquals(3, result.size());
+        assertEquals(1, result.getFields().size());
+        assertTrue(asList(array).containsAll(result.getValues(0)));
+
+        // Joining an unnested array table
+        // -------------------------------
+        array = new Integer[] { 2, 3 };
+        Table<?> table = table(array);
+        result = create()
+            .select(TBook_ID(), TBook_TITLE())
+            .from(TBook())
+            .join(table)
+            .on(table.getField(0).cast(Integer.class).equal(TBook_ID()))
+            .orderBy(TBook_ID().asc())
+            .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
+        assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
+        assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
+        assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
+
+        // Joining an aliased unnested array table
+        // ---------------------------------------
+        result = create()
+            .select(TBook_ID(), TBook_TITLE())
+            .from(TBook())
+            .join(table.as("t"))
+            .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
+            .orderBy(TBook_ID().asc())
+            .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
+        assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
+        assertEquals("Animal Farm", result.getValue(0, TBook_TITLE()));
+        assertEquals("O Alquimista", result.getValue(1, TBook_TITLE()));
     }
 
     @Test
@@ -9566,7 +9581,7 @@ public abstract class jOOQAbstractTest<
         create().loadInto(TAuthor())
                 .loadCSV(
                     "####Some Data####\n" +
-                    "\"ID\",\"Last Name\"\r" +
+                    "\"ID\",\"Last Qualifier\"\r" +
                     "3,Hesse\n" +
                     "4,Frisch")
                 .fields(TAuthor_ID(), TAuthor_LAST_NAME())
@@ -9592,7 +9607,7 @@ public abstract class jOOQAbstractTest<
         loader =
         create().loadInto(TAuthor())
                 .loadCSV(
-                    "\"ID\",\"First Name\",\"Last Name\"\r" +
+                    "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
                     "5,Hermann,Hesse\n" +
                     "6,\"Max\",Frisch")
                 .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
@@ -9638,7 +9653,7 @@ public abstract class jOOQAbstractTest<
                 create().loadInto(TAuthor())
                         .onDuplicateKeyUpdate()
                         .loadCSV(
-                            "\"ID\",\"First Name\",\"Last Name\"\r" +
+                            "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
                             "1,Hermann,Hesse\n" +
                             "7,\"Max\",Frisch")
                         .fields(TAuthor_ID(), null, TAuthor_LAST_NAME())
@@ -9678,7 +9693,7 @@ public abstract class jOOQAbstractTest<
                 .onDuplicateKeyError()
                 .onErrorAbort()
                 .loadCSV(
-                    "\"ID\",\"First Name\",\"Last Name\"\r" +
+                    "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
                     "8,Hermann,Hesse\n" +
                     "1,\"Max\",Frisch\n" +
                     "2,Friedrich,Dürrenmatt")
@@ -9710,7 +9725,7 @@ public abstract class jOOQAbstractTest<
                 .onDuplicateKeyIgnore()
                 .onErrorAbort()
                 .loadCSV(
-                    "\"ID\",\"First Name\",\"Last Name\"\r" +
+                    "\"ID\",\"First Qualifier\",\"Last Qualifier\"\r" +
                     "8,Hermann,Hesse\n" +
                     "1,\"Max\",Frisch\n" +
                     "2,Friedrich,Dürrenmatt")

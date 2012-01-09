@@ -455,17 +455,17 @@ public class Factory implements FactoryOperations {
 
         // The field is an Oracle-style VARRAY constant
         else if (ArrayConstant.class.isAssignableFrom(cursor.getClass())) {
-            return new ArrayTable<Record>(cursor);
+            return new ArrayTable(cursor);
         }
 
         // The field is an Oracle-style VARRAY field
         else if (ArrayRecord.class.isAssignableFrom(cursor.getDataType().getType())) {
-            return new ArrayTable<Record>(cursor);
+            return new ArrayTable(cursor);
         }
 
         // The field is a regular array
         else if (cursor.getType().isArray() && cursor.getType() != byte[].class) {
-            return new ArrayTable<Record>(cursor);
+            return new ArrayTable(cursor);
         }
 
         // The field has any other type. Try to make it an array

@@ -107,6 +107,8 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
             //
             // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
 
+            // TODO: Is this still needed?
+
             switch (context.getDialect()) {
                 case HSQLDB:
                 case POSTGRES: {
@@ -114,7 +116,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
 
                         // The javac compiler doesn't like casting of generics
                         Object o = aliasProvider;
-                        ArrayTable<?> table = (ArrayTable<?>) o;
+                        ArrayTable table = (ArrayTable) o;
 
                         context.sql("(");
                         Util.toSQLNames(context, table.getFields());

@@ -35,41 +35,44 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
-
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.tools.StringUtils;
 import org.jooq.util.h2.H2DataType;
 
 /**
+ * An unnested array
+ *
  * @author Lukas Eder
  */
-class ArrayTable<R extends Record> extends AbstractTable<R> {
+class ArrayTable extends AbstractTable<Record> {
 
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 2380426377794577041L;
+    private static final long serialVersionUID = 2380426377794577041L;
 
-    private final Field<?>       array;
-    private final FieldList      field;
-    private final String         alias;
+    private final Field<?>          array;
+    private final FieldList         field;
+    private final String            alias;
 
     ArrayTable(Field<?> array) {
-        this(array, "array_table(COLUMN_VALUE)");
+        this(array, "array_table");
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     ArrayTable(Field<?> array, String alias) {
-        super("array_table");
+        super(alias);
 
         Class<?> arrayType;
         if (array.getDataType().getType().isArray()) {
@@ -83,75 +86,168 @@ class ArrayTable<R extends Record> extends AbstractTable<R> {
         this.array = array;
         this.alias = alias;
         this.field = new FieldList();
-        this.field.add(field("COLUMN_VALUE", arrayType));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return (Class<? extends R>) RecordImpl.class;
+        this.field.add(new Qualifier(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
     }
 
     @Override
-    public final Table<R> as(String as) {
-        return new TableAlias<R>(new ArrayTable<R>(array, ""), as);
+    public final Class<? extends Record> getRecordType() {
+        return RecordImpl.class;
+    }
+
+    @Override
+    public final Table<Record> as(String as) {
+        return new ArrayTable(array, as);
+    }
+
+    @Override
+    public final boolean declaresTables() {
+
+        // Always true, because unnested tables are always aliased
+        return true;
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.getDialect()) {
+        context.sql(table(context));
+    }
+
+    @Override
+    public final void bind(BindContext context) {
+        context.bind(table(context));
+    }
+
+    private final Table<Record> table(Configuration configuration) {
+        switch (configuration.getDialect()) {
             case ORACLE: {
-                context.sql("table(").sql(array).sql(")");
-                break;
+                if (array.getDataType().getType().isArray()) {
+                    return simulate().as(alias);
+                }
+                else {
+                    return new OracleArrayTable().as(alias);
+                }
             }
 
             case H2: {
-                context.sql("table(COLUMN_VALUE ");
-
-                // If the array type is unknown (e.g. because it's returned from a stored function
-                // Then the best choice for arbitrary types is varchar
-                if (array.getDataType().getType() == Object[].class) {
-                    context.sql(H2DataType.VARCHAR.getTypeName());
-                }
-                else {
-                    context.sql(array.getDataType().getTypeName());
-                }
-
-                context.sql(" = ").sql(array).sql(")");
-                break;
+                return new H2ArrayTable().as(alias);
             }
 
             // [#756] These dialects need special care when aliasing unnested
             // arrays
             case HSQLDB:
             case POSTGRES: {
-                context.sql("unnest(").sql(array).sql(")");
-
-                if (!StringUtils.isBlank(alias)) {
-                    context.sql(" as ").sql(alias);
-                }
-
-                break;
+                return new PostgresHSQLDBTable().as(alias);
             }
 
-            default:
-                throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + context.getDialect());
+            // Other dialects can simulate unnested arrays using UNION ALL
+            default: {
+                if (array.getDataType().getType().isArray() && array instanceof Param) {
+                    return simulate();
+                }
+
+                else {
+                    throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.getDialect());
+                }
+            }
         }
     }
 
-    @Override
-    public final void bind(BindContext context) {
-        switch (context.getDialect()) {
-            case ORACLE:
-            case H2:
-            case HSQLDB:
-            case POSTGRES:
-                context.bind(array);
-                break;
+    private class PostgresHSQLDBTable extends DialectArrayTable {
 
-            default:
-                throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + context.getDialect());
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 6989279597964488457L;
+
+        @Override
+        public void toSQL(RenderContext context) {
+            context.sql("(select * from unnest(")
+                   .sql(array)
+                   .sql(") as ")
+                   .literal(alias)
+                   .sql("(")
+                   .literal("COLUMN_VALUE")
+                   .sql("))");
         }
+    }
+
+    private class H2ArrayTable extends DialectArrayTable {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 8679404596822098711L;
+
+        @Override
+        public void toSQL(RenderContext context) {
+            context.sql("table(COLUMN_VALUE ");
+
+            // If the array type is unknown (e.g. because it's returned from
+            // a stored function
+            // Then the best choice for arbitrary types is varchar
+            if (array.getDataType().getType() == Object[].class) {
+                context.sql(H2DataType.VARCHAR.getTypeName());
+            }
+            else {
+                context.sql(array.getDataType().getTypeName());
+            }
+
+            context.sql(" = ").sql(array).sql(")");
+        }
+    }
+
+    private class OracleArrayTable extends DialectArrayTable {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 1716687061980551706L;
+
+        @Override
+        public void toSQL(RenderContext context) {
+            context.sql("table (").sql(array).sql(")");
+        }
+    }
+
+    private abstract class DialectArrayTable extends AbstractTable<Record> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 2662639259338694177L;
+
+        DialectArrayTable() {
+            super(alias);
+        }
+
+        @Override
+        public Class<? extends Record> getRecordType() {
+            return RecordImpl.class;
+        }
+
+        @Override
+        public Table<Record> as(String as) {
+            return new TableAlias<Record>(this, as);
+        }
+
+        @Override
+        public void bind(BindContext context) throws DataAccessException {
+            context.bind(array);
+        }
+
+        @Override
+        protected FieldList getFieldList() {
+            return ArrayTable.this.getFieldList();
+        }
+
+        @Override
+        protected List<Attachable> getAttachables0() {
+            return Collections.emptyList();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final ArrayTableSimulation simulate() {
+        return new ArrayTableSimulation(((Param<Object[]>) array).getValue(), alias);
     }
 
     @Override

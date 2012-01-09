@@ -36,15 +36,15 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.val;
 
 import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
-import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -73,40 +73,37 @@ class ArrayAsSubqueryCondition<T> extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.getDialect()) {
-
-            // [#869] H2 and HSQLDB can simulate this syntax by unnesting
-            // the array in a subselect
-            case H2:
-            case HSQLDB: {
-                context.sql(field)
-                       .sql(" ")
-                       .sql(operator.toSQL())
-                       .sql(" (")
-                       .sql(create(context).select().from(table(array)))
-                       .sql(")");
-                break;
-            }
-
-            // [#869] Postgres supports this syntax natively
-            case POSTGRES: {
-                context.sql(field)
-                       .sql(" ")
-                       .sql(operator.toSQL())
-                       .sql(" (")
-                       .sql(array)
-                       .sql(")");
-
-                break;
-            }
-
-            default:
-                throw new SQLDialectNotSupportedException("Arrays as subquery conditions not yet supported by " + context.getDialect());
-        }
+        context.sql(field)
+               .sql(" ")
+               .sql(operator.toSQL())
+               .sql(" (")
+               .sql(array(context))
+               .sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field).bind(val(array));
+        context.bind(field).bind(array(context));
+    }
+
+    private final QueryPart array(Configuration context) {
+        switch (context.getDialect()) {
+
+            // [#869] Postgres supports this syntax natively
+            case POSTGRES: {
+                return array;
+            }
+
+            // [#869] H2 and HSQLDB can simulate this syntax by unnesting
+            // the array in a subselect
+            case H2:
+            case HSQLDB:
+
+            // [#1048] All other dialects simulate unnesting of arrays using
+            // UNION ALL-connected subselects
+            default: {
+                return create(context).select().from(table(array));
+            }
+        }
     }
 }

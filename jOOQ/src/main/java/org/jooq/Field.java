@@ -517,7 +517,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAny(T... array);
 
     /**
@@ -550,7 +550,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equalAll(T... array);
 
     /**
@@ -596,7 +596,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAny(T... array);
 
     /**
@@ -629,7 +629,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqualAll(T... array);
 
     /**
@@ -671,7 +671,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAny(T... array);
 
     /**
@@ -704,7 +704,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThanAll(T... array);
 
     /**
@@ -746,7 +746,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAny(T... array);
 
     /**
@@ -779,7 +779,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqualAll(T... array);
 
     /**
@@ -821,7 +821,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAny(T... array);
 
     /**
@@ -854,7 +854,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThanAll(T... array);
 
     /**
@@ -896,7 +896,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAny(T... array);
 
     /**
@@ -929,7 +929,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * This is natively supported by {@link SQLDialect#POSTGRES}. Other dialects
      * will render a subselect unnesting the array.
      */
-    @Support({ H2, HSQLDB, POSTGRES })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqualAll(T... array);
 
     /**

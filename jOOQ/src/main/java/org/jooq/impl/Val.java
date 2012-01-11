@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -115,7 +116,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     // [#722] TODO This is probably not entirely right.
                     case INGRES:
 
-                    // [#1029] Postgres and [#632] Sybase need explicit casting 
+                    // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
                     case POSTGRES:
                     case SYBASE: {
@@ -238,8 +239,17 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                 context.sql(val.toString());
             }
             else if (type.isArray()) {
-                context.sql("ARRAY")
-                       .sql(Arrays.toString((Object[]) val));
+
+                // H2 renders arrays as tuples
+                if (context.getDialect() == H2) {
+                    context.sql(Arrays.toString((Object[]) val).replaceAll("\\[([^]]*)\\]", "($1)"));
+                }
+
+                // By default, render HSQLDB / POSTGRES syntax
+                else {
+                    context.sql("ARRAY")
+                           .sql(Arrays.toString((Object[]) val));
+                }
             }
             else if (ArrayRecord.class.isAssignableFrom(type)) {
                 context.sql(val.toString());

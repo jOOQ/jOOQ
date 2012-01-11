@@ -43,7 +43,7 @@ public final class Tables {
 	public static org.jooq.util.oracle.sys.tables.AllObjects ALL_OBJECTS = org.jooq.util.oracle.sys.tables.AllObjects.ALL_OBJECTS;
 
 	/**
-	 * Description of all procedures available to the user
+	 * Functions/procedures/packages/types/triggers available to the user
 	 */
 	public static org.jooq.util.oracle.sys.tables.AllProcedures ALL_PROCEDURES = org.jooq.util.oracle.sys.tables.AllProcedures.ALL_PROCEDURES;
 

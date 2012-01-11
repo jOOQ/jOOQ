@@ -6549,6 +6549,26 @@ public abstract class jOOQAbstractTest<
         assertEquals("4", record.getValue(2));
         assertEquals("1", record.getValue(3));
 
+        // Greatest and least with tables. If they're simulated using subqueries
+        // there is a risk of breaking this functionality due to limited support
+        // for subqueries and derived tables...
+        Result<Record> result = create()
+            .select(TBook_ID(),
+                    greatest(TBook_ID(),
+                        TBook_AUTHOR_ID(),
+                        TBook_LANGUAGE_ID()),
+                    least(TBook_ID(),
+                        TBook_AUTHOR_ID(),
+                        TBook_LANGUAGE_ID()))
+            .from(TBook())
+            .orderBy(TBook_ID())
+            .fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+        assertEquals(asList(1, 2, 4, 4), result.getValues(1));
+        assertEquals(asList(1, 1, 2, 2), result.getValues(2));
+
         // Mathematical functions
         switch (getDialect()) {
             case SQLITE:

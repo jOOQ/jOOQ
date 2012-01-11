@@ -350,7 +350,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #unnest(List)
      */
-    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Support
     public static Table<?> table(List<?> list) {
         return table(list.toArray());
     }
@@ -360,7 +360,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #unnest(Object[])
      */
-    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Support
     public static Table<?> table(Object[] array) {
         return table(val(array));
     }
@@ -393,24 +393,30 @@ public class Factory implements FactoryOperations {
      * <p>
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
+     * <p>
+     * In all other dialects, unnesting of arrays is simulated using several
+     * <code>UNION ALL</code> connected subqueries.
      */
-    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Support
     public static Table<?> unnest(List<?> list) {
-        return table(list.toArray());
+        return unnest(list.toArray());
     }
 
     /**
      * Create a table from an array of values
      * <p>
-     * This is equivalent to the <code>TABLE</code> function for H2,
-     * or the <code>UNNEST</code> function in HSQLDB and Postgres
+     * This is equivalent to the <code>TABLE</code> function for H2, or the
+     * <code>UNNEST</code> function in HSQLDB and Postgres
      * <p>
      * For Oracle, use {@link #table(ArrayRecord)} instead, as Oracle knows only
      * typed arrays
+     * <p>
+     * In all other dialects, unnesting of arrays is simulated using several
+     * <code>UNION ALL</code> connected subqueries.
      */
-    @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Support
     public static Table<?> unnest(Object[] array) {
-        return table(val(array));
+        return unnest(val(array));
     }
 
     /**
@@ -421,7 +427,7 @@ public class Factory implements FactoryOperations {
      */
     @Support(ORACLE)
     public static Table<?> unnest(ArrayRecord<?> array) {
-        return table(val(array));
+        return unnest(val(array));
     }
 
     /**
@@ -440,6 +446,9 @@ public class Factory implements FactoryOperations {
      * This functionality has only limited scope when used in H2, as ARRAY types
      * involved with stored functions can only be of type <code>Object[]</code>.
      * Such arrays are converted into <code>VARCHAR</code> arrays by jOOQ.
+     * <p>
+     * In all dialects where arrays are not supported, unnesting of arrays is
+     * simulated using several <code>UNION ALL</code> connected subqueries.
      */
     @Support({ H2, HSQLDB, POSTGRES, ORACLE })
     public static Table<?> unnest(Field<?> cursor) {

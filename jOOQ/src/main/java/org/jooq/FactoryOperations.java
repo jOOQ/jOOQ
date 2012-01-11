@@ -1035,6 +1035,39 @@ public interface FactoryOperations extends Configuration {
     Record fetchOne(String sql, Object... bindings) throws DataAccessException;
 
     /**
+     * Execute a query holding plain SQL.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    int execute(String sql) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL. There must be as many binding
+     * variables contained in the SQL, as passed in the bindings parameter
+     * <p>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    int execute(String sql, Object... bindings) throws DataAccessException;
+
+    /**
      * Create a new query holding plain SQL. There must not be any binding
      * variables contained in the SQL
      * <p>

@@ -382,6 +382,16 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
+    public final int execute(String sql) throws DataAccessException {
+        return getDelegate().execute(sql);
+    }
+
+    @Override
+    public final int execute(String sql, Object... bindings) throws DataAccessException {
+        return getDelegate().execute(sql, bindings);
+    }
+
+    @Override
     public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
         return getDelegate().resultQuery(sql);
     }

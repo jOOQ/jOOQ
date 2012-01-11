@@ -845,6 +845,22 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    public final int execute(String sql) throws DataAccessException {
+        return query(sql).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int execute(String sql, Object... bindings) throws DataAccessException {
+        return query(sql, bindings).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final ResultQuery<Record> resultQuery(String sql) throws DataAccessException {
         return resultQuery(sql, new Object[0]);
     }

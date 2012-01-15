@@ -36,10 +36,23 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 import java.util.List;
+
+import org.jooq.impl.Factory;
 
 /**
  * A table to be used in queries
@@ -97,6 +110,8 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      * <ul>
      * <li> {@link SQLDialect#ORACLE}</li>
      * <li> {@link SQLDialect#SQLSERVER} (not yet officially supported)</li>
+     * <li>Other dialects by using some means of simulation (not yet officially
+     * supported)</li>
      * </ul>
      *
      * @param aggregateFunctions The aggregate functions used for pivoting.
@@ -117,4 +132,308 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      */
     @Support({ ORACLE })
     PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     */
+    @Support
+    TableOnStep join(TableLike<?> table);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support
+    TableOnStep join(String sql);
+
+    /**
+     * <code>INNER JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support
+    TableOnStep join(String sql, Object... bindings);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     */
+    @Support
+    TableOnStep leftOuterJoin(TableLike<?> table);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support
+    TableOnStep leftOuterJoin(String sql);
+
+    /**
+     * <code>LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support
+    TableOnStep leftOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep rightOuterJoin(TableLike<?> table);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep rightOuterJoin(String sql);
+
+    /**
+     * <code>RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep rightOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     */
+    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep fullOuterJoin(TableLike<?> table);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep fullOuterJoin(String sql);
+
+    /**
+     * <code>FULL OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    TableOnStep fullOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>CROSS JOIN</code> a table to this table.
+     * <p>
+     * If this syntax is unavailable, it is simulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     */
+    Table<Record> crossJoin(TableLike<?> table);
+
+    /**
+     * <code>CROSS JOIN</code> a table to this table.
+     * <p>
+     * If this syntax is unavailable, it is simulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    Table<Record> crossJoin(String sql);
+
+    /**
+     * <code>CROSS JOIN</code> a table to this table.
+     * <p>
+     * If this syntax is unavailable, it is simulated with a regular
+     * <code>INNER JOIN</code>. The following two constructs are equivalent:
+     * <code><pre>
+     * A cross join B
+     * A join B on 1 = 1
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    Table<Record> crossJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     */
+    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalJoin(TableLike<?> table);
+
+    /**
+     * <code>NATURAL JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalJoin(String sql);
+
+    /**
+     * <code>NATURAL JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     */
+    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalLeftOuterJoin(TableLike<?> table);
+
+    /**
+     * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalLeftOuterJoin(String sql);
+
+    /**
+     * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
+
+    /**
+     * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     */
+    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalRightOuterJoin(TableLike<?> table);
+
+    /**
+     * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String)
+     */
+    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalRightOuterJoin(String sql);
+
+    /**
+     * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
+     * <p>
+     * This is only possible where the underlying RDBMS supports it
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @see Factory#table(String, Object...)
+     */
+    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 }

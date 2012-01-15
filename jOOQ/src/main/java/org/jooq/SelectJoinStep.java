@@ -95,39 +95,49 @@ import org.jooq.impl.Factory;
 public interface SelectJoinStep extends SelectWhereStep {
 
     /**
-     * <code>INNER JOIN</code> a table
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using {@link Table#join(TableLike)}
+     *
+     * @see Table#join(TableLike)
      */
     @Support
     SelectOnStep join(TableLike<?> table);
 
     /**
-     * <code>INNER JOIN</code> a table
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using {@link Table#join(String)}
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#join(String)
      */
     @Support
     SelectOnStep join(String sql);
 
     /**
-     * <code>INNER JOIN</code> a table
+     * Convenience method to <code>INNER JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#join(String, Object...)}
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#join(String, Object...)
      */
     @Support
     SelectOnStep join(String sql, Object... bindings);
 
     /**
-     * <code>CROSS JOIN</code> a table
+     * Convenience method to <code>CROSS JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#crossJoin(TableLike)}
      * <p>
      * If this syntax is unavailable, it is simulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
@@ -135,12 +145,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * A cross join B
      * A join B on 1 = 1
      * </pre></code>
+     *
+     * @see Table#crossJoin(TableLike)
      */
     @Support
     SelectJoinStep crossJoin(TableLike<?> table);
 
     /**
-     * <code>CROSS JOIN</code> a table
+     * Convenience method to <code>CROSS JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#crossJoin(String)}
      * <p>
      * If this syntax is unavailable, it is simulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
@@ -154,13 +168,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#crossJoin(String)
      */
     @Support
     SelectJoinStep crossJoin(String sql);
 
     /**
-     * <code>CROSS JOIN</code> a table
+     * Convenience method to <code>CROSS JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#crossJoin(String, Object...)}
      * <p>
      * If this syntax is unavailable, it is simulated with a regular
      * <code>INNER JOIN</code>. The following two constructs are equivalent:
@@ -174,53 +191,70 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#crossJoin(String, Object...)
      */
     @Support
     SelectJoinStep crossJoin(String sql, Object... bindings);
 
     /**
-     * <code>LEFT OUTER JOIN</code> a table
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(TableLike)}
+     *
+     * @see Table#leftOuterJoin(TableLike)
      */
     @Support
     SelectOnStep leftOuterJoin(TableLike<?> table);
 
     /**
-     * <code>LEFT OUTER JOIN</code> a table
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String)}
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#leftOuterJoin(String)
      */
     @Support
     SelectOnStep leftOuterJoin(String sql);
 
     /**
-     * <code>LEFT OUTER JOIN</code> a table
+     * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterJoin(String, Object...)}
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#leftOuterJoin(String, Object...)
      */
     @Support
     SelectOnStep leftOuterJoin(String sql, Object... bindings);
 
     /**
-     * <code>RIGHT OUTER JOIN</code> a table
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(TableLike)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
+     *
+     * @see Table#rightOuterJoin(TableLike)
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep rightOuterJoin(TableLike<?> table);
 
     /**
-     * <code>RIGHT OUTER JOIN</code> a table
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
      * <p>
@@ -229,13 +263,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#rightOuterJoin(String)
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep rightOuterJoin(String sql);
 
     /**
-     * <code>RIGHT OUTER JOIN</code> a table
+     * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#rightOuterJoin(String, Object...)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
      * <p>
@@ -244,21 +281,28 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#rightOuterJoin(String, Object...)
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep rightOuterJoin(String sql, Object... bindings);
 
     /**
-     * <code>FULL OUTER JOIN</code> a table
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(TableLike)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
+     *
+     * @see Table#fullOuterJoin(TableLike)
      */
     @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(TableLike<?> table);
 
     /**
-     * <code>FULL OUTER JOIN</code> a table
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(String)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
      * <p>
@@ -267,13 +311,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#fullOuterJoin(String)
      */
     @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(String sql);
 
     /**
-     * <code>FULL OUTER JOIN</code> a table
+     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#fullOuterJoin(String, Object...)}
      * <p>
      * This is only possible where the underlying RDBMS supports it
      * <p>
@@ -282,22 +329,29 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#fullOuterJoin(String, Object...)
      */
     @Support({ DB2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectOnStep fullOuterJoin(String sql, Object... bindings);
 
     /**
-     * <code>NATURAL JOIN</code> a table
+     * Convenience method to <code>NATURAL JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#naturalJoin(TableLike)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
+     *
+     * @see Table#naturalJoin(TableLike)
      */
     @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalJoin(TableLike<?> table);
 
     /**
-     * <code>NATURAL JOIN</code> a table
+     * Convenience method to <code>NATURAL JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#naturalJoin(String)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
@@ -307,13 +361,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#naturalJoin(String)
      */
     @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalJoin(String sql);
 
     /**
-     * <code>NATURAL JOIN</code> a table
+     * Convenience method to <code>NATURAL JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#naturalJoin(String, Object...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
@@ -323,22 +380,29 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#naturalJoin(String, Object...)
      */
     @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalJoin(String sql, Object... bindings);
 
     /**
-     * <code>NATURAL LEFT OUTER JOIN</code> a table
+     * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
+     * last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalLeftOuterJoin(TableLike)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
+     *
+     * @see Table#naturalLeftOuterJoin(TableLike)
      */
     @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalLeftOuterJoin(TableLike<?> table);
 
     /**
-     * <code>NATURAL LEFT OUTER JOIN</code> a table
+     * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
+     * last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalLeftOuterJoin(String)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
@@ -348,13 +412,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#naturalLeftOuterJoin(String)
      */
     @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalLeftOuterJoin(String sql);
 
     /**
-     * <code>NATURAL LEFT OUTER JOIN</code> a table
+     * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
+     * last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalLeftOuterJoin(String, Object...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
@@ -364,24 +431,29 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#naturalLeftOuterJoin(String, Object...)
      */
     @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
-     * <code>NATURAL RIGHT OUTER JOIN</code> a table and proceed to the next
-     * step
+     * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalRightOuterJoin(TableLike)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
+     *
+     * @see Table#naturalRightOuterJoin(TableLike)
      */
     @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalRightOuterJoin(TableLike<?> table);
 
     /**
-     * <code>NATURAL RIGHT OUTER JOIN</code> a table and proceed to the next
-     * step
+     * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalRightOuterJoin(String)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
@@ -391,14 +463,16 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see Factory#table(String)
+     * @see Table#naturalRightOuterJoin(String)
      */
     @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql);
 
     /**
-     * <code>NATURAL RIGHT OUTER JOIN</code> a table and proceed to the next
-     * step
+     * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
+     * the last table added to the <code>FROM</code> clause using
+     * {@link Table#naturalRightOuterJoin(String, Object...)}
      * <p>
      * Natural joins are supported by most RDBMS. If they aren't supported, they
      * are simulated if jOOQ has enough information.
@@ -408,7 +482,8 @@ public interface SelectJoinStep extends SelectWhereStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see Factory#table(String, Object...)
+     * @see Table#naturalRightOuterJoin(String, Object...)
      */
     @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql, Object... bindings);

@@ -90,7 +90,6 @@ implements
     private int                         forUpdateWait;
     private boolean                     forShare;
     private final TableList             from;
-    private final JoinList              join;
     private final ConditionProviderImpl condition;
     private final ConditionProviderImpl connectBy;
     private boolean                     connectByNoCycle;
@@ -116,7 +115,6 @@ implements
         this.distinct = distinct;
         this.select = new SelectFieldList();
         this.from = new TableList();
-        this.join = new JoinList();
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
         this.connectByStartWith = new ConditionProviderImpl();
@@ -136,10 +134,10 @@ implements
     @Override
     public final List<Attachable> getAttachables() {
         if (limit.isApplicable()) {
-            return getAttachables(select, from, join, condition, groupBy, having, orderBy, limit, forUpdateOf, forUpdateOfTables);
+            return getAttachables(select, from, condition, groupBy, having, orderBy, limit, forUpdateOf, forUpdateOfTables);
         }
         else {
-            return getAttachables(select, from, join, condition, groupBy, having, orderBy, forUpdateOf, forUpdateOfTables);
+            return getAttachables(select, from, condition, groupBy, having, orderBy, forUpdateOf, forUpdateOfTables);
         }
     }
 
@@ -150,7 +148,6 @@ implements
                .declareFields(false)
                .declareTables(true)
                .bind((QueryPart) getFrom())
-               .bind((QueryPart) getJoin())
                .declareTables(false)
                .bind(getWhere())
                .bind(getConnectBy())
@@ -466,10 +463,6 @@ implements
             context.sql(" from ").sql(getFrom());
         }
 
-        if (!getJoin().isEmpty()) {
-            context.sql(" ").sql(getJoin());
-        }
-
         context.declareTables(false);
 
         // WHERE clause
@@ -613,12 +606,6 @@ implements
                         result.add(field);
                     }
                 }
-
-                for (Join j : getJoin()) {
-                    for (Field<?> field : j.getTable().asTable().getFields()) {
-                        result.add(field);
-                    }
-                }
             }
 
             // The default is SELECT 1, when projections and table sources are
@@ -640,12 +627,6 @@ implements
             }
         }
 
-        for (Join j : getJoin()) {
-            if (!knownTable(j.getTable())) {
-                return false;
-            }
-        }
-
         return true;
     }
 
@@ -660,22 +641,12 @@ implements
         // - on a single table
         // - a select *
 
-        if (getTables().size() == 1 && getSelect0().isEmpty()) {
-            return (Class<? extends R>) getTables().get(0).asTable().getRecordType();
+        if (getFrom().size() == 1 && getSelect0().isEmpty()) {
+            return (Class<? extends R>) getFrom().get(0).asTable().getRecordType();
         }
         else {
             return (Class<? extends R>) RecordImpl.class;
         }
-    }
-
-    final TableList getTables() {
-        TableList result = new TableList(getFrom());
-
-        for (Join j : getJoin()) {
-            result.add(j.getTable().asTable());
-        }
-
-        return result;
     }
 
     final TableList getFrom() {
@@ -684,10 +655,6 @@ implements
 
     final FieldList getGroupBy() {
         return groupBy;
-    }
-
-    final JoinList getJoin() {
-        return join;
     }
 
     final Limit getLimit() {

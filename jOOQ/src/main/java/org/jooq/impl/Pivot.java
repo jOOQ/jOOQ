@@ -35,19 +35,25 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.vals;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.PivotForStep;
 import org.jooq.PivotInStep;
-import org.jooq.QueryPartInternal;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 
@@ -93,33 +99,201 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
+        context.sql(pivot(context));
+    }
 
-        // Bind variables are not allowed inside of PIVOT clause
-        boolean inline = context.inline();
-        boolean declare = context.declareFields();
+    private Table<?> pivot(Configuration configuration) {
+        switch (configuration.getDialect()) {
 
-        context.sql(table)
-               .sql(" pivot(")
-               .inline(true)
-               .declareFields(true)
-               .sql(aggregateFunctions)
-               .sql(" for ")
-               .literal(on.getName())
-               .sql(" in (")
-               .sql(in)
-               .declareFields(declare)
-               .inline(inline)
-               .sql("))");
+            // Oracle has native support for the PIVOT clause
+            case ORACLE: {
+                return new OraclePivotTable();
+            }
+
+            // Some other dialects can simulate it. This implementation is
+            // EXPERIMENTAL and not officially supported
+            default: {
+                return new DefaultPivotTable();
+            }
+        }
+    }
+
+    /**
+     * A simulation of Oracle's <code>PIVOT</code> table
+     */
+    private class DefaultPivotTable extends DialectPivotTable {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -5930286639571867314L;
+
+        @Override
+        public void toSQL(RenderContext context) {
+            context.declareTables(true)
+                   .sql(select(context))
+                   .declareTables(false);
+        }
+
+        @Override
+        public void bind(BindContext context) throws DataAccessException {
+            context.declareTables(true)
+                   .bind(select(context))
+                   .declareTables(false);
+        }
+
+        private Table<Record> select(Context<?> context) {
+            FieldList groupingFields = new FieldList();
+            FieldList aliasedGroupingFields = new FieldList();
+            FieldList aggregatedFields = new FieldList();
+
+            Table<?> pivot = table.as("pivot_outer");
+
+            // Clearly, the API should be improved to make this more object-
+            // oriented...
+
+            // This loop finds all fields that are used in aggregate
+            // functions. They're excluded from the GROUP BY clause
+            for (Field<?> field : aggregateFunctions) {
+                if (field instanceof AggregateFunctionImpl) {
+                    for (QueryPart argument : ((AggregateFunctionImpl<?>) field).getArguments()) {
+                        if (argument instanceof Field) {
+                            aggregatedFields.add((Field<?>) argument);
+                        }
+                    }
+                }
+            }
+
+            // This loop finds all fields qualify for GROUP BY clauses
+            for (Field<?> field : table.getFields()) {
+                if (!aggregatedFields.contains(field)) {
+                    if (!on.equals(field)) {
+                        aliasedGroupingFields.add(pivot.getField(field));
+                        groupingFields.add(field);
+                    }
+                }
+            }
+
+            // The product {aggregateFunctions} x {in}
+            FieldList aggregationSelects = new FieldList();
+            for (Field<?> inField : in) {
+                for (Field<?> aggregateFunction : aggregateFunctions) {
+                    Condition join = trueCondition();
+
+                    for (Field<?> field : groupingFields) {
+                        join = join.and(join(pivot, field));
+                    }
+
+                    Select<?> aggregateSelect = create(context)
+                        .select(aggregateFunction)
+                        .from(table)
+                        .where(on.equal((Field<T>) inField))
+                        .and(join);
+
+                    aggregationSelects.add(aggregateSelect.asField(inField.getName() + "_" + aggregateFunction.getName()));
+                }
+            }
+
+            // This is the complete select
+            Table<Record> select =
+            create(context).select(aliasedGroupingFields)
+                           .select(aggregationSelects)
+                           .from(pivot)
+                           .where(pivot.getField(on).in(in.toArray(new Field[0])))
+                           .groupBy(aliasedGroupingFields)
+                           .asTable();
+            return select;
+        }
+    }
+
+    /**
+     * The Oracle-specific <code>PIVOT</code> implementation
+     */
+    private class OraclePivotTable extends DialectPivotTable {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -3451610306872726958L;
+
+        @Override
+        public void toSQL(RenderContext context) {
+
+            // Bind variables are not allowed inside of PIVOT clause
+            boolean inline = context.inline();
+            boolean declare = context.declareFields();
+
+            context.sql(table)
+                   .sql(" pivot(")
+                   .inline(true)
+                   .declareFields(true)
+                   .sql(aggregateFunctions)
+                   .sql(" for ")
+                   .literal(on.getName())
+                   .sql(" in (")
+                   .sql(in)
+                   .declareFields(declare)
+                   .inline(inline)
+                   .sql("))");
+        }
+
+        @Override
+        public void bind(BindContext context) throws DataAccessException {
+            context.bind(table);
+        }
+    }
+
+    /**
+     * A base class for dialect-specific implementations of the pivot table
+     */
+    private abstract class DialectPivotTable extends AbstractTable<Record> {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 2662639259338694177L;
+
+        DialectPivotTable() {
+            super("pivot");
+        }
+
+        @Override
+        public Class<? extends Record> getRecordType() {
+            return RecordImpl.class;
+        }
+
+        @Override
+        public Table<Record> as(String as) {
+            return new TableAlias<Record>(this, as);
+        }
+
+        @Override
+        protected FieldList getFieldList() {
+            return Pivot.this.getFieldList();
+        }
+
+        @Override
+        protected List<Attachable> getAttachables0() {
+            return Collections.emptyList();
+        }
+    }
+
+
+    /**
+     * Extracted method for type-safety
+     */
+    private <Z> Condition join(Table<?> pivot, Field<Z> field) {
+        return field.equal(pivot.getField(field));
     }
 
     @Override
     public final boolean declaresTables() {
-        return table.internalAPI(QueryPartInternal.class).declaresTables();
+        return true;
     }
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.bind(table);
+        context.bind(pivot(context));
     }
 
     @Override

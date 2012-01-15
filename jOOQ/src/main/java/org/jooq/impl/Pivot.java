@@ -181,7 +181,7 @@ implements
                     Condition join = trueCondition();
 
                     for (Field<?> field : groupingFields) {
-                        join = join.and(join(pivot, field));
+                        join = join.and(condition(pivot, field));
                     }
 
                     Select<?> aggregateSelect = create(context)
@@ -221,9 +221,12 @@ implements
 
             // Bind variables are not allowed inside of PIVOT clause
             boolean inline = context.inline();
-            boolean declare = context.declareFields();
+            boolean declareFields = context.declareFields();
+            boolean declareTables = context.declareFields();
 
-            context.sql(table)
+            context.declareTables(true)
+                   .sql(table)
+                   .declareTables(declareTables)
                    .sql(" pivot(")
                    .inline(true)
                    .declareFields(true)
@@ -232,7 +235,7 @@ implements
                    .literal(on.getName())
                    .sql(" in (")
                    .sql(in)
-                   .declareFields(declare)
+                   .declareFields(declareFields)
                    .inline(inline)
                    .sql("))");
         }
@@ -282,7 +285,7 @@ implements
     /**
      * Extracted method for type-safety
      */
-    private <Z> Condition join(Table<?> pivot, Field<Z> field) {
+    private <Z> Condition condition(Table<?> pivot, Field<Z> field) {
         return field.equal(pivot.getField(field));
     }
 

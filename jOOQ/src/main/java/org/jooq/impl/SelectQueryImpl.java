@@ -46,6 +46,7 @@ import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
+import org.jooq.Table;
 import org.jooq.TableLike;
 
 /**
@@ -131,22 +132,86 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
 
     @Override
     public final void addJoin(TableLike<?> table, Condition... conditions) {
-        getJoin().add(new Join(table, JoinType.JOIN, conditions));
+        addJoin(table, JoinType.JOIN, conditions);
     }
 
     @Override
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
-        getJoin().add(new Join(table, type, conditions));
+        int index = getFrom().size() - 1;
+        Table<?> joined = null;
+
+        switch (type) {
+            case JOIN:
+                joined = getFrom().get(index).join(table).on(conditions);
+                break;
+            case LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).leftOuterJoin(table).on(conditions);
+                break;
+            case RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).rightOuterJoin(table).on(conditions);
+                break;
+            case FULL_OUTER_JOIN:
+                joined = getFrom().get(index).fullOuterJoin(table).on(conditions);
+                break;
+
+            // These join types don't take any ON clause. Ignore conditions.
+            case CROSS_JOIN:
+                joined = getFrom().get(index).crossJoin(table);
+                break;
+            case NATURAL_JOIN:
+                joined = getFrom().get(index).naturalJoin(table);
+                break;
+            case NATURAL_LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalLeftOuterJoin(table);
+                break;
+            case NATURAL_RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalRightOuterJoin(table);
+                break;
+        }
+
+        getFrom().set(index, joined);
     }
 
     @Override
     public final void addJoinUsing(TableLike<?> table, Collection<? extends Field<?>> fields) {
-        getJoin().add(new Join(table, JoinType.JOIN, fields));
+        addJoinUsing(table, JoinType.JOIN, fields);
     }
 
     @Override
     public final void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields) {
-        getJoin().add(new Join(table, type, fields));
+        int index = getFrom().size() - 1;
+        Table<?> joined = null;
+
+        switch (type) {
+            case JOIN:
+                joined = getFrom().get(index).join(table).using(fields);
+                break;
+            case LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).leftOuterJoin(table).using(fields);
+                break;
+            case RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).rightOuterJoin(table).using(fields);
+                break;
+            case FULL_OUTER_JOIN:
+                joined = getFrom().get(index).fullOuterJoin(table).using(fields);
+                break;
+
+            // These join types don't take any USING clause. Ignore fields
+            case CROSS_JOIN:
+                joined = getFrom().get(index).crossJoin(table);
+                break;
+            case NATURAL_JOIN:
+                joined = getFrom().get(index).naturalJoin(table);
+                break;
+            case NATURAL_LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalLeftOuterJoin(table);
+                break;
+            case NATURAL_RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalRightOuterJoin(table);
+                break;
+        }
+
+        getFrom().set(index, joined);
     }
 
     @Override

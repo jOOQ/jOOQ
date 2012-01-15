@@ -47,6 +47,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
@@ -55,6 +56,7 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnConditionStep;
 import org.jooq.TableOnStep;
@@ -203,6 +205,62 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     public final JoinTable on(String sql, Object... bindings) {
         and(sql, bindings);
         return this;
+    }
+
+    @Override
+    public final JoinTable onKey() throws DataAccessException {
+        List<?> leftToRight = lhs.getReferencesTo(rhs);
+        List<?> rightToLeft = rhs.getReferencesTo(lhs);
+
+        if (leftToRight.size() == 1 && rightToLeft.size() == 0) {
+            return onKey((ForeignKey<?, ?>) leftToRight.get(0));
+        }
+        else if (rightToLeft.size() == 1 && leftToRight.size() == 0) {
+            return onKey((ForeignKey<?, ?>) rightToLeft.get(0));
+        }
+
+        throw onKeyException();
+    }
+
+    @Override
+    public final JoinTable onKey(TableField<?, ?>... keyFields) throws DataAccessException {
+        if (keyFields != null && keyFields.length > 0) {
+            if (keyFields[0].getTable().equals(lhs)) {
+                for (ForeignKey<?, ?> key : lhs.getReferences()) {
+                    if (key.getFields().containsAll(asList(keyFields))) {
+                        return onKey(key);
+                    }
+                }
+            }
+            else if (keyFields[0].getTable().equals(rhs)) {
+                for (ForeignKey<?, ?> key : rhs.getReferences()) {
+                    if (key.getFields().containsAll(asList(keyFields))) {
+                        return onKey(key);
+                    }
+                }
+            }
+        }
+
+        throw onKeyException();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final JoinTable onKey(ForeignKey<?, ?> key) {
+        JoinTable result = this;
+
+        TableField<?, ?>[] references = key.getFieldsArray();
+        TableField<?, ?>[] referenced = key.getKey().getFieldsArray();
+
+        for (int i = 0; i < references.length; i++) {
+            result.and(((Field<Void>) references[i]).equal((Field<Void>) referenced[i]));
+        }
+
+        return result;
+    }
+
+    private final DataAccessException onKeyException() {
+        return new DataAccessException("Key ambiguous between tables " + lhs + " and " + rhs);
     }
 
     @Override

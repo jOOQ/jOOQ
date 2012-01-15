@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.SQLITE;
 
 import java.util.Collection;
 
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 
 /**
@@ -106,4 +107,53 @@ public interface TableOnStep {
      */
     @Support({ DERBY, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE })
     Table<Record> using(Collection<? extends Field<?>> fields);
+
+    /**
+     * Join the table on a non-ambiguous foreign key relationship between the
+     * two joined tables.
+     * <p>
+     * See {@link #onKey(Key)} for examples.
+     *
+     * @see #onKey(Key)
+     * @throws DataAccessException If there is no non-ambiguous key definition
+     *             known to jOOQ
+     */
+    @Support
+    TableOnConditionStep onKey() throws DataAccessException;
+
+    /**
+     * Join the table on a non-ambiguous foreign key relationship between the
+     * two joined tables.
+     * <p>
+     * See {@link #onKey(Key)} for examples.
+     *
+     * @see #onKey(Key)
+     * @throws DataAccessException If there is no non-ambiguous key definition
+     *             known to jOOQ
+     */
+    @Support
+    TableOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+
+    /**
+     * Join the table on a non-ambiguous foreign key relationship between the
+     * two joined tables.
+     * <p>
+     * An example: <code><pre>
+     * // There is a single foreign key relationship between A and B and it can
+     * // be obtained by A.getReferencesTo(B) or vice versa. The order of A and
+     * // B is not important
+     * A.join(B).onKey();
+     *
+     * // There are several foreign key relationships between A and B. In order
+     * // to disambiguate, you can provide a formal org.jooq.Key reference from
+     * // the generated Keys class
+     * A.join(B).onKey(key);
+     *
+     * // There are several foreign key relationships between A and B. In order
+     * // to disambiguate, you can provide any non-ambiguous foreign key column
+     * A.join(B).onKey(B.A_ID);
+     * </pre></code>
+     */
+    @Support
+    TableOnConditionStep onKey(ForeignKey<?, ?> key);
 }

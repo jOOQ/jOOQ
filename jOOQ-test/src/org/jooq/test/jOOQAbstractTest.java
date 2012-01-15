@@ -234,6 +234,7 @@ public abstract class jOOQAbstractTest<
 
     protected static final List<Short>     BOOK_IDS_SHORT     = Arrays.asList((short) 1, (short) 2, (short) 3, (short) 4);
     protected static final List<Integer>   BOOK_IDS           = Arrays.asList(1, 2, 3, 4);
+    protected static final List<Integer>   BOOK_AUTHOR_IDS    = Arrays.asList(1, 1, 2, 2);
     protected static final List<String>    BOOK_TITLES        = Arrays.asList("1984", "Animal Farm", "O Alquimista", "Brida");
     protected static final List<String>    BOOK_FIRST_NAMES   = Arrays.asList("George", "George", "Paulo", "Paulo");
     protected static final List<String>    BOOK_LAST_NAMES    = Arrays.asList("Orwell", "Orwell", "Coelho", "Coelho");
@@ -5900,6 +5901,62 @@ public abstract class jOOQAbstractTest<
         assertNull(result.getValue(2, TAuthor_LAST_NAME()));
         assertEquals("Brida", result.getValue(3, TBook_TITLE()));
         assertNull(result.getValue(3, TAuthor_LAST_NAME()));
+    }
+
+    @Test
+    public void testJoinOnKey() throws Exception {
+        if (!supportsReferences()) {
+            log.info("SKIPPING", "JOIN ON KEY tests");
+            return;
+        }
+
+        try {
+            create().select(TAuthor_ID(), TBook_TITLE())
+                    .from(TAuthor().join(TBook()).onKey());
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        try {
+            create().select(TAuthor_ID(), TBook_TITLE())
+                    .from(TAuthor().join(TBook()).onKey(TBook_TITLE()));
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        try {
+            create().select(TAuthor_ID(), TBook_TITLE())
+                    .from(TAuthor().join(TBook()).onKey(TBook_AUTHOR_ID(), TBook_ID()));
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        // Test the Table API
+        // ------------------
+        Result<Record> result1 =
+        create().select(TAuthor_ID(), TBook_TITLE())
+                .from(TAuthor().join(TBook()).onKey(TBook_AUTHOR_ID()))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(4, result1.size());
+        assertEquals(BOOK_AUTHOR_IDS, result1.getValues(0));
+        assertEquals(BOOK_TITLES, result1.getValues(1));
+
+        Result<Record> result2 =
+        create().select(TAuthor_ID(), TBook_TITLE())
+                .from(TAuthor()
+                    .join(TBook())
+                    .onKey(TBook_AUTHOR_ID())
+                    .and(TBook_ID().in(1, 2)))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        // Test the Select API
+        // -------------------
+        assertEquals(2, result2.size());
+        assertEquals(BOOK_AUTHOR_IDS.subList(0, 2), result2.getValues(0));
+        assertEquals(BOOK_TITLES.subList(0, 2), result2.getValues(1));
     }
 
     @Test

@@ -129,6 +129,42 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
     @Support({ DERBY, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE })
     void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields);
 
+//    /**
+//     * Joins the existing table product to a new table using a foreign key
+//     *
+//     * @param table The joined table
+//     * @param type The type of join
+//     * @see Table#onKey(Key)
+//     * @throws DataAccessException If there is no non-ambiguous key definition
+//     *             known to jOOQ
+//     */
+//    @Support
+//    void addJoinOnKey(TableLike<?> table, JoinType type) throws DataAccessException;
+//
+//    /**
+//     * Joins the existing table product to a new table using a foreign key
+//     *
+//     * @param table The joined table
+//     * @param type The type of join
+//     * @param keyFields The foreign key fields
+//     * @see Table#onKey(Key)
+//     * @throws DataAccessException If there is no non-ambiguous key definition
+//     *             known to jOOQ
+//     */
+//    @Support
+//    void addJoinOnKey(TableLike<?> table, JoinType type, TableField<?, ?>... keyFields) throws DataAccessException;
+//
+//    /**
+//     * Joins the existing table product to a new table using a foreign key
+//     *
+//     * @param table The joined table
+//     * @param type The type of join
+//     * @param key The foreign key
+//     * @see Table#onKey(Key)
+//     */
+//    @Support
+//    void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key);
+
     /**
      * Adds grouping fields
      *

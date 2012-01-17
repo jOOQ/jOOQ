@@ -5985,18 +5985,71 @@ public abstract class jOOQAbstractTest<
             "Ex Libris", "Orell Füssli", "Orell Füssli",
             "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result4.getValues(1));
 
-        // Test inverse join relationship [#671] TODO
-        // ------------------------------
-//        Result<Record> result5 =
-//        create().select(TBook_TITLE(), TBookStore_NAME())
-//                .from(TBook())
-//                .join(TBookToBookStore()
-//                    .join(TBookStore()).onKey())
-//                .onKey()
-//                .orderBy(TBook_ID(), TBookStore_NAME())
-//                .fetch();
-//
-//        assertEquals(result4, result5);
+        // [#671] Test inverse join relationship
+        // -------------------------------------
+        Result<Record> result5 =
+        create().select(TBook_ID(), TBookStore_NAME())
+                .from(TBook())
+                .join(TBookToBookStore()
+                    .join(TBookStore()).onKey())
+                .onKey()
+                .orderBy(TBook_ID(), TBookStore_NAME())
+                .fetch();
+
+        assertEquals(result4, result5);
+    }
+
+    @Test
+    public void testInverseAndNestedJoin() throws Exception {
+
+        // Testing joining of nested joins
+        // -------------------------------
+        Result<Record> result1 = create()
+            .select(
+                TAuthor_ID(),
+                TBook_ID(),
+                TBookStore_NAME())
+            .from(TAuthor()
+                .join(TBook())
+                .on(TAuthor_ID().equal(TBook_AUTHOR_ID())))
+            .join(TBookToBookStore()
+                .join(TBookStore())
+                .on(TBookToBookStore_BOOK_STORE_NAME().equal(TBookStore_NAME())))
+            .on(TBook_ID().equal(TBookToBookStore_BOOK_ID()))
+            .orderBy(TBook_ID(), TBookStore_NAME())
+            .fetch();
+
+        assertEquals(6, result1.size());
+        assertEquals(asList(1, 1, 1, 2, 2, 2), result1.getValues(0));
+        assertEquals(asList(1, 1, 2, 3, 3, 3), result1.getValues(1));
+        assertEquals(asList(
+            "Ex Libris", "Orell Füssli", "Orell Füssli",
+            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result1.getValues(2));
+
+        // Testing joining of cross products
+        Result<Record> result2 = create()
+            .select(
+                TAuthor_ID(),
+                TBook_ID(),
+                TBookStore_NAME())
+            .from(TAuthor()
+                        .join(TBook())
+                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID())),
+                  TBookToBookStore()
+                        .join(TBookStore())
+                        .on(TBookToBookStore_BOOK_STORE_NAME().equal(TBookStore_NAME())))
+            .where(TBook_ID().equal(TBookToBookStore_BOOK_ID()))
+            .orderBy(TBook_ID(), TBookStore_NAME())
+            .fetch();
+
+        assertEquals(6, result2.size());
+        assertEquals(asList(1, 1, 1, 2, 2, 2), result2.getValues(0));
+        assertEquals(asList(1, 1, 2, 3, 3, 3), result2.getValues(1));
+        assertEquals(asList(
+            "Ex Libris", "Orell Füssli", "Orell Füssli",
+            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result2.getValues(2));
+
+        assertEquals(result1, result2);
     }
 
     @Test

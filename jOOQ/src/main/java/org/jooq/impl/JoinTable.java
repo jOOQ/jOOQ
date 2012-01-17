@@ -114,7 +114,12 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
                .sql(" ")
                .sql(getType(context).toSQL())
                .sql(" ")
-               .sql(rhs);
+
+               // [#671] Some databases formally require nested JOINS to be
+               // wrapped in parentheses (e.g. MySQL)
+               .sql(rhs instanceof JoinTable ? "(" : "")
+               .sql(rhs)
+               .sql(rhs instanceof JoinTable ? ")" : "");
 
         switch (getType(context)) {
 
@@ -129,7 +134,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
             // Regular JOINs
             default: {
-                toSQL0(context);
+                toSQLJoinCondition(context);
                 break;
             }
         }
@@ -144,7 +149,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
         }
     }
 
-    private void toSQL0(RenderContext context) {
+    private void toSQLJoinCondition(RenderContext context) {
         if (!using.isEmpty()) {
             context.sql(" using (");
             Util.toSQLNames(context, using);
@@ -169,7 +174,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
     @Override
     public final Table<Record> as(String alias) {
-        return new TableAlias<Record>(this, alias);
+        return new TableAlias<Record>(this, alias, true);
     }
 
     @Override

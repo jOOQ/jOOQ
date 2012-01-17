@@ -40,6 +40,7 @@ import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -95,6 +96,17 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     // ------------------------------------------------------------------------
     // Table API
     // ------------------------------------------------------------------------
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final List<ForeignKey<Record, ?>> getReferences() {
+        List<ForeignKey<?, ?>> result = new ArrayList<ForeignKey<?, ?>>();
+
+        result.addAll(lhs.getReferences());
+        result.addAll(rhs.getReferences());
+
+        return (List) result;
+    }
 
     @Override
     public final void toSQL(RenderContext context) {

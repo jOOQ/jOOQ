@@ -5952,11 +5952,51 @@ public abstract class jOOQAbstractTest<
                 .orderBy(TBook_ID())
                 .fetch();
 
-        // Test the Select API
-        // -------------------
         assertEquals(2, result2.size());
         assertEquals(BOOK_AUTHOR_IDS.subList(0, 2), result2.getValues(0));
         assertEquals(BOOK_TITLES.subList(0, 2), result2.getValues(1));
+
+        // Test the Select API
+        // -------------------
+        Result<Record> result3 =
+        create().select(TAuthor_ID(), TBook_TITLE())
+                .from(TAuthor())
+                .join(TBook()).onKey(TBook_AUTHOR_ID())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(4, result3.size());
+        assertEquals(BOOK_AUTHOR_IDS, result3.getValues(0));
+        assertEquals(BOOK_TITLES, result3.getValues(1));
+
+        // Test using unambiguous keys
+        // ---------------------------
+        Result<Record> result4 =
+        create().select(TBook_ID(), TBookStore_NAME())
+                .from(TBook())
+                .join(TBookToBookStore()).onKey()
+                .join(TBookStore()).onKey()
+                .orderBy(TBook_ID(), TBookStore_NAME())
+                .fetch();
+
+        assertEquals(6, result4.size());
+        assertEquals(asList(1, 1, 2, 3, 3, 3), result4.getValues(0));
+        assertEquals(asList(
+            "Ex Libris", "Orell Füssli", "Orell Füssli",
+            "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result4.getValues(1));
+
+        // Test inverse join relationship [#671] TODO
+        // ------------------------------
+//        Result<Record> result5 =
+//        create().select(TBook_TITLE(), TBookStore_NAME())
+//                .from(TBook())
+//                .join(TBookToBookStore()
+//                    .join(TBookStore()).onKey())
+//                .onKey()
+//                .orderBy(TBook_ID(), TBookStore_NAME())
+//                .fetch();
+//
+//        assertEquals(result4, result5);
     }
 
     @Test

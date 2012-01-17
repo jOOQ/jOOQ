@@ -46,6 +46,7 @@ import java.util.Collection;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
@@ -62,7 +63,9 @@ import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SortField;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -509,6 +512,34 @@ class SelectImpl extends AbstractDelegatingSelect<Record> implements
     @Override
     public final SelectImpl on(String sql, Object... bindings) {
         return on(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl onKey() throws DataAccessException {
+        conditionStep = ConditionStep.ON;
+        getQuery().addJoinOnKey(joinTable, joinType);
+        joinTable = null;
+        joinType = null;
+        return this;
+    }
+
+    @Override
+    public final SelectImpl onKey(TableField<?, ?>... keyFields) throws DataAccessException {
+        conditionStep = ConditionStep.ON;
+        getQuery().addJoinOnKey(joinTable, joinType, keyFields);
+        joinTable = null;
+        joinType = null;
+        return this;
+    }
+
+    @Override
+    public final SelectImpl onKey(ForeignKey<?, ?> key) {
+        conditionStep = ConditionStep.ON;
+        getQuery().addJoinOnKey(joinTable, joinType, key);
+        joinTable = null;
+        joinType = null;
+        return this;
+
     }
 
     @Override

@@ -42,12 +42,15 @@ import java.util.Collection;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -137,6 +140,8 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
 
     @Override
     public final void addJoin(TableLike<?> table, JoinType type, Condition... conditions) {
+        // TODO: This and similar methods should be refactored, patterns extracted...
+
         int index = getFrom().size() - 1;
         Table<?> joined = null;
 
@@ -173,12 +178,131 @@ class SelectQueryImpl extends AbstractSubSelect<Record> implements SelectQuery {
     }
 
     @Override
+    public final void addJoinOnKey(TableLike<?> table, JoinType type) throws DataAccessException {
+        // TODO: This and similar methods should be refactored, patterns extracted...
+
+        int index = getFrom().size() - 1;
+        Table<?> joined = null;
+
+        switch (type) {
+            case JOIN:
+                joined = getFrom().get(index).join(table).onKey();
+                break;
+            case LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).leftOuterJoin(table).onKey();
+                break;
+            case RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).rightOuterJoin(table).onKey();
+                break;
+            case FULL_OUTER_JOIN:
+                joined = getFrom().get(index).fullOuterJoin(table).onKey();
+                break;
+
+            // These join types don't take any ON clause. Ignore conditions.
+            case CROSS_JOIN:
+                joined = getFrom().get(index).crossJoin(table);
+                break;
+            case NATURAL_JOIN:
+                joined = getFrom().get(index).naturalJoin(table);
+                break;
+            case NATURAL_LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalLeftOuterJoin(table);
+                break;
+            case NATURAL_RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalRightOuterJoin(table);
+                break;
+        }
+
+        getFrom().set(index, joined);
+    }
+
+    @Override
+    public final void addJoinOnKey(TableLike<?> table, JoinType type, TableField<?, ?>... keyFields) throws DataAccessException {
+        // TODO: This and similar methods should be refactored, patterns extracted...
+
+        int index = getFrom().size() - 1;
+        Table<?> joined = null;
+
+        switch (type) {
+            case JOIN:
+                joined = getFrom().get(index).join(table).onKey(keyFields);
+                break;
+            case LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).leftOuterJoin(table).onKey(keyFields);
+                break;
+            case RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).rightOuterJoin(table).onKey(keyFields);
+                break;
+            case FULL_OUTER_JOIN:
+                joined = getFrom().get(index).fullOuterJoin(table).onKey(keyFields);
+                break;
+
+            // These join types don't take any ON clause. Ignore conditions.
+            case CROSS_JOIN:
+                joined = getFrom().get(index).crossJoin(table);
+                break;
+            case NATURAL_JOIN:
+                joined = getFrom().get(index).naturalJoin(table);
+                break;
+            case NATURAL_LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalLeftOuterJoin(table);
+                break;
+            case NATURAL_RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalRightOuterJoin(table);
+                break;
+        }
+
+        getFrom().set(index, joined);
+    }
+
+    @Override
+    public final void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key) {
+        // TODO: This and similar methods should be refactored, patterns extracted...
+
+        int index = getFrom().size() - 1;
+        Table<?> joined = null;
+
+        switch (type) {
+            case JOIN:
+                joined = getFrom().get(index).join(table).onKey(key);
+                break;
+            case LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).leftOuterJoin(table).onKey(key);
+                break;
+            case RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).rightOuterJoin(table).onKey(key);
+                break;
+            case FULL_OUTER_JOIN:
+                joined = getFrom().get(index).fullOuterJoin(table).onKey(key);
+                break;
+
+            // These join types don't take any ON clause. Ignore conditions.
+            case CROSS_JOIN:
+                joined = getFrom().get(index).crossJoin(table);
+                break;
+            case NATURAL_JOIN:
+                joined = getFrom().get(index).naturalJoin(table);
+                break;
+            case NATURAL_LEFT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalLeftOuterJoin(table);
+                break;
+            case NATURAL_RIGHT_OUTER_JOIN:
+                joined = getFrom().get(index).naturalRightOuterJoin(table);
+                break;
+        }
+
+        getFrom().set(index, joined);
+    }
+
+    @Override
     public final void addJoinUsing(TableLike<?> table, Collection<? extends Field<?>> fields) {
         addJoinUsing(table, JoinType.JOIN, fields);
     }
 
     @Override
     public final void addJoinUsing(TableLike<?> table, JoinType type, Collection<? extends Field<?>> fields) {
+        // TODO: This and similar methods should be refactored, patterns extracted...
+
         int index = getFrom().size() - 1;
         Table<?> joined = null;
 

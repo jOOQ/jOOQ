@@ -35,14 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
@@ -168,7 +160,7 @@ public interface SelectOnStep {
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
      */
-    @Support({ DERBY, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE })
+    @Support
     SelectJoinStep using(Field<?>... fields);
 
     /**
@@ -178,6 +170,6 @@ public interface SelectOnStep {
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
      */
-    @Support({ DERBY, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE })
+    @Support
     SelectJoinStep using(Collection<? extends Field<?>> fields);
 }

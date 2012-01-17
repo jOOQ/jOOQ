@@ -36,6 +36,19 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.JoinType.CROSS_JOIN;
+import static org.jooq.JoinType.JOIN;
+import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.NATURAL_JOIN;
+import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
+import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
+import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
@@ -54,7 +67,6 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -112,7 +124,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     public final void toSQL(RenderContext context) {
         context.sql(lhs)
                .sql(" ")
-               .sql(getType(context).toSQL())
+               .sql(translateType(context).toSQL())
                .sql(" ")
 
                // [#671] Some databases formally require nested JOINS to be
@@ -121,67 +133,99 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
                .sql(rhs)
                .sql(rhs instanceof JoinTable ? ")" : "");
 
-        switch (getType(context)) {
-
-            // CROSS JOIN does not have any additional clauses
-            case CROSS_JOIN:
-
-            // NATURAL JOIN does not have any additional clauses
-            case NATURAL_JOIN:
-            case NATURAL_LEFT_OUTER_JOIN:
-            case NATURAL_RIGHT_OUTER_JOIN:
-                break;
-
-            // Regular JOINs
-            default: {
-                toSQLJoinCondition(context);
-                break;
-            }
+        // CROSS JOIN and NATURAL JOIN do not have any condition clauses
+        if (!asList(CROSS_JOIN,
+                    NATURAL_JOIN,
+                    NATURAL_LEFT_OUTER_JOIN,
+                    NATURAL_RIGHT_OUTER_JOIN).contains(translateType(context))) {
+            toSQLJoinCondition(context);
         }
     }
 
-    final JoinType getType(RenderContext context) {
-        if (context.getDialect() == SQLDialect.ASE && type == JoinType.CROSS_JOIN) {
-            return JoinType.JOIN;
+    /**
+     * Translate the join type for SQL rendering
+     */
+    final JoinType translateType(RenderContext context) {
+        if (simulateCrossJoin(context)) {
+            return JOIN;
+        }
+        else if (simulateNaturalJoin(context)) {
+            return JOIN;
+        }
+        else if (simulateNaturalLeftOuterJoin(context)) {
+            return LEFT_OUTER_JOIN;
+        }
+        else if (simulateNaturalRightOuterJoin(context)) {
+            return RIGHT_OUTER_JOIN;
         }
         else {
             return type;
         }
     }
 
-    private void toSQLJoinCondition(RenderContext context) {
+    private final boolean simulateCrossJoin(RenderContext context) {
+        return type == CROSS_JOIN && context.getDialect() == ASE;
+    }
+
+    private final boolean simulateNaturalJoin(RenderContext context) {
+        return type == NATURAL_JOIN && asList(ASE, DB2, INGRES, SQLSERVER).contains(context.getDialect());
+    }
+
+    private final boolean simulateNaturalLeftOuterJoin(RenderContext context) {
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
+    }
+
+    private final boolean simulateNaturalRightOuterJoin(RenderContext context) {
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
+    }
+
+    private final void toSQLJoinCondition(RenderContext context) {
         if (!using.isEmpty()) {
 
-            switch (context.getDialect()) {
-                // [#582] Some dialects don't explicitly support a JOIN .. USING
-                // syntax. This can be simulated with JOIN .. ON
-                case ASE:
-                case DB2:
-                case H2:
-                case SQLSERVER:
-                case SYBASE: {
-                    context.sql(" on ");
-                    String glue = "";
+            // [#582] Some dialects don't explicitly support a JOIN .. USING
+            // syntax. This can be simulated with JOIN .. ON
+            if (asList(ASE, DB2, H2, SQLSERVER, SYBASE).contains(context.getDialect())) {
+                String glue = " on ";
+                for (Field<?> field : using) {
+                    context.sql(glue)
+                           .sql(lhs.getField(field))
+                           .sql(" = ")
+                           .sql(rhs.getField(field));
 
-                    for (Field<?> field : using) {
-                        context.sql(glue)
-                               .sql(lhs.getField(field))
-                               .sql(" = ")
-                               .sql(rhs.getField(field));
-
-                        glue = " and ";
-                    }
-
-                    break;
+                    glue = " and ";
                 }
+            }
 
-                default: {
-                    context.sql(" using (");
-                    Util.toSQLNames(context, using);
-                    context.sql(")");
+            // Native supporters of JOIN .. USING
+            else {
+                context.sql(" using (");
+                Util.toSQLNames(context, using);
+                context.sql(")");
+            }
+        }
+
+        // [#577] If any NATURAL JOIN syntax needs to be simulated, find out 
+        // common fields in lhs and rhs of the JOIN clause
+        else if (simulateNaturalJoin(context) ||
+                 simulateNaturalLeftOuterJoin(context) ||
+                 simulateNaturalRightOuterJoin(context)) {
+
+            String glue = " on ";
+            for (Field<?> field : lhs.getFields()) {
+                Field<?> other = rhs.getField(field);
+
+                if (other != null) {
+                    context.sql(glue)
+                           .sql(field)
+                           .sql(" = ")
+                           .sql(other);
+
+                    glue = " and ";
                 }
             }
         }
+
+        // Regular JOIN condition
         else {
             context.sql(" on ").sql(condition);
         }

@@ -5850,18 +5850,6 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testJoinUsing() throws Exception {
-        // TODO [#582] Simulate this
-
-        switch (getDialect()) {
-            case ASE:
-            case DB2:
-            case H2:
-            case SQLSERVER:
-            case SYBASE:
-                log.info("SKIPPING", "JOIN USING tests");
-                return;
-        }
-
         Result<Record> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TAuthor())

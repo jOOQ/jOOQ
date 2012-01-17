@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.SQLITE;
 
 import java.util.Collection;
 
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 
 /**
@@ -123,42 +124,42 @@ public interface SelectOnStep {
     @Support
     SelectOnConditionStep on(String sql, Object... bindings);
 
-//    /**
-//     * Join the previous table on a non-ambiguous foreign key relationship
-//     * between the two joined tables.
-//     * <p>
-//     * See {@link Table#onKey(Key)} for examples.
-//     *
-//     * @see Table#onKey(Key)
-//     * @throws DataAccessException If there is no non-ambiguous key definition
-//     *             known to jOOQ
-//     */
-//    @Support
-//    SelectOnConditionStep onKey() throws DataAccessException;
-//
-//    /**
-//     * Join the previous table on a non-ambiguous foreign key relationship
-//     * between the two joined tables.
-//     * <p>
-//     * See {@link Table#onKey(Key)} for examples.
-//     *
-//     * @see Table#onKey(Key)
-//     * @throws DataAccessException If there is no non-ambiguous key definition
-//     *             known to jOOQ
-//     */
-//    @Support
-//    SelectOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
-//
-//    /**
-//     * Join the table on a non-ambiguous foreign key relationship between the
-//     * two joined tables.
-//     * <p>
-//     * See {@link Table#onKey(Key)} for examples.
-//     *
-//     * @see Table#onKey(Key)
-//     */
-//    @Support
-//    SelectOnConditionStep onKey(ForeignKey<?, ?> key);
+    /**
+     * Join the previous table on a non-ambiguous foreign key relationship
+     * between the two joined tables.
+     * <p>
+     * See {@link Table#onKey(Key)} for examples.
+     *
+     * @see Table#onKey(Key)
+     * @throws DataAccessException If there is no non-ambiguous key definition
+     *             known to jOOQ
+     */
+    @Support
+    SelectJoinStep onKey() throws DataAccessException;
+
+    /**
+     * Join the previous table on a non-ambiguous foreign key relationship
+     * between the two joined tables.
+     * <p>
+     * See {@link Table#onKey(Key)} for examples.
+     *
+     * @see Table#onKey(Key)
+     * @throws DataAccessException If there is no non-ambiguous key definition
+     *             known to jOOQ
+     */
+    @Support
+    SelectJoinStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+
+    /**
+     * Join the table on a non-ambiguous foreign key relationship between the
+     * two joined tables.
+     * <p>
+     * See {@link Table#onKey(Key)} for examples.
+     *
+     * @see Table#onKey(Key)
+     */
+    @Support
+    SelectJoinStep onKey(ForeignKey<?, ?> key);
 
     /**
      * Join the previous table with the <code>USING(column [, column...])</code>

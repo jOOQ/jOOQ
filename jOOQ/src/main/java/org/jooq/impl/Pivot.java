@@ -301,7 +301,7 @@ implements
 
     @Override
     public final Table<Record> as(String alias) {
-        return new TableAlias<Record>(this, alias);
+        return new TableAlias<Record>(this, alias, true);
     }
 
     @Override

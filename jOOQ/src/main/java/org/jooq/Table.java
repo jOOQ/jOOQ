@@ -45,7 +45,6 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -326,15 +325,17 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      */
-    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     Table<Record> naturalJoin(TableLike<?> table);
 
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -343,13 +344,14 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String)
      */
-    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     Table<Record> naturalJoin(String sql);
 
     /**
      * <code>NATURAL JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -358,21 +360,23 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     Table<Record> naturalJoin(String sql, Object... bindings);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     Table<Record> naturalLeftOuterJoin(TableLike<?> table);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -381,13 +385,14 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     Table<Record> naturalLeftOuterJoin(String sql);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -396,21 +401,23 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -419,13 +426,14 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql);
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
      * <p>
-     * This is only possible where the underlying RDBMS supports it
+     * If this is not supported by your RDBMS, then jOOQ will try to simulate
+     * this behaviour using the information provided in this query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -434,6 +442,6 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 }

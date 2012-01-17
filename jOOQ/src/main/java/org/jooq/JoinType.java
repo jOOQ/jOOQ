@@ -36,14 +36,6 @@
 
 package org.jooq;
 
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SYBASE;
 
 /**
  * The type of join
@@ -85,19 +77,19 @@ public enum JoinType {
     /**
      * <code>NATURAL INNER JOIN</code> two tables
      */
-    @Support({DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE})
+    @Support
     NATURAL_JOIN("natural join"),
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> two tables
      */
-    @Support({DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE})
+    @Support
     NATURAL_LEFT_OUTER_JOIN("natural left outer join"),
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> two tables
      */
-    @Support({DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE})
+    @Support
     NATURAL_RIGHT_OUTER_JOIN("natural right outer join"),
 
     ;

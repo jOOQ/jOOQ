@@ -44,7 +44,6 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
@@ -345,7 +344,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      *
      * @see Table#naturalJoin(TableLike)
      */
-    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     SelectJoinStep naturalJoin(TableLike<?> table);
 
     /**
@@ -364,7 +363,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String)
      * @see Table#naturalJoin(String)
      */
-    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     SelectJoinStep naturalJoin(String sql);
 
     /**
@@ -383,7 +382,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      * @see Table#naturalJoin(String, Object...)
      */
-    @Support({ DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     SelectJoinStep naturalJoin(String sql, Object... bindings);
 
     /**
@@ -396,7 +395,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      *
      * @see Table#naturalLeftOuterJoin(TableLike)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     SelectJoinStep naturalLeftOuterJoin(TableLike<?> table);
 
     /**
@@ -415,7 +414,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String)
      * @see Table#naturalLeftOuterJoin(String)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     SelectJoinStep naturalLeftOuterJoin(String sql);
 
     /**
@@ -434,7 +433,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      * @see Table#naturalLeftOuterJoin(String, Object...)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support
     SelectJoinStep naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -447,7 +446,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      *
      * @see Table#naturalRightOuterJoin(TableLike)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -466,7 +465,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String)
      * @see Table#naturalRightOuterJoin(String)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql);
 
     /**
@@ -485,7 +484,7 @@ public interface SelectJoinStep extends SelectWhereStep {
      * @see Factory#table(String, Object...)
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
-    @Support({ DERBY, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep naturalRightOuterJoin(String sql, Object... bindings);
 
 }

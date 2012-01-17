@@ -5788,17 +5788,6 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testNaturalJoin() throws Exception {
-        // TODO [#577] Simulate this
-
-        switch (getDialect()) {
-            case ASE:
-            case DB2:
-            case INGRES:
-            case SQLSERVER:
-                log.info("SKIPPING", "NATURAL JOIN tests");
-                return;
-        }
-
         Result<Record> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
@@ -5814,38 +5803,28 @@ public abstract class jOOQAbstractTest<
         assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
         assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
 
-        switch (getDialect()) {
-            case H2:
-                log.info("SKIPPING", "NATURAL OUTER JOIN tests");
-                break;
+        // TODO [#574] allow for selecting all columns, including
+        // the ones making up the join condition!
+        result =
+        // create().select()
+        create().select(TAuthor_LAST_NAME(), TBook_TITLE())
+                .from(TBook())
+                .naturalLeftOuterJoin(TAuthor())
+                .orderBy(getDialect() == SQLDialect.ORACLE
+                    ? field("id")
+                    : TBook_ID())
+                .fetch();
 
-            default: {
+        assertEquals(4, result.size());
+        assertEquals("1984", result.getValue(0, TBook_TITLE()));
+        assertEquals("Orwell", result.getValue(0, TAuthor_LAST_NAME()));
+        assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
+        assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
 
-                // TODO [#574] allow for selecting all columns, including
-                // the ones making up the join condition!
-                result =
-                // create().select()
-                create().select(TAuthor_LAST_NAME(), TBook_TITLE())
-                        .from(TBook())
-                        .naturalLeftOuterJoin(TAuthor())
-                        .orderBy(getDialect() == SQLDialect.ORACLE
-                            ? field("id")
-                            : TBook_ID())
-                        .fetch();
-
-                assertEquals(4, result.size());
-                assertEquals("1984", result.getValue(0, TBook_TITLE()));
-                assertEquals("Orwell", result.getValue(0, TAuthor_LAST_NAME()));
-                assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
-                assertEquals("Coelho", result.getValue(1, TAuthor_LAST_NAME()));
-
-                assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
-                assertNull(result.getValue(2, TAuthor_LAST_NAME()));
-                assertEquals("Brida", result.getValue(3, TBook_TITLE()));
-                assertNull(result.getValue(3, TAuthor_LAST_NAME()));
-            }
-            break;
-        }
+        assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
+        assertNull(result.getValue(2, TAuthor_LAST_NAME()));
+        assertEquals("Brida", result.getValue(3, TBook_TITLE()));
+        assertNull(result.getValue(3, TAuthor_LAST_NAME()));
     }
 
     @Test

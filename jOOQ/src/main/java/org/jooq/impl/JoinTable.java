@@ -151,9 +151,36 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
     private void toSQLJoinCondition(RenderContext context) {
         if (!using.isEmpty()) {
-            context.sql(" using (");
-            Util.toSQLNames(context, using);
-            context.sql(")");
+
+            switch (context.getDialect()) {
+                // [#582] Some dialects don't explicitly support a JOIN .. USING
+                // syntax. This can be simulated with JOIN .. ON
+                case ASE:
+                case DB2:
+                case H2:
+                case SQLSERVER:
+                case SYBASE: {
+                    context.sql(" on ");
+                    String glue = "";
+
+                    for (Field<?> field : using) {
+                        context.sql(glue)
+                               .sql(lhs.getField(field))
+                               .sql(" = ")
+                               .sql(rhs.getField(field));
+
+                        glue = " and ";
+                    }
+
+                    break;
+                }
+
+                default: {
+                    context.sql(" using (");
+                    Util.toSQLNames(context, using);
+                    context.sql(")");
+                }
+            }
         }
         else {
             context.sql(" on ").sql(condition);

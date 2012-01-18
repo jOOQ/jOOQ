@@ -1,0 +1,214 @@
+QUERY ::= ( SELECT | 
+            RESULT_QUERY |
+            UPDATE |
+            INSERT |
+            DELETE |
+            MERGE |
+            TRUNCATE |
+            'query' SQL )
+
+RESULT_QUERY ::= ( SELECT |
+                   'resultQuery' SQL )
+
+RESULT ::=   ( 'fetch' | 'fetchMany' | 'fetchOne' ) SQL |
+             ( 'fetch' | 'fetchOne' ) TABLE CONDITION? |
+             ( 'fetchAny' TABLE ) |
+             ( 'fetch' 'JDBC ResultSet' ) |
+             RESULT_QUERY
+             ( 'fetch' |
+               'fetchMany' |
+               'fetchOne' |
+               'fetchAny' |
+               'fetchMaps' |
+               'fetchOneMap' |
+               'fetchMap' |
+               'fetchArrays' |
+               'fetchArray' |
+               'fetchOneArray' |
+               'fetchInto' |
+               'fetchLater' |
+               'execute' 'getResult' )
+
+CURSOR ::= ( RESULT_QUERY 'fetchLazy' )
+
+SELECT ::= ( ( 'select' | 'selectDistinct' ) FIELD* |
+               'selectOne' |
+               'selectZero' |
+               'selectCount' )
+             ( 'select' FIELD* )* 
+             ( 'hint' SQL )*
+             ( 'from' ( TABLE+ | SQL )
+               ( ( 'join' | 'leftOuterJoin' | 'rightOuterJoin' | 'fullOuterJoin' )
+                 ( TABLE | SQL ) 
+                 ( 'on' ( CONDITION+ | SQL ) MORE_CONDITIONS? |
+                   'using' FIELD+ ) |
+                 ( 'crossJoin' | 'naturalJoin' | 'naturalLeftOuterJoin' | 'naturalRightOuterJoin' )
+               ( TABLE | SQL ) )* )?
+             ( ( 'where' ( CONDITION+ | SQL ) | 
+                 ( 'whereExists' | 'whereNotExists' ) SELECT ) MORE_CONDITIONS? )?
+             ( ( 'connectBy' | 'connectByNoCycle' )
+               ( CONDITION | SQL )
+               ( 'and' ( CONDITION | SQL ) )* 
+               ( 'startWith' ( CONDITION | SQL ) )? )?
+             ( 'groupBy' GROUP_FIELD+ )?
+             ( 'having' ( CONDITION+ | SQL ) MORE_CONDITIONS? )?
+             ( 'orderBy' ( FIELD+ | SORT_FIELD+ | INT+ ) )?
+             ( ( 'limit' INT ( 'offset' INT | INT )? ) |
+               ( ( 'forUpdate' 
+                   ( 'of' ( FIELD+ | TABLE+ ) )? 
+                   ( 'wait' INT |
+                     'noWait' |
+                     'skipLocked' )? ) |
+                 'forShare' ) )?
+           ( ( 'union' | 'unionAll' | 'except' | 'intersect' ) SELECT )*
+
+UPDATE ::=  ( 'update' TABLE )
+            ( 'set' FIELD FIELD )+
+            ( ( 'where' ( CONDITION+ | SQL ) | 
+            ( 'whereExists' | 'whereNotExists' ) SELECT ) MORE_CONDITIONS? )?
+
+INSERT ::=  ( 'insertInto' )
+            ( SELECT | 
+              TABLE 
+              ( ( ( 'set' FIELD FIELD )+ ( 'newRecord' ( 'set' FIELD FIELD )+ )* | 
+                        ( 'values' FIELD+ )+ ) |
+                FIELD+ ( 'values' FIELD+ )+ ) 
+              ( ( 'onDuplicateKeyUpdate' ( 'set' FIELD FIELD )+ ) | 
+                ( 'returning' FIELD* ) )? )
+
+DELETE ::=  ( 'delete' TABLE )
+            ( ( 'where' ( CONDITION+ | SQL ) | 
+            ( 'whereExists' | 'whereNotExists' ) SELECT ) MORE_CONDITIONS? )?
+
+MERGE ::= ( 'mergeInto' TABLE )
+          ( 'using' TABLE | 'usingDual' )
+          ( 'on' ( CONDITION+ | SQL ) MORE_CONDITIONS? )
+          ( 'whenMatchedThenUpdate' 
+            ( 'set' FIELD FIELD )+ 
+            ( 'where' CONDITION 
+              ( 'deleteWhere' CONDITION )? )? )?
+          ( 'whenNotMatchedThenInsert' 
+            ( ( 'set' FIELD FIELD )+ | 
+              ( FIELD+ 'values' FIELD+) ) 
+            ( 'where' CONDITION )? )?
+
+TRUNCATE ::= 'truncate' TABLE
+
+SQL ::= 'SQL String' BINDING*
+
+BINDING ::= 'Any Java Object'
+BINDING_MAP ::= 'A map of bind values'
+
+FIELD ::= ( 'jOOQ generated Field' ) |
+          ( 'CustomField' ) |
+          ( ( 'val' | 'value' ) BINDING ) |
+          ( 'param' NAME BINDING? ) |
+          ( 'literal' BINDING ) |
+          FIELD 'as' NAME |
+          FIELD 'cast' TYPE |
+          ( 'zero' | 'one' | 'two' | 'pi' | 'e' ) |
+          ( 'currentDate' | 'currentTime' | 'currentTimestamp' | 'currentUser' ) |
+          ( 'rand' ) |
+          ( 'field' SQL ) |
+          ( 'function' NAME FIELD* ) |
+          ( ( 'decode' )
+            ( ( ( ( 'value' FIELD )
+                  ( 'when' FIELD FIELD )+ ) |
+                  ( 'when' CONDITION FIELD )+ )
+              ( 'otherwise' FIELD )? | 
+              ( FIELD+ ) ) ) |
+          ( 'grouping' FIELD ) |
+          ( 'groupingId' FIELD+ ) |
+          ( 'cast' BINDING TYPE ) |
+          ( 'castNull' TYPE ) |
+          ( ( 'coalesce' | 'concat' | 'greatest' | 'least' ) FIELD+ ) |
+          ( ( 'nvl' | 'nullif' ) FIELD FIELD ) |
+          ( 'nvl2' FIELD FIELD FIELD ) |
+          ( ( 'upper' | 'lower' | 'trim' | 'rtrim' | 'ltrim' | 
+              'ascii' | 'length' | 'charLength' | 'bitLength' | 'octetLength' ) FIELD ) |
+          ( ( 'rpad' | 'lpad' | 'replace' | 'substring' ) FIELD FIELD FIELD? ) |
+          ( ( 'repeat' | 'position' ) FIELD FIELD ) |
+          ( 'extract' FIELD FIELD ) |
+          ( ( 'bitCount' | 'bitNot' ) FIELD ) |
+          ( ( 'bitAnd' | 'bitNand' | 'bitOr' | 'bitNor' | 'bitXor' | 'bitXNor' | 'shl' | 'shr' ) FIELD FIELD ) |
+          ( FIELD 'neg' ) |
+          ( FIELD ( 'add' | 'sub' | 'mul' | 'div' | 'mod' ) FIELD ) |
+          ( ( 'sign' | 'abs' | 'floor' | 'ceil' | 'sqrt' | 'exp' | 'ln' | 
+              'acos' | 'asin' | 'atan' | 'cos' | 'sin' | 'tan' | 'cot' |
+              'sinh' | 'cosh' | 'tanh' | 'coth' | 'deg' | 'rad' ) FIELD ) |
+          ( ( 'log' | 'power' | 'atan2' ) FIELD FIELD ) |
+          ( 'round' FIELD FIELD? ) |
+          AGGREGATE_FUNCTION ( 'over' PARTITION_CLAUSE )?
+
+AGGREGATE_FUNCTION ::=           
+              'count' | 'rowNumber' | 'rank' | 'denseRank' | 'percentRank' | 'cumeDist' |
+              ( ( 'count' | 'countDistinct' | 
+			      'max' | 'maxDistinct' |
+				  'min' | 'minDistinct' |
+				  'sum' | 'sumDistinct' |
+				  'avg' | 'avgDistinct' |
+				  'median' | 
+                  'stddevPop' | 'stddevSamp' | 'varPop' | 'varSamp' ) FIELD ) |
+              ( 'ntile' INT ) | 
+              ( ( ( 'firstValue' | 'lastValue' ) FIELD |
+                  ( ( 'lead' | 'lag' ) FIELD ( INT FIELD? )? ) ) 
+                ( 'ignoreNulls' | 'respectNulls' )? )
+
+PARTITION_CLAUSE ::= ( 'partitionBy' FIELD+ | 'partitionByOne' )?
+                     ( 'orderBy' ( FIELD+ | SORT_FIELD+ )
+                       ( 'rowsUnboundedPreceding' | 
+                         'rowsPreceding' INT | 
+                         'rowsCurrentRow' |
+                         'rowsUnboundedFollowing' |
+                         'rowsFollowing' INT | 
+                         ( 'rowsBetweenUnboundedPreceding' | 
+                           'rowsBetweenPreceding' INT |
+                           'rowsBetweenCurrentRow' |
+                           'rowsBetweenUnboundedFollowing' |
+                           'rowsBetweenFollowing' INT ) 
+                         ( 'andUnboundedPreceding' |
+                           'andPreceding' INT |
+                           'andCurrentRow' |
+                           'andUnboundedFollowing' |
+                           'andFollowing' INT ) )? )?
+           
+GROUP_FIELD ::= ( FIELD | 
+                  'rollup' FIELD+ |
+                  'cube' FIELD+ |
+                  'groupingSets' ( FIELD+ | ( '[' FIELD+ ']' )+ ) )
+
+
+SORT_FIELD ::= FIELD ( 'asc' | 'desc' | 'sortAsc' BINDING+ | 'sortDesc' BINDING+ | 'sort' BINDING_MAP )
+                     ( 'nullsFirst' | 'nullsLast' )?
+INT ::= [0-9]+ /* ws: explicit */
+NAME ::= [A-Za-z0-9]+ /* ws: explicit */
+TABLE ::= ( 'jOOQ generated Table' ) |
+          ( 'CustomTable' ) |
+          ( 'table' ( SQL | SELECT ) ) |
+          ( ( 'table' | 'unnest' ) ( FIELD | BINDING* ) ) |
+		  ( TABLE 'as' NAME ) |
+		  ( TABLE 'pivot' AGGREGATE_FUNCTION+ 'on' FIELD 'in' FIELD+ )
+
+CONDITION ::= ( CONDITION ( MORE_CONDITIONS | 'not' ) ) |
+              ( FIELD ( 'isNull' | 
+                        'isNotNull' | 
+                        'isTrue' | 
+                        'isFalse' | 
+                        'between' FIELD FIELD |
+                        ( 'like' | 'notLike' | 'equal' | 'notEqual' |
+                          'lessThan' | 'lessOrEqual' | 'greaterThan' | 'greaterOrEqual' ) FIELD |
+                        ( 'in' | 'notIn' ) ( FIELD+ | SELECT ) |
+                        ( 'equalAny' | 'equalSome' | 'equalAll' | 
+                          'notEqualAny' | 'notEqualSome' | 'notEqualAll' |
+                          'lessThanAny' | 'lessThanSome' | 'lessThanAll' |
+                          'lessOrEqualAny' | 'lessOrEqualSome' | 'lessOrEqualAll' |
+                          'greaterThanAny' | 'greaterThanSome' | 'greaterThanAll' |
+                          'greaterOrEqualAny' | 'greaterOrEqualSome' | 'greaterOrEqualAll' ) SELECT ) ) |
+              ( 'condition' SQL ) |
+              ( 'trueCondition' | 'falseCondition' ) |
+              ( 'exists' | 'notExists' ) SELECT
+
+MORE_CONDITIONS ::= ( ( 'and' | 'or') ( CONDITION | SQL ) | 
+                      ( 'andNot' | 'orNot' ) CONDITION |
+                      ( 'andExists' | 'andNotExists' | 'orExists' | 'orNotExists' ) SELECT )+
+

@@ -38,6 +38,7 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
@@ -69,6 +70,7 @@ import static org.jooq.util.oracle.OracleFactory.level;
 import static org.jooq.util.oracle.OracleFactory.prior;
 import static org.jooq.util.oracle.OracleFactory.rownum;
 import static org.jooq.util.oracle.OracleFactory.sysConnectByPath;
+import static org.jooq.util.oracle.OracleFactory.sysContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -997,5 +999,14 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.Pkg_976.p_976(ora(), now));
         assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.Pkg_976.f_976(ora(), now));
         assertEquals(now, ora().select(org.jooq.test.oracle2.generatedclasses.packages.Pkg_976.f_976(now)).fetchOne(0));
+    }
+
+    @Test
+    public void testOracleFunctions() {
+        Record user = ora().select(
+            sysContext("USERENV", "SESSION_USER"),
+            currentUser()).fetchOne();
+
+        assertEquals(user.getValue(0), user.getValue(1));
     }
 }

@@ -44,6 +44,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
+import org.jooq.impl.SQLDataType;
 
 /**
  * A {@link SQLDialect#ORACLE} specific factory
@@ -95,6 +96,24 @@ public class OracleFactory extends Factory {
      */
     public static Field<String> rowid() {
         return field("rowid", String.class);
+    }
+
+    // -------------------------------------------------------------------------
+    // Oracle-specific functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The Oracle-specific <code>SYS_CONTEXT</code> function
+     */
+    public static Field<String> sysContext(String namespace, String parameter) {
+        return function("sys_context", SQLDataType.VARCHAR, val(namespace), val(parameter));
+    }
+
+    /**
+     * The Oracle-specific <code>SYS_CONTEXT</code> function
+     */
+    public static Field<String> sysContext(String namespace, String parameter, int length) {
+        return function("sys_context", SQLDataType.VARCHAR, val(namespace), val(parameter), val(length));
     }
 
     // -------------------------------------------------------------------------

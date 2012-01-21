@@ -3986,7 +3986,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Get a value
+     * Get a bind value
      * <p>
      * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java
      * type <code>&lt;T&gt;</code>. This may not always be accurate, which can
@@ -3996,9 +3996,9 @@ public class Factory implements FactoryOperations {
      * <li>{@link SQLDialect#DERBY}</li>
      * <li>{@link SQLDialect#DB2}</li>
      * <li>{@link SQLDialect#H2}</li>
-     * <li>{@link SQLDialect#HSQLDB}
-     * <li>{@link SQLDialect#INGRES}
-     * <li>{@link SQLDialect#SYBASE}
+     * <li>{@link SQLDialect#HSQLDB}</li>
+     * <li>{@link SQLDialect#INGRES}</li>
+     * <li>{@link SQLDialect#SYBASE}</li>
      * </ul>
      * <p>
      * If you need more type-safety, please use {@link #val(Object, DataType)}
@@ -4030,7 +4030,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Get a value with an associated type, taken from a field
+     * Get a bind value with an associated type, taken from a field
      *
      * @param <T> The generic value type
      * @param value The constant value
@@ -4044,7 +4044,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Get a value with an associated type, taken from a field
+     * Get a bind value with an associated type, taken from a field
      *
      * @param <T> The generic value type
      * @param value The constant value
@@ -4058,7 +4058,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Get a value with an associated type
+     * Get a bind value with an associated type
      * <p>
      * This will try to bind <code>value</code> as <code>type</code> in a
      * <code>PreparedStatement</code>. If <code>value</code> and
@@ -4094,7 +4094,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Get a list of values and fields
+     * Get a list of bind values and fields
      */
     @Support
     public static List<Field<?>> vals(Object... values) {

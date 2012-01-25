@@ -615,6 +615,11 @@ public abstract class jOOQAbstractTest<
     protected abstract DataType<?>[] getCastableDataTypes();
     protected abstract Factory create(SchemaMapping mapping);
 
+    @SuppressWarnings("unchecked")
+    private Sequence<? extends Number> SAuthorID() throws IllegalAccessException, NoSuchFieldException {
+        return (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());
+    }
+
     protected final Schema schema() {
         return create().getSchemaMapping().map(TAuthor().getSchema());
     }
@@ -2776,8 +2781,7 @@ public abstract class jOOQAbstractTest<
 
         reset = false;
 
-        @SuppressWarnings("unchecked")
-        Sequence<? extends Number> sequence = (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());
+        Sequence<? extends Number> sequence = SAuthorID();
         Field<? extends Number> nextval = sequence.nextval();
         Field<? extends Number> currval = null;
 
@@ -7486,6 +7490,17 @@ public abstract class jOOQAbstractTest<
         }
         finally {
             register(null);
+        }
+
+        // [#1071] Check sequences
+        if (cSequences() == null) {
+            log.info("SKIPPING", "sequences test");
+        }
+        else {
+            Select<?> s;
+
+            s = create().select(SAuthorID().nextval(), SAuthorID().currval());
+            s = runSerialisation(s);
         }
     }
 

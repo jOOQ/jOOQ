@@ -82,19 +82,19 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Configuration constants
     // -----------------------
-    private final int               ON_DUPLICATE_KEY_ERROR  = 0;
-    private final int               ON_DUPLICATE_KEY_IGNORE = 1;
-    private final int               ON_DUPLICATE_KEY_UPDATE = 2;
+    private static final int        ON_DUPLICATE_KEY_ERROR  = 0;
+    private static final int        ON_DUPLICATE_KEY_IGNORE = 1;
+    private static final int        ON_DUPLICATE_KEY_UPDATE = 2;
 
-    private final int               ON_ERROR_ABORT          = 0;
-    private final int               ON_ERROR_IGNORE         = 1;
+    private static final int        ON_ERROR_ABORT          = 0;
+    private static final int        ON_ERROR_IGNORE         = 1;
 
-    private final int               COMMIT_NONE             = 0;
-    private final int               COMMIT_AFTER            = 1;
-    private final int               COMMIT_ALL              = 2;
+    private static final int        COMMIT_NONE             = 0;
+    private static final int        COMMIT_AFTER            = 1;
+    private static final int        COMMIT_ALL              = 2;
 
-    private final int               CONTENT_CSV             = 0;
-    private final int               CONTENT_XML             = 1;
+    private static final int        CONTENT_CSV             = 0;
+    private static final int        CONTENT_XML             = 1;
 
     // Configuration data
     // ------------------

@@ -44,13 +44,15 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.io.Serializable;
+
 
 /**
  * A type representing sequences in databases that support this.
  *
  * @author Lukas Eder
  */
-public interface Sequence<T extends Number> {
+public interface Sequence<T extends Number> extends Serializable {
 
     /**
      * Get the sequence name

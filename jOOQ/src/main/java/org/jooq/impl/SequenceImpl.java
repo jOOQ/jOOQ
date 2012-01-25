@@ -49,9 +49,14 @@ import org.jooq.Sequence;
  */
 public class SequenceImpl<T extends Number> implements Sequence<T> {
 
-    final String name;
-    final Schema schema;
-    final DataType<T> type;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 6224349401603636427L;
+
+    final String              name;
+    final Schema              schema;
+    final DataType<T>         type;
 
     public SequenceImpl(String name, Schema schema, DataType<T> type) {
         this.name = name;

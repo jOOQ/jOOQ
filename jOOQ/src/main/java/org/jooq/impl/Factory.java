@@ -1056,8 +1056,9 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public final <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select) {
-        return new InsertSelectQueryImpl<R>(this, into, select);
+        return new InsertSelectQueryImpl<R>(this, into, into.getFields(), select);
     }
 
     /**

@@ -723,20 +723,20 @@ public class jOOQTest {
     @Test
     public void testLikeCondition() throws Exception {
         Condition c1 = FIELD_NAME1.like("%a%");
-        assertEquals("\"TABLE1\".\"ID1\" like '%a%')", r_refI().render(c1));
-        assertEquals("\"TABLE1\".\"ID1\" like ?)", r_ref().render(c1));
+        assertEquals("\"TABLE1\".\"NAME1\" like '%a%'", r_refI().render(c1));
+        assertEquals("\"TABLE1\".\"NAME1\" like ?", r_ref().render(c1));
 
         Condition c2 = FIELD_NAME1.notLike("%a%");
-        assertEquals("\"TABLE1\".\"ID1\" not like '%a%')", r_refI().render(c2));
-        assertEquals("\"TABLE1\".\"ID1\" not like ?)", r_ref().render(c2));
+        assertEquals("\"TABLE1\".\"NAME1\" not like '%a%'", r_refI().render(c2));
+        assertEquals("\"TABLE1\".\"NAME1\" not like ?", r_ref().render(c2));
 
         Condition c3 = FIELD_NAME1.like("%a%", '!');
-        assertEquals("\"TABLE1\".\"ID1\" like '%a%' escape '!')", r_refI().render(c3));
-        assertEquals("\"TABLE1\".\"ID1\" like ? escape '!')", r_ref().render(c3));
+        assertEquals("\"TABLE1\".\"NAME1\" like '%a%' escape '!'", r_refI().render(c3));
+        assertEquals("\"TABLE1\".\"NAME1\" like ? escape '!'", r_ref().render(c3));
 
         Condition c4 = FIELD_NAME1.notLike("%a%", '!');
-        assertEquals("\"TABLE1\".\"ID1\" not like '%a%' escape '!')", r_refI().render(c4));
-        assertEquals("\"TABLE1\".\"ID1\" not like ? escape '!')", r_ref().render(c4));
+        assertEquals("\"TABLE1\".\"NAME1\" not like '%a%' escape '!'", r_refI().render(c4));
+        assertEquals("\"TABLE1\".\"NAME1\" not like ? escape '!'", r_ref().render(c4));
     }
 
     @Test
@@ -1334,12 +1334,24 @@ public class jOOQTest {
 
     @Test
     public void testInsertSelect2() throws Exception {
-        Insert<Table1Record> q = create.insertInto(TABLE1, create.selectQuery());
+        Insert<Table1Record> q = create.insertInto(TABLE1).select(create.selectQuery());
 
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_ref().render(q));
 
-        q = create.insertInto(TABLE1, create.select(val(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")));
+        // [#1069] Allow for specifying custom fields
+        q = create.insertInto(TABLE1, FIELD_ID1).select(create.selectQuery());
+
+        assertEquals("insert into \"TABLE1\" (\"ID1\") select 1 from dual", r_refI().render(q));
+        assertEquals("insert into \"TABLE1\" (\"ID1\") select 1 from dual", r_ref().render(q));
+
+        // [#1069] Allow for specifying custom fields
+        q = create.insertInto(TABLE1, FIELD_ID1, FIELD_NAME1).select(create.selectQuery());
+
+        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") select 1 from dual", r_refI().render(q));
+        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") select 1 from dual", r_ref().render(q));
+
+        q = create.insertInto(TABLE1).select(create.select(val(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")));
 
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1, \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = 'abc'", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select ?, \"TABLE1\".\"NAME1\" from \"TABLE1\" where \"TABLE1\".\"NAME1\" = ?", r_ref().render(q));

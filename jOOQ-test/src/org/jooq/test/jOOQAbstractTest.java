@@ -4395,23 +4395,35 @@ public abstract class jOOQAbstractTest<
                 break;
         }
 
-        Insert<A> i = create().insertInto(
-            TAuthor(),
-            create().select(vals(
-                1000,
-                val("Lukas")))
-            .select(vals(
-                "Eder",
-                val(new Date(363589200000L)),
-                castNull(Integer.class),
-                nullField)));
+        Insert<A> i =
+        create().insertInto(TAuthor())
+                .select(create().select(vals(
+                                    1000,
+                                    val("Lukas")))
+                                .select(vals(
+                                    "Eder",
+                                    val(new Date(363589200000L)),
+                                    castNull(Integer.class),
+                                    nullField)));
 
-        i.execute();
+        assertEquals(1, i.execute());
 
-        A author = create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Lukas"));
-        assertEquals("Lukas", author.getValue(TAuthor_FIRST_NAME()));
-        assertEquals("Eder", author.getValue(TAuthor_LAST_NAME()));
-        assertEquals(null, author.getValue(TAuthor_YEAR_OF_BIRTH()));
+        A author1 = create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Lukas"));
+        assertEquals(1000, (int) author1.getValue(TAuthor_ID()));
+        assertEquals("Lukas", author1.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Eder", author1.getValue(TAuthor_LAST_NAME()));
+        assertEquals(null, author1.getValue(TAuthor_YEAR_OF_BIRTH()));
+
+        // [#1069] Run checks for INSERT INTO t(a, b) SELECT x, y syntax
+        i = create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                    .select(create().select(vals(1001, "Hesse")));
+
+        assertEquals(1, i.execute());
+        A author2 = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hesse"));
+        assertEquals(1001, (int) author2.getValue(TAuthor_ID()));
+        assertEquals(null, author2.getValue(TAuthor_FIRST_NAME()));
+        assertEquals("Hesse", author2.getValue(TAuthor_LAST_NAME()));
+        assertEquals(null, author2.getValue(TAuthor_YEAR_OF_BIRTH()));
     }
 
     @Test

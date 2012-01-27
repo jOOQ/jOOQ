@@ -73,4 +73,17 @@ public interface InsertValuesStep<R extends Record> extends InsertOnDuplicateSte
      */
     @Support
     InsertValuesStep<R> values(Collection<?> values);
+
+    /**
+     * Use a <code>SELECT</code> statement as the source of values for the
+     * <code>INSERT</code> statement
+     * <p>
+     * This variant of the <code>INSERT .. SELECT</code> statement expects a
+     * select returning exactly as many fields as specified previously in the
+     * <code>INTO</code> clause:
+     * {@link FactoryOperations#insertInto(Table, Field...)} or
+     * {@link FactoryOperations#insertInto(Table, Collection)}
+     */
+    @Support
+    Insert<R> select(Select<?> select);
 }

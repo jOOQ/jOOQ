@@ -3078,14 +3078,27 @@ public abstract class jOOQAbstractTest<
         asList(1),
         create().select(TBook_ID())
                 .from(TBook())
-                .where(TBook_ID().in(1, null))
+                .where(TBook_ID().in(val(1), castNull(Integer.class)))
                 .fetch(TBook_ID()));
-        assertEquals(
-        asList(),
-        create().select(TBook_ID())
-                .from(TBook())
-                .where(TBook_ID().notIn(1, null))
-                .fetch(TBook_ID()));
+
+        // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
+        if (asList(ASE, HSQLDB, MYSQL).contains(getDialect())) {
+            assertEquals(
+            asList(2, 3, 4),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().notIn(val(1), castNull(Integer.class)))
+                    .orderBy(TBook_ID())
+                    .fetch(TBook_ID()));
+        }
+        else {
+            assertEquals(
+            asList(),
+            create().select(TBook_ID())
+                    .from(TBook())
+                    .where(TBook_ID().notIn(val(1), castNull(Integer.class)))
+                    .fetch(TBook_ID()));
+        }
 
         assertEquals(Arrays.asList(1, 2), create().select()
             .from(TBook())

@@ -55,15 +55,17 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1540775270159018516L;
+    private static final long    serialVersionUID = -1540775270159018516L;
 
-    private final Table<?>    into;
-    private final Select<?>   select;
+    private final Table<?>       into;
+    private final List<Field<?>> fields;
+    private final Select<?>      select;
 
-    public InsertSelectQueryImpl(Configuration configuration, Table<?> into, Select<?> select) {
+    InsertSelectQueryImpl(Configuration configuration, Table<?> into, List<Field<?>> fields, Select<?> select) {
         super(configuration);
 
         this.into = into;
+        this.fields = (fields == null || fields.isEmpty()) ? into.getFields() : fields;
         this.select = select;
     }
 
@@ -77,7 +79,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
         context.sql("insert into ").sql(into).sql(" (");
 
         String separator = "";
-        for (Field<?> field : into.getFields()) {
+        for (Field<?> field : fields) {
             context.sql(separator).literal(field.getName());
             separator = ", ";
         }
@@ -88,7 +90,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     @Override
     public final void bind(BindContext context) {
         context.bind(into);
-        context.bind(into.getFields());
+        context.bind(fields);
         context.bind(select);
     }
 }

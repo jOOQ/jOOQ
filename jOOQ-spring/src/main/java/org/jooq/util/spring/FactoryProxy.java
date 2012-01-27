@@ -287,6 +287,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
+    @Deprecated
     public final <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select) {
         return getDelegate().insertInto(into, select);
     }

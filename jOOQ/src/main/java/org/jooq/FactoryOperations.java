@@ -416,12 +416,20 @@ public interface FactoryOperations extends Configuration {
      * Factory create = new Factory();
      *
      * create.insertInto(table, create.select(1))
-     *       .onDuplicateKeyUpdate()
-     *       .set(field1, value1)
-     *       .set(field2, value2)
      *       .execute();
      * </pre></code>
+     *
+     * @deprecated - 2.0.3 - Use any of these methods instead:
+     *             <ul>
+     *             <li>{@link #insertInto(Table)} and
+     *             {@link InsertSetStep#select(Select)}</li> <li>
+     *             {@link #insertInto(Table, Field...)} and
+     *             {@link InsertValuesStep#select(Select)}</li> <li>
+     *             {@link #insertInto(Table, Collection)} and
+     *             {@link InsertValuesStep#select(Select)}</li>
+     *             </ul>
      */
+    @Deprecated
     @Support
     <R extends Record> Insert<R> insertInto(Table<R> into, Select<?> select);
 

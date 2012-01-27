@@ -99,4 +99,18 @@ public interface InsertSetStep<R extends Record> {
      */
     @Support
     InsertValuesStep<R> values(Collection<?> values);
+
+    /**
+     * Use a <code>SELECT</code> statement as the source of values for the
+     * <code>INSERT</code> statement
+     * <p>
+     * This variant of the <code>INSERT .. SELECT</code> statement does not
+     * allow for specifying a subset of the fields inserted into. It will insert
+     * into all fields of the table specified in the <code>INTO</code> clause.
+     * Use {@link FactoryOperations#insertInto(Table, Field...)} or
+     * {@link FactoryOperations#insertInto(Table, Collection)} instead, to
+     * define a field set for insertion.
+     */
+    @Support
+    Insert<R> select(Select<?> select);
 }

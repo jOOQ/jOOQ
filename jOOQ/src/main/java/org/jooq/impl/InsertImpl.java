@@ -44,8 +44,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Insert;
 import org.jooq.InsertOnDuplicateSetMoreStep;
 import org.jooq.InsertQuery;
 import org.jooq.InsertResultStep;
@@ -54,6 +56,7 @@ import org.jooq.InsertValuesStep;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Select;
 import org.jooq.Table;
 
 /**
@@ -107,6 +110,12 @@ class InsertImpl<R extends Record>
     // -------------------------------------------------------------------------
     // The DSL API
     // -------------------------------------------------------------------------
+
+    @Override
+    public final Insert<R> select(Select<?> select) {
+        Configuration configuration = getDelegate().internalAPI(AttachableInternal.class).getConfiguration();
+        return new InsertSelectQueryImpl<R>(configuration, into, fields, select);
+    }
 
     @Override
     public final InsertImpl<R> values(Object... values) {

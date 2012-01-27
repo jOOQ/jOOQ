@@ -3072,6 +3072,21 @@ public abstract class jOOQAbstractTest<
             .orderBy(TBook_ID())
             .fetch(TBook_ID()));
 
+        // The IN clause
+        // [#1073] NULL checks
+        assertEquals(
+        asList(1),
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().in(1, null))
+                .fetch(TBook_ID()));
+        assertEquals(
+        asList(),
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(TBook_ID().notIn(1, null))
+                .fetch(TBook_ID()));
+
         assertEquals(Arrays.asList(1, 2), create().select()
             .from(TBook())
             .where(TBook_ID().in(1, 2))

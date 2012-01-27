@@ -8179,6 +8179,8 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testLike() throws Exception {
+        reset = false;
+
         Field<String> notLike = TBook_PUBLISHED_IN().cast(String.class);
 
         // DB2 doesn't support this syntax
@@ -8193,6 +8195,25 @@ public abstract class jOOQAbstractTest<
                 .fetch();
 
         assertEquals(3, books.size());
+
+        assertEquals(1,
+        create().insertInto(TBook())
+                .set(TBook_ID(), 5)
+                .set(TBook_AUTHOR_ID(), 2)
+                .set(TBook_PUBLISHED_IN(), 2012)
+                .set((Field<Integer>) TBook_LANGUAGE_ID(), 1)
+                .set(TBook_TITLE(), "About percentages (%) and underscores (_), a critical review")
+                .execute());
+
+        // [#1072] Add checks for ESCAPE syntax
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().like("%(!%)%", '!'))
+                .and(TBook_TITLE().like("%(#_)%", '#'))
+                .and(TBook_TITLE().notLike("%(!%)%", '#'))
+                .and(TBook_TITLE().notLike("%(#_)%", '!'))
+                .fetch();
+
     }
 
     @Test

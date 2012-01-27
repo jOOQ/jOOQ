@@ -344,8 +344,18 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition like(T value, char escape) {
+        return like(val(value), escape);
+    }
+
+    @Override
     public final Condition like(Field<T> value) {
         return new CompareCondition<T>(this, nullSafe(value), Comparator.LIKE);
+    }
+
+    @Override
+    public final Condition like(Field<T> value, char escape) {
+        return new CompareCondition<T>(this, nullSafe(value), Comparator.LIKE, escape);
     }
 
     @Override
@@ -354,8 +364,18 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition notLike(T value, char escape) {
+        return notLike(val(value), escape);
+    }
+
+    @Override
     public final Condition notLike(Field<T> value) {
         return new CompareCondition<T>(this, nullSafe(value), Comparator.NOT_LIKE);
+    }
+
+    @Override
+    public final Condition notLike(Field<T> value, char escape) {
+        return new CompareCondition<T>(this, nullSafe(value), Comparator.NOT_LIKE, escape);
     }
 
     @Override

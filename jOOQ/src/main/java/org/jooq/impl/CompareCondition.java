@@ -54,11 +54,17 @@ class CompareCondition<T> extends AbstractCondition {
     private final Field<T>    field1;
     private final Field<T>    field2;
     private final Comparator  comparator;
+    private final Character   escape;
 
     CompareCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
+        this(field1, field2, comparator, null);
+    }
+
+    CompareCondition(Field<T> field1, Field<T> field2, Comparator comparator, Character escape) {
         this.field1 = field1;
         this.field2 = field2;
         this.comparator = comparator;
+        this.escape = escape;
     }
 
     @Override
@@ -91,5 +97,11 @@ class CompareCondition<T> extends AbstractCondition {
         context.sql(comparator.toSQL())
                .sql(" ")
                .sql(field2);
+
+        if (escape != null) {
+            context.sql(" escape '")
+                   .sql(escape)
+                   .sql("'");
+        }
     }
 }

@@ -376,109 +376,205 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     // ------------------------------------------------------------------------
 
     /**
-     * <code>this is null</code>
+     * Create a condition to check this field against <code>null</code>.
+     * <p>
+     * SQL: <code>this is null</code>
      */
     @Support
     Condition isNull();
 
     /**
-     * <code>this is not null</code>
+     * Create a condition to check this field against <code>null</code>.
+     * <p>
+     * SQL: <code>this is not null</code>
      */
     @Support
     Condition isNotNull();
 
     /**
+     * Create a condition to check this field known string literals for
+     * <code>true</code>
+     * <p>
+     * SQL:
      * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
      */
     @Support
     Condition isTrue();
 
     /**
+     * Create a condition to check this field known string literals for
+     * <code>false</code>
+     * <p>
+     * SQL:
      * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
      */
     @Support
     Condition isFalse();
 
     /**
-     * <code>this like value</code>
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value</code>
      */
     @Support
     Condition like(Field<T> value);
 
     /**
-     * <code>this like value</code>
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value escape 'e'</code>
+     */
+    @Support
+    Condition like(Field<T> value, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value</code>
      */
     @Support
     Condition like(T value);
 
     /**
-     * <code>this not like value</code>
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this like value escape 'e'</code>
+     */
+    @Support
+    Condition like(T value, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this not like value</code>
      */
     @Support
     Condition notLike(Field<T> value);
 
     /**
-     * <code>this not like value</code>
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this not like value escape 'e'</code>
+     */
+    @Support
+    Condition notLike(Field<T> value, char escape);
+
+    /**
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this not like value</code>
      */
     @Support
     Condition notLike(T value);
 
     /**
-     * <code>this in (values...)</code>
+     * Create a condition to pattern-check this field against a value
+     * <p>
+     * SQL: <code>this not like value escape 'e'</code>
+     */
+    @Support
+    Condition notLike(T value, char escape);
+
+    /**
+     * Create a condition to check this field against several values
+     * <p>
+     * SQL: <code>this in (values...)</code>
      */
     @Support
     Condition in(Collection<T> values);
 
     /**
-     * <code>this in (values...)</code>
+     * Create a condition to check this field against several values
+     * <p>
+     * SQL: <code>this in (values...)</code>
      */
     @Support
     Condition in(T... values);
 
     /**
-     * <code>this in (values...)</code>
+     * Create a condition to check this field against several values
+     * <p>
+     * SQL: <code>this in (values...)</code>
      */
     @Support
     Condition in(Field<?>... values);
 
     /**
-     * <code>this in (select...)</code>
+     * Create a condition to check this field against a subquery
+     * <p>
+     * Note that the subquery must return exactly one field. This is not checked
+     * by jOOQ and will result in syntax errors on the database, if not used
+     * correctly.
+     * <p>
+     * SQL: <code>this in (select...)</code>
      */
     @Support
     Condition in(Select<?> query);
 
     /**
-     * <code>this not in (values...)</code>
+     * Create a condition to check this field against several values
+     * <p>
+     * Note that if any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     * <p>
+     * SQL: <code>this not in (values...)</code>
      */
     @Support
     Condition notIn(Collection<T> values);
 
     /**
-     * <code>this not in (values...)</code>
+     * Create a condition to check this field against several values
+     * <p>
+     * Note that if any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     * <p>
+     * SQL: <code>this not in (values...)</code>
      */
     @Support
     Condition notIn(T... values);
 
     /**
-     * <code>this not in (values...)</code>
+     * Create a condition to check this field against several values
+     * <p>
+     * Note that if any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     * <p>
+     * SQL: <code>this not in (values...)</code>
      */
     @Support
     Condition notIn(Field<?>... values);
 
     /**
-     * <code>this not in (select...)</code>
+     * Create a condition to check this field against a subquery
+     * <p>
+     * Note that the subquery must return exactly one field. This is not checked
+     * by jOOQ and will result in syntax errors on the database, if not used
+     * correctly.
+     * <p>
+     * Note that if any of the passed values is <code>NULL</code>, then the
+     * condition will be <code>NULL</code> (or <code>false</code>, depending on
+     * the dialect) as well. This is standard SQL behaviour.
+     * <p>
+     * SQL: <code>this not in (select...)</code>
      */
     @Support
     Condition notIn(Select<?> query);
 
     /**
-     * <code>this between minValue and maxValue</code>
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
     Condition between(T minValue, T maxValue);
 
     /**
-     * <code>this between minValue and maxValue</code>
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
     Condition between(Field<T> minValue, Field<T> maxValue);

@@ -721,6 +721,25 @@ public class jOOQTest {
     }
 
     @Test
+    public void testLikeCondition() throws Exception {
+        Condition c1 = FIELD_NAME1.like("%a%");
+        assertEquals("\"TABLE1\".\"ID1\" like '%a%')", r_refI().render(c1));
+        assertEquals("\"TABLE1\".\"ID1\" like ?)", r_ref().render(c1));
+
+        Condition c2 = FIELD_NAME1.notLike("%a%");
+        assertEquals("\"TABLE1\".\"ID1\" not like '%a%')", r_refI().render(c2));
+        assertEquals("\"TABLE1\".\"ID1\" not like ?)", r_ref().render(c2));
+
+        Condition c3 = FIELD_NAME1.like("%a%", '!');
+        assertEquals("\"TABLE1\".\"ID1\" like '%a%' escape '!')", r_refI().render(c3));
+        assertEquals("\"TABLE1\".\"ID1\" like ? escape '!')", r_ref().render(c3));
+
+        Condition c4 = FIELD_NAME1.notLike("%a%", '!');
+        assertEquals("\"TABLE1\".\"ID1\" not like '%a%' escape '!')", r_refI().render(c4));
+        assertEquals("\"TABLE1\".\"ID1\" not like ? escape '!')", r_ref().render(c4));
+    }
+
+    @Test
     public void testPlainSQLCondition() throws Exception {
         Condition c1 = condition("TABLE1.ID = 10");
         Condition c2 = condition("TABLE1.ID = ? and TABLE2.ID = ?", 10, "20");

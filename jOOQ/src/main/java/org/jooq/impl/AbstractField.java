@@ -448,7 +448,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition between(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue));
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), false);
+    }
+
+    @Override
+    public final Condition notBetween(T minValue, T maxValue) {
+        return notBetween(val(minValue), val(maxValue));
+    }
+
+    @Override
+    public final Condition notBetween(Field<T> minValue, Field<T> maxValue) {
+        return new BetweenCondition<T>(this, nullSafe(minValue), nullSafe(maxValue), true);
     }
 
     @Override

@@ -50,14 +50,16 @@ class BetweenCondition<T> extends AbstractCondition {
 
     private static final long serialVersionUID = -4666251100802237878L;
 
+    private final boolean     not;
     private final Field<T>    field;
     private final Field<T>    minValue;
     private final Field<T>    maxValue;
 
-    BetweenCondition(Field<T> field, Field<T> minValue, Field<T> maxValue) {
+    BetweenCondition(Field<T> field, Field<T> minValue, Field<T> maxValue, boolean not) {
         this.field = field;
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.not = not;
     }
 
     @Override
@@ -73,6 +75,7 @@ class BetweenCondition<T> extends AbstractCondition {
     @Override
     public final void toSQL(RenderContext context) {
         context.sql(field)
+               .sql(not ? " not" : "")
                .sql(" between ")
                .sql(minValue)
                .sql(" and ")

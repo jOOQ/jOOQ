@@ -3060,6 +3060,17 @@ public abstract class jOOQAbstractTest<
             .where(val(3).between(TBook_AUTHOR_ID(), TBook_ID()))
             .orderBy(TBook_ID()).fetch(TBook_ID()));
 
+        // [#1074] The NOT BETWEEN clause
+        assertEquals(Arrays.asList(1, 4), create().select()
+            .from(TBook())
+            .where(TBook_ID().notBetween(2, 3))
+            .orderBy(TBook_ID()).fetch(TBook_ID()));
+
+        assertEquals(Arrays.asList(1, 2), create().select()
+            .from(TBook())
+            .where(val(3).notBetween(TBook_AUTHOR_ID(), TBook_ID()))
+            .orderBy(TBook_ID()).fetch(TBook_ID()));
+
         // The IN clause
         // [#502] empty set checks
         assertEquals(Arrays.asList(), create().select()

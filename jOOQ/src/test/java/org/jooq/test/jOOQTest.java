@@ -631,6 +631,10 @@ public class jOOQTest {
         assertEquals("\"TABLE1\".\"ID1\" between 1 and 10", r_refI().render(c));
         assertEquals("\"TABLE1\".\"ID1\" between ? and ?", r_ref().render(c));
 
+        c = FIELD_ID1.notBetween(1, 10);
+        assertEquals("\"TABLE1\".\"ID1\" not between 1 and 10", r_refI().render(c));
+        assertEquals("\"TABLE1\".\"ID1\" not between ? and ?", r_ref().render(c));
+
         context.checking(new Expectations() {{
             oneOf(statement).setInt(1, 1);
             oneOf(statement).setInt(2, 10);

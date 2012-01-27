@@ -580,6 +580,22 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition between(Field<T> minValue, Field<T> maxValue);
 
     /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between minValue and maxValue</code>
+     */
+    @Support
+    Condition notBetween(T minValue, T maxValue);
+
+    /**
+     * Create a condition to check this field against some bounds
+     * <p>
+     * SQL: <code>this not between minValue and maxValue</code>
+     */
+    @Support
+    Condition notBetween(Field<T> minValue, Field<T> maxValue);
+
+    /**
      * <code>this = value</code>
      * <p>
      * If <code>value == null</code>, then this will return a condition

@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.vals;
 
 import java.util.Collections;
 import java.util.List;
@@ -127,7 +126,10 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         if (table == null) {
             Select<Record> select = null;
 
-            for (Field<?> val : vals(array)) {
+            for (Object element : array) {
+
+                // [#1081] Be sure to get the correct cast type also for null
+                Field<?> val = Factory.val(element, field.get(0).getDataType());
                 Select<Record> subselect = create(configuration).select(val.as("COLUMN_VALUE"));
 
                 if (select == null) {

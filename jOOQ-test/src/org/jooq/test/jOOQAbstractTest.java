@@ -8154,18 +8154,23 @@ public abstract class jOOQAbstractTest<
         assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void testNULL() throws Exception {
         reset = false;
 
-        Field<Integer> n = castNull(Integer.class);
+        // [#1083] There is a subtle difference in inlining NULL or binding it
+        Field<Integer> n1 = castNull(Integer.class);
+        Field<Integer> n2 = val(null, Integer.class);
         Field<Integer> c = val(1);
 
-        assertEquals(null, create().select(n).fetchOne(n));
-        assertEquals(Integer.valueOf(1), create().select(c).from(TAuthor()).where(TAuthor_ID().equal(1)).and(n.isNull()).fetchOne(c));
-        assertEquals(Integer.valueOf(1), create().select(c).from(TAuthor()).where(TAuthor_ID().equal(1)).and(n.equal(n)).fetchOne(c));
-        assertEquals(null, create().selectOne().from(TAuthor()).where(n.isNotNull()).fetchAny());
-        assertEquals(null, create().selectOne().from(TAuthor()).where(n.notEqual(n)).fetchAny());
+        for (Field<Integer> n : asList(n1, n2)) {
+            assertEquals(null, create().select(n).fetchOne(n));
+            assertEquals(Integer.valueOf(1), create().select(c).from(TAuthor()).where(TAuthor_ID().equal(1)).and(n.isNull()).fetchOne(c));
+            assertEquals(Integer.valueOf(1), create().select(c).from(TAuthor()).where(TAuthor_ID().equal(1)).and(n.equal(n)).fetchOne(c));
+            assertEquals(null, create().selectOne().from(TAuthor()).where(n.isNotNull()).fetchAny());
+            assertEquals(null, create().selectOne().from(TAuthor()).where(n.notEqual(n)).fetchAny());
+        }
 
         UpdateQuery<A> u = create().updateQuery(TAuthor());
         u.addValue(TAuthor_YEAR_OF_BIRTH(), (Integer) null);

@@ -36,6 +36,7 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -8509,6 +8510,28 @@ public abstract class jOOQAbstractTest<
             assertEquals("1.666", result.getValueAsString(0, 4).substring(0, 5));
             assertEquals("0.707", result.getValueAsString(0, 6).substring(0, 5));
             assertEquals(0.5, result.getValueAsDouble(0, 8));
+        }
+
+        // NTILE()
+        if (asList(SYBASE, DB2).contains(getDialect())) {
+            log.info("SKIPPING", "NTILE tests");
+        }
+        else {
+            result =
+            create().select(TBook_ID(),
+                            ntile(1).over().orderBy(TBook_ID()),
+                            ntile(1).over().partitionBy(TBook_AUTHOR_ID()).orderBy(TBook_ID()),
+                            ntile(2).over().orderBy(TBook_ID()),
+                            ntile(2).over().partitionBy(TBook_AUTHOR_ID()).orderBy(TBook_ID()))
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .fetch();
+
+            assertEquals(BOOK_IDS, result.getValues(0));
+            assertEquals(nCopies(4, 1), result.getValues(1));
+            assertEquals(nCopies(4, 1), result.getValues(2));
+            assertEquals(asList(1, 1, 2, 2), result.getValues(3));
+            assertEquals(asList(1, 2, 1, 2), result.getValues(4));
         }
 
         column = 0;

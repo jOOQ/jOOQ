@@ -3749,7 +3749,7 @@ public class Factory implements FactoryOperations {
      * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
      * Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Support({ POSTGRES, ORACLE, SQLSERVER })
     public static WindowOverStep<Integer> ntile(int number) {
         return new WindowFunction<Integer>("ntile", SQLDataType.INTEGER, field("" + number, Integer.class));
     }

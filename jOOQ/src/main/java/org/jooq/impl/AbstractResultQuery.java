@@ -67,6 +67,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A query that returns a {@link Result}
@@ -78,14 +79,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = -5588344253566055707L;
+    private static final long       serialVersionUID = -5588344253566055707L;
+    private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
 
-    private transient boolean    lazy;
-    private transient int        size;
-    private transient boolean    many;
-    private transient Cursor<R>  cursor;
-    private Result<R>            result;
-    private List<Result<Record>> results;
+    private transient boolean       lazy;
+    private transient int           size;
+    private transient boolean       many;
+    private transient Cursor<R>     cursor;
+    private Result<R>               result;
+    private List<Result<Record>>    results;
 
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
@@ -113,6 +115,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         PreparedStatement statement = super.prepare(configuration, sql);
 
         if (size > 0) {
+            if (log.isDebugEnabled())
+                log.debug("Setting fetch size", size);
+
             statement.setFetchSize(size);
         }
 
@@ -130,6 +135,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             autoCommit = connection.getAutoCommit();
 
             if (autoCommit) {
+                if (log.isDebugEnabled())
+                    log.debug("Unsetting auto-commit", false);
+
                 connection.setAutoCommit(false);
             }
         }
@@ -171,6 +179,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
         finally {
             if (autoCommit) {
+                if (log.isDebugEnabled())
+                    log.debug("Resetting auto-commit", autoCommit);
+
                 connection.setAutoCommit(autoCommit);
             }
         }

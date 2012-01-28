@@ -6026,6 +6026,12 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testInverseAndNestedJoin() throws Exception {
 
+        // [#1086] TODO: Fix this for SQLite
+        if (getDialect() == SQLITE) {
+            log.info("SKIPPING", "Nested JOINs");
+            return;
+        }
+
         // Testing joining of nested joins
         // -------------------------------
         Result<Record> result1 = create()
@@ -9001,6 +9007,8 @@ public abstract class jOOQAbstractTest<
             switch (getDialect()) {
                 case POSTGRES:
                 case H2:
+                case HSQLDB:
+                    // [#1085] TODO: Is this kind of thing supported in any database??
                     log.info("SKIPPING", "Cross join of table with unnested array is not supported");
                     break;
 

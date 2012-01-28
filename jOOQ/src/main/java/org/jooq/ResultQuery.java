@@ -38,6 +38,7 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -83,19 +84,46 @@ public interface ResultQuery<R extends Record> extends Query {
     Result<R> fetch() throws DataAccessException;
 
     /**
-     * Execute the query and return the generated result
+     * Execute the query and "lazily" return the generated result
      * <p>
      * The returned {@link Cursor} holds a reference to the executed
      * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
      * be fetched (or iterated over) lazily, fetching records from the
      * {@link ResultSet} one by one.
      * <p>
+     * Depending on your JDBC driver's default behaviour, this may load the
+     * whole database result into the driver's memory. In order to indicate to
+     * the driver that you may not want to fetch all records at once, use
+     * {@link #fetchLazy(int)}
+     * <p>
      * Client code is responsible for closing the cursor after use.
      *
      * @return The resulting cursor.
      * @throws DataAccessException if something went wrong executing the query
+     * @see #fetchLazy(int)
      */
     Cursor<R> fetchLazy() throws DataAccessException;
+
+    /**
+     * Execute the query and "lazily" return the generated result
+     * <p>
+     * The returned {@link Cursor} holds a reference to the executed
+     * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
+     * be fetched (or iterated over) lazily, fetching records from the
+     * {@link ResultSet} one by one.
+     * <p>
+     * Depending on your JDBC driver's behaviour, this will load only
+     * <code>fetchSize</code> records from the database into memory at once. For
+     * more details, see also {@link Statement#setFetchSize(int)}
+     * <p>
+     * Client code is responsible for closing the cursor after use.
+     *
+     * @return The resulting cursor.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #fetchLazy()
+     * @see Statement#setFetchSize(int)
+     */
+    Cursor<R> fetchLazy(int fetchSize) throws DataAccessException;
 
     /**
      * Execute a query, possibly returning several result sets.

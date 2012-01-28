@@ -990,87 +990,89 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testLazyFetching() throws Exception {
+    public void testFetchLazy() throws Exception {
+        for (int fetchSize : Arrays.asList(0, 1)) {
 
-        // ---------------------------------------------------------------------
-        // A regular pass through the cursor
-        // ---------------------------------------------------------------------
-        Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy();
+            // ---------------------------------------------------------------------
+            // A regular pass through the cursor
+            // ---------------------------------------------------------------------
+            Cursor<B> cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
 
-        assertTrue(cursor.hasNext());
-        assertTrue(cursor.hasNext());
-        assertEquals(Integer.valueOf(1), cursor.fetchOne().getValue(TBook_ID()));
-        assertEquals(Integer.valueOf(2), cursor.fetchOne().getValue(TBook_ID()));
+            assertTrue(cursor.hasNext());
+            assertTrue(cursor.hasNext());
+            assertEquals(Integer.valueOf(1), cursor.fetchOne().getValue(TBook_ID()));
+            assertEquals(Integer.valueOf(2), cursor.fetchOne().getValue(TBook_ID()));
 
-        assertTrue(cursor.hasNext());
-        assertTrue(cursor.hasNext());
-        assertFalse(cursor.isClosed());
+            assertTrue(cursor.hasNext());
+            assertTrue(cursor.hasNext());
+            assertFalse(cursor.isClosed());
 
-        Iterator<B> it = cursor.iterator();
-        assertTrue(it.hasNext());
-        assertTrue(cursor.hasNext());
-        assertTrue(it.hasNext());
-        assertTrue(cursor.hasNext());
-        assertTrue(it.hasNext());
-        assertTrue(cursor.hasNext());
-        assertEquals(Integer.valueOf(3), it.next().getValue(TBook_ID()));
-        assertEquals(Integer.valueOf(4), it.next().getValue(TBook_ID()));
-        assertFalse(cursor.isClosed());
+            Iterator<B> it = cursor.iterator();
+            assertTrue(it.hasNext());
+            assertTrue(cursor.hasNext());
+            assertTrue(it.hasNext());
+            assertTrue(cursor.hasNext());
+            assertTrue(it.hasNext());
+            assertTrue(cursor.hasNext());
+            assertEquals(Integer.valueOf(3), it.next().getValue(TBook_ID()));
+            assertEquals(Integer.valueOf(4), it.next().getValue(TBook_ID()));
+            assertFalse(cursor.isClosed());
 
-        assertFalse(it.hasNext());
-        assertFalse(cursor.hasNext());
-        assertFalse(it.hasNext());
-        assertFalse(cursor.hasNext());
-        assertFalse(it.hasNext());
-        assertFalse(cursor.hasNext());
-        assertTrue(cursor.isClosed());
+            assertFalse(it.hasNext());
+            assertFalse(cursor.hasNext());
+            assertFalse(it.hasNext());
+            assertFalse(cursor.hasNext());
+            assertFalse(it.hasNext());
+            assertFalse(cursor.hasNext());
+            assertTrue(cursor.isClosed());
 
-        assertEquals(null, it.next());
-        assertEquals(null, it.next());
-        assertEquals(null, cursor.fetchOne());
-        assertEquals(null, cursor.fetchOne());
+            assertEquals(null, it.next());
+            assertEquals(null, it.next());
+            assertEquals(null, cursor.fetchOne());
+            assertEquals(null, cursor.fetchOne());
 
-        cursor.close();
-        cursor.close();
-        assertTrue(cursor.isClosed());
+            cursor.close();
+            cursor.close();
+            assertTrue(cursor.isClosed());
 
-        // ---------------------------------------------------------------------
-        // Prematurely closing the cursor
-        // ---------------------------------------------------------------------
-        cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy();
+            // ---------------------------------------------------------------------
+            // Prematurely closing the cursor
+            // ---------------------------------------------------------------------
+            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
 
-        assertTrue(cursor.hasNext());
-        assertTrue(cursor.hasNext());
-        assertEquals(Integer.valueOf(1), cursor.fetchOne().getValue(TBook_ID()));
-        assertEquals(Integer.valueOf(2), cursor.fetchOne().getValue(TBook_ID()));
-        assertFalse(cursor.isClosed());
+            assertTrue(cursor.hasNext());
+            assertTrue(cursor.hasNext());
+            assertEquals(Integer.valueOf(1), cursor.fetchOne().getValue(TBook_ID()));
+            assertEquals(Integer.valueOf(2), cursor.fetchOne().getValue(TBook_ID()));
+            assertFalse(cursor.isClosed());
 
-        cursor.close();
-        assertTrue(cursor.isClosed());
-        assertFalse(cursor.hasNext());
-        assertNull(cursor.fetchOne());
+            cursor.close();
+            assertTrue(cursor.isClosed());
+            assertFalse(cursor.hasNext());
+            assertNull(cursor.fetchOne());
 
-        // ---------------------------------------------------------------------
-        // Fetching several records at once
-        // ---------------------------------------------------------------------
-        cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy();
+            // ---------------------------------------------------------------------
+            // Fetching several records at once
+            // ---------------------------------------------------------------------
+            cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
 
-        assertTrue(cursor.fetch(0).isEmpty());
-        assertTrue(cursor.fetch(0).isEmpty());
-        List<B> list = cursor.fetch(1);
+            assertTrue(cursor.fetch(0).isEmpty());
+            assertTrue(cursor.fetch(0).isEmpty());
+            List<B> list = cursor.fetch(1);
 
-        assertEquals(1, list.size());
-        assertEquals(Integer.valueOf(1), list.get(0).getValue(TBook_ID()));
+            assertEquals(1, list.size());
+            assertEquals(Integer.valueOf(1), list.get(0).getValue(TBook_ID()));
 
-        list = cursor.fetch(2);
-        assertEquals(2, list.size());
-        assertEquals(Integer.valueOf(2), list.get(0).getValue(TBook_ID()));
-        assertEquals(Integer.valueOf(3), list.get(1).getValue(TBook_ID()));
+            list = cursor.fetch(2);
+            assertEquals(2, list.size());
+            assertEquals(Integer.valueOf(2), list.get(0).getValue(TBook_ID()));
+            assertEquals(Integer.valueOf(3), list.get(1).getValue(TBook_ID()));
 
-        list = cursor.fetch(2);
-        assertTrue(cursor.isClosed());
-        assertEquals(1, list.size());
-        assertEquals(Integer.valueOf(4), list.get(0).getValue(TBook_ID()));
+            list = cursor.fetch(2);
+            assertTrue(cursor.isClosed());
+            assertEquals(1, list.size());
+            assertEquals(Integer.valueOf(4), list.get(0).getValue(TBook_ID()));
+        }
     }
 
     @Test

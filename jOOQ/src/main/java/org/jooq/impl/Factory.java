@@ -3750,8 +3750,8 @@ public class Factory implements FactoryOperations {
      * Sybase.
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
-    public static WindowOverStep<BigDecimal> ntile(int number) {
-        return new WindowFunction<BigDecimal>("ntile", SQLDataType.NUMERIC, field("" + number, Integer.class));
+    public static WindowOverStep<Integer> ntile(int number) {
+        return new WindowFunction<Integer>("ntile", SQLDataType.INTEGER, field("" + number, Integer.class));
     }
 
     /**

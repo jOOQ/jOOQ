@@ -392,7 +392,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition isNotNull();
 
     /**
-     * Create a condition to check this field known string literals for
+     * Create a condition to check this field against known string literals for
      * <code>true</code>
      * <p>
      * SQL:
@@ -402,7 +402,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition isTrue();
 
     /**
-     * Create a condition to check this field known string literals for
+     * Create a condition to check this field against known string literals for
      * <code>false</code>
      * <p>
      * SQL:

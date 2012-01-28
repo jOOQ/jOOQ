@@ -102,6 +102,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final Cursor<R> fetchLazy(int fetchSize) {
+        return getDelegate().fetchLazy(fetchSize);
+    }
+
+    @Override
     public final List<Result<Record>> fetchMany() {
         return getDelegate().fetchMany();
     }

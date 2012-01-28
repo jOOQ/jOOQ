@@ -78,13 +78,14 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -5588344253566055707L;
+    private static final long    serialVersionUID = -5588344253566055707L;
 
-    private transient boolean       lazy;
-    private transient boolean       many;
-    private transient Cursor<R>     cursor;
-    private Result<R>               result;
-    private List<Result<Record>>    results;
+    private transient boolean    lazy;
+    private transient int        size;
+    private transient boolean    many;
+    private transient Cursor<R>  cursor;
+    private Result<R>            result;
+    private List<Result<Record>> results;
 
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
@@ -105,6 +106,17 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final ResultQuery<R> bind(int index, Object value) throws IllegalArgumentException, DataTypeException {
         return (ResultQuery<R>) super.bind(index, value);
+    }
+
+    @Override
+    protected final PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
+        PreparedStatement statement = super.prepare(configuration, sql);
+
+        if (size > 0) {
+            statement.setFetchSize(size);
+        }
+
+        return statement;
     }
 
     @Override
@@ -184,9 +196,21 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Cursor<R> fetchLazy() {
+        return fetchLazy(0);
+    }
+
+    @Override
+    public final Cursor<R> fetchLazy(int fetchSize) throws DataAccessException {
         lazy = true;
-        execute();
-        lazy = false;
+        size = fetchSize;
+
+        try {
+            execute();
+        }
+        finally {
+            lazy = false;
+            size = 0;
+        }
 
         return cursor;
     }

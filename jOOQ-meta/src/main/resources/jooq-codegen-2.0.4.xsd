@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.jooq.org/xsd/jooq-codegen"
-	targetNamespace="http://www.jooq.org/xsd/jooq-codegen"
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd"
+	targetNamespace="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd"
 	elementFormDefault="qualified">
 
 	<element name="configuration">
@@ -121,7 +122,7 @@
 		</annotation>
 		<all>
 			<element name="name" type="string" minOccurs="1" maxOccurs="1" />
-			<element name="literal" type="string" minOccurs="1"
+			<element name="literal" type="string" minOccurs="0"
 				maxOccurs="1" />
 			<element name="description" type="string" minOccurs="0"
 				maxOccurs="1" />

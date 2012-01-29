@@ -94,16 +94,6 @@ public interface Generator {
     void setGenerateInstanceFields(boolean generateInstanceFields);
 
     /**
-     * Whether unsigned data types should be generated
-     */
-    boolean generateUnsignedTypes();
-
-    /**
-     * Whether unsigned data types should be generated
-     */
-    void setGenerateUnsignedTypes(boolean generateUnsignedTypes);
-
-    /**
      * Whether the {@link Generated} annotation should be generated
      */
     boolean generateGeneratedAnnotation();

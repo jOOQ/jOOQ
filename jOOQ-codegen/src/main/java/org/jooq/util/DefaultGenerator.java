@@ -106,7 +106,6 @@ public class DefaultGenerator implements Generator {
     private boolean                 generateDeprecated          = true;
     private boolean                 generateRelations           = false;
     private boolean                 generateInstanceFields      = true;
-    private boolean                 generateUnsignedTypes       = true;
     private boolean                 generateGeneratedAnnotation = true;
     private GeneratorStrategy       strategy;
 
@@ -148,16 +147,6 @@ public class DefaultGenerator implements Generator {
     @Override
     public void setGenerateInstanceFields(boolean generateInstanceFields) {
         this.generateInstanceFields = generateInstanceFields;
-    }
-
-    @Override
-    public boolean generateUnsignedTypes() {
-        return generateUnsignedTypes;
-    }
-
-    @Override
-    public void setGenerateUnsignedTypes(boolean generateUnsignedTypes) {
-        this.generateUnsignedTypes = generateUnsignedTypes;
     }
 
     @Override

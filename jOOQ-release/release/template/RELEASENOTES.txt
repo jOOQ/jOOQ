@@ -76,6 +76,8 @@ Bug fixes
         arrays that contain NULL values
 #1084 - Bind index mismatch in val(null).equal(null) and in
         val(null).notEqual(null)
+#1091 - Add missing @Support annotations on Table.crossJoin()
+        methods
 
 Test cases
 ----------

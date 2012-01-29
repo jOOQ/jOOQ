@@ -64,10 +64,11 @@ public interface MergeMatchedDeleteStep<R extends Record> extends MergeNotMatche
      * <p>
      * <b>Note:</b> This syntax is only available for the
      * {@link SQLDialect#ORACLE} database!
-     *
-     * @see <a
-     *      href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm">http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm</a>
-     *      for a full definition of the Oracle <code>MERGE</code> statement
+     * <p>
+     * See <a href=
+     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
+     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
+     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support(ORACLE)
     MergeNotMatchedStep<R> deleteWhere(Condition condition);

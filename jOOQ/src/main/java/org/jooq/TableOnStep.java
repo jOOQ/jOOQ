@@ -104,9 +104,9 @@ public interface TableOnStep {
      * Join the table on a non-ambiguous foreign key relationship between the
      * two joined tables.
      * <p>
-     * See {@link #onKey(Key)} for examples.
+     * See {@link #onKey(ForeignKey)} for examples.
      *
-     * @see #onKey(Key)
+     * @see #onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
@@ -117,9 +117,9 @@ public interface TableOnStep {
      * Join the table on a non-ambiguous foreign key relationship between the
      * two joined tables.
      * <p>
-     * See {@link #onKey(Key)} for examples.
+     * See {@link #onKey(ForeignKey)} for examples.
      *
-     * @see #onKey(Key)
+     * @see #onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */

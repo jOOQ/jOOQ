@@ -7281,7 +7281,7 @@ public abstract class jOOQAbstractTest<
         // Sybase: Is casting enums to unknown enum types
         // ASE: Cannot implicitly cast '1' to 1
 
-        // TODO [#677] This doesn't work correctly yet for
+        // TODO [#677] [#1013] This doesn't work correctly yet for
         // Ingres, HSQLDB, H2, Derby, Sybase ASE
         // Double-check again for Postgres
 

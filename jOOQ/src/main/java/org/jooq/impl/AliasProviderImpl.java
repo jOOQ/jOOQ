@@ -36,6 +36,12 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
+
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.AliasProvider;
@@ -87,15 +93,9 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                 context.sql(")");
             }
 
-            switch (context.getDialect()) {
-
-                // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
-                case POSTGRES:
-                case HSQLDB:
-                case DERBY:
-                case MYSQL:
-                    context.sql(" as");
-                    break;
+            // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
+            if (Arrays.asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.getDialect())) {
+                context.sql(" as");
             }
 
             context.sql(" ");

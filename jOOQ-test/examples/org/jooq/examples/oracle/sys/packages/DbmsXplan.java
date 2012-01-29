@@ -10,12 +10,336 @@ package org.jooq.examples.oracle.sys.packages;
  */
 public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 407039933;
+	private static final long serialVersionUID = 1703556324;
 
 	/**
 	 * The singleton instance of DBMS_XPLAN
 	 */
 	public static org.jooq.examples.oracle.sys.packages.DbmsXplan DBMS_XPLAN = new org.jooq.examples.oracle.sys.packages.DbmsXplan();
+
+	/**
+	 * Invoke BUILD_PLAN_XML
+	 *
+	 * @param tableName
+	 * @param statementId
+	 * @param planId
+	 * @param format
+	 * @param filterPreds
+	 * @param planTag
+	 * @param reportRef
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.Object buildPlanXml(org.jooq.Configuration configuration, java.lang.String tableName, java.lang.String statementId, java.lang.Number planId, java.lang.String format, java.lang.String filterPreds, java.lang.String planTag, java.lang.String reportRef) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml();
+		f.setTableName(tableName);
+		f.setStatementId(statementId);
+		f.setPlanId(planId);
+		f.setFormat(format);
+		f.setFilterPreds(filterPreds);
+		f.setPlanTag(planTag);
+		f.setReportRef(reportRef);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get BUILD_PLAN_XML as a field
+	 *
+	 * @param tableName
+	 * @param statementId
+	 * @param planId
+	 * @param format
+	 * @param filterPreds
+	 * @param planTag
+	 * @param reportRef
+	 */
+	public static org.jooq.Field<java.lang.Object> buildPlanXml(java.lang.String tableName, java.lang.String statementId, java.lang.Number planId, java.lang.String format, java.lang.String filterPreds, java.lang.String planTag, java.lang.String reportRef) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml();
+		f.setTableName(tableName);
+		f.setStatementId(statementId);
+		f.setPlanId(planId);
+		f.setFormat(format);
+		f.setFilterPreds(filterPreds);
+		f.setPlanTag(planTag);
+		f.setReportRef(reportRef);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get BUILD_PLAN_XML as a field
+	 *
+	 * @param tableName
+	 * @param statementId
+	 * @param planId
+	 * @param format
+	 * @param filterPreds
+	 * @param planTag
+	 * @param reportRef
+	 */
+	public static org.jooq.Field<java.lang.Object> buildPlanXml(org.jooq.Field<java.lang.String> tableName, org.jooq.Field<java.lang.String> statementId, org.jooq.Field<? extends java.lang.Number> planId, org.jooq.Field<java.lang.String> format, org.jooq.Field<java.lang.String> filterPreds, org.jooq.Field<java.lang.String> planTag, org.jooq.Field<java.lang.String> reportRef) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.BuildPlanXml();
+		f.setTableName(tableName);
+		f.setStatementId(statementId);
+		f.setPlanId(planId);
+		f.setFormat(format);
+		f.setFilterPreds(filterPreds);
+		f.setPlanTag(planTag);
+		f.setReportRef(reportRef);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke DIFF_PLAN
+	 *
+	 * @param sqlText
+	 * @param outline
+	 * @param userName
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String diffPlan(org.jooq.Configuration configuration, java.lang.String sqlText, java.lang.String outline, java.lang.String userName) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan();
+		f.setSqlText(sqlText);
+		f.setOutline(outline);
+		f.setUserName(userName);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DIFF_PLAN as a field
+	 *
+	 * @param sqlText
+	 * @param outline
+	 * @param userName
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlan(java.lang.String sqlText, java.lang.String outline, java.lang.String userName) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan();
+		f.setSqlText(sqlText);
+		f.setOutline(outline);
+		f.setUserName(userName);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DIFF_PLAN as a field
+	 *
+	 * @param sqlText
+	 * @param outline
+	 * @param userName
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlan(org.jooq.Field<java.lang.String> sqlText, org.jooq.Field<java.lang.String> outline, org.jooq.Field<java.lang.String> userName) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlan();
+		f.setSqlText(sqlText);
+		f.setOutline(outline);
+		f.setUserName(userName);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke DIFF_PLAN_AWR
+	 *
+	 * @param sqlId
+	 * @param planHashValue1
+	 * @param planHashValue2
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String diffPlanAwr(org.jooq.Configuration configuration, java.lang.String sqlId, java.lang.Number planHashValue1, java.lang.Number planHashValue2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr();
+		f.setSqlId(sqlId);
+		f.setPlanHashValue1(planHashValue1);
+		f.setPlanHashValue2(planHashValue2);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DIFF_PLAN_AWR as a field
+	 *
+	 * @param sqlId
+	 * @param planHashValue1
+	 * @param planHashValue2
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanAwr(java.lang.String sqlId, java.lang.Number planHashValue1, java.lang.Number planHashValue2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr();
+		f.setSqlId(sqlId);
+		f.setPlanHashValue1(planHashValue1);
+		f.setPlanHashValue2(planHashValue2);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DIFF_PLAN_AWR as a field
+	 *
+	 * @param sqlId
+	 * @param planHashValue1
+	 * @param planHashValue2
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanAwr(org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<? extends java.lang.Number> planHashValue1, org.jooq.Field<? extends java.lang.Number> planHashValue2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanAwr();
+		f.setSqlId(sqlId);
+		f.setPlanHashValue1(planHashValue1);
+		f.setPlanHashValue2(planHashValue2);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke DIFF_PLAN_CURSOR
+	 *
+	 * @param sqlId
+	 * @param cursorChildNum1
+	 * @param cursorChildNum2
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String diffPlanCursor(org.jooq.Configuration configuration, java.lang.String sqlId, java.lang.Number cursorChildNum1, java.lang.Number cursorChildNum2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor();
+		f.setSqlId(sqlId);
+		f.setCursorChildNum1(cursorChildNum1);
+		f.setCursorChildNum2(cursorChildNum2);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DIFF_PLAN_CURSOR as a field
+	 *
+	 * @param sqlId
+	 * @param cursorChildNum1
+	 * @param cursorChildNum2
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanCursor(java.lang.String sqlId, java.lang.Number cursorChildNum1, java.lang.Number cursorChildNum2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor();
+		f.setSqlId(sqlId);
+		f.setCursorChildNum1(cursorChildNum1);
+		f.setCursorChildNum2(cursorChildNum2);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DIFF_PLAN_CURSOR as a field
+	 *
+	 * @param sqlId
+	 * @param cursorChildNum1
+	 * @param cursorChildNum2
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanCursor(org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<? extends java.lang.Number> cursorChildNum1, org.jooq.Field<? extends java.lang.Number> cursorChildNum2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanCursor();
+		f.setSqlId(sqlId);
+		f.setCursorChildNum1(cursorChildNum1);
+		f.setCursorChildNum2(cursorChildNum2);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke DIFF_PLAN_OUTLINE
+	 *
+	 * @param sqlText
+	 * @param outline1
+	 * @param outline2
+	 * @param userName
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String diffPlanOutline(org.jooq.Configuration configuration, java.lang.String sqlText, java.lang.String outline1, java.lang.String outline2, java.lang.String userName) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline();
+		f.setSqlText(sqlText);
+		f.setOutline1(outline1);
+		f.setOutline2(outline2);
+		f.setUserName(userName);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DIFF_PLAN_OUTLINE as a field
+	 *
+	 * @param sqlText
+	 * @param outline1
+	 * @param outline2
+	 * @param userName
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanOutline(java.lang.String sqlText, java.lang.String outline1, java.lang.String outline2, java.lang.String userName) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline();
+		f.setSqlText(sqlText);
+		f.setOutline1(outline1);
+		f.setOutline2(outline2);
+		f.setUserName(userName);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DIFF_PLAN_OUTLINE as a field
+	 *
+	 * @param sqlText
+	 * @param outline1
+	 * @param outline2
+	 * @param userName
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanOutline(org.jooq.Field<java.lang.String> sqlText, org.jooq.Field<java.lang.String> outline1, org.jooq.Field<java.lang.String> outline2, org.jooq.Field<java.lang.String> userName) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanOutline();
+		f.setSqlText(sqlText);
+		f.setOutline1(outline1);
+		f.setOutline2(outline2);
+		f.setUserName(userName);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke DIFF_PLAN_SQL_BASELINE
+	 *
+	 * @param baselinePlanName1
+	 * @param baselinePlanName2
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String diffPlanSqlBaseline(org.jooq.Configuration configuration, java.lang.String baselinePlanName1, java.lang.String baselinePlanName2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline();
+		f.setBaselinePlanName1(baselinePlanName1);
+		f.setBaselinePlanName2(baselinePlanName2);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DIFF_PLAN_SQL_BASELINE as a field
+	 *
+	 * @param baselinePlanName1
+	 * @param baselinePlanName2
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanSqlBaseline(java.lang.String baselinePlanName1, java.lang.String baselinePlanName2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline();
+		f.setBaselinePlanName1(baselinePlanName1);
+		f.setBaselinePlanName2(baselinePlanName2);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DIFF_PLAN_SQL_BASELINE as a field
+	 *
+	 * @param baselinePlanName1
+	 * @param baselinePlanName2
+	 */
+	public static org.jooq.Field<java.lang.String> diffPlanSqlBaseline(org.jooq.Field<java.lang.String> baselinePlanName1, org.jooq.Field<java.lang.String> baselinePlanName2) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DiffPlanSqlBaseline();
+		f.setBaselinePlanName1(baselinePlanName1);
+		f.setBaselinePlanName2(baselinePlanName2);
+
+		return f.asField();
+	}
 
 	/**
 	 * Invoke DISPLAY
@@ -180,6 +504,118 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
+	 * Invoke DISPLAY_PLAN
+	 *
+	 * @param tableName
+	 * @param statementId
+	 * @param format
+	 * @param filterPreds
+	 * @param type
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String displayPlan(org.jooq.Configuration configuration, java.lang.String tableName, java.lang.String statementId, java.lang.String format, java.lang.String filterPreds, java.lang.String type) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan();
+		f.setTableName(tableName);
+		f.setStatementId(statementId);
+		f.setFormat(format);
+		f.setFilterPreds(filterPreds);
+		f.setType(type);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DISPLAY_PLAN as a field
+	 *
+	 * @param tableName
+	 * @param statementId
+	 * @param format
+	 * @param filterPreds
+	 * @param type
+	 */
+	public static org.jooq.Field<java.lang.String> displayPlan(java.lang.String tableName, java.lang.String statementId, java.lang.String format, java.lang.String filterPreds, java.lang.String type) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan();
+		f.setTableName(tableName);
+		f.setStatementId(statementId);
+		f.setFormat(format);
+		f.setFilterPreds(filterPreds);
+		f.setType(type);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DISPLAY_PLAN as a field
+	 *
+	 * @param tableName
+	 * @param statementId
+	 * @param format
+	 * @param filterPreds
+	 * @param type
+	 */
+	public static org.jooq.Field<java.lang.String> displayPlan(org.jooq.Field<java.lang.String> tableName, org.jooq.Field<java.lang.String> statementId, org.jooq.Field<java.lang.String> format, org.jooq.Field<java.lang.String> filterPreds, org.jooq.Field<java.lang.String> type) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayPlan();
+		f.setTableName(tableName);
+		f.setStatementId(statementId);
+		f.setFormat(format);
+		f.setFilterPreds(filterPreds);
+		f.setType(type);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke DISPLAY_SQL_PLAN_BASELINE
+	 *
+	 * @param sqlHandle
+	 * @param planName
+	 * @param format
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.Object displaySqlPlanBaseline(org.jooq.Configuration configuration, java.lang.String sqlHandle, java.lang.String planName, java.lang.String format) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline();
+		f.setSqlHandle(sqlHandle);
+		f.setPlanName(planName);
+		f.setFormat(format);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get DISPLAY_SQL_PLAN_BASELINE as a field
+	 *
+	 * @param sqlHandle
+	 * @param planName
+	 * @param format
+	 */
+	public static org.jooq.Field<java.lang.Object> displaySqlPlanBaseline(java.lang.String sqlHandle, java.lang.String planName, java.lang.String format) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline();
+		f.setSqlHandle(sqlHandle);
+		f.setPlanName(planName);
+		f.setFormat(format);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get DISPLAY_SQL_PLAN_BASELINE as a field
+	 *
+	 * @param sqlHandle
+	 * @param planName
+	 * @param format
+	 */
+	public static org.jooq.Field<java.lang.Object> displaySqlPlanBaseline(org.jooq.Field<java.lang.String> sqlHandle, org.jooq.Field<java.lang.String> planName, org.jooq.Field<java.lang.String> format) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline();
+		f.setSqlHandle(sqlHandle);
+		f.setPlanName(planName);
+		f.setFormat(format);
+
+		return f.asField();
+	}
+
+	/**
 	 * Invoke DISPLAY_SQLSET
 	 *
 	 * @param sqlsetName
@@ -237,6 +673,284 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 		f.setPlanHashValue(planHashValue);
 		f.setFormat(format);
 		f.setSqlsetOwner(sqlsetOwner);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke FORMAT_NUMBER
+	 *
+	 * @param num
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String formatNumber(org.jooq.Configuration configuration, java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber();
+		f.setNum(num);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get FORMAT_NUMBER as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatNumber(java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get FORMAT_NUMBER as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatNumber(org.jooq.Field<? extends java.lang.Number> num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke FORMAT_NUMBER2
+	 *
+	 * @param num
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String formatNumber2(org.jooq.Configuration configuration, java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2 f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2();
+		f.setNum(num);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get FORMAT_NUMBER2 as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatNumber2(java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2 f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get FORMAT_NUMBER2 as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatNumber2(org.jooq.Field<? extends java.lang.Number> num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2 f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatNumber2();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke FORMAT_SIZE
+	 *
+	 * @param num
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String formatSize(org.jooq.Configuration configuration, java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize();
+		f.setNum(num);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get FORMAT_SIZE as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatSize(java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get FORMAT_SIZE as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatSize(org.jooq.Field<? extends java.lang.Number> num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke FORMAT_SIZE2
+	 *
+	 * @param num
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String formatSize2(org.jooq.Configuration configuration, java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize2 f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize2();
+		f.setNum(num);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get FORMAT_SIZE2 as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatSize2(java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize2 f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize2();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get FORMAT_SIZE2 as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatSize2(org.jooq.Field<? extends java.lang.Number> num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize2 f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatSize2();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke FORMAT_TIME_S
+	 *
+	 * @param num
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String formatTimeS(org.jooq.Configuration configuration, java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatTimeS f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatTimeS();
+		f.setNum(num);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get FORMAT_TIME_S as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatTimeS(java.lang.Number num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatTimeS f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatTimeS();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get FORMAT_TIME_S as a field
+	 *
+	 * @param num
+	 */
+	public static org.jooq.Field<java.lang.String> formatTimeS(org.jooq.Field<? extends java.lang.Number> num) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatTimeS f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.FormatTimeS();
+		f.setNum(num);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke GET_PLANDIFF_REPORT_XML
+	 *
+	 * @param reportRef
+	 * @param tid
+	 * @param method
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.Object getPlandiffReportXml(org.jooq.Configuration configuration, java.lang.String reportRef, java.lang.Number tid, java.lang.String method) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml();
+		f.setReportRef(reportRef);
+		f.setTid(tid);
+		f.setMethod(method);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get GET_PLANDIFF_REPORT_XML as a field
+	 *
+	 * @param reportRef
+	 * @param tid
+	 * @param method
+	 */
+	public static org.jooq.Field<java.lang.Object> getPlandiffReportXml(java.lang.String reportRef, java.lang.Number tid, java.lang.String method) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml();
+		f.setReportRef(reportRef);
+		f.setTid(tid);
+		f.setMethod(method);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get GET_PLANDIFF_REPORT_XML as a field
+	 *
+	 * @param reportRef
+	 * @param tid
+	 * @param method
+	 */
+	public static org.jooq.Field<java.lang.Object> getPlandiffReportXml(org.jooq.Field<java.lang.String> reportRef, org.jooq.Field<? extends java.lang.Number> tid, org.jooq.Field<java.lang.String> method) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.GetPlandiffReportXml();
+		f.setReportRef(reportRef);
+		f.setTid(tid);
+		f.setMethod(method);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke PREPARE_PLAN_XML_QUERY
+	 *
+	 * @param planQuery
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String preparePlanXmlQuery(org.jooq.Configuration configuration, java.lang.String planQuery) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery();
+		f.setPlanQuery(planQuery);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get PREPARE_PLAN_XML_QUERY as a field
+	 *
+	 * @param planQuery
+	 */
+	public static org.jooq.Field<java.lang.String> preparePlanXmlQuery(java.lang.String planQuery) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery();
+		f.setPlanQuery(planQuery);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get PREPARE_PLAN_XML_QUERY as a field
+	 *
+	 * @param planQuery
+	 */
+	public static org.jooq.Field<java.lang.String> preparePlanXmlQuery(org.jooq.Field<java.lang.String> planQuery) {
+		org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.PreparePlanXmlQuery();
+		f.setPlanQuery(planQuery);
 
 		return f.asField();
 	}

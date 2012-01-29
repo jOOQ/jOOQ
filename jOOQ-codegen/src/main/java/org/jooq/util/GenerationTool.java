@@ -85,7 +85,7 @@ public class GenerationTool {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		if (args.length != 1) {
+		if (args.length < 1) {
 			error();
 		}
 
@@ -108,7 +108,7 @@ public class GenerationTool {
     		else {
     	        Properties properties = new Properties();
                 properties.load(in);
-    	        main(properties);
+    	        main(properties, args);
     		}
 		} catch (Exception e) {
             log.error("Cannot read " + args[0] + ". Error : " + e.getMessage());
@@ -120,11 +120,7 @@ public class GenerationTool {
         }
 	}
 
-	public static void main(Properties properties) throws Exception {
-	    log.warn("WARNING: jooq-codegen source code generation using .properties files is deprecated");
-	    log.warn("WARNING: consider using XML configuration instead");
-	    log.warn("WARNING: See http://www.jooq.org/manual/META/Configuration/ for more details");
-
+	public static void main(Properties properties, String... args) throws Exception {
 	    Jdbc jdbc = new Jdbc();
 	    jdbc.setDriver(properties.getProperty("jdbc.Driver"));
 	    jdbc.setUrl(properties.getProperty("jdbc.URL"));
@@ -137,6 +133,8 @@ public class GenerationTool {
 
 	    MasterDataTables masterDataTables = new MasterDataTables();
 	    for (String name : defaultString(properties.getProperty("generator.generate.master-data-tables")).split(",")) {
+	        if (isBlank(name)) continue;
+
 	        MasterDataTable table = new MasterDataTable();
 
 	        table.setName(name);
@@ -177,9 +175,16 @@ public class GenerationTool {
 	    database.setIncludes(properties.containsKey("generator.database.includes") ? properties.getProperty("generator.database.includes") : null);
 	    database.setExcludes(properties.containsKey("generator.database.excludes") ? properties.getProperty("generator.database.excludes") : null);
 	    database.setDateAsTimestamp("true".equalsIgnoreCase(properties.getProperty("generator.database.date-as-timestamp")));
-        database.setMasterDataTables(masterDataTables);
-        database.setEnumTypes(enumTypes);
-        database.setForcedTypes(forcedTypes);
+
+	    // Avoid creating these empty elements when migrating
+	    if (!masterDataTables.getMasterDataTable().isEmpty())
+	        database.setMasterDataTables(masterDataTables);
+
+	    if (!enumTypes.getEnumType().isEmpty())
+	        database.setEnumTypes(enumTypes);
+
+	    if (!forcedTypes.getForcedType().isEmpty())
+	        database.setForcedTypes(forcedTypes);
 
 	    Target target = new Target();
 	    target.setPackageName(properties.getProperty("generator.target.package"));
@@ -193,7 +198,10 @@ public class GenerationTool {
 	    generate.setGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
 
 	    org.jooq.util.jaxb.Generator generator = new org.jooq.util.jaxb.Generator();
-	    generator.setStrategy(strategy);
+
+	    if (!isBlank(strategy.getName()))
+	        generator.setStrategy(strategy);
+
 	    generator.setDatabase(database);
         generator.setTarget(target);
         generator.setGenerate(generate);
@@ -203,7 +211,21 @@ public class GenerationTool {
         configuration.setJdbc(jdbc);
         configuration.setGenerator(generator);
 
-	    main(configuration);
+        if (args.length < 2) {
+            log.warn("WARNING: jooq-codegen source code generation using .properties files is deprecated as of jOOQ 2.0.4");
+            log.info("         Consider using XML configuration instead");
+            log.info("         See http://www.jooq.org/manual/META/Configuration/ for more details");
+            log.info("");
+            log.info("Use GenerationTool to migrate your .properties file to XML (printed on System.out) :");
+            log.info("Usage  : GenerationTool <configuration-file> migrate");
+            log.info("");
+
+            main(configuration);
+        }
+        else if ("migrate".equals(args[1])) {
+            log.info("Migrating properties to XML");
+            JAXB.marshal(configuration, System.out);
+        }
 	}
 
 	@SuppressWarnings("unchecked")

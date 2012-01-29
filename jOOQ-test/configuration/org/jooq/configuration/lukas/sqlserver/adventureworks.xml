@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd">
+    <jdbc>
+        <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
+        <url>jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true</url>
+        <schema>dbo</schema>
+        <user></user>
+        <password></password>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <database>
+            <name>org.jooq.util.sqlserver.SQLServerDatabase</name>
+            <includes>.*</includes>
+            <excludes></excludes>
+            <dateAsTimestamp>false</dateAsTimestamp>
+        </database>
+        <generate>
+            <relations>true</relations>
+            <deprecated>true</deprecated>
+            <instanceFields>true</instanceFields>
+            <unsignedTypes>true</unsignedTypes>
+            <generatedAnnotation>false</generatedAnnotation>
+        </generate>
+        <target>
+            <packageName>org.jooq.examples.sqlserver.adventureworks.dbo</packageName>
+            <directory>./examples</directory>
+        </target>
+    </generator>
+</configuration>

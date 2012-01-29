@@ -69,6 +69,64 @@
 				minOccurs="0" maxOccurs="1" />
 			<element name="outputSchema" type="string" default=""
 				minOccurs="0" maxOccurs="1" />
+			<element name="masterDataTables" minOccurs="0" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="masterDataTable" type="tns:MasterDataTable" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="enumTypes" minOccurs="0" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="enumType" type="tns:EnumType" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="forcedTypes" minOccurs="0" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="forcedType" type="tns:ForcedType" minOccurs="0" maxOccurs="unbounded"/>
+					</sequence>
+				</complexType>
+			</element>
+		</all>
+	</complexType>
+
+	<complexType name="MasterDataTable">
+		<annotation>
+			<documentation>
+				Configuration for a master data table
+			</documentation>
+		</annotation>
+		<all>
+			<element name="name" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="literal" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="description" type="string" minOccurs="0" maxOccurs="1"/>
+		</all>
+	</complexType>
+
+	<complexType name="EnumType">
+		<annotation>
+			<documentation>
+				Configuration for custom enum types
+			</documentation>
+		</annotation>
+		<all>
+			<element name="name" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="literals" type="string" minOccurs="1" maxOccurs="1"/>
+		</all>
+	</complexType>
+
+	<complexType name="ForcedType">
+		<annotation>
+			<documentation>
+				Configuration for forced types
+			</documentation>
+		</annotation>
+		<all>
+			<element name="name" type="string" minOccurs="1" maxOccurs="1"/>
+			<element name="expressions" type="string" minOccurs="1" maxOccurs="1"/>
 		</all>
 	</complexType>
 

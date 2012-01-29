@@ -16,20 +16,20 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
- * 				Configuration for the target artefacts
+ * 				Configuration for custom enum types
  * 			
  * 
- * <p>Java class for Target complex type.
+ * <p>Java class for EnumType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Target">
+ * &lt;complexType name="EnumType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="packageName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="directory" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="literals" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,62 +39,62 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Target", propOrder = {
+@XmlType(name = "EnumType", propOrder = {
 
 })
-public class Target {
+public class EnumType {
 
-    @XmlElement(defaultValue = "org.jooq.generated")
-    protected String packageName;
-    @XmlElement(required = true, defaultValue = "target/generated-sources/jooq")
-    protected String directory;
+    @XmlElement(required = true)
+    protected String name;
+    @XmlElement(required = true)
+    protected String literals;
 
     /**
-     * Gets the value of the packageName property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPackageName() {
-        return packageName;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the packageName property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPackageName(String value) {
-        this.packageName = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the directory property.
+     * Gets the value of the literals property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getDirectory() {
-        return directory;
+    public String getLiterals() {
+        return literals;
     }
 
     /**
-     * Sets the value of the directory property.
+     * Sets the value of the literals property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setDirectory(String value) {
-        this.directory = value;
+    public void setLiterals(String value) {
+        this.literals = value;
     }
 
 }

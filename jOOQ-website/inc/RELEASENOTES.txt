@@ -9,6 +9,81 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.0.3 - January 29, 2012
+=================================================================
+
+This release focuses on increased compatibility between various
+SQL dialect integrations as far as ARRAY and JOIN support is
+concerned:
+
+- ARRAY types are only available in H2, HSQLDB, Oracle, Postgres.
+  Nevertheless, they can be somewhat simulated in other dialects
+  using nested selects with UNION ALL. Increased compatibility
+  leads to a nicer API, where ARRAYs are used along with ALL/ANY
+  quantifiers, for instance.
+
+- JOIN syntaxes can be quite powerful in SQL. Apart from
+  simulating NATURAL JOIN, JOIN USING clauses, as well as a
+  synthetic "KEY JOIN" syntax, jOOQ now also supports nesting
+  JOIN expressions to create more complex table sources. See a
+  recent blog post on the subject here:
+
+http://lukaseder.wordpress.com/2012/01/15/lets-revise-the-sql-from-clause/
+
+Features and improvements
+-------------------------
+#578  - Add KEY JOIN syntax to simulate joining using generated
+        foreign keys
+#577  - Simulate NATURAL JOIN syntax, where this is unavailable
+#582  - Simulate JOIN USING syntax, where this is unavailable
+#671  - Allow for nesting JOIN clauses
+#676  - Add Table.join() methods to create more flexible table
+        sources
+#993  - Add Field.equalAny(T[]), .equalAny(Field<T[]>) methods
+#1048 - Simulate <op> <quantifier> (array) syntax for dialects
+        that do not support arrays
+#1051 - Add Factory.execute(String, Object...) as a convenience
+        method for Factory.query(...).execute()
+#1055 - Simulate Factory.table(Object[]) and table(List<?>) using
+        UNION ALL in dialects that do not support arrays
+#1060 - Improve debug logging of H2 arrays. The syntax is not
+        ARRAY[1, 2], but (1, 2)
+#1065 - Add OracleFactory.sysContext(String, String) to support
+        Oracle's SYS_CONTEXT function
+#1069 - Add support for INSERT INTO table(field1, field2, ...)
+        SELECT syntax - as opposed to the existing INSERT INTO
+        table SELECT
+#1072 - Add support for LIKE .. ESCAPE .. syntax
+#1074 - Add Field.notBetween(T, T) for convenience
+#1080 - Add support for JDBC's Statement.setFetchSize() in
+        ResultQuery.fetchLazy()
+#1082 - Add some more DEBUG logging in AbstractResultQuery
+
+API changes (backwards-compatible)
+----------------------------------
+#1059 - Change SelectFromStep.from(Collection<TableLike<?>>) to
+        from(Collection<? extends TableLike<?>>)
+
+API changes (backwards-incompatible)
+------------------------------------
+#1087 - Change the NTILE function to return Field<Integer>
+        instead of Field<BigDecimal>
+
+Bug fixes
+---------
+#1071 - Make Sequence Serializable
+#1081 - Derby error in NULL handling when simulating unnested
+        arrays that contain NULL values
+#1084 - Bind index mismatch in val(null).equal(null) and in
+        val(null).notEqual(null)
+
+Test cases
+----------
+#1026 - Add integration tests for NTILE window function and
+        document compatibility
+#1073 - Add integration tests for NOT IN queries holding NULL
+        arguments
+
 Version 2.0.2 - January 8, 2012
 =================================================================
 

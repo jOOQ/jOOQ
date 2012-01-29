@@ -485,6 +485,22 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
+<fo:basic-link internal-destination="TABLESOURCE">Table sources<fo:leader leader-pattern="dots"/>
+<fo:page-number-citation ref-id="TABLESOURCE"/>
+</fo:basic-link>
+</fo:inline>
+</fo:block>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">3.</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:block text-align-last="justify">
+<fo:inline>
 <fo:basic-link internal-destination="CONDITION">Conditions<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="CONDITION"/>
 </fo:basic-link>
@@ -495,7 +511,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">3.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -511,7 +527,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -527,7 +543,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -543,7 +559,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -559,7 +575,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">8.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -575,7 +591,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">8.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">9.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -591,7 +607,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">9.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">10.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -607,7 +623,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">10.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">11.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -623,7 +639,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">11.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">12.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -639,7 +655,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">12.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">13.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -655,7 +671,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">13.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">14.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -1842,8 +1858,8 @@ i.execute();</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT SELECT syntax support</fo:block>
 							<fo:block font-size="11pt">In some occasions, you may prefer the INSERT SELECT syntax, for instance, when
 								you copy records from one table to another: </fo:block>
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
-           create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Insert i = create.insertInto(T_AUTHOR_ARCHIVE)
+                 .select(create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
 i.execute();</fo:block>
 
 
@@ -3736,19 +3752,30 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectOnStep.java')">org.jooq.SelectOnStep</fo:basic-link>
 								is a top-level interface. </fo:block>
 
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// These join conditions are supported
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// These join conditions are supported
 SelectJoinStep    on(Condition... conditions);
-SelectJoinStep using(Field&lt;?&gt;... fields);
+SelectJoinStep onKey();
+SelectJoinStep onKey(TableField<?, ?>... keyFields);
+SelectJoinStep onKey(ForeignKey<?, ?> key);
+SelectJoinStep using(Field<?>... fields);
 
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));</fo:block>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));]]></fo:block>
 
-							<fo:block font-size="11pt">See the section about
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="CONDITION">Conditions</fo:basic-link>
+							<fo:block font-size="11pt">
+								See the section about
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="CONDITION">conditions</fo:basic-link>
 								to learn more about the many ways
-								to create Conditions in jOOQ. Now we're half way through. As you can
+								to create Conditions in jOOQ.
+								See also the section about
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="TABLESOURCE">table sources</fo:basic-link>
+								to learn more about the various ways of creating JOIN
+								expressions
+							</fo:block>
+							<fo:block font-size="11pt">
+								Now we're half way through. As you can
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
@@ -3903,10 +3930,75 @@ Record fetchOne();
                    .where(TBook.LANGUAGE.equal("DE"))
                    .orderBy(TBook.TITLE)
                    .fetchAny();</fo:block>
+						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="TABLESOURCE">
+<fo:marker marker-class-name="section">
+<fo:block>3.2. Table sources</fo:block>
+</fo:marker>3.2. Table sources</fo:block>
+<fo:block font-size="11pt">
+							When OLTP selects/updates/inserts/deletes records in single tables, OLAP is all about
+							creating custom table sources or ad-hoc row types
+						</fo:block>
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Create complex and nested table sources with jOOQ</fo:block>
+							<fo:block font-size="11pt">
+								In the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://en.wikipedia.org/wiki/Relational_model')">relational data model</fo:basic-link>,
+								there are many operations performed on entities, i.e. tables in order to join them together
+								before applying predicates, renaming operations and projections. Apart from the convenience
+								methods for joining table sources in the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SELECT">manual's section about the full SELECT syntax</fo:basic-link>,
+								the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java')">Table</fo:basic-link> type itself provides a
+								rich API for creating joined table sources. See an extract of the Table API:
+							</fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// These are the various supported JOIN clauses. These JOIN types
+// are followed by an additional ON / ON KEY / USING clause
+TableOnStep join(TableLike<?> table);
+TableOnStep join(String sql);
+TableOnStep join(String sql, Object... bindings);
+
+// All other JOIN types are equally overloaded with "String sql" convenience methods...
+TableOnStep  leftOuterJoin(TableLike<?> table);
+TableOnStep rightOuterJoin(TableLike<?> table);
+TableOnStep  fullOuterJoin(TableLike<?> table);
+
+// These JOIN types don't take any additional clause
+Table<Record>             crossJoin(TableLike<?> table);
+Table<Record>           naturalJoin(TableLike<?> table);
+Table<Record>  naturalLeftOuterJoin(TableLike<?> table);
+Table<Record> naturalRightOuterJoin(TableLike<?> table);
+
+// Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
+// table into another one using a list of PIVOT values
+PivotForStep pivot(Field<?>... aggregateFunctions);
+PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);]]></fo:block>
+
+							<fo:block font-size="11pt">
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableOnStep.java')">TableOnStep</fo:basic-link> type
+								contains methods for constructing the ON / ON KEY / USING clauses
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// The ON clause is the most widely used JOIN condition. Provide arbitrary conditions as arguments
+TableOnConditionStep on(Condition... conditions);
+TableOnConditionStep on(String sql);
+TableOnConditionStep on(String sql, Object... bindings);
+
+// The USING clause is also part of the SQL standard. Use this if joined tables contain identical field names.
+// The USING clause is simulated in databases that do not support it.
+Table<Record> using(Field<?>... fields);
+Table<Record> using(Collection<? extends Field<?>> fields);
+
+// The ON KEY clause is a "synthetic" clause that does not exist in any SQL dialect. jOOQ usually has all
+// foreign key relationship information to dynamically render "ON [ condition ... ]" clauses
+TableOnConditionStep onKey() throws DataAccessException;
+TableOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
+
+							<fo:block font-size="11pt">
+								For more details about the PIVOT clause, see the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="PIVOT">manual's section about the Oracle PIVOT syntax</fo:basic-link>
+							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONDITION">
 <fo:marker marker-class-name="section">
-<fo:block>3.2. Conditions</fo:block>
-</fo:marker>3.2. Conditions</fo:block>
+<fo:block>3.3. Conditions</fo:block>
+</fo:marker>3.3. Conditions</fo:block>
 <fo:block font-size="11pt">
 							The creation of conditions is the part of any database abstraction that
 							attracts the most attention.
@@ -4002,8 +4094,8 @@ T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUA
 T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ALIAS">
 <fo:marker marker-class-name="section">
-<fo:block>3.3. Aliased tables and fields</fo:block>
-</fo:marker>3.3. Aliased tables and fields</fo:block>
+<fo:block>3.4. Aliased tables and fields</fo:block>
+</fo:marker>3.4. Aliased tables and fields</fo:block>
 <fo:block font-size="11pt">
 							Aliasing is at the core of SQL and relational algebra. When you join
 							the same entity multiple times, you can rename it to distinguish the
@@ -4084,8 +4176,8 @@ GROUP BY FIRST_NAME, LAST_NAME;</fo:block>
 System.out.println("Books  : " + record.getValue("books"));</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="IN">
 <fo:marker marker-class-name="section">
-<fo:block>3.4. Nested SELECT using the IN operator</fo:block>
-</fo:marker>3.4. Nested SELECT using the IN operator</fo:block>
+<fo:block>3.5. Nested SELECT using the IN operator</fo:block>
+</fo:marker>3.5. Nested SELECT using the IN operator</fo:block>
 <fo:block font-size="11pt">
 							Set equal operations are very common when you want to select multiple
 							records. The IN operator can also be used for semi-joins, though
@@ -4149,8 +4241,8 @@ create.select(T_BOOK.getFields())
 </fo:table>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="EXISTS">
 <fo:marker marker-class-name="section">
-<fo:block>3.5. Nested SELECT using the EXISTS operator</fo:block>
-</fo:marker>3.5. Nested SELECT using the EXISTS operator</fo:block>
+<fo:block>3.6. Nested SELECT using the EXISTS operator</fo:block>
+</fo:marker>3.6. Nested SELECT using the EXISTS operator</fo:block>
 <fo:block font-size="11pt">The EXISTS operator is a bit different from all other SQL
 							elements, as it cannot really be applied to any object in a DSL.
 						</fo:block>
@@ -4245,8 +4337,8 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</fo:block>
 </fo:table>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="NESTED">
 <fo:marker marker-class-name="section">
-<fo:block>3.6. Other types of nested SELECT</fo:block>
-</fo:marker>3.6. Other types of nested SELECT</fo:block>
+<fo:block>3.7. Other types of nested SELECT</fo:block>
+</fo:marker>3.7. Other types of nested SELECT</fo:block>
 <fo:block font-size="11pt">Apart from the most common IN and EXISTS clauses that encourage
 							the use of nested selects, SQL knows a few more syntaxes to make use
 							of such constructs. </fo:block>
@@ -4389,8 +4481,8 @@ create.select(T_AUTHOR.ID, books)
 </fo:table>
                     	<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UNION">
 <fo:marker marker-class-name="section">
-<fo:block>3.7. UNION and other set operations</fo:block>
-</fo:marker>3.7. UNION and other set operations</fo:block>
+<fo:block>3.8. UNION and other set operations</fo:block>
+</fo:marker>3.8. UNION and other set operations</fo:block>
 <fo:block font-size="11pt">Unions, differences and intersections are vital set operations taken from set theory.</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's set operation API</fo:block>
 							<fo:block font-size="11pt">The
@@ -4542,8 +4634,8 @@ create.selectFrom(EMP).where(DEPT.equal("R&amp;D")
 							different.</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="FUNCTIONS">
 <fo:marker marker-class-name="section">
-<fo:block>3.8. Functions and aggregate operators</fo:block>
-</fo:marker>3.8. Functions and aggregate operators</fo:block>
+<fo:block>3.9. Functions and aggregate operators</fo:block>
+</fo:marker>3.9. Functions and aggregate operators</fo:block>
 <fo:block font-size="11pt">
 							Highly effective SQL cannot do without functions. Operations on
 							VARCHAR, DATE, and NUMERIC types in GROUP BY or ORDER BY clauses allow
@@ -4697,8 +4789,8 @@ AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field);
 </fo:table>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURES">
 <fo:marker marker-class-name="section">
-<fo:block>3.9. Stored procedures and functions</fo:block>
-</fo:marker>3.9. Stored procedures and functions</fo:block>
+<fo:block>3.10. Stored procedures and functions</fo:block>
+</fo:marker>3.10. Stored procedures and functions</fo:block>
 <fo:block font-size="11pt">
 							The full power of your database's vendor-specific extensions can hardly
 							be obtained outside of the
@@ -4776,8 +4868,8 @@ create.select(T_PERSON.NAME)
 								DSL either. </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ARITHMETIC">
 <fo:marker marker-class-name="section">
-<fo:block>3.10. Arithmetic operations and concatenation</fo:block>
-</fo:marker>3.10. Arithmetic operations and concatenation</fo:block>
+<fo:block>3.11. Arithmetic operations and concatenation</fo:block>
+</fo:marker>3.11. Arithmetic operations and concatenation</fo:block>
 <fo:block font-size="11pt">
 							Your database can do the math for you. Most arithmetic operations are
 							supported, but also string concatenation can be very efficient if done
@@ -4848,8 +4940,8 @@ create.select(concat("A", "B", "C"));
 </fo:table>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CASE">
 <fo:marker marker-class-name="section">
-<fo:block>3.11. The CASE clause</fo:block>
-</fo:marker>3.11. The CASE clause</fo:block>
+<fo:block>3.12. The CASE clause</fo:block>
+</fo:marker>3.12. The CASE clause</fo:block>
 <fo:block font-size="11pt">
 							The SQL standard supports a CASE clause, which works very similar to
 							Java's if-else statement. In complex SQL, this is very useful for value
@@ -4935,8 +5027,8 @@ ORDER BY CASE FIRST_NAME WHEN 'Paulo'  THEN 1
       .execute();</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CAST">
 <fo:marker marker-class-name="section">
-<fo:block>3.12. Type casting</fo:block>
-</fo:marker>3.12. Type casting</fo:block>
+<fo:block>3.13. Type casting</fo:block>
+</fo:marker>3.13. Type casting</fo:block>
 <fo:block font-size="11pt">
 							Many RDBMS allow for implicit or explicit conversion between types.
 							Apart from true type conversion, this is most often done with casting.
@@ -4980,8 +5072,8 @@ public class Factory {
 }</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SQL">
 <fo:marker marker-class-name="section">
-<fo:block>3.13. When it's just easier: Plain SQL</fo:block>
-</fo:marker>3.13. When it's just easier: Plain SQL</fo:block>
+<fo:block>3.14. When it's just easier: Plain SQL</fo:block>
+</fo:marker>3.14. When it's just easier: Plain SQL</fo:block>
 <fo:block font-size="11pt">
 							jOOQ cannot foresee all possible vendor-specific SQL features for your
 							database. And sometimes, even jOOQ code becomes too verbose. Then, you

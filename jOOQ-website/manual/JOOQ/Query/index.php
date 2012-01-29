@@ -311,8 +311,8 @@ i.execute();</pre>
 							<h3>Example: INSERT SELECT syntax support</h3>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when
 								you copy records from one table to another: </p>
-<pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
-           create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
+<pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE)
+                 .select(create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
 i.execute();</pre>
 
 

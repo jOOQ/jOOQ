@@ -836,8 +836,8 @@ i.execute();</java>
 							<h3>Example: INSERT SELECT syntax support</h3>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when
 								you copy records from one table to another: </p>
-<java>Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
-           create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
+<java>Insert i = create.insertInto(T_AUTHOR_ARCHIVE)
+                 .select(create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.isTrue()));
 i.execute();</java>
 
 
@@ -2416,19 +2416,30 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								<reference class="org.jooq.SelectOnStep"/>
 								is a top-level interface. </p>
 
-<java>// These join conditions are supported
+<java><![CDATA[// These join conditions are supported
 SelectJoinStep    on(Condition... conditions);
-SelectJoinStep using(Field&lt;?&gt;... fields);
+SelectJoinStep onKey();
+SelectJoinStep onKey(TableField<?, ?>... keyFields);
+SelectJoinStep onKey(ForeignKey<?, ?> key);
+SelectJoinStep using(Field<?>... fields);
 
 // The example, continued:
 create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
-      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));</java>
+      .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));]]></java>
 
-							<p>See the section about
-								<reference id="CONDITION" title="Conditions"/>
+							<p>
+								See the section about
+								<reference id="CONDITION" title="conditions"/>
 								to learn more about the many ways
-								to create Conditions in jOOQ. Now we're half way through. As you can
+								to create Conditions in jOOQ.
+								See also the section about
+								<reference id="TABLESOURCE" title="table sources"/>
+								to learn more about the various ways of creating JOIN
+								expressions
+							</p>
+							<p>
+								Now we're half way through. As you can
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
@@ -2583,6 +2594,74 @@ Record fetchOne();
                    .where(TBook.LANGUAGE.equal("DE"))
                    .orderBy(TBook.TITLE)
                    .fetchAny();</java>
+						</content>
+					</section>
+
+
+					<section id="TABLESOURCE">
+						<title>Table sources</title>
+						<slogan>
+							When OLTP selects/updates/inserts/deletes records in single tables, OLAP is all about
+							creating custom table sources or ad-hoc row types
+						</slogan>
+						<content>
+							<h2>Create complex and nested table sources with jOOQ</h2>
+							<p>
+								In the <a href="http://en.wikipedia.org/wiki/Relational_model" title="The Relational Data Model">relational data model</a>,
+								there are many operations performed on entities, i.e. tables in order to join them together
+								before applying predicates, renaming operations and projections. Apart from the convenience
+								methods for joining table sources in the
+								<reference id="SELECT" title="manual's section about the full SELECT syntax"/>,
+								the <reference class="org.jooq.Table" title="Table"/> type itself provides a
+								rich API for creating joined table sources. See an extract of the Table API:
+							</p>
+<java><![CDATA[// These are the various supported JOIN clauses. These JOIN types
+// are followed by an additional ON / ON KEY / USING clause
+TableOnStep join(TableLike<?> table);
+TableOnStep join(String sql);
+TableOnStep join(String sql, Object... bindings);
+
+// All other JOIN types are equally overloaded with "String sql" convenience methods...
+TableOnStep  leftOuterJoin(TableLike<?> table);
+TableOnStep rightOuterJoin(TableLike<?> table);
+TableOnStep  fullOuterJoin(TableLike<?> table);
+
+// These JOIN types don't take any additional clause
+Table<Record>             crossJoin(TableLike<?> table);
+Table<Record>           naturalJoin(TableLike<?> table);
+Table<Record>  naturalLeftOuterJoin(TableLike<?> table);
+Table<Record> naturalRightOuterJoin(TableLike<?> table);
+
+// Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
+// table into another one using a list of PIVOT values
+PivotForStep pivot(Field<?>... aggregateFunctions);
+PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);]]></java>
+
+							<p>
+								The <reference class="org.jooq.TableOnStep" title="TableOnStep"/> type
+								contains methods for constructing the ON / ON KEY / USING clauses
+							</p>
+
+<java><![CDATA[// The ON clause is the most widely used JOIN condition. Provide arbitrary conditions as arguments
+TableOnConditionStep on(Condition... conditions);
+TableOnConditionStep on(String sql);
+TableOnConditionStep on(String sql, Object... bindings);
+
+// The USING clause is also part of the SQL standard. Use this if joined tables contain identical field names.
+// The USING clause is simulated in databases that do not support it.
+Table<Record> using(Field<?>... fields);
+Table<Record> using(Collection<? extends Field<?>> fields);
+
+// The ON KEY clause is a "synthetic" clause that does not exist in any SQL dialect. jOOQ usually has all
+// foreign key relationship information to dynamically render "ON [ condition ... ]" clauses
+TableOnConditionStep onKey() throws DataAccessException;
+TableOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
+TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></java>
+
+							<p>
+								For more details about the PIVOT clause, see the
+								<reference id="PIVOT" title="manual's section about the Oracle PIVOT syntax"/>
+							</p>
 						</content>
 					</section>
 

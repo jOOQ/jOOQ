@@ -22,7 +22,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">next</a></td>
 </tr>
 </table>
 							<h2>SELECT from anonymous or ad-hoc types</h2>
@@ -109,6 +109,9 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 
 <pre class="prettyprint lang-java">// These join conditions are supported
 SelectJoinStep    on(Condition... conditions);
+SelectJoinStep onKey();
+SelectJoinStep onKey(TableField&lt;?, ?&gt;... keyFields);
+SelectJoinStep onKey(ForeignKey&lt;?, ?&gt; key);
 SelectJoinStep using(Field&lt;?&gt;... fields);
 
 // The example, continued:
@@ -116,10 +119,18 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
       .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));</pre>
 
-							<p>See the section about
-								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>
+							<p>
+								See the section about
+								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">conditions</a>
 								to learn more about the many ways
-								to create Conditions in jOOQ. Now we're half way through. As you can
+								to create Conditions in jOOQ.
+								See also the section about
+								<a href="<?=$root?>/manual/DSL/TABLESOURCE/" title="jOOQ Manual reference: Table sources">table sources</a>
+								to learn more about the various ways of creating JOIN
+								expressions
+							</p>
+							<p>
+								Now we're half way through. As you can
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
@@ -276,7 +287,7 @@ Record fetchOne();
                    .fetchAny();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">next</a></td>
 </tr>
 </table>
 <?php 

@@ -160,6 +160,9 @@ function printContent() {
 <a title="Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a>
 </li>
 <li>
+<a title="Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">Table sources</a>
+</li>
+<li>
 <a title="Conditions" href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a>
 </li>
 <li>

@@ -44,10 +44,11 @@ import java.util.List;
 public class Database {
 
     private String           name;
-    private String           includes = "";
-    private String           excludes = "";
+    private String           includes        = "";
+    private String           excludes        = "";
     private String           inputSchema;
     private String           outputSchema;
+    private String           dateAsTimestamp = "false";
     private List<EnumType>   enumTypes;
     private List<ForcedType> forcedTypes;
 
@@ -69,6 +70,10 @@ public class Database {
 
     String getOutputSchema() {
         return outputSchema;
+    }
+
+    String getDateAsTimestamp() {
+        return dateAsTimestamp;
     }
 
     List<EnumType> getEnumTypes() {

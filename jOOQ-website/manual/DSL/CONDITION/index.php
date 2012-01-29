@@ -20,7 +20,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
 </tr>
 </table>
 							<h2>Conditions are the SELECT's core business</h2>
@@ -114,7 +114,7 @@ T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUA
 T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
 </tr>
 </table>
 <?php 

@@ -154,6 +154,9 @@ function printContent() {
 <a title="Complete SELECT syntax" href="#SELECT">Complete SELECT syntax</a>
 </li>
 <li>
+<a title="Table sources" href="#TABLESOURCE">Table sources</a>
+</li>
+<li>
 <a title="Conditions" href="#CONDITION">Conditions</a>
 </li>
 <li>
@@ -1026,8 +1029,8 @@ i.execute();</pre>
 							<h3>Example: INSERT SELECT syntax support</h3>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when
 								you copy records from one table to another: </p>
-<pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE,
-           create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
+<pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE)
+                 .select(create.selectFrom(T_AUTHOR).where(T_AUTHOR.DECEASED.equal(1)));
 i.execute();</pre>
 
 
@@ -2620,6 +2623,9 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 
 <pre class="prettyprint lang-java">// These join conditions are supported
 SelectJoinStep    on(Condition... conditions);
+SelectJoinStep onKey();
+SelectJoinStep onKey(TableField&lt;?, ?&gt;... keyFields);
+SelectJoinStep onKey(ForeignKey&lt;?, ?&gt; key);
 SelectJoinStep using(Field&lt;?&gt;... fields);
 
 // The example, continued:
@@ -2627,10 +2633,18 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
       .from(T_AUTHOR)
       .join(T_BOOK).on(T_BOOK.AUTHOR_ID.equal(T_AUTHOR.ID));</pre>
 
-							<p>See the section about
-								<a href="#CONDITION" title="jOOQ Manual reference: Conditions">Conditions</a>
+							<p>
+								See the section about
+								<a href="#CONDITION" title="jOOQ Manual reference: Conditions">conditions</a>
 								to learn more about the many ways
-								to create Conditions in jOOQ. Now we're half way through. As you can
+								to create Conditions in jOOQ.
+								See also the section about
+								<a href="#TABLESOURCE" title="jOOQ Manual reference: Table sources">table sources</a>
+								to learn more about the various ways of creating JOIN
+								expressions
+							</p>
+							<p>
+								Now we're half way through. As you can
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
@@ -2785,8 +2799,71 @@ Record fetchOne();
                    .where(TBook.LANGUAGE.equal("DE"))
                    .orderBy(TBook.TITLE)
                    .fetchAny();</pre>
+						<h1 id="TABLESOURCE">
+<a name="TABLESOURCE"></a>3.2. Table sources</h1><p>
+							When OLTP selects/updates/inserts/deletes records in single tables, OLAP is all about
+							creating custom table sources or ad-hoc row types
+						</p>
+							<h2>Create complex and nested table sources with jOOQ</h2>
+							<p>
+								In the <a href="http://en.wikipedia.org/wiki/Relational_model" title="The Relational Data Model">relational data model</a>,
+								there are many operations performed on entities, i.e. tables in order to join them together
+								before applying predicates, renaming operations and projections. Apart from the convenience
+								methods for joining table sources in the
+								<a href="#SELECT" title="jOOQ Manual reference: Complete SELECT syntax">manual's section about the full SELECT syntax</a>,
+								the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">Table</a> type itself provides a
+								rich API for creating joined table sources. See an extract of the Table API:
+							</p>
+<pre class="prettyprint lang-java">// These are the various supported JOIN clauses. These JOIN types
+// are followed by an additional ON / ON KEY / USING clause
+TableOnStep join(TableLike&lt;?&gt; table);
+TableOnStep join(String sql);
+TableOnStep join(String sql, Object... bindings);
+
+// All other JOIN types are equally overloaded with "String sql" convenience methods...
+TableOnStep  leftOuterJoin(TableLike&lt;?&gt; table);
+TableOnStep rightOuterJoin(TableLike&lt;?&gt; table);
+TableOnStep  fullOuterJoin(TableLike&lt;?&gt; table);
+
+// These JOIN types don't take any additional clause
+Table&lt;Record&gt;             crossJoin(TableLike&lt;?&gt; table);
+Table&lt;Record&gt;           naturalJoin(TableLike&lt;?&gt; table);
+Table&lt;Record&gt;  naturalLeftOuterJoin(TableLike&lt;?&gt; table);
+Table&lt;Record&gt; naturalRightOuterJoin(TableLike&lt;?&gt; table);
+
+// Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
+// table into another one using a list of PIVOT values
+PivotForStep pivot(Field&lt;?&gt;... aggregateFunctions);
+PivotForStep pivot(Collection&lt;? extends Field&lt;?&gt;&gt; aggregateFunctions);</pre>
+
+							<p>
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableOnStep.java" title="Internal API reference: org.jooq.TableOnStep">TableOnStep</a> type
+								contains methods for constructing the ON / ON KEY / USING clauses
+							</p>
+
+<pre class="prettyprint lang-java">// The ON clause is the most widely used JOIN condition. Provide arbitrary conditions as arguments
+TableOnConditionStep on(Condition... conditions);
+TableOnConditionStep on(String sql);
+TableOnConditionStep on(String sql, Object... bindings);
+
+// The USING clause is also part of the SQL standard. Use this if joined tables contain identical field names.
+// The USING clause is simulated in databases that do not support it.
+Table&lt;Record&gt; using(Field&lt;?&gt;... fields);
+Table&lt;Record&gt; using(Collection&lt;? extends Field&lt;?&gt;&gt; fields);
+
+// The ON KEY clause is a "synthetic" clause that does not exist in any SQL dialect. jOOQ usually has all
+// foreign key relationship information to dynamically render "ON [ condition ... ]" clauses
+TableOnConditionStep onKey() throws DataAccessException;
+TableOnConditionStep onKey(TableField&lt;?, ?&gt;... keyFields) throws DataAccessException;
+TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
+
+							<p>
+								For more details about the PIVOT clause, see the
+								<a href="#PIVOT" title="jOOQ Manual reference: The Oracle 11g PIVOT clause">manual's section about the Oracle PIVOT syntax</a>
+							
+</p>
 						<h1 id="CONDITION">
-<a name="CONDITION"></a>3.2. Conditions</h1><p>
+<a name="CONDITION"></a>3.3. Conditions</h1><p>
 							The creation of conditions is the part of any database abstraction that
 							attracts the most attention.
 						</p>
@@ -2880,7 +2957,7 @@ Record fetchOne();
 T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUAGE.equal("FR")).or(
 T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</pre>
 						<h1 id="ALIAS">
-<a name="ALIAS"></a>3.3. Aliased tables and fields</h1><p>
+<a name="ALIAS"></a>3.4. Aliased tables and fields</h1><p>
 							Aliasing is at the core of SQL and relational algebra. When you join
 							the same entity multiple times, you can rename it to distinguish the
 							various meanings of the same entity
@@ -2959,7 +3036,7 @@ GROUP BY FIRST_NAME, LAST_NAME;</pre>
 <pre class="prettyprint lang-java">System.out.println("Author : " + record.getValue("author"));
 System.out.println("Books  : " + record.getValue("books"));</pre>
 						<h1 id="IN">
-<a name="IN"></a>3.4. Nested SELECT using the IN operator</h1><p>
+<a name="IN"></a>3.5. Nested SELECT using the IN operator</h1><p>
 							Set equal operations are very common when you want to select multiple
 							records. The IN operator can also be used for semi-joins, though
 						</p>
@@ -3012,7 +3089,7 @@ create.select(T_BOOK.getFields())
 </tr>
 </table>
 						<h1 id="EXISTS">
-<a name="EXISTS"></a>3.5. Nested SELECT using the EXISTS operator</h1><p>The EXISTS operator is a bit different from all other SQL
+<a name="EXISTS"></a>3.6. Nested SELECT using the EXISTS operator</h1><p>The EXISTS operator is a bit different from all other SQL
 							elements, as it cannot really be applied to any object in a DSL.
 						</p>
 							<h2>The EXISTS operator for use in semi-joins or anti-joins</h2>
@@ -3077,7 +3154,7 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</pre>
 </tr>
 </table>
 						<h1 id="NESTED">
-<a name="NESTED"></a>3.6. Other types of nested SELECT</h1><p>Apart from the most common IN and EXISTS clauses that encourage
+<a name="NESTED"></a>3.7. Other types of nested SELECT</h1><p>Apart from the most common IN and EXISTS clauses that encourage
 							the use of nested selects, SQL knows a few more syntaxes to make use
 							of such constructs. </p>
 							<h2>Comparison with single-field SELECT clause</h2>
@@ -3191,7 +3268,7 @@ create.select(T_AUTHOR.ID, books)
 </tr>
 </table>
                     	<h1 id="UNION">
-<a name="UNION"></a>3.7. UNION and other set operations</h1><p>Unions, differences and intersections are vital set operations taken from set theory.</p>
+<a name="UNION"></a>3.8. UNION and other set operations</h1><p>Unions, differences and intersections are vital set operations taken from set theory.</p>
 							<h2>jOOQ's set operation API</h2>
 							<p>The
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> API directly supports the UNION
@@ -3323,7 +3400,7 @@ create.selectFrom(EMP).where(DEPT.equal("R&amp;D")
 							In this example, the notion of "nested SELECT" and "subselect" are slightly
 							different.</p>
 						<h1 id="FUNCTIONS">
-<a name="FUNCTIONS"></a>3.8. Functions and aggregate operators</h1><p>
+<a name="FUNCTIONS"></a>3.9. Functions and aggregate operators</h1><p>
 							Highly effective SQL cannot do without functions. Operations on
 							VARCHAR, DATE, and NUMERIC types in GROUP BY or ORDER BY clauses allow
 							for very elegant queries.
@@ -3444,7 +3521,7 @@ AggregateFunction&lt;BigDecimal&gt; varSamp(Field&lt;? extends Number&gt; field)
 </tr>
 </table>
 						<h1 id="PROCEDURES">
-<a name="PROCEDURES"></a>3.9. Stored procedures and functions</h1><p>
+<a name="PROCEDURES"></a>3.10. Stored procedures and functions</h1><p>
 							The full power of your database's vendor-specific extensions can hardly
 							be obtained outside of the
 							database itself. Most modern RDBMS support
@@ -3511,7 +3588,7 @@ create.select(T_PERSON.NAME)
 								to embed stored procedures in SQL, they cannot be integrated in jOOQ's
 								DSL either. </p>
 						<h1 id="ARITHMETIC">
-<a name="ARITHMETIC"></a>3.10. Arithmetic operations and concatenation</h1><p>
+<a name="ARITHMETIC"></a>3.11. Arithmetic operations and concatenation</h1><p>
 							Your database can do the math for you. Most arithmetic operations are
 							supported, but also string concatenation can be very efficient if done
 							already in the database.
@@ -3562,7 +3639,7 @@ create.select(concat("A", "B", "C"));
 </tr>
 </table>
 						<h1 id="CASE">
-<a name="CASE"></a>3.11. The CASE clause</h1><p>
+<a name="CASE"></a>3.12. The CASE clause</h1><p>
 							The SQL standard supports a CASE clause, which works very similar to
 							Java's if-else statement. In complex SQL, this is very useful for value
 							mapping
@@ -3637,7 +3714,7 @@ ORDER BY CASE FIRST_NAME WHEN 'Paulo'  THEN 1
       .orderBy(T_AUTHOR.FIRST_NAME.sortAsc("Paulo", "George"))
       .execute();</pre>
 						<h1 id="CAST">
-<a name="CAST"></a>3.12. Type casting</h1><p>
+<a name="CAST"></a>3.13. Type casting</h1><p>
 							Many RDBMS allow for implicit or explicit conversion between types.
 							Apart from true type conversion, this is most often done with casting.
 						</p>
@@ -3679,7 +3756,7 @@ public class Factory {
     &lt;T&gt; Field&lt;T&gt; castNull(Class&lt;? extends T&gt; type);
 }</pre>
 						<h1 id="SQL">
-<a name="SQL"></a>3.13. When it's just easier: Plain SQL</h1><p>
+<a name="SQL"></a>3.14. When it's just easier: Plain SQL</h1><p>
 							jOOQ cannot foresee all possible vendor-specific SQL features for your
 							database. And sometimes, even jOOQ code becomes too verbose. Then, you
 							shouldn't hesitate to provide jOOQ with plain SQL, as you'd do with

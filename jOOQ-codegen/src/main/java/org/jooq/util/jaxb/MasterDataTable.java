@@ -16,22 +16,21 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
- * 				The source code generator's global configuration
+ * 				Configuration for a master data table
  * 			
  * 
- * <p>Java class for Generator complex type.
+ * <p>Java class for MasterDataTable complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Generator">
+ * &lt;complexType name="MasterDataTable">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="database" type="{http://www.jooq.org/xsd/jooq-codegen}Database"/>
- *         &lt;element name="generate" type="{http://www.jooq.org/xsd/jooq-codegen}Generate" minOccurs="0"/>
- *         &lt;element name="target" type="{http://www.jooq.org/xsd/jooq-codegen}Target" minOccurs="0"/>
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="literal" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,17 +40,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Generator", propOrder = {
+@XmlType(name = "MasterDataTable", propOrder = {
 
 })
-public class Generator {
+public class MasterDataTable {
 
-    @XmlElement(defaultValue = "org.jooq.util.DefaultGenerator")
+    @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
-    protected Database database;
-    protected Generate generate;
-    protected Target target;
+    protected String literal;
+    protected String description;
 
     /**
      * Gets the value of the name property.
@@ -78,75 +76,51 @@ public class Generator {
     }
 
     /**
-     * Gets the value of the database property.
+     * Gets the value of the literal property.
      * 
      * @return
      *     possible object is
-     *     {@link Database }
+     *     {@link String }
      *     
      */
-    public Database getDatabase() {
-        return database;
+    public String getLiteral() {
+        return literal;
     }
 
     /**
-     * Sets the value of the database property.
+     * Sets the value of the literal property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Database }
+     *     {@link String }
      *     
      */
-    public void setDatabase(Database value) {
-        this.database = value;
+    public void setLiteral(String value) {
+        this.literal = value;
     }
 
     /**
-     * Gets the value of the generate property.
+     * Gets the value of the description property.
      * 
      * @return
      *     possible object is
-     *     {@link Generate }
+     *     {@link String }
      *     
      */
-    public Generate getGenerate() {
-        return generate;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * Sets the value of the generate property.
+     * Sets the value of the description property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Generate }
+     *     {@link String }
      *     
      */
-    public void setGenerate(Generate value) {
-        this.generate = value;
-    }
-
-    /**
-     * Gets the value of the target property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Target }
-     *     
-     */
-    public Target getTarget() {
-        return target;
-    }
-
-    /**
-     * Sets the value of the target property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Target }
-     *     
-     */
-    public void setTarget(Target value) {
-        this.target = value;
+    public void setDescription(String value) {
+        this.description = value;
     }
 
 }

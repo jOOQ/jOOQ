@@ -13,7 +13,6 @@
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="xjc-generator" description="Generate JAXB artefacts from XSD">
-		<delete dir="${dir.target}" failonerror="no" />
 		<mkdir dir="${dir.java}/org/jooq/util/jaxb" />
 		<xjc schema="${dir.resources}/jooq-codegen.xsd" destdir="${dir.java}" package="org.jooq.util.jaxb"/>
 	</target>

@@ -112,10 +112,10 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
             switch (context.getDialect()) {
                 case HSQLDB:
                 case POSTGRES: {
-                    if (context.declareTables() && aliasProvider instanceof ArrayTable) {
+                    // The javac compiler doesn't like casting of generics
+                    Object o = aliasProvider;
 
-                        // The javac compiler doesn't like casting of generics
-                        Object o = aliasProvider;
+                    if (context.declareTables() && o instanceof ArrayTable) {
                         ArrayTable table = (ArrayTable) o;
 
                         context.sql("(");

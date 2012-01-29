@@ -282,6 +282,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      * A join B on 1 = 1
      * </pre></code>
      */
+    @Support
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -301,6 +302,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String)
      */
+    @Support
     Table<Record> crossJoin(String sql);
 
     /**
@@ -320,6 +322,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String, Object...)
      */
+    @Support
     Table<Record> crossJoin(String sql, Object... bindings);
 
     /**

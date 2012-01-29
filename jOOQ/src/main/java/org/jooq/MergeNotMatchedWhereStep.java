@@ -64,10 +64,11 @@ public interface MergeNotMatchedWhereStep<R extends Record> extends MergeFinalSt
      * <p>
      * <b>Note:</b> This syntax is only available for the
      * {@link SQLDialect#ORACLE} database!
-     *
-     * @see <a
-     *      href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm">http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm</a>
-     *      for a full definition of the Oracle <code>MERGE</code> statement
+     * <p>
+     * See <a href=
+     * "http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.htm"
+     * >http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_9016.
+     * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support(ORACLE)
     MergeFinalStep<R> where(Condition condition);

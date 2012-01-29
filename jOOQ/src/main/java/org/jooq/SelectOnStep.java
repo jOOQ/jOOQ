@@ -120,9 +120,9 @@ public interface SelectOnStep {
      * Join the previous table on a non-ambiguous foreign key relationship
      * between the two joined tables.
      * <p>
-     * See {@link Table#onKey(Key)} for examples.
+     * See {@link TableOnStep#onKey(ForeignKey)} for examples.
      *
-     * @see Table#onKey(Key)
+     * @see TableOnStep#onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
@@ -133,9 +133,9 @@ public interface SelectOnStep {
      * Join the previous table on a non-ambiguous foreign key relationship
      * between the two joined tables.
      * <p>
-     * See {@link Table#onKey(Key)} for examples.
+     * See {@link TableOnStep#onKey(ForeignKey)} for examples.
      *
-     * @see Table#onKey(Key)
+     * @see TableOnStep#onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
@@ -146,9 +146,9 @@ public interface SelectOnStep {
      * Join the table on a non-ambiguous foreign key relationship between the
      * two joined tables.
      * <p>
-     * See {@link Table#onKey(Key)} for examples.
+     * See {@link TableOnStep#onKey(ForeignKey)} for examples.
      *
-     * @see Table#onKey(Key)
+     * @see TableOnStep#onKey(ForeignKey)
      */
     @Support
     SelectJoinStep onKey(ForeignKey<?, ?> key);

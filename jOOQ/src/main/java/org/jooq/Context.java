@@ -87,7 +87,7 @@ public interface Context<C extends Context<C>> extends Configuration {
      * <ul>
      * <li>When binding variables to a {@link PreparedStatement}. Client code
      * must assure that calling {@link #nextIndex()} is followed by setting a
-     * bind value to {@link #statement()}</li>
+     * bind value to {@link BindContext#statement()}</li>
      * <li>When rendering unnamed bind variables with
      * {@link RenderContext#namedParams()} being to <code>true</code></li>
      * </ul>

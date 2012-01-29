@@ -138,7 +138,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *
      * @param table The joined table
      * @param type The type of join
-     * @see Table#onKey(Key)
+     * @see TableOnStep#onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
@@ -151,7 +151,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param table The joined table
      * @param type The type of join
      * @param keyFields The foreign key fields
-     * @see Table#onKey(Key)
+     * @see TableOnStep#onKey(ForeignKey)
      * @throws DataAccessException If there is no non-ambiguous key definition
      *             known to jOOQ
      */
@@ -164,7 +164,7 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * @param table The joined table
      * @param type The type of join
      * @param key The foreign key
-     * @see Table#onKey(Key)
+     * @see TableOnStep#onKey(ForeignKey)
      */
     @Support
     void addJoinOnKey(TableLike<?> table, JoinType type, ForeignKey<?, ?> key);

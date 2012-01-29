@@ -44,6 +44,7 @@ import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.util.jaxb.MasterDataTable;
 
 public class DefaultMasterDataTableDefinition extends AbstractDefinition implements MasterDataTableDefinition {
 
@@ -72,7 +73,7 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
 
     @Override
     public ColumnDefinition getLiteralColumn() {
-        String columnName = getDatabase().getProperty("generator.generate.master-data-table-literal." + getName());
+        String columnName = getConfiguredMasterDataTable().getLiteral();
 
         if (columnName == null) {
             columnName = getPrimaryKeyColumn().getName();
@@ -83,13 +84,23 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
 
     @Override
     public ColumnDefinition getDescriptionColumn() {
-        String columnName = getDatabase().getProperty("generator.generate.master-data-table-description." + getName());
+        String columnName = getConfiguredMasterDataTable().getDescription();
 
         if (columnName == null) {
             columnName = getLiteralColumn().getName();
         }
 
         return getColumn(columnName);
+    }
+
+    private final MasterDataTable getConfiguredMasterDataTable() {
+        for (MasterDataTable table : getDatabase().getConfiguredMasterDataTables()) {
+            if (table.getName().equals(getName())) {
+                return table;
+            }
+        }
+
+        return null;
     }
 
     @Override

@@ -42,6 +42,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.jaxb.ForcedType;
 
 abstract class AbstractTypedElementDefinition<T extends Definition>
     extends AbstractDefinition
@@ -79,39 +80,34 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         if (type == null) {
             Database db = container.getDatabase();
 
-            for (String property : db.getPropertyNames()) {
+            // [#677] Forced types for matching regular expressions
+            for (ForcedType forcedType : db.getConfiguredForcedTypes()) {
+                if (getQualifiedName().matches(forcedType.getExpressions())) {
+                    log.debug("Forcing type", this + " into " + forcedType.getName());
+                    DataType<?> forcedDataType = null;
 
-                // [#677] Forced types for matching regular expressions
-                if (property.startsWith("generator.database.forced-type.")) {
-                    if (getQualifiedName().matches(db.getProperty(property))) {
-                        String forcedType = property.replace("generator.database.forced-type.", "");
+                    String t = definedType.getType();
+                    int p = definedType.getPrecision();
+                    int s = definedType.getScale();
 
-                        log.debug("Forcing type", this + " into " + forcedType);
-                        DataType<?> forcedDataType = null;
+                    try {
+                        forcedDataType = getDialectDataType(db.getDialect(), forcedType.getName(), p, s);
+                    } catch (SQLDialectNotSupportedException ignore) {}
 
-                        String t = definedType.getType();
-                        int p = definedType.getPrecision();
-                        int s = definedType.getScale();
+                    // [#677] SQLDataType matches are actual type-rewrites
+                    if (forcedDataType != null) {
+                        type = new DefaultDataTypeDefinition(db, forcedType.getName(), p, s);
+                    }
 
-                        try {
-                            forcedDataType = getDialectDataType(db.getDialect(), forcedType, p, s);
-                        } catch (SQLDialectNotSupportedException ignore) {}
-
-                        // [#677] SQLDataType matches are actual type-rewrites
-                        if (forcedDataType != null) {
-                            type = new DefaultDataTypeDefinition(db, forcedType, p, s);
-                        }
-
-                        // Other forced types are UDT's, enums, etc.
-                        else {
-                            type = new DefaultDataTypeDefinition(db, t, p, s, forcedType);
-                        }
+                    // Other forced types are UDT's, enums, etc.
+                    else {
+                        type = new DefaultDataTypeDefinition(db, t, p, s, forcedType.getName());
                     }
                 }
             }
 
             // [#976] Mapping DATE as TIMESTAMP
-            if ("true".equalsIgnoreCase(db.getProperty("generator.database.date-as-timestamp"))) {
+            if (db.dateAsTimestamp()) {
                 DataType<?> dataType = null;
 
                 try {

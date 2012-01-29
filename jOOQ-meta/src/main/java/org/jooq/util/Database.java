@@ -38,10 +38,12 @@ package org.jooq.util;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Properties;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
+import org.jooq.util.jaxb.EnumType;
+import org.jooq.util.jaxb.ForcedType;
+import org.jooq.util.jaxb.MasterDataTable;
 
 /**
  * A general database model.
@@ -170,16 +172,40 @@ public interface Database {
     String[] getIncludes();
 
     /**
-     * Database objects matching any of these regular expressions will be
-     * generated as master data tables.
+     * Database objects matching any of these table names will be generated as
+     * master data tables.
      */
-    void setMasterDataTableNames(String[] masterDataTables);
+    void setConfiguredMasterDataTables(List<MasterDataTable> tables);
 
     /**
-     * Database objects matching any of these regular expressions will be
-     * generated as master data tables.
+     * Database objects matching any of these table names will be generated as
+     * master data tables.
      */
-    String[] getMasterDataTableNames();
+    List<MasterDataTable> getConfiguredMasterDataTables();
+
+    /**
+     * Database objects matching any of these field names will be generated as
+     * enum types
+     */
+    void setConfiguredEnumTypes(List<EnumType> types);
+
+    /**
+     * Database objects matching any of these field names will be generated as
+     * enum types
+     */
+    List<EnumType> getConfiguredEnumTypes();
+
+    /**
+     * Database objects matching any of these field names will be generated as
+     * forced types
+     */
+    void setConfiguredForcedTypes(List<ForcedType> types);
+
+    /**
+     * Database objects matching any of these field names will be generated as
+     * forced types
+     */
+    List<ForcedType> getConfiguredForcedTypes();
 
     /**
      * Database objects matching any of these regular expressions will not be
@@ -204,21 +230,6 @@ public interface Database {
     Factory create();
 
     /**
-     * Set the configuration properties to this database
-     */
-    void setProperties(Properties properties);
-
-    /**
-     * Get a configuration property from this database
-     */
-    String getProperty(String property);
-
-    /**
-     * Get a configuration property from this database
-     */
-    List<String> getPropertyNames();
-
-    /**
      * Check whether a type is an array type
      */
     boolean isArrayType(String dataType);
@@ -226,5 +237,20 @@ public interface Database {
     /**
      * Whether this database supports unsigned types
      */
+    void setSupportsUnsignedTypes(boolean supportsUnsignedTypes);
+
+    /**
+     * Whether this database supports unsigned types
+     */
     boolean supportsUnsignedTypes();
+
+    /**
+     * Whether DATE columns should be treated as TIMESTAMP columns
+     */
+    void setDateAsTimestamp(boolean dateAsTimestamp);
+
+    /**
+     * Whether DATE columns should be treated as TIMESTAMP columns
+     */
+    boolean dateAsTimestamp();
 }

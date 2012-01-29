@@ -42,11 +42,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.jooq.SQLDialect;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.util.jaxb.EnumType;
+import org.jooq.util.jaxb.ForcedType;
+import org.jooq.util.jaxb.MasterDataTable;
 
 /**
  * A base implementation for all types of databases.
@@ -57,13 +59,24 @@ public abstract class AbstractDatabase implements Database {
 
     private static final JooqLogger log = JooqLogger.getLogger(AbstractDatabase.class);
 
+    // -------------------------------------------------------------------------
+    // Configuration elements
+    // -------------------------------------------------------------------------
+
     private Connection                      connection;
     private String                          inputSchema;
     private String                          outputSchema;
     private String[]                        excludes;
     private String[]                        includes;
-    private String[]                        masterDataTableNames;
-    private Properties                      properties;
+    private boolean                         supportsUnsignedTypes;
+    private boolean                         dateAsTimestamp;
+    private List<MasterDataTable>           configuredMasterDataTables;
+    private List<EnumType>                  configuredEnumTypes;
+    private List<ForcedType>                configuredForcedTypes;
+
+    // -------------------------------------------------------------------------
+    // Loaded definitions
+    // -------------------------------------------------------------------------
 
     private List<SequenceDefinition>        sequences;
     private List<TableDefinition>           tables;
@@ -75,22 +88,6 @@ public abstract class AbstractDatabase implements Database {
     private List<PackageDefinition>         packages;
     private Relations                       relations;
 
-
-
-    @Override
-    public final void setProperties(Properties properties) {
-        this.properties = properties;
-    }
-
-    @Override
-    public final String getProperty(String property) {
-        return properties.getProperty(property);
-    }
-
-    @Override
-    public final List<String> getPropertyNames() {
-        return new ArrayList<String>(properties.stringPropertyNames());
-    }
 
     @Override
     public final SQLDialect getDialect() {
@@ -153,18 +150,53 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void setMasterDataTableNames(String[] masterDataTableNames) {
-        this.masterDataTableNames = masterDataTableNames;
+    public final void setConfiguredMasterDataTables(List<MasterDataTable> configuredMasterDataTables) {
+        this.configuredMasterDataTables = configuredMasterDataTables;
     }
 
     @Override
-    public final String[] getMasterDataTableNames() {
-        return masterDataTableNames;
+    public final List<MasterDataTable> getConfiguredMasterDataTables() {
+        return configuredMasterDataTables;
+    }
+
+    @Override
+    public final void setConfiguredEnumTypes(List<EnumType> configuredEnumTypes) {
+        this.configuredEnumTypes = configuredEnumTypes;
+    }
+
+    @Override
+    public final List<EnumType> getConfiguredEnumTypes() {
+        return configuredEnumTypes;
+    }
+
+    @Override
+    public final void setConfiguredForcedTypes(List<ForcedType> configuredForcedTypes) {
+        this.configuredForcedTypes = configuredForcedTypes;
+    }
+
+    @Override
+    public final List<ForcedType> getConfiguredForcedTypes() {
+        return configuredForcedTypes;
+    }
+
+    @Override
+    public final void setSupportsUnsignedTypes(boolean supportsUnsignedTypes) {
+        this.supportsUnsignedTypes = supportsUnsignedTypes;
     }
 
     @Override
     public final boolean supportsUnsignedTypes() {
-        return !"false".equalsIgnoreCase(properties.getProperty("generator.generate.unsigned-types"));
+        return supportsUnsignedTypes;
+    }
+
+    @Override
+    public final void setDateAsTimestamp(boolean dateAsTimestamp) {
+        this.dateAsTimestamp = dateAsTimestamp;
+    }
+
+    @Override
+    public final boolean dateAsTimestamp() {
+        return dateAsTimestamp;
     }
 
     @Override
@@ -272,20 +304,18 @@ public abstract class AbstractDatabase implements Database {
     private final List<EnumDefinition> getConfiguredEnums() {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
-        for (String property : properties.stringPropertyNames()) {
-            if (property.startsWith("generator.database.enum-type.")) {
-                String name = property.replace("generator.database.enum-type.", "");
-                DefaultEnumDefinition e = new DefaultEnumDefinition(this, name, null, true);
+        for (EnumType enumType : configuredEnumTypes) {
+            String name = enumType.getName();
+            DefaultEnumDefinition e = new DefaultEnumDefinition(this, name, null, true);
 
-                String literals = properties.getProperty(property);
+            String literals = enumType.getLiterals();
 
-                try {
-                    CSVReader reader = new CSVReader(new StringReader(literals));
-                    e.addLiterals(reader.readNext());
-                } catch (IOException ignore) {}
+            try {
+                CSVReader reader = new CSVReader(new StringReader(literals));
+                e.addLiterals(reader.readNext());
+            } catch (IOException ignore) {}
 
-                result.add(e);
-            }
+            result.add(e);
         }
 
         return result;
@@ -436,8 +466,8 @@ public abstract class AbstractDatabase implements Database {
         List<T> result = new ArrayList<T>();
 
         definitionLoop: for (TableDefinition definition : list) {
-            for (String table : masterDataTableNames) {
-                if (definition.getName().matches(table)) {
+            for (MasterDataTable table : configuredMasterDataTables) {
+                if (definition.getName().equals(table.getName())) {
 
                     // If we have a match, then add the table only if master
                     // data tables are included in the result

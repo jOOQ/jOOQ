@@ -11,24 +11,9 @@ package org.jooq.test.derby.generatedclasses;
 public final class Tables {
 
 	/**
-	 * The table TEST.T_IDENTITY_PK
+	 * The table TEST.T_639_NUMBERS_TABLE
 	 */
-	public static org.jooq.test.derby.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
-
-	/**
-	 * The table TEST.T_IDENTITY
-	 */
-	public static org.jooq.test.derby.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY;
-
-	/**
-	 * The table TEST.T_BOOLEANS
-	 */
-	public static org.jooq.test.derby.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS;
-
-	/**
-	 * The table TEST.T_TRIGGERS
-	 */
-	public static org.jooq.test.derby.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS;
+	public static org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
 	 * The table TEST.T_658_REF
@@ -66,14 +51,39 @@ public final class Tables {
 	public static org.jooq.test.derby.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.derby.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
-	 * The table TEST.X_UNUSED
+	 * The table TEST.T_BOOLEANS
 	 */
-	public static org.jooq.test.derby.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED;
+	public static org.jooq.test.derby.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
-	 * The table TEST.T_639_NUMBERS_TABLE
+	 * The table TEST.T_IDENTITY
 	 */
-	public static org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
+	public static org.jooq.test.derby.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY;
+
+	/**
+	 * The table TEST.T_IDENTITY_PK
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
+
+	/**
+	 * The table TEST.T_TRIGGERS
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS;
+
+	/**
+	 * The table TEST.V_AUTHOR
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.derby.generatedclasses.tables.VAuthor.V_AUTHOR;
+
+	/**
+	 * The table TEST.V_BOOK
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.VBook V_BOOK = org.jooq.test.derby.generatedclasses.tables.VBook.V_BOOK;
+
+	/**
+	 * The table TEST.V_LIBRARY
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.derby.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
 	 * The table TEST.X_TEST_CASE_64_69
@@ -91,19 +101,9 @@ public final class Tables {
 	public static org.jooq.test.derby.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * The table TEST.V_LIBRARY
+	 * The table TEST.X_UNUSED
 	 */
-	public static org.jooq.test.derby.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.derby.generatedclasses.tables.VLibrary.V_LIBRARY;
-
-	/**
-	 * The table TEST.V_AUTHOR
-	 */
-	public static org.jooq.test.derby.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.derby.generatedclasses.tables.VAuthor.V_AUTHOR;
-
-	/**
-	 * The table TEST.V_BOOK
-	 */
-	public static org.jooq.test.derby.generatedclasses.tables.VBook V_BOOK = org.jooq.test.derby.generatedclasses.tables.VBook.V_BOOK;
+	public static org.jooq.test.derby.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
 	 * No instances

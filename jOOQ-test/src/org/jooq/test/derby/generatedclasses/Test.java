@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses;
  */
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -836974368;
+	private static final long serialVersionUID = 140504812;
 
 	/**
 	 * The singleton instance of TEST
@@ -30,10 +30,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
-			org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
-			org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY,
-			org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS,
-			org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS,
+			org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.derby.generatedclasses.tables.T_658Ref.T_658_REF,
 			org.jooq.test.derby.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
 			org.jooq.test.derby.generatedclasses.tables.T_785.T_785,
@@ -41,13 +38,16 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK,
 			org.jooq.test.derby.generatedclasses.tables.TBookStore.T_BOOK_STORE,
 			org.jooq.test.derby.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
-			org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED,
-			org.jooq.test.derby.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
+			org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS,
+			org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY,
+			org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
+			org.jooq.test.derby.generatedclasses.tables.TTriggers.T_TRIGGERS,
+			org.jooq.test.derby.generatedclasses.tables.VAuthor.V_AUTHOR,
+			org.jooq.test.derby.generatedclasses.tables.VBook.V_BOOK,
+			org.jooq.test.derby.generatedclasses.tables.VLibrary.V_LIBRARY,
 			org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.derby.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71,
 			org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85,
-			org.jooq.test.derby.generatedclasses.tables.VLibrary.V_LIBRARY,
-			org.jooq.test.derby.generatedclasses.tables.VAuthor.V_AUTHOR,
-			org.jooq.test.derby.generatedclasses.tables.VBook.V_BOOK);
+			org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 }

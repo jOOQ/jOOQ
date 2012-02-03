@@ -47,11 +47,13 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.JoinType;
+import org.jooq.PivotForStep;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.TableOnStep;
 
 abstract class AbstractTable<R extends Record> extends AbstractType<R> implements Table<R> {
 
@@ -139,12 +141,12 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     // ------------------------------------------------------------------------
 
     @Override
-    public final Pivot<Object> pivot(Field<?>... aggregateFunctions) {
+    public final PivotForStep pivot(Field<?>... aggregateFunctions) {
         return new Pivot<Object>(this, aggregateFunctions);
     }
 
     @Override
-    public final Pivot<Object> pivot(Collection<? extends Field<?>> aggregateFunctions) {
+    public final PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions) {
         return pivot(aggregateFunctions.toArray(new Field[0]));
     }
 
@@ -153,122 +155,122 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     // ------------------------------------------------------------------------
 
     @Override
-    public final JoinTable join(TableLike<?> table) {
+    public final TableOnStep join(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.JOIN);
     }
 
     @Override
-    public final JoinTable join(String sql) {
+    public final TableOnStep join(String sql) {
         return join(table(sql));
     }
 
     @Override
-    public final JoinTable join(String sql, Object... bindings) {
+    public final TableOnStep join(String sql, Object... bindings) {
         return join(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable leftOuterJoin(TableLike<?> table) {
+    public final TableOnStep leftOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final JoinTable leftOuterJoin(String sql) {
+    public final TableOnStep leftOuterJoin(String sql) {
         return leftOuterJoin(table(sql));
     }
 
     @Override
-    public final JoinTable leftOuterJoin(String sql, Object... bindings) {
+    public final TableOnStep leftOuterJoin(String sql, Object... bindings) {
         return leftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable rightOuterJoin(TableLike<?> table) {
+    public final TableOnStep rightOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final JoinTable rightOuterJoin(String sql) {
+    public final TableOnStep rightOuterJoin(String sql) {
         return rightOuterJoin(table(sql));
     }
 
     @Override
-    public final JoinTable rightOuterJoin(String sql, Object... bindings) {
+    public final TableOnStep rightOuterJoin(String sql, Object... bindings) {
         return rightOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable fullOuterJoin(TableLike<?> table) {
+    public final TableOnStep fullOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.FULL_OUTER_JOIN);
     }
 
     @Override
-    public final JoinTable fullOuterJoin(String sql) {
+    public final TableOnStep fullOuterJoin(String sql) {
         return fullOuterJoin(table(sql));
     }
 
     @Override
-    public final JoinTable fullOuterJoin(String sql, Object... bindings) {
+    public final TableOnStep fullOuterJoin(String sql, Object... bindings) {
         return fullOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable crossJoin(TableLike<?> table) {
+    public final Table<Record> crossJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.CROSS_JOIN);
     }
 
     @Override
-    public final JoinTable crossJoin(String sql) {
+    public final Table<Record> crossJoin(String sql) {
         return crossJoin(table(sql));
     }
 
     @Override
-    public final JoinTable crossJoin(String sql, Object... bindings) {
+    public final Table<Record> crossJoin(String sql, Object... bindings) {
         return crossJoin(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable naturalJoin(TableLike<?> table) {
+    public final Table<Record> naturalJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.NATURAL_JOIN);
     }
 
     @Override
-    public final JoinTable naturalJoin(String sql) {
+    public final Table<Record> naturalJoin(String sql) {
         return naturalJoin(table(sql));
     }
 
     @Override
-    public final JoinTable naturalJoin(String sql, Object... bindings) {
+    public final Table<Record> naturalJoin(String sql, Object... bindings) {
         return naturalJoin(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable naturalLeftOuterJoin(TableLike<?> table) {
+    public final Table<Record> naturalLeftOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.NATURAL_LEFT_OUTER_JOIN);
     }
 
     @Override
-    public final JoinTable naturalLeftOuterJoin(String sql) {
+    public final Table<Record> naturalLeftOuterJoin(String sql) {
         return naturalLeftOuterJoin(table(sql));
     }
 
     @Override
-    public final JoinTable naturalLeftOuterJoin(String sql, Object... bindings) {
+    public final Table<Record> naturalLeftOuterJoin(String sql, Object... bindings) {
         return naturalLeftOuterJoin(table(sql, bindings));
     }
 
     @Override
-    public final JoinTable naturalRightOuterJoin(TableLike<?> table) {
+    public final Table<Record> naturalRightOuterJoin(TableLike<?> table) {
         return new JoinTable(this, table, JoinType.NATURAL_RIGHT_OUTER_JOIN);
     }
 
     @Override
-    public final JoinTable naturalRightOuterJoin(String sql) {
+    public final Table<Record> naturalRightOuterJoin(String sql) {
         return naturalRightOuterJoin(table(sql));
     }
 
     @Override
-    public final JoinTable naturalRightOuterJoin(String sql, Object... bindings) {
+    public final Table<Record> naturalRightOuterJoin(String sql, Object... bindings) {
         return naturalRightOuterJoin(table(sql, bindings));
     }
 }

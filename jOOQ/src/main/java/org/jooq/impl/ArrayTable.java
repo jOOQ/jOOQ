@@ -78,8 +78,14 @@ class ArrayTable extends AbstractTable<Record> {
         if (array.getDataType().getType().isArray()) {
             arrayType = array.getDataType().getType().getComponentType();
         }
+
+        // [#1110] Keep track of element type information of Oracle VARRAY / TABLE types
+        else if (array instanceof ArrayConstant) {
+            arrayType = array.getDataType().getType();
+        }
+
+        // Is this case possible?
         else {
-            // [#523] TODO use ArrayRecord meta data instead
             arrayType = Object.class;
         }
 

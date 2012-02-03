@@ -1920,8 +1920,8 @@ public class Factory implements FactoryOperations {
      * @see Field#like(Field, char)
      */
     @Support
-    public static Field<String> escape(String value, char escape) {
-        return val(value.replace("%", escape + "%").replace("_", escape + "_"));
+    public static String escape(String value, char escape) {
+        return value.replace("%", escape + "%").replace("_", escape + "_");
     }
 
     /**
@@ -1935,7 +1935,12 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> escape(Field<String> field, char escape) {
-        return replace(replace(field, "%", escape + "%"), "_", escape + "_");
+        Field<String> replace = field;
+
+        replace = replace(replace, literal("'%'"), literal("'" + escape + "%'"));
+        replace = replace(replace, literal("'_'"), literal("'" + escape + "_'"));
+
+        return replace;
     }
 
     /**

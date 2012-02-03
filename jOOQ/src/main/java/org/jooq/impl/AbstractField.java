@@ -39,6 +39,7 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
+import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.trueCondition;
@@ -376,6 +377,62 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition notLike(Field<T> value, char escape) {
         return new CompareCondition<T>(this, nullSafe(value), Comparator.NOT_LIKE, escape);
+    }
+
+    @Override
+    public final Condition contains(T value) {
+        Field<String> concat = Factory.concat(
+            Factory.literal("'%'"),
+            Factory.val(escape("" + value, '!')),
+            Factory.literal("'%'"));
+
+        return like(concat.cast(this), '!');
+    }
+
+    @Override
+    public final Condition contains(Field<T> value) {
+        Field<String> concat = Factory.concat(
+            Factory.literal("'%'"),
+            escape(value.cast(String.class), '!'),
+            Factory.literal("'%'"));
+
+        return like(concat.cast(this), '!');
+    }
+
+    @Override
+    public final Condition startsWith(T value) {
+        Field<String> concat = Factory.concat(
+            Factory.val(escape("" + value, '!')),
+            Factory.literal("'%'"));
+
+        return like(concat.cast(this), '!');
+    }
+
+    @Override
+    public final Condition startsWith(Field<T> value) {
+        Field<String> concat = Factory.concat(
+            escape(value.cast(String.class), '!'),
+            Factory.literal("'%'"));
+
+        return like(concat.cast(this), '!');
+    }
+
+    @Override
+    public final Condition endsWith(T value) {
+        Field<String> concat = Factory.concat(
+            Factory.literal("'%'"),
+            Factory.val(escape("" + value, '!')));
+
+        return like(concat.cast(this), '!');
+    }
+
+    @Override
+    public final Condition endsWith(Field<T> value) {
+        Field<String> concat = Factory.concat(
+            Factory.literal("'%'"),
+            escape(value.cast(String.class), '!'));
+
+        return like(concat.cast(this), '!');
     }
 
     @Override

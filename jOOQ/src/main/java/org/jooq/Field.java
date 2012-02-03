@@ -476,6 +476,78 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition notLike(T value, char escape);
 
     /**
+     * Convenience method for {@link #like(Object, char)} including proper
+     * adding of wildcards and escaping
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     *
+     * @see Factory#escape(String, char)
+     * @see #like(Object, char)
+     */
+    @Support
+    Condition contains(T value);
+
+    /**
+     * Convenience method for {@link #like(Object, char)} including proper
+     * adding of wildcards and escaping
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     *
+     * @see Factory#escape(Field, char)
+     * @see #like(Field, char)
+     */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Condition contains(Field<T> value);
+
+    /**
+     * Convenience method for {@link #like(Object, char)} including proper
+     * adding of wildcards and escaping
+     * <p>
+     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     *
+     * @see Factory#escape(String, char)
+     * @see #like(Object, char)
+     */
+    @Support
+    Condition startsWith(T value);
+
+    /**
+     * Convenience method for {@link #like(Object, char)} including proper
+     * adding of wildcards and escaping
+     * <p>
+     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     *
+     * @see Factory#escape(Field, char)
+     * @see #like(Field, char)
+     */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Condition startsWith(Field<T> value);
+
+    /**
+     * Convenience method for {@link #like(Object, char)} including proper
+     * adding of wildcards and escaping
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     *
+     * @see Factory#escape(String, char)
+     * @see #like(Object, char)
+     */
+    @Support
+    Condition endsWith(T value);
+
+    /**
+     * Convenience method for {@link #like(Object, char)} including proper
+     * adding of wildcards and escaping
+     * <p>
+     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     *
+     * @see Factory#escape(Field, char)
+     * @see #like(Field, char)
+     */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    Condition endsWith(Field<T> value);
+
+    /**
      * Create a condition to check this field against several values
      * <p>
      * SQL: <code>this in (values...)</code>

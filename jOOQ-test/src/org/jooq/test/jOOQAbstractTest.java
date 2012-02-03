@@ -8279,6 +8279,20 @@ public abstract class jOOQAbstractTest<
                 .and(TBook_TITLE().notLike("%(#_)%", '!'))
                 .fetch();
 
+        assertEquals(1, books.size());
+        assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
+
+        // [#1106] Add checks for Factory.escape() function
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().like(concat(val("%"), escape("(%)", '!'), val("%")), '!'))
+                .and(TBook_TITLE().like(concat(val("%"), escape(val("(_)"), '#'), val("%")), '#'))
+                .and(TBook_TITLE().notLike(concat(val("%"), escape("(!%)", '#'), val("%")), '#'))
+                .and(TBook_TITLE().notLike(concat(val("%"), escape(val("(#_)"), '!'), val("%")), '!'))
+                .fetch();
+
+        assertEquals(1, books.size());
+        assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
     }
 
     @Test

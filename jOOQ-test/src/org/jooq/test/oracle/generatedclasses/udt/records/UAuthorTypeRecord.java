@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.udt.records;
  */
 public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord> {
 
-	private static final long serialVersionUID = -1381852637;
+	private static final long serialVersionUID = -285072416;
 
 
 	/**
@@ -73,6 +73,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	 * @param self IN OUT parameter
 	 * @param book1 OUT parameter
 	 * @param book2 OUT parameter
+	 * @param books OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
 	public org.jooq.test.oracle.generatedclasses.udt.u_author_type.GetBooks getBooks() {

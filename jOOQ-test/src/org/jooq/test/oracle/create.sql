@@ -71,12 +71,16 @@ DROP TYPE u_string_array/
 DROP TYPE u_number_array/
 DROP TYPE u_number_long_array/
 DROP TYPE u_date_array/
+DROP TYPE u_string_table/
+DROP TYPE u_number_table/
+DROP TYPE u_number_long_table/
+DROP TYPE u_date_table/
 DROP TYPE o_invalid_type/
 DROP TYPE t_invalid_type/
 DROP TYPE u_invalid_type/
 
-DROP TYPE t_book_type/
 DROP TYPE u_author_type/
+DROP TYPE t_book_type/
 DROP TYPE u_book_type/
 
 CREATE TYPE u_book_type AS OBJECT (
@@ -93,7 +97,10 @@ CREATE OR REPLACE TYPE u_author_type AS OBJECT (
   last_name varchar2(50),
 
   member procedure load,
-  member procedure get_books (book1 OUT u_book_type, book2 OUT u_book_type),
+  member procedure get_books (
+  	book1 OUT u_book_type,
+  	book2 OUT u_book_type,
+  	books OUT t_book_type),
 
   member function count_books return number
 )
@@ -113,10 +120,15 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
     end if;
   end load;
 
-  member procedure get_books (book1 OUT u_book_type, book2 OUT u_book_type) is
+  member procedure get_books (
+    book1 OUT u_book_type,
+    book2 OUT u_book_type,
+  	books OUT t_book_type) is
+
     x number(7);
     b1 u_book_type := u_book_type(null, null);
     b2 u_book_type := u_book_type(null, null);
+    bs t_book_type;
   begin
     x := id;
 
@@ -145,8 +157,14 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
       where b.r = 2;
     end if;
 
+	select u_book_type(b.id, b.title)
+	bulk collect into bs
+	from t_book b
+    where b.author_id = x;
+
     book1 := b1;
     book2 := b2;
+    books := bs;
   end get_books;
 
   member function count_books return number is
@@ -175,6 +193,10 @@ CREATE TYPE u_number_array AS VARRAY(4) OF NUMBER(7)/
 CREATE TYPE u_number_long_array AS VARRAY(4) OF NUMBER(11)/
 CREATE TYPE u_date_array AS VARRAY(4) OF DATE/
 
+CREATE TYPE u_string_table AS TABLE OF VARCHAR2(20)/
+CREATE TYPE u_number_table AS TABLE OF NUMBER(7)/
+CREATE TYPE u_number_long_table AS TABLE OF NUMBER(11)/
+CREATE TYPE u_date_table AS TABLE OF DATE/
 
 CREATE TYPE u_street_type AS OBJECT (
   street VARCHAR2(100),
@@ -598,6 +620,28 @@ BEGIN
 END p_arrays3;
 /
 
+CREATE OR REPLACE PROCEDURE p_tables1 (in_table u_number_table, out_table OUT u_number_table)
+IS
+BEGIN
+    out_table := in_table;
+END p_tables1;
+/
+
+CREATE OR REPLACE PROCEDURE p_tables2 (in_table u_number_long_table, out_table OUT u_number_long_table)
+IS
+BEGIN
+    out_table := in_table;
+END p_tables2;
+/
+
+CREATE OR REPLACE PROCEDURE p_tables3 (in_table u_string_table, out_table OUT u_string_table)
+IS
+BEGIN
+    out_table := in_table;
+END p_tables3;
+/
+
+
 CREATE OR REPLACE PROCEDURE p_many_parameters (
   f000 number, f001 number, f002 number, f003 number, f004 number,
   f005 number, f006 number, f007 number, f008 number, f009 number,
@@ -803,6 +847,30 @@ IS
 BEGIN
     return in_array;
 END f_arrays3;
+/
+
+CREATE OR REPLACE FUNCTION f_tables1 (in_table u_number_table)
+RETURN u_number_table
+IS
+BEGIN
+    return in_table;
+END f_tables1;
+/
+
+CREATE OR REPLACE FUNCTION f_tables2 (in_table u_number_long_table)
+RETURN u_number_long_table
+IS
+BEGIN
+    return in_table;
+END f_tables2;
+/
+
+CREATE OR REPLACE FUNCTION f_tables3 (in_table u_string_table)
+RETURN u_string_table
+IS
+BEGIN
+    return in_table;
+END f_tables3;
 /
 
 CREATE OR REPLACE PROCEDURE p_author_exists (author_name VARCHAR2, result OUT NUMBER)

@@ -261,6 +261,120 @@ public final class Routines {
 	}
 
 	/**
+	 * Invoke F_TABLES1
+	 *
+	 * @param inTable
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord fTables1(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables1 f = new org.jooq.test.oracle.generatedclasses.routines.FTables1();
+		f.setInTable(inTable);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_TABLES1 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord> fTables1(org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables1 f = new org.jooq.test.oracle.generatedclasses.routines.FTables1();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F_TABLES1 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord> fTables1(org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord> inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables1 f = new org.jooq.test.oracle.generatedclasses.routines.FTables1();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke F_TABLES2
+	 *
+	 * @param inTable
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord fTables2(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables2 f = new org.jooq.test.oracle.generatedclasses.routines.FTables2();
+		f.setInTable(inTable);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_TABLES2 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord> fTables2(org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables2 f = new org.jooq.test.oracle.generatedclasses.routines.FTables2();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F_TABLES2 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord> fTables2(org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord> inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables2 f = new org.jooq.test.oracle.generatedclasses.routines.FTables2();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke F_TABLES3
+	 *
+	 * @param inTable
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord fTables3(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables3 f = new org.jooq.test.oracle.generatedclasses.routines.FTables3();
+		f.setInTable(inTable);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_TABLES3 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord> fTables3(org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables3 f = new org.jooq.test.oracle.generatedclasses.routines.FTables3();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F_TABLES3 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord> fTables3(org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord> inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables3 f = new org.jooq.test.oracle.generatedclasses.routines.FTables3();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
 	 * Invoke F317
 	 *
 	 * @param p1
@@ -561,6 +675,51 @@ public final class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Invoke P_TABLES1
+	 *
+	 * @param inTable IN parameter
+	 * @param outTable OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord pTables1(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.PTables1 p = new org.jooq.test.oracle.generatedclasses.routines.PTables1();
+		p.setInTable(inTable);
+
+		p.execute(configuration);
+		return p.getOutTable();
+	}
+
+	/**
+	 * Invoke P_TABLES2
+	 *
+	 * @param inTable IN parameter
+	 * @param outTable OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord pTables2(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.PTables2 p = new org.jooq.test.oracle.generatedclasses.routines.PTables2();
+		p.setInTable(inTable);
+
+		p.execute(configuration);
+		return p.getOutTable();
+	}
+
+	/**
+	 * Invoke P_TABLES3
+	 *
+	 * @param inTable IN parameter
+	 * @param outTable OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord pTables3(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.PTables3 p = new org.jooq.test.oracle.generatedclasses.routines.PTables3();
+		p.setInTable(inTable);
+
+		p.execute(configuration);
+		return p.getOutTable();
 	}
 
 	/**

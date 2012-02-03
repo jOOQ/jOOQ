@@ -3,7 +3,6 @@
     <jdbc>
         <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
         <url>jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true</url>
-        <schema>dbo</schema>
         <user></user>
         <password></password>
     </jdbc>
@@ -14,6 +13,26 @@
             <includes>.*</includes>
             <excludes></excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
+            <schemata>
+                <schema>
+                    <inputSchema>dbo</inputSchema>
+                </schema>
+                <schema>
+                	<inputSchema>HumanResources</inputSchema>
+                </schema>
+                <schema>
+                	<inputSchema>Person</inputSchema>
+                </schema>
+                <schema>
+                	<inputSchema>Production</inputSchema>
+                </schema>
+                <schema>
+                	<inputSchema>Purchasing</inputSchema>
+                </schema>
+                <schema>
+                	<inputSchema>Sales</inputSchema>
+                </schema>
+            </schemata>
         </database>
         <generate>
             <relations>true</relations>
@@ -23,7 +42,7 @@
             <generatedAnnotation>false</generatedAnnotation>
         </generate>
         <target>
-            <packageName>org.jooq.examples.sqlserver.adventureworks.dbo</packageName>
+            <packageName>org.jooq.examples.sqlserver.adventureworks</packageName>
             <directory>./examples</directory>
         </target>
     </generator>

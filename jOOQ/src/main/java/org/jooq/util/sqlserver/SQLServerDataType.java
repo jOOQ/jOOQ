@@ -112,6 +112,7 @@ public class SQLServerDataType<T> extends AbstractDataType<T> {
     public static final SQLServerDataType<BigDecimal> MONEY            = new SQLServerDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
     public static final SQLServerDataType<BigDecimal> SMALLMONEY       = new SQLServerDataType<BigDecimal>(SQLDataType.DECIMAL, "smallmoney");
     public static final SQLServerDataType<byte[]>     IMAGE            = new SQLServerDataType<byte[]>(SQLDataType.BINARY, "image");
+    public static final SQLServerDataType<String>     UNIQUEIDENTIFIER = new SQLServerDataType<String>(SQLDataType.VARCHAR, "uniqueidentifier");
 
 
     private SQLServerDataType(SQLDataType<T> sqlDataType, String typeName) {

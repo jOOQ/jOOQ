@@ -42,9 +42,9 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 /**
  * Sybase table definition
  *
@@ -52,8 +52,8 @@ import org.jooq.util.DefaultDataTypeDefinition;
  */
 public class SybaseTableDefinition extends AbstractTableDefinition {
 
-    public SybaseTableDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public SybaseTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -76,13 +76,15 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
              .orderBy(SYSTABCOL.COLUMN_ID)
              .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(SYSDOMAIN.DOMAIN_NAME),
                 record.getValue(SYSTABCOL.WIDTH),
                 record.getValue(SYSTABCOL.SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(
-            	getDatabase().getTable(getName()),
+            	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(SYSTABCOL.COLUMN_NAME),
                 record.getValue(SYSTABCOL.COLUMN_ID),
                 type,

@@ -46,9 +46,9 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.derby.sys.tables.Syscolumns;
 
 /**
@@ -58,8 +58,8 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
 
     private final String         tableid;
 
-    public DerbyTableDefinition(Database database, String name, String tableid) {
-		super(database, name, "");
+    public DerbyTableDefinition(SchemaDefinition schema, String name, String tableid) {
+		super(schema, name, "");
 
 		this.tableid = tableid;
 	}
@@ -82,11 +82,13 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             Number precision = parsePrecision(typeName);
             Number scale = parseScale(typeName);
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 typeName, precision, scale);
 
 			ColumnDefinition column = new DefaultColumnDefinition(
-				getDatabase().getTable(getName()),
+				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(Syscolumns.COLUMNNAME),
 			    record.getValue(Syscolumns.COLUMNNUMBER),
 			    type,

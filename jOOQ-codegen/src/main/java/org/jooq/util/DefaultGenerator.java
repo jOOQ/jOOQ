@@ -40,7 +40,6 @@ package org.jooq.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.TypeVariable;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -190,7 +189,6 @@ public class DefaultGenerator implements Generator {
         log.info("Database parameters");
 	    log.info("----------------------------------------------------------");
 	    log.info("  dialect", database.getDialect());
-	    log.info("  schema", database.getInputSchema());
 	    log.info("  target dir", getTargetDirectory());
 	    log.info("  target package", getTargetPackage());
 	    log.info("----------------------------------------------------------");
@@ -207,20 +205,30 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating schemas
         // ----------------------------------------------------------------------
-		log.info("Generating classes in", targetPackageDir.getCanonicalPath());
-		SchemaDefinition schema = database.getSchema();
+		for (SchemaDefinition schema : database.getSchemata()) {
+		    generate(database, schema, watch);
+		}
+    }
+
+    private void generate(
+            Database database,
+            SchemaDefinition schema,
+            StopWatch watch) throws SQLException, IOException {
+
+        File targetSchemaDir = strategy.getFile(schema).getParentFile();
+
 		GenerationWriter outS = null;
 		GenerationWriter outF = null;
 
 		if (!schema.isDefaultSchema()) {
-			targetPackageDir.mkdirs();
 
 			// Generating the schema
 			// -----------------------------------------------------------------
 			log.info("Generating schema", strategy.getFileName(schema));
+			log.info("----------------------------------------------------------");
 
-			outS = new GenerationWriter(new PrintWriter(new File(targetPackageDir, strategy.getFileName(schema))));
-			printHeader(outS, targetPackage);
+			outS = new GenerationWriter(strategy.getFile(schema));
+			printHeader(outS, schema);
 			printClassJavadoc(outS, schema);
 
 			outS.print("public class ");
@@ -247,8 +255,8 @@ public class DefaultGenerator implements Generator {
             // -----------------------------------------------------------------
             log.info("Generating factory", strategy.getFileName(schema, "Factory"));
 
-            outF = new GenerationWriter(new PrintWriter(new File(targetPackageDir, strategy.getFileName(schema, "Factory"))));
-            printHeader(outF, targetPackage);
+            outF = new GenerationWriter(strategy.getFile(schema, "Factory"));
+            printHeader(outF, schema);
             printClassJavadoc(outF, schema);
 
             outF.print("public class ");
@@ -295,16 +303,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating sequences
         // ----------------------------------------------------------------------
-		if (database.getSequences().size() > 0) {
-		    log.info("Generating sequences", targetPackageDir.getCanonicalPath());
-		    targetPackageDir.mkdirs();
+		if (database.getSequences(schema).size() > 0) {
+		    log.info("Generating sequences");
 
-            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Sequences.java")));
-            printHeader(out, targetPackage);
+            GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Sequences.java"));
+            printHeader(out, schema);
             printClassJavadoc(out, "Convenience access to all sequences in " + schema.getName());
             out.println("public final class Sequences {");
 
-            for (SequenceDefinition sequence : database.getSequences()) {
+            for (SequenceDefinition sequence : database.getSequences(schema)) {
                 out.println();
                 out.println("\t/**");
                 out.println("\t * The sequence " + sequence.getQualifiedName());
@@ -343,26 +350,22 @@ public class DefaultGenerator implements Generator {
             out.println("}");
             out.close();
 
-            registerInSchema(outS, database.getSequences(), Sequence.class, true);
+            registerInSchema(outS, database.getSequences(schema), Sequence.class, true);
             watch.splitInfo("Sequences generated");
 		}
 
         // ---------------------------------------------------------------------
         // XXX Generating master data tables
         // ---------------------------------------------------------------------
-        File targetMasterDataTablePackageDir = new File(targetPackageDir, "enums");
+        if (database.getMasterDataTables(schema).size() > 0) {
+            log.info("Generating master data");
 
-        if (database.getMasterDataTables().size() > 0) {
-            log.info("Generating master data", targetMasterDataTablePackageDir.getCanonicalPath());
-
-            for (MasterDataTableDefinition table : database.getMasterDataTables()) {
+            for (MasterDataTableDefinition table : database.getMasterDataTables(schema)) {
                 try {
-                    targetMasterDataTablePackageDir.mkdirs();
-
                     log.info("Generating table", strategy.getFileName(table));
 
-                    GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetMasterDataTablePackageDir, strategy.getFileName(table))));
-                    printHeader(out, targetPackage + ".enums");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table));
+                    printHeader(out, table);
                     printClassJavadoc(out, table);
 
                     ColumnDefinition pk = table.getPrimaryKeyColumn();
@@ -480,18 +483,15 @@ public class DefaultGenerator implements Generator {
 		// ----------------------------------------------------------------------
 		// XXX Generating tables
 		// ----------------------------------------------------------------------
-		File targetTablePackageDir = new File(targetPackageDir, "tables");
-		if (database.getTables().size() > 0) {
-		    log.info("Generating tables", targetTablePackageDir.getCanonicalPath());
+		if (database.getTables(schema).size() > 0) {
+		    log.info("Generating tables");
 
-    		for (TableDefinition table : database.getTables()) {
+    		for (TableDefinition table : database.getTables(schema)) {
     		    try {
-        			targetTablePackageDir.mkdirs();
-
         			log.info("Generating table", strategy.getFileName(table));
 
-        			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTablePackageDir, strategy.getFileName(table))));
-        			printHeader(out, targetPackage + ".tables");
+        			GenerationWriter out = new GenerationWriter(strategy.getFile(table));
+        			printHeader(out, table);
         			printClassJavadoc(out, table);
 
         			Class<?> baseClass;
@@ -567,7 +567,7 @@ public class DefaultGenerator implements Generator {
                             out.println("> getIdentity() {");
 
                             out.print("\t\treturn ");
-                            out.print(strategy.getTargetPackage());
+                            out.print(strategy.getJavaPackageName(schema));
                             out.print(".Keys.IDENTITY_");
                             out.print(strategy.getJavaIdentifier(identity.getContainer()));
                             out.println(";");
@@ -589,7 +589,7 @@ public class DefaultGenerator implements Generator {
                             out.println("> getMainKey() {");
 
                             out.print("\t\treturn ");
-                            out.print(strategy.getTargetPackage());
+                            out.print(strategy.getJavaPackageName(schema));
                             out.print(".Keys.");
                             out.print(strategy.getJavaIdentifier(mainKey));
                             out.println(";");
@@ -623,7 +623,7 @@ public class DefaultGenerator implements Generator {
                             String separator = "";
                             for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                                 out.print(separator);
-                                out.print(strategy.getTargetPackage());
+                                out.print(strategy.getJavaPackageName(schema));
                                 out.print(".Keys.");
                                 out.print(strategy.getJavaIdentifier(uniqueKey));
 
@@ -667,7 +667,7 @@ public class DefaultGenerator implements Generator {
                                 }
 
                                 out.print(separator);
-                                out.print(strategy.getTargetPackage());
+                                out.print(strategy.getJavaPackageName(schema));
                                 out.print(".Keys.");
                                 out.print(strategy.getJavaIdentifier(foreignKey));
 
@@ -705,22 +705,22 @@ public class DefaultGenerator implements Generator {
     		    }
     		}
 
-    		registerInSchema(outS, database.getTables(), Table.class, true);
+    		registerInSchema(outS, database.getTables(schema), Table.class, true);
     		watch.splitInfo("Tables generated");
 		}
 
         // ----------------------------------------------------------------------
         // XXX Generating central static table access
         // ----------------------------------------------------------------------
-		if (database.getTables().size() > 0) {
-            log.info("Generating table references", targetTablePackageDir.getCanonicalPath());
+		if (database.getTables(schema).size() > 0) {
+            log.info("Generating table references");
 
-            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Tables.java")));
-            printHeader(out, targetPackage);
+            GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Tables.java"));
+            printHeader(out, schema);
             printClassJavadoc(out, "Convenience access to all tables in " + schema.getName());
             out.println("public final class Tables {");
 
-            for (TableDefinition table : database.getTables()) {
+            for (TableDefinition table : database.getTables(schema)) {
                 out.println();
                 out.println("\t/**");
 
@@ -754,12 +754,11 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating relations
         // ----------------------------------------------------------------------
-		if (generateRelations() && database.getTables().size() > 0) {
-		    log.info("Generating Keys", targetTablePackageDir.getCanonicalPath());
-            targetPackageDir.mkdirs();
+		if (generateRelations() && database.getTables(schema).size() > 0) {
+		    log.info("Generating Keys");
 
-            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Keys.java")));
-            printHeader(out, targetPackage);
+            GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Keys.java"));
+            printHeader(out, schema);
             printClassJavadoc(out, "A class modelling foreign key relationships between tables of the " + schema.getName() + " schema");
 
             out.suppressWarnings("unchecked");
@@ -769,7 +768,7 @@ public class DefaultGenerator implements Generator {
             out.println();
             out.println("\t// IDENTITY definitions");
 
-            for (TableDefinition table : database.getTables()) {
+            for (TableDefinition table : database.getTables(schema)) {
                 try {
                     ColumnDefinition identity = table.getIdentity();
 
@@ -798,7 +797,7 @@ public class DefaultGenerator implements Generator {
             out.println();
             out.println("\t// UNIQUE and PRIMARY KEY definitions");
 
-            for (TableDefinition table : database.getTables()) {
+            for (TableDefinition table : database.getTables(schema)) {
 		        try {
                     List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
 
@@ -834,7 +833,7 @@ public class DefaultGenerator implements Generator {
             out.println();
             out.println("\t// FOREIGN KEY definitions");
 
-            for (TableDefinition table : database.getTables()) {
+            for (TableDefinition table : database.getTables(schema)) {
                 try {
                     List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
 
@@ -855,6 +854,12 @@ public class DefaultGenerator implements Generator {
                             out.print("> ");
                             out.print(strategy.getJavaIdentifier(foreignKey));
                             out.print(" = createForeignKey(");
+
+                            if (!foreignKey.getSchema().equals(foreignKey.getReferencedKey().getSchema())) {
+                                out.print(strategy.getJavaPackageName(foreignKey.getReferencedKey().getSchema()));
+                                out.print(".Keys.");
+                            }
+
                             out.print(strategy.getJavaIdentifier(foreignKey.getReferencedKey()));
                             out.print(", ");
                             out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyTable()));
@@ -886,18 +891,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating table records
         // ----------------------------------------------------------------------
-		File targetTableRecordPackageDir = new File(new File(targetPackageDir, "tables"), "records");
-		if  (database.getTables().size() > 0) {
-		    log.info("Generating records", targetTableRecordPackageDir.getCanonicalPath());
+		if  (database.getTables(schema).size() > 0) {
+		    log.info("Generating records");
 
-    		for (TableDefinition table : database.getTables()) {
+    		for (TableDefinition table : database.getTables(schema)) {
     		    try {
-        			targetTableRecordPackageDir.mkdirs();
-
         			log.info("Generating record", strategy.getFileName(table, "Record"));
 
-        			GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetTableRecordPackageDir, strategy.getFileName(table, "Record"))));
-        			printHeader(out, targetPackage + ".tables.records");
+        			GenerationWriter out = new GenerationWriter(strategy.getFile(table, "Record"));
+        			printHeader(out, table, "Record");
         			printClassJavadoc(out, table);
 
         			Class<?> baseClass;
@@ -943,18 +945,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating UDTs
         // ----------------------------------------------------------------------
-        File targetUDTPackageDir = new File(targetPackageDir, "udt");
-        if (database.getUDTs().size() > 0) {
-            log.info("Generating UDTs", targetUDTPackageDir.getCanonicalPath());
+        if (database.getUDTs(schema).size() > 0) {
+            log.info("Generating UDTs");
 
-            for (UDTDefinition udt : database.getUDTs()) {
+            for (UDTDefinition udt : database.getUDTs(schema)) {
                 try {
-                    targetUDTPackageDir.mkdirs();
-
                     log.info("Generating UDT ", strategy.getFileName(udt));
 
-                    GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetUDTPackageDir, strategy.getFileName(udt))));
-                    printHeader(out, targetPackage + ".udt");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(udt));
+                    printHeader(out, udt);
                     printClassJavadoc(out, udt);
 
                     out.print("public class ");
@@ -1030,25 +1029,22 @@ public class DefaultGenerator implements Generator {
                 }
             }
 
-            registerInSchema(outS, database.getUDTs(), UDT.class, true);
+            registerInSchema(outS, database.getUDTs(schema), UDT.class, true);
             watch.splitInfo("UDTs generated");
         }
 
         // ----------------------------------------------------------------------
         // XXX Generating UDT record classes
         // ----------------------------------------------------------------------
-        File targetRecordUDTPackageDir = new File(targetUDTPackageDir, "records");
-        if (database.getUDTs().size() > 0) {
-            log.info("Generating UDT records", targetRecordUDTPackageDir.getCanonicalPath());
+        if (database.getUDTs(schema).size() > 0) {
+            log.info("Generating UDT records");
 
-            for (UDTDefinition udt : database.getUDTs()) {
+            for (UDTDefinition udt : database.getUDTs(schema)) {
                 try {
-                    targetRecordUDTPackageDir.mkdirs();
-
                     log.info("Generating UDT record", strategy.getFileName(udt, "Record"));
 
-                    GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetRecordUDTPackageDir, strategy.getFileName(udt, "Record"))));
-                    printHeader(out, targetPackage + ".udt.records");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(udt, "Record"));
+                    printHeader(out, udt, "Record");
                     printClassJavadoc(out, udt);
 
                     out.print("public class ");
@@ -1104,12 +1100,11 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating UDT member procedures
         // ----------------------------------------------------------------------
-        if (database.getUDTs().size() > 0) {
-            for (UDTDefinition udt : database.getUDTs()) {
+        if (database.getUDTs(schema).size() > 0) {
+            for (UDTDefinition udt : database.getUDTs(schema)) {
                 if (udt.getRoutines().size() > 0) {
                     try {
-                        File dir = new File(targetUDTPackageDir, strategy.getJavaIdentifierUC(udt).toLowerCase());
-                        log.info("Generating member routines", dir.getCanonicalPath());
+                        log.info("Generating member routines");
 
                         for (RoutineDefinition routine : udt.getRoutines()) {
                             try {
@@ -1130,15 +1125,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating central static udt access
         // ----------------------------------------------------------------------
-        if (database.getUDTs().size() > 0) {
-            log.info("Generating UDT references", targetTablePackageDir.getCanonicalPath());
+        if (database.getUDTs(schema).size() > 0) {
+            log.info("Generating UDT references");
 
-            GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "UDTs.java")));
-            printHeader(out, targetPackage);
+            GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "UDTs.java"));
+            printHeader(out, schema);
             printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getName());
             out.println("public final class UDTs {");
 
-            for (UDTDefinition udt : database.getUDTs()) {
+            for (UDTDefinition udt : database.getUDTs(schema)) {
                 out.println();
                 out.println("\t/**");
                 out.println("\t * The type " + udt.getQualifiedName());
@@ -1165,18 +1160,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating ARRAY record classes
         // ----------------------------------------------------------------------
-        File targetRecordARRAYPackageDir = new File(targetUDTPackageDir, "records");
-        if (database.getArrays().size() > 0) {
-            log.info("Generating ARRAYs", targetRecordARRAYPackageDir.getCanonicalPath());
+        if (database.getArrays(schema).size() > 0) {
+            log.info("Generating ARRAYs");
 
-            for (ArrayDefinition array : database.getArrays()) {
+            for (ArrayDefinition array : database.getArrays(schema)) {
                 try {
-                    targetRecordARRAYPackageDir.mkdirs();
-
                     log.info("Generating ARRAY", strategy.getFileName(array, "Record"));
 
-                    GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetRecordARRAYPackageDir, strategy.getFileName(array, "Record"))));
-                    printHeader(out, targetPackage + ".udt.records");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(array, "Record"));
+                    printHeader(out, array, "Record");
                     printClassJavadoc(out, array);
 
                     out.print("public class ");
@@ -1195,7 +1187,7 @@ public class DefaultGenerator implements Generator {
                     out.print(Configuration.class);
                     out.println(" configuration) {");
                     out.print("\t\tsuper(\"");
-                    out.print(array.getSchemaName());
+                    out.print(array.getSchema().getName());
                     out.print(".");
                     out.print(array.getName());
                     out.print("\", ");
@@ -1244,18 +1236,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating enums
         // ----------------------------------------------------------------------
-        File targetEnumPackageDir = new File(targetPackageDir, "enums");
-        if (database.getEnums().size() > 0) {
-            log.info("Generating ENUMs", targetEnumPackageDir.getCanonicalPath());
+        if (database.getEnums(schema).size() > 0) {
+            log.info("Generating ENUMs");
 
-            for (EnumDefinition e : database.getEnums()) {
+            for (EnumDefinition e : database.getEnums(schema)) {
                 try {
-                    targetEnumPackageDir.mkdirs();
-
                     log.info("Generating ENUM", strategy.getFileName(e));
 
-                    GenerationWriter out = new GenerationWriter(new PrintWriter(new File(targetEnumPackageDir, strategy.getFileName(e))));
-                    printHeader(out, targetPackage + ".enums");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(e));
+                    printHeader(out, e);
                     printClassJavadoc(out, e);
 
                     out.print("public enum ");
@@ -1309,16 +1298,15 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating routines
         // ----------------------------------------------------------------------
-        if (database.getRoutines().size() > 0) {
-            File targetRoutinePackageDir = new File(targetPackageDir, "routines");
-            log.info("Generating routines", targetRoutinePackageDir.getCanonicalPath());
+        if (database.getRoutines(schema).size() > 0) {
+            log.info("Generating routines");
 
-            GenerationWriter outR = new GenerationWriter(new PrintWriter(new File(targetPackageDir, "Routines.java")));
-            printHeader(outR, targetPackage);
+            GenerationWriter outR = new GenerationWriter(new File(targetSchemaDir, "Routines.java"));
+            printHeader(outR, schema);
             printClassJavadoc(outR, "Convenience access to all stored procedures and functions in " + schema.getName());
 
             outR.println("public final class Routines {");
-            for (RoutineDefinition routine : database.getRoutines()) {
+            for (RoutineDefinition routine : database.getRoutines(schema)) {
                 try {
                     printRoutine(database, schema, routine);
 
@@ -1351,14 +1339,12 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating packages
         // ----------------------------------------------------------------------
-		File targetPackagesPackageDir = new File(targetPackageDir, "packages");
-		if (database.getPackages().size() > 0) {
-		    log.info("Generating packages", targetPackagesPackageDir.getCanonicalPath());
+		if (database.getPackages(schema).size() > 0) {
+		    log.info("Generating packages");
 
-            for (PackageDefinition pkg : database.getPackages()) {
+            for (PackageDefinition pkg : database.getPackages(schema)) {
                 try {
-                    File targetPackagePackageDir = new File(targetPackagesPackageDir, strategy.getJavaIdentifierUC(pkg).toLowerCase());
-                    log.info("Generating package", targetPackagePackageDir.getCanonicalPath());
+                    log.info("Generating package", pkg);
 
                     for (RoutineDefinition routine : pkg.getRoutines()) {
                         try {
@@ -1369,8 +1355,8 @@ public class DefaultGenerator implements Generator {
                     }
 
                     // Static convenience methods
-                    GenerationWriter outPkg = new GenerationWriter(new PrintWriter(new File(targetPackagesPackageDir, strategy.getFileName(pkg))));
-                    printHeader(outPkg, targetPackage + ".packages");
+                    GenerationWriter outPkg = new GenerationWriter(strategy.getFile(pkg));
+                    printHeader(outPkg, pkg);
                     printClassJavadoc(outPkg, "Convenience access to all stored procedures and functions in " + pkg.getName());
                     outPkg.print("public final class ");
                     outPkg.print(strategy.getJavaClassName(pkg));
@@ -1495,11 +1481,10 @@ public class DefaultGenerator implements Generator {
 
     private void printRoutine(Database database, SchemaDefinition schema, RoutineDefinition routine)
         throws FileNotFoundException, SQLException {
-        strategy.getFile(routine).getParentFile().mkdirs();
         log.info("Generating routine", strategy.getFileName(routine));
 
-        GenerationWriter out = new GenerationWriter(new PrintWriter(strategy.getFile(routine)));
-        printHeader(out, strategy.getJavaPackageName(routine));
+        GenerationWriter out = new GenerationWriter(strategy.getFile(routine));
+        printHeader(out, routine);
         printClassJavadoc(out, routine);
 
         out.print("public class ");
@@ -1993,7 +1978,7 @@ public class DefaultGenerator implements Generator {
 
     private void printSingletonReference(GenerationWriter out, Definition definition) {
         if (definition instanceof SequenceDefinition) {
-            out.print(strategy.getTargetPackage());
+            out.print(strategy.getJavaPackageName(definition.getSchema()));
             out.print(".");
             out.print("Sequences");
             out.print(".");
@@ -2402,11 +2387,15 @@ public class DefaultGenerator implements Generator {
         out.printSuppressWarningsPlaceholder();
     }
 
-	private void printHeader(GenerationWriter out, String packageName) {
+    private void printHeader(GenerationWriter out, Definition definition) {
+        printHeader(out, definition, "");
+    }
+
+	private void printHeader(GenerationWriter out, Definition definition, String suffix) {
 		out.println("/**");
 		out.println(" * This class is generated by jOOQ");
 		out.println(" */");
-		out.println("package " + packageName + ";");
+		out.println("package " + strategy.getJavaPackageName(definition, suffix) + ";");
 		out.println();
 	}
 
@@ -2447,10 +2436,10 @@ public class DefaultGenerator implements Generator {
         else {
             if (db.isArrayType(type.getType())) {
                 String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
-                return getTypeReference(db, baseType, 0, 0, baseType) + ".getArrayDataType()";
+                return getTypeReference(db, type.getSchema(), baseType, 0, 0, baseType) + ".getArrayDataType()";
             }
             else {
-                return getTypeReference(db, type.getType(), type.getPrecision(), type.getScale(), type.getUserType());
+                return getTypeReference(db, type.getSchema(), type.getType(), type.getPrecision(), type.getScale(), type.getUserType());
             }
         }
     }
@@ -2462,6 +2451,7 @@ public class DefaultGenerator implements Generator {
         else {
             return getType(
                 type.getDatabase(),
+                type.getSchema(),
                 type.getType(),
                 type.getPrecision(),
                 type.getScale(),
@@ -2470,28 +2460,28 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-    private String getType(Database db, String t, int p, int s, String u, String defaultType) throws SQLException {
+    private String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType) throws SQLException {
         String type = defaultType;
 
         // Array types
         if (db.isArrayType(t)) {
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), t, u);
-            type = getType(db, baseType, p, s, baseType, defaultType) + "[]";
+            type = getType(db, schema, baseType, p, s, baseType, defaultType) + "[]";
         }
 
         // Check for Oracle-style VARRAY types
-        else if (db.getArray(u) != null) {
-            type = strategy.getFullJavaClassName(db.getArray(u), "Record");
+        else if (db.getArray(schema, u) != null) {
+            type = strategy.getFullJavaClassName(db.getArray(schema, u), "Record");
         }
 
         // Check for ENUM types
-        else if (db.getEnum(u) != null) {
-            type = strategy.getFullJavaClassName(db.getEnum(u));
+        else if (db.getEnum(schema, u) != null) {
+            type = strategy.getFullJavaClassName(db.getEnum(schema, u));
         }
 
         // Check for UDTs
-        else if (db.getUDT(u) != null) {
-            type = strategy.getFullJavaClassName(db.getUDT(u), "Record");
+        else if (db.getUDT(schema, u) != null) {
+            type = strategy.getFullJavaClassName(db.getUDT(schema, u), "Record");
         }
 
         // Try finding a basic standard SQL type according to the current dialect
@@ -2524,23 +2514,23 @@ public class DefaultGenerator implements Generator {
         return type;
     }
 
-    private String getTypeReference(Database db, String t, int p, int s, String u) throws SQLException {
+    private String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, String u) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        if (db.getArray(u) != null) {
-            ArrayDefinition array = db.getArray(u);
+        if (db.getArray(schema, u) != null) {
+            ArrayDefinition array = db.getArray(schema, u);
 
             sb.append(getJavaTypeReference(db, array.getElementType()));
             sb.append(".asArrayDataType(");
             sb.append(strategy.getFullJavaClassName(array, "Record"));
             sb.append(".class)");
         }
-        else if (db.getUDT(u) != null) {
-            UDTDefinition udt = db.getUDT(u);
+        else if (db.getUDT(schema, u) != null) {
+            UDTDefinition udt = db.getUDT(schema, u);
 
             sb.append(strategy.getFullJavaIdentifierUC(udt));
             sb.append(".getDataType()");
         }
-        else if (db.getEnum(u) != null) {
+        else if (db.getEnum(schema, u) != null) {
             sb.append("org.jooq.util.");
             sb.append(db.getDialect().getName().toLowerCase());
             sb.append(".");
@@ -2548,7 +2538,7 @@ public class DefaultGenerator implements Generator {
             sb.append("DataType.");
             sb.append(FieldTypeHelper.normalise(FieldTypeHelper.getDataType(db.getDialect(), String.class).getTypeName()));
             sb.append(".asEnumDataType(");
-            sb.append(strategy.getFullJavaClassName(db.getEnum(u)));
+            sb.append(strategy.getFullJavaClassName(db.getEnum(schema, u)));
             sb.append(".class)");
         }
         else {
@@ -2581,8 +2571,8 @@ public class DefaultGenerator implements Generator {
                 sb.append("DataType.");
 
                 try {
-                    String type1 = getType(db, t, p, s, u, null);
-                    String type2 = getType(db, t, 0, 0, u, null);
+                    String type1 = getType(db, schema, t, p, s, u, null);
+                    String type2 = getType(db, schema, t, 0, 0, u, null);
 
                     sb.append(FieldTypeHelper.normalise(t));
 

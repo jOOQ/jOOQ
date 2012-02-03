@@ -46,15 +46,15 @@ import org.jooq.Record;
 import org.jooq.util.AbstractUDTDefinition;
 import org.jooq.util.AttributeDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 
 public class PostgresUDTDefinition extends AbstractUDTDefinition {
 
-    public PostgresUDTDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public PostgresUDTDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -69,12 +69,14 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                     ATTRIBUTES.NUMERIC_SCALE,
                     ATTRIBUTES.ATTRIBUTE_UDT_NAME)
                 .from(ATTRIBUTES)
-                .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchemaName()))
+                .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchema().getName()))
                 .and(ATTRIBUTES.UDT_NAME.equal(getName()))
                 .orderBy(ATTRIBUTES.ORDINAL_POSITION)
                 .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(ATTRIBUTES.DATA_TYPE),
                 record.getValue(ATTRIBUTES.NUMERIC_PRECISION),
                 record.getValue(ATTRIBUTES.NUMERIC_SCALE),
@@ -85,6 +87,7 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                 record.getValue(ATTRIBUTES.ATTRIBUTE_NAME),
                 record.getValue(ATTRIBUTES.ORDINAL_POSITION),
                 type);
+
             result.add(column);
         }
 

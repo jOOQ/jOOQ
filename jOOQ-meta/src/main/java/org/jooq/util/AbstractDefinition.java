@@ -48,21 +48,27 @@ import org.jooq.impl.Factory;
  */
 public abstract class AbstractDefinition implements Definition {
 
-    private final Database database;
-    private final String   name;
-    private final String   comment;
-    private final String   overload;
+    private final Database         database;
+    private final SchemaDefinition schema;
+    private final String           name;
+    private final String           comment;
+    private final String           overload;
 
-    public AbstractDefinition(Database database, String name) {
-        this(database, name, null);
+    public AbstractDefinition(Database database, SchemaDefinition schema, String name) {
+        this(database, schema, name, null);
     }
 
-    public AbstractDefinition(Database database, String name, String comment) {
-        this(database, name, comment, null);
+    public AbstractDefinition(Database database, SchemaDefinition schema, String name, String comment) {
+        this(database, schema, name, comment, null);
     }
 
-    public AbstractDefinition(Database database, String name, String comment, String overload) {
+    public AbstractDefinition(Database database, SchemaDefinition schema, String name, String comment, String overload) {
         this.database = database;
+
+        // The subclass constructor cannot pass "this" to the super constructor
+        this.schema = (schema == null && this instanceof SchemaDefinition)
+            ? (SchemaDefinition) this
+            : schema;
         this.name = name;
         this.comment = comment;
         this.overload = overload;
@@ -74,8 +80,8 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
-    public final String getSchemaName() {
-        return database.getInputSchema();
+    public final SchemaDefinition getSchema() {
+        return schema;
     }
 
     @Override

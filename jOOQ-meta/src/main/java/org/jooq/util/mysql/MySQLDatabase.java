@@ -59,6 +59,7 @@ import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -77,12 +78,13 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
+            SchemaDefinition schema = getSchema(record.getValue(KeyColumnUsage.TABLE_SCHEMA));
             String constraintName = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
             String tableName = record.getValue(KeyColumnUsage.TABLE_NAME);
             String columnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
 
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
@@ -93,12 +95,13 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
+            SchemaDefinition schema = getSchema(record.getValue(KeyColumnUsage.TABLE_SCHEMA));
             String constraintName = record.getValue(KeyColumnUsage.CONSTRAINT_NAME);
             String tableName = record.getValue(KeyColumnUsage.TABLE_NAME);
             String columnName = record.getValue(KeyColumnUsage.COLUMN_NAME);
 
             String key = getKeyName(tableName, constraintName);
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
 
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
@@ -112,6 +115,7 @@ public class MySQLDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create().select(
+                KeyColumnUsage.TABLE_SCHEMA,
                 KeyColumnUsage.CONSTRAINT_NAME,
                 KeyColumnUsage.TABLE_NAME,
                 KeyColumnUsage.COLUMN_NAME)
@@ -121,8 +125,9 @@ public class MySQLDatabase extends AbstractDatabase {
             .and(KeyColumnUsage.TABLE_NAME.equal(TableConstraints.TABLE_NAME))
             .and(KeyColumnUsage.CONSTRAINT_NAME.equal(TableConstraints.CONSTRAINT_NAME))
             .where(TableConstraints.CONSTRAINT_TYPE.equal(constraintType))
-            .and(KeyColumnUsage.TABLE_SCHEMA.equal(getInputSchema()))
+            .and(KeyColumnUsage.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
+                KeyColumnUsage.TABLE_SCHEMA.asc(),
                 KeyColumnUsage.TABLE_NAME.asc(),
                 KeyColumnUsage.ORDINAL_POSITION.asc())
             .fetch();
@@ -131,6 +136,7 @@ public class MySQLDatabase extends AbstractDatabase {
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
+                    ReferentialConstraints.CONSTRAINT_SCHEMA,
                     ReferentialConstraints.CONSTRAINT_NAME,
                     ReferentialConstraints.TABLE_NAME,
                     ReferentialConstraints.REFERENCED_TABLE_NAME,
@@ -140,11 +146,14 @@ public class MySQLDatabase extends AbstractDatabase {
                 .join(KEY_COLUMN_USAGE)
                 .on(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(KeyColumnUsage.CONSTRAINT_SCHEMA))
                 .and(ReferentialConstraints.CONSTRAINT_NAME.equal(KeyColumnUsage.CONSTRAINT_NAME))
-                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.equal(getInputSchema()))
+                .where(ReferentialConstraints.CONSTRAINT_SCHEMA.in(getInputSchemata()))
                 .orderBy(
+                    KeyColumnUsage.CONSTRAINT_SCHEMA.asc(),
                     KeyColumnUsage.CONSTRAINT_NAME.asc(),
                     KeyColumnUsage.ORDINAL_POSITION.asc())
                 .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue(ReferentialConstraints.CONSTRAINT_SCHEMA));
 
             String foreignKey = record.getValue(ReferentialConstraints.CONSTRAINT_NAME);
             String foreignKeyColumn = record.getValue(KeyColumnUsage.COLUMN_NAME);
@@ -152,7 +161,7 @@ public class MySQLDatabase extends AbstractDatabase {
             String referencedKey = record.getValue(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
             String referencedTableName = record.getValue(ReferentialConstraints.REFERENCED_TABLE_NAME);
 
-            TableDefinition foreignKeyTable = getTable(foreignKeyTableName);
+            TableDefinition foreignKeyTable = getTable(schema, foreignKeyTableName);
 
             if (foreignKeyTable != null) {
                 ColumnDefinition column = foreignKeyTable.getColumn(foreignKeyColumn);
@@ -174,17 +183,21 @@ public class MySQLDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Record record : create().select(
+                Tables.TABLE_SCHEMA,
                 Tables.TABLE_NAME,
                 Tables.TABLE_COMMENT)
             .from(TABLES)
-            .where(Tables.TABLE_SCHEMA.equal(getInputSchema()))
-            .orderBy(Tables.TABLE_NAME)
+            .where(Tables.TABLE_SCHEMA.in(getInputSchemata()))
+            .orderBy(
+                Tables.TABLE_SCHEMA,
+                Tables.TABLE_NAME)
             .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(Tables.TABLE_SCHEMA));
             String name = record.getValue(Tables.TABLE_NAME);
             String comment = record.getValue(Tables.TABLE_COMMENT);
 
-            MySQLTableDefinition table = new MySQLTableDefinition(this, name, comment);
+            MySQLTableDefinition table = new MySQLTableDefinition(schema, name, comment);
             result.add(table);
         }
 
@@ -197,6 +210,7 @@ public class MySQLDatabase extends AbstractDatabase {
 
         Result<Record> records = create()
             .select(
+                Columns.TABLE_SCHEMA,
                 Columns.COLUMN_COMMENT,
                 Columns.TABLE_NAME,
                 Columns.COLUMN_NAME,
@@ -204,20 +218,22 @@ public class MySQLDatabase extends AbstractDatabase {
             .from(COLUMNS)
             .where(
                 Columns.COLUMN_TYPE.like("enum(%)").and(
-                Columns.TABLE_SCHEMA.equal(getInputSchema())))
+                Columns.TABLE_SCHEMA.in(getInputSchemata())))
             .orderBy(
+                Columns.TABLE_SCHEMA.asc(),
                 Columns.TABLE_NAME.asc(),
                 Columns.COLUMN_NAME.asc())
             .fetch();
 
         for (Record record : records) {
+            SchemaDefinition schema = getSchema(record.getValue(Columns.TABLE_SCHEMA));
             String comment = record.getValue(Columns.COLUMN_COMMENT);
             String table = record.getValue(Columns.TABLE_NAME);
             String column = record.getValue(Columns.COLUMN_NAME);
             String name = table + "_" + column;
             String columnType = record.getValue(Columns.COLUMN_TYPE);
 
-            DefaultEnumDefinition definition = new DefaultEnumDefinition(this, name, comment);
+            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, comment);
             for (String string : columnType.replaceAll("enum\\(|\\)", "").split(",")) {
                 definition.addLiteral(string.trim().replaceAll("'", ""));
             }
@@ -245,20 +261,25 @@ public class MySQLDatabase extends AbstractDatabase {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
         for (Record record : create().select(
+                    Proc.DB,
                     Proc.NAME,
                     Proc.COMMENT,
                     Proc.PARAM_LIST,
                     Proc.RETURNS)
                 .from(PROC)
-                .where(DB.equal(getInputSchema()))
+                .where(DB.in(getInputSchemata()))
+                .orderBy(
+                    DB,
+                    Proc.NAME)
                 .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(DB));
             String name = record.getValue(Proc.NAME);
             String comment = record.getValue(Proc.COMMENT);
             String params = new String(record.getValue(Proc.PARAM_LIST));
             String returns = new String(record.getValue(Proc.RETURNS));
 
-            result.add(new MySQLRoutineDefinition(this, name, comment, params, returns));
+            result.add(new MySQLRoutineDefinition(schema, name, comment, params, returns));
         }
 
         return result;

@@ -62,6 +62,7 @@ import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -88,11 +89,12 @@ public class IngresDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
+            SchemaDefinition schema = getSchema(record.getValue(trim(Iiconstraints.SCHEMA_NAME)));
             String key = record.getValue(trim(Iiconstraints.CONSTRAINT_NAME));
             String tableName = record.getValue(trim(Iiconstraints.TABLE_NAME));
             String columnName = record.getValue(trim(IiindexColumns.COLUMN_NAME));
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -102,11 +104,12 @@ public class IngresDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
+            SchemaDefinition schema = getSchema(record.getValue(trim(Iiconstraints.SCHEMA_NAME)));
             String key = record.getValue(trim(Iiconstraints.CONSTRAINT_NAME));
             String tableName = record.getValue(trim(Iiconstraints.TABLE_NAME));
             String columnName = record.getValue(trim(IiindexColumns.COLUMN_NAME));
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -115,32 +118,35 @@ public class IngresDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create().select(
-                trim(Iiconstraints.TABLE_NAME),
-                trim(Iiconstraints.CONSTRAINT_NAME),
-                trim(IiindexColumns.COLUMN_NAME))
-            .from(IICONSTRAINTS)
-            .join(IICONSTRAINT_INDEXES)
-            .on(Iiconstraints.CONSTRAINT_NAME.equal(IiconstraintIndexes.CONSTRAINT_NAME))
-            .and(Iiconstraints.SCHEMA_NAME.equal(IiconstraintIndexes.SCHEMA_NAME))
-            .join(IIINDEXES)
-            .on(IiconstraintIndexes.INDEX_NAME.equal(Iiindexes.INDEX_NAME))
-            .and(IiconstraintIndexes.SCHEMA_NAME.equal(Iiindexes.INDEX_OWNER))
-            .join(IIINDEX_COLUMNS)
-            .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
-            .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
-            .where(Iiconstraints.SCHEMA_NAME.equal(getInputSchema()))
-            .and(Iiconstraints.CONSTRAINT_TYPE.equal(constraintType))
-            .orderBy(
-                Iiconstraints.TABLE_NAME.asc(),
-                IiindexColumns.INDEX_NAME.asc(),
-                IiindexColumns.KEY_SEQUENCE.asc())
-            .fetch();
+                    trim(Iiconstraints.SCHEMA_NAME),
+                    trim(Iiconstraints.TABLE_NAME),
+                    trim(Iiconstraints.CONSTRAINT_NAME),
+                    trim(IiindexColumns.COLUMN_NAME))
+                .from(IICONSTRAINTS)
+                .join(IICONSTRAINT_INDEXES)
+                .on(Iiconstraints.CONSTRAINT_NAME.equal(IiconstraintIndexes.CONSTRAINT_NAME))
+                .and(Iiconstraints.SCHEMA_NAME.equal(IiconstraintIndexes.SCHEMA_NAME))
+                .join(IIINDEXES)
+                .on(IiconstraintIndexes.INDEX_NAME.equal(Iiindexes.INDEX_NAME))
+                .and(IiconstraintIndexes.SCHEMA_NAME.equal(Iiindexes.INDEX_OWNER))
+                .join(IIINDEX_COLUMNS)
+                .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
+                .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
+                .where(Iiconstraints.SCHEMA_NAME.in(getInputSchemata()))
+                .and(Iiconstraints.CONSTRAINT_TYPE.equal(constraintType))
+                .orderBy(
+                    Iiconstraints.SCHEMA_NAME.asc(),
+                    Iiconstraints.TABLE_NAME.asc(),
+                    IiindexColumns.INDEX_NAME.asc(),
+                    IiindexColumns.KEY_SEQUENCE.asc())
+                .fetch();
     }
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
             .select(
+                trim(IirefConstraints.REF_SCHEMA_NAME),
                 trim(IirefConstraints.REF_CONSTRAINT_NAME),
                 trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME),
                 trim(IirefConstraints.REF_TABLE_NAME),
@@ -158,21 +164,23 @@ public class IngresDatabase extends AbstractDatabase {
             .join(IIINDEX_COLUMNS)
             .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
             .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
-            .where(Iiconstraints.SCHEMA_NAME.equal(getInputSchema()))
+            .where(IirefConstraints.REF_SCHEMA_NAME.in(getInputSchemata()))
             .and(Iiconstraints.CONSTRAINT_TYPE.equal("R"))
             .orderBy(
+                IirefConstraints.REF_SCHEMA_NAME.asc(),
                 IirefConstraints.REF_TABLE_NAME.asc(),
                 IirefConstraints.REF_CONSTRAINT_NAME.asc(),
                 IiindexColumns.KEY_SEQUENCE.asc())
             .fetch();
 
         for (Record record : result) {
+            SchemaDefinition schema = getSchema(record.getValue(trim(IirefConstraints.REF_SCHEMA_NAME)));
             String foreignKey = record.getValue(trim(IirefConstraints.REF_CONSTRAINT_NAME));
             String foreignKeyTable = record.getValue(trim(IirefConstraints.REF_TABLE_NAME));
             String foreignKeyColumn = record.getValue(trim(IiindexColumns.COLUMN_NAME));
             String uniqueKey = record.getValue(trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME));
 
-            TableDefinition referencingTable = getTable(foreignKeyTable);
+            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
 
             if (referencingTable != null) {
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
@@ -186,18 +194,24 @@ public class IngresDatabase extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (Record record : create().select(
+                    trim(Iisequences.SEQ_OWNER),
                     trim(Iisequences.SEQ_NAME),
                     trim(Iisequences.DATA_TYPE))
                 .from(IISEQUENCES)
-                .where(Iisequences.SEQ_OWNER.equal(getInputSchema()))
-                .orderBy(Iisequences.SEQ_NAME)
+                .where(Iisequences.SEQ_OWNER.in(getInputSchemata()))
+                .orderBy(
+                    Iisequences.SEQ_OWNER,
+                    Iisequences.SEQ_NAME)
                 .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+            SchemaDefinition schema = getSchema(record.getValue(trim(Iisequences.SEQ_OWNER)));
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                this, schema,
                 record.getValue(trim(Iisequences.DATA_TYPE)), 0, 0);
 
             result.add(new DefaultSequenceDefinition(
-                getSchema(), record.getValue(trim(Iisequences.SEQ_NAME)), type));
+                schema, record.getValue(trim(Iisequences.SEQ_NAME)), type));
         }
 
         return result;
@@ -208,6 +222,7 @@ public class IngresDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Record record : create().select(
+                    trim(Iitables.TABLE_OWNER),
                     trim(Iitables.TABLE_NAME),
                     trim(IidbComments.LONG_REMARK))
                 .from(IITABLES)
@@ -216,11 +231,14 @@ public class IngresDatabase extends AbstractDatabase {
                 .and(Iitables.TABLE_OWNER.equal(IidbComments.OBJECT_OWNER))
                 .and(IidbComments.OBJECT_TYPE.equal("T"))
                 .and(IidbComments.TEXT_SEQUENCE.equal(1L))
-                .where(Iitables.TABLE_OWNER.equal(getInputSchema()))
-                .orderBy(trim(Iitables.TABLE_NAME))
+                .where(Iitables.TABLE_OWNER.in(getInputSchemata()))
+                .orderBy(
+                    trim(Iitables.TABLE_OWNER),
+                    trim(Iitables.TABLE_NAME))
                 .fetch()) {
 
-            result.add(new IngresTableDefinition(this,
+            result.add(new IngresTableDefinition(
+                getSchema(record.getValue(trim(Iitables.TABLE_OWNER))),
                 record.getValue(trim(Iitables.TABLE_NAME)),
                 record.getValue(trim(IidbComments.LONG_REMARK))));
         }

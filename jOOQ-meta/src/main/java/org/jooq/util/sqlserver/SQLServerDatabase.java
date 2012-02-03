@@ -57,6 +57,7 @@ import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -82,11 +83,12 @@ public class SQLServerDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -99,11 +101,12 @@ public class SQLServerDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -112,15 +115,21 @@ public class SQLServerDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create()
-            .select(KEY_COLUMN_USAGE.CONSTRAINT_NAME, KEY_COLUMN_USAGE.TABLE_NAME, KEY_COLUMN_USAGE.COLUMN_NAME)
+            .select(
+                KEY_COLUMN_USAGE.TABLE_SCHEMA,
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_NAME,
+                KEY_COLUMN_USAGE.COLUMN_NAME)
             .from(TABLE_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
-            .on(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
+            .on(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(KEY_COLUMN_USAGE.TABLE_SCHEMA))
+            .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
             .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getInputSchema()))
+            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
                 KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
             .fetch();
     }
@@ -134,25 +143,29 @@ public class SQLServerDatabase extends AbstractDatabase {
             .select(
                 REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
-            .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getInputSchema()))
+            .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
+            .and(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
+            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
                 KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
             .fetch();
 
         for (Record record : result) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String foreignKey = record.getValue(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME);
             String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
             String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(foreignKeyTable);
+            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
 
             if (referencingTable != null) {
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
@@ -176,16 +189,22 @@ public class SQLServerDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (String name : create()
-            .select(TABLES.TABLE_NAME)
-            .from(TABLES)
-            .where(TABLES.TABLE_SCHEMA.equal(getInputSchema()))
-            .orderBy(TABLES.TABLE_NAME)
-            .fetch(TABLES.TABLE_NAME)) {
+        for (Record record : create()
+                .select(
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)
+                .from(TABLES)
+                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)
+                .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
+            String name = record.getValue(TABLES.TABLE_NAME);
             String comment = "";
 
-            result.add(new SQLServerTableDefinition(this, name, comment));
+            result.add(new SQLServerTableDefinition(schema, name, comment));
         }
 
         return result;
@@ -224,17 +243,21 @@ public class SQLServerDatabase extends AbstractDatabase {
 
         for (Record record : create()
             .selectDistinct(
+                ROUTINES.ROUTINE_SCHEMA,
                 ROUTINES.ROUTINE_NAME,
                 ROUTINES.SPECIFIC_NAME,
                 ROUTINES.DATA_TYPE,
                 ROUTINES.NUMERIC_PRECISION,
                 ROUTINES.NUMERIC_SCALE)
             .from(ROUTINES)
-            .where(ROUTINES.ROUTINE_SCHEMA.equal(getInputSchema()))
-            .orderBy(ROUTINES.ROUTINE_NAME)
+            .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+            .orderBy(
+                ROUTINES.ROUTINE_SCHEMA,
+                ROUTINES.ROUTINE_NAME)
             .fetch()) {
 
-            SQLServerRoutineDefinition routine = new SQLServerRoutineDefinition(this,
+            SQLServerRoutineDefinition routine = new SQLServerRoutineDefinition(
+                getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
                 record.getValue(ROUTINES.ROUTINE_NAME),
                 record.getValue(ROUTINES.SPECIFIC_NAME),
                 record.getValue(ROUTINES.DATA_TYPE),

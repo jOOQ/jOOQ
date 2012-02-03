@@ -61,14 +61,16 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
     private final String specificName;
 
     public PostgresRoutineDefinition(Database database, Record record) {
-        super(database,
+        super(database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
             null,
             record.getValue(ROUTINES.ROUTINE_NAME),
             null,
             record.getValueAsString("overload"));
 
         if (!Arrays.asList("void", "record").contains(record.getValue("data_type"))) {
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
                 record.getValueAsString("data_type"),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
                 record.getValue(ROUTINES.NUMERIC_SCALE),
@@ -91,14 +93,16 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.ORDINAL_POSITION,
                 PARAMETERS.PARAMETER_MODE)
             .from(PARAMETERS)
-            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchemaName()))
+            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchema().getName()))
             .and(PARAMETERS.SPECIFIC_NAME.equal(specificName))
             .orderBy(PARAMETERS.ORDINAL_POSITION.asc())
             .fetch()) {
 
             String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(PARAMETERS.DATA_TYPE),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE),

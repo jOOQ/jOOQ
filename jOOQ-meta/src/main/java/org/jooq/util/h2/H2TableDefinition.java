@@ -45,9 +45,9 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.information_schema.tables.Columns;
 
 /**
@@ -58,8 +58,8 @@ import org.jooq.util.h2.information_schema.tables.Columns;
 
 public class H2TableDefinition extends AbstractTableDefinition {
 
-    public H2TableDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public H2TableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -75,18 +75,20 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.REMARKS,
                 Columns.SEQUENCE_NAME)
             .from(COLUMNS)
-            .where(Columns.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(Columns.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(Columns.TABLE_NAME.equal(getName()))
             .orderBy(Columns.ORDINAL_POSITION)
             .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(Columns.TYPE_NAME),
                 record.getValue(Columns.NUMERIC_PRECISION),
                 record.getValue(Columns.NUMERIC_SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(
-            	getDatabase().getTable(getName()),
+            	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(Columns.COLUMN_NAME),
                 record.getValue(Columns.ORDINAL_POSITION),
                 type,

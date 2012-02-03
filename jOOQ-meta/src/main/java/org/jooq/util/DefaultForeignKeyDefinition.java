@@ -46,10 +46,10 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
     private final TableDefinition        table;
     private final UniqueKeyDefinition    uniqueKey;
 
-    public DefaultForeignKeyDefinition(Database database, String name, TableDefinition table,
+    public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table,
         UniqueKeyDefinition uniqueKey) {
 
-        super(database, name, null);
+        super(schema.getDatabase(), schema, name, null);
 
         this.keyColumns = new ArrayList<ColumnDefinition>();
         this.table = table;

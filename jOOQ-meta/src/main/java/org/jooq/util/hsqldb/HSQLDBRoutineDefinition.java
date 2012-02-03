@@ -47,11 +47,11 @@ import org.jooq.Result;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * HSQLDB implementation of {@link AbstractRoutineDefinition}
@@ -63,11 +63,17 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
 
     private final String specificName; // internal name for the function used by HSQLDB
 
-    public HSQLDBRoutineDefinition(Database database, String name, String specificName, String dataType, Number precision, Number scale) {
-        super(database, null, name, null, null);
+    public HSQLDBRoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number precision, Number scale) {
+        super(schema, null, name, null, null);
 
         if (!StringUtils.isBlank(dataType)) {
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                dataType,
+                precision,
+                scale);
+
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
 
@@ -91,14 +97,16 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
             .on(ROUTINES.ROUTINE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
             .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
             .and(PARAMETERS.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
-            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchemaName()))
+            .where(PARAMETERS.SPECIFIC_SCHEMA.equal(getSchema().getName()))
             .and(PARAMETERS.SPECIFIC_NAME.equal(this.specificName))
             .orderBy(PARAMETERS.ORDINAL_POSITION.asc()).fetch();
 
         for (Record record : result) {
             String inOut = record.getValue(PARAMETERS.PARAMETER_MODE);
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValueAsString("datatype"),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE));

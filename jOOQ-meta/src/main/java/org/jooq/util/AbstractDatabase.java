@@ -49,6 +49,8 @@ import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
+import org.jooq.util.jaxb.Schemata;
+import org.jooq.util.jaxb.Schemata.Schema;
 
 /**
  * A base implementation for all types of databases.
@@ -64,12 +66,11 @@ public abstract class AbstractDatabase implements Database {
     // -------------------------------------------------------------------------
 
     private Connection                      connection;
-    private String                          inputSchema;
-    private String                          outputSchema;
     private String[]                        excludes;
     private String[]                        includes;
     private boolean                         supportsUnsignedTypes;
     private boolean                         dateAsTimestamp;
+    private Schemata                        configuredSchemata;
     private List<MasterDataTable>           configuredMasterDataTables;
     private List<EnumType>                  configuredEnumTypes;
     private List<ForcedType>                configuredForcedTypes;
@@ -78,6 +79,7 @@ public abstract class AbstractDatabase implements Database {
     // Loaded definitions
     // -------------------------------------------------------------------------
 
+    private List<SchemaDefinition>          schemata;
     private List<SequenceDefinition>        sequences;
     private List<TableDefinition>           tables;
     private List<MasterDataTableDefinition> masterDataTables;
@@ -87,6 +89,7 @@ public abstract class AbstractDatabase implements Database {
     private List<RoutineDefinition>         routines;
     private List<PackageDefinition>         packages;
     private Relations                       relations;
+
 
 
     @Override
@@ -105,28 +108,54 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void setInputSchema(String inputSchema) {
-        this.inputSchema = inputSchema;
+    public final List<SchemaDefinition> getSchemata() {
+        if (schemata == null) {
+            schemata = new ArrayList<SchemaDefinition>();
+
+            for (String name : getInputSchemata()) {
+                schemata.add(new SchemaDefinition(this, getOutputSchema(name), null));
+            }
+        }
+
+        return schemata;
     }
 
     @Override
-    public final String getInputSchema() {
+    public final SchemaDefinition getSchema(String name) {
+        for (SchemaDefinition schema : getSchemata()) {
+            if (schema.getName().equals(getOutputSchema(name))) {
+                return schema;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public final List<String> getInputSchemata() {
+        List<String> result = new ArrayList<String>();
+
+        for (Schema schema : configuredSchemata.getSchema()) {
+            result.add(schema.getInputSchema());
+        }
+
+        return result;
+    }
+
+    @Override
+    public String getOutputSchema(String inputSchema) {
+        for (Schema schema : configuredSchemata.getSchema()) {
+            if (inputSchema.equals(schema.getInputSchema())) {
+                return schema.getOutputSchema();
+            }
+        }
+
         return inputSchema;
     }
 
     @Override
-    public final void setOutputSchema(String outputSchema) {
-        this.outputSchema = outputSchema;
-    }
-
-    @Override
-    public final String getOutputSchema() {
-        return outputSchema;
-    }
-
-    @Override
-    public final SchemaDefinition getSchema() {
-        return new SchemaDefinition(this, getOutputSchema(), null);
+    public final void setConfiguredSchemata(Schemata schemata) {
+        this.configuredSchemata = schemata;
     }
 
     @Override
@@ -200,7 +229,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<SequenceDefinition> getSequences() {
+    public final List<SequenceDefinition> getSequences(SchemaDefinition schema) {
         if (sequences == null) {
             sequences = new ArrayList<SequenceDefinition>();
 
@@ -214,11 +243,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return sequences;
+        return filterSchema(sequences, schema);
     }
 
     @Override
-    public final List<TableDefinition> getTables() {
+    public final List<TableDefinition> getTables(SchemaDefinition schema) {
         if (tables == null) {
             tables = new ArrayList<TableDefinition>();
 
@@ -232,18 +261,18 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return tables;
+        return filterSchema(tables, schema);
     }
 
     @Override
-    public final TableDefinition getTable(String name) {
-        for (TableDefinition table : getTables()) {
+    public final TableDefinition getTable(SchemaDefinition schema, String name) {
+        for (TableDefinition table : getTables(schema)) {
             if (table.getName().equals(name)) {
                 return table;
             }
         }
 
-        for (TableDefinition table : getMasterDataTables()) {
+        for (TableDefinition table : getMasterDataTables(schema)) {
             if (table.getName().equals(name)) {
                 return table;
             }
@@ -253,7 +282,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<MasterDataTableDefinition> getMasterDataTables() {
+    public final List<MasterDataTableDefinition> getMasterDataTables(SchemaDefinition schema) {
         if (masterDataTables == null) {
             masterDataTables = new ArrayList<MasterDataTableDefinition>();
 
@@ -267,12 +296,12 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return masterDataTables;
+        return filterSchema(masterDataTables, schema);
     }
 
     @Override
-    public final MasterDataTableDefinition getMasterDataTable(String name) {
-        for (MasterDataTableDefinition table : getMasterDataTables()) {
+    public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name) {
+        for (MasterDataTableDefinition table : getMasterDataTables(schema)) {
             if (table.getName().equals(name)) {
                 return table;
             }
@@ -282,7 +311,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<EnumDefinition> getEnums() {
+    public final List<EnumDefinition> getEnums(SchemaDefinition schema) {
         if (enums == null) {
             enums = new ArrayList<EnumDefinition>();
 
@@ -306,7 +335,7 @@ public abstract class AbstractDatabase implements Database {
 
         for (EnumType enumType : configuredEnumTypes) {
             String name = enumType.getName();
-            DefaultEnumDefinition e = new DefaultEnumDefinition(this, name, null, true);
+            DefaultEnumDefinition e = new DefaultEnumDefinition(getSchemata().get(0), name, null, true);
 
             String literals = enumType.getLiterals();
 
@@ -322,8 +351,8 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final EnumDefinition getEnum(String name) {
-        for (EnumDefinition e : getEnums()) {
+    public final EnumDefinition getEnum(SchemaDefinition schema, String name) {
+        for (EnumDefinition e : getEnums(schema)) {
             if (e.getName().equals(name)) {
                 return e;
             }
@@ -333,7 +362,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<ArrayDefinition> getArrays() {
+    public final List<ArrayDefinition> getArrays(SchemaDefinition schema) {
         if (arrays == null) {
             arrays = new ArrayList<ArrayDefinition>();
 
@@ -347,12 +376,12 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return arrays;
+        return filterSchema(arrays, schema);
     }
 
     @Override
-    public final ArrayDefinition getArray(String name) {
-        for (ArrayDefinition e : getArrays()) {
+    public final ArrayDefinition getArray(SchemaDefinition schema, String name) {
+        for (ArrayDefinition e : getArrays(schema)) {
             if (e.getName().equals(name)) {
                 return e;
             }
@@ -362,7 +391,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<UDTDefinition> getUDTs() {
+    public final List<UDTDefinition> getUDTs(SchemaDefinition schema) {
         if (udts == null) {
             udts = new ArrayList<UDTDefinition>();
 
@@ -376,12 +405,12 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return udts;
+        return filterSchema(udts, schema);
     }
 
     @Override
-    public final UDTDefinition getUDT(String name) {
-        for (UDTDefinition e : getUDTs()) {
+    public final UDTDefinition getUDT(SchemaDefinition schema, String name) {
+        for (UDTDefinition e : getUDTs(schema)) {
             if (e.getName().equals(name)) {
                 return e;
             }
@@ -397,7 +426,7 @@ public abstract class AbstractDatabase implements Database {
                 relations = getRelations0();
             } catch (Exception e) {
                 log.error("Error while fetching relations", e);
-                relations = new DefaultRelations(this);
+                relations = new DefaultRelations();
             }
         }
 
@@ -405,7 +434,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final List<RoutineDefinition> getRoutines() {
+    public final List<RoutineDefinition> getRoutines(SchemaDefinition schema) {
         if (routines == null) {
             routines = new ArrayList<RoutineDefinition>();
 
@@ -419,11 +448,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return routines;
+        return filterSchema(routines, schema);
     }
 
     @Override
-    public final List<PackageDefinition> getPackages() {
+    public final List<PackageDefinition> getPackages(SchemaDefinition schema) {
         if (packages == null) {
             packages = new ArrayList<PackageDefinition>();
 
@@ -437,7 +466,24 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return packages;
+        return filterSchema(packages, schema);
+    }
+
+    private final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {
+        if (schema == null) {
+            return definitions;
+        }
+        else {
+            List<T> result = new ArrayList<T>();
+
+            for (T definition : definitions) {
+                if (definition.getSchema().equals(schema)) {
+                    result.add(definition);
+                }
+            }
+
+            return result;
+        }
     }
 
     private final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
@@ -494,7 +540,7 @@ public abstract class AbstractDatabase implements Database {
      * Retrieve ALL relations from the database.
      */
     protected final Relations getRelations0() throws SQLException {
-        DefaultRelations result = new DefaultRelations(this);
+        DefaultRelations result = new DefaultRelations();
 
         loadPrimaryKeys(result);
         loadUniqueKeys(result);

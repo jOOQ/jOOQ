@@ -47,17 +47,17 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * @author Lukas Eder
  */
 public class OracleTableDefinition extends AbstractTableDefinition {
 
-	public OracleTableDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
+	public OracleTableDefinition(SchemaDefinition schema, String name, String comment) {
+		super(schema, name, comment);
 	}
 
 	@Override
@@ -76,18 +76,20 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		    .on(ALL_TAB_COLS.OWNER.equal(ALL_COL_COMMENTS.OWNER),
 		        ALL_TAB_COLS.TABLE_NAME.equal(ALL_COL_COMMENTS.TABLE_NAME),
 		        ALL_TAB_COLS.COLUMN_NAME.equal(ALL_COL_COMMENTS.COLUMN_NAME))
-	        .where(ALL_TAB_COLS.OWNER.equal(getSchemaName()))
+	        .where(ALL_TAB_COLS.OWNER.equal(getSchema().getName()))
 	        .and(ALL_TAB_COLS.TABLE_NAME.equal(getName()))
 	        .orderBy(ALL_TAB_COLS.COLUMN_ID)
 	        .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(ALL_TAB_COLS.DATA_TYPE),
                 record.getValueAsInteger(ALL_TAB_COLS.DATA_PRECISION, 0),
                 record.getValueAsInteger(ALL_TAB_COLS.DATA_SCALE, 0));
 
 			DefaultColumnDefinition column = new DefaultColumnDefinition(
-				getDatabase().getTable(getName()),
+				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(ALL_TAB_COLS.COLUMN_NAME),
 			    record.getValueAsInteger(ALL_TAB_COLS.COLUMN_ID),
 			    type,

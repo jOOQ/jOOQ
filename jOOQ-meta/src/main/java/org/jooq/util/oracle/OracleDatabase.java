@@ -64,6 +64,7 @@ import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -80,11 +81,12 @@ public class OracleDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
+            SchemaDefinition schema = getSchema(record.getValue(ALL_CONS_COLUMNS.OWNER));
             String key = record.getValue(ALL_CONS_COLUMNS.CONSTRAINT_NAME);
             String tableName = record.getValue(ALL_CONS_COLUMNS.TABLE_NAME);
             String columnName = record.getValue(ALL_CONS_COLUMNS.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -97,11 +99,12 @@ public class OracleDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
+            SchemaDefinition schema = getSchema(record.getValue(ALL_CONS_COLUMNS.OWNER));
             String key = record.getValue(ALL_CONS_COLUMNS.CONSTRAINT_NAME);
             String tableName = record.getValue(ALL_CONS_COLUMNS.TABLE_NAME);
             String columnName = record.getValue(ALL_CONS_COLUMNS.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -110,17 +113,20 @@ public class OracleDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create().select(
+                ALL_CONS_COLUMNS.OWNER,
                 ALL_CONS_COLUMNS.CONSTRAINT_NAME,
                 ALL_CONS_COLUMNS.TABLE_NAME,
                 ALL_CONS_COLUMNS.COLUMN_NAME)
-            .from(ALL_CONS_COLUMNS)
-            .join(ALL_CONSTRAINTS)
-            .on(ALL_CONS_COLUMNS.CONSTRAINT_NAME.equal(ALL_CONSTRAINTS.CONSTRAINT_NAME))
-            .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.notLike("BIN$%"))
-            .and(ALL_CONS_COLUMNS.OWNER.equal(getInputSchema()))
+            .from(ALL_CONS_COLUMNS
+                .join(ALL_CONSTRAINTS)
+                .on(ALL_CONS_COLUMNS.OWNER.equal(ALL_CONSTRAINTS.OWNER))
+                .and(ALL_CONS_COLUMNS.CONSTRAINT_NAME.equal(ALL_CONSTRAINTS.CONSTRAINT_NAME)))
+            .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType)
+                .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.notLike("BIN$%"))
+                .and(ALL_CONS_COLUMNS.OWNER.in(getInputSchemata())))
             .orderBy(
-                ALL_CONSTRAINTS.CONSTRAINT_NAME,
+                ALL_CONS_COLUMNS.OWNER,
+                ALL_CONS_COLUMNS.CONSTRAINT_NAME,
                 ALL_CONS_COLUMNS.POSITION)
             .fetch();
     }
@@ -131,29 +137,32 @@ public class OracleDatabase extends AbstractDatabase {
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
-                    ALL_CONSTRAINTS.CONSTRAINT_NAME,
-                    ALL_CONSTRAINTS.TABLE_NAME,
+                    ALL_CONS_COLUMNS.OWNER,
+                    ALL_CONS_COLUMNS.CONSTRAINT_NAME,
+                    ALL_CONS_COLUMNS.TABLE_NAME,
                     ALL_CONS_COLUMNS.COLUMN_NAME,
                     ALL_CONSTRAINTS.R_CONSTRAINT_NAME)
-                .from(ALL_CONSTRAINTS)
-                .join(ALL_CONS_COLUMNS)
-                .on(ALL_CONSTRAINTS.OWNER.equal(ALL_CONS_COLUMNS.OWNER))
-                .and(ALL_CONSTRAINTS.TABLE_NAME.equal(ALL_CONS_COLUMNS.TABLE_NAME))
-                .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.equal(ALL_CONS_COLUMNS.CONSTRAINT_NAME))
+                .from(ALL_CONSTRAINTS
+                    .join(ALL_CONS_COLUMNS)
+                    .on(ALL_CONSTRAINTS.OWNER.equal(ALL_CONS_COLUMNS.OWNER))
+                    .and(ALL_CONSTRAINTS.TABLE_NAME.equal(ALL_CONS_COLUMNS.TABLE_NAME))
+                    .and(ALL_CONSTRAINTS.CONSTRAINT_NAME.equal(ALL_CONS_COLUMNS.CONSTRAINT_NAME)))
                 .where(ALL_CONSTRAINTS.CONSTRAINT_TYPE.equal("R"))
-                .and(ALL_CONSTRAINTS.OWNER.equal(getInputSchema()))
+                .and(ALL_CONSTRAINTS.OWNER.in(getInputSchemata()))
                 .orderBy(
-                    ALL_CONSTRAINTS.TABLE_NAME,
-                    ALL_CONSTRAINTS.CONSTRAINT_NAME,
+                    ALL_CONS_COLUMNS.OWNER,
+                    ALL_CONS_COLUMNS.TABLE_NAME,
+                    ALL_CONS_COLUMNS.CONSTRAINT_NAME,
                     ALL_CONS_COLUMNS.POSITION)
                 .fetch()) {
 
-            String foreignKeyName = record.getValue(ALL_CONSTRAINTS.CONSTRAINT_NAME);
-            String foreignKeyTableName = record.getValue(ALL_CONSTRAINTS.TABLE_NAME);
+            SchemaDefinition schema = getSchema(record.getValue(ALL_CONS_COLUMNS.OWNER));
+            String foreignKeyName = record.getValue(ALL_CONS_COLUMNS.CONSTRAINT_NAME);
+            String foreignKeyTableName = record.getValue(ALL_CONS_COLUMNS.TABLE_NAME);
             String foreignKeyColumnName = record.getValue(ALL_CONS_COLUMNS.COLUMN_NAME);
             String uniqueKeyName = record.getValue(ALL_CONSTRAINTS.R_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(foreignKeyTableName);
+            TableDefinition referencingTable = getTable(schema, foreignKeyTableName);
             if (referencingTable != null) {
                 ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
                 relations.addForeignKey(foreignKeyName, uniqueKeyName, column);
@@ -169,34 +178,39 @@ public class OracleDatabase extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (Record record : create().select(
+                    ALL_SEQUENCES.SEQUENCE_OWNER,
                     ALL_SEQUENCES.SEQUENCE_NAME,
                     ALL_SEQUENCES.MAX_VALUE)
                 .from(ALL_SEQUENCES)
-                .where(ALL_SEQUENCES.SEQUENCE_OWNER.equal(getInputSchema()))
-                .orderBy(ALL_SEQUENCES.SEQUENCE_NAME)
+                .where(ALL_SEQUENCES.SEQUENCE_OWNER.in(getInputSchemata()))
+                .orderBy(
+                    ALL_SEQUENCES.SEQUENCE_OWNER,
+                    ALL_SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
             DataTypeDefinition type;
 
+            SchemaDefinition schema = getSchema(record.getValue(ALL_SEQUENCES.SEQUENCE_OWNER));
             BigInteger value = record.getValue(ALL_SEQUENCES.MAX_VALUE, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
 
             if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 2, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 2, 0);
             }
             else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 4, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 4, 0);
             }
             else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 9, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 9, 0);
             }
             else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 18, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 18, 0);
             }
             else {
-                type = new DefaultDataTypeDefinition(this, SQLDataType.NUMERIC.getTypeName(), 38, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 38, 0);
             }
 
-            result.add(new DefaultSequenceDefinition(getSchema(),
+            result.add(new DefaultSequenceDefinition(
+                getSchema(record.getValue(ALL_SEQUENCES.SEQUENCE_OWNER)),
                 record.getValue(ALL_SEQUENCES.SEQUENCE_NAME),
                 type));
         }
@@ -212,18 +226,22 @@ public class OracleDatabase extends AbstractDatabase {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
         for (Record record : create().select(
+                ALL_TAB_COMMENTS.OWNER,
                 ALL_TAB_COMMENTS.TABLE_NAME,
                 ALL_TAB_COMMENTS.COMMENTS)
             .from(ALL_TAB_COMMENTS)
-            .where(ALL_TAB_COMMENTS.OWNER.equal(getInputSchema()))
+            .where(ALL_TAB_COMMENTS.OWNER.in(getInputSchemata()))
             .and(ALL_TAB_COMMENTS.TABLE_NAME.notLike("%$%"))
-            .orderBy(ALL_TAB_COMMENTS.TABLE_NAME)
+            .orderBy(
+                ALL_TAB_COMMENTS.OWNER,
+                ALL_TAB_COMMENTS.TABLE_NAME)
             .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(ALL_TAB_COMMENTS.OWNER));
             String name = record.getValue(ALL_TAB_COMMENTS.TABLE_NAME);
             String comment = record.getValue(ALL_TAB_COMMENTS.COMMENTS);
 
-            OracleTableDefinition table = new OracleTableDefinition(this, name, comment);
+            OracleTableDefinition table = new OracleTableDefinition(schema, name, comment);
             result.add(table);
         }
 
@@ -246,14 +264,21 @@ public class OracleDatabase extends AbstractDatabase {
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
 
-        for (String name : create().selectDistinct(ALL_TYPES.TYPE_NAME)
+        for (Record record : create().selectDistinct(
+                ALL_TYPES.OWNER,
+                ALL_TYPES.TYPE_NAME)
             .from(ALL_TYPES)
-            .where(ALL_TYPES.OWNER.equal(getInputSchema()))
+            .where(ALL_TYPES.OWNER.in(getInputSchemata()))
             .and(ALL_TYPES.TYPECODE.equal("OBJECT"))
-            .orderBy(ALL_TYPES.TYPE_NAME)
-            .fetch(ALL_TYPES.TYPE_NAME)) {
+            .orderBy(
+                ALL_TYPES.OWNER,
+                ALL_TYPES.TYPE_NAME)
+            .fetch()) {
 
-            result.add(new OracleUDTDefinition(this, name, null));
+            SchemaDefinition schema = getSchema(record.getValue(ALL_TYPES.OWNER));
+            String name = record.getValue(ALL_TYPES.TYPE_NAME);
+
+            result.add(new OracleUDTDefinition(schema, name, null));
         }
 
         return result;
@@ -267,23 +292,28 @@ public class OracleDatabase extends AbstractDatabase {
         List<ArrayDefinition> arrays = new ArrayList<ArrayDefinition>();
 
         for (Record record : create().select(
+                ALL_COLL_TYPES.OWNER,
                 ALL_COLL_TYPES.TYPE_NAME,
                 ALL_COLL_TYPES.ELEM_TYPE_NAME,
                 ALL_COLL_TYPES.PRECISION,
                 ALL_COLL_TYPES.SCALE)
             .from(ALL_COLL_TYPES)
-            .where(ALL_COLL_TYPES.OWNER.equal(getInputSchema()))
+            .where(ALL_COLL_TYPES.OWNER.in(getInputSchemata()))
             .and(ALL_COLL_TYPES.COLL_TYPE.equal("VARYING ARRAY"))
-            .orderBy(ALL_COLL_TYPES.TYPE_NAME)
+            .orderBy(
+                ALL_COLL_TYPES.OWNER,
+                ALL_COLL_TYPES.TYPE_NAME)
             .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue(ALL_COLL_TYPES.OWNER));
 
             String name = record.getValue(ALL_COLL_TYPES.TYPE_NAME);
             String dataType = record.getValue(ALL_COLL_TYPES.ELEM_TYPE_NAME);
             int precision = record.getValue(ALL_COLL_TYPES.PRECISION, BigDecimal.ZERO).intValue();
             int scale = record.getValue(ALL_COLL_TYPES.SCALE, BigDecimal.ZERO).intValue();
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, dataType, precision, scale);
-            DefaultArrayDefinition array = new DefaultArrayDefinition(this, name, type);
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, precision, scale);
+            DefaultArrayDefinition array = new DefaultArrayDefinition(schema, name, type);
 
             arrays.add(array);
         }
@@ -295,16 +325,24 @@ public class OracleDatabase extends AbstractDatabase {
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
 
-        for (Record record : create().select(ALL_OBJECTS.OBJECT_NAME, ALL_OBJECTS.OBJECT_ID)
+        for (Record record : create().select(
+                    ALL_OBJECTS.OWNER,
+                    ALL_OBJECTS.OBJECT_NAME,
+                    ALL_OBJECTS.OBJECT_ID)
                 .from(ALL_OBJECTS)
-                .where(ALL_OBJECTS.OWNER.equal(getInputSchema())
+                .where(ALL_OBJECTS.OWNER.in(getInputSchemata())
                 .and(ALL_OBJECTS.OBJECT_TYPE.in("FUNCTION", "PROCEDURE")))
-                .orderBy(ALL_OBJECTS.OBJECT_NAME, ALL_OBJECTS.OBJECT_ID)
+                .orderBy(
+                    ALL_OBJECTS.OWNER,
+                    ALL_OBJECTS.OBJECT_NAME,
+                    ALL_OBJECTS.OBJECT_ID)
                 .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(ALL_OBJECTS.OWNER));
             String objectName = record.getValue(ALL_OBJECTS.OBJECT_NAME);
             BigDecimal objectId = record.getValue(ALL_OBJECTS.OBJECT_ID);
-            result.add(new OracleRoutineDefinition(this, null, objectName, "", objectId, null));
+
+            result.add(new OracleRoutineDefinition(schema, null, objectName, "", objectId, null));
         }
 
         return result;
@@ -318,16 +356,22 @@ public class OracleDatabase extends AbstractDatabase {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
 
         for (Record record : create().select(
+                    ALL_OBJECTS.OWNER,
         		    ALL_OBJECTS.OBJECT_NAME,
         		    ALL_OBJECTS.OBJECT_ID)
                 .from(ALL_OBJECTS)
-                .where(ALL_OBJECTS.OWNER.equal(getInputSchema())
+                .where(ALL_OBJECTS.OWNER.in(getInputSchemata())
                 .and(ALL_OBJECTS.OBJECT_TYPE.equal("PACKAGE")))
-                .orderBy(ALL_OBJECTS.OBJECT_NAME, ALL_OBJECTS.OBJECT_ID)
+                .orderBy(
+                    ALL_OBJECTS.OWNER,
+                    ALL_OBJECTS.OBJECT_NAME,
+                    ALL_OBJECTS.OBJECT_ID)
                 .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(ALL_OBJECTS.OWNER));
             String name = record.getValue(ALL_OBJECTS.OBJECT_NAME);
-            result.add(new OraclePackageDefinition(this, name, ""));
+
+            result.add(new OraclePackageDefinition(schema, name, ""));
         }
 
         return result;

@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @author Lukas Eder
  */
-public interface Relations extends Definition {
+public interface Relations {
 
     /**
      * Get the the primary for a given column, or <code>null</code> if that

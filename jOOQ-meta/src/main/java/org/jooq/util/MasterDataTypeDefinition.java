@@ -83,4 +83,9 @@ public class MasterDataTypeDefinition implements DataTypeDefinition {
     public final Database getDatabase() {
         return underlying.getDatabase();
     }
+
+    @Override
+    public final SchemaDefinition getSchema() {
+        return underlying.getSchema();
+    }
 }

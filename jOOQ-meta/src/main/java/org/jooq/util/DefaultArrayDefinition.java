@@ -40,8 +40,8 @@ public class DefaultArrayDefinition extends AbstractDefinition implements ArrayD
 
     private final DataTypeDefinition type;
 
-    public DefaultArrayDefinition(Database database, String name, DataTypeDefinition type) {
-        super(database, name, "");
+    public DefaultArrayDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
+        super(schema.getDatabase(), schema, name, "");
 
         this.type = type;
     }

@@ -42,20 +42,19 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
- * H2 table definition
+ * SQLite table definition
  *
- * @author Espen Stromsnes
+ * @author Lukas Eder
  */
-
 public class SQLiteTableDefinition extends AbstractTableDefinition {
 
-    public SQLiteTableDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -79,9 +78,15 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
                 .getValue(0, Boolean.class);
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                dataType,
+                precision,
+                scale);
+
             ColumnDefinition column = new DefaultColumnDefinition(
-                getDatabase().getTable(getName()),
+                getDatabase().getTable(getSchema(), getName()),
                 name,
                 position,
                 type,

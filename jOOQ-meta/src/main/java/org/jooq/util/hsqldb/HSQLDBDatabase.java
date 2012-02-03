@@ -62,6 +62,7 @@ import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -84,11 +85,12 @@ public class HSQLDBDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -101,11 +103,12 @@ public class HSQLDBDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -114,15 +117,21 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create()
-            .select(KEY_COLUMN_USAGE.CONSTRAINT_NAME, KEY_COLUMN_USAGE.TABLE_NAME, KEY_COLUMN_USAGE.COLUMN_NAME)
-            .from(TABLE_CONSTRAINTS)
-            .join(KEY_COLUMN_USAGE)
-            .on(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
+            .select(
+                KEY_COLUMN_USAGE.TABLE_SCHEMA,
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_NAME,
+                KEY_COLUMN_USAGE.COLUMN_NAME)
+            .from(TABLE_CONSTRAINTS
+                .join(KEY_COLUMN_USAGE)
+                .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
+                .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME)))
             .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getInputSchema()))
+            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
                 KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
             .fetch();
     }
@@ -134,27 +143,31 @@ public class HSQLDBDatabase extends AbstractDatabase {
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
             .select(
-                REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
-            .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getInputSchema()))
+            .on(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
+            .and(KEY_COLUMN_USAGE.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+            .where(KEY_COLUMN_USAGE.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
                 KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
             .fetch();
 
         for (Record record : result) {
-            String foreignKey = record.getValue(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME);
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            String foreignKey = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
             String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(foreignKeyTable);
+            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
 
             if (referencingTable != null) {
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
@@ -171,19 +184,26 @@ public class HSQLDBDatabase extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (Record record : create()
-            .select(
-                SEQUENCES.SEQUENCE_NAME,
-                SEQUENCES.DATA_TYPE)
-            .from(SEQUENCES)
-            .where(SEQUENCES.SEQUENCE_SCHEMA.equal(getInputSchema()))
-            .orderBy(SEQUENCES.SEQUENCE_NAME)
-            .fetch()) {
+                .select(
+                    SEQUENCES.SEQUENCE_SCHEMA,
+                    SEQUENCES.SEQUENCE_NAME,
+                    SEQUENCES.DATA_TYPE)
+                .from(SEQUENCES)
+                .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    SEQUENCES.SEQUENCE_SCHEMA,
+                    SEQUENCES.SEQUENCE_NAME)
+                .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+            SchemaDefinition schema = getSchema(record.getValue(SEQUENCES.SEQUENCE_SCHEMA));
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                this,
+                schema,
                 record.getValue(SEQUENCES.DATA_TYPE), 0, 0);
 
             result.add(new DefaultSequenceDefinition(
-                getSchema(), record.getValue(SEQUENCES.SEQUENCE_NAME), type));
+                schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));
         }
 
         return result;
@@ -196,16 +216,22 @@ public class HSQLDBDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (String name : create()
-            .select(TABLES.TABLE_NAME)
-            .from(TABLES)
-            .where(TABLES.TABLE_SCHEMA.equal(getInputSchema()))
-            .orderBy(TABLES.TABLE_NAME)
-            .fetch(TABLES.TABLE_NAME)) {
+        for (Record record : create()
+                .select(
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)
+                .from(TABLES)
+                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)
+                .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
+            String name = record.getValue(TABLES.TABLE_NAME);
             String comment = "";
 
-            result.add(new HSQLDBTableDefinition(this, name, comment));
+            result.add(new HSQLDBTableDefinition(schema, name, comment));
         }
 
         return result;
@@ -247,6 +273,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
         for (Record record : create()
                 .select(
+                    ROUTINES.ROUTINE_SCHEMA,
                     ROUTINES.ROUTINE_NAME,
                     ROUTINES.SPECIFIC_NAME,
                     nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, ROUTINES.DATA_TYPE).as("datatype"),
@@ -257,18 +284,19 @@ public class HSQLDBDatabase extends AbstractDatabase {
                 .on(ROUTINES.ROUTINE_SCHEMA.equal(ELEMENT_TYPES.OBJECT_SCHEMA))
                 .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
                 .and(ROUTINES.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
-                .where(ROUTINES.ROUTINE_SCHEMA.equal(getInputSchema()))
-                .orderBy(ROUTINES.ROUTINE_NAME)
+                .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    ROUTINES.ROUTINE_SCHEMA,
+                    ROUTINES.ROUTINE_NAME)
                 .fetch()) {
 
-            String name = record.getValue(ROUTINES.ROUTINE_NAME);
-            String specificName = record.getValue(ROUTINES.SPECIFIC_NAME);
-            String dataType = record.getValueAsString("datatype");
-            Long precision = record.getValue(ROUTINES.NUMERIC_PRECISION);
-            Long scale = record.getValue(ROUTINES.NUMERIC_SCALE);
-
-            HSQLDBRoutineDefinition function = new HSQLDBRoutineDefinition(this, name, specificName, dataType, precision, scale);
-            result.add(function);
+            result.add(new HSQLDBRoutineDefinition(
+                getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
+                record.getValue(ROUTINES.ROUTINE_NAME),
+                record.getValue(ROUTINES.SPECIFIC_NAME),
+                record.getValueAsString("datatype"),
+                record.getValue(ROUTINES.NUMERIC_PRECISION),
+                record.getValue(ROUTINES.NUMERIC_SCALE)));
         }
 
         return result;

@@ -46,17 +46,17 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * @author Lukas Eder
  */
 public class PostgresTableDefinition extends AbstractTableDefinition {
 
-	public PostgresTableDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
+	public PostgresTableDefinition(SchemaDefinition schema, String name, String comment) {
+		super(schema, name, comment);
 	}
 
 	@Override
@@ -73,19 +73,21 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_NAME)
             .from(COLUMNS)
-            .where(COLUMNS.TABLE_SCHEMA.equal(getSchemaName()))
+            .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))
             .orderBy(COLUMNS.ORDINAL_POSITION)
             .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(COLUMNS.DATA_TYPE),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
                 record.getValue(COLUMNS.UDT_NAME));
 
 			ColumnDefinition column = new DefaultColumnDefinition(
-			    getDatabase().getTable(getName()),
+			    getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,

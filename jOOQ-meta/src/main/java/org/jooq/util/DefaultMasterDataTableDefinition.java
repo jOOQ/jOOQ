@@ -55,7 +55,7 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
     private boolean                 dataFetched;
 
     public DefaultMasterDataTableDefinition(TableDefinition delegate) {
-        super(delegate.getDatabase(), delegate.getName(), delegate.getComment());
+        super(delegate.getDatabase(), delegate.getSchema(), delegate.getName(), delegate.getComment());
 
         this.delegate = delegate;
     }

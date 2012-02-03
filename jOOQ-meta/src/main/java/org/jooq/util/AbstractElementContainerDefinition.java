@@ -62,17 +62,17 @@ extends AbstractDefinition {
 
     private List<E>                 elements;
 
-    public AbstractElementContainerDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public AbstractElementContainerDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema.getDatabase(), schema, name, comment);
     }
 
     @Override
     public final String getQualifiedName() {
-        if (StringUtils.isBlank(getSchemaName())) {
+        if (StringUtils.isBlank(getSchema().getName())) {
             return getName();
         }
         else {
-            return getSchemaName() + "." + getName();
+            return getSchema().getName() + "." + getName();
         }
     }
 

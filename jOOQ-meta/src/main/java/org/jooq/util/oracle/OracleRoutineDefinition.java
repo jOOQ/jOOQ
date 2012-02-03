@@ -46,12 +46,12 @@ import org.jooq.Result;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * @author Lukas Eder
@@ -60,8 +60,8 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 
     private final BigDecimal objectId;
 
-	public OracleRoutineDefinition(Database database, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
-		super(database, pkg, name, comment, overload);
+	public OracleRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, BigDecimal objectId, String overload) {
+		super(schema, pkg, name, comment, overload);
 
 		this.objectId = objectId;
 	}
@@ -77,7 +77,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	            ALL_ARGUMENTS.TYPE_NAME,
 	            ALL_ARGUMENTS.POSITION)
 	        .from(ALL_ARGUMENTS)
-            .where(ALL_ARGUMENTS.OWNER.equal(getSchemaName()))
+            .where(ALL_ARGUMENTS.OWNER.equal(getSchema().getName()))
             .and(ALL_ARGUMENTS.OBJECT_NAME.equal(getName()))
             .and(ALL_ARGUMENTS.OBJECT_ID.equal(objectId))
             .and(ALL_ARGUMENTS.OVERLOAD.equal(getOverload()))
@@ -92,7 +92,9 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	        InOutDefinition inOut =
                 InOutDefinition.getFromString(record.getValue(ALL_ARGUMENTS.IN_OUT));
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(ALL_ARGUMENTS.DATA_TYPE),
                 record.getValue(ALL_ARGUMENTS.DATA_PRECISION),
                 record.getValue(ALL_ARGUMENTS.DATA_SCALE),

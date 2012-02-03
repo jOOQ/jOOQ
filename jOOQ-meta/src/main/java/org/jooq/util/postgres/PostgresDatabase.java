@@ -50,6 +50,7 @@ import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_ENUM;
+import static org.jooq.util.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.util.postgres.pg_catalog.Tables.PG_TYPE;
 
 import java.sql.SQLException;
@@ -70,6 +71,7 @@ import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -89,11 +91,12 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -103,11 +106,12 @@ public class PostgresDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
             String key = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String tableName = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String columnName = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -116,12 +120,17 @@ public class PostgresDatabase extends AbstractDatabase {
 
     private List<Record> fetchKeys(String constraintType) {
         return create()
-            .select(KEY_COLUMN_USAGE.CONSTRAINT_NAME, KEY_COLUMN_USAGE.TABLE_NAME, KEY_COLUMN_USAGE.COLUMN_NAME)
+            .select(
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_SCHEMA,
+                KEY_COLUMN_USAGE.TABLE_NAME,
+                KEY_COLUMN_USAGE.COLUMN_NAME)
             .from(TABLE_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
-            .on(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
+            .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA))
+            .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
             .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.equal(constraintType))
-            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.equal(getInputSchema()))
+            .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
@@ -134,27 +143,31 @@ public class PostgresDatabase extends AbstractDatabase {
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
             .select(
-                REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
+                KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
             .from(REFERENTIAL_CONSTRAINTS)
             .join(KEY_COLUMN_USAGE)
-            .on(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME.equal(KEY_COLUMN_USAGE.CONSTRAINT_NAME))
-            .where(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA.equal(getInputSchema()))
+            .on(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
+            .and(KEY_COLUMN_USAGE.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+            .where(KEY_COLUMN_USAGE.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),
+                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
                 KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
             .fetch();
 
         for (Record record : result) {
-            String foreignKey = record.getValue(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME);
+            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            String foreignKey = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
             String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(foreignKeyTable);
+            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
 
             if (referencingTable != null) {
 
@@ -170,16 +183,22 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (String name : create()
-            .select(TABLES.TABLE_NAME)
-            .from(TABLES)
-            .where(TABLES.TABLE_SCHEMA.equal(getInputSchema()))
-            .orderBy(TABLES.TABLE_NAME)
-            .fetch(TABLES.TABLE_NAME)) {
+        for (Record record : create()
+                .select(
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)
+                .from(TABLES)
+                .where(TABLES.TABLE_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    TABLES.TABLE_SCHEMA,
+                    TABLES.TABLE_NAME)
+                .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(TABLES.TABLE_SCHEMA));
+            String name = record.getValue(TABLES.TABLE_NAME);
             String comment = "";
 
-            result.add(new PostgresTableDefinition(this, name, comment));
+            result.add(new PostgresTableDefinition(schema, name, comment));
         }
 
         return result;
@@ -191,22 +210,27 @@ public class PostgresDatabase extends AbstractDatabase {
 
         for (Record record : create()
                 .select(
+                    SEQUENCES.SEQUENCE_SCHEMA,
                     SEQUENCES.SEQUENCE_NAME,
                     SEQUENCES.DATA_TYPE,
                     SEQUENCES.NUMERIC_PRECISION,
                     SEQUENCES.NUMERIC_SCALE)
                 .from(SEQUENCES)
-                .where(SEQUENCES.SEQUENCE_SCHEMA.equal(getInputSchema()))
-                .orderBy(SEQUENCES.SEQUENCE_NAME)
+                .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    SEQUENCES.SEQUENCE_SCHEMA,
+                    SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+            SchemaDefinition schema = getSchema(record.getValue(SEQUENCES.SEQUENCE_SCHEMA));
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                this, schema,
                 record.getValue(SEQUENCES.DATA_TYPE),
                 record.getValue(SEQUENCES.NUMERIC_PRECISION),
                 record.getValue(SEQUENCES.NUMERIC_SCALE));
 
-            result.add(new DefaultSequenceDefinition(
-                getSchema(), record.getValue(SEQUENCES.SEQUENCE_NAME), type));
+            result.add(new DefaultSequenceDefinition(schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));
         }
 
         return result;
@@ -217,20 +241,27 @@ public class PostgresDatabase extends AbstractDatabase {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
         Result<Record> records = create()
-            .select(PG_TYPE.TYPNAME, PG_ENUM.ENUMLABEL)
+            .select(
+                PG_NAMESPACE.NSPNAME,
+                PG_TYPE.TYPNAME,
+                PG_ENUM.ENUMLABEL)
             .from(PG_ENUM)
             .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
+            .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
+            .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
             .orderBy(
-                PG_ENUM.ENUMTYPID,
+                PG_NAMESPACE.NSPNAME,
+                PG_TYPE.TYPNAME,
                 PG_ENUM.ENUMLABEL)
             .fetch();
 
         DefaultEnumDefinition definition = null;
         for (Record record : records) {
+            SchemaDefinition schema = getSchema(record.getValue(PG_NAMESPACE.NSPNAME));
             String typeName = String.valueOf(record.getValue(PG_TYPE.TYPNAME));
 
             if (definition == null || !definition.getName().equals(typeName)) {
-                definition = new DefaultEnumDefinition(this, typeName, null);
+                definition = new DefaultEnumDefinition(schema, typeName, null);
                 result.add(definition);
             }
 
@@ -244,13 +275,21 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
 
-        for (String name : create().selectDistinct(ATTRIBUTES.UDT_NAME)
+        for (Record record : create()
+                .selectDistinct(
+                    ATTRIBUTES.UDT_SCHEMA,
+                    ATTRIBUTES.UDT_NAME)
                 .from(ATTRIBUTES)
-                .where(ATTRIBUTES.UDT_SCHEMA.equal(getInputSchema()))
-                .orderBy(ATTRIBUTES.UDT_NAME)
-                .fetch(ATTRIBUTES.UDT_NAME)) {
+                .where(ATTRIBUTES.UDT_SCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    ATTRIBUTES.UDT_SCHEMA,
+                    ATTRIBUTES.UDT_NAME)
+                .fetch()) {
 
-            result.add(new PostgresUDTDefinition(this, name, null));
+            SchemaDefinition schema = getSchema(record.getValue(ATTRIBUTES.UDT_SCHEMA));
+            String name = record.getValue(ATTRIBUTES.UDT_NAME);
+
+            result.add(new PostgresUDTDefinition(schema, name, null));
         }
 
         return result;
@@ -270,6 +309,7 @@ public class PostgresDatabase extends AbstractDatabase {
         Routines r2 = ROUTINES.as("r2");
 
         for (Record record : create().select(
+                r1.ROUTINE_SCHEMA,
                 r1.ROUTINE_NAME,
                 r1.SPECIFIC_NAME,
 
@@ -292,18 +332,22 @@ public class PostgresDatabase extends AbstractDatabase {
                 exists(
                     create().selectOne()
                         .from(r2)
-                        .where(r2.ROUTINE_SCHEMA.equal(getInputSchema()))
+                        .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
+                        .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
                         .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
                         .and(r2.SPECIFIC_NAME.notEqual(r1.SPECIFIC_NAME))),
                     create().select(count())
                         .from(r2)
-                        .where(r2.ROUTINE_SCHEMA.equal(getInputSchema()))
+                        .where(r2.ROUTINE_SCHEMA.in(getInputSchemata()))
+                        .and(r2.ROUTINE_SCHEMA.equal(r1.ROUTINE_SCHEMA))
                         .and(r2.ROUTINE_NAME.equal(r1.ROUTINE_NAME))
                         .and(r2.SPECIFIC_NAME.lessOrEqual(r1.SPECIFIC_NAME)).asField())
                 .as("overload"))
             .from(r1)
-            .where(r1.ROUTINE_SCHEMA.equal(getInputSchema()))
-            .orderBy(r1.ROUTINE_NAME.asc())
+            .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
+            .orderBy(
+                r1.ROUTINE_SCHEMA.asc(),
+                r1.ROUTINE_NAME.asc())
             .fetch()) {
 
             result.add(new PostgresRoutineDefinition(this, record));

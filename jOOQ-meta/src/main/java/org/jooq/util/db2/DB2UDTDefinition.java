@@ -46,10 +46,10 @@ import org.jooq.Record;
 import org.jooq.util.AbstractUDTDefinition;
 import org.jooq.util.AttributeDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.db2.syscat.tables.Attributes;
 
 /**
@@ -59,8 +59,8 @@ import org.jooq.util.db2.syscat.tables.Attributes;
  */
 public class DB2UDTDefinition extends AbstractUDTDefinition {
 
-    public DB2UDTDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public DB2UDTDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -74,11 +74,13 @@ public class DB2UDTDefinition extends AbstractUDTDefinition {
                 Attributes.LENGTH,
                 Attributes.SCALE)
             .from(ATTRIBUTES)
-            .where(Attributes.TYPESCHEMA.equal(getSchemaName()))
+            .where(Attributes.TYPESCHEMA.equal(getSchema().getName()))
             .and(Attributes.TYPENAME.equal(getName()))
             .orderBy(Attributes.ORDINAL).fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(Attributes.ATTR_TYPENAME),
                 record.getValue(Attributes.LENGTH),
                 record.getValue(Attributes.SCALE));

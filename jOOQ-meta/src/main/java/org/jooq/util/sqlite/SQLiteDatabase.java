@@ -53,6 +53,8 @@ import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
+import org.jooq.util.jaxb.Schemata;
+import org.jooq.util.jaxb.Schemata.Schema;
 import org.jooq.util.sqlite.sqlite_master.SQLiteMaster;
 
 /**
@@ -61,6 +63,19 @@ import org.jooq.util.sqlite.sqlite_master.SQLiteMaster;
  * @author Lukas Eder
  */
 public class SQLiteDatabase extends AbstractDatabase {
+
+    public SQLiteDatabase() {
+
+        // SQLite doesn't know schemata
+        Schema schema = new Schema();
+        schema.setInputSchema("");
+        schema.setOutputSchema("");
+
+        Schemata s = new Schemata();
+        s.getSchema().add(schema);
+
+        setConfiguredSchemata(s);
+    }
 
     @Override
     public Factory create() {
@@ -82,7 +97,7 @@ public class SQLiteDatabase extends AbstractDatabase {
 
                     // Generate a primary key name
                     String key = "pk_" + tableName + "_" + columnName;
-                    TableDefinition table = getTable(tableName);
+                    TableDefinition table = getTable(getSchemata().get(0), tableName);
 
                     if (table != null) {
                         ColumnDefinition column = table.getColumn(columnName);
@@ -118,7 +133,7 @@ public class SQLiteDatabase extends AbstractDatabase {
             .orderBy(SQLiteMaster.NAME)
             .fetch(SQLiteMaster.NAME)) {
 
-            SQLiteTableDefinition table = new SQLiteTableDefinition(this, name, "");
+            SQLiteTableDefinition table = new SQLiteTableDefinition(getSchemata().get(0), name, "");
             result.add(table);
         }
 

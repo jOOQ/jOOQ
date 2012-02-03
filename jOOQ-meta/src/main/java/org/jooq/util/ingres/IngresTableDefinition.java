@@ -47,9 +47,9 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.ingres.ingres.tables.Iicolumns;
 import org.jooq.util.ingres.ingres.tables.IidbSubcomments;
 
@@ -58,8 +58,8 @@ import org.jooq.util.ingres.ingres.tables.IidbSubcomments;
  */
 public class IngresTableDefinition extends AbstractTableDefinition {
 
-    public IngresTableDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public IngresTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                 .and(IidbSubcomments.SUBOBJECT_NAME.equal(Iicolumns.COLUMN_NAME))
                 .and(IidbSubcomments.SUBOBJECT_TYPE.equal("C"))
                 .and(IidbSubcomments.TEXT_SEQUENCE.equal(1L))
-                .where(Iicolumns.TABLE_OWNER.equal(getSchemaName()))
+                .where(Iicolumns.TABLE_OWNER.equal(getSchema().getName()))
                 .and(trim(Iicolumns.TABLE_NAME).equal(getName()))
                 .orderBy(Iicolumns.COLUMN_SEQUENCE)
                 .fetch()) {
@@ -117,13 +117,15 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                 }
             }
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 typeName,
                 record.getValue(Iicolumns.COLUMN_LENGTH),
                 record.getValue(Iicolumns.COLUMN_SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(
-                getDatabase().getTable(getName()),
+                getDatabase().getTable(getSchema(), getName()),
                 record.getValue(trim(Iicolumns.COLUMN_NAME)),
                 record.getValue(Iicolumns.COLUMN_SEQUENCE),
                 type,

@@ -55,7 +55,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     private transient DataTypeDefinition type;
 
     public AbstractTypedElementDefinition(T container, String name, int position, DataTypeDefinition definedType, String comment) {
-        super(container.getDatabase(), protectName(container.getName(), name, position), comment);
+        super(container.getDatabase(),
+              container.getSchema(),
+              protectName(container.getName(), name, position),
+              comment);
 
         this.container = container;
         this.definedType = definedType;
@@ -96,12 +99,12 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
                     // [#677] SQLDataType matches are actual type-rewrites
                     if (forcedDataType != null) {
-                        type = new DefaultDataTypeDefinition(db, forcedType.getName(), p, s);
+                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedType.getName(), p, s);
                     }
 
                     // Other forced types are UDT's, enums, etc.
                     else {
-                        type = new DefaultDataTypeDefinition(db, t, p, s, forcedType.getName());
+                        type = new DefaultDataTypeDefinition(db, getSchema(), t, p, s, forcedType.getName());
                     }
                 }
             }
@@ -117,7 +120,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (dataType != null) {
                     if (dataType.getSQLDataType() == SQLDataType.DATE) {
                         DataType<?> forcedDataType = getDialectDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                        type = new DefaultDataTypeDefinition(db, forcedDataType.getTypeName(), 0, 0);
+                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedDataType.getTypeName(), 0, 0);
                     }
                 }
             }
@@ -133,11 +136,11 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
     @Override
     public final String getQualifiedName() {
-        if (StringUtils.isBlank(getSchemaName())) {
+        if (StringUtils.isBlank(getSchema().getName())) {
             return getContainer().getName() + "." + getName();
         }
         else {
-            return getSchemaName() + "." + getContainer().getName() + "." + getName();
+            return getSchema().getName() + "." + getContainer().getName() + "." + getName();
         }
     }
 }

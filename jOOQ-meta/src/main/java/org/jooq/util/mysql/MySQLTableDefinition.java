@@ -50,9 +50,9 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.mysql.information_schema.tables.Columns;
 
 /**
@@ -60,8 +60,8 @@ import org.jooq.util.mysql.information_schema.tables.Columns;
  */
 public class MySQLTableDefinition extends AbstractTableDefinition {
 
-    public MySQLTableDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
+    public MySQLTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		        Columns.NUMERIC_SCALE,
     		        Columns.EXTRA)
     		    .from(COLUMNS)
-    		    .where(TABLE_SCHEMA.equal(getSchemaName()))
+    		    .where(TABLE_SCHEMA.equal(getSchema().getName()))
     		    .and(TABLE_NAME.equal(getName()))
     		    .orderBy(ORDINAL_POSITION)
     		    .fetch()) {
@@ -94,14 +94,16 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		    }
 		    }
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 dataType,
                 record.getValue(Columns.NUMERIC_PRECISION),
                 record.getValue(Columns.NUMERIC_SCALE),
                 getName() + "_" + record.getValue(Columns.COLUMN_NAME));
 
 			ColumnDefinition column = new DefaultColumnDefinition(
-				getDatabase().getTable(getName()),
+				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(Columns.COLUMN_NAME),
 			    record.getValueAsInteger(Columns.ORDINAL_POSITION),
 			    type,

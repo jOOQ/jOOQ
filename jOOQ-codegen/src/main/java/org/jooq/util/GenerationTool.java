@@ -42,11 +42,13 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.List;
 import java.util.Properties;
 
 import javax.xml.bind.JAXB;
 
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Database.EnumTypes;
 import org.jooq.util.jaxb.Database.ForcedTypes;
@@ -56,6 +58,8 @@ import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.MasterDataTable;
+import org.jooq.util.jaxb.Schemata;
+import org.jooq.util.jaxb.Schemata.Schema;
 import org.jooq.util.jaxb.Strategy;
 import org.jooq.util.jaxb.Target;
 
@@ -168,13 +172,19 @@ public class GenerationTool {
             }
         }
 
+        Schema schema = new Schema();
+        schema.setInputSchema(properties.containsKey("generator.database.input-schema") ? properties.getProperty("generator.database.input-schema") : null);
+        schema.setOutputSchema(properties.containsKey("generator.database.output-schema") ? properties.getProperty("generator.database.output-schema") : null);
+
+        Schemata schemata = new Schemata();
+        schemata.getSchema().add(schema);
+
 	    org.jooq.util.jaxb.Database database = new org.jooq.util.jaxb.Database();
 	    database.setName(properties.getProperty("generator.database"));
-	    database.setInputSchema(properties.containsKey("generator.database.input-schema") ? properties.getProperty("generator.database.input-schema") : null);
-	    database.setOutputSchema(properties.containsKey("generator.database.output-schema") ? properties.getProperty("generator.database.output-schema") : null);
 	    database.setIncludes(properties.containsKey("generator.database.includes") ? properties.getProperty("generator.database.includes") : null);
 	    database.setExcludes(properties.containsKey("generator.database.excludes") ? properties.getProperty("generator.database.excludes") : null);
 	    database.setDateAsTimestamp("true".equalsIgnoreCase(properties.getProperty("generator.database.date-as-timestamp")));
+	    database.setSchemata(schemata);
 
 	    // Avoid creating these empty elements when migrating
 	    if (!masterDataTables.getMasterDataTable().isEmpty())
@@ -269,9 +279,29 @@ public class GenerationTool {
             Class<Database> databaseClass = (Class<Database>) Class.forName(g.getDatabase().getName());
             Database database = databaseClass.newInstance();
 
+            Schemata schemata = g.getDatabase().getSchemata();
+            if (schemata == null) {
+                schemata = new Schemata();
+                g.getDatabase().setSchemata(schemata);
+            }
+
+            List<Schema> schemaList = schemata.getSchema();
+            if (schemaList.isEmpty())
+                schemaList.add(new Schema());
+
+            for (Schema schema : schemaList) {
+                if (StringUtils.isBlank(schema.getInputSchema())) {
+                    log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
+                    schema.setInputSchema(j.getSchema());
+                }
+
+                if (StringUtils.isBlank(schema.getOutputSchema())) {
+                    schema.setOutputSchema(schema.getInputSchema());
+                }
+            }
+
             database.setConnection(connection);
-            database.setInputSchema(defaultString(GenerationUtil.getInputSchema(configuration)));
-            database.setOutputSchema(defaultString(GenerationUtil.getOutputSchema(configuration)));
+            database.setConfiguredSchemata(schemata);
             database.setIncludes(defaultString(g.getDatabase().getIncludes()).split(","));
             database.setExcludes(defaultString(g.getDatabase().getExcludes()).split(","));
             database.setDateAsTimestamp(g.getDatabase().isDateAsTimestamp());

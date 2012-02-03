@@ -295,11 +295,22 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
         sb.append(getTargetPackage());
 
+        // [#282] In multi-schema setups, the schema name goes into the package
+        if (definition.getDatabase().getSchemata().size() > 1) {
+            String inputSchema = definition.getSchema().getName();
+            String outputSchema = definition.getDatabase().getOutputSchema(inputSchema);
+
+            sb.append(".");
+            sb.append(GenerationUtil.convertToJavaIdentifierEnum(outputSchema).toLowerCase());
+        }
+
+        // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
         if (!StringUtils.isBlank(getSubPackage(definition))) {
             sb.append(".");
             sb.append(getSubPackage(definition));
         }
 
+        // Record are yet in another subpackage
         if ("Record".equals(suffix)) {
             sb.append(".records");
         }

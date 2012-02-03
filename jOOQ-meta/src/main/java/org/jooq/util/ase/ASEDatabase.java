@@ -35,6 +35,7 @@
  */
 package org.jooq.util.ase;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.val;
@@ -42,12 +43,12 @@ import static org.jooq.util.ase.sys.tables.Sysindexes.SYSINDEXES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.impl.Factory;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -55,6 +56,7 @@ import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -69,16 +71,31 @@ import org.jooq.util.ase.sys.tables.Sysreferences;
  */
 public class ASEDatabase extends AbstractDatabase {
 
+    private static final JooqLogger log = JooqLogger.getLogger(ASEDatabase.class);
+
     @Override
     public Factory create() {
         return new DboFactory(getConnection());
+    }
+
+    private SchemaDefinition getSchema() {
+        List<SchemaDefinition> schemata = getSchemata();
+
+        if (schemata.size() > 1) {
+            log.error("NOT SUPPORTED", "jOOQ does not support multiple schemata in Sybase ASE.");
+            log.error("-----------------------------------------------------------------------");
+
+            // TODO [#1098] Support this also for Sybase ASE
+        }
+
+        return schemata.get(0);
     }
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(PK_INCL, PK_EXCL)) {
             String keyName = record.getValueAsString(0);
-            TableDefinition table = getTable(record.getValueAsString(1));
+            TableDefinition table = getTable(getSchema(), record.getValueAsString(1));
 
             if (table != null) {
                 for (int i = 0; i < 8; i++) {
@@ -96,7 +113,7 @@ public class ASEDatabase extends AbstractDatabase {
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(UK_INCL, UK_EXCL)) {
             String keyName = record.getValueAsString(0);
-            TableDefinition table = getTable(record.getValueAsString(1));
+            TableDefinition table = getTable(getSchema(), record.getValueAsString(1));
 
             if (table != null) {
                 for (int i = 0; i < 8; i++) {
@@ -171,11 +188,12 @@ public class ASEDatabase extends AbstractDatabase {
                 field("col_name(tableid, fokey13)", String.class),
                 field("col_name(tableid, fokey14)", String.class),
                 field("col_name(tableid, fokey15)", String.class),
-                field("col_name(tableid, fokey16)", String.class))
+                field("col_name(tableid, fokey16)", String.class),
+                field("object_owner_id(tableid)"))
             .from(Sysreferences.SYSREFERENCES)
             .fetch()) {
 
-            TableDefinition referencingTable = getTable(record.getValueAsString("fk_table"));
+            TableDefinition referencingTable = getTable(getSchema(), record.getValueAsString("fk_table"));
             if (referencingTable != null) {
                 for (int i = 0; i < 16; i++) {
                     if (record.getValue(i + 3) == null) {
@@ -203,20 +221,23 @@ public class ASEDatabase extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        for (String name : fetchTableNames()) {
-            result.add(new ASETableDefinition(this, name, null));
+        for (Record record : fetchTables()) {
+            SchemaDefinition schema = getSchema(record.getValueAsString("Owner"));
+            String name = record.getValueAsString("Name");
+
+            result.add(new ASETableDefinition(schema, name, null));
         }
 
         return result;
     }
 
-    private List<String> fetchTableNames() {
-        List<String> result = new ArrayList<String>();
+    private List<Record> fetchTables() {
+        List<Record> result = new ArrayList<Record>();
 
         for (Record record : create().fetch("sp_help")) {
-            if (Arrays.asList("view", "user table", "system table").contains(record.getValueAsString("Object_type"))) {
-                if (getInputSchema().equals(record.getValueAsString("Owner"))) {
-                    result.add(record.getValueAsString("Name"));
+            if (asList("view", "user table", "system table").contains(record.getValueAsString("Object_type"))) {
+                if (getInputSchemata().contains(record.getValueAsString("Owner"))) {
+                    result.add(record);
                 }
             }
         }

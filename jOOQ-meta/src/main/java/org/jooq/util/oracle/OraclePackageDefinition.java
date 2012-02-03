@@ -43,16 +43,16 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.util.AbstractPackageDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * @author Lukas Eder
  */
 public class OraclePackageDefinition extends AbstractPackageDefinition {
 
-    public OraclePackageDefinition(Database database, String packageName, String comment) {
-        super(database, packageName, comment);
+    public OraclePackageDefinition(SchemaDefinition schema, String packageName, String comment) {
+        super(schema, packageName, comment);
     }
 
     @Override
@@ -65,12 +65,12 @@ public class OraclePackageDefinition extends AbstractPackageDefinition {
                     ALL_ARGUMENTS.OBJECT_ID,
                     ALL_ARGUMENTS.OVERLOAD)
                 .from(ALL_ARGUMENTS)
-                .where(ALL_ARGUMENTS.OWNER.equal(getSchemaName()))
+                .where(ALL_ARGUMENTS.OWNER.in(getSchema().getName()))
                 .and(ALL_ARGUMENTS.PACKAGE_NAME.equal(getName()))
                 .orderBy(ALL_ARGUMENTS.OBJECT_NAME, ALL_ARGUMENTS.OVERLOAD)
                 .fetch()) {
 
-            result.add(new OracleRoutineDefinition(getDatabase(),
+            result.add(new OracleRoutineDefinition(getSchema(),
                 this,
                 record.getValue(ALL_ARGUMENTS.OBJECT_NAME),
                 "",

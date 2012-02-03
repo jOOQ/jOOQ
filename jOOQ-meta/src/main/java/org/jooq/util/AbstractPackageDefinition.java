@@ -50,8 +50,8 @@ public abstract class AbstractPackageDefinition extends AbstractDefinition imple
 
     private List<RoutineDefinition> routines;
 
-    public AbstractPackageDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public AbstractPackageDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema.getDatabase(), schema, name, comment);
     }
 
     @Override

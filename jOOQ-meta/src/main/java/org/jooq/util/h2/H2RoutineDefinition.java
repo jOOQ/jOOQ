@@ -44,11 +44,11 @@ import org.jooq.Record;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.h2.information_schema.tables.FunctionColumns;
 
 /**
@@ -59,11 +59,17 @@ import org.jooq.util.h2.information_schema.tables.FunctionColumns;
  */
 public class H2RoutineDefinition extends AbstractRoutineDefinition {
 
-    public H2RoutineDefinition(Database database, String name, String comment, String typeName, Number precision, Number scale) {
-        super(database, null, name, comment, null);
+    public H2RoutineDefinition(SchemaDefinition schema, String name, String comment, String typeName, Number precision, Number scale) {
+        super(schema, null, name, comment, null);
 
         if (!StringUtils.isBlank(typeName)) {
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), typeName, precision, scale);
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                schema,
+                typeName,
+                precision,
+                scale);
+
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
     }
@@ -78,7 +84,7 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                     FunctionColumns.SCALE,
                     FunctionColumns.POS)
                 .from(FUNCTION_COLUMNS)
-                .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchemaName()))
+                .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchema().getName()))
                 .and(FunctionColumns.ALIAS_NAME.equal(getName()))
                 .orderBy(FunctionColumns.POS.asc()).fetch()) {
 
@@ -95,7 +101,12 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 continue;
             }
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), typeName, precision, scale);
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(), typeName,
+                precision,
+                scale);
+
             ParameterDefinition parameter = new DefaultParameterDefinition(this, paramName, position, type);
 
             addParameter(InOutDefinition.IN, parameter);

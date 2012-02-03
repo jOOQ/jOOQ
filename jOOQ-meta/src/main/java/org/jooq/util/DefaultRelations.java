@@ -44,7 +44,7 @@ import java.util.Set;
 
 import org.jooq.tools.JooqLogger;
 
-public class DefaultRelations extends AbstractDefinition implements Relations {
+public class DefaultRelations implements Relations {
 
     private static final JooqLogger                          log                 = JooqLogger.getLogger(DefaultRelations.class);
 
@@ -55,10 +55,6 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
     private Map<ColumnDefinition, ForeignKeyDefinition>      foreignKeysByColumn = new LinkedHashMap<ColumnDefinition, ForeignKeyDefinition>();
     private Map<ColumnDefinition, UniqueKeyDefinition>       primaryKeysByColumn = new LinkedHashMap<ColumnDefinition, UniqueKeyDefinition>();
     private Map<ColumnDefinition, List<UniqueKeyDefinition>> uniqueKeysByColumn  = new LinkedHashMap<ColumnDefinition, List<UniqueKeyDefinition>>();
-
-	public DefaultRelations(Database database) {
-		super(database, "", "");
-	}
 
 	public void addPrimaryKey(String keyName, ColumnDefinition column) {
 	    if (log.isDebugEnabled()) {
@@ -82,7 +78,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
         UniqueKeyDefinition key = uniqueKeys.get(keyName);
 
         if (key == null) {
-            key = new DefaultUniqueKeyDefinition(getDatabase(), keyName, column.getContainer());
+            key = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, column.getContainer());
             uniqueKeys.put(keyName, key);
 
             if (isPK) {
@@ -105,7 +101,7 @@ public class DefaultRelations extends AbstractDefinition implements Relations {
 
             // If the unique key is not loaded, ignore this foreign key
             if (uniqueKey != null) {
-                foreignKey = new DefaultForeignKeyDefinition(getDatabase(), foreignKeyName, column.getContainer(), uniqueKey);
+                foreignKey = new DefaultForeignKeyDefinition(column.getSchema(), foreignKeyName, column.getContainer(), uniqueKey);
                 foreignKeys.put(foreignKeyName, foreignKey);
 
                 uniqueKey.getForeignKeys().add(foreignKey);

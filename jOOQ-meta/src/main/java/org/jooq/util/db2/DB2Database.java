@@ -36,6 +36,7 @@
 package org.jooq.util.db2;
 
 import static org.jooq.impl.Factory.concat;
+import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.db2.syscat.tables.Datatypes.DATATYPES;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCNAME;
@@ -67,6 +68,7 @@ import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -93,11 +95,12 @@ public class DB2Database extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("P")) {
+            SchemaDefinition schema = getSchema(record.getValue(Keycoluse.TABSCHEMA.trim()));
             String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(Keycoluse.TABNAME);
             String columnName = record.getValue(Keycoluse.COLNAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -107,11 +110,12 @@ public class DB2Database extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("U")) {
+            SchemaDefinition schema = getSchema(record.getValue(Keycoluse.TABSCHEMA.trim()));
             String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(Keycoluse.TABNAME);
             String columnName = record.getValue(Keycoluse.COLNAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(schema, tableName);
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -121,15 +125,17 @@ public class DB2Database extends AbstractDatabase {
     private List<Record> fetchKeys(String constraintType) {
         return create().select(
                 concat(Keycoluse.TABNAME, val("__"), Keycoluse.CONSTNAME).as("constraint_name"),
+                Keycoluse.TABSCHEMA.trim(),
                 Keycoluse.TABNAME,
                 Keycoluse.COLNAME)
             .from(KEYCOLUSE)
             .join(TABCONST)
             .on(Keycoluse.TABSCHEMA.equal(Tabconst.TABSCHEMA))
             .and(Keycoluse.CONSTNAME.equal(Tabconst.CONSTNAME))
-            .where(Keycoluse.TABSCHEMA.equal(getInputSchema()))
+            .where(Keycoluse.TABSCHEMA.in(getInputSchemata()))
             .and(Tabconst.TYPE.equal(constraintType))
             .orderBy(
+                Keycoluse.TABSCHEMA.asc(),
                 Keycoluse.TABNAME.asc(),
                 Keycoluse.CONSTNAME.asc(),
                 Keycoluse.COLSEQ.asc())
@@ -140,19 +146,26 @@ public class DB2Database extends AbstractDatabase {
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (Record record : create().select(
                     concat(References.TABNAME, val("__"), References.CONSTNAME).as("constraint_name"),
+                    References.TABSCHEMA.trim(),
                     References.TABNAME,
                     References.FK_COLNAMES,
                     concat(References.REFTABNAME, val("__"), References.REFKEYNAME).as("referenced_constraint_name"))
                 .from(REFERENCES)
-                .where(References.TABSCHEMA.equal(getInputSchema()))
+                .where(References.TABSCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    References.TABSCHEMA,
+                    References.TABNAME,
+                    References.CONSTNAME,
+                    References.FK_COLNAMES)
                 .fetch()) {
 
+            SchemaDefinition schema = getSchema(record.getValue(References.TABSCHEMA.trim()));
             String foreignKey = record.getValue("constraint_name", String.class);
             String foreignKeyTableName = record.getValue(References.TABNAME);
             String foreignKeyColumn = record.getValue(References.FK_COLNAMES);
             String uniqueKey = record.getValue("referenced_constraint_name", String.class);
 
-            TableDefinition foreignKeyTable = getTable(foreignKeyTableName);
+            TableDefinition foreignKeyTable = getTable(schema, foreignKeyTableName);
 
             if (foreignKeyTable != null) {
                 /*
@@ -176,6 +189,7 @@ public class DB2Database extends AbstractDatabase {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 
         for (Record record : create().select(
+                    Sequences.SEQSCHEMA.trim(),
                     Sequences.SEQNAME,
                     Sequences.SEQTYPE,
                     Datatypes.TYPENAME,
@@ -183,17 +197,24 @@ public class DB2Database extends AbstractDatabase {
                 .from(SEQUENCES)
                 .join(DATATYPES)
                 .on(Sequences.DATATYPEID.equal(Datatypes.TYPEID.cast(Integer.class)))
-                .where(Sequences.SEQSCHEMA.equal(getInputSchema()))
-                .orderBy(Sequences.SEQNAME)
+                .where(Sequences.SEQSCHEMA.in(getInputSchemata()))
+                .orderBy(
+                    Sequences.SEQSCHEMA,
+                    Sequences.SEQNAME)
                 .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+            SchemaDefinition schema = getSchema(record.getValue(Sequences.SEQSCHEMA.trim()));
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                this, schema,
                 record.getValue(Datatypes.TYPENAME),
                 record.getValue(Sequences.PRECISION),
                 0);
 
-            result.add(new DefaultSequenceDefinition(getSchema(),
-                record.getValue(Sequences.SEQNAME), type));
+            result.add(new DefaultSequenceDefinition(
+                schema,
+                record.getValue(Sequences.SEQNAME),
+                type));
         }
 
         return result;
@@ -205,17 +226,19 @@ public class DB2Database extends AbstractDatabase {
 
         SelectQuery q = create().selectQuery();
         q.addFrom(TABLES);
+        q.addSelect(Tables.TABSCHEMA.trim());
         q.addSelect(Tables.TABNAME);
-        q.addConditions(Tables.TABSCHEMA.equal(getInputSchema()));
+        q.addConditions(Tables.TABSCHEMA.in(getInputSchemata()));
         q.addConditions(Tables.TYPE.in("T", "V")); // tables and views
         q.addOrderBy(Tables.TABNAME);
         q.execute();
 
         for (Record record : q.getResult()) {
+            SchemaDefinition schema = getSchema(record.getValue(Tables.TABSCHEMA.trim()));
             String name = record.getValue(Tables.TABNAME);
             String comment = "";
 
-            DB2TableDefinition table = new DB2TableDefinition(this, name, comment);
+            DB2TableDefinition table = new DB2TableDefinition(schema, name, comment);
             result.add(table);
 
         }
@@ -228,17 +251,24 @@ public class DB2Database extends AbstractDatabase {
 
         for (Record record : create()
                 .select().from(create()
-                    .select(PROCNAME.as("name"), val(true).as("isProcedure"))
+                    .select(
+                        PROCSCHEMA.trim().as("schema"),
+                        PROCNAME.as("name"),
+                        val(true).as("isProcedure"))
                     .from(PROCEDURES)
-                    .where(PROCSCHEMA.equal(getInputSchema()))
-                    .unionAll(create()
-                    .select(FUNCNAME.as("name"), val(false).as("isProcedure"))
+                    .where(PROCSCHEMA.in(getInputSchemata()))
+                .unionAll(create()
+                    .select(
+                        FUNCSCHEMA.trim().as("schema"),
+                        FUNCNAME.as("name"),
+                        val(false).as("isProcedure"))
                     .from(FUNCTIONS)
-                    .where(FUNCSCHEMA.equal(getInputSchema()))))
-                .orderBy(Factory.literal(1))
+                    .where(FUNCSCHEMA.in(getInputSchemata()))))
+                .orderBy(two())
                 .fetch()) {
 
-            result.add(new DB2RoutineDefinition(this,
+            result.add(new DB2RoutineDefinition(
+                getSchema(record.getValueAsString("schema")),
                 record.getValueAsString("name"),
                 null,
                 record.getValueAsBoolean("isProcedure")));
@@ -263,12 +293,18 @@ public class DB2Database extends AbstractDatabase {
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
 
-        for (String name : create().selectDistinct(Datatypes.TYPENAME)
-            .from(DATATYPES)
-            .where(Datatypes.TYPESCHEMA.equal(getInputSchema()))
-            .orderBy(Datatypes.TYPENAME).fetch(Datatypes.TYPENAME)) {
+        for (Record record : create().selectDistinct(
+                    Datatypes.TYPESCHEMA.trim(),
+                    Datatypes.TYPENAME)
+                .from(DATATYPES)
+                .where(Datatypes.TYPESCHEMA.in(getInputSchemata()))
+                .orderBy(Datatypes.TYPENAME)
+                .fetch()) {
 
-            result.add(new DB2UDTDefinition(this, name, null));
+            result.add(new DB2UDTDefinition(
+                getSchema(record.getValue(Datatypes.TYPESCHEMA.trim())),
+                record.getValue(Datatypes.TYPENAME),
+                null));
         }
 
         return result;

@@ -44,6 +44,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
+import org.jooq.util.jaxb.Schemata;
 
 /**
  * A general database model.
@@ -53,9 +54,14 @@ import org.jooq.util.jaxb.MasterDataTable;
 public interface Database {
 
     /**
-     * The schema generated from this database
+     * The schemata generated from this database
      */
-    SchemaDefinition getSchema();
+    List<SchemaDefinition> getSchemata();
+
+    /**
+     * Get a schema defined in this database by name
+     */
+    SchemaDefinition getSchema(String name);
 
     /**
      * Retrieve the schema's primary key / foreign key relations
@@ -63,71 +69,70 @@ public interface Database {
     Relations getRelations();
 
     /**
-     * The sequences contained in this database (for schema {@link #getSchema()}
+     * The sequences contained in this database
      */
-    List<SequenceDefinition> getSequences();
+    List<SequenceDefinition> getSequences(SchemaDefinition schema);
 
     /**
-     * The tables contained in this database (for schema {@link #getSchema()})
+     * The tables contained in this database
      */
-    List<TableDefinition> getTables();
+    List<TableDefinition> getTables(SchemaDefinition schema);
 
     /**
      * Get a table in this database by name
      */
-    TableDefinition getTable(String name);
+    TableDefinition getTable(SchemaDefinition schema, String name);
 
     /**
      * The master data tables contained in this database (for schema
      * {@link #getSchema()})
      */
-    List<MasterDataTableDefinition> getMasterDataTables();
+    List<MasterDataTableDefinition> getMasterDataTables(SchemaDefinition schema);
 
     /**
      * Get a master data table in this database by name
      */
-    MasterDataTableDefinition getMasterDataTable(String name);
+    MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name);
 
     /**
      * The enum UDTs defined in this database
      */
-    List<EnumDefinition> getEnums();
+    List<EnumDefinition> getEnums(SchemaDefinition schema);
 
     /**
      * Get an enum UDT defined in this database by name
      */
-    EnumDefinition getEnum(String name);
+    EnumDefinition getEnum(SchemaDefinition schema, String name);
 
     /**
      * The UDTs defined in this database
      */
-    List<UDTDefinition> getUDTs();
+    List<UDTDefinition> getUDTs(SchemaDefinition schema);
 
     /**
      * Get a UDT defined in this database by name
      */
-    UDTDefinition getUDT(String name);
+    UDTDefinition getUDT(SchemaDefinition schema, String name);
 
     /**
      * The Arrays defined in this database
      */
-    List<ArrayDefinition> getArrays();
+    List<ArrayDefinition> getArrays(SchemaDefinition schema);
 
     /**
      * Get a ARRAY defined in this database by name
      */
-    ArrayDefinition getArray(String name);
+    ArrayDefinition getArray(SchemaDefinition schema, String name);
 
     /**
      * The stored routines (procedures and functions) contained in this database
-     * (for schema {@link #getSchema()})
      */
-    List<RoutineDefinition> getRoutines();
+    List<RoutineDefinition> getRoutines(SchemaDefinition schema);
 
     /**
-     * The packages contained in this database (for schema {@link #getSchema()})
+     * The packages contained in this database
      */
-    List<PackageDefinition> getPackages();
+    List<PackageDefinition> getPackages(SchemaDefinition schema);
 
     /**
      * Initialise a connection to this database
@@ -140,24 +145,19 @@ public interface Database {
     Connection getConnection();
 
     /**
-     * The input schema is the schema that jooq-meta is reading data from
+     * The input schemata are the schemata that jooq-meta is reading data from
      */
-    void setInputSchema(String schema);
+    List<String> getInputSchemata();
 
     /**
-     * The input schema is the schema that jooq-meta is reading data from
+     *  The output schema is the schema used by jooq-codegen in class names
      */
-    String getInputSchema();
+    String getOutputSchema(String inputSchema);
 
     /**
-     * The output schema is the schema used by jooq-codegen in class names
+     * The input and output schemata
      */
-    void setOutputSchema(String schema);
-
-    /**
-     * The output schema is the schema used by jooq-codegen in class names
-     */
-    String getOutputSchema();
+    void setConfiguredSchemata(Schemata schemata);
 
     /**
      * Only database objects matching any of these regular expressions will be

@@ -39,12 +39,12 @@ import java.sql.SQLException;
 import org.jooq.Record;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * Sybase implementation of {@link AbstractRoutineDefinition}
@@ -54,8 +54,8 @@ import org.jooq.util.ParameterDefinition;
  */
 public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
 
-    public SybaseRoutineDefinition(Database database, PackageDefinition pkg, String name) {
-        super(database, pkg, name, null, null);
+    public SybaseRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name) {
+        super(schema, pkg, name, null, null);
     }
 
     @Override
@@ -99,7 +99,9 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                 throw new IllegalArgumentException("Stored procedure param is neither in or out mode!");
             }
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(SYSDOMAIN.DOMAIN_NAME),
                 record.getValue(SYSPROCPARM.WIDTH),
                 record.getValue(SYSPROCPARM.SCALE));

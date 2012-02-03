@@ -47,6 +47,7 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
+import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -57,6 +58,7 @@ import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -73,6 +75,27 @@ import org.jooq.util.sybase.sys.tables.Systable;
  * @author Espen Stromsnes
  */
 public class SybaseDatabase extends AbstractDatabase {
+
+    private static final JooqLogger log = JooqLogger.getLogger(SybaseDatabase.class);
+
+    @Override
+    public Factory create() {
+        return new Factory(getConnection(), SQLDialect.SYBASE);
+    }
+
+
+    private SchemaDefinition getSchema() {
+        List<SchemaDefinition> schemata = getSchemata();
+
+        if (schemata.size() > 1) {
+            log.error("NOT SUPPORTED", "jOOQ does not support multiple schemata in Sybase ASE.");
+            log.error("-----------------------------------------------------------------------");
+
+            // TODO [#1102] Support this also for Sybase SQL Anywhere
+        }
+
+        return schemata.get(0);
+    }
 
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
@@ -97,7 +120,7 @@ public class SybaseDatabase extends AbstractDatabase {
             String tableName = record.getValue(SYSTABLE.TABLE_NAME);
             String columnName = record.getValue(SYSTABCOL.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(getSchema(), tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -129,7 +152,7 @@ public class SybaseDatabase extends AbstractDatabase {
             String tableName = record.getValue(SYSTABLE.TABLE_NAME);
             String columnName = record.getValue(SYSTABCOL.COLUMN_NAME);
 
-            TableDefinition table = getTable(tableName);
+            TableDefinition table = getTable(getSchema(), tableName);
             if (table != null) {
                 r.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -177,7 +200,7 @@ public class SybaseDatabase extends AbstractDatabase {
             String foreignKeyColumn = record.getValue(SYSTABCOL.COLUMN_NAME);
             String referencedKey = record.getValueAsString("ukIndexName");
 
-            TableDefinition foreignKeyTable = getTable(foreignKeyTableName);
+            TableDefinition foreignKeyTable = getTable(getSchema(), foreignKeyTableName);
 
             if (foreignKeyTable != null) {
                 ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn);
@@ -195,7 +218,8 @@ public class SybaseDatabase extends AbstractDatabase {
             .orderBy(SYSSEQUENCE.SEQUENCE_NAME)
             .fetch(SYSSEQUENCE.SEQUENCE_NAME)) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(this,
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                this, getSchema(),
                 SybaseDataType.NUMERIC.getTypeName(), 38, 0);
 
             result.add(new DefaultSequenceDefinition(getSchema(), name, type));
@@ -217,7 +241,7 @@ public class SybaseDatabase extends AbstractDatabase {
             String name = record.getValue(SYSTABLE.TABLE_NAME);
             String comment = record.getValue(SYSTABLE.REMARKS);
 
-            SybaseTableDefinition table = new SybaseTableDefinition(this, name, comment);
+            SybaseTableDefinition table = new SybaseTableDefinition(getSchema(), name, comment);
             result.add(table);
         }
 
@@ -252,7 +276,7 @@ public class SybaseDatabase extends AbstractDatabase {
                 .fetch()) {
 
             String name = record.getValue(SYSPROCEDURE.PROC_NAME);
-            result.add(new SybaseRoutineDefinition(this, null, name));
+            result.add(new SybaseRoutineDefinition(getSchema(), null, name));
         }
 
         return result;
@@ -262,10 +286,5 @@ public class SybaseDatabase extends AbstractDatabase {
     protected List<PackageDefinition> getPackages0() throws SQLException {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();
         return result;
-    }
-
-    @Override
-    public Factory create() {
-        return new Factory(getConnection(), SQLDialect.SYBASE);
     }
 }

@@ -64,8 +64,8 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
 
     private final PackageDefinition     pkg;
 
-    public AbstractRoutineDefinition(Database database, PackageDefinition pkg, String name, String comment, String overload) {
-        super(database, name, comment, overload);
+    public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload) {
+        super(schema.getDatabase(), schema, name, comment, overload);
 
         this.pkg = pkg;
     }
@@ -136,7 +136,7 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
             return getReturnValue().getType();
         }
         else {
-            return new DefaultDataTypeDefinition(getDatabase(), "unknown", 0, 0);
+            return new DefaultDataTypeDefinition(getDatabase(), getSchema(), "unknown", 0, 0);
         }
     }
 

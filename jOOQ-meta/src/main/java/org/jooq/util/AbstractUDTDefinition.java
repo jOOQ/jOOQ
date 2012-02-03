@@ -50,8 +50,8 @@ implements
 
     private List<RoutineDefinition> routines;
 
-    public AbstractUDTDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public AbstractUDTDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override

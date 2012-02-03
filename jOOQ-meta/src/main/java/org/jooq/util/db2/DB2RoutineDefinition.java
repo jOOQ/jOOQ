@@ -44,11 +44,11 @@ import java.sql.SQLException;
 import org.jooq.Record;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.db2.syscat.tables.Funcparms;
 import org.jooq.util.db2.syscat.tables.Functions;
 import org.jooq.util.db2.syscat.tables.Procparms;
@@ -63,8 +63,8 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
 
     private final boolean isProcedure;
 
-    public DB2RoutineDefinition(Database database, String name, String comment, boolean isProcedure) {
-        super(database, null, name, comment, null);
+    public DB2RoutineDefinition(SchemaDefinition schema, String name, String comment, boolean isProcedure) {
+        super(schema, null, name, comment, null);
 
         this.isProcedure = isProcedure;
     }
@@ -94,7 +94,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                     Funcparms.FUNCSCHEMA.equal(Functions.FUNCSCHEMA),
                     Funcparms.FUNCNAME.equal(Functions.FUNCNAME))
                 .where(
-                    Funcparms.FUNCSCHEMA.equal(getSchemaName()),
+                    Funcparms.FUNCSCHEMA.equal(getSchema().getName()),
                     Funcparms.FUNCNAME.equal(getName()),
                     Functions.ORIGIN.equal("Q"))
                 .orderBy(
@@ -111,13 +111,25 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
 
             // result after casting
             if ("C".equals(rowType)) {
-                DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
+                DataTypeDefinition type = new DefaultDataTypeDefinition(
+                    getDatabase(),
+                    getSchema(),
+                    dataType,
+                    precision,
+                    scale);
+
                 addParameter(InOutDefinition.RETURN, new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type));
             }
 
             // parameter
             else if ("P".equals(rowType)) {
-                DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), dataType, precision, scale);
+                DataTypeDefinition type = new DefaultDataTypeDefinition(
+                    getDatabase(),
+                    getSchema(),
+                    dataType,
+                    precision,
+                    scale);
+
                 ParameterDefinition column = new DefaultParameterDefinition(this, paramName, position, type);
 
                 addParameter(InOutDefinition.IN, column);
@@ -138,13 +150,15 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                     Procparms.ORDINAL,
                     Procparms.PARM_MODE)
                 .from(PROCPARMS)
-                .where(Procparms.PROCSCHEMA.equal(getSchemaName()))
+                .where(Procparms.PROCSCHEMA.equal(getSchema().getName()))
                 .and(Procparms.PROCNAME.equal(getName()))
                 .orderBy(Procparms.ORDINAL).fetch()) {
 
             String paramMode = record.getValue(Procparms.PARM_MODE);
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(Procparms.TYPENAME),
                 record.getValue(Procparms.LENGTH),
                 record.getValue(Procparms.SCALE));

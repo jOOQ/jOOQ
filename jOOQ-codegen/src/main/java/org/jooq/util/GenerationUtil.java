@@ -43,17 +43,12 @@ import java.util.Set;
 
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 import org.jooq.util.h2.H2DataType;
-import org.jooq.util.jaxb.Configuration;
 
 /**
  * @author Lukas Eder
  */
 class GenerationUtil {
-
-    private static final JooqLogger log = JooqLogger.getLogger(GenerationUtil.class);
 
     private static Set<String> JAVA_KEYWORDS = unmodifiableSet(new HashSet<String>(asList(
          "abstract",
@@ -206,32 +201,5 @@ class GenerationUtil {
         }
 
         throw new SQLDialectNotSupportedException("getArrayBaseType() is not supported for dialect " + dialect);
-    }
-
-    // -------------------------------------------------------------------------
-    // For backwards compatibility with "jdbc.Schema"
-    // -------------------------------------------------------------------------
-
-    static String getInputSchema(Configuration configuration) {
-        if (!StringUtils.isBlank(configuration.getGenerator().getDatabase().getInputSchema())) {
-            return configuration.getGenerator().getDatabase().getInputSchema();
-        }
-        else {
-            log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
-            return configuration.getJdbc().getSchema();
-        }
-    }
-
-    static String getOutputSchema(Configuration configuration) {
-        if (!StringUtils.isBlank(configuration.getGenerator().getDatabase().getOutputSchema())) {
-            return configuration.getGenerator().getDatabase().getOutputSchema();
-        }
-        else if (!StringUtils.isBlank(configuration.getGenerator().getDatabase().getInputSchema())) {
-            return configuration.getGenerator().getDatabase().getInputSchema();
-        }
-        else {
-            log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
-            return configuration.getJdbc().getSchema();
-        }
     }
 }

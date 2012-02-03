@@ -59,8 +59,8 @@ implements TableDefinition {
     private boolean                    identityLoaded;
     private ColumnDefinition           identity;
 
-    public AbstractTableDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override

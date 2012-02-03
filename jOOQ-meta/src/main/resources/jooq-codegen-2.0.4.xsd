@@ -81,12 +81,9 @@
 				minOccurs="0" maxOccurs="1" />
 			<element name="excludes" type="string" default="" minOccurs="0"
 				maxOccurs="1" />
-			<element name="inputSchema" type="string" default=""
-				minOccurs="0" maxOccurs="1" />
-			<element name="outputSchema" type="string" default=""
-				minOccurs="0" maxOccurs="1" />
 			<element name="dateAsTimestamp" type="boolean" default="false"
 				minOccurs="0" maxOccurs="1" />
+			<element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1"/>
 			<element name="masterDataTables" minOccurs="0" maxOccurs="1">
 				<complexType>
 					<sequence>
@@ -112,6 +109,27 @@
 				</complexType>
 			</element>
 		</all>
+	</complexType>
+
+	<complexType name="Schemata">
+		<annotation>
+			<documentation>
+				Some configuration for the schema abstraction
+				(jooq-meta)
+			</documentation>
+		</annotation>
+		<sequence>
+			<element name="schema" minOccurs="1" maxOccurs="unbounded">
+				<complexType>
+					<all>
+						<element name="inputSchema" type="string" default=""
+							minOccurs="1" maxOccurs="1" />
+						<element name="outputSchema" type="string" default=""
+							minOccurs="0" maxOccurs="1" />
+					</all>
+				</complexType>
+			</element>
+		</sequence>
 	</complexType>
 
 	<complexType name="MasterDataTable">

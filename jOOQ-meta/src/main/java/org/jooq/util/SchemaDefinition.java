@@ -46,15 +46,15 @@ import org.jooq.tools.StringUtils;
 public class SchemaDefinition extends AbstractDefinition {
 
 	public SchemaDefinition(Database database, String name, String comment) {
-		super(database, name, comment);
+		super(database, null, name, comment);
 	}
 
 	@Override
 	public final String getQualifiedName() {
-		return getSchemaName();
+		return getName();
 	}
 
     public boolean isDefaultSchema() {
-        return StringUtils.isBlank(getSchemaName());
+        return StringUtils.isBlank(getName());
     }
 }

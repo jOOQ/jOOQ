@@ -46,15 +46,15 @@ import org.jooq.Record;
 import org.jooq.util.AbstractUDTDefinition;
 import org.jooq.util.AttributeDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultAttributeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 
 public class OracleUDTDefinition extends AbstractUDTDefinition {
 
-    public OracleUDTDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public OracleUDTDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -68,11 +68,13 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
                 ALL_TYPE_ATTRS.PRECISION,
                 ALL_TYPE_ATTRS.SCALE)
             .from(ALL_TYPE_ATTRS)
-            .where(ALL_TYPE_ATTRS.OWNER.equal(getSchemaName()))
+            .where(ALL_TYPE_ATTRS.OWNER.equal(getSchema().getName()))
             .and(ALL_TYPE_ATTRS.TYPE_NAME.equal(getName()))
             .orderBy(ALL_TYPE_ATTRS.ATTR_NO).fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_NAME),
                 record.getValueAsInteger(ALL_TYPE_ATTRS.PRECISION, 0),
                 record.getValueAsInteger(ALL_TYPE_ATTRS.SCALE, 0));
@@ -99,14 +101,14 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
                     ALL_ARGUMENTS.OBJECT_ID,
                     ALL_ARGUMENTS.OVERLOAD)
                 .from(ALL_ARGUMENTS)
-                .where(ALL_ARGUMENTS.OWNER.equal(getSchemaName()))
+                .where(ALL_ARGUMENTS.OWNER.equal(getSchema().getName()))
                 .and(ALL_ARGUMENTS.PACKAGE_NAME.equal(getName()))
                 .orderBy(
                     ALL_ARGUMENTS.OBJECT_NAME,
                     ALL_ARGUMENTS.OVERLOAD)
                 .fetch()) {
 
-            result.add(new OracleRoutineDefinition(getDatabase(),
+            result.add(new OracleRoutineDefinition(getSchema(),
                 this,
                 record.getValue(ALL_ARGUMENTS.OBJECT_NAME),
                 "",

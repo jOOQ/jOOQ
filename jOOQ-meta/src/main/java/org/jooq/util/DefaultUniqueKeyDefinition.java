@@ -44,8 +44,8 @@ public class DefaultUniqueKeyDefinition extends AbstractDefinition implements Un
     private final List<ColumnDefinition>     keyColumns;
     private final TableDefinition            table;
 
-    public DefaultUniqueKeyDefinition(Database database, String name, TableDefinition table) {
-        super(database, name, null);
+    public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table) {
+        super(schema.getDatabase(), schema, name, null);
 
         this.foreignKeys = new ArrayList<ForeignKeyDefinition>();
         this.keyColumns = new ArrayList<ColumnDefinition>();

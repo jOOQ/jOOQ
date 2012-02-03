@@ -47,18 +47,20 @@ import org.jooq.util.oracle.OracleDataType;
  */
 public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
-    private final Database database;
-    private final String   typeName;
-    private final String   udtName;
-    private final int      precision;
-    private final int      scale;
+    private final Database         database;
+    private final SchemaDefinition schema;
+    private final String           typeName;
+    private final String           udtName;
+    private final int              precision;
+    private final int              scale;
 
-    public DefaultDataTypeDefinition(Database database, String typeName, Number precision, Number scale) {
-        this(database, typeName, precision, scale, typeName);
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number precision, Number scale) {
+        this(database, schema, typeName, precision, scale, typeName);
     }
 
-    public DefaultDataTypeDefinition(Database database, String typeName, Number precision, Number scale, String udtName) {
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number precision, Number scale, String udtName) {
         this.database = database;
+        this.schema = schema;
         this.typeName = typeName;
         this.udtName = udtName;
         this.precision = precision == null ? 0 : precision.intValue();
@@ -70,13 +72,18 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return database;
     }
 
+    @Override
+    public final SchemaDefinition getSchema() {
+        return schema;
+    }
+
     private final SQLDialect getDialect() {
         return getDatabase().getDialect();
     }
 
     @Override
     public final boolean isUDT() {
-        return getDatabase().getUDT(udtName) != null;
+        return getDatabase().getUDT(schema, udtName) != null;
     }
 
     @Override

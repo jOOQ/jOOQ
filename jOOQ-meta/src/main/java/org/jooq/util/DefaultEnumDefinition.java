@@ -44,12 +44,12 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
     private final List<String> literals;
     private final boolean isSynthetic;
 
-    public DefaultEnumDefinition(Database database, String name, String comment) {
-        this(database, name, comment, false);
+    public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment) {
+        this(schema, name, comment, false);
     }
 
-    public DefaultEnumDefinition(Database database, String name, String comment, boolean isSynthetic) {
-        super(database, name, comment);
+    public DefaultEnumDefinition(SchemaDefinition schema, String name, String comment, boolean isSynthetic) {
+        super(schema.getDatabase(), schema, name, comment);
 
         this.literals = new ArrayList<String>();
         this.isSynthetic = isSynthetic;

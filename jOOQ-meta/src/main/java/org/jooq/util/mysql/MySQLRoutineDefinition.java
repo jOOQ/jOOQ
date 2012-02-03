@@ -42,11 +42,11 @@ import java.util.regex.Matcher;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
+import org.jooq.util.SchemaDefinition;
 
 /**
  * @author Lukas Eder
@@ -56,8 +56,8 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
     private final String params;
     private final String returns;
 
-	public MySQLRoutineDefinition(Database database, String name, String comment, String params, String returns) {
-		super(database, null, name, comment, null);
+	public MySQLRoutineDefinition(SchemaDefinition schema, String name, String comment, String params, String returns) {
+		super(schema, null, name, comment, null);
 
 		this.params = params;
 		this.returns = returns;
@@ -105,7 +105,13 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             scale = Integer.valueOf(matcher.group(group + 3));
         }
 
-        DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), paramType, precision, scale);
+        DataTypeDefinition type = new DefaultDataTypeDefinition(
+            getDatabase(),
+            getSchema(),
+            paramType,
+            precision,
+            scale);
+
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);
 	}
 }

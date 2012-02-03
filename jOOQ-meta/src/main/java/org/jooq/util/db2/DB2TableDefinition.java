@@ -45,9 +45,9 @@ import org.jooq.Record;
 import org.jooq.util.AbstractTableDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
-import org.jooq.util.Database;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.db2.syscat.tables.Columns;
 
 /**
@@ -57,8 +57,8 @@ import org.jooq.util.db2.syscat.tables.Columns;
  */
 public class DB2TableDefinition extends AbstractTableDefinition {
 
-    public DB2TableDefinition(Database database, String name, String comment) {
-        super(database, name, comment);
+    public DB2TableDefinition(SchemaDefinition schema, String name, String comment) {
+        super(schema, name, comment);
     }
 
     @Override
@@ -73,18 +73,20 @@ public class DB2TableDefinition extends AbstractTableDefinition {
                     Columns.SCALE,
                     Columns.IDENTITY)
                 .from(COLUMNS)
-                .where(Columns.TABSCHEMA.equal(getSchemaName()))
+                .where(Columns.TABSCHEMA.equal(getSchema().getName()))
                 .and(Columns.TABNAME.equal(getName()))
                 .orderBy(Columns.COLNO)
                 .fetch()) {
 
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(),
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
                 record.getValue(Columns.TYPENAME),
                 record.getValue(Columns.LENGTH),
                 record.getValue(Columns.SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(
-            	getDatabase().getTable(getName()),
+            	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(Columns.COLNAME),
                 record.getValue(Columns.COLNO),
                 type,

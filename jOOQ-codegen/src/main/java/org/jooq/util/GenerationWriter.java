@@ -1,5 +1,7 @@
 package org.jooq.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -43,8 +45,10 @@ public class GenerationWriter {
     private final Set<Object>   alreadyPrinted;
     private final Set<String>   suppressWarnings;
 
-    public GenerationWriter(PrintWriter writer) {
-        this.writer = writer;
+    public GenerationWriter(File file) throws FileNotFoundException {
+        file.getParentFile().mkdirs();
+
+        this.writer = new PrintWriter(file);
         this.sb = new StringBuilder();
         this.staticInitialisationStatements = new ArrayList<String>();
         this.initialisationStatements = new ArrayList<String>();

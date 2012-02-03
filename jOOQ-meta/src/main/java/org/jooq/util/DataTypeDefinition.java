@@ -78,4 +78,9 @@ public interface DataTypeDefinition {
      */
     Database getDatabase();
 
+    /**
+     * The underlying schema
+     */
+    SchemaDefinition getSchema();
+
 }

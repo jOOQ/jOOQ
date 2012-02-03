@@ -1911,6 +1911,34 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * Convenience method for {@link #replace(Field, String, String)} to escape
+     * data for use with {@link Field#like(Field, char)}
+     * <p>
+     * Essentially, this escapes <code>%</code> and <code>_</code> characters
+     *
+     * @see #replace(Field, String, String)
+     * @see Field#like(Field, char)
+     */
+    @Support
+    public static Field<String> escape(String value, char escape) {
+        return val(value.replace("%", escape + "%").replace("_", escape + "_"));
+    }
+
+    /**
+     * Convenience method for {@link #replace(Field, String, String)} to escape
+     * data for use with {@link Field#like(Field, char)}
+     * <p>
+     * Essentially, this escapes <code>%</code> and <code>_</code> characters
+     *
+     * @see #replace(Field, String, String)
+     * @see Field#like(Field, char)
+     */
+    @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    public static Field<String> escape(Field<String> field, char escape) {
+        return replace(replace(field, "%", escape + "%"), "_", escape + "_");
+    }
+
+    /**
      * Get the replace(field, search) function
      *
      * @see #replace(Field, Field)

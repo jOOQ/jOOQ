@@ -38,6 +38,7 @@ package org.jooq.impl;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -75,6 +76,8 @@ class ArrayTable extends AbstractTable<Record> {
         super(alias);
 
         Class<?> arrayType;
+
+        // TODO [#523] Solve this in a more object-oriented way...
         if (array.getDataType().getType().isArray()) {
             arrayType = array.getDataType().getType().getComponentType();
         }
@@ -82,6 +85,14 @@ class ArrayTable extends AbstractTable<Record> {
         // [#1110] Keep track of element type information of Oracle VARRAY / TABLE types
         else if (array instanceof ArrayConstant) {
             arrayType = array.getDataType().getType();
+        }
+
+        // [#1111] Keep track of element type information of Oracle
+        // VARRAY / TABLE types returned from functions
+        else if (ArrayRecord.class.isAssignableFrom(array.getDataType().getType())) {
+            // TODO [#523] This information should be available in ARRAY meta-data
+            ArrayRecord<?> dummy = Util.newArrayRecord((Class<ArrayRecord<?>>) array.getDataType().getType(), DefaultConfiguration.DEFAULT_CONFIGURATION);
+            arrayType = dummy.getDataType().getType();
         }
 
         // Is this case possible?

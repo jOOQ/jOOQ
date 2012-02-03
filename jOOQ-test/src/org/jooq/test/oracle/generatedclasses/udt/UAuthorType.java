@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.udt;
  */
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = 111509532;
+	private static final long serialVersionUID = -2077496023;
 
 	/**
 	 * The singleton instance of U_AUTHOR_TYPE
@@ -87,6 +87,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	 * @param self IN OUT parameter
 	 * @param book1 OUT parameter
 	 * @param book2 OUT parameter
+	 * @param books OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
 	public static org.jooq.test.oracle.generatedclasses.udt.u_author_type.GetBooks getBooks(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord self) {

@@ -299,7 +299,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_COLL_TYPES.SCALE)
             .from(ALL_COLL_TYPES)
             .where(ALL_COLL_TYPES.OWNER.in(getInputSchemata()))
-            .and(ALL_COLL_TYPES.COLL_TYPE.equal("VARYING ARRAY"))
+            .and(ALL_COLL_TYPES.COLL_TYPE.in("VARYING ARRAY", "TABLE"))
             .orderBy(
                 ALL_COLL_TYPES.OWNER,
                 ALL_COLL_TYPES.TYPE_NAME)

@@ -36,15 +36,22 @@
 
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
+import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.test.oracle.generatedclasses.Routines.f691cursorIn;
 import static org.jooq.test.oracle.generatedclasses.Routines.f691cursorOut;
+import static org.jooq.test.oracle.generatedclasses.Routines.fArrays1;
+import static org.jooq.test.oracle.generatedclasses.Routines.fTables1;
+import static org.jooq.test.oracle.generatedclasses.Routines.pArrays1;
+import static org.jooq.test.oracle.generatedclasses.Routines.pTables1;
 import static org.jooq.test.oracle.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.oracle.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.oracle.generatedclasses.Tables.T_725_LOB_TEST;
@@ -94,6 +101,7 @@ import org.jooq.test.oracle.generatedclasses.Sequences;
 import org.jooq.test.oracle.generatedclasses.TestFactory;
 import org.jooq.test.oracle.generatedclasses.packages.Library;
 import org.jooq.test.oracle.generatedclasses.routines.F377;
+import org.jooq.test.oracle.generatedclasses.routines.FTables1;
 import org.jooq.test.oracle.generatedclasses.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
@@ -120,6 +128,7 @@ import org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord;
+import org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.u_author_type.GetBooks;
 import org.jooq.test.oracle2.generatedclasses.tables.records.T_976Record;
@@ -803,6 +812,96 @@ public class jOOQOracleTest extends jOOQAbstractTest<
             "C:/Program Files/Java/jre6/lib",
             "C:/Program Files/Java/jre6/lib/javaws.jar",
             "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
+    }
+
+    @Test
+    public void testOracleTableTypes() throws Exception {
+        // TODO [#523] [#1109] These two statements are needed when running this test
+        // in standalone mode. The data type is not registered automatically for
+        // ArrayRecords
+        ora().newRecord(TArrays());
+        new FTables1();
+
+        // Unnesting arrays
+        assertEquals(emptyList(),
+            create().select().from(table(new UNumberArrayRecord(ora(), (Integer[]) null))).fetch(0));
+        assertEquals(emptyList(),
+            create().select().from(table(new UNumberArrayRecord(ora()))).fetch(0));
+        assertEquals(asList(1),
+            create().select().from(table(new UNumberArrayRecord(ora(), 1))).fetch(0));
+        assertEquals(asList(1, 2),
+            create().select().from(table(new UNumberArrayRecord(ora(), 1, 2))).fetch(0));
+
+        // Unnesting tables
+        assertEquals(emptyList(),
+            create().select().from(table(new UNumberTableRecord(ora(), (Integer[]) null))).fetch(0));
+        assertEquals(emptyList(),
+            create().select().from(table(new UNumberTableRecord(ora()))).fetch(0));
+        assertEquals(asList(1),
+            create().select().from(table(new UNumberTableRecord(ora(), 1))).fetch(0));
+        assertEquals(asList(1, 2),
+            create().select().from(table(new UNumberTableRecord(ora(), 1, 2))).fetch(0));
+
+        // Unnesting arrays from functions
+        assertEquals(emptyList(),
+            create().select().from(table(fArrays1(new UNumberArrayRecord(ora(), (Integer[]) null)))).fetch(0));
+        assertEquals(emptyList(),
+            create().select().from(table(fArrays1(new UNumberArrayRecord(ora())))).fetch(0));
+        assertEquals(asList(1),
+            create().select().from(table(fArrays1(new UNumberArrayRecord(ora(), 1)))).fetch(0));
+        assertEquals(asList(1, 2),
+            create().select().from(table(fArrays1(new UNumberArrayRecord(ora(), 1, 2)))).fetch(0));
+
+        // Unnesting tables from functions
+        assertEquals(emptyList(),
+            create().select().from(table(fTables1(new UNumberTableRecord(ora(), (Integer[]) null)))).fetch(0));
+        assertEquals(emptyList(),
+            create().select().from(table(fTables1(new UNumberTableRecord(ora())))).fetch(0));
+        assertEquals(asList(1),
+            create().select().from(table(fTables1(new UNumberTableRecord(ora(), 1)))).fetch(0));
+        assertEquals(asList(1, 2),
+            create().select().from(table(fTables1(new UNumberTableRecord(ora(), 1, 2)))).fetch(0));
+
+        // Retrieving arrays from functions
+        assertEquals(emptyList(),
+            fArrays1(ora(), new UNumberArrayRecord(ora(), (Integer[]) null)).getList());
+        assertEquals(emptyList(),
+            fArrays1(ora(), new UNumberArrayRecord(ora())).getList());
+        assertEquals(asList(1),
+            fArrays1(ora(), new UNumberArrayRecord(ora(), 1)).getList());
+        assertEquals(asList(1, 2),
+            fArrays1(ora(), new UNumberArrayRecord(ora(), 1, 2)).getList());
+
+        // Retrieving tables from functions
+        assertEquals(emptyList(),
+            fTables1(ora(), new UNumberTableRecord(ora(), (Integer[]) null)).getList());
+        assertEquals(emptyList(),
+            fTables1(ora(), new UNumberTableRecord(ora())).getList());
+        assertEquals(asList(1),
+            fTables1(ora(), new UNumberTableRecord(ora(), 1)).getList());
+        assertEquals(asList(1, 2),
+            fTables1(ora(), new UNumberTableRecord(ora(), 1, 2)).getList());
+
+        // Retrieving arrays from procedures
+        assertEquals(emptyList(),
+            pArrays1(ora(), new UNumberArrayRecord(ora(), (Integer[]) null)).getList());
+        assertEquals(emptyList(),
+            pArrays1(ora(), new UNumberArrayRecord(ora())).getList());
+        assertEquals(asList(1),
+            pArrays1(ora(), new UNumberArrayRecord(ora(), 1)).getList());
+        assertEquals(asList(1, 2),
+            pArrays1(ora(), new UNumberArrayRecord(ora(), 1, 2)).getList());
+
+        // Retrieving tables from procedures
+        assertEquals(emptyList(),
+            pTables1(ora(), new UNumberTableRecord(ora(), (Integer[]) null)).getList());
+        assertEquals(emptyList(),
+            pTables1(ora(), new UNumberTableRecord(ora())).getList());
+        assertEquals(asList(1),
+            pTables1(ora(), new UNumberTableRecord(ora(), 1)).getList());
+        assertEquals(asList(1, 2),
+            pTables1(ora(), new UNumberTableRecord(ora(), 1, 2)).getList());
+
     }
 
     @Test

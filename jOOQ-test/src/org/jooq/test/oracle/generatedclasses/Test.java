@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses;
  */
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 692870622;
+	private static final long serialVersionUID = -1861976036;
 
 	/**
 	 * The singleton instance of TEST
@@ -27,10 +27,10 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	 */
 	{
 		addMapping("TEST.O_INVALID_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.OInvalidTypeRecord.class);
-		addMapping("TEST.T_INVALID_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.TInvalidTypeRecord.class);
 		addMapping("TEST.U_ADDRESS_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.UAddressTypeRecord.class);
 		addMapping("TEST.U_AUTHOR_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord.class);
 		addMapping("TEST.U_BOOK_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.UBookTypeRecord.class);
+		addMapping("TEST.U_INVALID_TABLE", org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTableRecord.class);
 		addMapping("TEST.U_INVALID_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTypeRecord.class);
 		addMapping("TEST.U_STREET_TYPE", org.jooq.test.oracle.generatedclasses.udt.records.UStreetTypeRecord.class);
 	}
@@ -75,10 +75,10 @@ public class Test extends org.jooq.impl.SchemaImpl {
 	public final java.util.List<org.jooq.UDT<?>> getUDTs() {
 		return java.util.Arrays.<org.jooq.UDT<?>>asList(
 			org.jooq.test.oracle.generatedclasses.udt.OInvalidType.O_INVALID_TYPE,
-			org.jooq.test.oracle.generatedclasses.udt.TInvalidType.T_INVALID_TYPE,
 			org.jooq.test.oracle.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE,
 			org.jooq.test.oracle.generatedclasses.udt.UAuthorType.U_AUTHOR_TYPE,
 			org.jooq.test.oracle.generatedclasses.udt.UBookType.U_BOOK_TYPE,
+			org.jooq.test.oracle.generatedclasses.udt.UInvalidTable.U_INVALID_TABLE,
 			org.jooq.test.oracle.generatedclasses.udt.UInvalidType.U_INVALID_TYPE,
 			org.jooq.test.oracle.generatedclasses.udt.UStreetType.U_STREET_TYPE);
 	}

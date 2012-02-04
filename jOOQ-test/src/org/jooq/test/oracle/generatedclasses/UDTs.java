@@ -16,11 +16,6 @@ public final class UDTs {
 	public static org.jooq.test.oracle.generatedclasses.udt.OInvalidType O_INVALID_TYPE = org.jooq.test.oracle.generatedclasses.udt.OInvalidType.O_INVALID_TYPE;
 
 	/**
-	 * The type TEST.T_INVALID_TYPE
-	 */
-	public static org.jooq.test.oracle.generatedclasses.udt.TInvalidType T_INVALID_TYPE = org.jooq.test.oracle.generatedclasses.udt.TInvalidType.T_INVALID_TYPE;
-
-	/**
 	 * The type TEST.U_ADDRESS_TYPE
 	 */
 	public static org.jooq.test.oracle.generatedclasses.udt.UAddressType U_ADDRESS_TYPE = org.jooq.test.oracle.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE;
@@ -34,6 +29,11 @@ public final class UDTs {
 	 * The type TEST.U_BOOK_TYPE
 	 */
 	public static org.jooq.test.oracle.generatedclasses.udt.UBookType U_BOOK_TYPE = org.jooq.test.oracle.generatedclasses.udt.UBookType.U_BOOK_TYPE;
+
+	/**
+	 * The type TEST.U_INVALID_TABLE
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.UInvalidTable U_INVALID_TABLE = org.jooq.test.oracle.generatedclasses.udt.UInvalidTable.U_INVALID_TABLE;
 
 	/**
 	 * The type TEST.U_INVALID_TYPE

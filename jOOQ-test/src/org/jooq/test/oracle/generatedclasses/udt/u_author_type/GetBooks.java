@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.udt.u_author_type;
  */
 public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1379255812;
+	private static final long serialVersionUID = 460360447;
 
 
 	/**
@@ -29,7 +29,7 @@ public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.udt.records.TBookTypeRecord> BOOKS = createParameter("BOOKS", org.jooq.test.oracle.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.udt.records.TBookTypeRecord.class));
+	public static final org.jooq.Parameter<org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord> BOOKS = createParameter("BOOKS", org.jooq.test.oracle.generatedclasses.udt.UBookType.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord.class));
 
 	/**
 	 * Create a new routine call instance
@@ -62,7 +62,7 @@ public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 		return getValue(BOOK2);
 	}
 
-	public org.jooq.test.oracle.generatedclasses.udt.records.TBookTypeRecord getBooks() {
+	public org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord getBooks() {
 		return getValue(BOOKS);
 	}
 }

@@ -96,7 +96,7 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
         List<Attachable> result = new ArrayList<Attachable>();
 
         if (Attachable.class.isAssignableFrom(type.getType())) {
-            for (T element : array) {
+            for (T element : get()) {
                 result.add((Attachable) element);
             }
         }

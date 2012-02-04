@@ -10,7 +10,7 @@ package org.jooq.examples.oracle.sys.packages;
  */
 public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 1703556324;
+	private static final long serialVersionUID = -1690923682;
 
 	/**
 	 * The singleton instance of DBMS_XPLAN
@@ -350,7 +350,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param filterPreds
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object display(org.jooq.Configuration configuration, java.lang.String tableName, java.lang.String statementId, java.lang.String format, java.lang.String filterPreds) {
+	public static org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord display(org.jooq.Configuration configuration, java.lang.String tableName, java.lang.String statementId, java.lang.String format, java.lang.String filterPreds) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.Display f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.Display();
 		f.setTableName(tableName);
 		f.setStatementId(statementId);
@@ -369,7 +369,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @param filterPreds
 	 */
-	public static org.jooq.Field<java.lang.Object> display(java.lang.String tableName, java.lang.String statementId, java.lang.String format, java.lang.String filterPreds) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> display(java.lang.String tableName, java.lang.String statementId, java.lang.String format, java.lang.String filterPreds) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.Display f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.Display();
 		f.setTableName(tableName);
 		f.setStatementId(statementId);
@@ -387,7 +387,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @param filterPreds
 	 */
-	public static org.jooq.Field<java.lang.Object> display(org.jooq.Field<java.lang.String> tableName, org.jooq.Field<java.lang.String> statementId, org.jooq.Field<java.lang.String> format, org.jooq.Field<java.lang.String> filterPreds) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> display(org.jooq.Field<java.lang.String> tableName, org.jooq.Field<java.lang.String> statementId, org.jooq.Field<java.lang.String> format, org.jooq.Field<java.lang.String> filterPreds) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.Display f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.Display();
 		f.setTableName(tableName);
 		f.setStatementId(statementId);
@@ -406,7 +406,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object displayAwr(org.jooq.Configuration configuration, java.lang.String sqlId, java.math.BigInteger planHashValue, java.math.BigInteger dbId, java.lang.String format) {
+	public static org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord displayAwr(org.jooq.Configuration configuration, java.lang.String sqlId, java.math.BigInteger planHashValue, java.math.BigInteger dbId, java.lang.String format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr();
 		f.setSqlId(sqlId);
 		f.setPlanHashValue(planHashValue);
@@ -425,7 +425,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param dbId
 	 * @param format
 	 */
-	public static org.jooq.Field<java.lang.Object> displayAwr(java.lang.String sqlId, java.math.BigInteger planHashValue, java.math.BigInteger dbId, java.lang.String format) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displayAwr(java.lang.String sqlId, java.math.BigInteger planHashValue, java.math.BigInteger dbId, java.lang.String format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr();
 		f.setSqlId(sqlId);
 		f.setPlanHashValue(planHashValue);
@@ -443,7 +443,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param dbId
 	 * @param format
 	 */
-	public static org.jooq.Field<java.lang.Object> displayAwr(org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<java.math.BigInteger> planHashValue, org.jooq.Field<java.math.BigInteger> dbId, org.jooq.Field<java.lang.String> format) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displayAwr(org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<java.math.BigInteger> planHashValue, org.jooq.Field<java.math.BigInteger> dbId, org.jooq.Field<java.lang.String> format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayAwr();
 		f.setSqlId(sqlId);
 		f.setPlanHashValue(planHashValue);
@@ -461,7 +461,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object displayCursor(org.jooq.Configuration configuration, java.lang.String sqlId, java.math.BigInteger cursorChildNo, java.lang.String format) {
+	public static org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord displayCursor(org.jooq.Configuration configuration, java.lang.String sqlId, java.math.BigInteger cursorChildNo, java.lang.String format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor();
 		f.setSqlId(sqlId);
 		f.setCursorChildNo(cursorChildNo);
@@ -478,7 +478,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param cursorChildNo
 	 * @param format
 	 */
-	public static org.jooq.Field<java.lang.Object> displayCursor(java.lang.String sqlId, java.math.BigInteger cursorChildNo, java.lang.String format) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displayCursor(java.lang.String sqlId, java.math.BigInteger cursorChildNo, java.lang.String format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor();
 		f.setSqlId(sqlId);
 		f.setCursorChildNo(cursorChildNo);
@@ -494,7 +494,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param cursorChildNo
 	 * @param format
 	 */
-	public static org.jooq.Field<java.lang.Object> displayCursor(org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<java.math.BigInteger> cursorChildNo, org.jooq.Field<java.lang.String> format) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displayCursor(org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<java.math.BigInteger> cursorChildNo, org.jooq.Field<java.lang.String> format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplayCursor();
 		f.setSqlId(sqlId);
 		f.setCursorChildNo(cursorChildNo);
@@ -573,7 +573,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object displaySqlPlanBaseline(org.jooq.Configuration configuration, java.lang.String sqlHandle, java.lang.String planName, java.lang.String format) {
+	public static org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord displaySqlPlanBaseline(org.jooq.Configuration configuration, java.lang.String sqlHandle, java.lang.String planName, java.lang.String format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline();
 		f.setSqlHandle(sqlHandle);
 		f.setPlanName(planName);
@@ -590,7 +590,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param planName
 	 * @param format
 	 */
-	public static org.jooq.Field<java.lang.Object> displaySqlPlanBaseline(java.lang.String sqlHandle, java.lang.String planName, java.lang.String format) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displaySqlPlanBaseline(java.lang.String sqlHandle, java.lang.String planName, java.lang.String format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline();
 		f.setSqlHandle(sqlHandle);
 		f.setPlanName(planName);
@@ -606,7 +606,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param planName
 	 * @param format
 	 */
-	public static org.jooq.Field<java.lang.Object> displaySqlPlanBaseline(org.jooq.Field<java.lang.String> sqlHandle, org.jooq.Field<java.lang.String> planName, org.jooq.Field<java.lang.String> format) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displaySqlPlanBaseline(org.jooq.Field<java.lang.String> sqlHandle, org.jooq.Field<java.lang.String> planName, org.jooq.Field<java.lang.String> format) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlPlanBaseline();
 		f.setSqlHandle(sqlHandle);
 		f.setPlanName(planName);
@@ -625,7 +625,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param sqlsetOwner
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object displaySqlset(org.jooq.Configuration configuration, java.lang.String sqlsetName, java.lang.String sqlId, java.math.BigInteger planHashValue, java.lang.String format, java.lang.String sqlsetOwner) {
+	public static org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord displaySqlset(org.jooq.Configuration configuration, java.lang.String sqlsetName, java.lang.String sqlId, java.math.BigInteger planHashValue, java.lang.String format, java.lang.String sqlsetOwner) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset();
 		f.setSqlsetName(sqlsetName);
 		f.setSqlId(sqlId);
@@ -646,7 +646,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @param sqlsetOwner
 	 */
-	public static org.jooq.Field<java.lang.Object> displaySqlset(java.lang.String sqlsetName, java.lang.String sqlId, java.math.BigInteger planHashValue, java.lang.String format, java.lang.String sqlsetOwner) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displaySqlset(java.lang.String sqlsetName, java.lang.String sqlId, java.math.BigInteger planHashValue, java.lang.String format, java.lang.String sqlsetOwner) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset();
 		f.setSqlsetName(sqlsetName);
 		f.setSqlId(sqlId);
@@ -666,7 +666,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param format
 	 * @param sqlsetOwner
 	 */
-	public static org.jooq.Field<java.lang.Object> displaySqlset(org.jooq.Field<java.lang.String> sqlsetName, org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<java.math.BigInteger> planHashValue, org.jooq.Field<java.lang.String> format, org.jooq.Field<java.lang.String> sqlsetOwner) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> displaySqlset(org.jooq.Field<java.lang.String> sqlsetName, org.jooq.Field<java.lang.String> sqlId, org.jooq.Field<java.math.BigInteger> planHashValue, org.jooq.Field<java.lang.String> format, org.jooq.Field<java.lang.String> sqlsetOwner) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.DisplaySqlset();
 		f.setSqlsetName(sqlsetName);
 		f.setSqlId(sqlId);
@@ -962,7 +962,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param iFormatFlags
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object prepareRecords(org.jooq.Configuration configuration, org.jooq.Result<org.jooq.Record> planCur, java.lang.Integer iFormatFlags) {
+	public static org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord prepareRecords(org.jooq.Configuration configuration, org.jooq.Result<org.jooq.Record> planCur, java.lang.Integer iFormatFlags) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords();
 		f.setPlanCur(planCur);
 		f.setIFormatFlags(iFormatFlags);
@@ -977,7 +977,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param planCur
 	 * @param iFormatFlags
 	 */
-	public static org.jooq.Field<java.lang.Object> prepareRecords(org.jooq.Result<org.jooq.Record> planCur, java.lang.Integer iFormatFlags) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> prepareRecords(org.jooq.Result<org.jooq.Record> planCur, java.lang.Integer iFormatFlags) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords();
 		f.setPlanCur(planCur);
 		f.setIFormatFlags(iFormatFlags);
@@ -991,7 +991,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	 * @param planCur
 	 * @param iFormatFlags
 	 */
-	public static org.jooq.Field<java.lang.Object> prepareRecords(org.jooq.Field<org.jooq.Result<org.jooq.Record>> planCur, org.jooq.Field<java.lang.Integer> iFormatFlags) {
+	public static org.jooq.Field<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> prepareRecords(org.jooq.Field<org.jooq.Result<org.jooq.Record>> planCur, org.jooq.Field<java.lang.Integer> iFormatFlags) {
 		org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords f = new org.jooq.examples.oracle.sys.packages.dbms_xplan.PrepareRecords();
 		f.setPlanCur(planCur);
 		f.setIFormatFlags(iFormatFlags);

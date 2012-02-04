@@ -47,7 +47,9 @@ import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
+import org.jooq.UDTRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.util.h2.H2DataType;
 
@@ -103,7 +105,24 @@ class ArrayTable extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.field = new FieldList();
-        this.field.add(new Qualifier(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
+
+        // [#1114] VARRAY/TABLE of OBJECT have more than one field
+        if (UDTRecord.class.isAssignableFrom(arrayType)) {
+            try {
+                UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
+                for (Field<?> f : record.getFields()) {
+                    this.field.add(new Qualifier(f.getDataType(), alias, f.getName()));
+                }
+            }
+            catch (Exception e) {
+                throw new DataTypeException("Bad UDT Type : " + arrayType, e);
+            }
+        }
+        
+        // Simple array types have a synthetic field called "COLUMN_VALUE"
+        else {
+            this.field.add(new Qualifier(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
+        }
     }
 
     @Override

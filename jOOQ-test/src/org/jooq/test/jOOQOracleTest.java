@@ -101,7 +101,10 @@ import org.jooq.test.oracle.generatedclasses.Sequences;
 import org.jooq.test.oracle.generatedclasses.TestFactory;
 import org.jooq.test.oracle.generatedclasses.packages.Library;
 import org.jooq.test.oracle.generatedclasses.routines.F377;
+import org.jooq.test.oracle.generatedclasses.routines.FArrays1;
+import org.jooq.test.oracle.generatedclasses.routines.FArrays4;
 import org.jooq.test.oracle.generatedclasses.routines.FTables1;
+import org.jooq.test.oracle.generatedclasses.routines.FTables4;
 import org.jooq.test.oracle.generatedclasses.tables.VIncomplete;
 import org.jooq.test.oracle.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.TAuthorRecord;
@@ -124,6 +127,9 @@ import org.jooq.test.oracle.generatedclasses.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.udt.records.OInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord;
+import org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord;
+import org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord;
+import org.jooq.test.oracle.generatedclasses.udt.records.UBookTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTableRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord;
@@ -819,8 +825,13 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         // TODO [#523] [#1109] These two statements are needed when running this test
         // in standalone mode. The data type is not registered automatically for
         // ArrayRecords
-        ora().newRecord(TArrays());
+        new FArrays1();
         new FTables1();
+        new FArrays4();
+        new FTables4();
+
+        // FIRST, check unnesting of VARRAY/TABLE of NUMBER
+        // ------------------------------------------------
 
         // Unnesting arrays
         assertEquals(emptyList(),
@@ -901,6 +912,45 @@ public class jOOQOracleTest extends jOOQAbstractTest<
             pTables1(ora(), new UNumberTableRecord(ora(), 1)).getList());
         assertEquals(asList(1, 2),
             pTables1(ora(), new UNumberTableRecord(ora(), 1, 2)).getList());
+
+        // THEN, check unnesting of VARRAY/TABLE of OBJECT
+        // -----------------------------------------------
+        UBookTypeRecord r1 = new UBookTypeRecord();
+        UBookTypeRecord r2 = new UBookTypeRecord();
+
+        r1.setId(1);
+        r1.setTitle(BOOK_TITLES.get(0));
+
+        r2.setId(2);
+        r2.setTitle(BOOK_TITLES.get(1));
+
+        // Unnesting arrays
+        assertEquals(emptyList(),
+            create().select().from(table(new UBookArrayRecord(ora(), (UBookTypeRecord[]) null))).fetch(0));
+        assertEquals(emptyList(),
+            create().select().from(table(new UBookArrayRecord(ora()))).fetch(0));
+        assertEquals(asList(1),
+            create().select().from(table(new UBookArrayRecord(ora(), r1))).fetch(0));
+        assertEquals(BOOK_TITLES.subList(0, 1),
+            create().select().from(table(new UBookArrayRecord(ora(), r1))).fetch(1));
+        assertEquals(asList(1, 2),
+            create().select().from(table(new UBookArrayRecord(ora(), r1, r2))).fetch(0));
+        assertEquals(BOOK_TITLES.subList(0, 2),
+            create().select().from(table(new UBookArrayRecord(ora(), r1, r2))).fetch(1));
+
+        // Unnesting tables
+        assertEquals(emptyList(),
+            create().select().from(table(new UBookTableRecord(ora(), (UBookTypeRecord[]) null))).fetch(0));
+        assertEquals(emptyList(),
+            create().select().from(table(new UBookTableRecord(ora()))).fetch(0));
+        assertEquals(asList(1),
+            create().select().from(table(new UBookTableRecord(ora(), r1))).fetch(0));
+        assertEquals(BOOK_TITLES.subList(0, 1),
+            create().select().from(table(new UBookTableRecord(ora(), r1))).fetch(1));
+        assertEquals(asList(1, 2),
+            create().select().from(table(new UBookTableRecord(ora(), r1, r2))).fetch(0));
+        assertEquals(BOOK_TITLES.subList(0, 2),
+            create().select().from(table(new UBookTableRecord(ora(), r1, r2))).fetch(1));
 
     }
 

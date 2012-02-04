@@ -35,43 +35,16 @@
  */
 package org.jooq.util.maven;
 
-import java.util.List;
-
-import org.jooq.util.DefaultGenerator;
+import org.jooq.util.DefaultGeneratorStrategy;
 
 /**
- * @author Sander Plas
+ * @author Lukas Eder
  */
-public class Generator {
+public class Strategy {
 
-    private String                name = DefaultGenerator.class.getName();
-    private Strategy              strategy;
-    private Database              database;
-    private Generate              generate;
-    private List<MasterDataTable> masterDataTables;
-    private Target                target;
+    private String name = DefaultGeneratorStrategy.class.getName();
 
     String getName() {
         return name;
-    }
-
-    Strategy getStrategy() {
-        return strategy;
-    }
-
-    Database getDatabase() {
-        return database;
-    }
-
-    Generate getGenerate() {
-        return generate;
-    }
-
-    List<MasterDataTable> getMasterDataTables() {
-        return masterDataTables;
-    }
-
-    Target getTarget() {
-        return target;
     }
 }

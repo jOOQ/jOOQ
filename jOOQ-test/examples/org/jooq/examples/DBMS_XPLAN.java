@@ -41,6 +41,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.jooq.examples.oracle.sys.packages.DbmsXplan;
+import org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord;
 import org.jooq.util.oracle.OracleFactory;
 
 public class DBMS_XPLAN {
@@ -56,14 +57,15 @@ public class DBMS_XPLAN {
         ora.fetch("select * from t_book b join t_author a on b.author_id = a.id");
 
         // TODO [#1113] This doesn't work yet
-//        for (DbmsXplanTypeRecord record : DbmsXplan.displayCursor(ora, null, null, "ALLSTATS LAST").get()) {
-//            System.out.println(record.getPlanTableOutput());
-//        }
+        System.out.println("Standalone call:");
+        System.out.println("----------------");
+        for (DbmsXplanTypeRecord record : DbmsXplan.displayCursor(ora, null, null, "ALLSTATS LAST").get()) {
+            System.out.println(record.getPlanTableOutput());
+        }
 
         // [#1114] Unnesting TABLE of OBJECT
         System.out.println("Unnested table:");
         System.out.println("---------------");
-
         for (String row : ora.select()
                              .from(table(DbmsXplan.displayCursor(null, null, "ALLSTATS LAST")))
                              .fetch(0, String.class)) {

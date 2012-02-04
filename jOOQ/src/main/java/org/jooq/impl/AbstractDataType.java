@@ -406,7 +406,8 @@ public abstract class AbstractDataType<T> implements DataType<T> {
                 // jOOQ data types are handled here
                 if (EnumType.class.isAssignableFrom(type) ||
                     UDTRecord.class.isAssignableFrom(type) ||
-                    MasterDataType.class.isAssignableFrom(type)) {
+                    MasterDataType.class.isAssignableFrom(type) ||
+                    ArrayRecord.class.isAssignableFrom(type)) {
 
                     for (SQLDialect d : SQLDialect.values()) {
                         result = typesByType[d.ordinal()].get(type);

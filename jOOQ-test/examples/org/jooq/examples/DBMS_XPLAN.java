@@ -53,7 +53,7 @@ public class DBMS_XPLAN {
         Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "TEST", "TEST");
 
         OracleFactory ora = new OracleFactory(connection);
-        ora.fetch("select * from t_book");
+        ora.fetch("select * from t_book b join t_author a on b.author_id = a.id");
 
         // TODO [#1113] This doesn't work yet
 //        for (DbmsXplanTypeRecord record : DbmsXplan.displayCursor(ora, null, null, "ALLSTATS LAST").get()) {
@@ -61,8 +61,15 @@ public class DBMS_XPLAN {
 //        }
 
         // [#1114] Unnesting TABLE of OBJECT
-        ora.select().from(table(DbmsXplan.displayCursor(null, null, "ALLSTATS LAST"))).fetch();
-//        select * from table(dbms_xplan.display_cursor('851kf9fa1z8sv'));
+        System.out.println("Unnested table:");
+        System.out.println("---------------");
+
+        for (String row : ora.select()
+                             .from(table(DbmsXplan.displayCursor(null, null, "ALLSTATS LAST")))
+                             .fetch(0, String.class)) {
+
+            System.out.println(row);
+        }
     }
 
 }

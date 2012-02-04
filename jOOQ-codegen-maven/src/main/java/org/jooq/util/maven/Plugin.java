@@ -96,6 +96,7 @@ public class Plugin extends AbstractMojo {
         props.put("generator.database.input-schema", defaultString(generator.getDatabase().getInputSchema()));
         props.put("generator.database.output-schema", defaultString(generator.getDatabase().getOutputSchema()));
         props.put("generator.database.date-as-timestamp", defaultString(generator.getDatabase().getDateAsTimestamp()));
+        props.put("generator.generate.unsigned-types", defaultString(generator.getDatabase().getUnsignedTypes()));
 
         if (generator.getDatabase().getEnumTypes() != null) {
             for (EnumType type : generator.getDatabase().getEnumTypes()) {

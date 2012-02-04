@@ -118,13 +118,13 @@ import org.jooq.test.oracle.generatedclasses.tables.records.VIncompleteRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.oracle.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.oracle.generatedclasses.udt.OInvalidType;
-import org.jooq.test.oracle.generatedclasses.udt.TInvalidType;
 import org.jooq.test.oracle.generatedclasses.udt.UAddressType;
+import org.jooq.test.oracle.generatedclasses.udt.UInvalidTable;
 import org.jooq.test.oracle.generatedclasses.udt.UInvalidType;
 import org.jooq.test.oracle.generatedclasses.udt.UStreetType;
 import org.jooq.test.oracle.generatedclasses.udt.records.OInvalidTypeRecord;
-import org.jooq.test.oracle.generatedclasses.udt.records.TInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UAuthorTypeRecord;
+import org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTableRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UInvalidTypeRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord;
 import org.jooq.test.oracle.generatedclasses.udt.records.UNumberLongArrayRecord;
@@ -175,8 +175,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
             Class.forName(F377.class.getName());
             Class.forName(UInvalidType.class.getName());
             Class.forName(UInvalidTypeRecord.class.getName());
-            Class.forName(TInvalidType.class.getName());
-            Class.forName(TInvalidTypeRecord.class.getName());
+            Class.forName(UInvalidTable.class.getName());
+            Class.forName(UInvalidTableRecord.class.getName());
             Class.forName(OInvalidType.class.getName());
             Class.forName(OInvalidTypeRecord.class.getName());
         }

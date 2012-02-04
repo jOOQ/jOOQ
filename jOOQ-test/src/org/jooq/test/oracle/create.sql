@@ -64,7 +64,7 @@ DROP FUNCTION f691cursor_out/
 DROP FUNCTION f691cursor_in/
 DROP PACKAGE library/
 
-DROP TYPE t_address_type/
+DROP TYPE u_address_table/
 DROP TYPE u_address_type/
 DROP TYPE u_street_type/
 DROP TYPE u_string_array/
@@ -76,11 +76,12 @@ DROP TYPE u_number_table/
 DROP TYPE u_number_long_table/
 DROP TYPE u_date_table/
 DROP TYPE o_invalid_type/
-DROP TYPE t_invalid_type/
+DROP TYPE u_invalid_table/
 DROP TYPE u_invalid_type/
 
 DROP TYPE u_author_type/
-DROP TYPE t_book_type/
+DROP TYPE u_book_table/
+DROP TYPE u_book_array/
 DROP TYPE u_book_type/
 
 CREATE TYPE u_book_type AS OBJECT (
@@ -89,7 +90,8 @@ CREATE TYPE u_book_type AS OBJECT (
 )
 /
 
-CREATE TYPE t_book_type AS TABLE OF u_book_type/
+CREATE TYPE u_book_table AS TABLE OF u_book_type/
+CREATE TYPE u_book_array AS VARRAY(4) OF u_book_type/
 
 CREATE OR REPLACE TYPE u_author_type AS OBJECT (
   id number(7),
@@ -100,7 +102,7 @@ CREATE OR REPLACE TYPE u_author_type AS OBJECT (
   member procedure get_books (
   	book1 OUT u_book_type,
   	book2 OUT u_book_type,
-  	books OUT t_book_type),
+  	books OUT u_book_table),
 
   member function count_books return number
 )
@@ -123,12 +125,12 @@ CREATE OR REPLACE TYPE BODY u_author_type AS
   member procedure get_books (
     book1 OUT u_book_type,
     book2 OUT u_book_type,
-  	books OUT t_book_type) is
+  	books OUT u_book_table) is
 
     x number(7);
     b1 u_book_type := u_book_type(null, null);
     b2 u_book_type := u_book_type(null, null);
-    bs t_book_type;
+    bs u_book_table;
   begin
     x := id;
 
@@ -184,7 +186,7 @@ end;
 /
 
 CREATE TYPE u_invalid_type AS invalid/
-CREATE TYPE t_invalid_type AS TABLE OF u_invalid_type/
+CREATE TYPE u_invalid_table AS TABLE OF u_invalid_type/
 CREATE TYPE o_invalid_type AS OBJECT (
     invalid u_invalid_type
 )/
@@ -910,7 +912,7 @@ CREATE OR REPLACE PACKAGE library_767_package_test AS
 END library_767_package_test;
 /
 
-CREATE TYPE t_address_type AS TABLE OF u_address_type
+CREATE TYPE u_address_table AS TABLE OF u_address_type
 /
 
 CREATE OR REPLACE PROCEDURE p_get_two_cursors (

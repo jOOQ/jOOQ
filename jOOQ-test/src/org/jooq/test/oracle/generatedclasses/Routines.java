@@ -125,6 +125,44 @@ public final class Routines {
 	}
 
 	/**
+	 * Invoke F_ARRAYS4
+	 *
+	 * @param inArray
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord fArrays4(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord inArray) {
+		org.jooq.test.oracle.generatedclasses.routines.FArrays4 f = new org.jooq.test.oracle.generatedclasses.routines.FArrays4();
+		f.setInArray(inArray);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_ARRAYS4 as a field
+	 *
+	 * @param inArray
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord> fArrays4(org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord inArray) {
+		org.jooq.test.oracle.generatedclasses.routines.FArrays4 f = new org.jooq.test.oracle.generatedclasses.routines.FArrays4();
+		f.setInArray(inArray);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F_ARRAYS4 as a field
+	 *
+	 * @param inArray
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord> fArrays4(org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord> inArray) {
+		org.jooq.test.oracle.generatedclasses.routines.FArrays4 f = new org.jooq.test.oracle.generatedclasses.routines.FArrays4();
+		f.setInArray(inArray);
+
+		return f.asField();
+	}
+
+	/**
 	 * Invoke F_AUTHOR_EXISTS
 	 *
 	 * @param authorName
@@ -375,6 +413,44 @@ public final class Routines {
 	}
 
 	/**
+	 * Invoke F_TABLES4
+	 *
+	 * @param inTable
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord fTables4(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables4 f = new org.jooq.test.oracle.generatedclasses.routines.FTables4();
+		f.setInTable(inTable);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_TABLES4 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord> fTables4(org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables4 f = new org.jooq.test.oracle.generatedclasses.routines.FTables4();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get F_TABLES4 as a field
+	 *
+	 * @param inTable
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord> fTables4(org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord> inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.FTables4 f = new org.jooq.test.oracle.generatedclasses.routines.FTables4();
+		f.setInTable(inTable);
+
+		return f.asField();
+	}
+
+	/**
 	 * Invoke F317
 	 *
 	 * @param p1
@@ -565,6 +641,21 @@ public final class Routines {
 	}
 
 	/**
+	 * Invoke P_ARRAYS4
+	 *
+	 * @param inArray IN parameter
+	 * @param outArray OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord pArrays4(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord inArray) {
+		org.jooq.test.oracle.generatedclasses.routines.PArrays4 p = new org.jooq.test.oracle.generatedclasses.routines.PArrays4();
+		p.setInArray(inArray);
+
+		p.execute(configuration);
+		return p.getOutArray();
+	}
+
+	/**
 	 * Invoke P_AUTHOR_EXISTS
 	 *
 	 * @param authorName IN parameter
@@ -716,6 +807,21 @@ public final class Routines {
 	 */
 	public static org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord pTables3(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UStringTableRecord inTable) {
 		org.jooq.test.oracle.generatedclasses.routines.PTables3 p = new org.jooq.test.oracle.generatedclasses.routines.PTables3();
+		p.setInTable(inTable);
+
+		p.execute(configuration);
+		return p.getOutTable();
+	}
+
+	/**
+	 * Invoke P_TABLES4
+	 *
+	 * @param inTable IN parameter
+	 * @param outTable OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord pTables4(org.jooq.Configuration configuration, org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord inTable) {
+		org.jooq.test.oracle.generatedclasses.routines.PTables4 p = new org.jooq.test.oracle.generatedclasses.routines.PTables4();
 		p.setInTable(inTable);
 
 		p.execute(configuration);

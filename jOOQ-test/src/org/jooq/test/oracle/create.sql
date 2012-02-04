@@ -40,10 +40,20 @@ DROP TABLE t_booleans/
 DROP PROCEDURE p_arrays1/
 DROP PROCEDURE p_arrays2/
 DROP PROCEDURE p_arrays3/
+DROP PROCEDURE p_arrays4/
+DROP PROCEDURE p_tables1/
+DROP PROCEDURE p_tables2/
+DROP PROCEDURE p_tables3/
+DROP PROCEDURE p_tables4/
 DROP PROCEDURE p_many_parameters/
 DROP FUNCTION f_arrays1/
 DROP FUNCTION f_arrays2/
 DROP FUNCTION f_arrays3/
+DROP FUNCTION f_arrays4/
+DROP FUNCTION f_tables1/
+DROP FUNCTION f_tables2/
+DROP FUNCTION f_tables3/
+DROP FUNCTION f_tables4/
 DROP PROCEDURE p_enhance_address1/
 DROP PROCEDURE p_enhance_address2/
 DROP PROCEDURE p_enhance_address3/
@@ -622,6 +632,13 @@ BEGIN
 END p_arrays3;
 /
 
+CREATE OR REPLACE PROCEDURE p_arrays4 (in_array u_book_array, out_array OUT u_book_array)
+IS
+BEGIN
+    out_array := in_array;
+END p_arrays4;
+/
+
 CREATE OR REPLACE PROCEDURE p_tables1 (in_table u_number_table, out_table OUT u_number_table)
 IS
 BEGIN
@@ -641,6 +658,13 @@ IS
 BEGIN
     out_table := in_table;
 END p_tables3;
+/
+
+CREATE OR REPLACE PROCEDURE p_tables4 (in_table u_book_table, out_table OUT u_book_table)
+IS
+BEGIN
+    out_table := in_table;
+END p_tables4;
 /
 
 
@@ -851,6 +875,14 @@ BEGIN
 END f_arrays3;
 /
 
+CREATE OR REPLACE FUNCTION f_arrays4 (in_array u_book_array)
+RETURN u_book_array
+IS
+BEGIN
+    return in_array;
+END f_arrays4;
+/
+
 CREATE OR REPLACE FUNCTION f_tables1 (in_table u_number_table)
 RETURN u_number_table
 IS
@@ -873,6 +905,14 @@ IS
 BEGIN
     return in_table;
 END f_tables3;
+/
+
+CREATE OR REPLACE FUNCTION f_tables4 (in_table u_book_table)
+RETURN u_book_table
+IS
+BEGIN
+    return in_table;
+END f_tables4;
 /
 
 CREATE OR REPLACE PROCEDURE p_author_exists (author_name VARCHAR2, result OUT NUMBER)

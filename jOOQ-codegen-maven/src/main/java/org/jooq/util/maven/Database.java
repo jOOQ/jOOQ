@@ -49,6 +49,7 @@ public class Database {
     private String           inputSchema;
     private String           outputSchema;
     private String           dateAsTimestamp = "false";
+    private String           unsignedTypes   = "true";
     private List<EnumType>   enumTypes;
     private List<ForcedType> forcedTypes;
 
@@ -74,6 +75,10 @@ public class Database {
 
     String getDateAsTimestamp() {
         return dateAsTimestamp;
+    }
+
+    String getUnsignedTypes() {
+        return unsignedTypes;
     }
 
     List<EnumType> getEnumTypes() {

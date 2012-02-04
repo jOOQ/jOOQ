@@ -184,6 +184,7 @@ public class GenerationTool {
 	    database.setIncludes(properties.containsKey("generator.database.includes") ? properties.getProperty("generator.database.includes") : null);
 	    database.setExcludes(properties.containsKey("generator.database.excludes") ? properties.getProperty("generator.database.excludes") : null);
 	    database.setDateAsTimestamp("true".equalsIgnoreCase(properties.getProperty("generator.database.date-as-timestamp")));
+	    database.setUnsignedTypes(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.unsigned-types")));
 	    database.setSchemata(schemata);
 
 	    // Avoid creating these empty elements when migrating
@@ -204,7 +205,6 @@ public class GenerationTool {
 	    generate.setRelations("true".equalsIgnoreCase(properties.getProperty("generator.generate.relations")));
 	    generate.setDeprecated(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.deprecated")));
 	    generate.setInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
-	    generate.setUnsignedTypes(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.unsigned-types")));
 	    generate.setGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
 
 	    org.jooq.util.jaxb.Generator generator = new org.jooq.util.jaxb.Generator();
@@ -308,7 +308,7 @@ public class GenerationTool {
             database.setConfiguredMasterDataTables(g.getDatabase().getMasterDataTables().getMasterDataTable());
             database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes().getEnumType());
             database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes().getForcedType());
-            database.setSupportsUnsignedTypes(g.getGenerate().isUnsignedTypes());
+            database.setSupportsUnsignedTypes(g.getDatabase().isUnsignedTypes());
 
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());

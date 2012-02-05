@@ -70,26 +70,26 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.impl.Factory;
-import org.jooq.test.$.testcases.AggregateWindowFunctionTests;
-import org.jooq.test.$.testcases.CRUDTests;
-import org.jooq.test.$.testcases.DataTypeTests;
-import org.jooq.test.$.testcases.EnumTests;
-import org.jooq.test.$.testcases.ExoticTests;
-import org.jooq.test.$.testcases.FetchTests;
-import org.jooq.test.$.testcases.FormatTests;
-import org.jooq.test.$.testcases.FunctionTests;
-import org.jooq.test.$.testcases.GeneralTests;
-import org.jooq.test.$.testcases.GroupByTests;
-import org.jooq.test.$.testcases.InsertUpdateTests;
-import org.jooq.test.$.testcases.JoinTests;
-import org.jooq.test.$.testcases.LoaderTests;
-import org.jooq.test.$.testcases.MappingTests;
-import org.jooq.test.$.testcases.OrderByTests;
-import org.jooq.test.$.testcases.PlainSQLTests;
-import org.jooq.test.$.testcases.PredicateTests;
-import org.jooq.test.$.testcases.RenderAndBindTests;
-import org.jooq.test.$.testcases.RoutineAndUDTTests;
-import org.jooq.test.$.testcases.SelectTests;
+import org.jooq.test._.testcases.AggregateWindowFunctionTests;
+import org.jooq.test._.testcases.CRUDTests;
+import org.jooq.test._.testcases.DataTypeTests;
+import org.jooq.test._.testcases.EnumTests;
+import org.jooq.test._.testcases.ExoticTests;
+import org.jooq.test._.testcases.FetchTests;
+import org.jooq.test._.testcases.FormatTests;
+import org.jooq.test._.testcases.FunctionTests;
+import org.jooq.test._.testcases.GeneralTests;
+import org.jooq.test._.testcases.GroupByTests;
+import org.jooq.test._.testcases.InsertUpdateTests;
+import org.jooq.test._.testcases.JoinTests;
+import org.jooq.test._.testcases.LoaderTests;
+import org.jooq.test._.testcases.OrderByTests;
+import org.jooq.test._.testcases.PlainSQLTests;
+import org.jooq.test._.testcases.PredicateTests;
+import org.jooq.test._.testcases.RenderAndBindTests;
+import org.jooq.test._.testcases.RoutineAndUDTTests;
+import org.jooq.test._.testcases.SchemaAndMappingTests;
+import org.jooq.test._.testcases.SelectTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -587,17 +587,17 @@ public abstract class jOOQAbstractTest<
     // IMPORTANT! Make this the an early test, to check for attaching side-effects
     @Test
     public void testUse() throws Exception {
-        new MappingTests(this).testUse();
+        new SchemaAndMappingTests(this).testUse();
     }
 
     @Test
     public void testTableMapping() throws Exception {
-        new MappingTests(this).testTableMapping();
+        new SchemaAndMappingTests(this).testTableMapping();
     }
 
     @Test
     public void testSchemaMapping() throws Exception {
-        new MappingTests(this).testSchemaMapping();
+        new SchemaAndMappingTests(this).testSchemaMapping();
     }
 
     @Test

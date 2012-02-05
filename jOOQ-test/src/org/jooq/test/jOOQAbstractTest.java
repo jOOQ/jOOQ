@@ -64,6 +64,7 @@ import static org.jooq.tools.unsigned.Unsigned.ushort;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -254,27 +255,34 @@ public abstract class jOOQAbstractTest<
     protected static boolean             initialised;
     protected static boolean             reset;
     protected static Connection          connection;
+    protected static Connection          connectionMultiSchema;
     protected static boolean             autocommit;
     protected static String              jdbcURL;
     protected static String              jdbcSchema;
     protected static Map<String, String> scripts            = new HashMap<String, String>();
 
-    protected void execute(String script) throws Exception {
+    protected void execute(String script, Connection con) throws Exception {
         Statement stmt = null;
 
         String allSQL = scripts.get(script);
         if (allSQL == null) {
-            File file = new File(getClass().getResource(script).toURI());
-            allSQL = FileUtils.readFileToString(file);
+            try {
+                File file = new File(getClass().getResource(script).toURI());
+                allSQL = FileUtils.readFileToString(file);
+                testSQLWatch.splitDebug("Loaded SQL file");
+            }
+            catch (IOException ignore) {
+                allSQL = "";
+            }
+
             scripts.put(script, allSQL);
-            testSQLWatch.splitDebug("Loaded SQL file");
         }
 
         for (String sql : allSQL.split("/")) {
             try {
                 if (!StringUtils.isBlank(sql)) {
                     sql = sql.replace("{" + JDBC_SCHEMA + "}", jdbcSchema);
-                    stmt = connection.createStatement();
+                    stmt = con.createStatement();
                     stmt.execute(sql.trim());
                     testSQLWatch.splitDebug(StringUtils.abbreviate(sql.trim().replaceAll("[\\n\\r]|\\s+", " "), 25));
                 }
@@ -377,16 +385,20 @@ public abstract class jOOQAbstractTest<
     @Before
     public void setUp() throws Exception {
         connection = getConnection();
+        connectionMultiSchema = getConnectionMultiSchema();
+
         autocommit = connection.getAutoCommit();
 
         if (!initialised) {
             initialised = true;
-            execute(getCreateScript());
+            execute(getCreateScript(), connection);
+            execute(getCreateMultiSchemaScript(), connectionMultiSchema);
         }
 
         if (!reset) {
             reset = true;
-            execute(getResetScript());
+            execute(getResetScript(), connection);
+            execute(getResetMultiSchemaScript(), connectionMultiSchema);
         }
     }
 
@@ -426,58 +438,70 @@ public abstract class jOOQAbstractTest<
 
     protected final Connection getConnection() {
         if (connection == null) {
-            try {
-                String property = System.getProperty("jdbc.properties");
-                if (property == null) {
-                    log.error("No system property 'jdbc.properties' found");
-                    log.error("-----------");
-                    log.error("Please be sure property is set; example: -Djdbc.properties=/org/jooq/configuration/${env_var:USERNAME}/db2/library.properties");
-                    throw new Error();
-                }
-                InputStream in = GenerationTool.class.getResourceAsStream(property);
-                if (in == null) {
-                    log.error("Cannot find " + property);
-                    log.error("-----------");
-                    log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
-                    log.error("If it is located at the current working directory, try adding a '/' to the path");
-                    throw new Error();
-                }
-
-                Properties properties = new Properties();
-
-                try {
-                    properties.load(in);
-                }
-                finally {
-                    in.close();
-                }
-
-                String driver = properties.getProperty(JDBC_DRIVER);
-                jdbcURL = properties.getProperty(JDBC_URL) + getSchemaSuffix();
-                String jdbcUser = properties.getProperty(JDBC_USER);
-                String jdbcPassword = properties.getProperty(JDBC_PASSWORD);
-                jdbcSchema = properties.getProperty(JDBC_SCHEMA) + getSchemaSuffix();
-
-                Class.forName(driver);
-                if (StringUtils.isBlank(jdbcUser)) {
-                    Properties p = new Properties();
-
-                    if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
-                        p.setProperty("timezone", "EUROPE-CENTRAL");
-                    }
-
-                    connection = DriverManager.getConnection(getJdbcURL(), p);
-                }
-                else {
-                    connection = DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
-                }
-            }
-            catch (Exception e) {
-                throw new Error(e);
-            }
+            connection = getConnection0(null, null);
         }
 
         return connection;
+    }
+
+    protected final Connection getConnectionMultiSchema() {
+        if (connectionMultiSchema == null) {
+            connectionMultiSchema = getConnection0("MULTI_SCHEMA", "MULTI_SCHEMA");
+        }
+
+        return connectionMultiSchema;
+    }
+
+    private final Connection getConnection0(String jdbcUser, String jdbcPassword) {
+        try {
+            String property = System.getProperty("jdbc.properties");
+            if (property == null) {
+                log.error("No system property 'jdbc.properties' found");
+                log.error("-----------");
+                log.error("Please be sure property is set; example: -Djdbc.properties=/org/jooq/configuration/${env_var:USERNAME}/db2/library.properties");
+                throw new Error();
+            }
+            InputStream in = GenerationTool.class.getResourceAsStream(property);
+            if (in == null) {
+                log.error("Cannot find " + property);
+                log.error("-----------");
+                log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
+                log.error("If it is located at the current working directory, try adding a '/' to the path");
+                throw new Error();
+            }
+
+            Properties properties = new Properties();
+
+            try {
+                properties.load(in);
+            }
+            finally {
+                in.close();
+            }
+
+            String driver = properties.getProperty(JDBC_DRIVER);
+            jdbcURL = properties.getProperty(JDBC_URL) + getSchemaSuffix();
+            jdbcUser = jdbcUser != null ? jdbcUser : properties.getProperty(JDBC_USER);
+            jdbcPassword = jdbcPassword != null ? jdbcPassword : properties.getProperty(JDBC_PASSWORD);
+            jdbcSchema = properties.getProperty(JDBC_SCHEMA) + getSchemaSuffix();
+
+            Class.forName(driver);
+            if (StringUtils.isBlank(jdbcUser)) {
+                Properties p = new Properties();
+
+                if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
+                    p.setProperty("timezone", "EUROPE-CENTRAL");
+                }
+
+                return DriverManager.getConnection(getJdbcURL(), p);
+            }
+            else {
+                return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
+            }
+        }
+        catch (Exception e) {
+            throw new Error(e);
+        }
     }
 
     /**
@@ -497,6 +521,14 @@ public abstract class jOOQAbstractTest<
 
     protected final String getResetScript() throws Exception {
         return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset.sql";
+    }
+
+    protected final String getCreateMultiSchemaScript() throws Exception {
+        return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/create-multi-schema.sql";
+    }
+
+    protected final String getResetMultiSchemaScript() throws Exception {
+        return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset-multi-schema.sql";
     }
 
     protected abstract Table<T658> T658();

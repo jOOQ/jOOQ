@@ -178,13 +178,15 @@ public abstract class jOOQAbstractTest<
     public static boolean                initialised;
     public static boolean                reset;
     public static Connection             connection;
+    private static boolean               connectionInitialised;
     public static Connection             connectionMultiSchema;
+    private static boolean               connectionMultiSchemaInitialised;
     public static boolean                autocommit;
     public static String                 jdbcURL;
     public static String                 jdbcSchema;
     public static Map<String, String>    scripts            = new HashMap<String, String>();
 
-    protected void execute(String script, Connection con) throws Exception {
+    protected void execute(String script) throws Exception {
         Statement stmt = null;
 
         String allSQL = scripts.get(script);
@@ -205,7 +207,14 @@ public abstract class jOOQAbstractTest<
             try {
                 if (!StringUtils.isBlank(sql)) {
                     sql = sql.replace("{" + JDBC_SCHEMA + "}", jdbcSchema);
-                    stmt = con.createStatement();
+
+                    if (sql.toLowerCase().contains("multi_schema.")) {
+                        stmt = getConnectionMultiSchema().createStatement();
+                    }
+                    else {
+                        stmt = getConnection().createStatement();
+                    }
+
                     stmt.execute(sql.trim());
                     testSQLWatch.splitDebug(StringUtils.abbreviate(sql.trim().replaceAll("[\\n\\r]|\\s+", " "), 25));
                 }
@@ -314,14 +323,12 @@ public abstract class jOOQAbstractTest<
 
         if (!initialised) {
             initialised = true;
-            execute(getCreateScript(), connection);
-            execute(getCreateMultiSchemaScript(), connectionMultiSchema);
+            execute(getCreateScript());
         }
 
         if (!reset) {
             reset = true;
-            execute(getResetScript(), connection);
-            execute(getResetMultiSchemaScript(), connectionMultiSchema);
+            execute(getResetScript());
         }
     }
 
@@ -345,7 +352,8 @@ public abstract class jOOQAbstractTest<
     }
 
     public final Connection getConnection() {
-        if (connection == null) {
+        if (!connectionInitialised) {
+            connectionInitialised = true;
             connection = getConnection0(null, null);
         }
 
@@ -353,7 +361,8 @@ public abstract class jOOQAbstractTest<
     }
 
     public final Connection getConnectionMultiSchema() {
-        if (connectionMultiSchema == null) {
+        if (!connectionMultiSchemaInitialised) {
+            connectionMultiSchemaInitialised = true;
             connectionMultiSchema = getConnection0("MULTI_SCHEMA", "MULTI_SCHEMA");
         }
 
@@ -429,14 +438,6 @@ public abstract class jOOQAbstractTest<
 
     protected final String getResetScript() throws Exception {
         return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset.sql";
-    }
-
-    protected final String getCreateMultiSchemaScript() throws Exception {
-        return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/create-multi-schema.sql";
-    }
-
-    protected final String getResetMultiSchemaScript() throws Exception {
-        return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/reset-multi-schema.sql";
     }
 
     protected abstract Table<T658> T658();

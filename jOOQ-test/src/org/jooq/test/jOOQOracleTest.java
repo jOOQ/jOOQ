@@ -46,6 +46,7 @@ import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.test.oracle.generatedclasses.Routines.f691cursorIn;
 import static org.jooq.test.oracle.generatedclasses.Routines.f691cursorOut;
 import static org.jooq.test.oracle.generatedclasses.Routines.fArrays1;
@@ -736,6 +737,13 @@ public class jOOQOracleTest extends jOOQAbstractTest<
 
     private OracleFactory ora() {
         return new OracleFactory(create().getConnection(), create().getSchemaMapping());
+    }
+
+    @Test
+    public void testOracleHints() throws Exception {
+        assertEquals(1, create().selectOne().hint("/*+ALL_ROWS*/").fetchOne(0));
+        assertEquals(1, create().select(val(1)).hint("/*+ALL_ROWS*/").fetchOne(0));
+        assertEquals(1, create().selectDistinct(val(1)).hint("/*+ALL_ROWS*/").fetchOne(0));
     }
 
     @Test

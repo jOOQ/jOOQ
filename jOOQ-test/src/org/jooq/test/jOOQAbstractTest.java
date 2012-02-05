@@ -39,7 +39,6 @@ import static junit.framework.Assert.assertEquals;
 
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -48,7 +47,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -117,6 +115,7 @@ import com.sybase.jdbc3.jdbc.SybSQLException;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class jOOQAbstractTest<
 
         // T_AUTHOR table
@@ -1227,48 +1226,4 @@ public abstract class jOOQAbstractTest<
     public void testLoader() throws Exception {
         new LoaderTests(this).testLoader();
     }
-
-    /**
-     * Reflection helper
-     */
-    @SuppressWarnings("unchecked")
-    protected <R> R invoke(Class<?> clazz, String methodName, Object... parameters) throws Exception {
-        return (R) invoke0(clazz, clazz, methodName, parameters);
-    }
-
-    /**
-     * Reflection helper
-     */
-    @SuppressWarnings("unchecked")
-    protected <R> R  invoke(Object object, String methodName, Object... parameters) throws Exception {
-        return (R) invoke0(object.getClass(), object, methodName, parameters);
-    }
-
-    /**
-     * Reflection helper
-     */
-    private Object invoke0(Class<?> clazz, Object object, String methodName, Object... parameters) throws Exception {
-        for (Method method : clazz.getMethods()) {
-            if (method.getName().equals(methodName)) {
-                try {
-                    return method.invoke(object, parameters);
-                }
-                catch (IllegalArgumentException ignore) {
-                }
-            }
-        }
-
-        // If there was no matching method and we have DUMMY parameters
-        // Try removing them first. DUMMY parameters are used in SQL Server
-        if (Arrays.asList(parameters).contains(DUMMY_OUT_INT)) {
-            List<Object> alternative = new ArrayList<Object>(Arrays.asList(parameters));
-            while (alternative.remove(DUMMY_OUT_INT));
-            return invoke0(clazz, object, methodName, alternative.toArray());
-        }
-
-        throw new NoSuchMethodException();
-    }
-
-    // Dummy parameters for SQL Server
-    private static Integer DUMMY_OUT_INT = new Integer(0);
 }

@@ -47,6 +47,7 @@ import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.test.oracle.generatedclasses.multi_schema.Tables.T_BOOK_SALE;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorIn;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorOut;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.fArrays1;
@@ -99,6 +100,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
 import org.jooq.test.oracle.generatedclasses.test.TestFactory;
@@ -161,6 +163,7 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
+        TBookSaleRecord,
         VLibraryRecord,
         TArraysRecord,
         TDirectoryRecord,
@@ -267,6 +270,11 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected UpdatableTable<TBookToBookStoreRecord> TBookToBookStore() {
         return T_BOOK_TO_BOOK_STORE;
+    }
+
+    @Override
+    protected UpdatableTable<TBookSaleRecord> TBookSale() {
+        return T_BOOK_SALE;
     }
 
     @Override

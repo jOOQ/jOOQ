@@ -58,6 +58,7 @@ public class LoaderTests<
     B    extends UpdatableRecord<B>,
     S    extends UpdatableRecord<S>,
     B2S  extends UpdatableRecord<B2S>,
+    BS   extends UpdatableRecord<BS>,
     L    extends TableRecord<L>,
     X    extends TableRecord<X>,
     D    extends UpdatableRecord<D>,
@@ -69,9 +70,9 @@ public class LoaderTests<
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    public LoaderTests(jOOQAbstractTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public LoaderTests(jOOQAbstractTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
     }
 

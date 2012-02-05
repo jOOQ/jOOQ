@@ -130,6 +130,9 @@ public abstract class jOOQAbstractTest<
         // T_BOOK_TO_BOOK_STORE table
         B2S extends UpdatableRecord<B2S>,
 
+        // MULTI_SCHEMA.T_BOOK_SALE table
+        BS extends UpdatableRecord<BS>,
+
         // V_LIBRARY view
         L extends TableRecord<L>,
 
@@ -515,6 +518,23 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<B2S, String> TBookToBookStore_BOOK_STORE_NAME();
     protected abstract TableField<B2S, Integer> TBookToBookStore_STOCK();
 
+    protected abstract UpdatableTable<BS> TBookSale();
+    protected final TableField<BS, Integer> TBookSale_ID() {
+        return (TableField<BS, Integer>) TBookSale().getField("ID");
+    }
+    protected final TableField<BS, Integer> TBookSale_BOOK_ID() {
+        return (TableField<BS, Integer>) TBookSale().getField("BOOK_ID");
+    }
+    protected final TableField<BS, String> TBookSale_BOOK_STORE_NAME() {
+        return (TableField<BS, String>) TBookSale().getField("BOOK_STORE_NAME");
+    }
+    protected final TableField<BS, Date> TBookSale_SOLD_AT() {
+        return (TableField<BS, Date>) TBookSale().getField("SOLD_AT");
+    }
+    protected final TableField<BS, BigDecimal> TBookSale_SOLD_FOR() {
+        return (TableField<BS, BigDecimal>) TBookSale().getField("SOLD_FOR");
+    }
+
     protected abstract UpdatableTable<D> TDirectory();
     protected abstract TableField<D, Integer> TDirectory_ID();
     protected abstract TableField<D, Integer> TDirectory_PARENT_ID();
@@ -598,6 +618,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testSchemaMapping() throws Exception {
         new SchemaAndMappingTests(this).testSchemaMapping();
+    }
+
+    @Test
+    public void testMultiSchemaQueries() throws Exception {
+        new SchemaAndMappingTests(this).testMultiSchemaQueries();
     }
 
     @Test

@@ -99,6 +99,7 @@ public class jOOQIngresTest extends jOOQAbstractTest<
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
+        XUnusedRecord,
         VLibraryRecord,
         XUnusedRecord,
         XUnusedRecord,
@@ -184,6 +185,11 @@ public class jOOQIngresTest extends jOOQAbstractTest<
     @Override
     protected UpdatableTable<TBookToBookStoreRecord> TBookToBookStore() {
         return T_BOOK_TO_BOOK_STORE;
+    }
+
+    @Override
+    protected UpdatableTable<XUnusedRecord> TBookSale() {
+        return null;
     }
 
     @Override

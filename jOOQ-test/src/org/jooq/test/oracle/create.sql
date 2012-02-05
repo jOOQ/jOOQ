@@ -11,6 +11,8 @@ DROP SEQUENCE s_961_big_integer/
 DROP SEQUENCE s_triggers_sequence/
 DROP TRIGGER t_triggers_trigger/
 
+DROP TABLE multi_schema.t_book_sale/
+
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/
 DROP TABLE t_book_to_book_store/
@@ -468,6 +470,21 @@ COMMENT ON TABLE t_book_to_book_store IS 'An m:n relation between books and book
 COMMENT ON COLUMN t_book_to_book_store.book_store_name IS 'The book store name'/
 COMMENT ON COLUMN t_book_to_book_store.book_id IS 'The book ID'/
 COMMENT ON COLUMN t_book_to_book_store.stock IS 'The number of books on stock'/
+
+GRANT ALL ON T_BOOK_TO_BOOK_STORE TO MULTI_SCHEMA
+/
+
+CREATE TABLE MULTI_SCHEMA.T_BOOK_SALE (
+  ID NUMBER(7) NOT NULL,
+  BOOK_ID NUMBER(7) NOT NULL,
+  BOOK_STORE_NAME VARCHAR2(400) NOT NULL,
+  SOLD_AT DATE NOT NULL,
+  SOLD_FOR NUMBER(10, 2) NOT NULL,
+
+  CONSTRAINT pk_t_book_sale PRIMARY KEY (ID),
+  CONSTRAINT fk_t_book_to_book_store FOREIGN KEY (BOOK_ID, BOOK_STORE_NAME) REFERENCES TEST.T_BOOK_TO_BOOK_STORE(BOOK_ID, BOOK_STORE_NAME) ON DELETE CASCADE
+)
+/
 
 
 CREATE TABLE t_arrays (

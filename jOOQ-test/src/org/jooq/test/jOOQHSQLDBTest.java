@@ -98,6 +98,7 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
         TBookRecord,
         TBookStoreRecord,
         TBookToBookStoreRecord,
+        XUnusedRecord,
         VLibraryRecord,
         TArraysRecord,
         XUnusedRecord,
@@ -183,6 +184,11 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
     @Override
     protected UpdatableTable<TBookToBookStoreRecord> TBookToBookStore() {
         return T_BOOK_TO_BOOK_STORE;
+    }
+
+    @Override
+    protected UpdatableTable<XUnusedRecord> TBookSale() {
+        return null;
     }
 
     @Override

@@ -81,6 +81,9 @@ public abstract class BaseTest<
     // T_BOOK_TO_BOOK_STORE table
     B2S extends UpdatableRecord<B2S>,
 
+    // MULTI_SCHEMA.T_BOOK_SALE table
+    BS extends UpdatableRecord<BS>,
+
     // V_LIBRARY view
     L extends TableRecord<L>,
 
@@ -120,9 +123,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         this.delegate = delegate;
     }
 
@@ -388,6 +391,30 @@ public abstract class BaseTest<
 
     protected TableField<B2S, Integer> TBookToBookStore_STOCK() {
         return delegate.TBookToBookStore_STOCK();
+    }
+
+    protected UpdatableTable<BS> TBookSale() {
+        return delegate.TBookSale();
+    }
+
+    protected TableField<BS, Integer> TBookSale_ID() {
+        return delegate.TBookSale_ID();
+    }
+
+    protected TableField<BS, Integer> TBookSale_BOOK_ID() {
+        return delegate.TBookSale_BOOK_ID();
+    }
+
+    protected TableField<BS, String> TBookSale_BOOK_STORE_NAME() {
+        return delegate.TBookSale_BOOK_STORE_NAME();
+    }
+
+    protected TableField<BS, Date> TBookSale_SOLD_AT() {
+        return delegate.TBookSale_SOLD_AT();
+    }
+
+    protected TableField<BS, BigDecimal> TBookSale_SOLD_FOR() {
+        return delegate.TBookSale_SOLD_FOR();
     }
 
     protected UpdatableTable<D> TDirectory() {

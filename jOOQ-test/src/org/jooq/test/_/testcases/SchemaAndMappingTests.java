@@ -35,11 +35,16 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.sum;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Arrays;
 
 import org.jooq.Field;
@@ -61,6 +66,7 @@ public class SchemaAndMappingTests<
     B    extends UpdatableRecord<B>,
     S    extends UpdatableRecord<S>,
     B2S  extends UpdatableRecord<B2S>,
+    BS   extends UpdatableRecord<BS>,
     L    extends TableRecord<L>,
     X    extends TableRecord<X>,
     D    extends UpdatableRecord<D>,
@@ -72,9 +78,9 @@ public class SchemaAndMappingTests<
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> {
+extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    public SchemaAndMappingTests(jOOQAbstractTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    public SchemaAndMappingTests(jOOQAbstractTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
     }
 
@@ -265,4 +271,88 @@ extends BaseTest<A, B, S, B2S, L, X, D, T, U, I, IPK, T658, T725, T639, T785> {
         assertEquals("Brida", result.getValue(3, TBook_TITLE()));
     }
 
+    @Test
+    public void testMultiSchemaQueries() {
+        if (TBookSale() == null) {
+            log.info("SKIPPING", "Multi-schema query tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // Intial test, table is empty
+        // ---------------------------
+        assertEquals(0, create().selectCount().from(TBookSale()).fetchOne(0));
+
+        // Testing adding records to another schema's table
+        // ------------------------------------------------
+        BS sale = create().newRecord(TBookSale());
+        sale.setValue(TBookSale_ID(), 1);
+        sale.setValue(TBookSale_BOOK_ID(), 1);
+        sale.setValue(TBookSale_BOOK_STORE_NAME(), "Orell Füssli");
+        sale.setValue(TBookSale_SOLD_AT(), new Date(0));
+        sale.setValue(TBookSale_SOLD_FOR(), new BigDecimal("3.50"));
+        assertEquals(1, sale.store());
+        assertEquals(1, create().selectCount().from(TBookSale()).fetchOne(0));
+
+        sale = sale.copy();
+        sale.setValue(TBookSale_ID(), 2);
+        sale.setValue(TBookSale_SOLD_FOR(), new BigDecimal("7.50"));
+        assertEquals(1, sale.store());
+        assertEquals(2, create().selectCount().from(TBookSale()).fetchOne(0));
+
+        sale = sale.copy();
+        sale.setValue(TBookSale_ID(), 3);
+        sale.setValue(TBookSale_BOOK_STORE_NAME(), "Ex Libris");
+        sale.setValue(TBookSale_SOLD_FOR(), new BigDecimal("8.50"));
+        assertEquals(1, sale.store());
+        assertEquals(3, create().selectCount().from(TBookSale()).fetchOne(0));
+
+        // Test joining tables across schemas
+        // ----------------------------------
+        Result<Record> result1 =
+        create().select(
+                    TBook_TITLE(),
+                    TBookSale_BOOK_STORE_NAME(),
+                    sum(TBookSale_SOLD_FOR()))
+                .from(TBook()
+                    .join(TBookSale())
+                    .on(TBook_ID().equal(TBookSale_BOOK_ID())))
+                .groupBy(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TBookSale_BOOK_STORE_NAME())
+                .orderBy(
+                    TBook_ID().asc(),
+                    sum(TBookSale_SOLD_FOR()).desc())
+                .fetch();
+
+        assertEquals(2, result1.size());
+        assertEquals(nCopies(2, "1984"), result1.getValues(TBook_TITLE()));
+        assertEquals(asList("Orell Füssli", "Ex Libris"), result1.getValues(TBookSale_BOOK_STORE_NAME()));
+        assertEquals(asList(new BigDecimal("11"), new BigDecimal("8.5")), result1.getValues(sum(TBookSale_SOLD_FOR())));
+
+        // Test joining "onKey"
+        // --------------------
+        Result<Record> result2 =
+        create().select(
+                    TBook_TITLE(),
+                    TBookSale_BOOK_STORE_NAME(),
+                    sum(TBookSale_SOLD_FOR()))
+                .from(TBook()
+                    .join(TBookToBookStore()
+                        .join(TBookSale())
+                        .onKey())
+                    .onKey())
+                .groupBy(
+                    TBook_ID(),
+                    TBook_TITLE(),
+                    TBookSale_BOOK_STORE_NAME())
+                .orderBy(
+                    TBook_ID().asc(),
+                    sum(TBookSale_SOLD_FOR()).desc())
+                .fetch();
+
+        assertEquals(result1, result2);
+    }
 }

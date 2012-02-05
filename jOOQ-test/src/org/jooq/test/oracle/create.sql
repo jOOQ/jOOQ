@@ -54,6 +54,10 @@ DROP FUNCTION f_tables1/
 DROP FUNCTION f_tables2/
 DROP FUNCTION f_tables3/
 DROP FUNCTION f_tables4/
+DROP FUNCTION f_pipelined_array1/
+DROP FUNCTION f_pipelined_array4/
+DROP FUNCTION f_pipelined_table1/
+DROP FUNCTION f_pipelined_table4/
 DROP PROCEDURE p_enhance_address1/
 DROP PROCEDURE p_enhance_address2/
 DROP PROCEDURE p_enhance_address3/
@@ -849,6 +853,66 @@ IS
 BEGIN
 	return NULL;
 END f_many_parameters;
+/
+
+CREATE OR REPLACE FUNCTION f_pipelined_array1
+RETURN u_number_array
+PIPELINED
+AS
+BEGIN
+	FOR i in 1 .. 10 LOOP
+	    PIPE ROW(i);
+	END LOOP;
+	RETURN;
+END f_pipelined_array1;
+/
+
+CREATE OR REPLACE FUNCTION f_pipelined_table1
+RETURN u_number_table
+PIPELINED
+AS
+BEGIN
+	FOR i in 1 .. 10 LOOP
+	    PIPE ROW(i);
+	END LOOP;
+	RETURN;
+END f_pipelined_table1;
+/
+
+CREATE OR REPLACE FUNCTION f_pipelined_array4
+RETURN u_book_array
+PIPELINED
+AS
+	title VARCHAR2(100);
+BEGIN
+	FOR i in 1 .. 4 LOOP
+		SELECT b.title
+		INTO title
+		FROM t_book b
+		WHERE b.id = i;
+
+	    PIPE ROW(u_book_type(i, title));
+	END LOOP;
+	RETURN;
+END f_pipelined_array4;
+/
+
+CREATE OR REPLACE FUNCTION f_pipelined_table4
+RETURN u_book_table
+PIPELINED
+AS
+	title VARCHAR2(100);
+BEGIN
+	FOR i in 1 .. 4 LOOP
+		SELECT b.title
+		INTO title
+		FROM t_book b
+		WHERE b.id = i;
+
+	    PIPE ROW(u_book_type(i, title));
+	END LOOP;
+	RETURN;
+END f_pipelined_table4;
 /
 
 CREATE OR REPLACE FUNCTION f_arrays1 (in_array u_number_array)

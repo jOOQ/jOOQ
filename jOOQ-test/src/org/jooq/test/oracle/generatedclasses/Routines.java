@@ -299,6 +299,94 @@ public final class Routines {
 	}
 
 	/**
+	 * Invoke F_PIPELINED_ARRAY1
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord fPipelinedArray1(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray1 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray1();
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_PIPELINED_ARRAY1 as a field
+	 *
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberArrayRecord> fPipelinedArray1() {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray1 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray1();
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke F_PIPELINED_ARRAY4
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord fPipelinedArray4(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray4 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray4();
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_PIPELINED_ARRAY4 as a field
+	 *
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookArrayRecord> fPipelinedArray4() {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray4 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedArray4();
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke F_PIPELINED_TABLE1
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord fPipelinedTable1(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable1 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable1();
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_PIPELINED_TABLE1 as a field
+	 *
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UNumberTableRecord> fPipelinedTable1() {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable1 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable1();
+
+		return f.asField();
+	}
+
+	/**
+	 * Invoke F_PIPELINED_TABLE4
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord fPipelinedTable4(org.jooq.Configuration configuration) {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable4 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable4();
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get F_PIPELINED_TABLE4 as a field
+	 *
+	 */
+	public static org.jooq.Field<org.jooq.test.oracle.generatedclasses.udt.records.UBookTableRecord> fPipelinedTable4() {
+		org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable4 f = new org.jooq.test.oracle.generatedclasses.routines.FPipelinedTable4();
+
+		return f.asField();
+	}
+
+	/**
 	 * Invoke F_TABLES1
 	 *
 	 * @param inTable

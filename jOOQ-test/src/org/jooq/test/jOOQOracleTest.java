@@ -823,6 +823,13 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     }
 
     @Test
+    public void testOraclePipelinedFunctions() throws Exception {
+        // TODO [#1113] [#1119] Standalone calls to pipelined functions should
+        // be possible too
+        System.out.println(Routines.fPipelinedArray1(ora()));
+    }
+
+    @Test
     public void testOracleTableTypes() throws Exception {
         // TODO [#523] [#1109] These two statements are needed when running this test
         // in standalone mode. The data type is not registered automatically for

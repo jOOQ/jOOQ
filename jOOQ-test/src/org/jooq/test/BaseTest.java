@@ -38,6 +38,7 @@ package org.jooq.test;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -560,6 +561,10 @@ public abstract class BaseTest<
 
     protected Factory create(SchemaMapping mapping) {
         return delegate.create(mapping);
+    }
+
+    protected final Connection getConnection() {
+        return delegate.getConnection();
     }
 
     protected final Factory create() {

@@ -1072,4 +1072,19 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             assertEquals(new BigDecimal("0.00001"), result.getValue(4, 1));
         }
     }
+
+    @Test
+    public void testDateTime() throws Exception {
+
+        // [#1009] SQL DATE doesn't have a time zone. SQL TIMESTAMP does
+        Record record =
+        create().select(
+            val(new Date(0)).as("d"),
+            val(new Time(0)).as("t"),
+            val(new Timestamp(0)).as("ts")).fetchOne();
+
+        assertEquals(new Date(-3600000), record.getValue("d"));
+        assertEquals(new Time(0), record.getValue("t"));
+        assertEquals(new Timestamp(0), record.getValue("ts"));
+    }
 }

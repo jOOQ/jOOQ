@@ -295,6 +295,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         // enforced. But the inserted values should at least be converted to the
         // right types
 
+        long timeIn = 0;
+        long timeOut = -3600000;
+
         // Explicit field list
         assertEquals(1,
         create().insertInto(TAuthor(),
@@ -305,7 +308,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
                 .values(
                     "5",
                     "Smith",
-                    0L,
+                    timeIn,
                     new BigDecimal("1980"))
                 .execute());
 
@@ -314,8 +317,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         assertEquals(5, (int) author1.getValue(TAuthor_ID()));
         assertEquals("Smith", author1.getValue(TAuthor_LAST_NAME()));
 
-        // TODO [#1009] This doesn't work yet. Add more substantial tz tests
-        // assertEquals(0L, author1.getValue(TAuthor_DATE_OF_BIRTH()).getTime());
+        // [#1009] Somewhere on the way to the database and back, the CET time
+        // zone is added, that's why there is a one-hour shift
+        assertEquals(new Date(timeOut), author1.getValue(TAuthor_DATE_OF_BIRTH()));
         assertEquals(1980, (int) author1.getValue(TAuthor_YEAR_OF_BIRTH()));
 
         // Implicit field list

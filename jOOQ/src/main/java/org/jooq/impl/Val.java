@@ -135,6 +135,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
      * Render the bind variable including a cast, if necessary
      */
     private void toSQLCast(RenderContext context) {
+        SQLDataType<T> type = getDataType(context).getSQLDataType();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
         if (getType() == BigDecimal.class && asList(DB2, DERBY, HSQLDB).contains(context.getDialect())) {
@@ -147,7 +148,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
         }
 
         // [#1028] Most databases don't know an OTHER type (except H2, HSQLDB).
-        else if (SQLDataType.OTHER == getDataType(context).getSQLDataType()) {
+        else if (SQLDataType.OTHER == type) {
 
             // If the bind value is set, it can be used to derive the cast type
             if (value != null) {
@@ -169,7 +170,8 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
         // [#1029] Postgres generally doesn't need the casting. Only in the
         // above case where the type is OTHER
-        else if (context.getDialect() == POSTGRES) {
+        // [#1125] TODO Also with temporal data types, casting is needed some times
+        else if (context.getDialect() == POSTGRES /* && !type.isTemporal() */) {
             toSQL(context, getValue(), getType());
         }
 

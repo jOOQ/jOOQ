@@ -39,6 +39,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.NOT_EQUALS;
+import static org.jooq.SQLDialect.DB2;
 
 import java.util.List;
 
@@ -103,9 +104,16 @@ class CompareCondition<T> extends AbstractCondition {
             }
         }
 
+        // [#1131] Some weird DB2 issue stops "LIKE" from working with a
+        // concatenated search expression, if the expression is more than 4000
+        // characters long
+        boolean cast = context.getDialect() == DB2 && field2 instanceof Concat;
+
         context.sql(comparator.toSQL())
                .sql(" ")
-               .sql(field2);
+               .sql(cast ? "cast(" : "")
+               .sql(field2)
+               .sql(cast ? " as varchar(4000))" : "");
 
         if (escape != null) {
             context.sql(" escape '")

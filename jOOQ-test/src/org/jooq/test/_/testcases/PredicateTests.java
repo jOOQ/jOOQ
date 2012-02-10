@@ -46,7 +46,9 @@ import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.escape;
+import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
 
 import java.util.Arrays;
@@ -180,6 +182,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         // DERBY doesn't know any REPLACE function, hence only test those
         // conditions that do not use REPLACE internally
         boolean derby = getDialect() == DERBY;
+
+        // [#1131] DB2 doesn't like concat in LIKE expressions very much
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_TITLE().like(concat("19", "84")))
+                .and(TBook_TITLE().like(upper(concat("198", "4"))))
+                .and(TBook_TITLE().like(lower(concat("1", "984"))))
+                .fetch();
+
+        assertEquals(1, books.size());
+        assertEquals(1, (int) books.get(0).getValue(TBook_ID()));
 
         // [#1106] Add checks for Factory.escape() function
         books =

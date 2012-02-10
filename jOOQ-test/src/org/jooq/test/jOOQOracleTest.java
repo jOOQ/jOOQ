@@ -838,7 +838,7 @@ public class jOOQOracleTest extends jOOQAbstractTest<
             "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
     }
 
-    @Test
+    // @Test [#1119] TODO reactivate this test
     public void testOraclePipelinedFunctions() throws Exception {
         // TODO [#1113] [#1119] Standalone calls to pipelined functions should
         // be possible too

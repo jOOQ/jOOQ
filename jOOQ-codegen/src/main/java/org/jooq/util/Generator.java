@@ -104,6 +104,16 @@ public interface Generator {
     void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation);
 
     /**
+     * Whether POJO's should be generated in addition to records
+     */
+    boolean generatePojos();
+
+    /**
+     * Whether POJO's should be generated in addition to records
+     */
+    void setGeneratePojos(boolean generatePojos);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

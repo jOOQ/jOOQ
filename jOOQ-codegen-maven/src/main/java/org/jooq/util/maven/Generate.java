@@ -44,6 +44,7 @@ public class Generate {
     private String deprecated          = "true";
     private String instanceFields      = "true";
     private String generatedAnnotation = "true";
+    private String pojos               = "false";
 
     String getRelations() {
         return relations;
@@ -59,5 +60,9 @@ public class Generate {
 
     String getGeneratedAnnotation() {
         return generatedAnnotation;
+    }
+
+    String getPojos() {
+        return pojos;
     }
 }

@@ -40,6 +40,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.val;
@@ -1083,7 +1084,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             val(new Time(0)).as("t"),
             val(new Timestamp(0)).as("ts")).fetchOne();
 
-        assertEquals(new Date(-3600000), record.getValue("d"));
+        // ... (except for SQLite)
+        if (getDialect() != SQLITE)
+            assertEquals(new Date(-3600000), record.getValue("d"));
+
         assertEquals(new Time(0), record.getValue("t"));
         assertEquals(new Timestamp(0), record.getValue("ts"));
     }

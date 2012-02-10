@@ -133,7 +133,15 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
     @Override
     public String getFileName(Definition definition, String suffix) {
-        return getJavaClassName(definition) + suffix + ".java";
+
+        // The POJO suffix doesn't really apply to the file name
+        // TODO: Replace the term "suffix" by "mode"
+        if ("Pojo".equals(suffix)) {
+            return getJavaClassName(definition) + ".java";
+        }
+        else {
+            return getJavaClassName(definition) + suffix + ".java";
+        }
     }
 
     @Override
@@ -315,6 +323,11 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
             sb.append(".records");
         }
 
+        // POJOs too
+        else if ("Pojo".equals(suffix)) {
+            sb.append(".pojos");
+        }
+
         return sb.toString();
     }
 
@@ -336,7 +349,9 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         String name = GenerationUtil.convertToJavaIdentifier(definition.getName());
         result.append(StringUtils.toCamelCase(name));
 
-        if (!StringUtils.isEmpty(suffix)) {
+        // The POJO suffix doesn't really apply to the file name
+        // TODO: Replace the term "suffix" by "mode"
+        if (!"Pojo".equals(suffix) && !StringUtils.isEmpty(suffix)) {
             result.append(suffix);
         }
 

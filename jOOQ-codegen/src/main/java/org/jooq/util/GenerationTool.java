@@ -206,6 +206,7 @@ public class GenerationTool {
 	    generate.setDeprecated(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.deprecated")));
 	    generate.setInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
 	    generate.setGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
+	    generate.setPojos("true".equalsIgnoreCase(properties.getProperty("generator.generate.pojos")));
 
 	    org.jooq.util.jaxb.Generator generator = new org.jooq.util.jaxb.Generator();
 
@@ -304,18 +305,28 @@ public class GenerationTool {
             database.setConfiguredSchemata(schemata);
             database.setIncludes(defaultString(g.getDatabase().getIncludes()).split(","));
             database.setExcludes(defaultString(g.getDatabase().getExcludes()).split(","));
-            database.setDateAsTimestamp(g.getDatabase().isDateAsTimestamp());
             database.setConfiguredMasterDataTables(g.getDatabase().getMasterDataTables().getMasterDataTable());
             database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes().getEnumType());
             database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes().getForcedType());
-            database.setSupportsUnsignedTypes(g.getDatabase().isUnsignedTypes());
+
+            if (g.getDatabase().isDateAsTimestamp() != null)
+                database.setDateAsTimestamp(g.getDatabase().isDateAsTimestamp());
+            if (g.getDatabase().isUnsignedTypes() != null)
+                database.setSupportsUnsignedTypes(g.getDatabase().isUnsignedTypes());
 
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());
-            generator.setGenerateRelations(g.getGenerate().isRelations());
-            generator.setGenerateDeprecated(g.getGenerate().isDeprecated());
-            generator.setGenerateInstanceFields(g.getGenerate().isInstanceFields());
-            generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
+
+            if (g.getGenerate().isRelations() != null)
+                generator.setGenerateRelations(g.getGenerate().isRelations());
+            if (g.getGenerate().isDeprecated() != null)
+                generator.setGenerateDeprecated(g.getGenerate().isDeprecated());
+            if (g.getGenerate().isInstanceFields() != null)
+                generator.setGenerateInstanceFields(g.getGenerate().isInstanceFields());
+            if (g.getGenerate().isGeneratedAnnotation() != null)
+                generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
+            if (g.getGenerate().isPojos() != null)
+                generator.setGeneratePojos(g.getGenerate().isPojos());
 
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());
@@ -336,5 +347,4 @@ public class GenerationTool {
 		log.error("Usage : GenerationTool <configuration-file>");
 		System.exit(-1);
 	}
-
 }

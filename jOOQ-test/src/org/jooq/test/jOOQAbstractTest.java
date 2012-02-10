@@ -181,9 +181,9 @@ public abstract class jOOQAbstractTest<
     public static boolean                initialised;
     public static boolean                reset;
     public static Connection             connection;
-    private static boolean               connectionInitialised;
+    public static boolean                connectionInitialised;
     public static Connection             connectionMultiSchema;
-    private static boolean               connectionMultiSchemaInitialised;
+    public static boolean                connectionMultiSchemaInitialised;
     public static boolean                autocommit;
     public static String                 jdbcURL;
     public static String                 jdbcSchema;

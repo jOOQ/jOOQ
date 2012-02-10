@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
@@ -45,6 +46,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
 
+import org.jooq.Insert;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -79,14 +81,14 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
     }
 
     @Test
-    public void testGetSQLAndGetBindValues() throws Exception {
+    public void testSelectGetSQLAndGetBindValues() throws Exception {
         Select<?> select =
         create().select(TBook_ID(), TBook_ID().mul(6).div(2).div(3))
                 .from(TBook())
                 .orderBy(TBook_ID(), TBook_ID().mod(2));
 
         assertEquals(
-            Arrays.asList(6, 2, 3, 2),
+            asList(6, 2, 3, 2),
             select.getBindValues());
 
         log.info("Executing", select.getSQL());
@@ -107,6 +109,33 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         } catch (IllegalArgumentException expected) {}
 
         stmt.close();
+    }
+
+    @Test
+    public void testInsertUpdateGetSQLAndGetBindValues() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // INSERT INTO .. SET syntax
+        // ----------------------------
+        Insert<A> insert1 =
+        create().insertInto(TAuthor())
+                .set(TAuthor_ID(), 1)
+                .set(TAuthor_FIRST_NAME(), null)
+                .set(TAuthor_LAST_NAME(), "Koontz");
+
+        assertEquals(
+            Arrays.<Object>asList(1, null, "Koontz"),
+            insert1.getBindValues());
+
+        // INSERT INTO .. VALUES syntax
+        // ----------------------------
+        Insert<A> insert2 =
+        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+                .values(1, null, "Hesse");
+
+        assertEquals(
+            Arrays.<Object>asList(1, null, "Hesse"),
+            insert2.getBindValues());
     }
 
     @Test
@@ -161,7 +190,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
     }
 
     @Test
-    public void testQueryBindValues() throws Exception {
+    public void testSelectBindValues() throws Exception {
         Select<?> select =
         create().select(
                     TAuthor_ID(),
@@ -197,7 +226,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
     }
 
     @Test
-    public void testQueryBindValuesWithPlainSQL() throws Exception {
+    public void testSelectBindValuesWithPlainSQL() throws Exception {
         Select<?> select =
         create().select(TAuthor_ID())
                 .from(TAuthor())

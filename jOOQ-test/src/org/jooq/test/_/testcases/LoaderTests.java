@@ -368,6 +368,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         jOOQAbstractTest.connection.rollback();
         jOOQAbstractTest.connection.close();
         jOOQAbstractTest.connection = null;
+        jOOQAbstractTest.connectionInitialised = false;
         jOOQAbstractTest.connection = delegate.getConnection();
         jOOQAbstractTest.connection.setAutoCommit(false);
     }

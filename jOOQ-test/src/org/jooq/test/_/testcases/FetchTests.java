@@ -43,6 +43,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.val;
+import static org.joor.Reflect.on;
 
 import java.sql.Date;
 import java.util.AbstractList;
@@ -82,6 +83,8 @@ import org.jooq.test._.FinalWithoutAnnotations;
 import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
 
+import org.joor.Reflect;
+import org.joor.ReflectException;
 import org.junit.Test;
 
 public class FetchTests<
@@ -914,6 +917,28 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             assertTrue(cursor.isClosed());
             assertEquals(1, list.size());
             assertEquals(Integer.valueOf(4), list.get(0).getValue(TBook_ID()));
+        }
+    }
+
+    @Test
+    public void testFetchIntoGeneratedPojos() throws Exception {
+        try {
+            Reflect book = on(TBook().getClass().getPackage().getName() + ".pojos." + TBook().getClass().getSimpleName());
+
+            List<Object> books =
+            create().selectFrom(TBook())
+                    .orderBy(TBook_ID())
+                    .fetchInto((Class<?>) book.get());
+
+            assertEquals(4, books.size());
+            for (int i = 0; i < 4; i++) {
+                assertEquals(BOOK_IDS.get(i), on(books.get(i)).call("getId").get());
+                assertEquals(BOOK_AUTHOR_IDS.get(i), on(books.get(i)).call("getAuthorId").get());
+                assertEquals(BOOK_TITLES.get(i), on(books.get(i)).call("getTitle").get());
+            }
+        }
+        catch (ReflectException e) {
+            log.info("SKIPPING", "Generated POJO tests");
         }
     }
 }

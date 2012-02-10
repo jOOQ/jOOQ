@@ -37,6 +37,8 @@
 package org.jooq.util;
 
 
+import static org.jooq.util.GenerationUtil.convertToJavaIdentifierEnum;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -106,6 +108,7 @@ public class DefaultGenerator implements Generator {
     private boolean                 generateRelations           = false;
     private boolean                 generateInstanceFields      = true;
     private boolean                 generateGeneratedAnnotation = true;
+    private boolean                 generatePojos               = false;
     private GeneratorStrategy       strategy;
 
     @Override
@@ -156,6 +159,16 @@ public class DefaultGenerator implements Generator {
     @Override
     public void setGenerateGeneratedAnnotation(boolean generateGeneratedAnnotation) {
         this.generateGeneratedAnnotation = generateGeneratedAnnotation;
+    }
+
+    @Override
+    public boolean generatePojos() {
+        return generatePojos;
+    }
+
+    @Override
+    public void setGeneratePojos(boolean generatePojos) {
+        this.generatePojos = generatePojos;
     }
 
     // ----
@@ -708,6 +721,81 @@ public class DefaultGenerator implements Generator {
     		registerInSchema(outS, database.getTables(schema), Table.class, true);
     		watch.splitInfo("Tables generated");
 		}
+
+        // ----------------------------------------------------------------------
+        // XXX Generating table POJOs (courtesy of Marcel Bichon)
+        // ----------------------------------------------------------------------
+        if (generatePojos() && database.getTables(schema).size() > 0) {
+            log.info("Generating table POJOs");
+
+            for (TableDefinition table : database.getTables(schema)) {
+                try {
+                    log.info("Generating table POJO", strategy.getFileName(table));
+
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table, "Pojo"));
+                    printHeader(out, table, "Pojo");
+                    printClassJavadoc(out, table);
+
+                    out.print("public class ");
+                    out.print(strategy.getJavaClassName(table));
+                    out.print(" implements java.io.Serializable {");
+                    out.println();
+                    out.printSerial();
+
+                    out.println();
+
+                    for (ColumnDefinition column : table.getColumns()) {
+                        out.print("\tprivate ");
+                        out.print(getJavaType(column.getType()));
+                        out.print(" ");
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.println(";");
+                    }
+
+                    for (ColumnDefinition column : table.getColumns()) {
+
+                        // Getter
+                        out.println();
+                        out.print("\tpublic ");
+                        out.print(getJavaType(column.getType()));
+                        out.print(" ");
+                        out.print(strategy.getJavaGetterName(column));
+                        out.println("() {");
+
+                        out.print("\t\treturn this.");
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.println(";");
+                        out.println("\t}");
+
+                        // Setter
+                        out.println();
+                        out.print("\tpublic void ");
+                        out.print(strategy.getJavaSetterName(column));
+                        out.print("(");
+                        out.print(getJavaType(column.getType()));
+                        out.print(" ");
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.println(") {");
+
+                        out.print("\t\tthis.");
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.print(" = ");
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.println(";");
+                        out.println("\t}");
+                    }
+
+                    out.println("}");
+                    out.close();
+                }
+                catch (Exception e) {
+                    log.error("Error while generating table POJO " + table, e);
+                }
+            }
+
+            watch.splitInfo("Table POJOs generated");
+        }
+
 
         // ----------------------------------------------------------------------
         // XXX Generating central static table access
@@ -2020,6 +2108,7 @@ public class DefaultGenerator implements Generator {
 		out.println("\tpublic void " + strategy.getJavaSetterName(element) + "(" + getJavaType(element.getType()) + " value) {");
 		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifierUC(element) + ", value);");
 		out.println("\t}");
+
 		printFieldJavaDoc(out, element);
 		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element) + "() {");
 		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifierUC(element) + ");");
@@ -2308,12 +2397,6 @@ public class DefaultGenerator implements Generator {
 	            out.println("\t * </pre></code>");
 	        }
 		}
-
-		// TODO Log this!
-//		if (disambiguationSuffix != null && disambiguationSuffix.length() > 0) {
-//			out.println("\t * ");
-//			out.println("\t * This item causes a name clash. That is why an underline character was appended to the Java field name");
-//		}
 
 		printDeprecation(out, deprecation);
 

@@ -846,6 +846,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchIntoGeneratedPojos() throws Exception {
+        new FetchTests(this).testFetchIntoGeneratedPojos();
+    }
+
+    @Test
     public void testFetchIntoRecordHandler() throws Exception {
         new FetchTests(this).testFetchIntoRecordHandler();
     }

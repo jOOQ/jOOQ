@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.getDataType;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -54,6 +56,7 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
@@ -163,7 +166,7 @@ final class Util {
      * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
      * values as specified by the <code>INTO</code> clause's column list.
      */
-    public static final Object[] convert(List<Field<?>> fields, Object[] values) {
+    static final Object[] convert(List<Field<?>> fields, Object[] values) {
         if (values != null) {
             Object[] result = new Object[values.length];
 
@@ -184,6 +187,111 @@ final class Util {
         else {
             return null;
         }
+    }
+
+    /**
+     * Useful conversion method
+     */
+    static final Class<?>[] getClasses(Field<?>[] fields) {
+        return getClasses(getDataTypes(fields));
+    }
+
+    /**
+     * Useful conversion method
+     */
+    static final Class<?>[] getClasses(DataType<?>[] types) {
+        if (types == null) {
+            return null;
+        }
+
+        Class<?>[] result = new Class<?>[types.length];
+
+        for (int i = 0; i < types.length; i++) {
+            if (types[i] != null) {
+                result[i] = types[i].getType();
+            }
+            else {
+                result[i] = Object.class;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Useful conversion method
+     */
+    static final Class<?>[] getClasses(Object[] values) {
+        if (values == null) {
+            return null;
+        }
+
+        Class<?>[] result = new Class<?>[values.length];
+
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] instanceof Field<?>) {
+                result[i] = ((Field<?>) values[i]).getType();
+            }
+            else if (values[i] != null) {
+                result[i] = values[i].getClass();
+            }
+            else {
+                result[i] = Object.class;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Useful conversion method
+     */
+    static final DataType<?>[] getDataTypes(Field<?>[] fields) {
+        if (fields == null) {
+            return null;
+        }
+
+        DataType<?>[] result = new DataType<?>[fields.length];
+
+        for (int i = 0; i < fields.length; i++) {
+            if (fields[i] != null) {
+                result[i] = fields[i].getDataType();
+            }
+            else {
+                result[i] = getDataType(Object.class);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Useful conversion method
+     */
+    static final DataType<?>[] getDataTypes(Class<?>[] types) {
+        if (types == null) {
+            return null;
+        }
+
+        DataType<?>[] result = new DataType<?>[types.length];
+
+        for (int i = 0; i < types.length; i++) {
+            if (types[i] != null) {
+                result[i] = getDataType(types[i]);
+            }
+            else {
+                result[i] = getDataType(Object.class);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Useful conversion method
+     */
+    static final DataType<?>[] getDataTypes(Object[] values) {
+        return getDataTypes(getClasses(values));
     }
 
     /**

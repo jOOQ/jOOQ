@@ -646,8 +646,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testGetSQLAndGetBindValues() throws Exception {
-        new RenderAndBindTests(this).testGetSQLAndGetBindValues();
+    public void testSelectGetSQLAndGetBindValues() throws Exception {
+        new RenderAndBindTests(this).testSelectGetSQLAndGetBindValues();
+    }
+
+    @Test
+    public void testInsertUpdateGetSQLAndGetBindValues() throws Exception {
+        new RenderAndBindTests(this).testInsertUpdateGetSQLAndGetBindValues();
     }
 
     @Test
@@ -1239,13 +1244,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testQueryBindValues() throws Exception {
-        new RenderAndBindTests(this).testQueryBindValues();
+    public void testSelectBindValues() throws Exception {
+        new RenderAndBindTests(this).testSelectBindValues();
     }
 
     @Test
-    public void testQueryBindValuesWithPlainSQL() throws Exception {
-        new RenderAndBindTests(this).testQueryBindValuesWithPlainSQL();
+    public void testSelectBindValuesWithPlainSQL() throws Exception {
+        new RenderAndBindTests(this).testSelectBindValuesWithPlainSQL();
     }
 
     @Test

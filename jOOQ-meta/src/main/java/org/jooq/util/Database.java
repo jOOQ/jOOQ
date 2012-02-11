@@ -85,7 +85,7 @@ public interface Database {
 
     /**
      * The master data tables contained in this database (for schema
-     * {@link #getSchema(SchemaDefinition)})
+     * {@link #getSchema(String)})
      */
     List<MasterDataTableDefinition> getMasterDataTables(SchemaDefinition schema);
 

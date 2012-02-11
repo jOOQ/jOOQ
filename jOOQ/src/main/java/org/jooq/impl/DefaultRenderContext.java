@@ -35,10 +35,13 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -54,6 +57,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private boolean             inline;
     private boolean             renderNamedParams;
     private int                 alias;
+    private CastMode            castMode         = CastMode.DEFAULT;
+    private SQLDialect[]        castDialects;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -199,6 +204,39 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext namedParams(boolean r) {
         this.renderNamedParams = r;
+        return this;
+    }
+
+    @Override
+    public final CastMode castMode() {
+        return castMode;
+    }
+
+    @Override
+    public final RenderContext castMode(CastMode mode) {
+        this.castMode = mode;
+        this.castDialects = null;
+        return this;
+    }
+
+    @Override
+    public final Boolean cast() {
+        switch (castMode) {
+            case ALWAYS:
+                return true;
+            case NEVER:
+                return false;
+            case SOME:
+                return asList(castDialects).contains(getDialect());
+        }
+
+        return null;
+    }
+
+    @Override
+    public final RenderContext castModeSome(SQLDialect... dialects) {
+        this.castMode = CastMode.SOME;
+        this.castDialects = dialects;
         return this;
     }
 

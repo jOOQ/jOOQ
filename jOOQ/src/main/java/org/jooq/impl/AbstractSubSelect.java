@@ -52,6 +52,7 @@ import org.jooq.Field;
 import org.jooq.LockProvider;
 import org.jooq.Operator;
 import org.jooq.OrderProvider;
+import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -156,6 +157,8 @@ implements
                .bind(getHaving())
                .bind((QueryPart) getOrderBy());
 
+        // TOP clauses never bind values. So this can be safely applied at the
+        // end for LIMIT .. OFFSET clauses, or ROW_NUMBER() filtering
         if (getLimit().isApplicable()) {
             context.bind(getLimit());
         }
@@ -179,14 +182,15 @@ implements
                 // With DB2, there are two possibilities
                 case DB2: {
 
-                    // DB2 natively supports a "FIRST ROWS" clause, without offset
-                    if (getLimit().getOffset() == 0) {
+                    // DB2 natively supports a "FIRST ROWS" clause, without
+                    // offset and without bind values
+                    if (getLimit().offsetZero() && !getLimit().rendersParams()) {
                         toSQLReferenceLimitDefault(context);
                     }
 
                     // "OFFSET" has to be simulated
                     else {
-                        toSQLReferenceLimitDB2SQLServer(context);
+                        toSQLReferenceLimitDB2SQLServerSybase(context);
                     }
 
                     break;
@@ -197,21 +201,33 @@ implements
                 case ASE:
                 case SQLSERVER: {
 
-                    // Native TOP support, without OFFSET
-                    if (getLimit().getOffset() == 0) {
+                    // Native TOP support, without OFFSET and without bind values
+                    if (getLimit().offsetZero() && !getLimit().rendersParams()) {
                         toSQLReference0(context);
                     }
 
                     // OFFSET simulation
                     else {
-                        toSQLReferenceLimitDB2SQLServer(context);
+                        toSQLReferenceLimitDB2SQLServerSybase(context);
                     }
 
                     break;
                 }
 
+                // Sybase has TOP .. START AT support, but only without bind
+                // variables
                 case SYBASE: {
-                    toSQLReference0(context);
+
+                    // Native TOP support, without OFFSET and without bind values
+                    if (!getLimit().rendersParams()) {
+                        toSQLReference0(context);
+                    }
+
+                    // OFFSET simulation
+                    else {
+                        toSQLReferenceLimitDB2SQLServerSybase(context);
+                    }
+
                     break;
                 }
 
@@ -294,10 +310,10 @@ implements
     }
 
     /**
-     * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2} and
-     * {@link SQLDialect#SQLSERVER} dialects
+     * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
+     * {@link SQLDialect#SQLSERVER} and {@link SQLDialect#SYBASE} dialects
      */
-    private final void toSQLReferenceLimitDB2SQLServer(RenderContext context) {
+    private final void toSQLReferenceLimitDB2SQLServerSybase(RenderContext context) {
         RenderContext local = new DefaultRenderContext(context);
         toSQLReference0(local);
         String enclosed = local.render();
@@ -335,25 +351,12 @@ implements
                .sql(subqueryName)
                .sql(" where ")
                .sql(rownumName)
-               .sql(" >= ");
-
-        if (context.inline()) {
-            context.sql(getLimit().getLowerRownum());
-        }
-        else {
-            context.sql("?");
-        }
-
-        context.sql(" and ")
+               .sql(" > ")
+               .sql(getLimit().getLowerRownum())
+               .sql(" and ")
                .sql(rownumName)
-               .sql(" < ");
-
-        if (context.inline()) {
-            context.sql(getLimit().getUpperRownum());
-        }
-        else {
-            context.sql("?");
-        }
+               .sql(" <= ")
+               .sql(getLimit().getUpperRownum());
     }
 
     /**
@@ -378,25 +381,12 @@ implements
                .sql(subqueryName)
                .sql(") where ")
                .sql(rownumName)
-               .sql(" >= ");
-
-        if (context.inline()) {
-            context.sql(getLimit().getLowerRownum());
-        }
-        else {
-            context.sql("?");
-        }
-
-        context.sql(" and ")
+               .sql(" > ")
+               .sql(getLimit().getLowerRownum())
+               .sql(" and ")
                .sql(rownumName)
-               .sql(" < ");
-
-        if (context.inline()) {
-            context.sql(getLimit().getUpperRownum());
-        }
-        else {
-            context.sql("?");
-        }
+               .sql(" <= ")
+               .sql(getLimit().getUpperRownum());
     }
 
     /**
@@ -422,7 +412,7 @@ implements
             case SQLSERVER: {
 
                 // If we have a TOP clause, it needs to be rendered here
-                if (getLimit().isApplicable() && getLimit().getOffset() == 0) {
+                if (getLimit().isApplicable() && getLimit().offsetZero() && !getLimit().rendersParams()) {
                     context.sql(getLimit()).sql(" ");
                 }
 
@@ -439,7 +429,7 @@ implements
             }
 
             case SYBASE: {
-                if (getLimit().isApplicable()) {
+                if (getLimit().isApplicable() && !getLimit().rendersParams()) {
                     context.sql(getLimit()).sql(" ");
                 }
 
@@ -525,7 +515,30 @@ implements
     }
 
     @Override
+    public final void addLimit(Param<Integer> numberOfRows) {
+        addLimit(0, numberOfRows);
+    }
+
+    @Override
     public final void addLimit(int offset, int numberOfRows) {
+        limit.setOffset(offset);
+        limit.setNumberOfRows(numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(int offset, Param<Integer> numberOfRows) {
+        limit.setOffset(offset);
+        limit.setNumberOfRows(numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(Param<Integer> offset, int numberOfRows) {
+        limit.setOffset(offset);
+        limit.setNumberOfRows(numberOfRows);
+    }
+
+    @Override
+    public final void addLimit(Param<Integer> offset, Param<Integer> numberOfRows) {
         limit.setOffset(offset);
         limit.setNumberOfRows(numberOfRows);
     }

@@ -45,6 +45,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Operator;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -73,12 +74,13 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -5425308887382166448L;
+    private static final long        serialVersionUID = -5425308887382166448L;
 
     /**
      * The limit that has been added in a limit(int).offset(int) construct
      */
-    private transient int     limit            = 0;
+    private transient Integer        limit;
+    private transient Param<Integer> limitParam;
 
     SimpleSelectImpl(Configuration configuration) {
         this(new SimpleSelectQueryImpl<R>(configuration));
@@ -222,19 +224,64 @@ class SimpleSelectImpl<R extends Record> extends AbstractDelegatingSelect<R>
     @Override
     public final SimpleSelectImpl<R> limit(int numberOfRows) {
         this.limit = numberOfRows;
+        this.limitParam = null;
         getQuery().addLimit(numberOfRows);
         return this;
     }
 
     @Override
-    public final SimpleSelectImpl<R> offset(int offset) {
-        getQuery().addLimit(offset, limit);
+    public final SimpleSelectImpl<R> limit(Param<Integer> numberOfRows) {
+        this.limit = null;
+        this.limitParam = numberOfRows;
+        getQuery().addLimit(numberOfRows);
         return this;
     }
 
     @Override
     public final SimpleSelectImpl<R> limit(int offset, int numberOfRows) {
         getQuery().addLimit(offset, numberOfRows);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> limit(int offset, Param<Integer> numberOfRows) {
+        getQuery().addLimit(offset, numberOfRows);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> limit(Param<Integer> offset, int numberOfRows) {
+        getQuery().addLimit(offset, numberOfRows);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> limit(Param<Integer> offset, Param<Integer> numberOfRows) {
+        getQuery().addLimit(offset, numberOfRows);
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> offset(int offset) {
+        if (limit != null) {
+            getQuery().addLimit(offset, limit);
+        }
+        else if (limitParam != null) {
+            getQuery().addLimit(offset, limitParam);
+        }
+
+        return this;
+    }
+
+    @Override
+    public final SimpleSelectImpl<R> offset(Param<Integer> offset) {
+        if (limit != null) {
+            getQuery().addLimit(offset, limit);
+        }
+        else if (limitParam != null) {
+            getQuery().addLimit(offset, limitParam);
+        }
+
         return this;
     }
 

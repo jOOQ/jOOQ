@@ -35,9 +35,17 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.table;
 
 import java.util.Arrays;
@@ -205,19 +213,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
     @Test
     public void testLimit() throws Exception {
-        SQLDialect dialect = getDialect();
 
-        int lower = 0;
-
-        // The following dialects don't support LIMIT 0 / TOP 0
-        switch (dialect) {
-            case DB2:
-            case DERBY:
-            case HSQLDB:
-            case INGRES:
-            case SYBASE:
-                lower = 1;
-        }
+        // Some dialects don't support LIMIT 0 / TOP 0
+        int lower = asList(DB2, DERBY, HSQLDB, INGRES, SYBASE).contains(getDialect()) ? 1 : 0;
 
         for (int i = lower; i < 6; i++) {
             assertEquals(Math.min(i, 4),
@@ -246,6 +244,76 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             .selectFrom(TBook())
             .orderBy(TBook_ID(), TBook_AUTHOR_ID())
             .limit(1, 2)
+            .fetch();
+
+        assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
+        assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
+    }
+
+    @Test
+    public void testLimitNamedParams() throws Exception {
+        if (asList(ASE, INGRES).contains(getDialect())) {
+            log.info("SKIPPING", "Parameterised LIMIT .. OFFSET tests");
+            return;
+        }
+
+        // Some dialects don't support LIMIT 0 / TOP 0
+        int lower = asList(DB2, DERBY, HSQLDB, SYBASE).contains(getDialect()) ? 1 : 0;
+
+        for (int i = lower; i < 6; i++) {
+            Select<?> s1 = create().selectFrom(TBook()).limit(param("limit", i));
+            Select<?> s2 = create().select().from(TBook()).limit(param("limit", i));
+
+            assertEquals(Math.min(i, 4), s1.fetch().size());
+            assertEquals(Math.min(i, 4), s2.fetch().size());
+            assertEquals(Math.min(i + 1, 4), s1.bind("limit", i + 1).fetch().size());
+            assertEquals(Math.min(i + 1, 4), s2.bind("limit", i + 1).fetch().size());
+        }
+
+        for (int i = lower; i < 6; i++) {
+            Select<?> s1a = create().selectFrom(TBook()).limit(param("offset", 1), i);
+            Select<?> s1b = create().selectFrom(TBook()).limit(1, param("limit", i));
+            Select<?> s1c = create().selectFrom(TBook()).limit(param("offset", 1), param("limit", i));
+
+            Select<?> s2a = create().selectFrom(TBook()).limit(i).offset(param("offset", 1));
+            Select<?> s2b = create().selectFrom(TBook()).limit(param("limit", i)).offset(1);
+            Select<?> s2c = create().selectFrom(TBook()).limit(param("limit", i)).offset(param("offset", 1));
+
+            Select<?> s3a = create().select().from(TBook()).limit(param("offset", 1), i);
+            Select<?> s3b = create().select().from(TBook()).limit(1, param("limit", i));
+            Select<?> s3c = create().select().from(TBook()).limit(param("offset", 1), param("limit", i));
+
+            Select<?> s4a = create().select().from(TBook()).limit(i).offset(param("offset", 1));
+            Select<?> s4b = create().select().from(TBook()).limit(param("limit", i)).offset(1);
+            Select<?> s4c = create().select().from(TBook()).limit(param("limit", i)).offset(param("offset", 1));
+
+            assertEquals(Math.min(i, 3), s1a.fetch().size());
+            assertEquals(Math.min(i, 3), s1b.fetch().size());
+            assertEquals(Math.min(i, 3), s1c.fetch().size());
+            assertEquals(Math.min(i + 1, 2), s1c.bind("limit", i + 1).bind("offset", 2).fetch().size());
+
+            assertEquals(Math.min(i, 3), s2a.fetch().size());
+            assertEquals(Math.min(i, 3), s2b.fetch().size());
+            assertEquals(Math.min(i, 3), s2c.fetch().size());
+            assertEquals(Math.min(i + 1, 2), s2c.bind("limit", i + 1).bind("offset", 2).fetch().size());
+
+            assertEquals(Math.min(i, 3), s3a.fetch().size());
+            assertEquals(Math.min(i, 3), s3b.fetch().size());
+            assertEquals(Math.min(i, 3), s3c.fetch().size());
+            assertEquals(Math.min(i + 1, 2), s3c.bind("limit", i + 1).bind("offset", 2).fetch().size());
+
+            assertEquals(Math.min(i, 3), s4a.fetch().size());
+            assertEquals(Math.min(i, 3), s4b.fetch().size());
+            assertEquals(Math.min(i, 3), s4c.fetch().size());
+            assertEquals(Math.min(i + 1, 2), s4c.bind("limit", i + 1).bind("offset", 2).fetch().size());
+        }
+
+        Result<B> result = create()
+            .selectFrom(TBook())
+            .orderBy(TBook_ID(), TBook_AUTHOR_ID())
+            .limit(
+                param("offset", 1),
+                param("limit", 2))
             .fetch();
 
         assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));

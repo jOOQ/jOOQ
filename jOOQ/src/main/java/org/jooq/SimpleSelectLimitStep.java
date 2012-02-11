@@ -72,7 +72,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * Add a <code>LIMIT</code> clause to the query
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
-     * RDBMS, this is simulated with a <code>ROW_NUMBER()</code> window function
+     * RDBMS, this may be simulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      * <p>
      * This is the same as calling {@link #limit(int, int)} with offset = 0, or
@@ -82,13 +82,78 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
     SimpleSelectOffsetStep<R> limit(int numberOfRows);
 
     /**
+     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, this may be simulated with a <code>ROW_NUMBER()</code>
+     * window function and nested <code>SELECT</code> statements.
+     * <p>
+     * This is the same as calling {@link #limit(int, int)} with offset = 0, or
+     * calling <code>.limit(numberOfRows).offset(0)</code>
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SimpleSelectOffsetStep<R> limit(Param<Integer> numberOfRows);
+
+    /**
      * Add a <code>LIMIT</code> clause to the query
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or if your RDBMS does not natively support offsets, this is
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectFinalStep<R> limit(int offset, int numberOfRows);
+
+    /**
+     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function and
+     * nested <code>SELECT</code> statements.
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SimpleSelectFinalStep<R> limit(int offset, Param<Integer> numberOfRows);
+
+    /**
+     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function and
+     * nested <code>SELECT</code> statements.
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SimpleSelectFinalStep<R> limit(Param<Integer> offset, int numberOfRows);
+
+    /**
+     * Add a <code>LIMIT</code> clause to the query using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SimpleSelectFinalStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

@@ -8,19 +8,19 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = 530150763;
+	private static final long serialVersionUID = 593413647;
 
-	private java.lang.Integer id;
-	private org.jooq.test.mysql.generatedclasses.enums.Boolean_10 oneZero;
+	private java.lang.Integer                                             id;
+	private org.jooq.test.mysql.generatedclasses.enums.Boolean_10         oneZero;
 	private org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseLc trueFalseLc;
 	private org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseUc trueFalseUc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc yesNoLc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc yesNoUc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc yNLc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc yNUc;
-	private java.lang.Boolean vcBoolean;
-	private java.lang.Boolean cBoolean;
-	private java.lang.Boolean nBoolean;
+	private org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc     yesNoLc;
+	private org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc     yesNoUc;
+	private org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc        yNLc;
+	private org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc        yNUc;
+	private java.lang.Boolean                                             vcBoolean;
+	private java.lang.Boolean                                             cBoolean;
+	private java.lang.Boolean                                             nBoolean;
 
 	public java.lang.Integer getId() {
 		return this.id;

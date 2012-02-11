@@ -80,7 +80,6 @@ public class Plugin extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-
         Properties props = new Properties();
 
         props.put("jdbc.Driver", jdbc.getDriver());
@@ -113,6 +112,7 @@ public class Plugin extends AbstractMojo {
         props.put("generator.generate.deprecated", defaultString(generator.getGenerate().getDeprecated()));
         props.put("generator.generate.instance-fields", defaultString(generator.getGenerate().getInstanceFields()));
         props.put("generator.generate.pojos", defaultString(generator.getGenerate().getPojos()));
+        props.put("generator.generate.jpa-annotations", defaultString(generator.getGenerate().getJPAAnnotations()));
 
         props.put("generator.target.package", generator.getTarget().getPackageName());
         props.put("generator.target.directory", generator.getTarget().getDirectory());

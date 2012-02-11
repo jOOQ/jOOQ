@@ -10,21 +10,21 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1637209226;
+	private static final long serialVersionUID = 1359273608;
 
-	private java.lang.Integer id;
-	private java.lang.String name;
+	private java.lang.Integer    id;
+	private java.lang.String     name;
 	private java.math.BigInteger bigInteger;
-	private java.lang.Integer idRef;
-	private java.lang.String nameRef;
-	private java.lang.Integer class_;
-	private java.lang.Integer fields;
-	private java.lang.Integer configuration;
-	private java.lang.Integer uDT;
-	private java.lang.Integer metaData;
-	private java.lang.Integer type0;
-	private java.lang.Integer primaryKey;
-	private java.lang.Integer primarykey;
+	private java.lang.Integer    idRef;
+	private java.lang.String     nameRef;
+	private java.lang.Integer    class_;
+	private java.lang.Integer    fields;
+	private java.lang.Integer    configuration;
+	private java.lang.Integer    uDT;
+	private java.lang.Integer    metaData;
+	private java.lang.Integer    type0;
+	private java.lang.Integer    primaryKey;
+	private java.lang.Integer    primarykey;
 	private java.math.BigDecimal field_737;
 
 	public java.lang.Integer getId() {

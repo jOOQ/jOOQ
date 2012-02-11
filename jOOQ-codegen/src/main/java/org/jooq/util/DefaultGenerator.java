@@ -109,6 +109,8 @@ public class DefaultGenerator implements Generator {
     private boolean                 generateInstanceFields      = true;
     private boolean                 generateGeneratedAnnotation = true;
     private boolean                 generatePojos               = false;
+    private boolean                 generateJPAAnnotations      = false;
+
     private GeneratorStrategy       strategy;
 
     @Override
@@ -169,6 +171,16 @@ public class DefaultGenerator implements Generator {
     @Override
     public void setGeneratePojos(boolean generatePojos) {
         this.generatePojos = generatePojos;
+    }
+
+    @Override
+    public boolean generateJPAAnnotations() {
+        return generateJPAAnnotations;
+    }
+
+    @Override
+    public void setGenerateJPAAnnotations(boolean generateJPAAnnotations) {
+        this.generateJPAAnnotations = generateJPAAnnotations;
     }
 
     // ----
@@ -735,6 +747,7 @@ public class DefaultGenerator implements Generator {
                     GenerationWriter out = new GenerationWriter(strategy.getFile(table, "Pojo"));
                     printHeader(out, table, "Pojo");
                     printClassJavadoc(out, table);
+                    printTableJPAAnnotation(out, table);
 
                     out.print("public class ");
                     out.print(strategy.getJavaClassName(table));
@@ -744,9 +757,14 @@ public class DefaultGenerator implements Generator {
 
                     out.println();
 
+                    int maxLength = 0;
+                    for (ColumnDefinition column : table.getColumns()) {
+                        maxLength = Math.max(maxLength, getJavaType(column.getType()).length());
+                    }
+
                     for (ColumnDefinition column : table.getColumns()) {
                         out.print("\tprivate ");
-                        out.print(getJavaType(column.getType()));
+                        out.print(StringUtils.rightPad(getJavaType(column.getType()), maxLength));
                         out.print(" ");
                         out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
                         out.println(";");
@@ -756,6 +774,7 @@ public class DefaultGenerator implements Generator {
 
                         // Getter
                         out.println();
+                        printColumnJPAAnnotation(out, column);
                         out.print("\tpublic ");
                         out.print(getJavaType(column.getType()));
                         out.print(" ");
@@ -989,6 +1008,7 @@ public class DefaultGenerator implements Generator {
         			GenerationWriter out = new GenerationWriter(strategy.getFile(table, "Record"));
         			printHeader(out, table, "Record");
         			printClassJavadoc(out, table);
+        			printTableJPAAnnotation(out, table);
 
         			Class<?> baseClass;
 
@@ -1519,6 +1539,85 @@ public class DefaultGenerator implements Generator {
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
 	}
+
+    private void printTableJPAAnnotation(GenerationWriter out, TableDefinition table) {
+        Database database = table.getDatabase();
+        SchemaDefinition schema = table.getSchema();
+
+        if (generateJPAAnnotations()) {
+            out.println("@javax.persistence.Entity");
+            out.print("@javax.persistence.Table(name = \"");
+            out.print(table.getName().replace("\"", "\\\""));
+            out.print("\"");
+
+            if (!schema.isDefaultSchema()) {
+                out.print(", schema = \"");
+                out.print(database.getOutputSchema(schema.getName()).replace("\"", "\\\""));
+                out.print("\"");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            String glue1 = "";
+
+            for (UniqueKeyDefinition uk : table.getUniqueKeys()) {
+
+                // Single-column keys are annotated on the column itself
+                if (uk.getKeyColumns().size() > 1) {
+                    sb.append(glue1);
+                    sb.append("\t@javax.persistence.UniqueConstraint(columnNames = {");
+
+                    String glue2 = "";
+                    for (ColumnDefinition column : uk.getKeyColumns()) {
+                        sb.append(glue2);
+                        sb.append("\"");
+                        sb.append(column.getName().replace("\"", "\\\""));
+                        sb.append("\"");
+
+                        glue2 = ", ";
+                    }
+
+                    sb.append("})");
+
+                    glue1 = ",\n";
+                }
+            }
+
+            if (sb.length() > 0) {
+                out.println(", uniqueConstraints = {");
+                out.println(sb);
+                out.print("}");
+            }
+
+            out.println(")");
+        }
+    }
+
+    private void printColumnJPAAnnotation(GenerationWriter out, ColumnDefinition column) {
+        if (generateJPAAnnotations()) {
+            UniqueKeyDefinition pk = column.getPrimaryKey();
+            List<UniqueKeyDefinition> uks = column.getUniqueKeys();
+
+            if (pk != null) {
+                if (pk.getKeyColumns().size() == 1) {
+                    out.println("\t@javax.persistence.Id");
+                }
+            }
+
+            String unique = "";
+            for (UniqueKeyDefinition uk : uks) {
+                if (uk.getKeyColumns().size() == 1) {
+                    unique = ", unique = true";
+                    break;
+                }
+            }
+
+            out.print("\t@javax.persistence.Column(name = \"");
+            out.print(column.getName().replace("\"", "\\\""));
+            out.print("\"");
+            out.print(unique);
+            out.println(")");
+        }
+    }
 
     private void registerInSchema(GenerationWriter outS, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
         if (outS != null) {
@@ -2110,6 +2209,10 @@ public class DefaultGenerator implements Generator {
 		out.println("\t}");
 
 		printFieldJavaDoc(out, element);
+		if (element instanceof ColumnDefinition) {
+		    printColumnJPAAnnotation(out, (ColumnDefinition) element);
+		}
+
 		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element) + "() {");
 		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifierUC(element) + ");");
 		out.println("\t}");

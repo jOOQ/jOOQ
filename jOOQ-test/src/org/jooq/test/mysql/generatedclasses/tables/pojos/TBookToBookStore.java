@@ -10,9 +10,9 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1795523909;
+	private static final long serialVersionUID = 734241767;
 
-	private java.lang.String bookStoreName;
+	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;
 	private java.lang.Integer stock;
 

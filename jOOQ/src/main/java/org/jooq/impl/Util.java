@@ -496,7 +496,7 @@ final class Util {
     /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
-    static boolean isJPAAvailable() {
+    private static boolean isJPAAvailable() {
         if (isJPAAvailable == null) {
             try {
                 Class.forName(Column.class.getName());
@@ -515,8 +515,13 @@ final class Util {
      * or methods
      */
     static final boolean hasColumnAnnotations(Class<?> type) {
-        // An entity usually has @Column annotations, too
-        if (type.getAnnotation(Entity.class) != null) {
+        if (!isJPAAvailable()) {
+            return false;
+        }
+
+        // An @Entity or @Table usually has @Column annotations, too
+        if (type.getAnnotation(Entity.class) != null ||
+            type.getAnnotation(javax.persistence.Table.class) != null) {
             return true;
         }
 

@@ -45,6 +45,7 @@ public class Generate {
     private String instanceFields      = "true";
     private String generatedAnnotation = "true";
     private String pojos               = "false";
+    private String jpaAnnotations      = "false";
 
     String getRelations() {
         return relations;
@@ -64,5 +65,9 @@ public class Generate {
 
     String getPojos() {
         return pojos;
+    }
+
+    String getJPAAnnotations() {
+        return jpaAnnotations;
     }
 }

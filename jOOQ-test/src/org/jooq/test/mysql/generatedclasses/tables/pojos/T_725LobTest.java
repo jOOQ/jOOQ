@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class T_725LobTest implements java.io.Serializable {
 
-	private static final long serialVersionUID = 538359271;
+	private static final long serialVersionUID = -1817151553;
 
 	private java.lang.Integer id;
-	private byte[] lob;
+	private byte[]            lob;
 
 	public java.lang.Integer getId() {
 		return this.id;

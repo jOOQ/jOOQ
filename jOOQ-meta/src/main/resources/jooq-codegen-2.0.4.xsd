@@ -173,6 +173,8 @@
 				minOccurs="0" maxOccurs="1" />
 			<element name="pojos" type="boolean" default="false"
 				minOccurs="0" maxOccurs="1" />
+			<element name="jpaAnnotations" type="boolean" default="false"
+			    minOccurs="0" maxOccurs="1" />
 		</all>
 	</complexType>
 

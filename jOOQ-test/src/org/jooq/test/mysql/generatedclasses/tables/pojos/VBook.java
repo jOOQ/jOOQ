@@ -10,17 +10,17 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -111193327;
+	private static final long serialVersionUID = 360277067;
 
-	private java.lang.Integer id;
-	private java.lang.Integer authorId;
-	private java.lang.Integer coAuthorId;
-	private java.lang.Integer detailsId;
-	private java.lang.String title;
-	private java.lang.Integer publishedIn;
-	private java.lang.Integer languageId;
-	private java.lang.String contentText;
-	private byte[] contentPdf;
+	private java.lang.Integer                                      id;
+	private java.lang.Integer                                      authorId;
+	private java.lang.Integer                                      coAuthorId;
+	private java.lang.Integer                                      detailsId;
+	private java.lang.String                                       title;
+	private java.lang.Integer                                      publishedIn;
+	private java.lang.Integer                                      languageId;
+	private java.lang.String                                       contentText;
+	private byte[]                                                 contentPdf;
 	private org.jooq.test.mysql.generatedclasses.enums.VBookStatus status;
 
 	public java.lang.Integer getId() {

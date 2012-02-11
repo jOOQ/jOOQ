@@ -8,21 +8,21 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -587418657;
+	private static final long serialVersionUID = 1858551029;
 
-	private java.lang.Integer id;
-	private java.lang.Byte byte_;
-	private java.lang.Short short_;
-	private java.lang.Integer integer;
-	private java.lang.Long long_;
-	private java.lang.Byte byteDecimal;
-	private java.lang.Short shortDecimal;
-	private java.lang.Integer integerDecimal;
-	private java.lang.Long longDecimal;
+	private java.lang.Integer    id;
+	private java.lang.Byte       byte_;
+	private java.lang.Short      short_;
+	private java.lang.Integer    integer;
+	private java.lang.Long       long_;
+	private java.lang.Byte       byteDecimal;
+	private java.lang.Short      shortDecimal;
+	private java.lang.Integer    integerDecimal;
+	private java.lang.Long       longDecimal;
 	private java.math.BigInteger bigInteger;
 	private java.math.BigDecimal bigDecimal;
-	private java.lang.Double float_;
-	private java.lang.Double double_;
+	private java.lang.Double     float_;
+	private java.lang.Double     double_;
 
 	public java.lang.Integer getId() {
 		return this.id;

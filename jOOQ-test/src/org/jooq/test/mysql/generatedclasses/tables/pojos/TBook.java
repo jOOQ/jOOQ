@@ -10,17 +10,17 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = 516272409;
+	private static final long serialVersionUID = -1465434661;
 
-	private java.lang.Integer id;
-	private java.lang.Integer authorId;
-	private java.lang.Integer coAuthorId;
-	private java.lang.Integer detailsId;
-	private java.lang.String title;
-	private java.lang.Integer publishedIn;
-	private org.jooq.test.mysql.generatedclasses.enums.TLanguage languageId;
-	private java.lang.String contentText;
-	private byte[] contentPdf;
+	private java.lang.Integer                                      id;
+	private java.lang.Integer                                      authorId;
+	private java.lang.Integer                                      coAuthorId;
+	private java.lang.Integer                                      detailsId;
+	private java.lang.String                                       title;
+	private java.lang.Integer                                      publishedIn;
+	private org.jooq.test.mysql.generatedclasses.enums.TLanguage   languageId;
+	private java.lang.String                                       contentText;
+	private byte[]                                                 contentPdf;
 	private org.jooq.test.mysql.generatedclasses.enums.TBookStatus status;
 
 	public java.lang.Integer getId() {

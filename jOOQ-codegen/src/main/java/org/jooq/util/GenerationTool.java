@@ -207,6 +207,7 @@ public class GenerationTool {
 	    generate.setInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
 	    generate.setGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
 	    generate.setPojos("true".equalsIgnoreCase(properties.getProperty("generator.generate.pojos")));
+	    generate.setJpaAnnotations("true".equalsIgnoreCase(properties.getProperty("generator.generate.jpa-annotations")));
 
 	    org.jooq.util.jaxb.Generator generator = new org.jooq.util.jaxb.Generator();
 
@@ -327,6 +328,8 @@ public class GenerationTool {
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
+            if (g.getGenerate().isJpaAnnotations() != null)
+                generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
 
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());

@@ -44,7 +44,7 @@ import org.jooq.impl.Factory;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
-import org.jooq.util.jaxb.Schemata;
+import org.jooq.util.jaxb.Schema;
 
 /**
  * A general database model.
@@ -157,7 +157,7 @@ public interface Database {
     /**
      * The input and output schemata
      */
-    void setConfiguredSchemata(Schemata schemata);
+    void setConfiguredSchemata(List<Schema> schemata);
 
     /**
      * Only database objects matching any of these regular expressions will be

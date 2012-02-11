@@ -15,17 +15,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ForcedType complex type.
+ * <p>Java class for Schema complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ForcedType">
+ * &lt;complexType name="Schema">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;all>
- *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="expressions" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="inputSchema" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="outputSchema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/all>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,62 +35,62 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ForcedType", propOrder = {
+@XmlType(name = "Schema", propOrder = {
 
 })
-public class ForcedType {
+public class Schema {
 
-    @XmlElement(required = true)
-    protected String name;
-    @XmlElement(required = true)
-    protected String expressions;
+    @XmlElement(required = true, defaultValue = "")
+    protected String inputSchema;
+    @XmlElement(defaultValue = "")
+    protected String outputSchema;
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the inputSchema property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getName() {
-        return name;
+    public String getInputSchema() {
+        return inputSchema;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the inputSchema property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setInputSchema(String value) {
+        this.inputSchema = value;
     }
 
     /**
-     * Gets the value of the expressions property.
+     * Gets the value of the outputSchema property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getExpressions() {
-        return expressions;
+    public String getOutputSchema() {
+        return outputSchema;
     }
 
     /**
-     * Sets the value of the expressions property.
+     * Sets the value of the outputSchema property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setExpressions(String value) {
-        this.expressions = value;
+    public void setOutputSchema(String value) {
+        this.outputSchema = value;
     }
 
 }

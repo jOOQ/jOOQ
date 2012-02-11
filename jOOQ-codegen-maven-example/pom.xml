@@ -83,6 +83,13 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			<type>jar</type>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<properties>
@@ -126,6 +133,7 @@
 									<relations>true</relations>
 									<deprecated>false</deprecated>
 									<instanceFields>false</instanceFields>
+									<pojos>true</pojos>
 								</generate>
 								<target>
 									<packageName>org.jooq.util.maven.example.postgres</packageName>
@@ -161,6 +169,7 @@
 									<relations>true</relations>
 									<deprecated>false</deprecated>
 									<instanceFields>true</instanceFields>
+									<jpaAnnotations>true</jpaAnnotations>
 								</generate>
 								<target>
 									<packageName>org.jooq.util.maven.example.ase</packageName>
@@ -188,6 +197,7 @@
 									<name>org.jooq.util.mysql.MySQLDatabase</name>
 									<includes>.*</includes>
 									<excludes>t_book_details</excludes>
+									<unsignedTypes>true</unsignedTypes>
 
 									<!-- [#958] This checks the schema-rewriting functionality -->
 									<inputSchema>test</inputSchema>
@@ -262,6 +272,8 @@
 									<deprecated>false</deprecated>
 									<instanceFields>true</instanceFields>
 									<generatedAnnotation>false</generatedAnnotation>
+									<pojos>true</pojos>
+									<jpaAnnotations>true</jpaAnnotations>
 								</generate>
 								<target>
 									<packageName>org.jooq.util.maven.example.mysql</packageName>

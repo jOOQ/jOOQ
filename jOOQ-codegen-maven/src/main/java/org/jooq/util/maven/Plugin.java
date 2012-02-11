@@ -35,13 +35,12 @@
  */
 package org.jooq.util.maven;
 
-import static org.jooq.tools.StringUtils.defaultString;
+import java.io.StringWriter;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Properties;
+import javax.xml.bind.JAXB;
 
 import org.jooq.util.GenerationTool;
+import org.jooq.util.jaxb.Configuration;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -62,91 +61,34 @@ public class Plugin extends AbstractMojo {
      * @required
      * @readonly
      */
-    private MavenProject project;
+    private MavenProject                 project;
 
     /**
      * The jdbc settings.
      *
      * @parameter
      */
-    private Jdbc         jdbc;
+    private org.jooq.util.jaxb.Jdbc      jdbc;
 
     /**
      * The generator settings
      *
      * @parameter
      */
-    private Generator    generator;
+    private org.jooq.util.jaxb.Generator generator;
 
     @Override
     public void execute() throws MojoExecutionException {
-        Properties props = new Properties();
-
-        props.put("jdbc.Driver", jdbc.getDriver());
-        props.put("jdbc.URL", jdbc.getUrl());
-        props.put("jdbc.Schema", defaultString(jdbc.getSchema()));
-        props.put("jdbc.User", defaultString(jdbc.getUser()));
-        props.put("jdbc.Password", defaultString(jdbc.getPassword()));
-
-        props.put("generator", defaultString(generator.getName()));
-        props.put("generator.database", defaultString(generator.getDatabase().getName()));
-        props.put("generator.database.includes", defaultString(generator.getDatabase().getIncludes()));
-        props.put("generator.database.excludes", defaultString(generator.getDatabase().getExcludes()));
-        props.put("generator.database.input-schema", defaultString(generator.getDatabase().getInputSchema()));
-        props.put("generator.database.output-schema", defaultString(generator.getDatabase().getOutputSchema()));
-        props.put("generator.database.date-as-timestamp", defaultString(generator.getDatabase().getDateAsTimestamp()));
-        props.put("generator.generate.unsigned-types", defaultString(generator.getDatabase().getUnsignedTypes()));
-
-        if (generator.getDatabase().getEnumTypes() != null) {
-            for (EnumType type : generator.getDatabase().getEnumTypes()) {
-                props.put("generator.database.enum-type." + type.getName(), type.getLiterals());
-            }
-        }
-        if (generator.getDatabase().getForcedTypes() != null) {
-            for (ForcedType type : generator.getDatabase().getForcedTypes()) {
-                props.put("generator.database.forced-type." + type.getName(), type.getExpressions());
-            }
-        }
-
-        props.put("generator.generate.relations", defaultString(generator.getGenerate().getRelations()));
-        props.put("generator.generate.deprecated", defaultString(generator.getGenerate().getDeprecated()));
-        props.put("generator.generate.instance-fields", defaultString(generator.getGenerate().getInstanceFields()));
-        props.put("generator.generate.pojos", defaultString(generator.getGenerate().getPojos()));
-        props.put("generator.generate.jpa-annotations", defaultString(generator.getGenerate().getJPAAnnotations()));
-
-        props.put("generator.target.package", generator.getTarget().getPackageName());
-        props.put("generator.target.directory", generator.getTarget().getDirectory());
-
-        if (generator.getMasterDataTables() != null) {
-
-            StringBuilder mdtList = new StringBuilder();
-            for (MasterDataTable mdt : generator.getMasterDataTables()) {
-                if (mdtList.length() > 0) {
-                    mdtList.append(",");
-                }
-
-                mdtList.append(mdt.getName());
-
-                props.put("generator.generate.master-data-table-literal." + mdt.getName(), mdt.getLiteral());
-                props.put("generator.generate.master-data-table-description." + mdt.getName(), mdt.getDescription());
-            }
-
-            props.put("generator.generate.master-data-tables", mdtList.toString());
-        }
-
-        if (getLog().isDebugEnabled()) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            try {
-                props.store(stream, "passing these properties to jooq-codegen:");
-            }
-            catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-            getLog().debug(stream.toString());
-        }
-
         try {
-            GenerationTool.main(props);
+            Configuration configuration = new Configuration();
+            configuration.setJdbc(jdbc);
+            configuration.setGenerator(generator);
+
+            StringWriter writer = new StringWriter();
+            JAXB.marshal(configuration, writer);
+
+            getLog().info("Using this configuration:\n" + writer.toString());
+            GenerationTool.main(configuration);
         }
         catch (Exception ex) {
             throw new MojoExecutionException("Error running jOOQ code generation tool", ex);

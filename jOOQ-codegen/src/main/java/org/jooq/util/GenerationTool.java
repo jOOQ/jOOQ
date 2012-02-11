@@ -42,6 +42,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -50,16 +51,12 @@ import javax.xml.bind.JAXB;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.Configuration;
-import org.jooq.util.jaxb.Database.EnumTypes;
-import org.jooq.util.jaxb.Database.ForcedTypes;
-import org.jooq.util.jaxb.Database.MasterDataTables;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.MasterDataTable;
-import org.jooq.util.jaxb.Schemata;
-import org.jooq.util.jaxb.Schemata.Schema;
+import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
 import org.jooq.util.jaxb.Target;
 
@@ -135,7 +132,7 @@ public class GenerationTool {
 	    Strategy strategy = new Strategy();
 	    strategy.setName(properties.containsKey("generator.strategy") ? properties.getProperty("generator.strategy") : null);
 
-	    MasterDataTables masterDataTables = new MasterDataTables();
+	    List<MasterDataTable> masterDataTables = new ArrayList<MasterDataTable>();
 	    for (String name : defaultString(properties.getProperty("generator.generate.master-data-tables")).split(",")) {
 	        if (isBlank(name)) continue;
 
@@ -145,10 +142,10 @@ public class GenerationTool {
 	        table.setLiteral(properties.getProperty("generator.generate.master-data-table-literal." + name));
 	        table.setDescription(properties.getProperty("generator.generate.master-data-table-description." + name));
 
-	        masterDataTables.getMasterDataTable().add(table);
+	        masterDataTables.add(table);
 	    }
 
-        EnumTypes enumTypes = new EnumTypes();
+        List<EnumType> enumTypes = new ArrayList<EnumType>();
         for (String property : properties.stringPropertyNames()) {
             if (property.startsWith("generator.database.enum-type.")) {
                 String name = property.replace("generator.database.enum-type.", "");
@@ -156,11 +153,11 @@ public class GenerationTool {
                 EnumType type = new EnumType();
                 type.setName(name);
                 type.setLiterals(properties.getProperty(property));
-                enumTypes.getEnumType().add(type);
+                enumTypes.add(type);
             }
         }
 
-        ForcedTypes forcedTypes = new ForcedTypes();
+        List<ForcedType> forcedTypes = new ArrayList<ForcedType>();
         for (String property : properties.stringPropertyNames()) {
             if (property.startsWith("generator.database.forced-type.")) {
                 String name = property.replace("generator.database.forced-type.", "");
@@ -168,16 +165,9 @@ public class GenerationTool {
                 ForcedType type = new ForcedType();
                 type.setName(name);
                 type.setExpressions(properties.getProperty(property));
-                forcedTypes.getForcedType().add(type);
+                forcedTypes.add(type);
             }
         }
-
-        Schema schema = new Schema();
-        schema.setInputSchema(properties.containsKey("generator.database.input-schema") ? properties.getProperty("generator.database.input-schema") : null);
-        schema.setOutputSchema(properties.containsKey("generator.database.output-schema") ? properties.getProperty("generator.database.output-schema") : null);
-
-        Schemata schemata = new Schemata();
-        schemata.getSchema().add(schema);
 
 	    org.jooq.util.jaxb.Database database = new org.jooq.util.jaxb.Database();
 	    database.setName(properties.getProperty("generator.database"));
@@ -185,17 +175,18 @@ public class GenerationTool {
 	    database.setExcludes(properties.containsKey("generator.database.excludes") ? properties.getProperty("generator.database.excludes") : null);
 	    database.setDateAsTimestamp("true".equalsIgnoreCase(properties.getProperty("generator.database.date-as-timestamp")));
 	    database.setUnsignedTypes(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.unsigned-types")));
-	    database.setSchemata(schemata);
+	    database.setInputSchema(properties.containsKey("generator.database.input-schema") ? properties.getProperty("generator.database.input-schema") : null);
+	    database.setOutputSchema(properties.containsKey("generator.database.output-schema") ? properties.getProperty("generator.database.output-schema") : null);
 
 	    // Avoid creating these empty elements when migrating
-	    if (!masterDataTables.getMasterDataTable().isEmpty())
-	        database.setMasterDataTables(masterDataTables);
+	    if (!masterDataTables.isEmpty())
+	        database.getMasterDataTables().addAll(masterDataTables);
 
-	    if (!enumTypes.getEnumType().isEmpty())
-	        database.setEnumTypes(enumTypes);
+	    if (!enumTypes.isEmpty())
+	        database.getEnumTypes().addAll(enumTypes);
 
-	    if (!forcedTypes.getForcedType().isEmpty())
-	        database.setForcedTypes(forcedTypes);
+	    if (!forcedTypes.isEmpty())
+	        database.getForcedTypes().addAll(forcedTypes);
 
 	    Target target = new Target();
 	    target.setPackageName(properties.getProperty("generator.target.package"));
@@ -250,12 +241,6 @@ public class GenerationTool {
 	        g.setStrategy(new Strategy());
 	    if (g.getTarget() == null)
 	        g.setTarget(new Target());
-	    if (g.getDatabase().getEnumTypes() == null)
-	        g.getDatabase().setEnumTypes(new EnumTypes());
-        if (g.getDatabase().getForcedTypes() == null)
-            g.getDatabase().setForcedTypes(new ForcedTypes());
-        if (g.getDatabase().getMasterDataTables() == null)
-            g.getDatabase().setMasterDataTables(new MasterDataTables());
 
         Class.forName(j.getDriver());
         Connection connection = null;
@@ -281,17 +266,23 @@ public class GenerationTool {
             Class<Database> databaseClass = (Class<Database>) Class.forName(g.getDatabase().getName());
             Database database = databaseClass.newInstance();
 
-            Schemata schemata = g.getDatabase().getSchemata();
-            if (schemata == null) {
-                schemata = new Schemata();
-                g.getDatabase().setSchemata(schemata);
+            List<Schema> schemata = g.getDatabase().getSchemata();
+            if (schemata.isEmpty()) {
+                Schema schema = new Schema();
+                schema.setInputSchema(g.getDatabase().getInputSchema());
+                schema.setOutputSchema(g.getDatabase().getOutputSchema());
+                schemata.add(schema);
+            }
+            else {
+                if (!StringUtils.isBlank(g.getDatabase().getInputSchema())) {
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
+                }
+                if (!StringUtils.isBlank(g.getDatabase().getOutputSchema())) {
+                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
+                }
             }
 
-            List<Schema> schemaList = schemata.getSchema();
-            if (schemaList.isEmpty())
-                schemaList.add(new Schema());
-
-            for (Schema schema : schemaList) {
+            for (Schema schema : schemata) {
                 if (StringUtils.isBlank(schema.getInputSchema())) {
                     log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
                     schema.setInputSchema(j.getSchema());
@@ -306,14 +297,19 @@ public class GenerationTool {
             database.setConfiguredSchemata(schemata);
             database.setIncludes(defaultString(g.getDatabase().getIncludes()).split(","));
             database.setExcludes(defaultString(g.getDatabase().getExcludes()).split(","));
-            database.setConfiguredMasterDataTables(g.getDatabase().getMasterDataTables().getMasterDataTable());
-            database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes().getEnumType());
-            database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes().getForcedType());
+            database.setConfiguredMasterDataTables(g.getDatabase().getMasterDataTables());
+            database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes());
+            database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes());
 
             if (g.getDatabase().isDateAsTimestamp() != null)
                 database.setDateAsTimestamp(g.getDatabase().isDateAsTimestamp());
             if (g.getDatabase().isUnsignedTypes() != null)
                 database.setSupportsUnsignedTypes(g.getDatabase().isUnsignedTypes());
+
+            if (StringUtils.isBlank(g.getTarget().getPackageName()))
+                g.getTarget().setPackageName("org.jooq.generated");
+            if (StringUtils.isBlank(g.getTarget().getDirectory()))
+                g.getTarget().setPackageName("target/generated-sources/jooq");
 
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());

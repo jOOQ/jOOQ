@@ -53,8 +53,7 @@ import org.jooq.util.RoutineDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.jaxb.Schemata;
-import org.jooq.util.jaxb.Schemata.Schema;
+import org.jooq.util.jaxb.Schema;
 import org.jooq.util.sqlite.sqlite_master.SQLiteMaster;
 
 /**
@@ -71,10 +70,10 @@ public class SQLiteDatabase extends AbstractDatabase {
         schema.setInputSchema("");
         schema.setOutputSchema("");
 
-        Schemata s = new Schemata();
-        s.getSchema().add(schema);
+        List<Schema> schemata = new ArrayList<Schema>();
+        schemata.add(schema);
 
-        setConfiguredSchemata(s);
+        setConfiguredSchemata(schemata);
     }
 
     @Override

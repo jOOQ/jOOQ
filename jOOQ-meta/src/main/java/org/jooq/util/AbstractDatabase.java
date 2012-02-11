@@ -584,43 +584,43 @@ public abstract class AbstractDatabase implements Database {
 
     /**
      * Retrieve ALL sequences from the database. This will be filtered in
-     * {@link #getTables()}
+     * {@link #getTables(SchemaDefinition)}
      */
     protected abstract List<SequenceDefinition> getSequences0() throws SQLException;
 
     /**
      * Retrieve ALL tables from the database. This will be filtered in
-     * {@link #getTables()}
+     * {@link #getTables(SchemaDefinition)}
      */
     protected abstract List<TableDefinition> getTables0() throws SQLException;
 
     /**
      * Retrieve ALL stored routines (functions and procedures) from the
-     * database. This will be filtered in {@link #getRoutines()}
+     * database. This will be filtered in {@link #getRoutines(SchemaDefinition)}
      */
     protected abstract List<RoutineDefinition> getRoutines0() throws SQLException;
 
     /**
      * Retrieve ALL packages from the database. This will be filtered in
-     * {@link #getPackages()}
+     * {@link #getPackages(SchemaDefinition)}
      */
     protected abstract List<PackageDefinition> getPackages0() throws SQLException;
 
     /**
      * Retrieve ALL enum UDTs from the database. This will be filtered in
-     * {@link #getEnums()}
+     * {@link #getEnums(SchemaDefinition)}
      */
     protected abstract List<EnumDefinition> getEnums0() throws SQLException;
 
     /**
      * Retrieve ALL UDTs from the database. This will be filtered in
-     * {@link #getEnums()}
+     * {@link #getEnums(SchemaDefinition)}
      */
     protected abstract List<UDTDefinition> getUDTs0() throws SQLException;
 
     /**
      * Retrieve ALL ARRAYs from the database. This will be filtered in
-     * {@link #getArrays()}
+     * {@link #getArrays(SchemaDefinition)}
      */
     protected abstract List<ArrayDefinition> getArrays0() throws SQLException;
 }

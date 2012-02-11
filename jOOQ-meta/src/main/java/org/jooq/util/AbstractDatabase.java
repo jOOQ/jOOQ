@@ -49,8 +49,7 @@ import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
-import org.jooq.util.jaxb.Schemata;
-import org.jooq.util.jaxb.Schemata.Schema;
+import org.jooq.util.jaxb.Schema;
 
 /**
  * A base implementation for all types of databases.
@@ -70,7 +69,7 @@ public abstract class AbstractDatabase implements Database {
     private String[]                        includes;
     private boolean                         supportsUnsignedTypes;
     private boolean                         dateAsTimestamp;
-    private Schemata                        configuredSchemata;
+    private List<Schema>                    configuredSchemata;
     private List<MasterDataTable>           configuredMasterDataTables;
     private List<EnumType>                  configuredEnumTypes;
     private List<ForcedType>                configuredForcedTypes;
@@ -135,7 +134,7 @@ public abstract class AbstractDatabase implements Database {
     public final List<String> getInputSchemata() {
         List<String> result = new ArrayList<String>();
 
-        for (Schema schema : configuredSchemata.getSchema()) {
+        for (Schema schema : configuredSchemata) {
             result.add(schema.getInputSchema());
         }
 
@@ -144,7 +143,7 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public String getOutputSchema(String inputSchema) {
-        for (Schema schema : configuredSchemata.getSchema()) {
+        for (Schema schema : configuredSchemata) {
             if (inputSchema.equals(schema.getInputSchema())) {
                 return schema.getOutputSchema();
             }
@@ -154,7 +153,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final void setConfiguredSchemata(Schemata schemata) {
+    public final void setConfiguredSchemata(List<Schema> schemata) {
         this.configuredSchemata = schemata;
     }
 

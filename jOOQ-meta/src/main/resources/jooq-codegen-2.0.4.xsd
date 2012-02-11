@@ -92,46 +92,52 @@
 				minOccurs="0" maxOccurs="1" />
 			<element name="unsignedTypes" type="boolean" default="true"
 				minOccurs="0" maxOccurs="1" />
+
+			<element name="inputSchema" type="string" default=""
+				minOccurs="0" maxOccurs="1" />
+			<element name="outputSchema" type="string" default=""
+				minOccurs="0" maxOccurs="1" />
+
 			<element name="schemata" type="tns:Schemata" minOccurs="0" maxOccurs="1"/>
-			<element name="masterDataTables" minOccurs="0" maxOccurs="1">
-				<complexType>
-					<sequence>
-						<element name="masterDataTable" type="tns:MasterDataTable"
-							minOccurs="0" maxOccurs="unbounded" />
-					</sequence>
-				</complexType>
-			</element>
-			<element name="enumTypes" minOccurs="0" maxOccurs="1">
-				<complexType>
-					<sequence>
-						<element name="enumType" type="tns:EnumType" minOccurs="0"
-							maxOccurs="unbounded" />
-					</sequence>
-				</complexType>
-			</element>
-			<element name="forcedTypes" minOccurs="0" maxOccurs="1">
-				<complexType>
-					<sequence>
-						<element name="forcedType" type="tns:ForcedType"
-							minOccurs="0" maxOccurs="unbounded" />
-					</sequence>
-				</complexType>
-			</element>
+			<element name="masterDataTables" type="tns:MasterDataTables" minOccurs="0" maxOccurs="1"/>
+			<element name="enumTypes" type="tns:EnumTypes" minOccurs="0" maxOccurs="1"/>
+			<element name="forcedTypes" type="tns:ForcedTypes" minOccurs="0" maxOccurs="1"/>
 		</all>
 	</complexType>
 
 	<complexType name="Schemata">
 		<sequence>
-			<element name="schema" minOccurs="1" maxOccurs="unbounded">
-				<complexType>
-					<all>
-						<element name="inputSchema" type="string" default=""
-							minOccurs="1" maxOccurs="1" />
-						<element name="outputSchema" type="string" default=""
-							minOccurs="0" maxOccurs="1" />
-					</all>
-				</complexType>
-			</element>
+			<element name="schema" type="tns:Schema" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="Schema">
+		<all>
+			<element name="inputSchema" type="string" default=""
+				minOccurs="1" maxOccurs="1" />
+			<element name="outputSchema" type="string" default=""
+				minOccurs="0" maxOccurs="1" />
+		</all>
+	</complexType>
+
+	<complexType name="MasterDataTables">
+		<sequence>
+			<element name="masterDataTable" type="tns:MasterDataTable"
+				minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="EnumTypes">
+		<sequence>
+			<element name="enumType" type="tns:EnumType" minOccurs="0"
+				maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="ForcedTypes">
+		<sequence>
+			<element name="forcedType" type="tns:ForcedType"
+				minOccurs="0" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>
 

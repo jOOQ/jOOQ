@@ -120,4 +120,76 @@ public interface RenderContext extends Context<RenderContext> {
      * Set the new context value for {@link #namedParams()}
      */
     RenderContext namedParams(boolean renderNamedParams);
+
+    /**
+     * The currently applied cast mode for bind values
+     */
+    CastMode castMode();
+
+    /**
+     * Set the new cast mode for {@link #castMode()}
+     */
+    RenderContext castMode(CastMode mode);
+
+    /**
+     * Whether casting must be applied. The result follows this logic:
+     * <table border="1">
+     * <tr>
+     * <th>CastMode</th>
+     * <th>result</th>
+     * </tr>
+     * <tr>
+     * <td><code>ALWAYS</code></td>
+     * <td><code>true</code></td>
+     * </tr>
+     * <tr>
+     * <td><code>NEVER</code></td>
+     * <td><code>false</code></td>
+     * </tr>
+     * <tr>
+     * <td><code>SOME</code></td>
+     * <td><code>true</code> or <code>false</code> depending on the dialect</td>
+     * </tr>
+     * <tr>
+     * <td><code>DEFAULT</code></td>
+     * <td><code>null</code></td>
+     * </tr>
+     * </table>
+     */
+    Boolean cast();
+
+    /**
+     * Set the new cast mode to {@link CastMode#SOME} for a list of dialects
+     */
+    RenderContext castModeSome(SQLDialect... dialects);
+
+    /**
+     * The cast mode for bind values.
+     *
+     * @see RenderContext#castMode()
+     */
+    enum CastMode {
+
+        /**
+         * Cast all bind values to their respective type
+         */
+        ALWAYS,
+
+        /**
+         * Cast no bind values to their respective type
+         */
+        NEVER,
+
+        /**
+         * Cast bind values only in some dialects. The specified dialects assume
+         * {@link #ALWAYS} behaviour, all the other dialects assume
+         * {@link #NEVER}
+         */
+        SOME,
+
+        /**
+         * Cast when needed. This is the default mode if not specified otherwise
+         */
+        DEFAULT
+    }
 }

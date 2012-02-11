@@ -101,12 +101,92 @@ public interface OrderProvider {
     void addLimit(int numberOfRows);
 
     /**
+     * Limit the results of this select using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, this may be simulated with a <code>ROW_NUMBER()</code>
+     * window function and nested <code>SELECT</code> statements.
+     * <p>
+     * This is the same as calling {@link #addLimit(int, int)} with offset = 0
+     *
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(Param<Integer> numberOfRows);
+
+    /**
      * Limit the results of this select
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or if your RDBMS does not natively support offsets, this is
+     * simulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, int numberOfRows);
+
+    /**
+     * Limit the results of this select
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function and
+     * nested <code>SELECT</code> statements.
+     *
+     * @param offset The lowest offset starting at 0
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(Param<Integer> offset, int numberOfRows);
+
+    /**
+     * Limit the results of this select using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function and
+     * nested <code>SELECT</code> statements.
+     *
+     * @param offset The lowest offset starting at 0
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(int offset, Param<Integer> numberOfRows);
+
+    /**
+     * Limit the results of this select using named parameters
+     * <p>
+     * Note that some dialects do not support bind values at all in
+     * <code>LIMIT</code> or <code>TOP</code> clauses!
+     * <p>
+     * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
+     * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
+     * support bind values, or if your RDBMS does not natively support offsets,
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
+     *
+     * @param offset The lowest offset starting at 0
+     * @param numberOfRows The number of rows to return
+     */
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
 }

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.RenderContext.CastMode.NEVER;
 import static org.jooq.impl.Factory.val;
 
 import java.util.Collections;
@@ -42,8 +43,11 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.RenderContext;
-import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.RenderContext.CastMode;
+import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -54,13 +58,11 @@ class Limit extends AbstractQueryPart {
      * Generated UID
      */
     private static final long serialVersionUID = 2053741242981425602L;
-    private int               offset;
-    private int               numberOfRows;
-
-    Limit() {
-        offset = 0;
-        numberOfRows = Integer.MAX_VALUE;
-    }
+    private Field<Integer>    numberOfRows;
+    private Field<Integer>    offset;
+    private Field<Integer>    offsetOrZero     = val(0);
+    private Field<Integer>    offsetPlusOne    = val(1);
+    private boolean           rendersParams;;
 
     @Override
     public final List<Attachable> getAttachables() {
@@ -69,6 +71,9 @@ class Limit extends AbstractQueryPart {
 
     @Override
     public final void toSQL(RenderContext context) {
+        boolean inline = context.inline();
+        CastMode castMode = context.castMode();
+
         switch (context.getDialect()) {
 
             // True LIMIT / OFFSET support provided by the following dialects
@@ -78,30 +83,26 @@ class Limit extends AbstractQueryPart {
             case HSQLDB:   // No break
             case POSTGRES: // No break
             case SQLITE: {
-                if (context.inline()) {
-                    context.sql("limit ")
-                           .sql(getNumberOfRows())
-                           .sql(" offset ")
-                           .sql(getOffset());
-                }
-                else {
-                    context.sql("limit ? offset ?");
-                }
+                context.castMode(NEVER)
+                       .sql("limit ")
+                       .sql(numberOfRows)
+                       .sql(" offset ")
+                       .sql(offsetOrZero)
+                       .castMode(castMode);
 
                 break;
             }
 
             case DERBY: {
-                if (context.inline()) {
-                    context.sql("offset ")
-                           .sql(getOffset())
-                           .sql(" rows fetch next ")
-                           .sql(getNumberOfRows())
-                           .sql(" rows only");
-                }
-                else {
-                    context.sql("offset ? rows fetch next ? rows only");
-                }
+
+                // Casts are not supported here...
+                context.castMode(NEVER)
+                       .sql("offset ")
+                       .sql(offsetOrZero)
+                       .sql(" rows fetch next ")
+                       .sql(numberOfRows)
+                       .sql(" rows only")
+                       .castMode(castMode);
 
                 break;
             }
@@ -110,11 +111,13 @@ class Limit extends AbstractQueryPart {
 
                 // INGRES doesn't allow bind variables in the
                 // OFFSET m FETCH FIRST n ROWS ONLY clause
-                context.sql("offset ")
-                       .sql(getOffset())
+                context.inline(true)
+                       .sql("offset ")
+                       .sql(offsetOrZero)
                        .sql(" fetch first ")
-                       .sql(getNumberOfRows())
-                       .sql(" rows only");
+                       .sql(numberOfRows)
+                       .sql(" rows only")
+                       .inline(inline);
 
                 break;
             }
@@ -122,10 +125,12 @@ class Limit extends AbstractQueryPart {
             // Nice TOP .. START AT support
             // ----------------------------
             case SYBASE: {
-                context.sql("top ")
-                       .sql(getNumberOfRows())
+                context.inline(true)
+                       .sql("top ")
+                       .sql(numberOfRows)
                        .sql(" start at ")
-                       .sql(getOffset() + 1);
+                       .sql(offsetPlusOne)
+                       .inline(inline);
 
                 break;
             }
@@ -134,41 +139,43 @@ class Limit extends AbstractQueryPart {
             // "OFFSET" support is simulated with nested selects
             // -----------------------------------------------------------------
             case DB2: {
-                if (getOffset() != 0) {
-                    throw new SQLDialectNotSupportedException("DB2 does not support offsets in FETCH FIRST ROWS ONLY clause");
+                if (offset != null) {
+                    throw new DataAccessException("DB2 does not support offsets in FETCH FIRST ROWS ONLY clause");
                 }
 
-                // DB2 doesn't allow bind variables in the
-                // FETCH FIRST n ROWS ONLY clause
-                context.sql("fetch first ")
-                       .sql(getNumberOfRows())
-                       .sql(" rows only");
+                // DB2 doesn't allow bind variables here. Casting is not needed.
+                context.inline(true)
+                       .sql("fetch first ")
+                       .sql(numberOfRows)
+                       .sql(" rows only")
+                       .inline(inline);
 
                 break;
             }
 
             case ASE:
             case SQLSERVER: {
-                if (getOffset() != 0) {
-                    throw new SQLDialectNotSupportedException("Offsets in TOP clause not supported");
+                if (offset != null) {
+                    throw new DataAccessException("Offsets in TOP clause not supported");
                 }
 
                 // SQL Server and Sybase don't allow bind variables in the TOP n clause
-                context.sql("top ").sql(getNumberOfRows());
+                context.inline(true)
+                       .sql("top ")
+                       .sql(numberOfRows)
+                       .inline(inline);
+
                 break;
             }
 
             // A default implementation is necessary for hashCode() and toString()
             default: {
-                if (context.inline()) {
-                    context.sql("limit ")
-                           .sql(getNumberOfRows())
-                           .sql(" offset ")
-                           .sql(getOffset());
-                }
-                else {
-                    context.sql("limit ? offset ?");
-                }
+                context.castMode(NEVER)
+                       .sql("limit ")
+                       .sql(numberOfRows)
+                       .sql(" offset ")
+                       .sql(offsetOrZero)
+                       .castMode(castMode);
 
                 break;
             }
@@ -182,8 +189,8 @@ class Limit extends AbstractQueryPart {
             // OFFSET .. LIMIT support provided by the following dialects
             // ----------------------------------------------------------
             case DERBY: {
-                context.bind(val(getOffset()));
-                context.bind(val(getNumberOfRows()));
+                context.bind(offsetOrZero);
+                context.bind(numberOfRows);
                 break;
             }
 
@@ -194,86 +201,122 @@ class Limit extends AbstractQueryPart {
             case H2:
             case POSTGRES:
             case SQLITE: {
-                context.bind(val(getNumberOfRows()));
-                context.bind(val(getOffset()));
+                context.bind(numberOfRows);
+                context.bind(offsetOrZero);
+                break;
+            }
+
+            // These dialects don't support bind variables at all
+            case ASE:
+            case INGRES: {
                 break;
             }
 
             // No bind variables in the TOP .. START AT clause
             // -----------------------------------------------
-            case INGRES:
             case SYBASE: {
+
+                // TOP .. START AT clauses without bind variables
+                if (!rendersParams) {
+                }
+
+                // With simulated OFFSETs, no break, fall through
+                else {
+                    context.bind(getLowerRownum());
+                    context.bind(getUpperRownum());
+                }
+
                 break;
             }
 
             // These dialects don't allow bind variables in their TOP clauses
             // --------------------------------------------------------------
-            case ASE:
             case DB2:
             case SQLSERVER: {
 
                 // TOP clauses without bind variables
-                if (offset == 0) {
-                    break;
+                if (offset == null && !rendersParams) {
                 }
 
                 // With simulated OFFSETs, no break, fall through
                 else {
+                    context.bind(getLowerRownum());
+                    context.bind(getUpperRownum());
                 }
+
+                break;
             }
 
-            // Oracle knows no TOP clause, limits are always bound
-            // Also, with simulated OFFSETs, the previous dialects fall through
-            // -----------------------------------------------------------------
+            // Oracle knows no LIMIT or TOP clause, limits are always bound
+            // ------------------------------------------------------------
             case ORACLE: {
-                context.bind(val(getLowerRownum()));
-                context.bind(val(getUpperRownum()));
+                context.bind(getLowerRownum());
+                context.bind(getUpperRownum());
                 break;
             }
         }
     }
 
     /**
-     * The limit's OFFSET (first record to be returned)
+     * Whether this limit has an offset of zero
      */
-    public final int getOffset() {
-        return offset;
+    final boolean offsetZero() {
+        return offset == null;
     }
 
     /**
-     * The limit's LIMIT (number of records to be returned)
+     * The lower bound, such that ROW_NUMBER() > getLowerRownum()
      */
-    public final int getNumberOfRows() {
-        return numberOfRows;
+    final Field<Integer> getLowerRownum() {
+        return offsetOrZero;
     }
 
     /**
-     * The lower bound, such that ROW_NUMBER() >= getLowerRownum()
+     * The upper bound, such that ROW_NUMBER() <= getUpperRownum()
      */
-    public final int getLowerRownum() {
-        return offset + 1;
-    }
-
-    /**
-     * The upper bound, such that ROW_NUMBER() < getUpperRownum()
-     */
-    public final int getUpperRownum() {
-        return offset + 1 + numberOfRows;
+    final Field<Integer> getUpperRownum() {
+        return offsetOrZero.add(numberOfRows);
     }
 
     /**
      * Whether this LIMIT clause is applicable. If <code>false</code>, then no
      * LIMIT clause should be rendered.
      */
-    public final boolean isApplicable() {
-        return getOffset() != 0 || getNumberOfRows() != Integer.MAX_VALUE;
+    final boolean isApplicable() {
+        return offset != null || numberOfRows != null;
     }
 
-    void setOffset(int offset) {
+    /**
+     * Whether this LIMIT clause renders {@link Param} objects. This indicates
+     * to the <code>SELECT</code> statement, that it may need to prefer
+     * <code>ROW_NUMBER()</code> filtering over a <code>TOP</code> clause to
+     * allow for named parameters in the query, as the <code>TOP</code> clause
+     * may not accept bind variables.
+     */
+    final boolean rendersParams() {
+        return rendersParams;
+    }
+
+    final void setOffset(int offset) {
+        if (offset != 0) {
+            this.offset = val(offset);
+            this.offsetOrZero = this.offset;
+            this.offsetPlusOne = val(offset + 1);
+        }
+    }
+
+    final void setOffset(Param<Integer> offset) {
         this.offset = offset;
+        this.offsetOrZero = offset;
+        this.rendersParams = true;
     }
 
-    void setNumberOfRows(int numberOfRows) {
+    final void setNumberOfRows(int numberOfRows) {
+        this.numberOfRows = val(numberOfRows);
+    }
+
+    final void setNumberOfRows(Param<Integer> numberOfRows) {
         this.numberOfRows = numberOfRows;
+        this.rendersParams = true;
     }
 }

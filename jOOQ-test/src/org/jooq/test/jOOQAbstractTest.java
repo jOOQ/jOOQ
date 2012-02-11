@@ -766,6 +766,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLimitNamedParams() throws Exception {
+        new OrderByTests(this).testLimitNamedParams();
+    }
+
+    @Test
     public void testTypeConversions() throws Exception {
         new DataTypeTests(this).testTypeConversions();
     }

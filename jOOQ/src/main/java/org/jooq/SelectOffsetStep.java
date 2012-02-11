@@ -101,4 +101,15 @@ public interface SelectOffsetStep extends SelectFinalStep {
      */
     @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
     SelectFinalStep offset(int offset);
+
+    /**
+     * Add an <code>OFFSET</code> clause to the query using a named parameter
+     * <p>
+     * If there is no <code>LIMIT .. OFFSET</code> or <code>TOP</code> clause in
+     * your RDBMS, or if your RDBMS does not natively support offsets, this is
+     * simulated with a <code>ROW_NUMBER()</code> window function and nested
+     * <code>SELECT</code> statements.
+     */
+    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
+    SelectFinalStep offset(Param<Integer> offset);
 }

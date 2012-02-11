@@ -97,11 +97,31 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
     @Override
     public final void toSQL(RenderContext context) {
 
-        // Casting is only done when parameters are NOT inlined
+        // Casting can be enforced or prevented
+        switch (context.castMode()) {
+            case NEVER:
+                toSQL(context, getValue(), getType());
+                return;
+
+            case ALWAYS:
+                toSQLCast(context);
+                return;
+
+            case SOME:
+                if (context.cast()) {
+                    toSQLCast(context);
+                }
+                else {
+                    toSQL(context, getValue(), getType());
+                }
+
+                return;
+        }
+
+        // In default mode, casting is only done when parameters are NOT inlined
         if (!context.inline()) {
 
             // Generated enums should not be cast...
-            // The exception's exception
             if (!(getValue() instanceof EnumType) && !(getValue() instanceof MasterDataType)) {
                 switch (context.getDialect()) {
 

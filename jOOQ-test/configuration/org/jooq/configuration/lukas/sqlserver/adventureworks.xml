@@ -40,6 +40,8 @@
             <instanceFields>true</instanceFields>
             <unsignedTypes>true</unsignedTypes>
             <generatedAnnotation>false</generatedAnnotation>
+            <pojos>true</pojos>
+            <jpaAnnotations>true</jpaAnnotations>
         </generate>
         <target>
             <packageName>org.jooq.examples.sqlserver.adventureworks</packageName>

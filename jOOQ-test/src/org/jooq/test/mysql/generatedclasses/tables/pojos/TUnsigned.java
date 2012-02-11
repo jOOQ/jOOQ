@@ -8,12 +8,12 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1993294537;
+	private static final long serialVersionUID = -1510277863;
 
-	private org.jooq.tools.unsigned.UByte uByte;
-	private org.jooq.tools.unsigned.UShort uShort;
+	private org.jooq.tools.unsigned.UByte    uByte;
+	private org.jooq.tools.unsigned.UShort   uShort;
 	private org.jooq.tools.unsigned.UInteger uInt;
-	private org.jooq.tools.unsigned.ULong uLong;
+	private org.jooq.tools.unsigned.ULong    uLong;
 
 	public org.jooq.tools.unsigned.UByte getUByte() {
 		return this.uByte;

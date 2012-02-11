@@ -10,11 +10,11 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class XTestCase_85 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 411950047;
+	private static final long serialVersionUID = -2132677187;
 
 	private java.lang.Integer id;
 	private java.lang.Integer xUnusedId;
-	private java.lang.String xUnusedName;
+	private java.lang.String  xUnusedName;
 
 	public java.lang.Integer getId() {
 		return this.id;

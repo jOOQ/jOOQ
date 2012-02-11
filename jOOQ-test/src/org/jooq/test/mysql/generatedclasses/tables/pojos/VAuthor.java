@@ -10,14 +10,14 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 637869120;
+	private static final long serialVersionUID = 1430170954;
 
 	private java.lang.Integer id;
-	private java.lang.String firstName;
-	private java.lang.String lastName;
-	private java.sql.Date dateOfBirth;
+	private java.lang.String  firstName;
+	private java.lang.String  lastName;
+	private java.sql.Date     dateOfBirth;
 	private java.lang.Integer yearOfBirth;
-	private java.lang.String address;
+	private java.lang.String  address;
 
 	public java.lang.Integer getId() {
 		return this.id;

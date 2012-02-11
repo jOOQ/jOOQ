@@ -43,7 +43,6 @@ import static org.jooq.impl.Util.getMatchingGetter;
 import static org.jooq.impl.Util.getMatchingMembers;
 import static org.jooq.impl.Util.getMatchingSetters;
 import static org.jooq.impl.Util.hasColumnAnnotations;
-import static org.jooq.impl.Util.isJPAAvailable;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
@@ -562,7 +561,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
     private final <T> T intoPOJO(Class<? extends T> type) throws Exception {
         T result = type.newInstance();
-        boolean useAnnotations = isJPAAvailable() && hasColumnAnnotations(type);
+        boolean useAnnotations = hasColumnAnnotations(type);
 
         for (Field<?> field : getFields()) {
             List<java.lang.reflect.Field> members;
@@ -625,7 +624,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         Class<?> type = source.getClass();
 
         try {
-            boolean useAnnotations = isJPAAvailable() && hasColumnAnnotations(type);
+            boolean useAnnotations = hasColumnAnnotations(type);
 
             for (Field<?> field : getFields()) {
                 List<java.lang.reflect.Field> members;

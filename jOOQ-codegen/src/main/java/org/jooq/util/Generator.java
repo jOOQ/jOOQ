@@ -114,6 +114,16 @@ public interface Generator {
     void setGeneratePojos(boolean generatePojos);
 
     /**
+     * Whether POJO's and records should be annotated with JPA annotations
+     */
+    boolean generateJPAAnnotations();
+
+    /**
+     * Whether POJO's and records should be annotated with JPA annotations
+     */
+    void setGenerateJPAAnnotations(boolean generateJPAAnnotations);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

@@ -76,11 +76,11 @@ public class GenerationWriter {
         initialisationStatements.add(statement);
     }
 
-    public void print(String string) {
+    public void print(CharSequence string) {
         sb.append(string);
     }
 
-    public void println(String string) {
+    public void println(CharSequence string) {
         sb.append(string + "\n");
     }
 

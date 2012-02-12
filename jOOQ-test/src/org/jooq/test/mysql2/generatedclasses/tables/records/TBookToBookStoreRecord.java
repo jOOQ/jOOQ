@@ -8,9 +8,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * An m:n relation between books and book stores
  */
+@javax.persistence.Entity
+@javax.persistence.Table(name = "t_book_to_book_store", schema = "test2", uniqueConstraints = {
+	@javax.persistence.UniqueConstraint(columnNames = {"book_store_name", "book_id"})
+})
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -519812462;
+	private static final long serialVersionUID = 2130952857;
 
 	/**
 	 * The book store name
@@ -36,6 +40,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES t_book_store [test2.t_book_store.name]
 	 * </pre></code>
 	 */
+	@javax.persistence.Column(name = "book_store_name")
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
@@ -81,6 +86,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES t_book [test2.t_book.ID]
 	 * </pre></code>
 	 */
+	@javax.persistence.Column(name = "book_id")
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	}
@@ -112,6 +118,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * The number of books on stock
 	 */
+	@javax.persistence.Column(name = "stock")
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
 	}

@@ -8,9 +8,11 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * A book store
  */
+@javax.persistence.Entity
+@javax.persistence.Table(name = "t_book_store", schema = "test2")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1219854759;
+	private static final long serialVersionUID = 689080283;
 
 	/**
 	 * The books store name
@@ -22,6 +24,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * The books store name
 	 */
+	@javax.persistence.Column(name = "name", unique = true)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
 	}

@@ -8,9 +8,11 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * An unused table in the same schema.
  */
+@javax.persistence.Entity
+@javax.persistence.Table(name = "x_test_case_71", schema = "test2")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -915251641;
+	private static final long serialVersionUID = -1580068910;
 
 	/**
 	 * An uncommented item
@@ -26,6 +28,8 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * 
 	 * PRIMARY KEY
 	 */
+	@javax.persistence.Id
+	@javax.persistence.Column(name = "ID", unique = true)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID);
 	}
@@ -50,6 +54,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * REFERENCES x_test_case_64_69 [test2.x_test_case_64_69.ID]
 	 * </pre></code>
 	 */
+	@javax.persistence.Column(name = "TEST_CASE_64_69_ID")
 	public java.lang.Integer getTestCase_64_69Id() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
 	}

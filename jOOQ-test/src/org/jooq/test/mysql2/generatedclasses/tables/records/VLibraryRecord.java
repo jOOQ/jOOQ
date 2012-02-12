@@ -8,9 +8,11 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * VIEW
  */
+@javax.persistence.Entity
+@javax.persistence.Table(name = "v_library", schema = "test2")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1493006137;
+	private static final long serialVersionUID = 1654732788;
 
 	/**
 	 * An uncommented item
@@ -22,6 +24,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
+	@javax.persistence.Column(name = "AUTHOR")
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.AUTHOR);
 	}
@@ -36,6 +39,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	/**
 	 * The book's title
 	 */
+	@javax.persistence.Column(name = "TITLE")
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);
 	}

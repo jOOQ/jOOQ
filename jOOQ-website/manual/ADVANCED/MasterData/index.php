@@ -36,12 +36,23 @@ function printContent() {
 							<p>As previously discussed in the
 							  <a href="<?=$root?>/manual/META/Configuration/" title="jOOQ Manual reference: Configuration and setup of the generator">configuration and setup</a>
 							   section, you can configure master data tables as follows: </p>
-<pre class="prettyprint">#Generate a master data table enum classes (several Java regular expressions, separated by comma)
-generator.generate.master-data-tables=[a list of tables]
+<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the database element: --&gt;
+&lt;database&gt;
+  &lt;masterDataTables&gt;
+    &lt;masterDataTable&gt;
+      &lt;!-- The name of a master data table --&gt;
+      &lt;name&gt;[a table name]&lt;/name&gt;
 
-#For every master data table, specify two special columns
-generator.generate.master-data-table-literal.[master data table]=[column used for enum literals]
-generator.generate.master-data-table-description.[master data table]=[column used for documentation]</pre>
+      &lt;!-- The column used for enum literals --&gt;
+      &lt;literal&gt;[a column name]&lt;/literal&gt;
+
+      &lt;!-- The column used for documentation --&gt;
+      &lt;description&gt;[a column name]&lt;/description&gt;
+    &lt;/masterDataTable&gt;
+
+    [ &lt;masterDataTable&gt;...&lt;/masterDataTable&gt; ... ]
+  &lt;/masterDataTables&gt;
+ &lt;/database&gt;</pre>
 
 							<p>The results of this will be a Java enum that looks similar to this: </p>
 <pre class="prettyprint lang-java">public enum TLanguage implements MasterDataType&lt;Integer&gt; {

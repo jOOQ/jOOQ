@@ -26,6 +26,9 @@ generation. These improvements include:
   and to annotate both POJOs and Records with JPA annotations
   such as @Entity, @Table, @Id, @Column, @UniqueConstraint, etc.
 
+You can migrate your existing .properties configuration by running
+> org.jooq.util.GenerationTool /your.properties migrate
+
 Besides that, there is a lot of ongoing work to improve the
 integration of Oracle's TABLE and VARRAY types.
 

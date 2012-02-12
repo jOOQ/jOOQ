@@ -113,6 +113,7 @@ public class GenerationTool {
     		}
 		} catch (Exception e) {
             log.error("Cannot read " + args[0] + ". Error : " + e.getMessage());
+            e.printStackTrace();
             error();
         } finally {
             if (in != null) {

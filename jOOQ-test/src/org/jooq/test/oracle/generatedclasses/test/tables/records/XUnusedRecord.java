@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -775817862;
+	private static final long serialVersionUID = 2026302164;
 
 	/**
 	 * An uncommented item
@@ -288,6 +288,34 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELD_737);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setMsUnusedIdRef(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_ID_REF, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public java.lang.Integer getMsUnusedIdRef() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_ID_REF);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setMsUnusedNameRef(java.lang.String value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_NAME_REF, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public java.lang.String getMsUnusedNameRef() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_NAME_REF);
 	}
 
 	/**

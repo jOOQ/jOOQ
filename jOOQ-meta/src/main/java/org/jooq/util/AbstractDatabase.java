@@ -112,7 +112,7 @@ public abstract class AbstractDatabase implements Database {
             schemata = new ArrayList<SchemaDefinition>();
 
             for (String name : getInputSchemata()) {
-                schemata.add(new SchemaDefinition(this, getOutputSchema(name), null));
+                schemata.add(new SchemaDefinition(this, name, null));
             }
         }
 
@@ -120,9 +120,9 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final SchemaDefinition getSchema(String name) {
+    public final SchemaDefinition getSchema(String inputName) {
         for (SchemaDefinition schema : getSchemata()) {
-            if (schema.getName().equals(getOutputSchema(name))) {
+            if (schema.getName().equals(inputName)) {
                 return schema;
             }
         }

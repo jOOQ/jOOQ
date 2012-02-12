@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd">
+<configuration>
     <jdbc>
         <driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver>
         <url>jdbc:sqlserver://localhost:1433;databaseName=test;integratedSecurity=true</url>

@@ -140,7 +140,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             return getContainer().getName() + "." + getName();
         }
         else {
-            return getSchema().getName() + "." + getContainer().getName() + "." + getName();
+            return
+                getDatabase().getOutputSchema(getSchema().getName()) + "." +
+                getContainer().getName() + "." +
+                getName();
         }
     }
 }

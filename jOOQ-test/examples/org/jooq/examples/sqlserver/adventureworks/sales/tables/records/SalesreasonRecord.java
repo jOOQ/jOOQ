@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesReason", schema = "Sales")
 public class SalesreasonRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesreasonRecord> {
 
-	private static final long serialVersionUID = -1659776552;
+	private static final long serialVersionUID = 379209336;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class SalesreasonRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@javax.persistence.Column(name = "SalesReasonID", unique = true)
 	public java.lang.Integer getSalesreasonid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesreason.SALESREASON.SALESREASONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> fetchSalesorderheadersalesreasonList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON.SALESREASONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesreason.SALESREASON.SALESREASONID)))
-			.fetch();
 	}
 
 	/**

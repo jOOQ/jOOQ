@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class VendoraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord> {
 
-	private static final long serialVersionUID = -1597770297;
+	private static final long serialVersionUID = 440226976;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class VendoraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorAddress.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord fetchVendor() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR.VENDORID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS.VENDORID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Purchasing.VendorAddress.AddressID]
 	 * REFERENCES Address [Person.Address.AddressID]
 	 * </pre></code>
@@ -91,23 +74,6 @@ public class VendoraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 
 	/**
 	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord fetchAddress() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS.ADDRESSID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
 	 * <p>
 	 * <code><pre>
 	 * FOREIGN KEY [Purchasing.VendorAddress.AddressTypeID]
@@ -129,21 +95,6 @@ public class VendoraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "AddressTypeID")
 	public java.lang.Integer getAddresstypeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS.ADDRESSTYPEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorAddress.AddressTypeID]
-	 * REFERENCES AddressType [Person.AddressType.AddressTypeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord fetchAddresstype() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE.ADDRESSTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS.ADDRESSTYPEID)))
-			.fetchOne();
 	}
 
 	/**

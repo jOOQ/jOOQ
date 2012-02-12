@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> {
 
-	private static final long serialVersionUID = 745377000;
+	private static final long serialVersionUID = 468156792;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT.PRODUCTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.ProductDocument.DocumentID]
 	 * REFERENCES Document [Production.Document.DocumentID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@javax.persistence.Column(name = "DocumentID")
 	public java.lang.Integer getDocumentid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT.DOCUMENTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.DocumentID]
-	 * REFERENCES Document [Production.Document.DocumentID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord fetchDocument() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.DOCUMENT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.DOCUMENT.DOCUMENTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT.DOCUMENTID)))
-			.fetchOne();
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "ContactType", schema = "Person")
 public class ContacttypeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContacttypeRecord> {
 
-	private static final long serialVersionUID = -396258169;
+	private static final long serialVersionUID = 1346304751;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class ContacttypeRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@javax.persistence.Column(name = "ContactTypeID", unique = true)
 	public java.lang.Integer getContacttypeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE.CONTACTTYPEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord> fetchVendorcontactList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendorcontact.VENDORCONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendorcontact.VENDORCONTACT.CONTACTTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE.CONTACTTYPEID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> fetchStorecontactList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT.CONTACTTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE.CONTACTTYPEID)))
-			.fetch();
 	}
 
 	/**

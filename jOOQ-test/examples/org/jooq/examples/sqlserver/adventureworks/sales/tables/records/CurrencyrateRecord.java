@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
 public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord> {
 
-	private static final long serialVersionUID = 1826864506;
+	private static final long serialVersionUID = -1942718225;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "CurrencyRateID", unique = true)
 	public java.lang.Integer getCurrencyrateid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE.CURRENCYRATEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CURRENCYRATEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE.CURRENCYRATEID)))
-			.fetch();
 	}
 
 	/**
@@ -88,21 +76,6 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.FromCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord fetchCurrencyByFromcurrencycode() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.CURRENCY)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.CURRENCY.CURRENCYCODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE.FROMCURRENCYCODE)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.CurrencyRate.ToCurrencyCode]
 	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
 	 * </pre></code>
@@ -122,21 +95,6 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "ToCurrencyCode")
 	public java.lang.String getTocurrencycode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE.TOCURRENCYCODE);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.ToCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord fetchCurrencyByTocurrencycode() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.CURRENCY)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.CURRENCY.CURRENCYCODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE.TOCURRENCYCODE)))
-			.fetchOne();
 	}
 
 	/**

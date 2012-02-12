@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "TransactionHistory", schema = "Production")
 public class TransactionhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord> {
 
-	private static final long serialVersionUID = -127382687;
+	private static final long serialVersionUID = 1391335592;
 
 	/**
 	 * An uncommented item
@@ -55,21 +55,6 @@ public class TransactionhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	@javax.persistence.Column(name = "ProductID")
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistory.TRANSACTIONHISTORY.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.TransactionHistory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistory.TRANSACTIONHISTORY.PRODUCTID)))
-			.fetchOne();
 	}
 
 	/**

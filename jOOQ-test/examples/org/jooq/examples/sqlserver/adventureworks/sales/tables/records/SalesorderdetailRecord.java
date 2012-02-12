@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> {
 
-	private static final long serialVersionUID = -607760871;
+	private static final long serialVersionUID = 358867603;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "SalesOrderID")
 	public java.lang.Integer getSalesorderid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.SALESORDERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord fetchSalesorderheader() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SALESORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.SALESORDERID)))
-			.fetchOne();
 	}
 
 	/**
@@ -132,22 +115,6 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "ProductID")
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord fetchSpecialofferproduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.SPECIALOFFERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.SPECIALOFFERID)))
-			.and(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.PRODUCTID)))
-			.fetchOne();
 	}
 
 	/**

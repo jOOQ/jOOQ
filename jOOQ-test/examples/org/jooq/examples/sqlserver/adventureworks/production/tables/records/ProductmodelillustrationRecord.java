@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelillustrationRecord> {
 
-	private static final long serialVersionUID = 1363852360;
+	private static final long serialVersionUID = -327564872;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecor
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelRecord fetchProductmodel() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL.PRODUCTMODELID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration.PRODUCTMODELILLUSTRATION.PRODUCTMODELID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.ProductModelIllustration.IllustrationID]
 	 * REFERENCES Illustration [Production.Illustration.IllustrationID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecor
 	@javax.persistence.Column(name = "IllustrationID")
 	public java.lang.Integer getIllustrationid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration.PRODUCTMODELILLUSTRATION.ILLUSTRATIONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.IllustrationID]
-	 * REFERENCES Illustration [Production.Illustration.IllustrationID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord fetchIllustration() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.ILLUSTRATION)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.ILLUSTRATION.ILLUSTRATIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration.PRODUCTMODELILLUSTRATION.ILLUSTRATIONID)))
-			.fetchOne();
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductPhoto", schema = "Production")
 public class ProductphotoRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductphotoRecord> {
 
-	private static final long serialVersionUID = -94009547;
+	private static final long serialVersionUID = 766897457;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class ProductphotoRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "ProductPhotoID", unique = true)
 	public java.lang.Integer getProductphotoid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productphoto.PRODUCTPHOTO.PRODUCTPHOTOID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord> fetchProductproductphotoList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO.PRODUCTPHOTOID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productphoto.PRODUCTPHOTO.PRODUCTPHOTOID)))
-			.fetch();
 	}
 
 	/**

@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalespersonquotahistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord> {
 
-	private static final long serialVersionUID = -427011189;
+	private static final long serialVersionUID = 1313455198;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class SalespersonquotahistoryRecord extends org.jooq.impl.UpdatableRecord
 	@javax.persistence.Column(name = "SalesPersonID")
 	public java.lang.Integer getSalespersonid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salespersonquotahistory.SALESPERSONQUOTAHISTORY.SALESPERSONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesPersonQuotaHistory.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord fetchSalesperson() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON.SALESPERSONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salespersonquotahistory.SALESPERSONQUOTAHISTORY.SALESPERSONID)))
-			.fetchOne();
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesOrderHeader", schema = "Sales")
 public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> {
 
-	private static final long serialVersionUID = 1641573789;
+	private static final long serialVersionUID = 930050894;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "SalesOrderID", unique = true)
 	public java.lang.Integer getSalesorderid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SALESORDERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> fetchSalesorderdetailList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.SALESORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SALESORDERID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> fetchSalesorderheadersalesreasonList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON.SALESORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SALESORDERID)))
-			.fetch();
 	}
 
 	/**
@@ -220,21 +196,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord fetchCustomer() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER.CUSTOMERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CUSTOMERID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.SalesOrderHeader.ContactID]
 	 * REFERENCES Contact [Person.Contact.ContactID]
 	 * </pre></code>
@@ -254,21 +215,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "ContactID")
 	public java.lang.Integer getContactid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CONTACTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord fetchContact() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CONTACTID)))
-			.fetchOne();
 	}
 
 	/**
@@ -300,21 +246,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord fetchSalesperson() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON.SALESPERSONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SALESPERSONID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.SalesOrderHeader.TerritoryID]
 	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
 	 * </pre></code>
@@ -334,21 +265,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "TerritoryID")
 	public java.lang.Integer getTerritoryid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.TERRITORYID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord fetchSalesterritory() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.TERRITORYID)))
-			.fetchOne();
 	}
 
 	/**
@@ -380,21 +296,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.BillToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord fetchAddressByBilltoaddressid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.BILLTOADDRESSID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipToAddressID]
 	 * REFERENCES Address [Person.Address.AddressID]
 	 * </pre></code>
@@ -414,21 +315,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "ShipToAddressID")
 	public java.lang.Integer getShiptoaddressid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SHIPTOADDRESSID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord fetchAddressByShiptoaddressid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SHIPTOADDRESSID)))
-			.fetchOne();
 	}
 
 	/**
@@ -460,21 +346,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord fetchShipmethod() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD.SHIPMETHODID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SHIPMETHODID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.SalesOrderHeader.CreditCardID]
 	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
 	 * </pre></code>
@@ -494,21 +365,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "CreditCardID")
 	public java.lang.Integer getCreditcardid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CREDITCARDID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord fetchCreditcard() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD.CREDITCARDID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CREDITCARDID)))
-			.fetchOne();
 	}
 
 	/**
@@ -549,21 +405,6 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "CurrencyRateID")
 	public java.lang.Integer getCurrencyrateid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CURRENCYRATEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CurrencyRateID]
-	 * REFERENCES CurrencyRate [Sales.CurrencyRate.CurrencyRateID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord fetchCurrencyrate() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE.CURRENCYRATEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CURRENCYRATEID)))
-			.fetchOne();
 	}
 
 	/**

@@ -106,6 +106,7 @@ public class DefaultGenerator implements Generator {
 
     private boolean                 generateDeprecated          = true;
     private boolean                 generateRelations           = false;
+    private boolean                 generateNavigationMethods   = true;
     private boolean                 generateInstanceFields      = true;
     private boolean                 generateGeneratedAnnotation = true;
     private boolean                 generatePojos               = false;
@@ -146,6 +147,16 @@ public class DefaultGenerator implements Generator {
     @Override
     public boolean generateInstanceFields() {
         return generateInstanceFields;
+    }
+
+    @Override
+    public boolean generateNavigationMethods() {
+        return generateNavigationMethods;
+    }
+
+    @Override
+    public void setGenerateNavigationMethods(boolean generateNavigationMethods) {
+        this.generateNavigationMethods = generateNavigationMethods;
     }
 
     @Override
@@ -2217,7 +2228,10 @@ public class DefaultGenerator implements Generator {
 		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifierUC(element) + ");");
 		out.println("\t}");
 
-		if (generateRelations() && element instanceof ColumnDefinition) {
+		if (generateRelations() &&
+		    generateNavigationMethods() &&
+		    element instanceof ColumnDefinition) {
+
 		    ColumnDefinition column = (ColumnDefinition) element;
 
 			List<UniqueKeyDefinition> uniqueKeys = column.getUniqueKeys();

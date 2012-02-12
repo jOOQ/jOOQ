@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "Address", schema = "Person")
 public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = -137425674;
+	private static final long serialVersionUID = -307762430;
 
 	/**
 	 * An uncommented item
@@ -30,66 +30,6 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "AddressID", unique = true)
 	public java.lang.Integer getAddressid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord> fetchEmployeeaddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress.EMPLOYEEADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress.EMPLOYEEADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord> fetchVendoraddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord> fetchCustomeraddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderListByBilltoaddressid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.BILLTOADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderListByShiptoaddressid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SHIPTOADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID)))
-			.fetch();
 	}
 
 	/**
@@ -160,21 +100,6 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "StateProvinceID")
 	public java.lang.Integer getStateprovinceid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.STATEPROVINCEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Person.Address.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord fetchStateprovince() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.STATEPROVINCEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.STATEPROVINCEID)))
-			.fetchOne();
 	}
 
 	/**

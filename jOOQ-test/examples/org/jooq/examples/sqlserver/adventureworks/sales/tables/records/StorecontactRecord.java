@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> {
 
-	private static final long serialVersionUID = -924075427;
+	private static final long serialVersionUID = 1658015315;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.CustomerID]
-	 * REFERENCES Store [Sales.Store.CustomerID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord fetchStore() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.STORE)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.STORE.CUSTOMERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT.CUSTOMERID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.StoreContact.ContactID]
 	 * REFERENCES Contact [Person.Contact.ContactID]
 	 * </pre></code>
@@ -91,23 +74,6 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 
 	/**
 	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord fetchContact() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT.CONTACTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
 	 * <p>
 	 * <code><pre>
 	 * FOREIGN KEY [Sales.StoreContact.ContactTypeID]
@@ -129,21 +95,6 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "ContactTypeID")
 	public java.lang.Integer getContacttypeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT.CONTACTTYPEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactTypeID]
-	 * REFERENCES ContactType [Person.ContactType.ContactTypeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContacttypeRecord fetchContacttype() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE.CONTACTTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT.CONTACTTYPEID)))
-			.fetchOne();
 	}
 
 	/**

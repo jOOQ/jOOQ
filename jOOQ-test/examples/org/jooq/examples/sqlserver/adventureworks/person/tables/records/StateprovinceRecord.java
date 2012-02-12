@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "StateProvince", schema = "Person")
 public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord> {
 
-	private static final long serialVersionUID = 1329521171;
+	private static final long serialVersionUID = 655325962;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "StateProvinceID", unique = true)
 	public java.lang.Integer getStateprovinceid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.STATEPROVINCEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord> fetchAddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.STATEPROVINCEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.STATEPROVINCEID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord> fetchSalestaxrateList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salestaxrate.SALESTAXRATE)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salestaxrate.SALESTAXRATE.STATEPROVINCEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.STATEPROVINCEID)))
-			.fetch();
 	}
 
 	/**
@@ -94,21 +70,6 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "CountryRegionCode")
 	public java.lang.String getCountryregioncode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.COUNTRYREGIONCODE);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Person.StateProvince.CountryRegionCode]
-	 * REFERENCES CountryRegion [Person.CountryRegion.CountryRegionCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord fetchCountryregion() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION.COUNTRYREGIONCODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.COUNTRYREGIONCODE)))
-			.fetchOne();
 	}
 
 	/**
@@ -164,21 +125,6 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "TerritoryID")
 	public java.lang.Integer getTerritoryid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.TERRITORYID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Person.StateProvince.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord fetchSalesterritory() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.TERRITORYID)))
-			.fetchOne();
 	}
 
 	/**

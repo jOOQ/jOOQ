@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> {
 
-	private static final long serialVersionUID = 1137709772;
+	private static final long serialVersionUID = 2051955326;
 
 	/**
 	 * An uncommented item
@@ -49,41 +49,6 @@ public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.SpecialOfferID]
-	 * REFERENCES SpecialOffer [Sales.SpecialOffer.SpecialOfferID]
-	 * </pre></code>
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> fetchSalesorderdetailList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.SPECIALOFFERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.SPECIALOFFERID)))
-			.and(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.SpecialOfferID]
-	 * REFERENCES SpecialOffer [Sales.SpecialOffer.SpecialOfferID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord fetchSpecialoffer() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialoffer.SPECIALOFFER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialoffer.SPECIALOFFER.SPECIALOFFERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.SPECIALOFFERID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.SpecialOfferProduct.ProductID]
 	 * REFERENCES Product [Production.Product.ProductID]
 	 * </pre></code>
@@ -105,23 +70,6 @@ public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl
 	@javax.persistence.Column(name = "ProductID")
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.PRODUCTID)))
-			.fetchOne();
 	}
 
 	/**

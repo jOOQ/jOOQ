@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductlistpricehistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductlistpricehistoryRecord> {
 
-	private static final long serialVersionUID = 1037475598;
+	private static final long serialVersionUID = -1658165784;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class ProductlistpricehistoryRecord extends org.jooq.impl.UpdatableRecord
 	@javax.persistence.Column(name = "ProductID")
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productlistpricehistory.PRODUCTLISTPRICEHISTORY.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductListPriceHistory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productlistpricehistory.PRODUCTLISTPRICEHISTORY.PRODUCTID)))
-			.fetchOne();
 	}
 
 	/**

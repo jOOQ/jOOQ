@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord> {
 
-	private static final long serialVersionUID = -313498114;
+	private static final long serialVersionUID = 1439570437;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl
 	@javax.persistence.Column(name = "PurchaseOrderID")
 	public java.lang.Integer getPurchaseorderid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL.PURCHASEORDERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.PurchaseOrderID]
-	 * REFERENCES PurchaseOrderHeader [Purchasing.PurchaseOrderHeader.PurchaseOrderID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord fetchPurchaseorderheader() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.PURCHASEORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL.PURCHASEORDERID)))
-			.fetchOne();
 	}
 
 	/**
@@ -132,21 +115,6 @@ public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl
 	@javax.persistence.Column(name = "ProductID")
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL.PRODUCTID)))
-			.fetchOne();
 	}
 
 	/**

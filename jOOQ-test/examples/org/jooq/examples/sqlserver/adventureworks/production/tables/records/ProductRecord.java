@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Product", schema = "Production")
 public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord> {
 
-	private static final long serialVersionUID = 1104204404;
+	private static final long serialVersionUID = -570936821;
 
 	/**
 	 * An uncommented item
@@ -30,174 +30,6 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "ProductID", unique = true)
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> fetchBillofmaterialsListByComponentid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.COMPONENTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> fetchBillofmaterialsListByProductassemblyid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.PRODUCTASSEMBLYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord> fetchProductcosthistoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productcosthistory.PRODUCTCOSTHISTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productcosthistory.PRODUCTCOSTHISTORY.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> fetchProductdocumentList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductinventoryRecord> fetchProductinventoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductlistpricehistoryRecord> fetchProductlistpricehistoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productlistpricehistory.PRODUCTLISTPRICEHISTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productlistpricehistory.PRODUCTLISTPRICEHISTORY.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord> fetchProductproductphotoList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord> fetchProductreviewList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productreview.PRODUCTREVIEW)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productreview.PRODUCTREVIEW.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord> fetchTransactionhistoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistory.TRANSACTIONHISTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistory.TRANSACTIONHISTORY.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord> fetchWorkorderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord> fetchProductvendorList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord> fetchPurchaseorderdetailList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord> fetchShoppingcartitemList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Shoppingcartitem.SHOPPINGCARTITEM)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Shoppingcartitem.SHOPPINGCARTITEM.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> fetchSpecialofferproductList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID)))
-			.fetch();
 	}
 
 	/**
@@ -379,21 +211,6 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.SizeUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord fetchUnitmeasureBySizeunitmeasurecode() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE.UNITMEASURECODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.SIZEUNITMEASURECODE)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.Product.WeightUnitMeasureCode]
 	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
 	 * </pre></code>
@@ -413,21 +230,6 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "WeightUnitMeasureCode")
 	public java.lang.String getWeightunitmeasurecode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.WEIGHTUNITMEASURECODE);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.WeightUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord fetchUnitmeasureByWeightunitmeasurecode() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE.UNITMEASURECODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.WEIGHTUNITMEASURECODE)))
-			.fetchOne();
 	}
 
 	/**
@@ -534,21 +336,6 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductSubcategoryID]
-	 * REFERENCES ProductSubcategory [Production.ProductSubcategory.ProductSubcategoryID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord fetchProductsubcategory() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY.PRODUCTSUBCATEGORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTSUBCATEGORYID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.Product.ProductModelID]
 	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
 	 * </pre></code>
@@ -568,21 +355,6 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "ProductModelID")
 	public java.lang.Integer getProductmodelid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTMODELID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelRecord fetchProductmodel() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL.PRODUCTMODELID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTMODELID)))
-			.fetchOne();
 	}
 
 	/**

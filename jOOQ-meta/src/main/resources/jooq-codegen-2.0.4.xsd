@@ -262,6 +262,13 @@
 			  -->
 			<element name="relations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
+			<!--
+			  Generate navigation methods to navigate foreign key relationships
+			  directly from Record classes. This is only relevant if relations
+			  is set to true, too
+			  -->
+			<element name="navigationMethods" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
+
 			<!-- Generate deprecated code for backwards compatibility -->
 			<element name="deprecated" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
 

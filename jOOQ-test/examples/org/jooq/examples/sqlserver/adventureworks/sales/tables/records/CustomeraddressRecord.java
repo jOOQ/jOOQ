@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord> {
 
-	private static final long serialVersionUID = 2104736567;
+	private static final long serialVersionUID = -1045228540;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord fetchCustomer() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER.CUSTOMERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS.CUSTOMERID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.CustomerAddress.AddressID]
 	 * REFERENCES Address [Person.Address.AddressID]
 	 * </pre></code>
@@ -91,23 +74,6 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord fetchAddress() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS.ADDRESSID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
 	 * <p>
 	 * <code><pre>
 	 * FOREIGN KEY [Sales.CustomerAddress.AddressTypeID]
@@ -129,21 +95,6 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@javax.persistence.Column(name = "AddressTypeID")
 	public java.lang.Integer getAddresstypeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS.ADDRESSTYPEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressTypeID]
-	 * REFERENCES AddressType [Person.AddressType.AddressTypeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord fetchAddresstype() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE.ADDRESSTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS.ADDRESSTYPEID)))
-			.fetchOne();
 	}
 
 	/**

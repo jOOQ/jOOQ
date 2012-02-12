@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord> {
 
-	private static final long serialVersionUID = 1302734644;
+	private static final long serialVersionUID = 1825944154;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR.PRODUCTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Purchasing.ProductVendor.VendorID]
 	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "VendorID")
 	public java.lang.Integer getVendorid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR.VENDORID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord fetchVendor() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR.VENDORID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR.VENDORID)))
-			.fetchOne();
 	}
 
 	/**
@@ -234,21 +200,6 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "UnitMeasureCode")
 	public java.lang.String getUnitmeasurecode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR.UNITMEASURECODE);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord fetchUnitmeasure() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE.UNITMEASURECODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR.UNITMEASURECODE)))
-			.fetchOne();
 	}
 
 	/**

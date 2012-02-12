@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Culture", schema = "Production")
 public class CultureRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord> {
 
-	private static final long serialVersionUID = -1583146851;
+	private static final long serialVersionUID = -988396411;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class CultureRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "CultureID", unique = true)
 	public java.lang.String getCultureid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.CULTURE.CULTUREID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord> fetchProductmodelproductdescriptioncultureList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE.CULTUREID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.CULTURE.CULTUREID)))
-			.fetch();
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Shift", schema = "HumanResources")
 public class ShiftRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord> {
 
-	private static final long serialVersionUID = 1242699310;
+	private static final long serialVersionUID = -730819422;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class ShiftRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@javax.persistence.Column(name = "ShiftID", unique = true)
 	public java.lang.Byte getShiftid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.SHIFT.SHIFTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord> fetchEmployeedepartmenthistoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.SHIFTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.SHIFT.SHIFTID)))
-			.fetch();
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "CountryRegion", schema = "Person")
 public class CountryregionRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord> {
 
-	private static final long serialVersionUID = -1611364882;
+	private static final long serialVersionUID = 293528423;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class CountryregionRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	@javax.persistence.Column(name = "CountryRegionCode", unique = true)
 	public java.lang.String getCountryregioncode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION.COUNTRYREGIONCODE);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord> fetchStateprovinceList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.COUNTRYREGIONCODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION.COUNTRYREGIONCODE)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord> fetchCountryregioncurrencyList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Countryregioncurrency.COUNTRYREGIONCURRENCY)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Countryregioncurrency.COUNTRYREGIONCURRENCY.COUNTRYREGIONCODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION.COUNTRYREGIONCODE)))
-			.fetch();
 	}
 
 	/**

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SpecialOffer", schema = "Sales")
 public class SpecialofferRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord> {
 
-	private static final long serialVersionUID = 814990302;
+	private static final long serialVersionUID = 2046585254;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class SpecialofferRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "SpecialOfferID", unique = true)
 	public java.lang.Integer getSpecialofferid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialoffer.SPECIALOFFER.SPECIALOFFERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> fetchSpecialofferproductList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT.SPECIALOFFERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialoffer.SPECIALOFFER.SPECIALOFFERID)))
-			.fetch();
 	}
 
 	/**

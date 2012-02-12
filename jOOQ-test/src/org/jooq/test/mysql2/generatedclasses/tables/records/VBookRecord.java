@@ -8,9 +8,11 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * VIEW
  */
+@javax.persistence.Entity
+@javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -369657175;
+	private static final long serialVersionUID = -1931968530;
 
 	/**
 	 * The book ID
@@ -22,6 +24,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * The book ID
 	 */
+	@javax.persistence.Column(name = "ID")
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.ID);
 	}
@@ -36,6 +39,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * The author ID in entity 'author'
 	 */
+	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID);
 	}
@@ -50,6 +54,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * An uncommented item
 	 */
+	@javax.persistence.Column(name = "co_author_id")
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID);
 	}
@@ -64,6 +69,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * Some more details about the book
 	 */
+	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID);
 	}
@@ -78,6 +84,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * The book's title
 	 */
+	@javax.persistence.Column(name = "TITLE")
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.TITLE);
 	}
@@ -92,6 +99,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * The year the book was published in
 	 */
+	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN);
 	}
@@ -106,6 +114,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * The language of the book
 	 */
+	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID);
 	}
@@ -120,6 +129,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * Some textual content of the book
 	 */
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT);
 	}
@@ -134,6 +144,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * Some binary content of the book
 	 */
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF);
 	}
@@ -148,6 +159,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	/**
 	 * The book's stock status
 	 */
+	@javax.persistence.Column(name = "STATUS")
 	public org.jooq.test.mysql2.generatedclasses.enums.VBookStatus getStatus() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.STATUS);
 	}

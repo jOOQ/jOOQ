@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 85880556;
+	private static final long serialVersionUID = -962239126;
 
 	/**
 	 * The singleton instance of t_book
@@ -41,8 +41,8 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2
 	 * The author ID in entity 'author'
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [test.t_author.ID]
+	 * FOREIGN KEY [test2.t_book.AUTHOR_ID]
+	 * REFERENCES t_author [test2.t_author.ID]
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -51,8 +51,8 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book.co_author_id]
-	 * REFERENCES t_author [test.t_author.ID]
+	 * FOREIGN KEY [test2.t_book.co_author_id]
+	 * REFERENCES t_author [test2.t_author.ID]
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -76,8 +76,8 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2
 	 * The language of the book
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book.LANGUAGE_ID]
-	 * REFERENCES t_language [test.t_language.ID]
+	 * FOREIGN KEY [test2.t_book.LANGUAGE_ID]
+	 * REFERENCES t_language [test2.t_language.ID]
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.mysql2.generatedclasses.enums.TLanguage.class), this);

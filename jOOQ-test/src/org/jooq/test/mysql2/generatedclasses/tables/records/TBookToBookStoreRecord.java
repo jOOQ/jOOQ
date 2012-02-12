@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1567516542;
+	private static final long serialVersionUID = -519812462;
 
 	/**
 	 * The book store name
@@ -18,8 +18,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_store_name]
-	 * REFERENCES t_book_store [test.t_book_store.name]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_store_name]
+	 * REFERENCES t_book_store [test2.t_book_store.name]
 	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
@@ -32,8 +32,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_store_name]
-	 * REFERENCES t_book_store [test.t_book_store.name]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_store_name]
+	 * REFERENCES t_book_store [test2.t_book_store.name]
 	 * </pre></code>
 	 */
 	public java.lang.String getBookStoreName() {
@@ -46,8 +46,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_store_name]
-	 * REFERENCES t_book_store [test.t_book_store.name]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_store_name]
+	 * REFERENCES t_book_store [test2.t_book_store.name]
 	 * </pre></code>
 	 */
 	public org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
@@ -63,8 +63,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_id]
-	 * REFERENCES t_book [test.t_book.ID]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_id]
+	 * REFERENCES t_book [test2.t_book.ID]
 	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
@@ -77,8 +77,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_id]
-	 * REFERENCES t_book [test.t_book.ID]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_id]
+	 * REFERENCES t_book [test2.t_book.ID]
 	 * </pre></code>
 	 */
 	public java.lang.Integer getBookId() {
@@ -91,8 +91,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_id]
-	 * REFERENCES t_book [test.t_book.ID]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_id]
+	 * REFERENCES t_book [test2.t_book.ID]
 	 * </pre></code>
 	 */
 	public org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord fetchTBook() {

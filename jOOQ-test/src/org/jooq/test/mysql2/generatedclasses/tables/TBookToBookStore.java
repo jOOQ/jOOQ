@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1952103321;
+	private static final long serialVersionUID = -1567300673;
 
 	/**
 	 * The singleton instance of t_book_to_book_store
@@ -36,8 +36,8 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_store_name]
-	 * REFERENCES t_book_store [test.t_book_store.name]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_store_name]
+	 * REFERENCES t_book_store [test2.t_book_store.name]
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, this);
@@ -48,8 +48,8 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.t_book_to_book_store.book_id]
-	 * REFERENCES t_book [test.t_book.ID]
+	 * FOREIGN KEY [test2.t_book_to_book_store.book_id]
+	 * REFERENCES t_book [test2.t_book.ID]
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, this);

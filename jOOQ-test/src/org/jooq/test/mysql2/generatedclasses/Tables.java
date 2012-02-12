@@ -11,27 +11,27 @@ package org.jooq.test.mysql2.generatedclasses;
 public final class Tables {
 
 	/**
-	 * The table test.t_639_numbers_table
+	 * The table test2.t_639_numbers_table
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
 
 	/**
-	 * The table test.t_658_ref
+	 * The table test2.t_658_ref
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.mysql2.generatedclasses.tables.T_658Ref.T_658_REF;
 
 	/**
-	 * The table test.t_725_lob_test
+	 * The table test2.t_725_lob_test
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
 
 	/**
-	 * The table test.t_785
+	 * The table test2.t_785
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.T_785 T_785 = org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785;
 
 	/**
-	 * The table test.t_959
+	 * The table test2.t_959
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.T_959 T_959 = org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959;
 
@@ -56,22 +56,22 @@ public final class Tables {
 	public static org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 	/**
-	 * The table test.t_booleans
+	 * The table test2.t_booleans
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
-	 * The table test.t_identity_pk
+	 * The table test2.t_identity_pk
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
-	 * The table test.t_triggers
+	 * The table test2.t_triggers
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
-	 * The table test.t_unsigned
+	 * The table test2.t_unsigned
 	 */
 	public static org.jooq.test.mysql2.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 

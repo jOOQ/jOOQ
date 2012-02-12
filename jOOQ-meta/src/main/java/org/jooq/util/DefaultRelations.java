@@ -95,9 +95,14 @@ public class DefaultRelations implements Relations {
             ColumnDefinition foreignKeyColumn,
             SchemaDefinition uniqueKeySchema) {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName);
+        // [#1134] Prevent NPE's when a foreign key references a unique key
+        // from another schema
+        if (uniqueKeySchema == null) {
+            log.warn("Unused foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName + " references a schema out of scope for jooq-meta");
+            return;
         }
+
+        log.info("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName);
 
         ForeignKeyDefinition foreignKey = foreignKeys.get(key(foreignKeyColumn, foreignKeyName));
 

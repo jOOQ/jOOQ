@@ -184,6 +184,8 @@ public abstract class jOOQAbstractTest<
     public static boolean                connectionInitialised;
     public static Connection             connectionMultiSchema;
     public static boolean                connectionMultiSchemaInitialised;
+    public static Connection             connectionMultiSchemaUnused;
+    public static boolean                connectionMultiSchemaUnusedInitialised;
     public static boolean                autocommit;
     public static String                 jdbcURL;
     public static String                 jdbcSchema;
@@ -211,7 +213,12 @@ public abstract class jOOQAbstractTest<
                 if (!StringUtils.isBlank(sql)) {
                     sql = sql.replace("{" + JDBC_SCHEMA + "}", jdbcSchema);
 
-                    if (sql.toLowerCase().contains("multi_schema.")) {
+                    if (sql.toLowerCase().contains("multi_schema_unused.") &&
+                       !sql.toLowerCase().contains("references multi_schema_unused")) {
+                        stmt = getConnectionMultiSchemaUnused().createStatement();
+                    }
+                    else if (sql.toLowerCase().contains("multi_schema.") &&
+                            !sql.toLowerCase().contains("references multi_schema.")) {
                         stmt = getConnectionMultiSchema().createStatement();
                     }
                     else {
@@ -370,6 +377,15 @@ public abstract class jOOQAbstractTest<
         }
 
         return connectionMultiSchema;
+    }
+
+    public final Connection getConnectionMultiSchemaUnused() {
+        if (!connectionMultiSchemaUnusedInitialised) {
+            connectionMultiSchemaUnusedInitialised = true;
+            connectionMultiSchemaUnused = getConnection0("MULTI_SCHEMA_UNUSED", "MULTI_SCHEMA_UNUSED");
+        }
+
+        return connectionMultiSchemaUnused;
     }
 
     private final Connection getConnection0(String jdbcUser, String jdbcPassword) {

@@ -41,6 +41,8 @@ DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_booleans/
 
+DROP TABLE multi_schema_unused.x_unused/
+
 DROP PROCEDURE p_arrays1/
 DROP PROCEDURE p_arrays2/
 DROP PROCEDURE p_arrays3/
@@ -531,6 +533,16 @@ CREATE TABLE t_arrays (
 )
 /
 
+CREATE TABLE multi_schema_unused.x_unused (
+  id NUMBER(7) NOT NULL,
+  name VARCHAR2(10) NOT NULL,
+
+  CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME)
+)
+/
+
+GRANT ALL ON MULTI_SCHEMA_UNUSED.X_UNUSED TO TEST/
+
 CREATE TABLE x_unused (
   id NUMBER(7) NOT NULL,
   name VARCHAR2(10) NOT NULL,
@@ -546,10 +558,17 @@ CREATE TABLE x_unused (
   PRIMARYKEY NUMBER(7),
   name_ref VARCHAR2(10),
   "FIELD 737" NUMBER(25, 2),
+  MS_UNUSED_ID_REF NUMBER(7),
+  MS_UNUSED_NAME_REF VARCHAR2(10),
 
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
-  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
+  CONSTRAINT fk_x_unused_self
+    FOREIGN KEY(ID_REF, NAME_REF)
+    REFERENCES X_UNUSED(ID, NAME),
+  CONSTRAINT fk_ms_unused_x_unused
+    FOREIGN KEY(MS_UNUSED_ID_REF, MS_UNUSED_NAME_REF)
+    REFERENCES MULTI_SCHEMA_UNUSED.X_UNUSED(ID, NAME)
 )
 /
 COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'

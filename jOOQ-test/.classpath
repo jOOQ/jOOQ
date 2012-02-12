@@ -24,7 +24,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/jconn3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jtds-1.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
-	<classpathentry kind="lib" path="lib/h2-1.3.163.jar" sourcepath="/jOOQ-sources/h2-1.3.163-sources.jar"/>
-	<classpathentry kind="lib" path="lib/joor-0.9.1.jar" sourcepath="C:/Users/lukas/.m2/repository/org/jooq/joor/0.9.1/joor-0.9.1-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.163.jar" sourcepath="/jOOQ-sources/h2-1.3.163-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/joor-0.9.1.jar" sourcepath="C:/Users/lukas/.m2/repository/org/jooq/joor/0.9.1/joor-0.9.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

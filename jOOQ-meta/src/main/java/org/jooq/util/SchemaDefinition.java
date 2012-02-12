@@ -51,7 +51,7 @@ public class SchemaDefinition extends AbstractDefinition {
 
 	@Override
 	public final String getQualifiedName() {
-		return getName();
+		return getDatabase().getOutputSchema(getName());
 	}
 
     public boolean isDefaultSchema() {

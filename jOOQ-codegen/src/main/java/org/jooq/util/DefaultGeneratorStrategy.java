@@ -158,7 +158,13 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        return GenerationUtil.convertToJavaIdentifier(definition.getName());
+
+        // [#1126] TODO refactor this into input/output/label name
+        String n = (definition instanceof SchemaDefinition)
+            ? definition.getDatabase().getOutputSchema(definition.getName())
+            : definition.getName();
+
+        return GenerationUtil.convertToJavaIdentifier(n);
     }
 
     @Override
@@ -346,7 +352,12 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     private String getJavaClassName0(Definition definition, String suffix) {
         StringBuilder result = new StringBuilder();
 
-        String name = GenerationUtil.convertToJavaIdentifier(definition.getName());
+        // [#1126] TODO refactor this into input/output/label name
+        String n = (definition instanceof SchemaDefinition)
+            ? definition.getDatabase().getOutputSchema(definition.getName())
+            : definition.getName();
+
+        String name = GenerationUtil.convertToJavaIdentifier(n);
         result.append(StringUtils.toCamelCase(name));
 
         // The POJO suffix doesn't really apply to the file name

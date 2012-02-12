@@ -72,7 +72,9 @@ extends AbstractDefinition {
             return getName();
         }
         else {
-            return getSchema().getName() + "." + getName();
+            return
+                getDatabase().getOutputSchema(getSchema().getName()) + "." +
+                getName();
         }
     }
 

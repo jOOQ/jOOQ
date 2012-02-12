@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CreditCard", schema = "Sales")
 public class CreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord> {
 
-	private static final long serialVersionUID = 923430547;
+	private static final long serialVersionUID = 668442135;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class CreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "CreditCardID", unique = true)
 	public java.lang.Integer getCreditcardid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD.CREDITCARDID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> fetchContactcreditcardList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD.CREDITCARDID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD.CREDITCARDID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CREDITCARDID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD.CREDITCARDID)))
-			.fetch();
 	}
 
 	/**

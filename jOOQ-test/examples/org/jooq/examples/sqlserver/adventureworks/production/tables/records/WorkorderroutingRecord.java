@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> {
 
-	private static final long serialVersionUID = 2067780240;
+	private static final long serialVersionUID = -157427903;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "WorkOrderID")
 	public java.lang.Integer getWorkorderid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING.WORKORDERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.WorkOrderID]
-	 * REFERENCES WorkOrder [Production.WorkOrder.WorkOrderID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord fetchWorkorder() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.WORKORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING.WORKORDERID)))
-			.fetchOne();
 	}
 
 	/**
@@ -121,21 +104,6 @@ public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "LocationID")
 	public java.lang.Short getLocationid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING.LOCATIONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord fetchLocation() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION.LOCATIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING.LOCATIONID)))
-			.fetchOne();
 	}
 
 	/**

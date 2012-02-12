@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "PurchaseOrderHeader", schema = "Purchasing")
 public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> {
 
-	private static final long serialVersionUID = 2126182746;
+	private static final long serialVersionUID = -455800583;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	@javax.persistence.Column(name = "PurchaseOrderID", unique = true)
 	public java.lang.Integer getPurchaseorderid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.PURCHASEORDERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord> fetchPurchaseorderdetailList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL.PURCHASEORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.PURCHASEORDERID)))
-			.fetch();
 	}
 
 	/**
@@ -103,21 +91,6 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord fetchEmployee() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE.EMPLOYEEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.EMPLOYEEID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.VendorID]
 	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
 	 * </pre></code>
@@ -143,21 +116,6 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord fetchVendor() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR.VENDORID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.VENDORID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.ShipMethodID]
 	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
 	 * </pre></code>
@@ -177,21 +135,6 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	@javax.persistence.Column(name = "ShipMethodID")
 	public java.lang.Integer getShipmethodid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.SHIPMETHODID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord fetchShipmethod() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD.SHIPMETHODID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.SHIPMETHODID)))
-			.fetchOne();
 	}
 
 	/**

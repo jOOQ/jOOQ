@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ScrapReason", schema = "Production")
 public class ScrapreasonRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord> {
 
-	private static final long serialVersionUID = 48429735;
+	private static final long serialVersionUID = 1708542311;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class ScrapreasonRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@javax.persistence.Column(name = "ScrapReasonID", unique = true)
 	public java.lang.Short getScrapreasonid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason.SCRAPREASON.SCRAPREASONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord> fetchWorkorderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.SCRAPREASONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason.SCRAPREASON.SCRAPREASONID)))
-			.fetch();
 	}
 
 	/**

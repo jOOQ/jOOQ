@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Department", schema = "HumanResources")
 public class DepartmentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord> {
 
-	private static final long serialVersionUID = 710605850;
+	private static final long serialVersionUID = -1624684218;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class DepartmentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "DepartmentID", unique = true)
 	public java.lang.Short getDepartmentid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.DEPARTMENT.DEPARTMENTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord> fetchEmployeedepartmenthistoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.DEPARTMENTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.DEPARTMENT.DEPARTMENTID)))
-			.fetch();
 	}
 
 	/**

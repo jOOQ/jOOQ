@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> {
 
-	private static final long serialVersionUID = -799083807;
+	private static final long serialVersionUID = 218224695;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRe
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord fetchSalesorderheader() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SALESORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON.SALESORDERID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesReasonID]
 	 * REFERENCES SalesReason [Sales.SalesReason.SalesReasonID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRe
 	@javax.persistence.Column(name = "SalesReasonID")
 	public java.lang.Integer getSalesreasonid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON.SALESREASONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesReasonID]
-	 * REFERENCES SalesReason [Sales.SalesReason.SalesReasonID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesreasonRecord fetchSalesreason() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesreason.SALESREASON)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesreason.SALESREASON.SALESREASONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON.SALESREASONID)))
-			.fetchOne();
 	}
 
 	/**

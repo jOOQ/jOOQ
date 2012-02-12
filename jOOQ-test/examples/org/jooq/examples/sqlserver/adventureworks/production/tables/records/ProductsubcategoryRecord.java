@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductSubcategory", schema = "Production")
 public class ProductsubcategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord> {
 
-	private static final long serialVersionUID = 1159921698;
+	private static final long serialVersionUID = -1625373226;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class ProductsubcategoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true)
 	public java.lang.Integer getProductsubcategoryid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY.PRODUCTSUBCATEGORYID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord> fetchProductList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTSUBCATEGORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY.PRODUCTSUBCATEGORYID)))
-			.fetch();
 	}
 
 	/**
@@ -67,21 +55,6 @@ public class ProductsubcategoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	@javax.persistence.Column(name = "ProductCategoryID")
 	public java.lang.Integer getProductcategoryid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY.PRODUCTCATEGORYID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductSubcategory.ProductCategoryID]
-	 * REFERENCES ProductCategory [Production.ProductCategory.ProductCategoryID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcategoryRecord fetchProductcategory() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productcategory.PRODUCTCATEGORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productcategory.PRODUCTCATEGORY.PRODUCTCATEGORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY.PRODUCTCATEGORYID)))
-			.fetchOne();
 	}
 
 	/**

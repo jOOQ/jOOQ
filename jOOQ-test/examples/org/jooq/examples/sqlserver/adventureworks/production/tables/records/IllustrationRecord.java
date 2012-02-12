@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Illustration", schema = "Production")
 public class IllustrationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord> {
 
-	private static final long serialVersionUID = -206512581;
+	private static final long serialVersionUID = 1726217849;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class IllustrationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "IllustrationID", unique = true)
 	public java.lang.Integer getIllustrationid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.ILLUSTRATION.ILLUSTRATIONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelillustrationRecord> fetchProductmodelillustrationList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration.PRODUCTMODELILLUSTRATION)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration.PRODUCTMODELILLUSTRATION.ILLUSTRATIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.ILLUSTRATION.ILLUSTRATIONID)))
-			.fetch();
 	}
 
 	/**

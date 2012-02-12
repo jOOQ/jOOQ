@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord> {
 
-	private static final long serialVersionUID = -267341185;
+	private static final long serialVersionUID = 1344173135;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO.PRODUCTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.ProductProductPhoto.ProductPhotoID]
 	 * REFERENCES ProductPhoto [Production.ProductPhoto.ProductPhotoID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl
 	@javax.persistence.Column(name = "ProductPhotoID")
 	public java.lang.Integer getProductphotoid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO.PRODUCTPHOTOID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductPhotoID]
-	 * REFERENCES ProductPhoto [Production.ProductPhoto.ProductPhotoID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductphotoRecord fetchProductphoto() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productphoto.PRODUCTPHOTO)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productphoto.PRODUCTPHOTO.PRODUCTPHOTOID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO.PRODUCTPHOTOID)))
-			.fetchOne();
 	}
 
 	/**

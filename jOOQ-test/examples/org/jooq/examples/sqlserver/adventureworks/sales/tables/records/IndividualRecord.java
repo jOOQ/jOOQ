@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Individual", schema = "Sales")
 public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord> {
 
-	private static final long serialVersionUID = -623814168;
+	private static final long serialVersionUID = 1818733005;
 
 	/**
 	 * An uncommented item
@@ -44,23 +44,6 @@ public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 
 	/**
 	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.Individual.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord fetchCustomer() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER.CUSTOMERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.INDIVIDUAL.CUSTOMERID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
 	 * <p>
 	 * <code><pre>
 	 * FOREIGN KEY [Sales.Individual.ContactID]
@@ -82,21 +65,6 @@ public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "ContactID")
 	public java.lang.Integer getContactid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.INDIVIDUAL.CONTACTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.Individual.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord fetchContact() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.INDIVIDUAL.CONTACTID)))
-			.fetchOne();
 	}
 
 	/**

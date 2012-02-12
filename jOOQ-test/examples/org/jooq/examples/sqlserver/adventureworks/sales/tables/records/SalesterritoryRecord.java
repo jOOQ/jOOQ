@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTerritory", schema = "Sales")
 public class SalesterritoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord> {
 
-	private static final long serialVersionUID = -2064930938;
+	private static final long serialVersionUID = -1308758909;
 
 	/**
 	 * An uncommented item
@@ -30,66 +30,6 @@ public class SalesterritoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.
 	@javax.persistence.Column(name = "TerritoryID", unique = true)
 	public java.lang.Integer getTerritoryid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord> fetchStateprovinceList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord> fetchCustomerList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord> fetchSalespersonList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord> fetchSalesterritoryhistoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritoryhistory.SALESTERRITORYHISTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritoryhistory.SALESTERRITORYHISTORY.TERRITORYID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY.TERRITORYID)))
-			.fetch();
 	}
 
 	/**

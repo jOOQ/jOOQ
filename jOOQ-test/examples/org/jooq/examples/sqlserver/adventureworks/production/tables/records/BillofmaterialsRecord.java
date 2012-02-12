@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "BillOfMaterials", schema = "Production")
 public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> {
 
-	private static final long serialVersionUID = -704544534;
+	private static final long serialVersionUID = -509911625;
 
 	/**
 	 * An uncommented item
@@ -61,21 +61,6 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ProductAssemblyID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProductByProductassemblyid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.PRODUCTASSEMBLYID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.BillOfMaterials.ComponentID]
 	 * REFERENCES Product [Production.Product.ProductID]
 	 * </pre></code>
@@ -95,21 +80,6 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@javax.persistence.Column(name = "ComponentID")
 	public java.lang.Integer getComponentid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.COMPONENTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ComponentID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProductByComponentid() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.COMPONENTID)))
-			.fetchOne();
 	}
 
 	/**
@@ -165,21 +135,6 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@javax.persistence.Column(name = "UnitMeasureCode")
 	public java.lang.String getUnitmeasurecode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.UNITMEASURECODE);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord fetchUnitmeasure() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE.UNITMEASURECODE.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS.UNITMEASURECODE)))
-			.fetchOne();
 	}
 
 	/**

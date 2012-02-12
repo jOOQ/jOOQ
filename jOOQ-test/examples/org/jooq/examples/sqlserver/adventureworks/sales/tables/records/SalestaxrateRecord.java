@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalestaxrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord> {
 
-	private static final long serialVersionUID = 983865188;
+	private static final long serialVersionUID = -453441598;
 
 	/**
 	 * An uncommented item
@@ -55,21 +55,6 @@ public class SalestaxrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "StateProvinceID")
 	public java.lang.Integer getStateprovinceid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salestaxrate.SALESTAXRATE.STATEPROVINCEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesTaxRate.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord fetchStateprovince() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE.STATEPROVINCEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salestaxrate.SALESTAXRATE.STATEPROVINCEID)))
-			.fetchOne();
 	}
 
 	/**

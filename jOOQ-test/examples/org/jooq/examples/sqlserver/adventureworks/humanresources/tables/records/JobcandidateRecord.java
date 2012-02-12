@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "JobCandidate", schema = "HumanResources")
 public class JobcandidateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord> {
 
-	private static final long serialVersionUID = 2095506850;
+	private static final long serialVersionUID = 1475341113;
 
 	/**
 	 * An uncommented item
@@ -55,21 +55,6 @@ public class JobcandidateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "EmployeeID")
 	public java.lang.Integer getEmployeeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Jobcandidate.JOBCANDIDATE.EMPLOYEEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.JobCandidate.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord fetchEmployee() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE.EMPLOYEEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Jobcandidate.JOBCANDIDATE.EMPLOYEEID)))
-			.fetchOne();
 	}
 
 	/**

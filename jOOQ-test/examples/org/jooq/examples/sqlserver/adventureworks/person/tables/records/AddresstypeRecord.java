@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "AddressType", schema = "Person")
 public class AddresstypeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord> {
 
-	private static final long serialVersionUID = 229830877;
+	private static final long serialVersionUID = 1010214319;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class AddresstypeRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	@javax.persistence.Column(name = "AddressTypeID", unique = true)
 	public java.lang.Integer getAddresstypeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE.ADDRESSTYPEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord> fetchVendoraddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS.ADDRESSTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE.ADDRESSTYPEID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord> fetchCustomeraddressList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS.ADDRESSTYPEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE.ADDRESSTYPEID)))
-			.fetch();
 	}
 
 	/**

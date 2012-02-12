@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> {
 
-	private static final long serialVersionUID = -1975384101;
+	private static final long serialVersionUID = -924548417;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord fetchContact() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD.CONTACTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Sales.ContactCreditCard.CreditCardID]
 	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	@javax.persistence.Column(name = "CreditCardID")
 	public java.lang.Integer getCreditcardid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD.CREDITCARDID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord fetchCreditcard() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD.CREDITCARDID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD.CREDITCARDID)))
-			.fetchOne();
 	}
 
 	/**

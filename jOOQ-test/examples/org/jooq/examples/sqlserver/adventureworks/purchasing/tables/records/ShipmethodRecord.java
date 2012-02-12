@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "ShipMethod", schema = "Purchasing")
 public class ShipmethodRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord> {
 
-	private static final long serialVersionUID = -562519872;
+	private static final long serialVersionUID = -447256924;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class ShipmethodRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "ShipMethodID", unique = true)
 	public java.lang.Integer getShipmethodid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD.SHIPMETHODID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> fetchPurchaseorderheaderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER.SHIPMETHODID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD.SHIPMETHODID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.SHIPMETHODID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD.SHIPMETHODID)))
-			.fetch();
 	}
 
 	/**

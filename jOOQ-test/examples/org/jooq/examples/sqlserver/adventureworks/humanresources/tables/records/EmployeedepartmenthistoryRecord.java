@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord> {
 
-	private static final long serialVersionUID = -419475286;
+	private static final long serialVersionUID = 2134684220;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	@javax.persistence.Column(name = "EmployeeID")
 	public java.lang.Integer getEmployeeid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.EMPLOYEEID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord fetchEmployee() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE.EMPLOYEEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.EMPLOYEEID)))
-			.fetchOne();
 	}
 
 	/**
@@ -95,23 +78,6 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.DepartmentID]
-	 * REFERENCES Department [HumanResources.Department.DepartmentID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord fetchDepartment() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.DEPARTMENT)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.DEPARTMENT.DEPARTMENTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.DEPARTMENTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.ShiftID]
 	 * REFERENCES Shift [HumanResources.Shift.ShiftID]
 	 * </pre></code>
@@ -133,23 +99,6 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	@javax.persistence.Column(name = "ShiftID")
 	public java.lang.Byte getShiftid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.SHIFTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.ShiftID]
-	 * REFERENCES Shift [HumanResources.Shift.ShiftID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord fetchShift() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.SHIFT)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.SHIFT.SHIFTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY.SHIFTID)))
-			.fetchOne();
 	}
 
 	/**

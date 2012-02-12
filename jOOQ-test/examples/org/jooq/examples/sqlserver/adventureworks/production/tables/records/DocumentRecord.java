@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Document", schema = "Production")
 public class DocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord> {
 
-	private static final long serialVersionUID = -1715965267;
+	private static final long serialVersionUID = -121018047;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class DocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	@javax.persistence.Column(name = "DocumentID", unique = true)
 	public java.lang.Integer getDocumentid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.DOCUMENT.DOCUMENTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> fetchProductdocumentList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT.DOCUMENTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.DOCUMENT.DOCUMENTID)))
-			.fetch();
 	}
 
 	/**

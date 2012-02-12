@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord> {
 
-	private static final long serialVersionUID = 1493003556;
+	private static final long serialVersionUID = -800723272;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord fetchEmployee() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE.EMPLOYEEID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress.EMPLOYEEADDRESS.EMPLOYEEID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [HumanResources.EmployeeAddress.AddressID]
 	 * REFERENCES Address [Person.Address.AddressID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	@javax.persistence.Column(name = "AddressID")
 	public java.lang.Integer getAddressid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress.EMPLOYEEADDRESS.ADDRESSID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord fetchAddress() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS)
-			.where(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS.ADDRESSID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress.EMPLOYEEADDRESS.ADDRESSID)))
-			.fetchOne();
 	}
 
 	/**

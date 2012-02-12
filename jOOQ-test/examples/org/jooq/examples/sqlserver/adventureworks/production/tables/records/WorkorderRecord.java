@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "WorkOrder", schema = "Production")
 public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord> {
 
-	private static final long serialVersionUID = -1290006323;
+	private static final long serialVersionUID = -1456152415;
 
 	/**
 	 * An uncommented item
@@ -30,18 +30,6 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@javax.persistence.Column(name = "WorkOrderID", unique = true)
 	public java.lang.Integer getWorkorderid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.WORKORDERID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> fetchWorkorderroutingList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING.WORKORDERID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.WORKORDERID)))
-			.fetch();
 	}
 
 	/**
@@ -67,21 +55,6 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@javax.persistence.Column(name = "ProductID")
 	public java.lang.Integer getProductid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.PRODUCTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.PRODUCTID)))
-			.fetchOne();
 	}
 
 	/**
@@ -197,21 +170,6 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@javax.persistence.Column(name = "ScrapReasonID")
 	public java.lang.Short getScrapreasonid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.SCRAPREASONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ScrapReasonID]
-	 * REFERENCES ScrapReason [Production.ScrapReason.ScrapReasonID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord fetchScrapreason() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason.SCRAPREASON)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason.SCRAPREASON.SCRAPREASONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER.SCRAPREASONID)))
-			.fetchOne();
 	}
 
 	/**

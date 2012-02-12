@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductinventoryRecord> {
 
-	private static final long serialVersionUID = -252646676;
+	private static final long serialVersionUID = 281701012;
 
 	/**
 	 * An uncommented item
@@ -49,23 +49,6 @@ public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductInventory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord fetchProduct() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT.PRODUCTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY.PRODUCTID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.ProductInventory.LocationID]
 	 * REFERENCES Location [Production.Location.LocationID]
 	 * </pre></code>
@@ -87,23 +70,6 @@ public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "LocationID")
 	public java.lang.Short getLocationid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY.LOCATIONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductInventory.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord fetchLocation() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION.LOCATIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY.LOCATIONID)))
-			.fetchOne();
 	}
 
 	/**

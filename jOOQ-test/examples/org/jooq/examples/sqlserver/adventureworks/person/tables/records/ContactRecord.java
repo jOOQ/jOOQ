@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "Contact", schema = "Person")
 public class ContactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord> {
 
-	private static final long serialVersionUID = -2029545760;
+	private static final long serialVersionUID = 1081748288;
 
 	/**
 	 * An uncommented item
@@ -30,78 +30,6 @@ public class ContactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "ContactID", unique = true)
 	public java.lang.Integer getContactid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord> fetchEmployeeList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE)
-			.where(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord> fetchVendorcontactList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendorcontact.VENDORCONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendorcontact.VENDORCONTACT.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> fetchContactcreditcardList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord> fetchIndividualList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.INDIVIDUAL)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.INDIVIDUAL.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> fetchSalesorderheaderList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> fetchStorecontactList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT)
-			.where(org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT.CONTACTID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT.CONTACTID)))
-			.fetch();
 	}
 
 	/**

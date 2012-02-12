@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class LocationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord> {
 
-	private static final long serialVersionUID = -1271608159;
+	private static final long serialVersionUID = 258545505;
 
 	/**
 	 * An uncommented item
@@ -30,30 +30,6 @@ public class LocationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	@javax.persistence.Column(name = "LocationID", unique = true)
 	public java.lang.Short getLocationid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION.LOCATIONID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductinventoryRecord> fetchProductinventoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY.LOCATIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION.LOCATIONID)))
-			.fetch();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> fetchWorkorderroutingList() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING.LOCATIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION.LOCATIONID)))
-			.fetch();
 	}
 
 	/**

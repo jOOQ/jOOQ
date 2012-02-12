@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord> {
 
-	private static final long serialVersionUID = -1040443747;
+	private static final long serialVersionUID = -747812886;
 
 	/**
 	 * An uncommented item
@@ -41,23 +41,6 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	@javax.persistence.Column(name = "ProductModelID")
 	public java.lang.Integer getProductmodelid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE.PRODUCTMODELID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelRecord fetchProductmodel() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL.PRODUCTMODELID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE.PRODUCTMODELID)))
-			.fetchOne();
 	}
 
 	/**
@@ -95,23 +78,6 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductDescriptionID]
-	 * REFERENCES ProductDescription [Production.ProductDescription.ProductDescriptionID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord fetchProductdescription() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdescription.PRODUCTDESCRIPTION)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Productdescription.PRODUCTDESCRIPTION.PRODUCTDESCRIPTIONID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE.PRODUCTDESCRIPTIONID)))
-			.fetchOne();
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
 	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.CultureID]
 	 * REFERENCES Culture [Production.Culture.CultureID]
 	 * </pre></code>
@@ -133,23 +99,6 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	@javax.persistence.Column(name = "CultureID")
 	public java.lang.String getCultureid() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE.CULTUREID);
-	}
-
-	/**
-	 * An uncommented item
-	 * 
-	 * PRIMARY KEY
-	 * <p>
-	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.CultureID]
-	 * REFERENCES Culture [Production.Culture.CultureID]
-	 * </pre></code>
-	 */
-	public org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord fetchCulture() {
-		return create()
-			.selectFrom(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.CULTURE)
-			.where(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.CULTURE.CULTUREID.equal(getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE.CULTUREID)))
-			.fetchOne();
 	}
 
 	/**

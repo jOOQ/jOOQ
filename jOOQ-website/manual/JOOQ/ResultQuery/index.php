@@ -75,6 +75,8 @@ Object[] fetchArray(String fieldName);
 
 <pre class="prettyprint lang-java">// Fetch the resulting records into a custom POJO
 // type, which may or may not be JPA-annotated
+// Use the generator's &lt;pojos&gt;true&lt;/pojos&gt; and &lt;jpaAnnotation&gt;true&lt;/jpaAnnotation&gt;
+// configurations to generate such POJOs with jOOQ
 &lt;E&gt; List&lt;E&gt; fetchInto(Class&lt;? extends E&gt; type);
 
 // Fetch the resulting records into a custom

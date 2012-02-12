@@ -71,86 +71,183 @@ function printContent() {
 							</p>
 
 
-							<h2>Configure jOOQ</h2>
+							<h2>Configure jOOQ's code generator</h2>
 							<p>You need to tell jOOQ some things about your database connection.
-								Here's an example of how to do it for a MySQL database </p>
-<pre class="prettyprint">#Configure the database connection here
-jdbc.Driver=com.mysql.jdbc.Driver
-jdbc.URL=jdbc:mysql://[your jdbc URL]
-jdbc.User=[your database user]
-jdbc.Password=[your database password]
+								Here's an example of how to do it for an Oracle database </p>
+<pre class="prettyprint lang-xml">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;configuration&gt;
+  &lt;!-- Configure the database connection here --&gt;
+  &lt;jdbc&gt;
+    &lt;driver&gt;oracle.jdbc.OracleDriver&lt;/driver&gt;
+    &lt;url&gt;jdbc:oracle:thin:@[your jdbc connection parameters]&lt;/url&gt;
+    &lt;user&gt;[your database user]&lt;/user&gt;
+    &lt;password&gt;[your database password]&lt;/password&gt;
+  &lt;/jdbc&gt;
 
-#The default code generator. You can override this one, to generate your own code style
-#Defaults to org.jooq.util.DefaultGenerator
-generator=org.jooq.util.DefaultGenerator
+  &lt;generator&gt;
+    &lt;!-- The default code generator. You can override this one, to generate your own code style
+         Defaults to org.jooq.util.DefaultGenerator --&gt;
+    &lt;name&gt;org.jooq.util.DefaultGenerator&lt;/name&gt;
 
-#The database type. The format here is:
-#generator.database=org.util.[database].[database]Database
-generator.database=org.jooq.util.mysql.MySQLDatabase
+    &lt;!-- The naming strategy used for class and field names.
+         You may override this with your custom naming strategy.
+         Defaults to org.jooq.util.DefaultGeneratorStrategy --&gt;
+    &lt;strategy&gt;
+      &lt;name&gt;org.jooq.util.DefaultGeneratorStrategy&lt;/name&gt;
+    &lt;/strategy&gt;
 
-#The schema that is used locally as a source for meta information. This could be your
-#development schema or the production schema, etc:
-generator.database.input-schema=[your database schema / owner / name]
+    &lt;database&gt;
+      &lt;!-- The database dialect from jooq-meta. Available dialects are
+           named org.util.[database].[database]Database. Known values are:
 
-#All elements that are generated from your schema (several Java regular expressions, separated by comma)
-#Watch out for case-sensitivity. Depending on your database, this might be important!
-#You can create case-insensitive regular expressions using this syntax: (?i:expr)
-generator.database.includes=.*
+           org.jooq.util.ase.ASEDatabase
+           org.jooq.util.db2.DB2Database
+           org.jooq.util.derby.DerbyDatabase
+           org.jooq.util.h2.H2Database
+           org.jooq.util.hsqldb.HSQLDBDatabase
+           org.jooq.util.ingres.IngresDatabase
+           org.jooq.util.mysql.MySQLDatabase
+           org.jooq.util.oracle.OracleDatabase
+           org.jooq.util.postgres.PostgresDatabase
+           org.jooq.util.sqlite.SQLiteDatabaes
+           org.jooq.util.sqlserver.SQLServerDatabase
+           org.jooq.util.sybase.SybaseDatabase
 
-#All elements that are excluded from your schema (several Java regular expressions, separated by comma). Excludes match before includes
-generator.database.excludes=
+           You can also provide your own org.jooq.util.Database implementation
+           here, if your database is currently not supported --&gt;
+      &lt;name&gt;org.jooq.util.oracle.OracleDatabase&lt;/name&gt;
 
-#Primary key / foreign key relations should be generated and used.
-#This will be a prerequisite for various advanced features
-#Defaults to false
-generator.generate.relations=true
+      &lt;!-- All elements that are generated from your schema (several Java
+           regular expressions, separated by comma) Watch out for
+           case-sensitivity. Depending on your database, this might be
+           important! You can create case-insensitive regular expressions
+           using this syntax: (?i:expr)A comma-separated list of regular
+           expressions --&gt;
+      &lt;includes&gt;.*&lt;/includes&gt;
 
-#Generate deprecated code for backwards compatibility
-#Defaults to true
-generator.generate.deprecated=false
+      &lt;!-- All elements that are excluded from your schema (several Java
+           regular expressions, separated by comma). Excludes match before
+           includes --&gt;
+      &lt;excludes&gt;&lt;/excludes&gt;
 
-#The destination package of your generated classes (within the destination directory)
-generator.target.package=[org.jooq.your.package]
+      &lt;!-- The schema that is used locally as a source for meta information.
+           This could be your development schema or the production schema, etc
+           This cannot be combined with the schemata element. --&gt;
+      &lt;inputSchema&gt;[your database schema / owner / name]&lt;/inputSchema&gt;
+    &lt;/database&gt;
 
-#The destination directory of your generated classes
-generator.target.directory=[/path/to/your/dir]</pre>
+    &lt;generate&gt;
+      &lt;!-- See advanced configuration properties --&gt;
+    &lt;/generate&gt;
 
-							<p>And you can add some optional advanced configuration parameters: </p>
-<pre class="prettyprint">#The schema that is used in generated source code. This will be the production schema
-#Use this to override your local development schema name for source code generation
-#If not specified, this will be the same as the input-schema.
-generator.database.output-schema=[your database schema / owner / name]
+    &lt;target&gt;
+      &lt;!-- The destination package of your generated classes (within the
+           destination directory) --&gt;
+      &lt;packageName&gt;[org.jooq.your.packagename]&lt;/packageName&gt;
 
-#Generate java.sql.Timestamp fields for DATE columns. This is particularly useful for Oracle databases
-#Defaults to false
-generator.database.date-as-timestamp=true
+      &lt;!-- The destination directory of your generated classes --&gt;
+      &lt;directory&gt;[/path/to/your/dir]&lt;/directory&gt;
+    &lt;/target&gt;
+  &lt;/generator&gt;
+&lt;/configuration&gt;</pre>
 
-#Generate instance fields in your tables, as opposed to static fields. This simplifies aliasing
-#Defaults to true
-generator.generate.instance-fields=true
+							<p>And you can add some optional advanced configuration parameters for the database: </p>
 
-#Generate the javax.annotation.Generated annotation to indicate jOOQ version used for source code
-#generation. Defaults to true
-generator.generate.generated-annotation=true
+<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the database element: --&gt;
+&lt;database&gt;
+  &lt;!-- Generate java.sql.Timestamp fields for DATE columns. This is
+       particularly useful for Oracle databases.
+       Defaults to false --&gt;
+  &lt;dateAsTimestamp&gt;false&lt;/dateAsTimestamp&gt;
 
-#Generate jOOU data types for your unsigned data types, which are not natively supported in Java
-#Defaults to true
-generator.generate.unsigned-types=true
+  &lt;!-- Generate jOOU data types for your unsigned data types, which are
+       not natively supported in Java.
+       Defaults to true --&gt;
+  &lt;unsignedTypes&gt;true&lt;/unsignedTypes&gt;
 
-#Generate a master data table enum classes (several Java regular expressions, separated by comma)
-generator.generate.master-data-tables=[a list of tables]
+  &lt;!-- The schema that is used in generated source code. This will be the
+       production schema. Use this to override your local development
+       schema name for source code generation. If not specified, this
+       will be the same as the input-schema. --&gt;
+  &lt;outputSchema&gt;[your database schema / owner / name]&lt;/outputSchema&gt;
 
-#For every master data table, specify two special columns
-generator.generate.master-data-table-literal.[master data table]=[column used for enum literals]
-generator.generate.master-data-table-description.[master data table]=[column used for documentation]</pre>
+  &lt;!-- A configuration element to configure several input and/or output
+       schemata for jooq-meta, in case you're using jooq-meta in a multi-
+       schema environment.
+       This cannot be combined with the above inputSchema / outputSchema --&gt;
+  &lt;schemata&gt;
+    &lt;schema&gt;
+      &lt;inputSchema&gt;...&lt;/inputSchema&gt;
+      &lt;outputSchema&gt;...&lt;/outputSchema&gt;
+    &lt;/schema&gt;
+    [ &lt;schema&gt;...&lt;/schema&gt; ... ]
+  &lt;/schemata&gt;
+
+  &lt;!-- A configuration element to configure master data table enum classes --&gt;
+  &lt;masterDataTables&gt;...&lt;/masterDataTables&gt;
+
+  &lt;!-- A configuration element to configure synthetic enum types
+       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
+  &lt;enumTypes&gt;...&lt;/enumTypes&gt;
+
+  &lt;!-- A configuration element to configure type overrides for generated
+       artefacts (e.g. in combination with enumTypes)
+       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
+  &lt;forcedTypes&gt;...&lt;/forcedTypes&gt;
+&lt;/database&gt;</pre>
+
+                            <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
+
+<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
+&lt;generate&gt;
+  &lt;!-- Primary key / foreign key relations should be generated and used.
+       This is a prerequisite for various advanced features.
+       Defaults to false --&gt;
+  &lt;relations&gt;false&lt;/relations&gt;
+
+  &lt;!-- Generate navigation methods to navigate foreign key relationships
+       directly from Record classes. This is only relevant if relations
+       is set to true, too.
+       Defaults to true --&gt;
+  &lt;navigationMethods&gt;true&lt;/navigationMethods&gt;
+
+  &lt;!-- Generate deprecated code for backwards compatibility
+       Defaults to true --&gt;
+  &lt;deprecated&gt;true&lt;/deprecated&gt;
+
+  &lt;!-- Generate instance fields in your tables, as opposed to static
+       fields. This simplifies aliasing.
+       Defaults to true --&gt;
+  &lt;instanceFields&gt;true&lt;/instanceFields&gt;
+
+  &lt;!-- Generate the javax.annotation.Generated annotation to indicate
+       jOOQ version used for source code.
+       Defaults to true --&gt;
+  &lt;generatedAnnotation&gt;true&lt;/generatedAnnotation&gt;
+
+  &lt;!-- Generate POJOs in addition to Record classes for usage of the
+       ResultQuery.fetchInto(Class) API
+       Defaults to false --&gt;
+  &lt;pojos&gt;false&lt;/pojos&gt;
+
+  &lt;!-- Annotate POJOs and Records with JPA annotations for increased
+       compatibility and better integration with JPA/Hibernate, etc
+       Defaults to false --&gt;
+  &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
+&lt;/generate&gt;</pre>
+
 							<p>Check out the manual's section about
 								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
 								 to find out more
 								about those advanced configuration parameters. </p>
 
+							<p>Also, check out the official XSD file at
+							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</a>
+							   for a formal specification</p>
+
 							<h2>Run jOOQ code generation</h2>
 							<p>Code generation works by calling this class with the above property file as argument.</p>
-							<pre class="prettyprint">org.jooq.util.GenerationTool /jooq-config.properties</pre>
+							<pre class="prettyprint">org.jooq.util.GenerationTool /jooq-config.xml</pre>
 							<p>Be sure that these elements are located on the classpath: </p>
 							<ul>
 								
@@ -300,13 +397,6 @@ generator.generate.master-data-table-description.[master data table]=[column use
         &lt;packageName&gt;org.jooq.util.maven.example&lt;/packageName&gt;
         &lt;directory&gt;target/generated-sources/jooq&lt;/directory&gt;
       &lt;/target&gt;
-      &lt;masterDataTables&gt;
-        &lt;masterDataTable&gt;
-          &lt;name&gt;t_language&lt;/name&gt;
-          &lt;literal&gt;cd&lt;/literal&gt;
-          &lt;description&gt;description&lt;/description&gt;
-        &lt;/masterDataTable&gt;
-      &lt;/masterDataTables&gt;
     &lt;/generator&gt;
   &lt;/configuration&gt;
 &lt;/plugin&gt;
@@ -314,6 +404,19 @@ generator.generate.master-data-table-description.[master data table]=[column use
 							<p>See the full example of a pom.xml including the jOOQ-codegen artefact here:
 							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml" title="jOOQ-codegen-maven example pom.xml file">https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a>
 </p>
+
+                            <h3>Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</h3>
+                            <p>
+                                Before jOOQ 2.0.4, the code generator was configured using properties files
+                                These files are still supported for source code generation, but their syntax
+                                won't be maintained any longer. If you wish to migrate to XML, you can
+                                migrate the file using this command on the command line
+                            </p>
+							<pre class="prettyprint">org.jooq.util.GenerationTool /jooq-config.properties migrate</pre>
+							<p>
+								Using the migrate flag, jOOQ will read the properties file and output
+								a corresponding XML file on system out
+							</p>
 
 							<h3>Use jOOQ generated classes in your application</h3>
 							<p>Be sure, both jOOQ.jar and your generated package (see

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
  */
 public class MultiSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -540234768;
+	private static final long serialVersionUID = -1472774415;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA
@@ -24,6 +24,9 @@ public class MultiSchema extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
-		return java.util.Arrays.<org.jooq.Table<?>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
+		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR,
+			org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK,
+			org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
 	}
 }

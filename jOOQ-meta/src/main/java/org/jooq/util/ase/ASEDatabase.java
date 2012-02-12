@@ -205,7 +205,7 @@ public class ASEDatabase extends AbstractDatabase {
                     String uniqueKeyName = record.getValueAsString("pk");
 
                     ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
-                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column);
+                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column, getSchema());
                 }
             }
         }

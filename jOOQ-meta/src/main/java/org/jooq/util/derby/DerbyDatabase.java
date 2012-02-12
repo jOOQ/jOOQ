@@ -144,39 +144,44 @@ public class DerbyDatabase extends AbstractDatabase {
 
 	@Override
 	protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        Field<String> foreignKey = field("fc.constraintname", String.class);
-	    Field<String> foreignKeyTable = field("ft.tablename", String.class);
-	    Field<String> foreignKeySchema = field("fs.schemaname", String.class);
-	    Field<?> foreignKeyDescriptor = field("fg.descriptor");
-	    Field<String> uniqueKey = field("pc.constraintname", String.class);
+        Field<String> fkName = field("fc.constraintname", String.class);
+	    Field<String> fkTable = field("ft.tablename", String.class);
+	    Field<String> fkSchema = field("fs.schemaname", String.class);
+	    Field<?> fkDescriptor = field("fg.descriptor");
+	    Field<String> ukName = field("pc.constraintname", String.class);
+	    Field<String> ukSchema = field("ps.schemaname", String.class);
 
 	    for (Record record : create().select(
-	            foreignKey,
-	            foreignKeyTable,
-	            foreignKeySchema,
-	            foreignKeyDescriptor,
-	            uniqueKey)
+	            fkName,
+	            fkTable,
+	            fkSchema,
+	            fkDescriptor,
+	            ukName,
+	            ukSchema)
 	        .from("sys.sysconstraints   fc")
 	        .join("sys.sysforeignkeys   f ").on("f.constraintid = fc.constraintid")
 	        .join("sys.sysconglomerates fg").on("fg.conglomerateid = f.conglomerateid")
 	        .join("sys.systables        ft").on("ft.tableid = fg.tableid")
 	        .join("sys.sysschemas       fs").on("ft.schemaid = fs.schemaid")
 	        .join("sys.sysconstraints   pc").on("pc.constraintid = f.keyconstraintid")
+	        .join("sys.sysschemas       ps").on("pc.schemaid = ps.schemaid")
 	        .where("fc.type = 'F'")
 	        .fetch()) {
 
-	        SchemaDefinition schema = getSchema(record.getValue(foreignKeySchema));
-	        String foreignKeyName = record.getValue(foreignKey);
-            String foreignKeyTableName = record.getValue(foreignKeyTable);
-            List<Integer> foreignKeyIndexes = decode(record.getValueAsString(foreignKeyDescriptor));
-            String uniqueKeyName = record.getValue(uniqueKey);
+	        SchemaDefinition foreignKeySchema = getSchema(record.getValue(fkSchema));
+	        SchemaDefinition uniqueKeySchema = getSchema(record.getValue(ukSchema));
 
-	        TableDefinition referencingTable = getTable(schema, foreignKeyTableName);
+	        String foreignKeyName = record.getValue(fkName);
+            String foreignKeyTableName = record.getValue(fkTable);
+            List<Integer> foreignKeyIndexes = decode(record.getValueAsString(fkDescriptor));
+            String uniqueKeyName = record.getValue(ukName);
+
+	        TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
             if (referencingTable != null) {
                 for (int i = 0; i < foreignKeyIndexes.size(); i++) {
                     ColumnDefinition column = referencingTable.getColumn(foreignKeyIndexes.get(i));
 
-                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column);
+                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
                 }
             }
 	    }

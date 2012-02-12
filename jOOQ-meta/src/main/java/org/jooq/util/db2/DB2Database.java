@@ -149,7 +149,8 @@ public class DB2Database extends AbstractDatabase {
                     References.TABSCHEMA.trim(),
                     References.TABNAME,
                     References.FK_COLNAMES,
-                    concat(References.REFTABNAME, val("__"), References.REFKEYNAME).as("referenced_constraint_name"))
+                    concat(References.REFTABNAME, val("__"), References.REFKEYNAME).as("referenced_constraint_name"),
+                    References.REFTABSCHEMA.trim())
                 .from(REFERENCES)
                 .where(References.TABSCHEMA.in(getInputSchemata()))
                 .orderBy(
@@ -159,13 +160,15 @@ public class DB2Database extends AbstractDatabase {
                     References.FK_COLNAMES)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(References.TABSCHEMA.trim()));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(References.TABSCHEMA.trim()));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(References.REFTABSCHEMA.trim()));
+
             String foreignKey = record.getValue("constraint_name", String.class);
             String foreignKeyTableName = record.getValue(References.TABNAME);
             String foreignKeyColumn = record.getValue(References.FK_COLNAMES);
             String uniqueKey = record.getValue("referenced_constraint_name", String.class);
 
-            TableDefinition foreignKeyTable = getTable(schema, foreignKeyTableName);
+            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
 
             if (foreignKeyTable != null) {
                 /*
@@ -178,7 +181,7 @@ public class DB2Database extends AbstractDatabase {
                 for (int i = 0; i < referencingColumnNames.length; i++) {
                     ColumnDefinition column = foreignKeyTable.getColumn(referencingColumnNames[i]);
 
-                    relations.addForeignKey(foreignKey, uniqueKey, column);
+                    relations.addForeignKey(foreignKey, uniqueKey, column, uniqueKeySchema);
                 }
             }
         }

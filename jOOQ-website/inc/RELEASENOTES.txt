@@ -9,6 +9,95 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.0.4 - February 12, 2012
+=================================================================
+
+This release introduced many improvements to source code
+generation. These improvements include:
+
+- Maven and standalone code generation now use the same XML
+  configuration, which is read by jOOQ-codegen using JAXB. This
+  allows for more complex configuration elements in the future
+- jOOQ-codegen can now handle multi-schema databases and generate
+  code for tables referencing tables from other schemata. This
+  is integration tested against the SQL Server AdventureWorks
+  database
+- jOOQ now allows to generate simple POJOs in addition to Records
+  and to annotate both POJOs and Records with JPA annotations
+  such as @Entity, @Table, @Id, @Column, @UniqueConstraint, etc.
+
+Besides that, there is a lot of ongoing work to improve the
+integration of Oracle's TABLE and VARRAY types.
+
+Features and improvements
+-------------------------
+#8    - Add JPA annotations to generated POJOs / Records
+#282  - Add support for multi-schema databases
+#287  - Add support for Oracle TABLE types
+#395  - Use XML configuration file instead of properties file
+#1089 - Add Field.contains(), .startsWith(), .endsWith() as a
+        convenience for Field.like() (including escaping)
+#1092 - Move master data table configuration from
+        generator.generate to generator.database namespace
+#1093 - Add support for generator.strategy in Maven source code
+        generation
+#1094 - Add support for generator.database.date-as-timestamp in
+        Maven source code generation
+#1095 - Move generator.generate.unsigned-types to
+        generator.database namespace
+#1096 - Add support for generator.generate.unsigned-types in
+        Maven source code generation
+#1103 - Add support for SQL Server data type uniqueidentifier
+#1106 - Add Factory.escape(Field<String>, char) for use with LIKE
+#1108 - Add support for multi-schema databases using Maven code
+        generation
+#1115 - Add support for Oracle VARRAY/TABLE of OBJECT types
+#1127 - Add support for POJO classes generation
+#1129 - Allow for using Param in LIMIT .. OFFSET clauses
+#1132 - Add RenderContext.castMode() to allow for avoiding casts
+        where this is not really needed
+#1136 - Add generation option to enable/disable generating
+        navigation methods
+
+Bug fixes
+---------
+#1099 - Derby generated artefacts are not sorted alphabetically
+#1101 - Internal API leak exposed through covariance in
+        AbstractTable.joinXXX() methods
+#1110 - VARRAY element type information is lost when unnesting
+        VARRAY's in Oracle
+#1111 - VARRAY element type information is lost when unnesting
+        VARRAY's returned from functions in Oracle
+#1114 - Syntax error when unnesting TABLE of OBJECT in Oracle.
+        The unnested table contains several columns but jOOQ only
+        unnests "COLUMN_VALUE"
+#1117 - NullPointerException when passing an ArrayRecord
+        containing a null array to a stored function in Oracle
+#1125 - Postgres needs casting for date time data types in
+        queries like SELECT ? FROM DUAL
+#1131 - DB2: [Noauthorized routine named "LIKE" of type
+        "FUNCTION" having compatible arguments was found] when
+        using Field.like(concat(x, y))
+#1133 - Compilation errors in generated source code if the same
+        constraint name exists in several schemata
+#1134 - NullPointerException in code generation when a foreign
+        key constraint references a table from another schema
+        that is not being generated
+#1135 - Generated Javadoc references inputSchema instead of
+        outputSchema
+
+Test cases
+----------
+#1009 - Add more integration tests for proper handling of
+        java.sql.Date, Time, Timestamp
+#1090 - Run jOOQ tests against AdventureWorks SQL Server sample
+        database
+#1105 - Add integration tests for multi-schema source code
+        generation and querying
+#1122 - The 10k lines of integration test code are too heavy for
+        the compiler. Create test modules with fewer lines of
+        code, each.
+
 Version 2.0.3 - January 29, 2012
 =================================================================
 

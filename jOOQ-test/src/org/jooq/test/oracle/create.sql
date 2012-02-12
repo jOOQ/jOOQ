@@ -12,6 +12,8 @@ DROP SEQUENCE s_triggers_sequence/
 DROP TRIGGER t_triggers_trigger/
 
 DROP TABLE multi_schema.t_book_sale/
+DROP TABLE multi_schema.t_book/
+DROP TABLE multi_schema.t_author/
 
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/
@@ -471,8 +473,9 @@ COMMENT ON COLUMN t_book_to_book_store.book_store_name IS 'The book store name'/
 COMMENT ON COLUMN t_book_to_book_store.book_id IS 'The book ID'/
 COMMENT ON COLUMN t_book_to_book_store.stock IS 'The number of books on stock'/
 
-GRANT ALL ON T_BOOK_TO_BOOK_STORE TO MULTI_SCHEMA
-/
+GRANT ALL ON T_BOOK_TO_BOOK_STORE TO MULTI_SCHEMA/
+GRANT ALL ON T_BOOK_DETAILS TO MULTI_SCHEMA/
+GRANT ALL ON T_LANGUAGE TO MULTI_SCHEMA/
 
 CREATE TABLE MULTI_SCHEMA.T_BOOK_SALE (
   ID NUMBER(7) NOT NULL,
@@ -486,6 +489,36 @@ CREATE TABLE MULTI_SCHEMA.T_BOOK_SALE (
 )
 /
 
+CREATE TABLE MULTI_SCHEMA.t_author (
+  id NUMBER(7) NOT NULL,
+  first_name VARCHAR2(50),
+  last_name VARCHAR2(50) NOT NULL,
+  date_of_birth DATE,
+  year_of_birth NUMBER(7),
+  address test.u_address_type,
+
+  CONSTRAINT pk_t_author PRIMARY KEY (ID)
+)
+/
+
+CREATE TABLE MULTI_SCHEMA.t_book (
+  id NUMBER(7) NOT NULL,
+  author_id NUMBER(7) NOT NULL,
+  co_author_id NUMBER(7),
+  details_id NUMBER(7),
+  title VARCHAR2(400) NOT NULL,
+  published_in NUMBER(7) NOT NULL,
+  language_id NUMBER(7) NOT NULL,
+  content_text CLOB,
+  content_pdf BLOB,
+
+  CONSTRAINT pk_t_book PRIMARY KEY (ID),
+  CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID) ON DELETE CASCADE,
+  CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID) ON DELETE CASCADE,
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES TEST.T_BOOK_DETAILS(ID) ON DELETE CASCADE,
+  CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES TEST.T_LANGUAGE(ID) ON DELETE CASCADE
+)
+/
 
 CREATE TABLE t_arrays (
   id NUMBER(7) not null,

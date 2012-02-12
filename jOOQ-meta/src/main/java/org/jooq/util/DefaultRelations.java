@@ -48,9 +48,9 @@ public class DefaultRelations implements Relations {
 
     private static final JooqLogger                          log                 = JooqLogger.getLogger(DefaultRelations.class);
 
-    private Map<String, ForeignKeyDefinition>                foreignKeys         = new LinkedHashMap<String, ForeignKeyDefinition>();
-    private Map<String, UniqueKeyDefinition>                 primaryKeys         = new LinkedHashMap<String, UniqueKeyDefinition>();
-    private Map<String, UniqueKeyDefinition>                 uniqueKeys          = new LinkedHashMap<String, UniqueKeyDefinition>();
+    private Map<Key, ForeignKeyDefinition>                   foreignKeys         = new LinkedHashMap<Key, ForeignKeyDefinition>();
+    private Map<Key, UniqueKeyDefinition>                    primaryKeys         = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private Map<Key, UniqueKeyDefinition>                    uniqueKeys          = new LinkedHashMap<Key, UniqueKeyDefinition>();
 
     private Map<ColumnDefinition, ForeignKeyDefinition>      foreignKeysByColumn = new LinkedHashMap<ColumnDefinition, ForeignKeyDefinition>();
     private Map<ColumnDefinition, UniqueKeyDefinition>       primaryKeysByColumn = new LinkedHashMap<ColumnDefinition, UniqueKeyDefinition>();
@@ -75,41 +75,46 @@ public class DefaultRelations implements Relations {
     }
 
     private UniqueKeyDefinition getUniqueKey(String keyName, ColumnDefinition column, boolean isPK) {
-        UniqueKeyDefinition key = uniqueKeys.get(keyName);
+        UniqueKeyDefinition key = uniqueKeys.get(key(column, keyName));
 
         if (key == null) {
             key = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, column.getContainer());
-            uniqueKeys.put(keyName, key);
+            uniqueKeys.put(key(column, keyName), key);
 
             if (isPK) {
-                primaryKeys.put(keyName, key);
+                primaryKeys.put(key(column, keyName), key);
             }
         }
 
         return key;
     }
 
-    public void addForeignKey(String foreignKeyName, String uniqueKeyName, ColumnDefinition column) {
+    public void addForeignKey(
+            String foreignKeyName,
+            String uniqueKeyName,
+            ColumnDefinition foreignKeyColumn,
+            SchemaDefinition uniqueKeySchema) {
+
         if (log.isDebugEnabled()) {
-            log.debug("Adding foreign key", foreignKeyName + " (" + column + ") referencing " + uniqueKeyName);
+            log.debug("Adding foreign key", foreignKeyName + " (" + foreignKeyColumn + ") referencing " + uniqueKeyName);
         }
 
-        ForeignKeyDefinition foreignKey = foreignKeys.get(foreignKeyName);
+        ForeignKeyDefinition foreignKey = foreignKeys.get(key(foreignKeyColumn, foreignKeyName));
 
         if (foreignKey == null) {
-            UniqueKeyDefinition uniqueKey = uniqueKeys.get(uniqueKeyName);
+            UniqueKeyDefinition uniqueKey = uniqueKeys.get(key(uniqueKeySchema, uniqueKeyName));
 
             // If the unique key is not loaded, ignore this foreign key
             if (uniqueKey != null) {
-                foreignKey = new DefaultForeignKeyDefinition(column.getSchema(), foreignKeyName, column.getContainer(), uniqueKey);
-                foreignKeys.put(foreignKeyName, foreignKey);
+                foreignKey = new DefaultForeignKeyDefinition(foreignKeyColumn.getSchema(), foreignKeyName, foreignKeyColumn.getContainer(), uniqueKey);
+                foreignKeys.put(key(foreignKeyColumn, foreignKeyName), foreignKey);
 
                 uniqueKey.getForeignKeys().add(foreignKey);
             }
         }
 
         if (foreignKey != null) {
-            foreignKey.getKeyColumns().add(column);
+            foreignKey.getKeyColumns().add(foreignKeyColumn);
         }
 	}
 
@@ -190,5 +195,60 @@ public class DefaultRelations implements Relations {
         }
 
         return new ArrayList<ForeignKeyDefinition>(result);
+    }
+
+    private static Key key(Definition definition, String keyName) {
+        return new Key(definition.getSchema(), keyName);
+    }
+
+    /**
+     * A simple local wrapper for a key definition (schema + key name)
+     */
+    private static class Key {
+        final SchemaDefinition schema;
+        final String keyName;
+
+        Key(SchemaDefinition schema, String keyName) {
+            this.schema = schema;
+            this.keyName = keyName;
+        }
+
+        @Override
+        public String toString() {
+            return "Key [schema=" + schema + ", keyName=" + keyName + "]";
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((keyName == null) ? 0 : keyName.hashCode());
+            result = prime * result + ((schema == null) ? 0 : schema.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Key other = (Key) obj;
+            if (keyName == null) {
+                if (other.keyName != null)
+                    return false;
+            }
+            else if (!keyName.equals(other.keyName))
+                return false;
+            if (schema == null) {
+                if (other.schema != null)
+                    return false;
+            }
+            else if (!schema.equals(other.schema))
+                return false;
+            return true;
+        }
     }
 }

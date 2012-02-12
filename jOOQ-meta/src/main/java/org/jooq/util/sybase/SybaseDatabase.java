@@ -204,7 +204,7 @@ public class SybaseDatabase extends AbstractDatabase {
 
             if (foreignKeyTable != null) {
                 ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKey, referencedKey, referencingColumn);
+                relations.addForeignKey(foreignKey, referencedKey, referencingColumn, getSchema());
             }
         }
     }

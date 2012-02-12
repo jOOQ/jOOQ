@@ -141,6 +141,7 @@ public class MySQLDatabase extends AbstractDatabase {
                     ReferentialConstraints.TABLE_NAME,
                     ReferentialConstraints.REFERENCED_TABLE_NAME,
                     ReferentialConstraints.UNIQUE_CONSTRAINT_NAME,
+                    ReferentialConstraints.UNIQUE_CONSTRAINT_SCHEMA,
                     KeyColumnUsage.COLUMN_NAME)
                 .from(REFERENTIAL_CONSTRAINTS)
                 .join(KEY_COLUMN_USAGE)
@@ -153,7 +154,8 @@ public class MySQLDatabase extends AbstractDatabase {
                     KeyColumnUsage.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(ReferentialConstraints.CONSTRAINT_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(ReferentialConstraints.CONSTRAINT_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(ReferentialConstraints.UNIQUE_CONSTRAINT_SCHEMA));
 
             String foreignKey = record.getValue(ReferentialConstraints.CONSTRAINT_NAME);
             String foreignKeyColumn = record.getValue(KeyColumnUsage.COLUMN_NAME);
@@ -161,13 +163,13 @@ public class MySQLDatabase extends AbstractDatabase {
             String referencedKey = record.getValue(ReferentialConstraints.UNIQUE_CONSTRAINT_NAME);
             String referencedTableName = record.getValue(ReferentialConstraints.REFERENCED_TABLE_NAME);
 
-            TableDefinition foreignKeyTable = getTable(schema, foreignKeyTableName);
+            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
 
             if (foreignKeyTable != null) {
                 ColumnDefinition column = foreignKeyTable.getColumn(foreignKeyColumn);
 
                 String key = getKeyName(referencedTableName, referencedKey);
-                relations.addForeignKey(foreignKey, key, column);
+                relations.addForeignKey(foreignKey, key, column, uniqueKeySchema);
             }
         }
     }

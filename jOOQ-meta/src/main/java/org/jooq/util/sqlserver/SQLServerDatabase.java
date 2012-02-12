@@ -143,6 +143,7 @@ public class SQLServerDatabase extends AbstractDatabase {
             .select(
                 REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
                 KEY_COLUMN_USAGE.COLUMN_NAME)
@@ -159,17 +160,19 @@ public class SQLServerDatabase extends AbstractDatabase {
             .fetch();
 
         for (Record record : result) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
+
             String foreignKey = record.getValue(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME);
             String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
             String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
+            TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
 
             if (referencingTable != null) {
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn);
+                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
     }

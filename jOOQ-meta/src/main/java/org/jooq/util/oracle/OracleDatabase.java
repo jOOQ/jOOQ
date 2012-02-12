@@ -141,7 +141,8 @@ public class OracleDatabase extends AbstractDatabase {
                     ALL_CONS_COLUMNS.CONSTRAINT_NAME,
                     ALL_CONS_COLUMNS.TABLE_NAME,
                     ALL_CONS_COLUMNS.COLUMN_NAME,
-                    ALL_CONSTRAINTS.R_CONSTRAINT_NAME)
+                    ALL_CONSTRAINTS.R_CONSTRAINT_NAME,
+                    ALL_CONSTRAINTS.R_OWNER)
                 .from(ALL_CONSTRAINTS
                     .join(ALL_CONS_COLUMNS)
                     .on(ALL_CONSTRAINTS.OWNER.equal(ALL_CONS_COLUMNS.OWNER))
@@ -156,16 +157,18 @@ public class OracleDatabase extends AbstractDatabase {
                     ALL_CONS_COLUMNS.POSITION)
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(ALL_CONS_COLUMNS.OWNER));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(ALL_CONS_COLUMNS.OWNER));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(ALL_CONSTRAINTS.R_OWNER));
+
             String foreignKeyName = record.getValue(ALL_CONS_COLUMNS.CONSTRAINT_NAME);
             String foreignKeyTableName = record.getValue(ALL_CONS_COLUMNS.TABLE_NAME);
             String foreignKeyColumnName = record.getValue(ALL_CONS_COLUMNS.COLUMN_NAME);
             String uniqueKeyName = record.getValue(ALL_CONSTRAINTS.R_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(schema, foreignKeyTableName);
+            TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
             if (referencingTable != null) {
                 ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
-                relations.addForeignKey(foreignKeyName, uniqueKeyName, column);
+                relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
             }
         }
     }

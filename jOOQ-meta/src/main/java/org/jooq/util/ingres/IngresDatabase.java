@@ -149,6 +149,7 @@ public class IngresDatabase extends AbstractDatabase {
                 trim(IirefConstraints.REF_SCHEMA_NAME),
                 trim(IirefConstraints.REF_CONSTRAINT_NAME),
                 trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME),
+                trim(IirefConstraints.UNIQUE_SCHEMA_NAME),
                 trim(IirefConstraints.REF_TABLE_NAME),
                 trim(IiindexColumns.COLUMN_NAME))
             .from(IICONSTRAINTS)
@@ -174,17 +175,19 @@ public class IngresDatabase extends AbstractDatabase {
             .fetch();
 
         for (Record record : result) {
-            SchemaDefinition schema = getSchema(record.getValue(trim(IirefConstraints.REF_SCHEMA_NAME)));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(trim(IirefConstraints.REF_SCHEMA_NAME)));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(trim(IirefConstraints.UNIQUE_SCHEMA_NAME)));
+
             String foreignKey = record.getValue(trim(IirefConstraints.REF_CONSTRAINT_NAME));
             String foreignKeyTable = record.getValue(trim(IirefConstraints.REF_TABLE_NAME));
             String foreignKeyColumn = record.getValue(trim(IiindexColumns.COLUMN_NAME));
             String uniqueKey = record.getValue(trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME));
 
-            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
+            TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
 
             if (referencingTable != null) {
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn);
+                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
     }

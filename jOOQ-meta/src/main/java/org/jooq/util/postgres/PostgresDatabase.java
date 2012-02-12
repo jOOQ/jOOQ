@@ -144,6 +144,7 @@ public class PostgresDatabase extends AbstractDatabase {
         Result<Record> result = create()
             .select(
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
                 KEY_COLUMN_USAGE.CONSTRAINT_NAME,
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
                 KEY_COLUMN_USAGE.TABLE_NAME,
@@ -161,20 +162,22 @@ public class PostgresDatabase extends AbstractDatabase {
             .fetch();
 
         for (Record record : result) {
-            SchemaDefinition schema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(KEY_COLUMN_USAGE.TABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
+
             String foreignKey = record.getValue(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
             String foreignKeyTable = record.getValue(KEY_COLUMN_USAGE.TABLE_NAME);
             String foreignKeyColumn = record.getValue(KEY_COLUMN_USAGE.COLUMN_NAME);
             String uniqueKey = record.getValue(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
 
-            TableDefinition referencingTable = getTable(schema, foreignKeyTable);
+            TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);
 
             if (referencingTable != null) {
 
                 // [#986] Add the table name as a namespace prefix to the key
                 // name. In Postgres, foreign key names are only unique per table
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
-                relations.addForeignKey(foreignKeyTable + "__" + foreignKey, uniqueKey, referencingColumn);
+                relations.addForeignKey(foreignKeyTable + "__" + foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
     }

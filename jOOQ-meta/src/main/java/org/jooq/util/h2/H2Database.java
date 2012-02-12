@@ -142,7 +142,8 @@ public class H2Database extends AbstractDatabase {
                     CrossReferences.FKTABLE_NAME,
                     CrossReferences.FKTABLE_SCHEMA,
                     CrossReferences.FKCOLUMN_NAME,
-                    Constraints.CONSTRAINT_NAME)
+                    Constraints.CONSTRAINT_NAME,
+                    Constraints.CONSTRAINT_SCHEMA)
                 .from(CROSS_REFERENCES)
                 .join(CONSTRAINTS)
                 .on(CrossReferences.PK_NAME.equal(Constraints.UNIQUE_INDEX_NAME))
@@ -155,18 +156,19 @@ public class H2Database extends AbstractDatabase {
                     CrossReferences.ORDINAL_POSITION.asc())
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(CrossReferences.FKTABLE_SCHEMA));
+            SchemaDefinition foreignKeySchema = getSchema(record.getValue(CrossReferences.FKTABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.getValue(Constraints.CONSTRAINT_SCHEMA));
 
             String foreignKeyTableName = record.getValue(CrossReferences.FKTABLE_NAME);
             String foreignKeyColumn = record.getValue(CrossReferences.FKCOLUMN_NAME);
             String foreignKey = record.getValue(CrossReferences.FK_NAME);
             String uniqueKey = record.getValue(Constraints.CONSTRAINT_NAME);
 
-            TableDefinition foreignKeyTable = getTable(schema, foreignKeyTableName);
+            TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             if (foreignKeyTable != null) {
                 ColumnDefinition referencingColumn = foreignKeyTable.getColumn(foreignKeyColumn);
 
-                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn);
+                relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
     }

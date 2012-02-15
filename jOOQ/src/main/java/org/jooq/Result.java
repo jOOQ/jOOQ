@@ -1625,6 +1625,11 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     boolean isEmpty();
 
     /**
+     * Whether there are any records contained in this <code>Result</code>
+     */
+    boolean isNotEmpty();
+
+    /**
      * Get a simple formatted representation of this result.
      * <p>
      * This is the same as calling {@link #format(int)} with

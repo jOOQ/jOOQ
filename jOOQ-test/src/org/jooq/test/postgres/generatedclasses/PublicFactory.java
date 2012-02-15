@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  */
 public class PublicFactory extends org.jooq.util.postgres.PostgresFactory {
 
-	private static final long serialVersionUID = -2001156251;
+	private static final long serialVersionUID = -341766701;
 
 	/**
 	 * Create a factory with a connection
@@ -20,12 +20,12 @@ public class PublicFactory extends org.jooq.util.postgres.PostgresFactory {
 	}
 
 	/**
-	 * Create a factory with a connection and a schema mapping
+	 * Create a factory with a connection and some settings
 	 *
 	 * @param connection The connection to use with objects created from this factory
-	 * @param mapping The schema mapping to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
 	 */
-	public PublicFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
-		super(connection, mapping);
+	public PublicFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
+		super(connection, settings);
 	}
 }

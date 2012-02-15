@@ -51,11 +51,11 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.ingres.generatedclasses.Sequences;
 import org.jooq.test.ingres.generatedclasses.TestFactory;
@@ -113,8 +113,8 @@ public class jOOQIngresTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected Factory create(SchemaMapping mapping) {
-        return new TestFactory(getConnection(), mapping);
+    protected Factory create(Settings settings) {
+        return new TestFactory(getConnection(), settings);
     }
 
     @Override

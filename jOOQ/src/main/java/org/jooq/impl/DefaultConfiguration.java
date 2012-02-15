@@ -39,7 +39,7 @@ import java.sql.Connection;
 
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
+import org.jooq.conf.Settings;
 
 /**
  * The default configuration, if no other configuration is supplied
@@ -51,9 +51,9 @@ final class DefaultConfiguration implements Configuration {
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID             = -5746537675969065088L;
+    private static final long  serialVersionUID      = -5746537675969065088L;
 
-    static final Configuration          DEFAULT_CONFIGURATION        = new DefaultConfiguration();
+    static final Configuration DEFAULT_CONFIGURATION = new DefaultConfiguration();
 
     @SuppressWarnings("deprecation")
     @Override
@@ -67,8 +67,14 @@ final class DefaultConfiguration implements Configuration {
     }
 
     @Override
-    public SchemaMapping getSchemaMapping() {
-        return SchemaMapping.NO_MAPPING;
+    @Deprecated
+    public org.jooq.SchemaMapping getSchemaMapping() {
+        return org.jooq.SchemaMapping.NO_MAPPING;
+    }
+
+    @Override
+    public Settings getSettings() {
+        return new Settings();
     }
 
     /**
@@ -82,6 +88,6 @@ final class DefaultConfiguration implements Configuration {
 
     @Override
     public String toString() {
-        return new Factory(getConnection(), getDialect(), getSchemaMapping()).toString();
+        return new Factory(getConnection(), getDialect(), getSettings()).toString();
     }
 }

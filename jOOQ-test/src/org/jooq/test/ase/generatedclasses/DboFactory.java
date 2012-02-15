@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses;
  */
 public class DboFactory extends org.jooq.util.ase.ASEFactory {
 
-	private static final long serialVersionUID = 800307943;
+	private static final long serialVersionUID = -237948133;
 
 	/**
 	 * Create a factory with a connection
@@ -21,11 +21,21 @@ public class DboFactory extends org.jooq.util.ase.ASEFactory {
 
 	/**
 	 * Create a factory with a connection and a schema mapping
-	 *
-	 * @param connection The connection to use with objects created from this factory
-	 * @param mapping The schema mapping to use with objects created from this factory
+	 * 
+	 * @deprecated - 2.0.5 - Use {@link #DboFactory(java.sql.Connection, org.jooq.conf.Settings)} instead
 	 */
+	@Deprecated
 	public DboFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+	}
+
+	/**
+	 * Create a factory with a connection and some settings
+	 *
+	 * @param connection The connection to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
+	 */
+	public DboFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
+		super(connection, settings);
 	}
 }

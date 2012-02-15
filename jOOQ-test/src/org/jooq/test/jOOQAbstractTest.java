@@ -62,13 +62,13 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
 import org.jooq.test._.testcases.CRUDTests;
@@ -591,8 +591,9 @@ public abstract class jOOQAbstractTest<
     protected abstract Class<?> cLibrary();
     protected abstract Class<?> cSequences();
     protected abstract DataType<?>[] getCastableDataTypes();
-    protected abstract Factory create(SchemaMapping mapping);
+    protected abstract Factory create(Settings settings);
 
+    @SuppressWarnings("deprecation")
     protected final Schema schema() {
         return create().getSchemaMapping().map(TAuthor().getSchema());
     }

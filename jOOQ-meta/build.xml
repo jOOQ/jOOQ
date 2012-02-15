@@ -14,7 +14,7 @@
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="xjc-generator" description="Generate JAXB artefacts from XSD">
 		<mkdir dir="${dir.java}/org/jooq/util/jaxb" />
-		<xjc schema="${dir.resources}/jooq-codegen-2.0.4.xsd" destdir="${dir.java}" package="org.jooq.util.jaxb">
+		<xjc schema="${dir.resources}/xsd/jooq-codegen-2.0.4.xsd" destdir="${dir.java}" package="org.jooq.util.jaxb">
 			<arg value="-Xxew" />
 		    <arg value="-instantiate lazy" />
 		</xjc>

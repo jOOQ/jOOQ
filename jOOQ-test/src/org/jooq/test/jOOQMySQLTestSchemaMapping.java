@@ -36,7 +36,10 @@
 
 package org.jooq.test;
 
-import org.jooq.SchemaMapping;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.RenderMapping;
+import org.jooq.conf.Rendering;
+import org.jooq.conf.Settings;
 import org.jooq.test.mysql.generatedclasses.TestFactory;
 
 
@@ -58,9 +61,13 @@ public class jOOQMySQLTestSchemaMapping extends jOOQMySQLTest {
     }
 
     @Override
-    protected TestFactory create(SchemaMapping mapping) {
-        mapping = (mapping != null) ? mapping : new SchemaMapping();
-        mapping.add(TAuthor().getSchema(), TAuthor().getSchema().getName() + getSchemaSuffix());
-        return new TestFactory(getConnection(), mapping);
+    protected TestFactory create(Settings settings) {
+        settings = (settings != null) ? settings : new Settings();
+        settings.withRendering(new Rendering()
+                .withRenderMapping(new RenderMapping()
+                .withSchemata(new MappedSchema()
+                .withInput(TAuthor().getSchema().getName())
+                .withOutput(TAuthor().getSchema().getName() + getSchemaSuffix()))));
+        return new TestFactory(getConnection(), settings);
     }
 }

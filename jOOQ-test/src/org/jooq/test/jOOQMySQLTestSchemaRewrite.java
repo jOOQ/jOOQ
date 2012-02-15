@@ -60,11 +60,11 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.test.mysql2.generatedclasses.Routines;
 import org.jooq.test.mysql2.generatedclasses.Test2Factory;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord;
@@ -114,8 +114,8 @@ public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
     }
 
     @Override
-    protected Test2Factory create(SchemaMapping mapping) {
-        return new Test2Factory(getConnection(), mapping);
+    protected Test2Factory create(Settings settings) {
+        return new Test2Factory(getConnection(), settings);
     }
 
     @Override

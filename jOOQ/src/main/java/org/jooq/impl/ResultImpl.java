@@ -168,6 +168,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final boolean isNotEmpty() {
+        return !records.isEmpty();
+    }
+
+    @Override
     public final <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException {
         return get(index).getValue(field);
     }

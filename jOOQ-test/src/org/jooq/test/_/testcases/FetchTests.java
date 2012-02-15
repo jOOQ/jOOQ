@@ -900,23 +900,26 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             // Fetching several records at once
             // ---------------------------------------------------------------------
             cursor = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLazy(fetchSize);
+            Result<B> fetch0 = cursor.fetch(0);
 
-            assertTrue(cursor.fetch(0).isEmpty());
-            assertTrue(cursor.fetch(0).isEmpty());
-            List<B> list = cursor.fetch(1);
+            assertTrue(fetch0.isEmpty());
+            assertFalse(fetch0.isNotEmpty());
+            assertTrue(fetch0.isEmpty());
+            assertFalse(fetch0.isNotEmpty());
 
-            assertEquals(1, list.size());
-            assertEquals(Integer.valueOf(1), list.get(0).getValue(TBook_ID()));
+            Result<B> fetch1 = cursor.fetch(1);
+            assertEquals(1, fetch1.size());
+            assertEquals(Integer.valueOf(1), fetch1.get(0).getValue(TBook_ID()));
 
-            list = cursor.fetch(2);
-            assertEquals(2, list.size());
-            assertEquals(Integer.valueOf(2), list.get(0).getValue(TBook_ID()));
-            assertEquals(Integer.valueOf(3), list.get(1).getValue(TBook_ID()));
+            fetch1 = cursor.fetch(2);
+            assertEquals(2, fetch1.size());
+            assertEquals(Integer.valueOf(2), fetch1.get(0).getValue(TBook_ID()));
+            assertEquals(Integer.valueOf(3), fetch1.get(1).getValue(TBook_ID()));
 
-            list = cursor.fetch(2);
+            fetch1 = cursor.fetch(2);
             assertTrue(cursor.isClosed());
-            assertEquals(1, list.size());
-            assertEquals(Integer.valueOf(4), list.get(0).getValue(TBook_ID()));
+            assertEquals(1, fetch1.size());
+            assertEquals(Integer.valueOf(4), fetch1.get(0).getValue(TBook_ID()));
         }
     }
 

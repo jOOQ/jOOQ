@@ -40,6 +40,7 @@ import java.sql.Connection;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 
 /**
@@ -47,6 +48,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class MySQLFactory extends Factory {
 
     /**
@@ -61,9 +63,24 @@ public class MySQLFactory extends Factory {
      *            factory
      * @param mapping The schema mapping to use with objects created from this
      *            factory
+     * @deprecated - 2.0.5 - Use {@link #MySQLFactory(Connection, Settings)}
+     *             instead
      */
+    @Deprecated
     public MySQLFactory(Connection connection, SchemaMapping mapping) {
         super(connection, SQLDialect.MYSQL, mapping);
+    }
+
+    /**
+     * Create a factory with connection and a settings configured
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public MySQLFactory(Connection connection, Settings settings) {
+        super(connection, SQLDialect.MYSQL, settings);
     }
 
     /**

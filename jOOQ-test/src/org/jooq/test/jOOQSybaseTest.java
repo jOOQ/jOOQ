@@ -55,11 +55,11 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.sybase.generatedclasses.DbaFactory;
 import org.jooq.test.sybase.generatedclasses.Routines;
@@ -108,8 +108,8 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected Factory create(SchemaMapping mapping) {
-        return new DbaFactory(getConnection(), mapping);
+    protected Factory create(Settings settings) {
+        return new DbaFactory(getConnection(), settings);
     }
 
 

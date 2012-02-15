@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys;
  */
 public class SysFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = -1573961703;
+	private static final long serialVersionUID = 891220555;
 
 	/**
 	 * Create a factory with a connection
@@ -20,12 +20,12 @@ public class SysFactory extends org.jooq.util.oracle.OracleFactory {
 	}
 
 	/**
-	 * Create a factory with a connection and a schema mapping
+	 * Create a factory with a connection and some settings
 	 *
 	 * @param connection The connection to use with objects created from this factory
-	 * @param mapping The schema mapping to use with objects created from this factory
+	 * @param settings The settings to apply to objects created from this factory
 	 */
-	public SysFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
-		super(connection, mapping);
+	public SysFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
+		super(connection, settings);
 	}
 }

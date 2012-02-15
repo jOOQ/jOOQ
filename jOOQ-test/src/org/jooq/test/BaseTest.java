@@ -53,7 +53,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.SchemaMapping;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -61,6 +60,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.unsigned.UByte;
@@ -559,8 +559,8 @@ public abstract class BaseTest<
         return delegate.getCastableDataTypes();
     }
 
-    protected Factory create(SchemaMapping mapping) {
-        return delegate.create(mapping);
+    protected Factory create(Settings settings) {
+        return delegate.create(settings);
     }
 
     protected final Connection getConnection() {
@@ -584,6 +584,7 @@ public abstract class BaseTest<
         return (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());
     }
 
+    @SuppressWarnings("deprecation")
     protected final Schema schema() {
         return create().getSchemaMapping().map(TAuthor().getSchema());
     }

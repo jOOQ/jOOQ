@@ -43,8 +43,8 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.Store;
+import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -109,8 +109,13 @@ class AttachableImpl implements AttachableInternal {
         return getConfiguration().getDialect();
     }
 
-    final SchemaMapping getSchemaMapping() {
+    @Deprecated
+    final org.jooq.SchemaMapping getSchemaMapping() {
         return getConfiguration().getSchemaMapping();
+    }
+
+    final Settings getSettings() {
+        return getConfiguration().getSettings();
     }
 
     @Override

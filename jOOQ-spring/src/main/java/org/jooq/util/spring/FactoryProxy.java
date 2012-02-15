@@ -81,6 +81,7 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
@@ -97,6 +98,7 @@ import org.springframework.jdbc.support.nativejdbc.NativeJdbcExtractor;
  * @author Sergey Epik
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class FactoryProxy implements FactoryOperations, MethodInterceptor {
 
     /**
@@ -110,6 +112,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     private transient DataSource           dataSource;
     private SQLDialect                     dialect;
     private SchemaMapping                  schemaMapping;
+    private Settings                       settings;
     private NativeJdbcExtractor            nativeJdbcExtractor;
 
     // -------------------------------------------------------------------------
@@ -121,9 +124,14 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
         this.dialect = dialect;
     }
 
-    @Required
     public final void setSchemaMapping(SchemaMapping schemaMapping) {
         this.schemaMapping = schemaMapping;
+
+        log.warn("DEPRECATION", "org.jooq.SchemaMapping is deprecated as of jOOQ 2.0.5. Consider using jOOQ's runtime configuration org.jooq.conf.Settings instead");
+    }
+
+    public final void setSettings(Settings settings) {
+        this.settings = settings;
     }
 
     @Required
@@ -163,8 +171,14 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
+    @Deprecated
     public final SchemaMapping getSchemaMapping() {
         return schemaMapping;
+    }
+
+    @Override
+    public final Settings getSettings() {
+        return settings;
     }
 
     @Override
@@ -520,7 +534,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     private final Factory createFactory() {
         try {
             Class<? extends Factory> clazz = getDialect().getFactory();
-            Constructor<? extends Factory> constructor = clazz.getConstructor(Connection.class, SchemaMapping.class);
+            Constructor<? extends Factory> constructor = clazz.getConstructor(Connection.class, Settings.class);
             Connection con = DataSourceUtils.getConnection(getDataSource());
             Connection conToUse = con;
 
@@ -528,7 +542,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
                 conToUse = nativeJdbcExtractor.getNativeConnection(con);
             }
 
-            Factory factory = constructor.newInstance(conToUse, getSchemaMapping());
+            Factory factory = constructor.newInstance(conToUse, getSettings());
             currentFactory.set(factory);
             currentConnection.set(con);
 

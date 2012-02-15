@@ -40,7 +40,7 @@ import java.sql.Connection;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
+import org.jooq.conf.Settings;
 
 /**
  * @author Lukas Eder
@@ -133,8 +133,14 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     }
 
     @Override
-    public final SchemaMapping getSchemaMapping() {
+    @Deprecated
+    public final org.jooq.SchemaMapping getSchemaMapping() {
         return configuration.getSchemaMapping();
+    }
+
+    @Override
+    public final Settings getSettings() {
+        return configuration.getSettings();
     }
 
     void toString(StringBuilder sb) {

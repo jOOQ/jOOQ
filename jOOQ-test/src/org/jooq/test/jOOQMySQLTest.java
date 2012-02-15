@@ -68,11 +68,11 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.Settings;
 import org.jooq.test.mysql.generatedclasses.Routines;
 import org.jooq.test.mysql.generatedclasses.TestFactory;
 import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
@@ -134,8 +134,8 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected TestFactory create(SchemaMapping mapping) {
-        return new TestFactory(getConnection(), mapping);
+    protected TestFactory create(Settings settings) {
+        return new TestFactory(getConnection(), settings);
     }
 
     @Override

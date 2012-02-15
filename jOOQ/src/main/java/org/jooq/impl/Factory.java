@@ -100,7 +100,6 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.SchemaMapping;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
@@ -118,6 +117,7 @@ import org.jooq.UpdateQuery;
 import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -154,14 +154,17 @@ public class Factory implements FactoryOperations {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID  = 2681360188806309513L;
-    private static final JooqLogger log               = JooqLogger.getLogger(Factory.class);
+    private static final long            serialVersionUID  = 2681360188806309513L;
+    private static final JooqLogger      log               = JooqLogger.getLogger(Factory.class);
 
-    private static final Factory[]  DEFAULT_INSTANCES = new Factory[SQLDialect.values().length];
+    private static final Factory[]       DEFAULT_INSTANCES = new Factory[SQLDialect.values().length];
 
-    private transient Connection    connection;
-    private final SQLDialect        dialect;
-    private final SchemaMapping     mapping;
+    private transient Connection         connection;
+    private final SQLDialect             dialect;
+
+    @SuppressWarnings("deprecation")
+    private final org.jooq.SchemaMapping mapping;
+    private final Settings               settings;
 
     // -------------------------------------------------------------------------
     // Constructors
@@ -175,7 +178,7 @@ public class Factory implements FactoryOperations {
      * @param dialect The dialect to use with objects created from this factory
      */
     public Factory(Connection connection, SQLDialect dialect) {
-        this(connection, dialect, new SchemaMapping());
+        this(connection, dialect, new Settings(), null);
     }
 
     /**
@@ -187,11 +190,38 @@ public class Factory implements FactoryOperations {
      * @param dialect The dialect to use with objects created from this factory
      * @param mapping The schema mapping to use with objects created from this
      *            factory
+     * @deprecated - 2.0.5 - Use
+     *             {@link #Factory(Connection, SQLDialect, Settings)} instead
      */
-    public Factory(Connection connection, SQLDialect dialect, SchemaMapping mapping) {
+    @Deprecated
+    public Factory(Connection connection, SQLDialect dialect, org.jooq.SchemaMapping mapping) {
+        this(connection, dialect, null, null);
+    }
+
+    /**
+     * Create a factory with connection, a dialect and a schema mapping
+     * configured
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     * @param dialect The dialect to use with objects created from this factory
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    @SuppressWarnings("deprecation")
+    public Factory(Connection connection, SQLDialect dialect, Settings settings) {
+        this(connection, dialect, settings, org.jooq.SchemaMapping.fromSettings(settings));
+    }
+
+    /**
+     * Do the instanciation
+     */
+    @SuppressWarnings("deprecation")
+    private Factory(Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping) {
         this.connection = connection;
         this.dialect = dialect;
-        this.mapping = mapping != null ? mapping : new SchemaMapping();
+        this.settings = settings != null ? settings : new Settings();
+        this.mapping = mapping != null ? mapping : org.jooq.SchemaMapping.fromSettings(settings);
     }
 
     // -------------------------------------------------------------------------
@@ -218,8 +248,17 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
-    public final SchemaMapping getSchemaMapping() {
+    @Deprecated
+    public final org.jooq.SchemaMapping getSchemaMapping() {
         return mapping;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Settings getSettings() {
+        return settings;
     }
 
     // -------------------------------------------------------------------------
@@ -1198,6 +1237,7 @@ public class Factory implements FactoryOperations {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("deprecation")
     @Override
     public final int use(Schema schema) {
         int result = 0;
@@ -4604,7 +4644,7 @@ public class Factory implements FactoryOperations {
             return getNewFactory(DefaultConfiguration.DEFAULT_CONFIGURATION);
         }
         else {
-            return new Factory(configuration.getConnection(), configuration.getDialect(), configuration.getSchemaMapping());
+            return new Factory(configuration.getConnection(), configuration.getDialect(), configuration.getSettings());
         }
     }
 

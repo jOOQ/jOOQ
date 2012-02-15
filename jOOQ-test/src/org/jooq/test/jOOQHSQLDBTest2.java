@@ -59,11 +59,14 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.RenderMapping;
+import org.jooq.conf.Rendering;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.hsqldb.generatedclasses.Public;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
@@ -109,10 +112,14 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
         T_785Record> {
 
 	@Override
-    protected Factory create(SchemaMapping mapping) {
-	    mapping = (mapping != null) ? mapping : new SchemaMapping();
-	    mapping.add(TAuthor().getSchema(), Public.PUBLIC);
-        return new PublicFactory(getConnection(), mapping);
+    protected Factory create(Settings settings) {
+	    settings = (settings != null) ? settings : new Settings();
+	    settings.withRendering(new Rendering()
+	            .withRenderMapping(new RenderMapping()
+	            .withSchemata(new MappedSchema()
+	            .withInput(TAuthor().getSchema().getName())
+	            .withOutput(Public.PUBLIC.getName()))));
+        return new PublicFactory(getConnection(), settings);
     }
 
 	@Override

@@ -40,8 +40,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.MappedTable;
+import org.jooq.conf.RenderMapping;
+import org.jooq.conf.Rendering;
+import org.jooq.conf.Settings;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * General mapping of generated artefacts onto run-time substitutes.
@@ -68,28 +75,32 @@ import org.jooq.impl.TableImpl;
  * @see <a
  *      href="https://sourceforge.net/apps/trac/jooq/wiki/Manual/ADVANCED/SchemaMapping">https://sourceforge.net/apps/trac/jooq/wiki/Manual/ADVANCED/SchemaMapping</a>
  * @since 1.5.2, 1.6.0
+ * @deprecated - 2.0.5 - Use runtime configuration {@link Settings} instead
  */
+@Deprecated
 public class SchemaMapping implements Serializable {
 
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 8269660159338710470L;
+    private static final long           serialVersionUID  = 8269660159338710470L;
+    private static final JooqLogger     log               = JooqLogger.getLogger(SchemaMapping.class);
+    private static boolean              loggedDeprecation = false;
 
     /**
      * The default, unmodifiable mapping that just takes generated schemata
      */
-    public static final SchemaMapping   NO_MAPPING       = new SchemaMapping();
+    public static final SchemaMapping   NO_MAPPING        = new SchemaMapping(false);
 
     /**
      * The underlying mapping for schemata
      */
-    private final Map<String, Schema>   schemata         = new HashMap<String, Schema>();
+    private final Map<String, Schema>   schemata          = new HashMap<String, Schema>();
 
     /**
      * The underlying mapping for tables
      */
-    private final Map<String, Table<?>> tables           = new HashMap<String, Table<?>>();
+    private final Map<String, Table<?>> tables            = new HashMap<String, Table<?>>();
 
     /**
      * The default schema
@@ -99,7 +110,18 @@ public class SchemaMapping implements Serializable {
     /**
      * Construct an empty mapping
      */
-    public SchemaMapping() {}
+    public SchemaMapping() {
+        this(true);
+    }
+
+    private SchemaMapping(boolean logDeprecation) {
+        if (logDeprecation && !loggedDeprecation) {
+
+            // Log only once
+            loggedDeprecation = true;
+            log.warn("DEPRECATION", "org.jooq.SchemaMapping is deprecated as of jOOQ 2.0.5. Consider using jOOQ's runtime configuration org.jooq.conf.Settings instead");
+        }
+    }
 
     /**
      * Set a schema as the default schema. This results in the supplied schema
@@ -130,23 +152,41 @@ public class SchemaMapping implements Serializable {
     /**
      * Add schemata to this mapping
      *
-     * @param generatedSchema The schema known at codegen time to be mapped
-     * @param configuredSchema The schema configured at run time to be mapped
+     * @param inputSchema The schema known at codegen time to be mapped
+     * @param outputSchema The schema configured at run time to be mapped
      */
-    public void add(Schema generatedSchema, Schema configuredSchema) {
-        schemata.put(generatedSchema.getName(), configuredSchema);
+    public void add(String inputSchema, String outputSchema) {
+        add(inputSchema, new SchemaImpl(outputSchema));
     }
 
     /**
      * Add schemata to this mapping
      *
-     * @param generatedSchema The schema known at codegen time to be mapped
-     * @param configuredSchemaName The schema configured at run time to be
-     *            mapped
+     * @param inputSchema The schema known at codegen time to be mapped
+     * @param outputSchema The schema configured at run time to be mapped
      */
-    public void add(Schema generatedSchema, String configuredSchemaName) {
-        Schema configuredSchema = new SchemaImpl(configuredSchemaName);
-        add(generatedSchema, configuredSchema);
+    public void add(String inputSchema, Schema outputSchema) {
+        schemata.put(inputSchema, outputSchema);
+    }
+
+    /**
+     * Add schemata to this mapping
+     *
+     * @param inputSchema The schema known at codegen time to be mapped
+     * @param outputSchema The schema configured at run time to be mapped
+     */
+    public void add(Schema inputSchema, Schema outputSchema) {
+        add(inputSchema.getName(), outputSchema);
+    }
+
+    /**
+     * Add schemata to this mapping
+     *
+     * @param inputSchema The schema known at codegen time to be mapped
+     * @param outputSchema The schema configured at run time to be mapped
+     */
+    public void add(Schema inputSchema, String outputSchema) {
+        add(inputSchema.getName(), new SchemaImpl(outputSchema));
     }
 
     /**
@@ -267,5 +307,39 @@ public class SchemaMapping implements Serializable {
 
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * Convert jOOQ runtime {@link Settings} into the deprecated
+     * <code>SchemaMapping</code>
+     * <p>
+     * This method is for JOOQ INTERNAL USE only. Do not reference directly
+     */
+    public static SchemaMapping fromSettings(Settings settings) {
+        SchemaMapping result = new SchemaMapping(false);
+
+        if (settings != null) {
+            Rendering rendering = settings.getRendering();
+
+            if (rendering != null) {
+                RenderMapping r = rendering.getRenderMapping();
+
+                if (r != null) {
+                    if (!StringUtils.isEmpty(r.getDefaultSchema())) {
+                        result.use(r.getDefaultSchema());
+                    }
+
+                    for (MappedSchema schema : r.getSchemata()) {
+                        result.add(schema.getInput(), schema.getOutput());
+
+                        for (MappedTable table : schema.getTables()) {
+                            log.warn("TODO", "Re-implement table mapping for table " + table);
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 }

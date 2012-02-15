@@ -62,7 +62,6 @@ import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.Select;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -70,6 +69,7 @@ import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractKeys;
@@ -246,6 +246,7 @@ public class DefaultGenerator implements Generator {
 		}
     }
 
+    @SuppressWarnings("deprecation")
     private void generate(
             Database database,
             SchemaDefinition schema,
@@ -316,21 +317,46 @@ public class DefaultGenerator implements Generator {
             outF.println("\t\tsuper(connection);");
             outF.println("\t}");
 
+            if (generateDeprecated()) {
+                outF.println();
+                outF.println("\t/**");
+                outF.println("\t * Create a factory with a connection and a schema mapping");
+                outF.println("\t * ");
+                outF.print("\t * @deprecated - 2.0.5 - Use {@link #");
+                outF.print(strategy.getJavaClassName(schema, "Factory"));
+                outF.print("(");
+                outF.print(Connection.class);
+                outF.print(", ");
+                outF.print(Settings.class);
+                outF.println(")} instead");
+                outF.println("\t */");
+                outF.println("\t@Deprecated");
+                outF.print("\tpublic ");
+                outF.print(strategy.getJavaClassName(schema, "Factory"));
+                outF.print("(");
+                outF.print(Connection.class);
+                outF.print(" connection, ");
+                outF.print(org.jooq.SchemaMapping.class);
+                outF.println(" mapping) {");
+                outF.println("\t\tsuper(connection, mapping);");
+                outF.println("\t}");
+            }
+
             outF.println();
             outF.println("\t/**");
-            outF.println("\t * Create a factory with a connection and a schema mapping");
+            outF.println("\t * Create a factory with a connection and some settings");
             outF.println("\t *");
             outF.println("\t * @param connection The connection to use with objects created from this factory");
-            outF.println("\t * @param mapping The schema mapping to use with objects created from this factory");
+            outF.println("\t * @param settings The settings to apply to objects created from this factory");
             outF.println("\t */");
             outF.print("\tpublic ");
             outF.print(strategy.getJavaClassName(schema, "Factory"));
             outF.print("(");
             outF.print(Connection.class);
             outF.print(" connection, ");
-            outF.print(SchemaMapping.class);
-            outF.println(" mapping) {");
-            outF.println("\t\tsuper(connection, mapping);");
+            outF.print(Settings.class);
+            outF.println(" settings) {");
+            outF.println("\t\tsuper(connection, settings);");
             outF.println("\t}");
 
             watch.splitInfo("Schema generated");

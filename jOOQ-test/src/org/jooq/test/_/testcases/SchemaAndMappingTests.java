@@ -50,10 +50,14 @@ import java.util.Arrays;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.SchemaMapping;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.MappedTable;
+import org.jooq.conf.RenderMapping;
+import org.jooq.conf.Rendering;
+import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -114,22 +118,27 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
     @Test
     public void testTableMapping() throws Exception {
-        SchemaMapping mapping = new SchemaMapping();
-        mapping.add(TAuthor(), VAuthor());
-        mapping.add(TBook(), VBook().getName());
+        Settings settings = new Settings()
+            .withRendering(new Rendering()
+            .withRenderMapping(new RenderMapping()
+            .withSchemata(new MappedSchema()
+            .withInput(TAuthor().getSchema().getName())
+            .withTables(
+                new MappedTable(TAuthor().getName(), VAuthor().getName()),
+                new MappedTable(TBook().getName(), VBook().getName())))));
 
         Select<Record> q =
-        create(mapping).select(TBook_TITLE())
+        create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
                        .orderBy(TBook_ID().asc());
 
         // Assure T_* is replaced by V_*
-        assertTrue(create(mapping).render(q).contains(VAuthor().getName()));
-        assertTrue(create(mapping).render(q).contains(VBook().getName()));
-        assertFalse(create(mapping).render(q).contains(TAuthor().getName()));
-        assertFalse(create(mapping).render(q).contains(TBook().getName()));
+        assertTrue(create(settings).render(q).contains(VAuthor().getName()));
+        assertTrue(create(settings).render(q).contains(VBook().getName()));
+        assertFalse(create(settings).render(q).contains(TAuthor().getName()));
+        assertFalse(create(settings).render(q).contains(TBook().getName()));
 
         // Assure that results are correct
         Result<Record> result = q.fetch();
@@ -149,13 +158,18 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
         // Map to self. This will work even for single-schema RDBMS
         // ---------------------------------------------------------------------
-        SchemaMapping mapping = new SchemaMapping();
-        mapping.add(TAuthor(), TAuthor());
-        mapping.add(TBook(), TBook().getName());
-        mapping.add(TAuthor().getSchema(), TAuthor().getSchema().getName());
+        Settings settings = new Settings()
+            .withRendering(new Rendering()
+            .withRenderMapping(new RenderMapping()
+            .withSchemata(new MappedSchema()
+            .withInput(TAuthor().getSchema().getName())
+            .withOutput(TAuthor().getSchema().getName())
+            .withTables(
+                new MappedTable(TAuthor().getName(), TAuthor().getName()),
+                new MappedTable(TBook().getName(), TBook().getName())))));
 
         Select<Record> query =
-        create(mapping).select(TBook_TITLE())
+        create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
@@ -202,20 +216,24 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
         // Map to a second schema
         // ---------------------------------------------------------------------
-        mapping = new SchemaMapping();
-        mapping.add(TAuthor().getSchema(), TAuthor().getSchema().getName() + "2");
+        settings = new Settings()
+            .withRendering(new Rendering()
+            .withRenderMapping(new RenderMapping()
+            .withSchemata(new MappedSchema()
+            .withInput(TAuthor().getSchema().getName())
+            .withOutput(TAuthor().getSchema().getName() + "2"))));
 
         Select<Record> q =
-        create(mapping).select(TBook_TITLE())
+        create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
                        .orderBy(TBook_ID().asc());
 
         // Assure that schema is replaced
-        assertTrue(create(mapping).render(q).contains(TAuthor().getSchema().getName() + "2"));
+        assertTrue(create(settings).render(q).contains(TAuthor().getSchema().getName() + "2"));
         assertTrue(q.getSQL().contains(TAuthor().getSchema().getName() + "2"));
-        assertEquals(create(mapping).render(q), q.getSQL());
+        assertEquals(create(settings).render(q), q.getSQL());
 
         // Assure that results are correct
         result = q.fetch();
@@ -230,12 +248,12 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         Field<Integer> f2 = FNumberField(42).cast(Integer.class);
 
         q =
-        create(mapping).select(f1, f2);
+        create(settings).select(f1, f2);
 
         // Assure that schema is replaced
-        assertTrue(create(mapping).render(q).contains(TAuthor().getSchema().getName() + "2"));
+        assertTrue(create(settings).render(q).contains(TAuthor().getSchema().getName() + "2"));
         assertTrue(q.getSQL().contains(TAuthor().getSchema().getName() + "2"));
-        assertEquals(create(mapping).render(q), q.getSQL());
+        assertEquals(create(settings).render(q), q.getSQL());
 
         // Assure that results are correct
         Record record = q.fetchOne();
@@ -244,24 +262,29 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
         // Map both schema AND tables
         // --------------------------
-        mapping = new SchemaMapping();
-        mapping.add(TAuthor(), VAuthor());
-        mapping.add(TBook(), VBook().getName());
-        mapping.add(TAuthor().getSchema(), TAuthor().getSchema().getName() + "2");
+        settings = new Settings()
+            .withRendering(new Rendering()
+            .withRenderMapping(new RenderMapping()
+            .withSchemata(new MappedSchema()
+            .withInput(TAuthor().getSchema().getName())
+            .withOutput(TAuthor().getSchema().getName() + "2")
+            .withTables(
+                new MappedTable(TAuthor().getName(), VAuthor().getName()),
+                new MappedTable(TBook().getName(), VBook().getName())))));
 
         q =
-        create(mapping).select(TBook_TITLE())
+        create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
                        .orderBy(TBook_ID().asc());
 
         // Assure T_* is replaced by V_*
-        assertTrue(create(mapping).render(q).contains(VAuthor().getName()));
-        assertTrue(create(mapping).render(q).contains(VBook().getName()));
-        assertTrue(create(mapping).render(q).contains("test2"));
-        assertFalse(create(mapping).render(q).contains(TAuthor().getName()));
-        assertFalse(create(mapping).render(q).contains(TBook().getName()));
+        assertTrue(create(settings).render(q).contains(VAuthor().getName()));
+        assertTrue(create(settings).render(q).contains(VBook().getName()));
+        assertTrue(create(settings).render(q).contains("test2"));
+        assertFalse(create(settings).render(q).contains(TAuthor().getName()));
+        assertFalse(create(settings).render(q).contains(TBook().getName()));
 
         // Assure that results are correct
         result = q.fetch();

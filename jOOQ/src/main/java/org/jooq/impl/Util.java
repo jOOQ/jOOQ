@@ -66,7 +66,6 @@ import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
-import org.jooq.SchemaMapping;
 import org.jooq.Table;
 import org.jooq.Type;
 import org.jooq.exception.DataAccessException;
@@ -759,6 +758,7 @@ final class Util {
     /**
      * Map a {@link Schema} according to the configured {@link SchemaMapping}
      */
+    @SuppressWarnings("deprecation")
     static Schema getMappedSchema(Configuration configuration, Schema schema) {
         if (configuration.getSchemaMapping() != null) {
             return configuration.getSchemaMapping().map(schema);
@@ -771,6 +771,7 @@ final class Util {
     /**
      * Map a {@link Table} according to the configured {@link SchemaMapping}
      */
+    @SuppressWarnings("deprecation")
     static Table<?> getMappedTable(Configuration configuration, Table<?> table) {
         if (configuration.getSchemaMapping() != null) {
             return configuration.getSchemaMapping().map(table);

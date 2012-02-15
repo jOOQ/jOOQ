@@ -38,6 +38,8 @@ package org.jooq;
 import java.io.Serializable;
 import java.sql.Connection;
 
+import org.jooq.conf.Settings;
+
 
 /**
  * The Configuration holds data about sql dialects and connections
@@ -58,7 +60,15 @@ public interface Configuration extends Serializable {
 
     /**
      * Retrieve the configured schema mapping
+     *
+     * @deprecated - 2.0.5 - Use {@link #getSettings()} instead
      */
+    @Deprecated
     SchemaMapping getSchemaMapping();
+
+    /**
+     * Retrieve the runtime configuration settings
+     */
+    Settings getSettings();
 
 }

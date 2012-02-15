@@ -53,6 +53,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
 import org.jooq.Store;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -113,7 +114,27 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
      */
     @Override
     public final String getSQL() {
-        return create().render(this);
+        if (Util.getStatementType(create().getSettings()) == StatementType.STATEMENT) {
+            return getSQL(true);
+        }
+        else {
+            return getSQL(false);
+        }
+    }
+
+    /**
+     * This method is also declared as {@link Query#getSQL(boolean)}
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getSQL(boolean inline) {
+        if (inline) {
+            return create().renderInlined(this);
+        }
+        else {
+            return create().render(this);
+        }
     }
 
     /**

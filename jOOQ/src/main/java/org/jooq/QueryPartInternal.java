@@ -68,6 +68,13 @@ public interface QueryPartInternal extends QueryPart {
     String getSQL();
 
     /**
+     * Retrieve the SQL that will be rendered by this {@link QueryPart}
+     * <p>
+     * This method is exposed publicly in {@link Query#getSQL(boolean)}
+     */
+    String getSQL(boolean inline);
+
+    /**
      * Retrieve the bind values that will be bound by this {@link QueryPart}
      * <p>
      * This method is exposed publicly in {@link Query#getBindValues()}
@@ -104,7 +111,7 @@ public interface QueryPartInternal extends QueryPart {
      * Reproduce the SQL dialect this {@link QueryPart} was created with
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
-     * 
+     *
      * @return The SQL dialect
      * @deprecated - 2.0.2 - The attached SQL dialect of a {@link QueryPart}
      *             should no longer be referenced, as query parts become more

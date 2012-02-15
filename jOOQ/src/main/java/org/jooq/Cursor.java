@@ -209,4 +209,15 @@ public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
      * last record was fetched.
      */
     boolean isClosed();
+
+    /**
+     * Get the <code>Cursor</code>'s underlying {@link ResultSet}
+     * <p>
+     * If you modify the underlying <code>ResultSet</code>, the
+     * <code>Cursor</code> may be affected and in some cases, rendered unusable.
+     *
+     * @return The underlying <code>ResultSet</code>. May be <code>null</code>,
+     *         for instance when the <code>Cursor</code> is closed.
+     */
+    ResultSet resultSet();
 }

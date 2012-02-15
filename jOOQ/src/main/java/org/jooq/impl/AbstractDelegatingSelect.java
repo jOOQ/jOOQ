@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -48,7 +49,6 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Select;
 import org.jooq.Table;
-import org.jooq.exception.DataAccessException;
 
 /**
  * @author Lukas Eder
@@ -94,6 +94,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     @Override
     public final Result<R> fetch() {
         return getDelegate().fetch();
+    }
+
+    @Override
+    public final ResultSet fetchResultSet() {
+        return getDelegate().fetchResultSet();
     }
 
     @Override
@@ -237,7 +242,7 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
-    public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException {
+    public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return getDelegate().fetchInto(table);
     }
 

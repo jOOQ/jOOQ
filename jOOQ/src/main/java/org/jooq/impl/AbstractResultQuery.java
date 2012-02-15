@@ -206,6 +206,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final ResultSet fetchResultSet() throws DataAccessException {
+        return fetchLazy().resultSet();
+    }
+
+    @Override
     public final Cursor<R> fetchLazy() {
         return fetchLazy(0);
     }

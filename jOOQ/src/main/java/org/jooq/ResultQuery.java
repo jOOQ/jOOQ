@@ -84,6 +84,22 @@ public interface ResultQuery<R extends Record> extends Query {
     Result<R> fetch() throws DataAccessException;
 
     /**
+     * Execute the query and return the generated result as a JDBC
+     * {@link ResultSet}
+     * <p>
+     * This will return the {@link ResultSet} returned by the JDBC driver,
+     * leaving it untouched. Use this method when you want to use jOOQ for query
+     * execution, but not for result fetching.
+     * <p>
+     * The returned <code>ResultSet</code> can be used with
+     * {@link FactoryOperations#fetch(ResultSet)}
+     *
+     * @return The result.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    ResultSet fetchResultSet() throws DataAccessException;
+
+    /**
      * Execute the query and "lazily" return the generated result
      * <p>
      * The returned {@link Cursor} holds a reference to the executed

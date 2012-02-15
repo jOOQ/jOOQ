@@ -1724,11 +1724,19 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
     /**
      * Get this result as XML
      *
+     * @deprecated - 2.0.5 - Use {@link #intoXML()} instead
+     */
+    @Deprecated
+    Document exportXML();
+
+    /**
+     * Get this result as XML
+     *
      * @see #formatXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
      */
-    Document exportXML();
+    Document intoXML();
 
     /**
      * Convert this result into an array of arrays
@@ -1787,5 +1795,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return Convenience result, returning the parameter handler itself
      */
     <H extends RecordHandler<R>> H into(H handler);
+
+
 
 }

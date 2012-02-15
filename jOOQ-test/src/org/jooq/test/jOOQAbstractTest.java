@@ -1007,8 +1007,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testExportXML() throws Exception {
-        new FormatTests(this).testExportXML();
+    public void testIntoXML() throws Exception {
+        new FormatTests(this).testIntoXML();
     }
 
     @Test

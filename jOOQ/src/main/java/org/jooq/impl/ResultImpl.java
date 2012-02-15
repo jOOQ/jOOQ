@@ -1185,6 +1185,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Document exportXML() {
+        return intoXML();
+    }
+
+    @Override
+    public final Document intoXML() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();

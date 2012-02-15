@@ -243,9 +243,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
     }
 
     @Test
-    public void testExportXML() throws Exception {
+    public void testIntoXML() throws Exception {
         Result<B> books = create().selectFrom(TBook()).fetch();
-        testXML(books.exportXML(), books);
+        testXML(books.intoXML(), books);
     }
 
     private void testXML(Document doc, Result<B> books) throws XPathExpressionException {

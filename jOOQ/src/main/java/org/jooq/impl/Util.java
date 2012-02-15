@@ -68,6 +68,9 @@ import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.Type;
+import org.jooq.conf.Execution;
+import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -756,7 +759,7 @@ final class Util {
     }
 
     /**
-     * Map a {@link Schema} according to the configured {@link SchemaMapping}
+     * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("deprecation")
     static Schema getMappedSchema(Configuration configuration, Schema schema) {
@@ -769,7 +772,7 @@ final class Util {
     }
 
     /**
-     * Map a {@link Table} according to the configured {@link SchemaMapping}
+     * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("deprecation")
     static Table<?> getMappedTable(Configuration configuration, Table<?> table) {
@@ -813,5 +816,28 @@ final class Util {
      */
     static int hash(Object object) {
         return 0x7FFFFFF & object.hashCode();
+    }
+
+    // ------------------------------------------------------------------------
+    // Settings convenience access
+    // ------------------------------------------------------------------------
+
+    /**
+     * Get the statement type from the settings
+     */
+    static StatementType getStatementType(Settings settings) {
+        if (settings != null) {
+            Execution execution = settings.getExecution();
+
+            if (execution != null) {
+                StatementType result = execution.getStatementType();
+
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+
+        return StatementType.PREPARED_STATEMENT;
     }
 }

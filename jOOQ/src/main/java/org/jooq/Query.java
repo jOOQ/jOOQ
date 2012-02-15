@@ -36,9 +36,13 @@
 
 package org.jooq;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.Factory;
@@ -82,8 +86,43 @@ public interface Query extends QueryPart {
      * <li>JPA native queries</li>
      * <li>etc...</li>
      * </ul>
+     * <p>
+     * Note, this is the same as calling {@link #getSQL(boolean)}. The boolean
+     * parameter will depend on your {@link Factory}'s {@link Settings}:
+     * <table border="1">
+     * <tr>
+     * <th><code>StatementType</code></th>
+     * <th>boolean parameter</th>
+     * <th>effect</th>
+     * </tr>
+     * <tr>
+     * <td> {@link StatementType#PREPARED_STATEMENT}</td>
+     * <td><code>false</code> (default)</td>
+     * <td>This will render bind variables to be used with a JDBC
+     * {@link PreparedStatement}. You can extract bind values from this
+     * <code>Query</code> using {@link #getBindValues()}</td>
+     * </tr>
+     * <tr>
+     * <td> {@link StatementType#STATEMENT}</td>
+     * <td><code>true</code></td>
+     * <td>This will inline all bind variables in a statement to be used with a
+     * JDBC {@link Statement}</td>
+     * </tr>
+     * </table>
+     *
+     * @see #getSQL(boolean)
      */
     String getSQL();
+
+    /**
+     * Retrieve the SQL code rendered by this Query
+     * <p>
+     * See {@link #getSQL()} for more details
+     *
+     * @param inline Whether to inline bind variables
+     * @return The generated SQL
+     */
+    String getSQL(boolean inline);
 
     /**
      * Retrieve the bind values that will be bound by this Query. This

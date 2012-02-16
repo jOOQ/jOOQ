@@ -35,7 +35,9 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Integer.toOctalString;
 import static org.jooq.impl.Factory.getDataType;
+import static org.jooq.tools.StringUtils.leftPad;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -839,5 +841,54 @@ final class Util {
         }
 
         return StatementType.PREPARED_STATEMENT;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // XXX This section is taken from the H2 Database
+    // ------------------------------------------------------------------------
+
+    private static final char[] HEX = "0123456789abcdef".toCharArray();
+
+    /**
+     * Convert a byte array to a hex encoded string.
+     *
+     * @param value the byte array
+     * @return the hex encoded string
+     */
+    static String convertBytesToHex(byte[] value) {
+        return convertBytesToHex(value, value.length);
+    }
+
+    /**
+     * Convert a byte array to a hex encoded string.
+     *
+     * @param value the byte array
+     * @param len the number of bytes to encode
+     * @return the hex encoded string
+     */
+    static String convertBytesToHex(byte[] value, int len) {
+        char[] buff = new char[len + len];
+        char[] hex = HEX;
+        for (int i = 0; i < len; i++) {
+            int c = value[i] & 0xff;
+            buff[i + i] = hex[c >> 4];
+            buff[i + i + 1] = hex[c & 0xf];
+        }
+        return new String(buff);
+    }
+
+    /**
+     * Postgres uses octals instead of hex encoding
+     */
+    static String convertBytesToPostgresOctal(byte[] binary) {
+        StringBuilder sb = new StringBuilder();
+
+        for (byte b : binary) {
+            sb.append("\\\\");
+            sb.append(leftPad(toOctalString(b), 3, '0'));
+        }
+
+        return sb.toString();
     }
 }

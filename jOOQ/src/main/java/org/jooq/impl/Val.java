@@ -42,12 +42,12 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.conf.StatementType.STATEMENT;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -64,8 +64,6 @@ import org.jooq.Param;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
-import org.jooq.exception.DataAccessException;
-import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -270,24 +268,41 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     context.sql(val.toString());
                 }
             }
+
+            // [#1154] Binary data cannot always be inlined
             else if (type == byte[].class) {
                 byte[] binary = (byte[]) val;
 
-                // [#1154] Binary data cannot always be inlined
-                if (dialect == H2) {
+                if (asList(ASE, SQLSERVER, SYBASE).contains(dialect)) {
+                    context.sql("0x")
+                           .sql(Util.convertBytesToHex(binary));
+                }
+                else if (dialect == DB2) {
+                    context.sql("blob(X'")
+                           .sql(Util.convertBytesToHex(binary))
+                           .sql("')");
+                }
+                else if (asList(DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE).contains(dialect)) {
                     context.sql("X'")
-                           .sql(StringUtils.convertBytesToHex(binary))
+                           .sql(Util.convertBytesToHex(binary))
                            .sql("'");
                 }
-                else if (Util.getStatementType(context.getSettings()) == STATEMENT) {
-                    throw new DataAccessException("Cannot inline binary data in dialect " + dialect + ". Use StatementType.PREPARED_STATEMENT instead");
+                else if (asList(ORACLE).contains(dialect)) {
+                    context.sql("hextoraw('")
+                           .sql(Util.convertBytesToHex(binary))
+                           .sql("')");
+                }
+                else if (dialect == POSTGRES) {
+                    context.sql("E'")
+                           .sql(Util.convertBytesToPostgresOctal(binary))
+                           .sql("'::bytea");
                 }
 
                 // This default behaviour is used in debug logging for dialects
                 // that do not support inlining binary data
                 else {
-                    context.sql("'")
-                           .sql(Arrays.toString(binary).replace("'", "''"))
+                    context.sql("X'")
+                           .sql(Util.convertBytesToHex(binary))
                            .sql("'");
                 }
             }

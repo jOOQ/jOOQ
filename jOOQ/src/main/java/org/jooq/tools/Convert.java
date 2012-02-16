@@ -223,10 +223,18 @@ public final class Convert {
         else {
             final Class<?> fromClass = from.getClass();
 
+            // No conversion
             if (toClass == fromClass) {
                 return (T) from;
             }
+
+            // [#1155] Do this early: identity-conversion into Object
+            else if (toClass == Object.class) {
+                return (T) from;
+            }
             else if (fromClass == byte[].class) {
+            	
+                // This may not make much sense. Any other options?
                 return convert(Arrays.toString((byte[]) from), toClass);
             }
             else if (fromClass.isArray()) {
@@ -240,11 +248,6 @@ public final class Convert {
                 }
 
                 return (T) from.toString();
-            }
-
-            // All types can be converted into Object
-            else if (toClass == Object.class) {
-                return (T) from;
             }
 
             // Various number types are converted between each other via String

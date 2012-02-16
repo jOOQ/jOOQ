@@ -19,7 +19,6 @@
 			<arg value="-Xxew" />
 			<arg value="-Xfluent-api" />
 			<arg value="-Xdefault-value"/>
-			<arg value="-Xvalue-constructor" />
 		    <arg value="-instantiate lazy" />
 		</xjc>
 	</target>

@@ -124,8 +124,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             .withSchemata(new MappedSchema()
             .withInput(TAuthor().getSchema().getName())
             .withTables(
-                new MappedTable(TAuthor().getName(), VAuthor().getName()),
-                new MappedTable(TBook().getName(), VBook().getName())))));
+                new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
+                new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName())))));
 
         Select<Record> q =
         create(settings).select(TBook_TITLE())
@@ -165,8 +165,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             .withInput(TAuthor().getSchema().getName())
             .withOutput(TAuthor().getSchema().getName())
             .withTables(
-                new MappedTable(TAuthor().getName(), TAuthor().getName()),
-                new MappedTable(TBook().getName(), TBook().getName())))));
+                new MappedTable().withInput(TAuthor().getName()).withOutput(TAuthor().getName()),
+                new MappedTable().withInput(TBook().getName()).withOutput(TBook().getName())))));
 
         Select<Record> query =
         create(settings).select(TBook_TITLE())
@@ -269,8 +269,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
             .withInput(TAuthor().getSchema().getName())
             .withOutput(TAuthor().getSchema().getName() + "2")
             .withTables(
-                new MappedTable(TAuthor().getName(), VAuthor().getName()),
-                new MappedTable(TBook().getName(), VBook().getName())))));
+                new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
+                new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName())))));
 
         q =
         create(settings).select(TBook_TITLE())

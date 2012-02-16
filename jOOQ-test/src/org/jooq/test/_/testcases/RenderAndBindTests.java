@@ -41,9 +41,15 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.param;
+import static org.jooq.impl.Factory.vals;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 
 import org.jooq.Insert;
@@ -52,6 +58,10 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Execution;
+import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
+import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -256,5 +266,64 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         assertEquals(2, result2.size());
         assertEquals(1, result2.getValue(0, 0));
         assertEquals(2, result2.getValue(1, 0));
+    }
+
+    @Test
+    public void testInlinedBindValues() throws Exception {
+        // [#1147] Some data types need special care when inlined
+
+        String s1 = "test";
+        String s2 = "no SQL 'injection here; <<`'";
+        String s3 = "''";
+        String s4 = null;
+
+        Byte b1 = Byte.valueOf("1");
+        Byte b2 = null;
+        Short sh1 = Short.valueOf("2");
+        Short sh2 = null;
+        Integer i1 = 3;
+        Integer i2 = null;
+        Long l1 = 4L;
+        Long l2 = null;
+        BigInteger bi1 = new BigInteger("5");
+        BigInteger bi2 = null;
+        BigDecimal bd1 = new BigDecimal("6.01");
+        BigDecimal bd2 = null;
+        Double db1 = 7.25;
+        Double db2 = null;
+        Float f1 = 8.5f;
+        Float f2 = null;
+
+        Date d1 = Date.valueOf("1981-07-10");
+        Date d2 = null;
+        Time t1 = Time.valueOf("12:01:15");
+        Time t2 = null;
+        Timestamp ts1 = Timestamp.valueOf("1981-07-10 12:01:15");
+        Timestamp ts2 = null;
+
+        byte[] by1 = null; // "some bytes".getBytes();
+        byte[] by2 = null;
+        Boolean bool1 = true;
+        Boolean bool2 = false;
+        Boolean bool3 = null;
+
+        Factory create = create(new Settings()
+            .withExecution(new Execution()
+            .withStatementType(StatementType.STATEMENT)));
+
+        Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
+        Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
+        Object[] array3 = create.select(vals(d1, d2, t1, t2, ts1, ts2)).fetchOneArray();
+        Object[] array4 = create.select(vals(by1, by2, bool1, bool2, bool3)).fetchOneArray();
+
+        assertEquals(4, array1.length);
+        assertEquals(16, array2.length);
+        assertEquals(6, array3.length);
+        assertEquals(5, array4.length);
+
+        assertEquals(asList(s1, s2, s3, s4), asList(array1));
+        assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
+        assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
+        assertEquals(asList(by1, by2, bool1, bool2, bool3), asList(array4));
     }
 }

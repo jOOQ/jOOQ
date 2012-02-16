@@ -36,12 +36,16 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.math.BigDecimal;
@@ -251,7 +255,15 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                 context.sql("null");
             }
             else if (type == Boolean.class) {
-                context.sql(val.toString());
+
+                // [#1153] Some dialects don't support boolean literals
+                // TRUE and FALSE
+                if (asList(ASE, DB2, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(context.getDialect())) {
+                    context.sql(((Boolean) val) ? "1" : "0");
+                }
+                else {
+                    context.sql(val.toString());
+                }
             }
             else if (type == byte[].class) {
                 context.sql("'")

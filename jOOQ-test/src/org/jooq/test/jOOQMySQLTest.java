@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_IDENTITY_PK;
@@ -75,6 +76,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.test.mysql.generatedclasses.Routines;
 import org.jooq.test.mysql.generatedclasses.TestFactory;
+import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
@@ -727,5 +729,15 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         assertEquals(T_959JavaKeywords.abstract_, result.get(0));
         assertEquals(T_959JavaKeywords.class_, result.get(1));
         assertEquals(T_959JavaKeywords.public_, result.get(2));
+    }
+
+    @Test
+    public void testMySQLEnumIndex() throws Exception {
+        assertNull(MySQLFactory.enumType(TBookStatus.class, -1));
+        assertNull(MySQLFactory.enumType(TBookStatus.class, 0));
+        assertEquals(TBookStatus.SOLD_OUT, MySQLFactory.enumType(TBookStatus.class, 1));
+        assertEquals(TBookStatus.ORDERED, MySQLFactory.enumType(TBookStatus.class, 2));
+        assertEquals(TBookStatus.ON_STOCK, MySQLFactory.enumType(TBookStatus.class, 3));
+        assertNull(MySQLFactory.enumType(TBookStatus.class, 4));
     }
 }

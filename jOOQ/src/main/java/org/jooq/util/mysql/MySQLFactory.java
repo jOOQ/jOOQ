@@ -37,6 +37,7 @@ package org.jooq.util.mysql;
 
 import java.sql.Connection;
 
+import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
@@ -309,5 +310,59 @@ public class MySQLFactory extends Factory {
      */
     public static Field<String> password(Field<String> string) {
         return function("password", String.class, string);
+    }
+
+    // -------------------------------------------------------------------------
+    // Other utilities
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get a field based {@link EnumType} by its MySQL-specific index
+     * <p>
+     * If your MySQL enum type contains these three values: <code>A, B, C</code>
+     * , then this will be the mapping of indexes to values:
+     * <table border="1">
+     * <tr>
+     * <th>Enum literal as in {@link Enum#name()}</th>
+     * <th>Enum ordinal as in {@link Enum#ordinal()}</th>
+     * <th>MySQL index</th>
+     * </tr>
+     * <tr>
+     * <td><code>null</code></td>
+     * <td><code>-</code></td>
+     * <td><code>0</code></td>
+     * </tr>
+     * <tr>
+     * <td><code>A</code></td>
+     * <td><code>0</code></td>
+     * <td><code>1</code></td>
+     * </tr>
+     * <tr>
+     * <td><code>B</code></td>
+     * <td><code>1</code></td>
+     * <td><code>2</code></td>
+     * </tr>
+     * <tr>
+     * <td><code>C</code></td>
+     * <td><code>2</code></td>
+     * <td><code>3</code></td>
+     * </tr>
+     * </table>
+     * <p>
+     * See <a
+     * href="dev.mysql.com/doc/refman/5.5/en/enum.html">dev.mysql.com/doc/
+     * refman/5.5/en/enum.html</a> for more details about MySQL enum types
+     */
+    public static <E extends java.lang.Enum<E> & org.jooq.EnumType> E enumType(Class<E> type, int index) {
+        if (index <= 0) {
+            return null;
+        }
+
+        E[] values = type.getEnumConstants();
+        if (index > values.length) {
+            return null;
+        }
+
+        return values[index - 1];
     }
 }

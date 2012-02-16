@@ -39,7 +39,11 @@ package org.jooq.util;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayList;
@@ -104,7 +108,16 @@ public class GenerationTool {
 
 		try {
     		if (args[0].endsWith(".xml")) {
-    		    main(JAXB.unmarshal(in, Configuration.class));
+
+    		    // [#1149] If there is no namespace defined, add the default one
+    		    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    		    copyLarge(in, out);
+    		    String xml = out.toString();
+    		    xml = xml.replace(
+    		        "<configuration>",
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd\">");
+
+    		    main(JAXB.unmarshal(new StringReader(xml), Configuration.class));
     		}
     		else {
     	        Properties properties = new Properties();
@@ -349,4 +362,29 @@ public class GenerationTool {
 		log.error("Usage : GenerationTool <configuration-file>");
 		System.exit(-1);
 	}
+
+    /**
+     * Copy bytes from a large (over 2GB) <code>InputStream</code> to an
+     * <code>OutputStream</code>.
+     * <p>
+     * This method buffers the input internally, so there is no need to use a
+     * <code>BufferedInputStream</code>.
+     *
+     * @param input the <code>InputStream</code> to read from
+     * @param output the <code>OutputStream</code> to write to
+     * @return the number of bytes copied
+     * @throws NullPointerException if the input or output is null
+     * @throws IOException if an I/O error occurs
+     * @since Commons IO 1.3
+     */
+    public static long copyLarge(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[1024 * 4];
+        long count = 0;
+        int n = 0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
+        }
+        return count;
+    }
 }

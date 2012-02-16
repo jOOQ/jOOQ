@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.StatementType.STATEMENT;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -63,6 +64,8 @@ import org.jooq.Param;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
+import org.jooq.exception.DataAccessException;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -250,6 +253,8 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
      * Inlining abstraction
      */
     private void toSQL(RenderContext context, Object val, Class<?> type) {
+        SQLDialect dialect = context.getDialect();
+
         if (context.inline()) {
             if (val == null) {
                 context.sql("null");
@@ -258,7 +263,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
                 // [#1153] Some dialects don't support boolean literals
                 // TRUE and FALSE
-                if (asList(ASE, DB2, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(context.getDialect())) {
+                if (asList(ASE, DB2, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
                 else {
@@ -266,9 +271,25 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                 }
             }
             else if (type == byte[].class) {
-                context.sql("'")
-                       .sql(Arrays.toString((byte[]) val).replace("'", "''"))
-                       .sql("'");
+                byte[] binary = (byte[]) val;
+
+                // [#1154] Binary data cannot always be inlined
+                if (dialect == H2) {
+                    context.sql("X'")
+                           .sql(StringUtils.convertBytesToHex(binary))
+                           .sql("'");
+                }
+                else if (Util.getStatementType(context.getSettings()) == STATEMENT) {
+                    throw new DataAccessException("Cannot inline binary data in dialect " + dialect + ". Use StatementType.PREPARED_STATEMENT instead");
+                }
+
+                // This default behaviour is used in debug logging for dialects
+                // that do not support inlining binary data
+                else {
+                    context.sql("'")
+                           .sql(Arrays.toString(binary).replace("'", "''"))
+                           .sql("'");
+                }
             }
             else if (Number.class.isAssignableFrom(type)) {
                 context.sql(val.toString());
@@ -276,7 +297,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             else if (type.isArray()) {
 
                 // H2 renders arrays as tuples
-                if (context.getDialect() == H2) {
+                if (dialect == H2) {
                     context.sql(Arrays.toString((Object[]) val).replaceAll("\\[([^]]*)\\]", "($1)"));
                 }
 
@@ -312,13 +333,13 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
         // In Postgres, some additional casting must be done in some cases...
         // TODO: Improve this implementation with [#215] (cast support)
-        else if (context.getDialect() == SQLDialect.POSTGRES) {
+        else if (dialect == SQLDialect.POSTGRES) {
 
             // Postgres needs explicit casting for array types
             if (type.isArray() && byte[].class != type) {
                 context.sql(getBindVariable(context));
                 context.sql("::");
-                context.sql(FieldTypeHelper.getDataType(context.getDialect(), type).getCastTypeName(context));
+                context.sql(FieldTypeHelper.getDataType(dialect, type).getCastTypeName(context));
             }
 
             // ... and also for enum types

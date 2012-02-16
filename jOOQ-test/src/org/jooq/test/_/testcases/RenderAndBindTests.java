@@ -301,7 +301,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         Timestamp ts1 = Timestamp.valueOf("1981-07-10 12:01:15");
         Timestamp ts2 = null;
 
-        byte[] by1 = null; // "some bytes".getBytes();
+        byte[] by1 = "some bytes".getBytes();
         byte[] by2 = null;
         Boolean bool1 = true;
         Boolean bool2 = false;
@@ -324,6 +324,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         assertEquals(asList(s1, s2, s3, s4), asList(array1));
         assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
         assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
-        assertEquals(asList(by1, by2, bool1, bool2, bool3), asList(array4));
+
+        array4[0] = new String((byte[]) array4[0]);
+        assertEquals(asList(new String(by1), by2, bool1, bool2, bool3), asList(array4));
     }
 }

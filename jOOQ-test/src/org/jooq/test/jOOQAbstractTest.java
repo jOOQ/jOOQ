@@ -1295,6 +1295,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInlinedBindValues() throws Exception {
+        new RenderAndBindTests(this).testInlinedBindValues();
+    }
+
+    @Test
     public void testPivotClause() throws Exception {
         new ExoticTests(this).testPivotClause();
     }

@@ -1091,4 +1091,4 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         assertEquals(new Time(0), record.getValue("t"));
         assertEquals(new Timestamp(0), record.getValue("ts"));
     }
-}
+ }

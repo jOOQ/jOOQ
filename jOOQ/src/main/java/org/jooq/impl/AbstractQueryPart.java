@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.conf.StatementType.STATEMENT;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +55,6 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.SQLDialect;
 import org.jooq.Store;
-import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -114,7 +115,7 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
      */
     @Override
     public final String getSQL() {
-        if (Util.getStatementType(create().getSettings()) == StatementType.STATEMENT) {
+        if (Util.getStatementType(create().getSettings()) == STATEMENT) {
             return getSQL(true);
         }
         else {

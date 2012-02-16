@@ -36,6 +36,9 @@
 
 package org.jooq.impl;
 
+import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
+import static org.jooq.impl.Util.getStatementType;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -124,19 +127,28 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
             String sql = null;
             int result = 0;
             try {
-                sql = create(configuration).render(this);
+                sql = getSQL();
                 watch.splitTrace("SQL rendered");
 
+                // [#1145] Depending on the configuration, a prepared statement
+                // or an "ad-hoc" statement is used
+                boolean usePreparedStatement =
+                    getStatementType(getConfiguration().getSettings()) == PREPARED_STATEMENT;
+
                 if (log.isDebugEnabled())
-                    log.debug("Executing query", create(configuration).renderInlined(this));
-                if (log.isTraceEnabled())
+                    log.debug("Executing query", getSQL(true));
+                if (log.isTraceEnabled() && usePreparedStatement)
                     log.trace("Preparing statement", sql);
 
                 statement = prepare(configuration, sql);
-                watch.splitTrace("Statement prepared");
 
-                create(configuration).bind(this, statement);
-                watch.splitTrace("Variables bound");
+                // [#1145] Bind variables only for true prepared statements
+                if (usePreparedStatement) {
+                    watch.splitTrace("Statement prepared");
+
+                    create(configuration).bind(this, statement);
+                    watch.splitTrace("Variables bound");
+                }
 
                 result = execute(configuration, statement);
                 watch.splitTrace("Statement executed");
@@ -184,8 +196,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     }
 
     /**
-     * Default implementation for query execution. Subclasses may override this
-     * method.
+     * Default implementation for query execution using a prepared statement.
+     * Subclasses may override this method.
      *
      * @param configuration The configuration that is used for this query's
      *            execution.

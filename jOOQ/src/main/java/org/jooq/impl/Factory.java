@@ -241,7 +241,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Connection getConnection() {
-        return connection;
+        return new ConnectionProxy(connection, settings);
     }
 
     /**

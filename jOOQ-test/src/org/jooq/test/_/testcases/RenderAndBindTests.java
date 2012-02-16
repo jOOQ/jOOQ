@@ -313,17 +313,14 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
         Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
         Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
-        Object[] array3 = create.select(vals(d1, d2, t1, t2, ts1, ts2)).fetchOneArray();
         Object[] array4 = create.select(vals(by1, by2, bool1, bool2, bool3)).fetchOneArray();
 
         assertEquals(4, array1.length);
         assertEquals(16, array2.length);
-        assertEquals(6, array3.length);
         assertEquals(5, array4.length);
 
         assertEquals(asList(s1, s2, s3, s4), asList(array1));
         assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
-        assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
 
         array4[0] = new String((byte[]) array4[0]);
         assertEquals(asList(new String(by1), by2, bool1, bool2, bool3), asList(array4));

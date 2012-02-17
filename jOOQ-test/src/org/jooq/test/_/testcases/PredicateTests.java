@@ -168,6 +168,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
                 .execute());
 
         // [#1072] Add checks for ESCAPE syntax
+        // ------------------------------------
         books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().like("%(!%)%", '!'))
@@ -184,6 +185,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         boolean derby = getDialect() == DERBY;
 
         // [#1131] DB2 doesn't like concat in LIKE expressions very much
+        // -------------------------------------------------------------
         books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().like(concat("19", "84")))
@@ -195,6 +197,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         assertEquals(1, (int) books.get(0).getValue(TBook_ID()));
 
         // [#1106] Add checks for Factory.escape() function
+        // ------------------------------------------------
         books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().like(concat("%", escape("(%)", '!'), "%"), '!'))
@@ -209,6 +212,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
         assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
 
         // [#1089] Add checks for convenience methods
+        // ------------------------------------------
         books =
         create().selectFrom(TBook())
                 .where(TBook_TITLE().contains("%"))
@@ -224,6 +228,27 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
         assertEquals(1, books.size());
         assertEquals(5, (int) books.get(0).getValue(TBook_ID()));
+
+        // [#1159] Add checks for matching numbers with LIKE
+        // -------------------------------------------------
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_PUBLISHED_IN().like("194%"))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(2, books.size());
+        assertEquals(asList(1, 2), books.getValues(TBook_ID()));
+
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_PUBLISHED_IN().like("%9%"))
+                .and(TBook_PUBLISHED_IN().notLike("%8%"))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(2, books.size());
+        assertEquals(asList(2, 4), books.getValues(TBook_ID()));
     }
 
     @Test

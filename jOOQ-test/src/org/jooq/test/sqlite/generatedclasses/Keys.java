@@ -12,7 +12,6 @@ package org.jooq.test.sqlite.generatedclasses;
 public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// IDENTITY definitions
-	public static final org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_t_triggers = createIdentity(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sqlite.generatedclasses.tables.TTriggers.ID_GENERATED);
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> pk_t_639_numbers_table_ID = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.ID);
@@ -25,6 +24,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> pk_t_book_to_book_store_book_store_name = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> pk_t_book_to_book_store_book_id = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE, org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord> pk_t_booleans_id = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.sqlite.generatedclasses.tables.TBooleans.ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> pk_t_dates_id = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.TDates.T_DATES, org.jooq.test.sqlite.generatedclasses.tables.TDates.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord> pk_t_triggers_id_generated = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sqlite.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> pk_x_test_case_64_69_ID = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> pk_x_test_case_71_ID = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.ID);

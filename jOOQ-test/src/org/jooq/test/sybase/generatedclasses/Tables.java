@@ -21,6 +21,11 @@ public final class Tables {
 	public static org.jooq.test.sybase.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY;
 
 	/**
+	 * The table dba.t_dates
+	 */
+	public static org.jooq.test.sybase.generatedclasses.tables.TDates T_DATES = org.jooq.test.sybase.generatedclasses.tables.TDates.T_DATES;
+
+	/**
 	 * The table dba.t_booleans
 	 */
 	public static org.jooq.test.sybase.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS;

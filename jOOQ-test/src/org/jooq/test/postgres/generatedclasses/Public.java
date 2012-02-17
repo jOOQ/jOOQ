@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  */
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -773272411;
+	private static final long serialVersionUID = -368897877;
 
 	/**
 	 * The singleton instance of public
@@ -51,6 +51,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE,
 			org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS,
+			org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS,

@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses;
  */
 public class Test2 extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -610293870;
+	private static final long serialVersionUID = -364207339;
 
 	/**
 	 * The singleton instance of test2
@@ -35,6 +35,7 @@ public class Test2 extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE,
 			org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS,
+			org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED,

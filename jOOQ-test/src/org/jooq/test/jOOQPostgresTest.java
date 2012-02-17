@@ -46,6 +46,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
@@ -79,6 +80,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
@@ -110,6 +112,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
         XUnusedRecord,
         VLibraryRecord,
         TArraysRecord,
+        TDatesRecord,
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
@@ -273,6 +276,11 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TDatesRecord> TDates() {
+        return T_DATES;
     }
 
     @Override

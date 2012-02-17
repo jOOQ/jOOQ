@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static org.jooq.test.db2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.db2.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.db2.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.db2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.db2.generatedclasses.Tables.V_AUTHOR;
@@ -76,6 +77,7 @@ import org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.db2.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.db2.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.db2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord;
@@ -105,6 +107,7 @@ public class jOOQDB2Test extends jOOQAbstractTest<
         XUnusedRecord,
         VLibraryRecord,
         XUnusedRecord,
+        TDatesRecord,
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
@@ -348,6 +351,11 @@ public class jOOQDB2Test extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TDatesRecord> TDates() {
+        return T_DATES;
     }
 
     @Override

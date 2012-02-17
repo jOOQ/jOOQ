@@ -40,6 +40,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -239,6 +241,30 @@ public abstract class BaseTest<
 
     protected TableField<U, ULong> TUnsigned_U_LONG() {
         return delegate.TUnsigned_U_LONG();
+    }
+
+    public Table<DATE> TDates() {
+        return delegate.TDates();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected final TableField<DATE, Integer> TDates_ID() {
+        return (TableField<DATE, Integer>) getField(TDates(), "ID");
+    }
+
+    @SuppressWarnings("unchecked")
+    protected final TableField<DATE, Date> TDates_D() {
+        return (TableField<DATE, Date>) getField(TDates(), "D");
+    }
+
+    @SuppressWarnings("unchecked")
+    protected final TableField<DATE, Time> TDates_T() {
+        return (TableField<DATE, Time>) getField(TDates(), "T");
+    }
+
+    @SuppressWarnings("unchecked")
+    protected final TableField<DATE, Timestamp> TDates_TS() {
+        return (TableField<DATE, Timestamp>) getField(TDates(), "TS");
     }
 
     protected Table<X> TArrays() {

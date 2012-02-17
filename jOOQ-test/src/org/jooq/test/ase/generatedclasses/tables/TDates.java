@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1986889297;
+	private static final long serialVersionUID = -1429057447;
 
 	/**
 	 * The singleton instance of t_dates
@@ -47,11 +47,8 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.g
 
 	/**
 	 * An uncommented item
-	 * 
-	 * The SQL type of this item (timestamp) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TDatesRecord, java.lang.Object> TS = createField("ts", org.jooq.util.ase.ASEDataType.getDefaultDataType("timestamp"), T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
 	 * An uncommented item

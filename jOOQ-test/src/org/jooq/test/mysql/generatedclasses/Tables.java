@@ -61,6 +61,11 @@ public final class Tables {
 	public static org.jooq.test.mysql.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.mysql.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table test.t_dates
+	 */
+	public static org.jooq.test.mysql.generatedclasses.tables.TDates T_DATES = org.jooq.test.mysql.generatedclasses.tables.TDates.T_DATES;
+
+	/**
 	 * The table test.t_identity_pk
 	 */
 	public static org.jooq.test.mysql.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;

@@ -41,6 +41,11 @@ public final class Tables {
 	public static org.jooq.test.oracle.generatedclasses.test.tables.TBooleans T_BOOLEANS = org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table TEST.T_DATES
+	 */
+	public static org.jooq.test.oracle.generatedclasses.test.tables.TDates T_DATES = org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES;
+
+	/**
 	 * The table TEST.T_DIRECTORY
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.tables.TDirectory T_DIRECTORY = org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY;

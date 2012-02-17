@@ -71,6 +71,11 @@ public final class Tables {
 	public static org.jooq.test.sqlite.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sqlite.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table t_dates
+	 */
+	public static org.jooq.test.sqlite.generatedclasses.tables.TDates T_DATES = org.jooq.test.sqlite.generatedclasses.tables.TDates.T_DATES;
+
+	/**
 	 * The table t_triggers
 	 */
 	public static org.jooq.test.sqlite.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS;

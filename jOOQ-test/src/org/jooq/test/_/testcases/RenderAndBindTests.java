@@ -276,6 +276,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         boolean derby = (getDialect() == DERBY);
 
         // [#1147] Some data types need special care when inlined
+
+        // Selection from DUAL
+        // -------------------
         String s1 = "test";
         String s2 = "no SQL 'injection here; <<`'";
         String s3 = "''";
@@ -333,5 +336,39 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         array4[1] = (derby ? new String((byte[]) array4[1]) : array4[1]);
 
         assertEquals(asList(new String(by1), (derby ? new String(by2) : by2), bool1, bool2, bool3), asList(array4));
+    }
+
+    @Test
+    public void testInlinedBindValuesForDatetime() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        Date d1 = Date.valueOf("1981-07-10");
+        Time t1 = Time.valueOf("12:01:15");
+        Timestamp ts1 = Timestamp.valueOf("1981-07-10 12:01:15");
+
+        Factory create = create(new Settings()
+            .withExecution(new Execution()
+            .withStatementType(StatementType.STATEMENT)));
+
+        DATE date = create.newRecord(TDates());
+        date.setValue(TDates_ID(), 1);
+        assertEquals(1, date.store());
+
+        date.setValue(TDates_ID(), 2);
+        date.setValue(TDates_D(), d1);
+        date.setValue(TDates_T(), t1);
+        date.setValue(TDates_TS(), ts1);
+        assertEquals(1, date.store());
+
+        Result<Record> dates =
+        create.select(TDates_ID(), TDates_D(), TDates_T(), TDates_TS())
+              .from(TDates())
+              .orderBy(TDates_ID())
+              .fetch();
+
+        assertEquals(2, dates.size());
+        assertEquals(asList(1, 2), dates.getValues(TDates_ID()));
+        assertEquals(asList(1, null, null, null), asList(dates.get(0).intoArray()));
+        assertEquals(asList((Object) 2, d1, t1, ts1), asList(dates.get(1).intoArray()));
     }
 }

@@ -496,19 +496,6 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<U, ULong> TUnsigned_U_LONG();
 
     protected abstract Table<DATE> TDates();
-    protected final TableField<DATE, Integer> TDates_ID() {
-        return (TableField<DATE, Integer>) TDates().getField("ID");
-    }
-    protected final TableField<DATE, Date> TDates_D() {
-        return (TableField<DATE, Date>) TDates().getField("D");
-    }
-    protected final TableField<DATE, Time> TDates_T() {
-        return (TableField<DATE, Time>) TDates().getField("T");
-    }
-    protected final TableField<DATE, Timestamp> TDates_TS() {
-        return (TableField<DATE, Timestamp>) TDates().getField("TS");
-    }
-
 
     protected abstract Table<X> TArrays();
     protected abstract TableField<X, Integer> TArrays_ID();
@@ -1316,6 +1303,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testInlinedBindValues() throws Exception {
         new RenderAndBindTests(this).testInlinedBindValues();
+    }
+
+    @Test
+    public void testInlinedBindValuesForDatetime() throws Exception {
+        new RenderAndBindTests(this).testInlinedBindValuesForDatetime();
     }
 
     @Test

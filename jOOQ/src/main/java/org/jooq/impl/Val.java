@@ -48,8 +48,12 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.field;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -309,6 +313,55 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             else if (Number.class.isAssignableFrom(type)) {
                 context.sql(val.toString());
             }
+
+            // [#1156] Date/Time data types should be inlined using JDBC
+            // escape syntax
+            else if (type == Date.class) {
+
+                // Sybase ASE needs explicit casting to DATE
+                if (dialect == ASE) {
+                    context.sql(field("{d '" + val + "'}").cast(Date.class));
+                }
+
+                // The SQLite JDBC driver does not implement the escape syntax
+                else if (dialect == SQLITE) {
+                    context.sql("'").sql(val.toString()).sql("'");
+                }
+
+                // Normal behaviour: Apply JDBC escape syntax
+                else {
+                    context.sql("{d '").sql(val.toString()).sql("'}");
+                }
+            }
+            else if (type == Timestamp.class) {
+
+                // Sybase ASE needs explicit casting to DATETIME
+                if (dialect == ASE) {
+                    context.sql(field("{ts '" + val + "'}").cast(Timestamp.class));
+                }
+
+                // The SQLite JDBC driver does not implement the escape syntax
+                else if (dialect == SQLITE) {
+                    context.sql("'").sql(val.toString()).sql("'");
+                }
+
+                // Normal behaviour: Apply JDBC escape syntax
+                else {
+                    context.sql("{ts '").sql(val.toString()).sql("'}");
+                }
+            }
+            else if (type == Time.class) {
+
+                // The SQLite JDBC driver does not implement the escape syntax
+                if (dialect == SQLITE) {
+                    context.sql("'").sql(val.toString()).sql("'");
+                }
+
+                // Normal behaviour: Apply JDBC escape syntax
+                else {
+                    context.sql("{t '").sql(val.toString()).sql("'}");
+                }
+            }
             else if (type.isArray()) {
 
                 // H2 renders arrays as tuples
@@ -338,7 +391,6 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             // Known fall-through types:
             // - Blob, Clob (both not supported by jOOQ)
             // - String
-            // - java.util.Date subtypes
             else {
                 context.sql("'")
                        .sql(val.toString().replace("'", "''"))

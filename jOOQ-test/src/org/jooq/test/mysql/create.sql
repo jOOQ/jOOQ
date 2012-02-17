@@ -4,8 +4,8 @@ DROP VIEW IF EXISTS v_book/
 
 DROP PROCEDURE IF EXISTS p_unused/
 DROP PROCEDURE IF EXISTS p_author_exists/
-DROP PROCEDURE IF EXISTS p_create_author/ 
-DROP PROCEDURE IF EXISTS p_create_author_by_name/ 
+DROP PROCEDURE IF EXISTS p_create_author/
+DROP PROCEDURE IF EXISTS p_create_author_by_name/
 DROP PROCEDURE IF EXISTS p391/
 DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
@@ -14,6 +14,7 @@ DROP FUNCTION IF EXISTS f317/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 
+DROP TABLE IF EXISTS t_dates/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
@@ -43,8 +44,20 @@ DROP TABLE IF EXISTS t_identity_pk/
 CREATE TABLE t_identity_pk (
   id INT NOT NULL AUTO_INCREMENT,
   val int,
-  
+
   CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_dates (
+  id int,
+  d date,
+  t time,
+  ts timestamp,
+  d_int int,
+  ts_bigint bigint,
+
+  CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )
 /
 
@@ -60,7 +73,7 @@ CREATE TABLE t_booleans (
   vc_boolean varchar(1),
   c_boolean char(1),
   n_boolean int,
-  
+
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )
 /
@@ -69,10 +82,10 @@ CREATE TABLE t_959 (
   java_keywords enum('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
 	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',
 	                 'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
-	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof', 
+	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof',
 	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
-	                 'protected', 'public', 'return', 'short', 'static', 'strictfp', 
-	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws', 
+	                 'protected', 'public', 'return', 'short', 'static', 'strictfp',
+	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
 	                 'transient', 'true', 'try', 'void', 'volatile', 'while')
 ) ENGINE = InnoDB
 /
@@ -89,7 +102,7 @@ CREATE TABLE t_triggers (
   id_generated int not null AUTO_INCREMENT,
   id int,
   counter int,
-  
+
   CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 ) ENGINE = InnoDB
 /
@@ -100,9 +113,9 @@ ON t_triggers
 FOR EACH ROW
 BEGIN
 	DECLARE new_id INT;
-	
+
 	SELECT IFNULL(MAX(id_generated), 0) + 1 INTO new_id FROM t_triggers;
-	
+
 	SET NEW.id = new_id;
 	SET NEW.counter = new_id * 2;
 END;
@@ -113,7 +126,7 @@ CREATE TABLE t_language (
   DESCRIPTION VARCHAR(50) COMMENT 'The language description',
   description_english VARCHAR(50),
   ID INT NOT NULL COMMENT 'The language ID',
-  
+
   CONSTRAINT pk_t_language PRIMARY KEY (ID)
 ) ENGINE = InnoDB
   COMMENT 'An entity holding language master data'
@@ -121,21 +134,21 @@ CREATE TABLE t_language (
 
 CREATE TABLE t_658_11 (
   id CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_11 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_21 (
   id INT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_21 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_31 (
   id BIGINT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_31 PRIMARY KEY (id)
 )
 /
@@ -143,7 +156,7 @@ CREATE TABLE t_658_31 (
 CREATE TABLE t_658_12 (
   id CHAR(3) NOT NULL,
   cd CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_12 PRIMARY KEY (id)
 )
 /
@@ -151,7 +164,7 @@ CREATE TABLE t_658_12 (
 CREATE TABLE t_658_22 (
   id INT NOT NULL,
   cd INT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_22 PRIMARY KEY (id)
 )
 /
@@ -159,7 +172,7 @@ CREATE TABLE t_658_22 (
 CREATE TABLE t_658_32 (
   id BIGINT NOT NULL,
   cd BIGINT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_32 PRIMARY KEY (id)
 )
 /
@@ -184,7 +197,7 @@ CREATE TABLE t_658_ref (
 CREATE TABLE t_725_lob_test (
   ID int NOT NULL,
   LOB LONGBLOB NULL,
-  
+
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
 )
 /
@@ -203,7 +216,7 @@ CREATE TABLE t_author (
   DATE_OF_BIRTH DATE COMMENT 'The author''s date of birth',
   YEAR_OF_BIRTH INT COMMENT 'The author''s year of birth',
   ADDRESS VARCHAR(200) COMMENT 'The author''s address',
-  
+
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 ) ENGINE = InnoDB
   COMMENT = 'An entity holding authors of books';
@@ -211,7 +224,7 @@ CREATE TABLE t_author (
 
 CREATE TABLE t_book_details (
   ID INT NOT NULL COMMENT 'The details ID',
-    
+
   CONSTRAINT pk_t_book_details PRIMARY KEY (ID)
 ) ENGINE = InnoDB
   COMMENT = 'An unused details table'
@@ -230,11 +243,11 @@ CREATE TABLE t_book (
   STATUS enum('SOLD OUT','ORDERED','ON STOCK') COMMENT 'The book''s stock status',
   INDEX (AUTHOR_ID),
   INDEX (LANGUAGE_ID),
-	  
+
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
   CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID), 
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID),
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
 ) ENGINE = InnoDB
   COMMENT = 'An entity holding books';
@@ -242,7 +255,7 @@ CREATE TABLE t_book (
 
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL COMMENT 'The books store name',
-  
+
   CONSTRAINT uk_t_book_store_name UNIQUE(name)
 ) ENGINE = InnoDB
   COMMENT = 'A book store'
@@ -252,7 +265,7 @@ CREATE TABLE t_book_to_book_store (
   book_store_name VARCHAR(400) NOT NULL COMMENT 'The book store name',
   book_id INTEGER NOT NULL COMMENT 'The book ID',
   stock INTEGER COMMENT 'The number of books on stock',
-  
+
   CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name)
@@ -278,9 +291,9 @@ CREATE TABLE x_unused (
   META_DATA INT,
   TYPE0 INT,
   PRIMARY_KEY INT,
-  PRIMARYKEY INT,	
+  PRIMARYKEY INT,
   `FIELD 737` DECIMAL(25, 2),
-  
+
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
   CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
@@ -309,7 +322,7 @@ CREATE TABLE t_639_numbers_table (
 CREATE TABLE x_test_case_64_69 (
   ID INT NOT NULL,
   UNUSED_ID INT,
-   
+
   CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_64_69 FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
 ) ENGINE = InnoDB
@@ -319,7 +332,7 @@ CREATE TABLE x_test_case_64_69 (
 CREATE TABLE x_test_case_71 (
   ID INT NOT NULL,
   TEST_CASE_64_69_ID INT,
- 
+
   CONSTRAINT pk_x_test_case_71 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
 ) ENGINE = InnoDB
@@ -330,7 +343,7 @@ CREATE TABLE x_test_case_85 (
   id int NOT NULL,
   x_unused_id int,
   x_unused_name VARCHAR(10),
-	
+
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES X_UNUSED(id, name)
 ) ENGINE = InnoDB
@@ -341,7 +354,7 @@ CREATE OR REPLACE VIEW V_LIBRARY (AUTHOR, TITLE) AS
 SELECT CONCAT(A.FIRST_NAME, ' ', A.LAST_NAME), B.TITLE
 FROM T_AUTHOR A JOIN T_BOOK B ON B.AUTHOR_ID = A.ID;
 /
-  
+
 CREATE VIEW v_author AS
 SELECT * FROM t_author
 /
@@ -360,9 +373,9 @@ CREATE PROCEDURE p_create_author_by_name (IN first_name VARCHAR(50), IN last_nam
   COMMENT 'Create a new author'
 BEGIN
 	SET @id = 0;
-	
+
 	SELECT max(id) + 1 INTO @id FROM t_author;
-	
+
 	INSERT INTO T_AUTHOR (ID, FIRST_NAME, LAST_NAME)
 	VALUES (@id, first_name, last_name);
 END
@@ -379,8 +392,8 @@ CREATE PROCEDURE p_author_exists (author_name VARCHAR(50), OUT result INT)
   COMMENT 'Check existence of an author'
 BEGIN
   SELECT COUNT(*) > 0 INTO result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name;
 END
 /
@@ -403,8 +416,8 @@ CREATE FUNCTION f_author_exists (author_name VARCHAR(50))
   COMMENT 'Check existence of an author'
 BEGIN
   RETURN (SELECT COUNT(*) > 0
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name);
 END
 /

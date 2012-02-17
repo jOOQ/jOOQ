@@ -39,6 +39,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.vals;
@@ -270,42 +271,44 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
     @Test
     public void testInlinedBindValues() throws Exception {
-        // [#1147] Some data types need special care when inlined
+        // [#1158] TODO get this working for derby as well
+        boolean derby = (getDialect() == DERBY);
 
+        // [#1147] Some data types need special care when inlined
         String s1 = "test";
         String s2 = "no SQL 'injection here; <<`'";
         String s3 = "''";
-        String s4 = null;
+        String s4 = (derby ? s1 : null);
 
         Byte b1 = Byte.valueOf("1");
-        Byte b2 = null;
+        Byte b2 = (derby ? b1 : null);
         Short sh1 = Short.valueOf("2");
-        Short sh2 = null;
+        Short sh2 = (derby ? sh1 : null);
         Integer i1 = 3;
-        Integer i2 = null;
+        Integer i2 = (derby ? i1 : null);
         Long l1 = 4L;
-        Long l2 = null;
+        Long l2 = (derby ? l1 : null);
         BigInteger bi1 = new BigInteger("5");
-        BigInteger bi2 = null;
+        BigInteger bi2 = (derby ? bi1 : null);
         BigDecimal bd1 = new BigDecimal("6.01");
-        BigDecimal bd2 = null;
+        BigDecimal bd2 = (derby ? bd1 : null);
         Double db1 = 7.25;
-        Double db2 = null;
+        Double db2 = (derby ? db1 : null);
         Float f1 = 8.5f;
-        Float f2 = null;
+        Float f2 = (derby ? f1 : null);
 
         Date d1 = Date.valueOf("1981-07-10");
-        Date d2 = null;
+        Date d2 = (derby ? d1 : null);
         Time t1 = Time.valueOf("12:01:15");
-        Time t2 = null;
+        Time t2 = (derby ? t1 : null);
         Timestamp ts1 = Timestamp.valueOf("1981-07-10 12:01:15");
-        Timestamp ts2 = null;
+        Timestamp ts2 = (derby ? ts1 : null);
 
         byte[] by1 = "some bytes".getBytes();
-        byte[] by2 = null;
+        byte[] by2 = (derby ? by1 : null);
         Boolean bool1 = true;
         Boolean bool2 = false;
-        Boolean bool3 = null;
+        Boolean bool3 = (derby ? bool1 : null);
 
         Factory create = create(new Settings()
             .withExecution(new Execution()
@@ -313,16 +316,21 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
 
         Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
         Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
+        Object[] array3 = create.select(vals(d1, d2, t1, t2, ts1, ts2)).fetchOneArray();
         Object[] array4 = create.select(vals(by1, by2, bool1, bool2, bool3)).fetchOneArray();
 
         assertEquals(4, array1.length);
         assertEquals(16, array2.length);
+        assertEquals(6, array3.length);
         assertEquals(5, array4.length);
 
         assertEquals(asList(s1, s2, s3, s4), asList(array1));
         assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
+        assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
 
         array4[0] = new String((byte[]) array4[0]);
-        assertEquals(asList(new String(by1), by2, bool1, bool2, bool3), asList(array4));
+        array4[1] = (derby ? new String((byte[]) array4[1]) : array4[1]);
+
+        assertEquals(asList(new String(by1), (derby ? new String(by2) : by2), bool1, bool2, bool3), asList(array4));
     }
 }

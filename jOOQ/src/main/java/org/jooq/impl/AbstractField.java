@@ -340,43 +340,43 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Condition like(T value) {
+    public final Condition like(String value) {
         return like(val(value));
     }
 
     @Override
-    public final Condition like(T value, char escape) {
+    public final Condition like(String value, char escape) {
         return like(val(value), escape);
     }
 
     @Override
-    public final Condition like(Field<T> value) {
-        return new CompareCondition<T>(this, nullSafe(value), Comparator.LIKE);
+    public final Condition like(Field<String> value) {
+        return new CompareCondition(this, nullSafe(value), Comparator.LIKE);
     }
 
     @Override
-    public final Condition like(Field<T> value, char escape) {
-        return new CompareCondition<T>(this, nullSafe(value), Comparator.LIKE, escape);
+    public final Condition like(Field<String> value, char escape) {
+        return new CompareCondition(this, nullSafe(value), Comparator.LIKE, escape);
     }
 
     @Override
-    public final Condition notLike(T value) {
+    public final Condition notLike(String value) {
         return notLike(val(value));
     }
 
     @Override
-    public final Condition notLike(T value, char escape) {
+    public final Condition notLike(String value, char escape) {
         return notLike(val(value), escape);
     }
 
     @Override
-    public final Condition notLike(Field<T> value) {
-        return new CompareCondition<T>(this, nullSafe(value), Comparator.NOT_LIKE);
+    public final Condition notLike(Field<String> value) {
+        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE);
     }
 
     @Override
-    public final Condition notLike(Field<T> value, char escape) {
-        return new CompareCondition<T>(this, nullSafe(value), Comparator.NOT_LIKE, escape);
+    public final Condition notLike(Field<String> value, char escape) {
+        return new CompareCondition(this, nullSafe(value), Comparator.NOT_LIKE, escape);
     }
 
     @Override
@@ -386,7 +386,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             Factory.val(escape("" + value, '!')),
             Factory.literal("'%'"));
 
-        return like(concat.cast(this), '!');
+        return like(concat, '!');
     }
 
     @Override
@@ -396,7 +396,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             escape(value.cast(String.class), '!'),
             Factory.literal("'%'"));
 
-        return like(concat.cast(this), '!');
+        return like(concat, '!');
     }
 
     @Override
@@ -405,7 +405,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             Factory.val(escape("" + value, '!')),
             Factory.literal("'%'"));
 
-        return like(concat.cast(this), '!');
+        return like(concat, '!');
     }
 
     @Override
@@ -414,7 +414,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             escape(value.cast(String.class), '!'),
             Factory.literal("'%'"));
 
-        return like(concat.cast(this), '!');
+        return like(concat, '!');
     }
 
     @Override
@@ -423,7 +423,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             Factory.literal("'%'"),
             Factory.val(escape("" + value, '!')));
 
-        return like(concat.cast(this), '!');
+        return like(concat, '!');
     }
 
     @Override
@@ -432,7 +432,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             Factory.literal("'%'"),
             escape(value.cast(String.class), '!'));
 
-        return like(concat.cast(this), '!');
+        return like(concat, '!');
     }
 
     @Override
@@ -525,7 +525,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition equal(Field<T> field) {
-        return new CompareCondition<T>(this, nullSafe(field), Comparator.EQUALS);
+        return new CompareCondition(this, nullSafe(field), Comparator.EQUALS);
     }
 
     @Override
@@ -576,7 +576,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notEqual(Field<T> field) {
-        return new CompareCondition<T>(this, nullSafe(field), Comparator.NOT_EQUALS);
+        return new CompareCondition(this, nullSafe(field), Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -627,7 +627,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessThan(Field<T> field) {
-        return new CompareCondition<T>(this, nullSafe(field), Comparator.LESS);
+        return new CompareCondition(this, nullSafe(field), Comparator.LESS);
     }
 
     @Override
@@ -678,7 +678,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessOrEqual(Field<T> field) {
-        return new CompareCondition<T>(this, nullSafe(field), Comparator.LESS_OR_EQUAL);
+        return new CompareCondition(this, nullSafe(field), Comparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -729,7 +729,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterThan(Field<T> field) {
-        return new CompareCondition<T>(this, nullSafe(field), Comparator.GREATER);
+        return new CompareCondition(this, nullSafe(field), Comparator.GREATER);
     }
 
     @Override
@@ -780,7 +780,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterOrEqual(Field<T> field) {
-        return new CompareCondition<T>(this, nullSafe(field), Comparator.GREATER_OR_EQUAL);
+        return new CompareCondition(this, nullSafe(field), Comparator.GREATER_OR_EQUAL);
     }
 
     @Override

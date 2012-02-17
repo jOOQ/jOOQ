@@ -38,8 +38,13 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.NOT_EQUALS;
+import static org.jooq.Comparator.NOT_LIKE;
+import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.List;
 
@@ -48,24 +53,25 @@ import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
  */
-class CompareCondition<T> extends AbstractCondition {
+class CompareCondition extends AbstractCondition {
 
     private static final long serialVersionUID = -747240442279619486L;
 
-    private final Field<T>    field1;
-    private final Field<T>    field2;
+    private final Field<?>    field1;
+    private final Field<?>    field2;
     private final Comparator  comparator;
     private final Character   escape;
 
-    CompareCondition(Field<T> field1, Field<T> field2, Comparator comparator) {
+    CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
         this(field1, field2, comparator, null);
     }
 
-    CompareCondition(Field<T> field1, Field<T> field2, Comparator comparator, Character escape) {
+    CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator, Character escape) {
         this.field1 = field1;
         this.field2 = field2;
         this.comparator = comparator;
@@ -89,7 +95,20 @@ class CompareCondition<T> extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(field1)
+        SQLDialect dialect = context.getDialect();
+        Field<?> lhs = field1;
+
+        // [#1159] Some dialects cannot auto-convert the LHS operand to a
+        // VARCHAR when applying a LIKE predicate
+        // [#293] TODO: This could apply to other operators, too
+        if ((comparator == LIKE || comparator == NOT_LIKE)
+                && field1.getType() != String.class
+                && asList(ASE, DERBY, POSTGRES).contains(dialect)) {
+
+            lhs = lhs.cast(String.class);
+        }
+
+        context.sql(lhs)
                .sql(" ");
 
         if (field2.isNullLiteral()) {
@@ -107,13 +126,13 @@ class CompareCondition<T> extends AbstractCondition {
         // [#1131] Some weird DB2 issue stops "LIKE" from working with a
         // concatenated search expression, if the expression is more than 4000
         // characters long
-        boolean cast = context.getDialect() == DB2 && field2 instanceof Concat;
+        boolean castRhs = (dialect == DB2 && field2 instanceof Concat);
 
         context.sql(comparator.toSQL())
                .sql(" ")
-               .sql(cast ? "cast(" : "")
+               .sql(castRhs ? "cast(" : "")
                .sql(field2)
-               .sql(cast ? " as varchar(4000))" : "");
+               .sql(castRhs ? " as varchar(4000))" : "");
 
         if (escape != null) {
             context.sql(" escape '")

@@ -417,7 +417,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this like value</code>
      */
     @Support
-    Condition like(Field<T> value);
+    Condition like(Field<String> value);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -425,7 +425,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this like value escape 'e'</code>
      */
     @Support
-    Condition like(Field<T> value, char escape);
+    Condition like(Field<String> value, char escape);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -433,7 +433,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this like value</code>
      */
     @Support
-    Condition like(T value);
+    Condition like(String value);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -441,7 +441,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this like value escape 'e'</code>
      */
     @Support
-    Condition like(T value, char escape);
+    Condition like(String value, char escape);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -449,7 +449,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this not like value</code>
      */
     @Support
-    Condition notLike(Field<T> value);
+    Condition notLike(Field<String> value);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -457,7 +457,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this not like value escape 'e'</code>
      */
     @Support
-    Condition notLike(Field<T> value, char escape);
+    Condition notLike(Field<String> value, char escape);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -465,7 +465,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this not like value</code>
      */
     @Support
-    Condition notLike(T value);
+    Condition notLike(String value);
 
     /**
      * Create a condition to pattern-check this field against a value
@@ -473,7 +473,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * SQL: <code>this not like value escape 'e'</code>
      */
     @Support
-    Condition notLike(T value, char escape);
+    Condition notLike(String value, char escape);
 
     /**
      * Convenience method for {@link #like(Object, char)} including proper

@@ -56,6 +56,11 @@ public final class Tables {
 	public static org.jooq.test.derby.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table TEST.T_DATES
+	 */
+	public static org.jooq.test.derby.generatedclasses.tables.TDates T_DATES = org.jooq.test.derby.generatedclasses.tables.TDates.T_DATES;
+
+	/**
 	 * The table TEST.T_IDENTITY
 	 */
 	public static org.jooq.test.derby.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY;

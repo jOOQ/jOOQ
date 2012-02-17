@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses;
  */
 public class Dbo extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -623226017;
+	private static final long serialVersionUID = 1794404583;
 
 	/**
 	 * The singleton instance of dbo
@@ -39,6 +39,7 @@ public class Dbo extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.ase.generatedclasses.tables.TBookStore.T_BOOK_STORE,
 			org.jooq.test.ase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.ase.generatedclasses.tables.TBooleans.T_BOOLEANS,
+			org.jooq.test.ase.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.ase.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.ase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.ase.generatedclasses.tables.TTriggers.T_TRIGGERS,

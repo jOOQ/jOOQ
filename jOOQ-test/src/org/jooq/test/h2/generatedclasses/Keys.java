@@ -19,6 +19,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 
 	// UNIQUE and PRIMARY KEY definitions
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> PK_T_DATES = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.TDates.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> PK_T_BOOLEANS = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS, org.jooq.test.h2.generatedclasses.tables.TBooleans.ID);
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.h2.generatedclasses.tables.TTriggers.ID_GENERATED);
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID);

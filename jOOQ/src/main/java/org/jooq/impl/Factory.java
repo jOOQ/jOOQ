@@ -53,6 +53,7 @@ import static org.jooq.impl.Util.combine;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -67,6 +68,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import javax.xml.bind.JAXB;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -241,7 +244,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Connection getConnection() {
-        return new ConnectionProxy(connection, settings);
+        return (connection == null ? null : new ConnectionProxy(connection, settings));
     }
 
     /**
@@ -4613,7 +4616,10 @@ public class Factory implements FactoryOperations {
 
     @Override
     public String toString() {
-        return "Factory [connected=" + (connection != null) + ", dialect=" + dialect + ", mapping=" + mapping + "]";
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(settings, writer);
+
+        return "Factory [connected=" + (connection != null) + ", dialect=" + dialect + ", settings=\n" + writer + "]";
     }
 
     static {

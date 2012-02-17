@@ -109,7 +109,6 @@ import org.junit.Test;
 import org.postgresql.util.PSQLException;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import com.sybase.jdbc3.jdbc.SybSQLException;
 
 /**
  * The abstract test suite uses generic types to model the generated test schema
@@ -264,7 +263,7 @@ public abstract class jOOQAbstractTest<
                 }
 
                 // There is no DROP FUNCTION IF EXISTS statement in Postgres
-                else if (e instanceof PSQLException) {
+                else if (e.getClass().getName().startsWith("org.postgresql")) {
                     if ("42883".equals(((PSQLException) e).getSQLState())) {
                         continue;
                     }
@@ -278,7 +277,7 @@ public abstract class jOOQAbstractTest<
                 }
 
                 // There is no DROP ** IF EXISTS statement in SQL Server
-                else if (e instanceof SQLServerException) {
+                else if (e.getClass().getName().startsWith("com.microsoft")) {
                     switch (((SQLServerException)e).getErrorCode()) {
                         case 3701: // Tables
                         case 218:  // Types
@@ -287,7 +286,7 @@ public abstract class jOOQAbstractTest<
                 }
 
                 // There is no DROP SEQUENCE IF EXISTS statement in Sybase
-                else if (e instanceof SybSQLException) {
+                else if (e.getClass().getName().startsWith("com.sybase")) {
                     if (sql.contains("DROP SEQUENCE")) {
                         continue;
                     }

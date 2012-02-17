@@ -4,8 +4,8 @@ DROP VIEW IF EXISTS v_book/
 
 DROP PROCEDURE IF EXISTS p_unused/
 DROP PROCEDURE IF EXISTS p_author_exists/
-DROP PROCEDURE IF EXISTS p_create_author/ 
-DROP PROCEDURE IF EXISTS p_create_author_by_name/ 
+DROP PROCEDURE IF EXISTS p_create_author/
+DROP PROCEDURE IF EXISTS p_create_author_by_name/
 DROP PROCEDURE IF EXISTS p391/
 DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
@@ -14,6 +14,7 @@ DROP FUNCTION IF EXISTS f317/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 
+DROP TABLE IF EXISTS t_dates/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/
@@ -44,7 +45,7 @@ DROP TABLE IF EXISTS t_identity_pk/
 CREATE TABLE t_identity_pk (
   id INTEGER NOT NULL IDENTITY,
   val int,
-  
+
   CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
 )
 /
@@ -52,6 +53,18 @@ CREATE TABLE t_identity_pk (
 CREATE TABLE t_identity (
   id INTEGER NOT NULL IDENTITY,
   val int
+)
+/
+
+CREATE TABLE t_dates (
+  id int,
+  d date,
+  t time,
+  ts timestamp,
+  d_int int,
+  ts_bigint bigint,
+
+  CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )
 /
 
@@ -67,7 +80,7 @@ CREATE TABLE t_booleans (
   vc_boolean varchar(1),
   c_boolean char(1),
   n_boolean int,
-  
+
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )
 /
@@ -76,7 +89,7 @@ CREATE TABLE t_triggers (
   id_generated int IDENTITY not null,
   id int null,
   counter int null,
-  
+
   CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
@@ -97,7 +110,7 @@ CREATE TABLE t_language (
   description VARCHAR(50) NULL,
   description_english VARCHAR(50) NULL,
   id INTEGER NOT NULL,
-  
+
   CONSTRAINT pk_t_language PRIMARY KEY (ID)
 )
 /
@@ -111,21 +124,21 @@ COMMENT ON COLUMN t_language.description IS 'The language description'
 /
 CREATE TABLE t_658_11 (
   id CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_11 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_21 (
   id INT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_21 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_31 (
   id BIGINT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_31 PRIMARY KEY (id)
 )
 /
@@ -133,7 +146,7 @@ CREATE TABLE t_658_31 (
 CREATE TABLE t_658_12 (
   id CHAR(3) NOT NULL,
   cd CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_12 PRIMARY KEY (id)
 )
 /
@@ -141,7 +154,7 @@ CREATE TABLE t_658_12 (
 CREATE TABLE t_658_22 (
   id INT NOT NULL,
   cd INT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_22 PRIMARY KEY (id)
 )
 /
@@ -149,7 +162,7 @@ CREATE TABLE t_658_22 (
 CREATE TABLE t_658_32 (
   id BIGINT NOT NULL,
   cd BIGINT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_32 PRIMARY KEY (id)
 )
 /
@@ -174,7 +187,7 @@ CREATE TABLE t_658_ref (
 CREATE TABLE t_725_lob_test (
   ID int NOT NULL,
   LOB LONG BINARY NULL,
-  
+
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
 )
 /
@@ -193,9 +206,9 @@ CREATE TABLE t_author (
   DATE_OF_BIRTH DATE NULL,
   YEAR_OF_BIRTH INT NULL,
   ADDRESS VARCHAR(200) NULL,
-  
+
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
-) 
+)
 /
 COMMENT ON TABLE t_author IS 'An entity holding authors of books'
 /
@@ -214,7 +227,7 @@ COMMENT ON COLUMN t_author.address IS 'The author''s address'
 
 CREATE TABLE t_book_details (
   ID INT NOT NULL,
-    
+
   CONSTRAINT pk_t_book_details PRIMARY KEY (ID)
 )
 /
@@ -229,11 +242,11 @@ CREATE TABLE t_book (
   LANGUAGE_ID INT NOT NULL,
   CONTENT_TEXT LONG VARCHAR NULL,
   CONTENT_PDF LONG BINARY NULL,
-  
+
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
   CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID), 
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID),
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
 )
 /
@@ -256,9 +269,9 @@ COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'
 
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL,
-  
-  CONSTRAINT uk_t_book_store_name UNIQUE(name) 
-) 
+
+  CONSTRAINT uk_t_book_store_name UNIQUE(name)
+)
 /
 COMMENT ON TABLE t_book_store IS 'A book store'
 /
@@ -268,7 +281,7 @@ CREATE TABLE t_book_to_book_store (
   book_store_name VARCHAR(400) NOT NULL,
   book_id INTEGER NOT NULL,
   stock INTEGER,
-   
+
   CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name)
@@ -276,7 +289,7 @@ CREATE TABLE t_book_to_book_store (
   CONSTRAINT fk_b2bs_b_id    FOREIGN KEY (book_id)
                              REFERENCES t_book (id)
                              ON DELETE CASCADE
-) 
+)
 COMMENT ON TABLE t_book_to_book_store IS 'An m:n relation between books and book stores'
 /
 COMMENT ON COLUMN t_book_to_book_store.book_store_name IS 'The book store name'
@@ -298,18 +311,18 @@ CREATE TABLE x_unused (
   META_DATA INT,
   TYPE0 INT,
   PRIMARY_KEY INT,
-  PRIMARYKEY INT,	
+  PRIMARYKEY INT,
   "FIELD 737" DECIMAL(25, 2),
-	
+
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
   CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
-) 
+)
 /
 
 CREATE TABLE t_986_1 (
   REF INT,
-  
+
   CONSTRAINT pk_986 PRIMARY KEY(REF),
   CONSTRAINT uk_986 UNIQUE(REF),
   CONSTRAINT fk_986 FOREIGN KEY(REF) REFERENCES X_UNUSED(ID)
@@ -318,7 +331,7 @@ CREATE TABLE t_986_1 (
 
 CREATE TABLE t_986_2 (
   REF INT,
-  
+
   CONSTRAINT pk_986 PRIMARY KEY(REF),
   CONSTRAINT uk_986 UNIQUE(REF),
   CONSTRAINT fk_986 FOREIGN KEY(REF) REFERENCES X_UNUSED(ID)
@@ -339,7 +352,7 @@ CREATE TABLE t_639_numbers_table (
   BIG_DECIMAL DECIMAL(22, 5) NULL,
   "FLOAT" REAL NULL,
   "DOUBLE" DOUBLE NULL,
-  
+
   CONSTRAINT pk_t_639_numbers_table PRIMARY KEY(ID)
 )
 /
@@ -347,26 +360,26 @@ CREATE TABLE t_639_numbers_table (
 CREATE TABLE x_test_case_64_69 (
   ID INT NOT NULL,
   UNUSED_ID INT,
-   
+
   CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_64_69 FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
-) 
+)
 /
 
 CREATE TABLE x_test_case_71 (
   ID INT NOT NULL,
   TEST_CASE_64_69_ID INT,
- 
+
   CONSTRAINT pk_x_test_case_71 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
-) 
+)
 /
 
 CREATE TABLE x_test_case_85 (
   id int NOT NULL,
   x_unused_id int,
   x_unused_name VARCHAR(10),
-	
+
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES X_UNUSED(id, name)
 )
@@ -407,10 +420,10 @@ CREATE PROCEDURE p_author_exists (IN author_name VARCHAR(50), OUT result INT)
 BEGIN
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
     INTO result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name
-END 
+END
 /
 
 CREATE PROCEDURE p391 (
@@ -432,12 +445,12 @@ BEGIN
 
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
     INTO @result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name;
-      
+
   return @result;
-END 
+END
 /
 
 CREATE FUNCTION f_one ()

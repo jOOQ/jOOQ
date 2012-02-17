@@ -12,8 +12,8 @@ DROP FUNCTION p_enhance_address1(address IN u_address_type, no OUT VARCHAR)/
 DROP FUNCTION p_enhance_address2(address OUT u_address_type)/
 DROP FUNCTION p_enhance_address3(address IN OUT u_address_type)/
 DROP FUNCTION p_unused(in1 VARCHAR, out1 OUT INTEGER, out2 IN OUT INTEGER)/
-DROP FUNCTION p_create_author()/ 
-DROP FUNCTION p_create_author_by_name(first_name VARCHAR, last_name VARCHAR)/ 
+DROP FUNCTION p_create_author()/
+DROP FUNCTION p_create_author_by_name(first_name VARCHAR, last_name VARCHAR)/
 DROP FUNCTION p_author_exists(author_name VARCHAR, result OUT INTEGER)/
 DROP FUNCTION p391(
 	i1 INTEGER, io1 IN OUT INTEGER, o1 OUT INTEGER,
@@ -30,28 +30,29 @@ DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
 
-DROP TABLE IF EXISTS t_triggers CASCADE/
-DROP TABLE IF EXISTS t_arrays CASCADE/
-DROP TABLE IF EXISTS t_book_to_book_store CASCADE/
-DROP TABLE IF EXISTS t_book_store CASCADE/
-DROP TABLE IF EXISTS t_book CASCADE/
-DROP TABLE IF EXISTS t_book_details CASCADE/
-DROP TABLE IF EXISTS t_author CASCADE/
-DROP TABLE IF EXISTS t_language CASCADE/
-DROP TABLE IF EXISTS x_test_case_71 CASCADE/
-DROP TABLE IF EXISTS x_test_case_64_69 CASCADE/
-DROP TABLE IF EXISTS x_test_case_85 CASCADE/
-DROP TABLE IF EXISTS t_986_1 CASCADE/
-DROP TABLE IF EXISTS t_986_2 CASCADE/
-DROP TABLE IF EXISTS x_unused CASCADE/
-DROP TABLE IF EXISTS t_639_numbers_table CASCADE/
-DROP TABLE IF EXISTS t_658_ref CASCADE/
-DROP TABLE IF EXISTS t_658_11 CASCADE/
-DROP TABLE IF EXISTS t_658_21 CASCADE/
-DROP TABLE IF EXISTS t_658_31 CASCADE/
-DROP TABLE IF EXISTS t_658_12 CASCADE/
-DROP TABLE IF EXISTS t_658_22 CASCADE/
-DROP TABLE IF EXISTS t_658_32 CASCADE/
+DROP TABLE IF EXISTS t_dates/
+DROP TABLE IF EXISTS t_triggers/
+DROP TABLE IF EXISTS t_arrays/
+DROP TABLE IF EXISTS t_book_to_book_store/
+DROP TABLE IF EXISTS t_book_store/
+DROP TABLE IF EXISTS t_book/
+DROP TABLE IF EXISTS t_book_details/
+DROP TABLE IF EXISTS t_author/
+DROP TABLE IF EXISTS t_language/
+DROP TABLE IF EXISTS x_test_case_71/
+DROP TABLE IF EXISTS x_test_case_64_69/
+DROP TABLE IF EXISTS x_test_case_85/
+DROP TABLE IF EXISTS t_986_1/
+DROP TABLE IF EXISTS t_986_2/
+DROP TABLE IF EXISTS x_unused/
+DROP TABLE IF EXISTS t_639_numbers_table/
+DROP TABLE IF EXISTS t_658_ref/
+DROP TABLE IF EXISTS t_658_11/
+DROP TABLE IF EXISTS t_658_21/
+DROP TABLE IF EXISTS t_658_31/
+DROP TABLE IF EXISTS t_658_12/
+DROP TABLE IF EXISTS t_658_22/
+DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 DROP TABLE IF EXISTS t_959/
@@ -59,19 +60,19 @@ DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
 
-DROP TYPE IF EXISTS u_address_type CASCADE/
-DROP TYPE IF EXISTS u_street_type CASCADE/
-DROP TYPE IF EXISTS u_book_status CASCADE/
-DROP TYPE IF EXISTS u_country CASCADE/
-DROP TYPE IF EXISTS u_959 CASCADE/
+DROP TYPE IF EXISTS u_address_type/
+DROP TYPE IF EXISTS u_street_type/
+DROP TYPE IF EXISTS u_book_status/
+DROP TYPE IF EXISTS u_country/
+DROP TYPE IF EXISTS u_959/
 
 CREATE TYPE u_959 AS ENUM('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
 	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',
 	                 'else', 'enum', 'extends', 'false', 'final', 'finally', 'float',
-	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof', 
+	                 'for', 'goto', 'if', 'implements', 'import', 'instanceof',
 	                 'interface', 'int', 'long', 'native', 'new', 'package', 'private',
-	                 'protected', 'public', 'return', 'short', 'static', 'strictfp', 
-	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws', 
+	                 'protected', 'public', 'return', 'short', 'static', 'strictfp',
+	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
 	                 'transient', 'true', 'try', 'void', 'volatile', 'while')/
 CREATE TYPE u_book_status AS ENUM ('SOLD OUT', 'ON STOCK', 'ORDERED')/
 CREATE TYPE u_country AS ENUM ('Brazil', 'England', 'Germany')/
@@ -96,7 +97,7 @@ CREATE TYPE u_address_type AS (
 CREATE TABLE t_identity_pk (
   id serial not null,
   val int,
-  
+
   CONSTRAINT pk_t_identity_pk PRIMARY KEY (id)
 )
 /
@@ -104,6 +105,18 @@ CREATE TABLE t_identity_pk (
 CREATE TABLE t_identity (
   id serial not null,
   val int
+)
+/
+
+CREATE TABLE t_dates (
+  id int,
+  d date,
+  t time,
+  ts timestamp,
+  d_int int,
+  ts_bigint bigint,
+
+  CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )
 /
 
@@ -119,7 +132,7 @@ CREATE TABLE t_booleans (
   vc_boolean varchar(1),
   c_boolean char(1),
   n_boolean int,
-  
+
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )
 /
@@ -133,7 +146,7 @@ CREATE TABLE t_triggers (
   id_generated serial4 not null,
   id int,
   counter int,
-  
+
   CONSTRAINT pk_t_triggers PRIMARY KEY (id_generated)
 )
 /
@@ -144,9 +157,9 @@ AS $$
 BEGIN
 	new.id = new.id_generated;
 	new.counter = new.id_generated * 2;
-        
+
     return new;
-END 
+END
 $$ LANGUAGE plpgsql;
 /
 
@@ -162,7 +175,7 @@ CREATE TABLE t_language (
   description VARCHAR(50),
   description_english VARCHAR(50),
   id INTEGER NOT NULL,
-  
+
   CONSTRAINT pk_t_language PRIMARY KEY (ID)
 )
 /
@@ -177,21 +190,21 @@ COMMENT ON COLUMN t_language.description IS 'The language description'
 
 CREATE TABLE t_658_11 (
   id CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_11 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_21 (
   id INT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_21 PRIMARY KEY (id)
 )
 /
 
 CREATE TABLE t_658_31 (
   id BIGINT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_31 PRIMARY KEY (id)
 )
 /
@@ -199,7 +212,7 @@ CREATE TABLE t_658_31 (
 CREATE TABLE t_658_12 (
   id CHAR(3) NOT NULL,
   cd CHAR(3) NOT NULL,
-  
+
   CONSTRAINT pk_t_658_12 PRIMARY KEY (id)
 )
 /
@@ -207,7 +220,7 @@ CREATE TABLE t_658_12 (
 CREATE TABLE t_658_22 (
   id INT NOT NULL,
   cd INT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_22 PRIMARY KEY (id)
 )
 /
@@ -215,7 +228,7 @@ CREATE TABLE t_658_22 (
 CREATE TABLE t_658_32 (
   id BIGINT NOT NULL,
   cd BIGINT NOT NULL,
-  
+
   CONSTRAINT pk_t_658_32 PRIMARY KEY (id)
 )
 /
@@ -240,7 +253,7 @@ CREATE TABLE t_658_ref (
 CREATE TABLE t_725_lob_test (
   ID int NOT NULL,
   LOB BYTEA NULL,
-  
+
   CONSTRAINT pk_t_725_lob_test PRIMARY KEY (id)
 )
 /
@@ -259,7 +272,7 @@ CREATE TABLE t_author (
   date_of_birth DATE,
   year_of_birth INTEGER,
   address u_address_type,
-  
+
   CONSTRAINT pk_t_author PRIMARY KEY (ID)
 )
 /
@@ -280,7 +293,7 @@ COMMENT ON COLUMN t_author.address IS 'The author''s address'
 
 CREATE TABLE t_book_details (
   ID INT,
-    
+
   CONSTRAINT pk_t_book_details PRIMARY KEY (ID)
 )
 /
@@ -298,11 +311,11 @@ CREATE TABLE t_book (
   content_text TEXT,
   content_pdf BYTEA,
   status u_book_status,
-  
+
   CONSTRAINT pk_t_book PRIMARY KEY (ID),
   CONSTRAINT fk_t_book_author_id FOREIGN KEY (AUTHOR_ID) REFERENCES T_AUTHOR(ID),
   CONSTRAINT fk_t_book_co_author_id FOREIGN KEY (CO_AUTHOR_ID) REFERENCES T_AUTHOR(ID),
-  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID), 
+  CONSTRAINT fk_t_book_details_id FOREIGN KEY (DETAILS_ID) REFERENCES T_BOOK_DETAILS(ID),
   CONSTRAINT fk_t_book_language_id FOREIGN KEY (LANGUAGE_ID) REFERENCES T_LANGUAGE(ID)
 )
 /
@@ -328,7 +341,7 @@ COMMENT ON COLUMN t_book.status IS 'The book''s stock status'
 
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL,
-  
+
   CONSTRAINT uk_t_book_store_name UNIQUE(name)
 )
 /
@@ -342,7 +355,7 @@ CREATE TABLE t_book_to_book_store (
   book_store_name VARCHAR(400) NOT NULL,
   book_id INTEGER NOT NULL,
   stock INTEGER,
-  
+
   CONSTRAINT pk_b2bs PRIMARY KEY(book_store_name, book_id),
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name)
@@ -370,7 +383,7 @@ CREATE TABLE t_arrays (
   udt_array u_street_type[],
   enum_array u_country[],
   array_array INTEGER[][],
-  
+
   CONSTRAINT pk_t_arrays PRIMARY KEY (ID)
 )
 /
@@ -388,10 +401,10 @@ CREATE TABLE x_unused (
   VALUES INT,
   TYPE0 INT,
   PRIMARY_KEY INT,
-  PRIMARYKEY INT,	
-  name_ref VARCHAR(10),	
+  PRIMARYKEY INT,
+  name_ref VARCHAR(10),
   "FIELD 737" DECIMAL(25, 2),
-   
+
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
   CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
@@ -402,14 +415,14 @@ COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'
 
 CREATE TABLE t_986_1 (
   REF INT,
-  
+
   CONSTRAINT fk_986 FOREIGN KEY(REF) REFERENCES X_UNUSED(ID)
 )
 /
 
 CREATE TABLE t_986_2 (
   REF INT,
-  
+
   CONSTRAINT fk_986 FOREIGN KEY(REF) REFERENCES X_UNUSED(ID)
 )
 /
@@ -427,7 +440,7 @@ CREATE TABLE t_639_numbers_table (
   BIG_DECIMAL DECIMAL(22, 5),
   FLOAT REAL,
   DOUBLE DOUBLE PRECISION,
-  
+
   CONSTRAINT pk_t_639_numbers_table PRIMARY KEY(ID)
 );
 /
@@ -436,7 +449,7 @@ CREATE TABLE t_639_numbers_table (
 CREATE TABLE x_test_case_64_69 (
   id INTEGER NOT NULL,
   unused_id INTEGER,
-   
+
   CONSTRAINT pk_x_test_case_64_69 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_64_69 FOREIGN KEY(UNUSED_ID) REFERENCES X_UNUSED(ID)
 )
@@ -445,7 +458,7 @@ CREATE TABLE x_test_case_64_69 (
 CREATE TABLE x_test_case_71 (
   id INTEGER NOT NULL,
   test_case_64_69_id SMALLINT,
- 
+
   CONSTRAINT pk_x_test_case_71 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_71 FOREIGN KEY(TEST_CASE_64_69_ID) REFERENCES X_TEST_CASE_64_69(ID)
 )
@@ -455,7 +468,7 @@ CREATE TABLE x_test_case_85 (
   id INTEGER NOT NULL,
   x_unused_id INTEGER,
   x_unused_name VARCHAR(10),
-	
+
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(ID),
   CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES X_UNUSED(id, name)
 )
@@ -466,7 +479,7 @@ CREATE OR REPLACE VIEW v_library (author, title) AS
 SELECT a.first_name || ' ' || a.last_name, b.title
 FROM t_author a JOIN t_book b ON b.author_id = a.id
 /
-  
+
 CREATE VIEW v_author AS
 SELECT * FROM t_author
 /
@@ -496,7 +509,7 @@ CREATE FUNCTION p_enhance_address2 (address OUT u_address_type)
 AS $$
 BEGIN
 	address := (
-		SELECT t_author.address 
+		SELECT t_author.address
 		FROM t_author
 		WHERE first_name = 'George'
 	);
@@ -538,10 +551,10 @@ DECLARE
 BEGIN
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
     INTO v_result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name;
-      
+
   result := v_result;
 END;
 $$ LANGUAGE plpgsql;
@@ -620,10 +633,10 @@ DECLARE
 BEGIN
   SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END
     INTO v_result
-    FROM t_author 
-   WHERE first_name LIKE author_name 
+    FROM t_author
+   WHERE first_name LIKE author_name
       OR last_name LIKE author_name;
-      
+
   return v_result;
 END;
 $$ LANGUAGE plpgsql;
@@ -657,7 +670,7 @@ $$ LANGUAGE plpgsql;
 /
 
 CREATE FUNCTION p_get_two_cursors (
-	books   OUT refcursor, 
+	books   OUT refcursor,
 	authors OUT refcursor)
 AS $$
 BEGIN
@@ -669,7 +682,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE FUNCTION p_get_one_cursor (
     total   OUT int,
-	books   OUT refcursor, 
+	books   OUT refcursor,
 	book_ids IN int[])
 AS $$
 BEGIN
@@ -690,7 +703,7 @@ BEGIN
 	ELSE
 		OPEN ref FOR SELECT * FROM t_book WHERE id IN (SELECT * FROM UNNEST(book_ids)) ORDER BY id ASC;
 	END IF;
-	
+
 	RETURN ref;
 END;
 $$ LANGUAGE plpgsql;

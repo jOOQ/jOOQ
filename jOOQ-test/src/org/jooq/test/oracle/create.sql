@@ -15,6 +15,7 @@ DROP TABLE multi_schema.t_book_sale/
 DROP TABLE multi_schema.t_book/
 DROP TABLE multi_schema.t_author/
 
+DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/
 DROP TABLE t_book_to_book_store/
@@ -243,6 +244,18 @@ CREATE SEQUENCE s_961_int MAXVALUE 2000000000/
 CREATE SEQUENCE s_961_long MAXVALUE 10000000000/
 CREATE SEQUENCE s_961_big_integer/
 CREATE SEQUENCE s_triggers_sequence
+/
+
+CREATE TABLE t_dates (
+  id int,
+  d date,
+  t timestamp,
+  ts timestamp,
+  d_int number(7),
+  ts_bigint number(18),
+
+  CONSTRAINT pk_t_dates PRIMARY KEY (id)
+)
 /
 
 CREATE TABLE t_booleans (

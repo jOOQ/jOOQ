@@ -11,6 +11,7 @@ DELETE FROM t_book/
 DELETE FROM t_author/
 DELETE FROM t_language/
 DELETE FROM t_booleans/
+DELETE FROM t_dates/
 DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
 
@@ -28,7 +29,7 @@ INSERT INTO t_658_22 VALUES (1, 1), (2, 2), (3, 3)/
 INSERT INTO t_658_32 VALUES (1, 1), (2, 2), (3, 3)/
 INSERT INTO t_658_ref VALUES ('A', 1, 1, 'B', 2, 2)/
 
-INSERT INTO t_author (id, first_name, last_name, date_of_birth, year_of_birth, address) 
+INSERT INTO t_author (id, first_name, last_name, date_of_birth, year_of_birth, address)
 VALUES (1, 'George', 'Orwell', '1903-06-25', 1903, null),
        (2, 'Paulo',  'Coelho', '1947-08-24', 1947, null)
 /
@@ -40,7 +41,7 @@ VALUES (1, 1, null, null, '1984',         1948, 1, 'To know and not to know, to 
        (4, 2, null, null, 'Brida',        1990, 2, null, null)
 /
 
-INSERT INTO t_book_store (name) 
+INSERT INTO t_book_store (name)
 VALUES ('Orell Füssli'),
        ('Ex Libris'),
        ('Buchhandlung im Volkshaus')

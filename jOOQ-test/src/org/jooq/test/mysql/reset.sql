@@ -11,6 +11,7 @@ DELETE FROM t_book/
 DELETE FROM t_author/
 DELETE FROM t_language/
 DELETE FROM t_booleans/
+DELETE FROM t_dates/
 DELETE FROM t_identity_pk/
 
 INSERT INTO t_language (id, cd, description, description_english) VALUES (1, 'en', 'English', 'English')/
@@ -35,12 +36,12 @@ INSERT INTO t_book VALUES (2, 1, null, null, 'Animal Farm', 1945, 1, null, null,
 INSERT INTO t_book VALUES (3, 2, null, null, 'O Alquimista', 1988, 4, null, null, 'ON STOCK')/
 INSERT INTO t_book VALUES (4, 2, null, null, 'Brida', 1990, 2, null, null, 'SOLD OUT')/
 
-INSERT INTO t_book_store (name) VALUES 
+INSERT INTO t_book_store (name) VALUES
 	('Orell Füssli'),
 	('Ex Libris'),
 	('Buchhandlung im Volkshaus')/
 
-INSERT INTO t_book_to_book_store VALUES 
+INSERT INTO t_book_to_book_store VALUES
 	('Orell Füssli', 1, 10),
 	('Orell Füssli', 2, 10),
 	('Orell Füssli', 3, 10),

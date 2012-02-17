@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses;
  */
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -57617071;
+	private static final long serialVersionUID = 1503929128;
 
 	/**
 	 * The singleton instance of PUBLIC
@@ -34,6 +34,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY,
+			org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.h2.generatedclasses.tables.T_658Ref.T_658_REF,

@@ -81,6 +81,11 @@ public final class Tables {
 	public static org.jooq.test.ase.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.ase.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table dbo.t_dates
+	 */
+	public static org.jooq.test.ase.generatedclasses.tables.TDates T_DATES = org.jooq.test.ase.generatedclasses.tables.TDates.T_DATES;
+
+	/**
 	 * The table dbo.t_identity
 	 */
 	public static org.jooq.test.ase.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.ase.generatedclasses.tables.TIdentity.T_IDENTITY;

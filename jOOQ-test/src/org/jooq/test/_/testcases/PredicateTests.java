@@ -240,6 +240,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785
                 break;
 
             default:
+                // Oracle needs splitting of IN(..) expressions when there are
+                // more than 1000 elements
                 assertEquals(1, (int) create().select(count)
                     .from(TBook())
                     .where(TBook_ID().in(Collections.nCopies(1000, 1)))

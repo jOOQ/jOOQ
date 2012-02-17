@@ -65,6 +65,7 @@ import static org.jooq.test.oracle.generatedclasses.test.Tables.T_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOK;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOK_STORE;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.oracle.generatedclasses.test.Tables.T_DATES;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_DIRECTORY;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_TRIGGERS;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_AUTHOR;
@@ -116,6 +117,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
@@ -166,6 +168,7 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         TBookSaleRecord,
         VLibraryRecord,
         TArraysRecord,
+        TDatesRecord,
         TDirectoryRecord,
         TTriggersRecord,
         XUnusedRecord,
@@ -350,6 +353,11 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TDatesRecord> TDates() {
+        return T_DATES;
     }
 
     @Override

@@ -47,6 +47,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -137,8 +139,11 @@ public abstract class jOOQAbstractTest<
         // V_LIBRARY view
         L extends TableRecord<L>,
 
-        // X_UNUSED table
+        // T_ARRAYS table
         X extends TableRecord<X>,
+
+        // T_DATES table
+        DATE extends UpdatableRecord<DATE>,
 
         // T_DIRECTORY table
         D extends UpdatableRecord<D>,
@@ -489,6 +494,21 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<U, UShort> TUnsigned_U_SHORT();
     protected abstract TableField<U, UInteger> TUnsigned_U_INT();
     protected abstract TableField<U, ULong> TUnsigned_U_LONG();
+
+    protected abstract Table<DATE> TDates();
+    protected final TableField<DATE, Integer> TDates_ID() {
+        return (TableField<DATE, Integer>) TDates().getField("ID");
+    }
+    protected final TableField<DATE, Date> TDates_D() {
+        return (TableField<DATE, Date>) TDates().getField("D");
+    }
+    protected final TableField<DATE, Time> TDates_T() {
+        return (TableField<DATE, Time>) TDates().getField("T");
+    }
+    protected final TableField<DATE, Timestamp> TDates_TS() {
+        return (TableField<DATE, Timestamp>) TDates().getField("TS");
+    }
+
 
     protected abstract Table<X> TArrays();
     protected abstract TableField<X, Integer> TArrays_ID();

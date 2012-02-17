@@ -88,8 +88,11 @@ public abstract class BaseTest<
     // V_LIBRARY view
     L extends TableRecord<L>,
 
-    // X_UNUSED table
+    // T_ARRAYS table
     X extends TableRecord<X>,
+
+    // T_DATES table
+    DATE extends UpdatableRecord<DATE>,
 
     // T_DIRECTORY table
     D extends UpdatableRecord<D>,
@@ -124,9 +127,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, BS, L, X, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         this.delegate = delegate;
     }
 

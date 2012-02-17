@@ -39,6 +39,7 @@ package org.jooq.test;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_AUTHOR;
@@ -95,6 +96,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord;
@@ -125,6 +127,7 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         XUnusedRecord,
         VLibraryRecord,
         XUnusedRecord,
+        TDatesRecord,
         XUnusedRecord,
         TTriggersRecord,
         TUnsignedRecord,
@@ -363,6 +366,11 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
     @Override
     protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
         return TUnsigned.U_LONG;
+    }
+
+    @Override
+    protected Table<TDatesRecord> TDates() {
+        return T_DATES;
     }
 
     @Override

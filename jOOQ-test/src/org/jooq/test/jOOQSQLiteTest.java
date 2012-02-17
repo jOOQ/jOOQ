@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.sqlite.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.sqlite.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.sqlite.generatedclasses.Tables.V_BOOK;
 
@@ -69,6 +70,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_658RefRecord;
@@ -96,6 +98,7 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
         XUnusedRecord,
         VLibraryRecord,
         XUnusedRecord,
+        TDatesRecord,
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
@@ -334,6 +337,11 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TDatesRecord> TDates() {
+        return T_DATES;
     }
 
     @Override

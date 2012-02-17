@@ -44,6 +44,7 @@ import static org.jooq.test.mysql2.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.mysql2.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.mysql2.generatedclasses.Tables.T_UNSIGNED;
@@ -71,6 +72,7 @@ import org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord;
@@ -98,6 +100,7 @@ public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
         XUnusedRecord,
         VLibraryRecord,
         XUnusedRecord,
+        TDatesRecord,
         XUnusedRecord,
         TTriggersRecord,
         TUnsignedRecord,
@@ -341,6 +344,11 @@ public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
     @Override
     protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
         return T_UNSIGNED.U_LONG;
+    }
+
+    @Override
+    protected Table<TDatesRecord> TDates() {
+        return T_DATES;
     }
 
     @Override

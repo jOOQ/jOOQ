@@ -812,6 +812,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIgnoreCase() throws Exception {
+        new PredicateTests(this).testIgnoreCase();
+    }
+
+    @Test
     public void testLargeINCondition() throws Exception {
         new PredicateTests(this).testLargeINCondition();
     }

@@ -702,6 +702,18 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition equal(Field<T> field);
 
     /**
+     * <code>lower(this) = lower(value)</code>
+     */
+    @Support
+    Condition equalIgnoreCase(String value);
+
+    /**
+     * <code>lower(this) = lower(value)</code>
+     */
+    @Support
+    Condition equalIgnoreCase(Field<String> value);
+
+    /**
      * <code>this = (Select<?> ...)</code>
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -779,6 +791,18 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Condition notEqual(Field<T> field);
+
+    /**
+     * <code>lower(this) != lower(value)</code>
+     */
+    @Support
+    Condition notEqualIgnoreCase(String value);
+
+    /**
+     * <code>lower(this) != lower(value)</code>
+     */
+    @Support
+    Condition notEqualIgnoreCase(Field<String> value);
 
     /**
      * <code>this != (Select<?> ...)</code>

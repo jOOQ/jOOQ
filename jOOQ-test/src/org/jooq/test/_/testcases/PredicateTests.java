@@ -487,4 +487,19 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             }
         }
     }
+
+    @Test
+    public void testIgnoreCase() {
+        A author =
+        create().selectFrom(TAuthor())
+                .where(TAuthor_FIRST_NAME().equalIgnoreCase(TAuthor_FIRST_NAME()))
+                .and(upper(TAuthor_FIRST_NAME()).equalIgnoreCase(lower(TAuthor_FIRST_NAME())))
+                .and(TAuthor_FIRST_NAME().equalIgnoreCase("george"))
+                .and(TAuthor_FIRST_NAME().equalIgnoreCase("geORge"))
+                .and(TAuthor_FIRST_NAME().equalIgnoreCase("GEORGE"))
+                .and(TAuthor_FIRST_NAME().notEqualIgnoreCase("paulo"))
+                .fetchOne();
+
+        assertEquals("George", author.getValue(TAuthor_FIRST_NAME()));
+    }
 }

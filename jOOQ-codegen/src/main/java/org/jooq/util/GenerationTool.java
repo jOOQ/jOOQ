@@ -266,25 +266,25 @@ public class GenerationTool {
                     defaultString(j.getPassword()));
 
             Class<Generator> generatorClass = (Class<Generator>) (!isBlank(g.getName())
-                ? Class.forName(g.getName())
+                ? Class.forName(g.getName().trim())
                 : DefaultGenerator.class);
             Generator generator = generatorClass.newInstance();
 
             Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())
-                ? Class.forName(g.getStrategy().getName())
+                ? Class.forName(g.getStrategy().getName().trim())
                 : DefaultGeneratorStrategy.class);
             GeneratorStrategy strategy = strategyClass.newInstance();
 
             generator.setStrategy(strategy);
 
-            Class<Database> databaseClass = (Class<Database>) Class.forName(g.getDatabase().getName());
+            Class<Database> databaseClass = (Class<Database>) Class.forName(g.getDatabase().getName().trim());
             Database database = databaseClass.newInstance();
 
             List<Schema> schemata = g.getDatabase().getSchemata();
             if (schemata.isEmpty()) {
                 Schema schema = new Schema();
-                schema.setInputSchema(g.getDatabase().getInputSchema());
-                schema.setOutputSchema(g.getDatabase().getOutputSchema());
+                schema.setInputSchema(g.getDatabase().getInputSchema().trim());
+                schema.setOutputSchema(g.getDatabase().getOutputSchema().trim());
                 schemata.add(schema);
             }
             else {
@@ -299,11 +299,11 @@ public class GenerationTool {
             for (Schema schema : schemata) {
                 if (StringUtils.isBlank(schema.getInputSchema())) {
                     log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
-                    schema.setInputSchema(j.getSchema());
+                    schema.setInputSchema(j.getSchema().trim());
                 }
 
                 if (StringUtils.isBlank(schema.getOutputSchema())) {
-                    schema.setOutputSchema(schema.getInputSchema());
+                    schema.setOutputSchema(schema.getInputSchema().trim());
                 }
             }
 

@@ -35,7 +35,8 @@
  */
 package org.jooq.util;
 
-import java.io.File;
+import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
+
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-public class DefaultGeneratorStrategy implements GeneratorStrategy {
+public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
 
@@ -66,27 +67,32 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     @Override
-    public void setInstanceFields(boolean instanceFields) {
+    public final void setInstanceFields(boolean instanceFields) {
         this.instanceFields = instanceFields;
     }
 
     @Override
-    public String getTargetDirectory() {
+    public final boolean getInstanceFields() {
+        return instanceFields;
+    }
+
+    @Override
+    public final String getTargetDirectory() {
         return targetDirectory;
     }
 
     @Override
-    public void setTargetDirectory(String directory) {
+    public final void setTargetDirectory(String directory) {
         this.targetDirectory = directory;
     }
 
     @Override
-    public String getTargetPackage() {
+    public final String getTargetPackage() {
         return targetPackage;
     }
 
     @Override
-    public void setTargetPackage(String packageName) {
+    public final void setTargetPackage(String packageName) {
         this.targetPackage = packageName;
     }
 
@@ -95,30 +101,8 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     @Override
-    public final String getFileName(Definition definition) {
-        return getFileName(definition, Mode.DEFAULT);
-    }
-
-    @Override
-    public final String getFileName(Definition definition, Mode mode) {
-        return getJavaClassName(definition, mode) + ".java";
-    }
-
-    @Override
-    public final File getFile(Definition definition) {
-        return getFile(definition, Mode.DEFAULT);
-    }
-
-    @Override
-    public final File getFile(Definition definition, Mode mode) {
-        String dir = getTargetDirectory();
-        String pkg = getJavaPackageName(definition, mode).replaceAll("\\.", "/");
-        return new File(dir + "/" + pkg, getFileName(definition, mode));
-    }
-
-    @Override
     public String getJavaIdentifier(Definition definition) {
-        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getOutputName()).toUpperCase();
+        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getJavaName()).toUpperCase();
 
         // Columns, Attributes, Parameters
         if (definition instanceof ColumnDefinition ||
@@ -135,62 +119,17 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public final String getFullJavaIdentifier(Definition definition) {
-        StringBuilder sb = new StringBuilder();
-
-        // Columns
-        if (definition instanceof ColumnDefinition) {
-            TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
-
-            if (instanceFields) {
-                sb.append(getFullJavaIdentifier(e.getContainer()));
-            }
-            else {
-                sb.append(getFullJavaClassName(e.getContainer()));
-            }
-        }
-
-        // Attributes, Parameters
-        else if (definition instanceof TypedElementDefinition) {
-            TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
-            sb.append(getFullJavaClassName(e.getContainer()));
-        }
-
-        // Table, UDT, Schema, etc
-        else {
-            sb.append(getFullJavaClassName(definition));
-        }
-
-        sb.append(".");
-        sb.append(getJavaIdentifier(definition));
-
-        return sb.toString();
-    }
-
-    @Override
-    @Deprecated
-    public final String getJavaIdentifierUC(Definition definition) {
-        return getJavaIdentifier(definition);
-    }
-
-    @Override
-    @Deprecated
-    public final String getFullJavaIdentifierUC(Definition definition) {
-        return getFullJavaIdentifier(definition);
-    }
-
-    @Override
-    public String getJavaSetterName(Definition definition) {
+    public String getJavaSetterName(Definition definition, Mode mode) {
         return "set" + disambiguateMethod(definition, getJavaClassName(definition));
     }
 
     @Override
-    public String getJavaGetterName(Definition definition) {
+    public String getJavaGetterName(Definition definition, Mode mode) {
         return "get" + disambiguateMethod(definition, getJavaClassName(definition));
     }
 
     @Override
-    public String getJavaMethodName(Definition definition) {
+    public String getJavaMethodName(Definition definition, Mode mode) {
         return disambiguateMethod(definition, getJavaClassName0LC(definition, Mode.DEFAULT));
     }
 
@@ -255,18 +194,8 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public final String getJavaClassName(Definition definition) {
-        return getJavaClassName(definition, Mode.DEFAULT);
-    }
-
-    @Override
     public String getJavaClassName(Definition definition, Mode mode) {
         return getJavaClassName0(definition, mode);
-    }
-
-    @Override
-    public final String getJavaPackageName(Definition definition) {
-        return getJavaPackageName(definition, Mode.DEFAULT);
     }
 
     @Override
@@ -278,7 +207,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         // [#282] In multi-schema setups, the schema name goes into the package
         if (definition.getDatabase().getSchemata().size() > 1) {
             sb.append(".");
-            sb.append(GenerationUtil.convertToJavaIdentifierEnum(definition.getSchema().getOutputName()).toLowerCase());
+            sb.append(convertToJavaIdentifier(definition.getSchema().getJavaName()).toLowerCase());
         }
 
         // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
@@ -301,23 +230,6 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    @Deprecated
-    public final String getJavaClassNameLC(Definition definition) {
-        return getJavaMemberName(definition, Mode.DEFAULT);
-    }
-
-    @Override
-    @Deprecated
-    public final String getJavaClassNameLC(Definition definition, Mode mode) {
-        return getJavaMemberName(definition, mode);
-    }
-
-    @Override
-    public final String getJavaMemberName(Definition definition) {
-        return getJavaMemberName(definition, Mode.DEFAULT);
-    }
-
-    @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
         return getJavaClassName0LC(definition, mode);
     }
@@ -330,7 +242,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
 
-        String name = GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
+        String name = GenerationUtil.convertToJavaIdentifier(definition.getJavaName());
         result.append(StringUtils.toCamelCase(name));
 
         if (mode == Mode.RECORD) {
@@ -347,24 +259,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         return result.toString();
     }
 
-    @Override
-    public final String getFullJavaClassName(Definition definition) {
-        return getFullJavaClassName(definition, Mode.DEFAULT);
-    }
-
-    @Override
-    public final String getFullJavaClassName(Definition definition, Mode mode) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getJavaPackageName(definition, mode));
-        sb.append(".");
-        sb.append(getJavaClassName(definition, mode));
-
-        return sb.toString();
-    }
-
-    @Override
-    public String getSubPackage(Definition definition) {
+    private final String getSubPackage(Definition definition) {
         if (definition instanceof MasterDataTableDefinition) {
             return "enums";
         }
@@ -383,10 +278,10 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
             RoutineDefinition routine = (RoutineDefinition) definition;
 
             if (routine.getPackage() instanceof UDTDefinition) {
-                return "udt." + getJavaIdentifierUC(routine.getPackage()).toLowerCase();
+                return "udt." + getJavaIdentifier(routine.getPackage()).toLowerCase();
             }
             else if (routine.getPackage() != null) {
-                return "packages." + getJavaIdentifierUC(routine.getPackage()).toLowerCase();
+                return "packages." + getJavaIdentifier(routine.getPackage()).toLowerCase();
             }
             else {
                 return "routines";

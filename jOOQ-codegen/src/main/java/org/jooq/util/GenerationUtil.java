@@ -113,19 +113,11 @@ class GenerationUtil {
      * collisions have to be generally reviewed again, when allowing for more
      * control over generated source code, as of [#408][#911]
      */
-    static String convertToJavaIdentifierEnum(String literal) {
+    static String convertToJavaIdentifier(String literal) {
         if (JAVA_KEYWORDS.contains(literal)) {
             return literal + "_";
         }
-        else {
-            return convertToJavaIdentifier(literal);
-        }
-    }
 
-    /**
-     * Take a literal (e.g. database column) and make it a Java identifier
-     */
-    static String convertToJavaIdentifier(String literal) {
         StringBuilder sb = new StringBuilder();
 
         if ("".equals(literal)) {

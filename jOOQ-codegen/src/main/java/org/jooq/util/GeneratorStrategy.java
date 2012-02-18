@@ -65,6 +65,16 @@ public interface GeneratorStrategy {
     void setTargetPackage(String packageName);
 
     /**
+     * Whether fields are instance fields (as opposed to static fields)
+     */
+    void setInstanceFields(boolean instanceFields);
+
+    /**
+     * Whether fields are instance fields (as opposed to static fields)
+     */
+    boolean getInstanceFields();
+
+    /**
      * This is applied to definitions that can result in singleton static and
      * instance members. For instance, the singleton instance of a
      * {@link TableDefinition} is a java identifier
@@ -83,20 +93,19 @@ public interface GeneratorStrategy {
     String getFullJavaIdentifier(Definition definition);
 
     /**
-     * @return The Java identifier representing this object, e.g. [MY_TABLE]
-     * @deprecated - 2.0.5 - This is no longer used. Use
-     *             {@link #getJavaIdentifier(Definition)} instead
+     * This is applied to definitions that can result in setters of a container.
+     * For example, the definition could be a {@link ColumnDefinition}, the
+     * container a {@link TableDefinition}. Then this would apply to records and
+     * POJOs. Also, the definition could be an {@link AttributeDefinition} and
+     * the container a {@link UDTDefinition}
+     * <p>
+     * This is the same as calling
+     * <code>getJavaSetterName(definition, Mode.DEFAULT)</code>
+     *
+     * @return The Java setter method name representing this object, e.g.
+     *         [setMyTable]
      */
-    @Deprecated
-    String getJavaIdentifierUC(Definition definition);
-
-    /**
-     * @return The Java identifier representing this object, e.g.
-     *         [org.jooq.generated.MY_TABLE]
-     * @deprecated - 2.0.5 - This is no longer used. Use {@link #getFullJavaIdentifier(Definition)} instead
-     */
-    @Deprecated
-    String getFullJavaIdentifierUC(Definition definition);
+    String getJavaSetterName(Definition definition);
 
     /**
      * This is applied to definitions that can result in setters of a container.
@@ -108,7 +117,22 @@ public interface GeneratorStrategy {
      * @return The Java setter method name representing this object, e.g.
      *         [setMyTable]
      */
-    String getJavaSetterName(Definition definition);
+    String getJavaSetterName(Definition definition, Mode mode);
+
+    /**
+     * This is applied to definitions that can result in getters of a container.
+     * For example, the definition could be a {@link ColumnDefinition}, the
+     * container a {@link TableDefinition}. Then this would apply to records and
+     * POJOs. Also, the definition could be an {@link AttributeDefinition} and
+     * the container a {@link UDTDefinition}
+     * <p>
+     * This is the same as calling
+     * <code>getJavaGetterName(definition, Mode.DEFAULT)</code>
+     *
+     * @return The Java getter method name representing this object, e.g.
+     *         [getMyTable]
+     */
+    String getJavaGetterName(Definition definition);
 
     /**
      * This is applied to definitions that can result in getters of a container.
@@ -120,7 +144,18 @@ public interface GeneratorStrategy {
      * @return The Java getter method name representing this object, e.g.
      *         [getMyTable]
      */
-    String getJavaGetterName(Definition definition);
+    String getJavaGetterName(Definition definition, Mode mode);
+
+    /**
+     * This is applied to definitions that can result in methods. For example,
+     * the definition could be a {@link RoutineDefinition}
+     * <p>
+     * This is the same as calling
+     * <code>getJavaMethodName(definition, Mode.DEFAULT)</code>
+     *
+     * @return The Java method name representing this object, e.g. [myFunction]
+     */
+    String getJavaMethodName(Definition definition);
 
     /**
      * This is applied to definitions that can result in methods. For example,
@@ -128,7 +163,7 @@ public interface GeneratorStrategy {
      *
      * @return The Java method name representing this object, e.g. [myFunction]
      */
-    String getJavaMethodName(Definition definition);
+    String getJavaMethodName(Definition definition, Mode mode);
 
     /**
      * This is the same as calling
@@ -156,28 +191,6 @@ public interface GeneratorStrategy {
      * @return The Java package name of this object, e.g. [org.jooq.generated]
      */
     String getJavaPackageName(Definition definition, Mode mode);
-
-    /**
-     * @return The Java class name representing this object, starting with a
-     *         lower case character, e.g. [myTable]
-     * @deprecated - 2.0.5 - Use {@link #getJavaMemberName(Definition)} or
-     *             {@link #getJavaMethodName(Definition)} instead. The notion of
-     *             this being a class name starting with a lower-case letter is
-     *             too intrusive for custom generator strategies.
-     */
-    @Deprecated
-    String getJavaClassNameLC(Definition definition);
-
-    /**
-     * @return The Java class name representing this object, starting with a
-     *         lower case character, e.g. [myTableSuffix]
-     * @deprecated - 2.0.5 - Use {@link #getJavaMemberName(Definition, Mode)} or
-     *             {@link #getJavaMethodName(Definition)} instead. The notion of
-     *             this being a class name starting with a lower-case letter is
-     *             too intrusive for custom generator strategies.
-     */
-    @Deprecated
-    String getJavaClassNameLC(Definition definition, Mode mode);
 
     /**
      * The "java member name" is applied where a definition is used as a member
@@ -227,11 +240,6 @@ public interface GeneratorStrategy {
     String getFullJavaClassName(Definition definition, Mode mode);
 
     /**
-     * @return Get the target package's subpackage for this definition
-     */
-    String getSubPackage(Definition definition);
-
-    /**
      * @return The Java class file name representing this object, e.g.
      *         [MyTable.java]
      */
@@ -254,11 +262,6 @@ public interface GeneratorStrategy {
      *         [C:\org\jooq\generated\MyTableSuffix.java]
      */
     File getFile(Definition definition, Mode mode);
-
-    /**
-     * Whether fields are instance fields (as opposed to static fields)
-     */
-    void setInstanceFields(boolean instanceFields);
 
     /**
      * The "mode" by which an artefact should be named

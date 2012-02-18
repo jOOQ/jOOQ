@@ -37,7 +37,7 @@
 package org.jooq.util;
 
 
-import static org.jooq.util.GenerationUtil.convertToJavaIdentifierEnum;
+import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -103,21 +103,21 @@ import org.jooq.util.GeneratorStrategy.Mode;
  */
 public class DefaultGenerator implements Generator {
 
-    private static final JooqLogger log                         = JooqLogger.getLogger(DefaultGenerator.class);
+    private static final JooqLogger  log                         = JooqLogger.getLogger(DefaultGenerator.class);
 
-    private boolean                 generateDeprecated          = true;
-    private boolean                 generateRelations           = false;
-    private boolean                 generateNavigationMethods   = true;
-    private boolean                 generateInstanceFields      = true;
-    private boolean                 generateGeneratedAnnotation = true;
-    private boolean                 generatePojos               = false;
-    private boolean                 generateJPAAnnotations      = false;
+    private boolean                  generateDeprecated          = true;
+    private boolean                  generateRelations           = false;
+    private boolean                  generateNavigationMethods   = true;
+    private boolean                  generateInstanceFields      = true;
+    private boolean                  generateGeneratedAnnotation = true;
+    private boolean                  generatePojos               = false;
+    private boolean                  generateJPAAnnotations      = false;
 
-    private GeneratorStrategy       strategy;
+    private GeneratorStrategyWrapper strategy;
 
     @Override
     public void setStrategy(GeneratorStrategy strategy) {
-        this.strategy = strategy;
+        this.strategy = new GeneratorStrategyWrapper(strategy);
     }
 
     @Override
@@ -228,6 +228,19 @@ public class DefaultGenerator implements Generator {
 	    log.info("  dialect", database.getDialect());
 	    log.info("  target dir", getTargetDirectory());
 	    log.info("  target package", getTargetPackage());
+	    log.info("----------------------------------------------------------");
+	    log.info("");
+	    log.info("Generation parameters");
+	    log.info("----------------------------------------------------------");
+	    log.info("  strategy", strategy.delegate.getClass());
+	    log.info("  deprecated", generateDeprecated());
+	    log.info("  generated annotation", generateGeneratedAnnotation());
+	    log.info("  instance fields", generateInstanceFields());
+	    log.info("  JPA annotations", generateJPAAnnotations());
+	    log.info("  navigation methods", generateNavigationMethods());
+	    log.info("  pojos", generatePojos());
+	    log.info("  relations", generateRelations());
+
 	    log.info("----------------------------------------------------------");
 
 		String targetPackage = getTargetPackage();
@@ -458,7 +471,7 @@ public class DefaultGenerator implements Generator {
                         }
 
                         out.print("\t");
-                        out.print(GenerationUtil.convertToJavaIdentifierEnum(literal));
+                        out.print(GenerationUtil.convertToJavaIdentifier(literal));
                         out.print("(");
 
                         String separator = "";
@@ -522,7 +535,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tpublic final ");
                         out.print(data.getField(column.getName()).getType());
                         out.print(" ");
-                        out.print(strategy.getJavaGetterName(column));
+                        out.print(strategy.getJavaGetterName(column, Mode.DEFAULT));
                         out.println("() {");
                         out.print("\t\treturn ");
                         out.print(strategy.getJavaMemberName(column));
@@ -799,7 +812,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tprivate ");
                         out.print(StringUtils.rightPad(getJavaType(column.getType()), maxLength));
                         out.print(" ");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
                         out.println(";");
                     }
 
@@ -811,28 +824,28 @@ public class DefaultGenerator implements Generator {
                         out.print("\tpublic ");
                         out.print(getJavaType(column.getType()));
                         out.print(" ");
-                        out.print(strategy.getJavaGetterName(column));
+                        out.print(strategy.getJavaGetterName(column, Mode.POJO));
                         out.println("() {");
 
                         out.print("\t\treturn this.");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
                         out.println(";");
                         out.println("\t}");
 
                         // Setter
                         out.println();
                         out.print("\tpublic void ");
-                        out.print(strategy.getJavaSetterName(column));
+                        out.print(strategy.getJavaSetterName(column, Mode.POJO));
                         out.print("(");
                         out.print(getJavaType(column.getType()));
                         out.print(" ");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
                         out.println(") {");
 
                         out.print("\t\tthis.");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
                         out.print(" = ");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
                         out.println(";");
                         out.println("\t}");
                     }
@@ -1391,7 +1404,7 @@ public class DefaultGenerator implements Generator {
                     out.println();
 
                     for (String literal : e.getLiterals()) {
-                        out.println("\t" + GenerationUtil.convertToJavaIdentifierEnum(literal) + "(\"" + literal + "\"),");
+                        out.println("\t" + GenerationUtil.convertToJavaIdentifier(literal) + "(\"" + literal + "\"),");
                         out.println();
                     }
 
@@ -1785,7 +1798,7 @@ public class DefaultGenerator implements Generator {
             out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the routine");
             out.println("\t */");
         	out.print("\tpublic void ");
-            out.print(strategy.getJavaSetterName(parameter));
+            out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
             out.print("(");
             printNumberType(out, parameter.getType());
             out.println(" value) {");
@@ -1814,7 +1827,7 @@ public class DefaultGenerator implements Generator {
                 out.println("} statement!");
                 out.println("\t */");
                 out.print("\tpublic void ");
-                out.print(strategy.getJavaSetterName(parameter));
+                out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
                 out.print("(");
                 out.print(Field.class);
                 out.print("<");
@@ -1844,7 +1857,7 @@ public class DefaultGenerator implements Generator {
                 out.print("\tpublic ");
                 out.print(getJavaType(parameter.getType()));
                 out.print(" ");
-                out.print(strategy.getJavaGetterName(parameter));
+                out.print(strategy.getJavaGetterName(parameter, Mode.DEFAULT));
                 out.println("() {");
 
                 out.print("\t\treturn getValue(");
@@ -1887,7 +1900,7 @@ public class DefaultGenerator implements Generator {
         out.print("<");
         out.print(getJavaType(function.getReturnType()));
         out.print("> ");
-        out.print(strategy.getJavaMethodName(function));
+        out.print(strategy.getJavaMethodName(function, Mode.DEFAULT));
         out.print("(");
 
         String separator = "";
@@ -1918,7 +1931,7 @@ public class DefaultGenerator implements Generator {
 
         for (ParameterDefinition parameter : function.getInParameters()) {
             out.print("\t\tf.");
-            out.print(strategy.getJavaSetterName(parameter));
+            out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
             out.print("(");
             out.print(strategy.getJavaMemberName(parameter));
             out.println(");");
@@ -1955,7 +1968,7 @@ public class DefaultGenerator implements Generator {
 
         out.print(getJavaType(function.getReturnType()));
         out.print(" ");
-        out.print(strategy.getJavaMethodName(function));
+        out.print(strategy.getJavaMethodName(function, Mode.DEFAULT));
         out.print("(");
 
         String glue = "";
@@ -1988,7 +2001,7 @@ public class DefaultGenerator implements Generator {
 
         for (ParameterDefinition parameter : function.getInParameters()) {
             out.print("\t\tf.");
-            out.print(strategy.getJavaSetterName(parameter));
+            out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
             out.print("(");
 
             if (instance && parameter.equals(function.getInParameters().get(0))) {
@@ -2080,7 +2093,7 @@ public class DefaultGenerator implements Generator {
             out.print(strategy.getFullJavaClassName(procedure) + " ");
         }
 
-        out.print(strategy.getJavaMethodName(procedure));
+        out.print(strategy.getJavaMethodName(procedure, Mode.DEFAULT));
         out.print("(");
 
         String glue = "";
@@ -2113,7 +2126,7 @@ public class DefaultGenerator implements Generator {
 
         for (ParameterDefinition parameter : procedure.getInParameters()) {
             out.print("\t\tp.");
-            out.print(strategy.getJavaSetterName(parameter));
+            out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
             out.print("(");
 
             if (instance && parameter.equals(procedure.getInParameters().get(0))) {
@@ -2141,13 +2154,13 @@ public class DefaultGenerator implements Generator {
         if (procedure.getOutParameters().size() > 0) {
             if (instance) {
                 out.print("\t\tfrom(p.");
-                out.print(strategy.getJavaGetterName(procedure.getOutParameters().get(0)));
+                out.print(strategy.getJavaGetterName(procedure.getOutParameters().get(0), Mode.DEFAULT));
                 out.println("());");
             }
 
             if (procedure.getOutParameters().size() == 1) {
                 out.print("\t\treturn p.");
-                out.print(strategy.getJavaGetterName(procedure.getOutParameters().get(0)));
+                out.print(strategy.getJavaGetterName(procedure.getOutParameters().get(0), Mode.DEFAULT));
                 out.println("();");
             }
             else if (procedure.getOutParameters().size() > 1) {
@@ -2240,7 +2253,7 @@ public class DefaultGenerator implements Generator {
 
 	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) throws SQLException {
 		printFieldJavaDoc(out, element);
-		out.println("\tpublic void " + strategy.getJavaSetterName(element) + "(" + getJavaType(element.getType()) + " value) {");
+		out.println("\tpublic void " + strategy.getJavaSetterName(element, Mode.DEFAULT) + "(" + getJavaType(element.getType()) + " value) {");
 		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
 		out.println("\t}");
 
@@ -2249,7 +2262,7 @@ public class DefaultGenerator implements Generator {
 		    printColumnJPAAnnotation(out, (ColumnDefinition) element);
 		}
 
-		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element) + "() {");
+		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element, Mode.DEFAULT) + "() {");
 		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifier(element) + ");");
 		out.println("\t}");
 

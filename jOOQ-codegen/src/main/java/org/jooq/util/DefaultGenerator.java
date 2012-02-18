@@ -1744,13 +1744,11 @@ public class DefaultGenerator implements Generator {
         out.print(", \"");
         out.print(routine.getName());
         out.print("\", ");
-        out.print(strategy.getFullJavaIdentifierUC(schema));
+        out.print(strategy.getFullJavaIdentifier(schema));
 
         if (routine.getPackage() != null) {
             out.print(", ");
-            out.print(strategy.getFullJavaClassName(routine.getPackage()));
-            out.print(".");
-            out.print(strategy.getJavaIdentifierUC(routine.getPackage()));
+            out.print(strategy.getFullJavaIdentifier(routine.getPackage()));
         }
 
         if (routine.getReturnValue() != null) {
@@ -1853,8 +1851,15 @@ public class DefaultGenerator implements Generator {
 
             if (isOutParameter && !isReturnValue) {
                 out.println();
-                out.println("\tpublic " + getJavaType(parameter.getType()) + " get" + strategy.getJavaClassName(parameter) + "() {");
-                out.println("\t\treturn getValue(" + strategy.getJavaIdentifierUC(parameter) + ");");
+                out.print("\tpublic ");
+                out.print(getJavaType(parameter.getType()));
+                out.print(" ");
+                out.print(strategy.getJavaGetterName(parameter));
+                out.println("() {");
+
+                out.print("\t\treturn getValue(");
+                out.print(strategy.getJavaIdentifierUC(parameter));
+                out.println(");");
                 out.println("\t}");
             }
         }
@@ -2213,7 +2218,7 @@ public class DefaultGenerator implements Generator {
             out.print(strategy.getJavaIdentifierUC(definition));
         }
         else {
-            out.print(strategy.getFullJavaIdentifierUC(definition));
+            out.print(strategy.getFullJavaIdentifier(definition));
         }
     }
 
@@ -2246,7 +2251,7 @@ public class DefaultGenerator implements Generator {
 	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) throws SQLException {
 		printFieldJavaDoc(out, element);
 		out.println("\tpublic void " + strategy.getJavaSetterName(element) + "(" + getJavaType(element.getType()) + " value) {");
-		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifierUC(element) + ", value);");
+		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
 		out.println("\t}");
 
 		printFieldJavaDoc(out, element);
@@ -2255,7 +2260,7 @@ public class DefaultGenerator implements Generator {
 		}
 
 		out.println("\tpublic " + getJavaType(element.getType()) + " " + strategy.getJavaGetterName(element) + "() {");
-		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifierUC(element) + ");");
+		out.println("\t\treturn getValue(" + strategy.getFullJavaIdentifier(element) + ");");
 		out.println("\t}");
 
 		if (generateRelations() &&
@@ -2308,14 +2313,14 @@ public class DefaultGenerator implements Generator {
                         out.println("() {");
                         out.println("\t\treturn create()");
                         out.print("\t\t\t.selectFrom(");
-                        out.print(strategy.getFullJavaIdentifierUC(referencing));
+                        out.print(strategy.getFullJavaIdentifier(referencing));
                         out.println(")");
 
                         String connector = "\t\t\t.where(";
 
                         for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
                             out.print(connector);
-                            out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyColumns().get(i)));
+                            out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
                             out.print(".equal(getValue");
 
                             DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
@@ -2328,7 +2333,7 @@ public class DefaultGenerator implements Generator {
                             }
 
                             out.print("(");
-                            out.print(strategy.getFullJavaIdentifierUC(uniqueKey.getKeyColumns().get(i)));
+                            out.print(strategy.getFullJavaIdentifier(uniqueKey.getKeyColumns().get(i)));
                             out.println(")))");
 
                             connector = "\t\t\t.and(";
@@ -2380,14 +2385,14 @@ public class DefaultGenerator implements Generator {
                     out.println("() {");
                     out.println("\t\treturn create()");
                     out.print("\t\t\t.selectFrom(");
-                    out.print(strategy.getFullJavaIdentifierUC(referenced));
+                    out.print(strategy.getFullJavaIdentifier(referenced));
                     out.println(")");
 
                     String connector = "\t\t\t.where(";
 
                     for (int i = 0; i < foreignKey.getReferencedColumns().size(); i++) {
                         out.print(connector);
-                        out.print(strategy.getFullJavaIdentifierUC(foreignKey.getReferencedColumns().get(i)));
+                        out.print(strategy.getFullJavaIdentifier(foreignKey.getReferencedColumns().get(i)));
                         out.print(".equal(getValue");
 
                         DataTypeDefinition foreignType = foreignKey.getKeyColumns().get(i).getType();
@@ -2400,7 +2405,7 @@ public class DefaultGenerator implements Generator {
                         }
 
                         out.print("(");
-                        out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyColumns().get(i)));
+                        out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyColumns().get(i)));
                         out.println(")))");
 
                         connector = "\t\t\t.and(";
@@ -2775,7 +2780,7 @@ public class DefaultGenerator implements Generator {
         else if (db.getUDT(schema, u) != null) {
             UDTDefinition udt = db.getUDT(schema, u);
 
-            sb.append(strategy.getFullJavaIdentifierUC(udt));
+            sb.append(strategy.getFullJavaIdentifier(udt));
             sb.append(".getDataType()");
         }
         else if (db.getEnum(schema, u) != null) {

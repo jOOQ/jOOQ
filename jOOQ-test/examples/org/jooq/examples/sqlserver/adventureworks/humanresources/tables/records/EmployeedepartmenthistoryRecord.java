@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord> {
 
-	private static final long serialVersionUID = 2134684220;
+	private static final long serialVersionUID = -1554693530;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setEmployeeid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "EmployeeID")
@@ -49,8 +51,9 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.DepartmentID]
-	 * REFERENCES Department [HumanResources.Department.DepartmentID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
+	 * FOREIGN KEY (DepartmentID)
+	 * REFERENCES HumanResources.Department (DepartmentID)
 	 * </pre></code>
 	 */
 	public void setDepartmentid(java.lang.Short value) {
@@ -63,8 +66,9 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.DepartmentID]
-	 * REFERENCES Department [HumanResources.Department.DepartmentID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
+	 * FOREIGN KEY (DepartmentID)
+	 * REFERENCES HumanResources.Department (DepartmentID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "DepartmentID")
@@ -78,8 +82,9 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.ShiftID]
-	 * REFERENCES Shift [HumanResources.Shift.ShiftID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
+	 * FOREIGN KEY (ShiftID)
+	 * REFERENCES HumanResources.Shift (ShiftID)
 	 * </pre></code>
 	 */
 	public void setShiftid(java.lang.Byte value) {
@@ -92,8 +97,9 @@ public class EmployeedepartmenthistoryRecord extends org.jooq.impl.UpdatableReco
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.ShiftID]
-	 * REFERENCES Shift [HumanResources.Shift.ShiftID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
+	 * FOREIGN KEY (ShiftID)
+	 * REFERENCES HumanResources.Shift (ShiftID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ShiftID")

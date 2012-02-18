@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Currencyrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord> {
 
-	private static final long serialVersionUID = -2064560685;
+	private static final long serialVersionUID = -1107103472;
 
 	/**
 	 * The singleton instance of CurrencyRate
@@ -44,8 +44,9 @@ public class Currencyrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.FromCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
+	 * FOREIGN KEY (FromCurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord, java.lang.String> FROMCURRENCYCODE = createField("FromCurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);
@@ -54,8 +55,9 @@ public class Currencyrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.ToCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
+	 * FOREIGN KEY (ToCurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord, java.lang.String> TOCURRENCYCODE = createField("ToCurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);

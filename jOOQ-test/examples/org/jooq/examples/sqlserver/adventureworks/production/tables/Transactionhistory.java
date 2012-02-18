@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Transactionhistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord> {
 
-	private static final long serialVersionUID = 1562800897;
+	private static final long serialVersionUID = 129093828;
 
 	/**
 	 * The singleton instance of TransactionHistory
@@ -39,8 +39,9 @@ public class Transactionhistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.TransactionHistory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_TransactionHistory_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);

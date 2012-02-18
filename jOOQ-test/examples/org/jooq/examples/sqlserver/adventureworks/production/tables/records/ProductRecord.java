@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Product", schema = "Production")
 public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord> {
 
-	private static final long serialVersionUID = -570936821;
+	private static final long serialVersionUID = 800304053;
 
 	/**
 	 * An uncommented item
@@ -186,8 +186,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.SizeUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_Product_UnitMeasure_SizeUnitMeasureCode
+	 * FOREIGN KEY (SizeUnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public void setSizeunitmeasurecode(java.lang.String value) {
@@ -198,8 +199,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.SizeUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_Product_UnitMeasure_SizeUnitMeasureCode
+	 * FOREIGN KEY (SizeUnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SizeUnitMeasureCode")
@@ -211,8 +213,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.WeightUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_Product_UnitMeasure_WeightUnitMeasureCode
+	 * FOREIGN KEY (WeightUnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public void setWeightunitmeasurecode(java.lang.String value) {
@@ -223,8 +226,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.WeightUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_Product_UnitMeasure_WeightUnitMeasureCode
+	 * FOREIGN KEY (WeightUnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "WeightUnitMeasureCode")
@@ -311,8 +315,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductSubcategoryID]
-	 * REFERENCES ProductSubcategory [Production.ProductSubcategory.ProductSubcategoryID]
+	 * CONSTRAINT FK_Product_ProductSubcategory_ProductSubcategoryID
+	 * FOREIGN KEY (ProductSubcategoryID)
+	 * REFERENCES Production.ProductSubcategory (ProductSubcategoryID)
 	 * </pre></code>
 	 */
 	public void setProductsubcategoryid(java.lang.Integer value) {
@@ -323,8 +328,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductSubcategoryID]
-	 * REFERENCES ProductSubcategory [Production.ProductSubcategory.ProductSubcategoryID]
+	 * CONSTRAINT FK_Product_ProductSubcategory_ProductSubcategoryID
+	 * FOREIGN KEY (ProductSubcategoryID)
+	 * REFERENCES Production.ProductSubcategory (ProductSubcategoryID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductSubcategoryID")
@@ -336,8 +342,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_Product_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	public void setProductmodelid(java.lang.Integer value) {
@@ -348,8 +355,9 @@ public class ProductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_Product_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductModelID")

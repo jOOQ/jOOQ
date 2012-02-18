@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -265207656;
+	private static final long serialVersionUID = -1175567764;
 
 	/**
 	 * An uncommented item
@@ -46,8 +46,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_64_69.UNUSED_ID]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_test_case_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setUnusedId(java.lang.Integer value) {
@@ -58,8 +59,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_64_69.UNUSED_ID]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_test_case_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getUnusedId() {

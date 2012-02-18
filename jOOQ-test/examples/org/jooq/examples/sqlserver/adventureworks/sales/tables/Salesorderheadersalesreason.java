@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesorderheadersalesreason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> {
 
-	private static final long serialVersionUID = 1221129539;
+	private static final long serialVersionUID = 1937743755;
 
 	/**
 	 * The singleton instance of SalesOrderHeaderSalesReason
@@ -34,8 +34,9 @@ public class Salesorderheadersalesreason extends org.jooq.impl.UpdatableTableImp
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
+	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
+	 * FOREIGN KEY (SalesOrderID)
+	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord, java.lang.Integer> SALESORDERID = createField("SalesOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Salesorderheadersalesreason extends org.jooq.impl.UpdatableTableImp
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesReasonID]
-	 * REFERENCES SalesReason [Sales.SalesReason.SalesReasonID]
+	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
+	 * FOREIGN KEY (SalesReasonID)
+	 * REFERENCES Sales.SalesReason (SalesReasonID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord, java.lang.Integer> SALESREASONID = createField("SalesReasonID", org.jooq.impl.SQLDataType.INTEGER, this);

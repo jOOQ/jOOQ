@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> {
 
-	private static final long serialVersionUID = 509104809;
+	private static final long serialVersionUID = 1548276093;
 
 	/**
 	 * An uncommented item
@@ -16,8 +16,9 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_actor.actor_id]
-	 * REFERENCES actor [sakila.actor.actor_id]
+	 * CONSTRAINT fk_film_actor_actor
+	 * FOREIGN KEY (actor_id)
+	 * REFERENCES sakila.actor (actor_id)
 	 * </pre></code>
 	 */
 	public void setActorId(java.lang.Short value) {
@@ -30,8 +31,9 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_actor.actor_id]
-	 * REFERENCES actor [sakila.actor.actor_id]
+	 * CONSTRAINT fk_film_actor_actor
+	 * FOREIGN KEY (actor_id)
+	 * REFERENCES sakila.actor (actor_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getActorId() {
@@ -44,8 +46,9 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_actor.actor_id]
-	 * REFERENCES actor [sakila.actor.actor_id]
+	 * CONSTRAINT fk_film_actor_actor
+	 * FOREIGN KEY (actor_id)
+	 * REFERENCES sakila.actor (actor_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.ActorRecord fetchActor() {
@@ -61,8 +64,9 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_actor.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_actor_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public void setFilmId(java.lang.Short value) {
@@ -75,8 +79,9 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_actor.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_actor_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getFilmId() {
@@ -89,8 +94,9 @@ public class FilmActorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_actor.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_actor_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {

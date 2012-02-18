@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> {
 
-	private static final long serialVersionUID = 358867603;
+	private static final long serialVersionUID = -2091910991;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
+	 * CONSTRAINT FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
+	 * FOREIGN KEY (SalesOrderID)
+	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
 	public void setSalesorderid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
+	 * CONSTRAINT FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
+	 * FOREIGN KEY (SalesOrderID)
+	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SalesOrderID")
@@ -96,8 +98,9 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
+	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
+	 * FOREIGN KEY (SpecialOfferID, ProductID)
+	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -108,8 +111,9 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
+	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
+	 * FOREIGN KEY (SpecialOfferID, ProductID)
+	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")
@@ -121,8 +125,9 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
+	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
+	 * FOREIGN KEY (SpecialOfferID, ProductID)
+	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
 	public void setSpecialofferid(java.lang.Integer value) {
@@ -133,8 +138,9 @@ public class SalesorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
+	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
+	 * FOREIGN KEY (SpecialOfferID, ProductID)
+	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SpecialOfferID")

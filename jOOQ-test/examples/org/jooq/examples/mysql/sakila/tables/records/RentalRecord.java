@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -1584085899;
+	private static final long serialVersionUID = -1861584637;
 
 	/**
 	 * An uncommented item
@@ -58,8 +58,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.inventory_id]
-	 * REFERENCES inventory [sakila.inventory.inventory_id]
+	 * CONSTRAINT fk_rental_inventory
+	 * FOREIGN KEY (inventory_id)
+	 * REFERENCES sakila.inventory (inventory_id)
 	 * </pre></code>
 	 */
 	public void setInventoryId(java.lang.Integer value) {
@@ -70,8 +71,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.inventory_id]
-	 * REFERENCES inventory [sakila.inventory.inventory_id]
+	 * CONSTRAINT fk_rental_inventory
+	 * FOREIGN KEY (inventory_id)
+	 * REFERENCES sakila.inventory (inventory_id)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getInventoryId() {
@@ -82,8 +84,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.inventory_id]
-	 * REFERENCES inventory [sakila.inventory.inventory_id]
+	 * CONSTRAINT fk_rental_inventory
+	 * FOREIGN KEY (inventory_id)
+	 * REFERENCES sakila.inventory (inventory_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.InventoryRecord fetchInventory() {
@@ -97,8 +100,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.customer_id]
-	 * REFERENCES customer [sakila.customer.customer_id]
+	 * CONSTRAINT fk_rental_customer
+	 * FOREIGN KEY (customer_id)
+	 * REFERENCES sakila.customer (customer_id)
 	 * </pre></code>
 	 */
 	public void setCustomerId(java.lang.Short value) {
@@ -109,8 +113,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.customer_id]
-	 * REFERENCES customer [sakila.customer.customer_id]
+	 * CONSTRAINT fk_rental_customer
+	 * FOREIGN KEY (customer_id)
+	 * REFERENCES sakila.customer (customer_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getCustomerId() {
@@ -121,8 +126,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.customer_id]
-	 * REFERENCES customer [sakila.customer.customer_id]
+	 * CONSTRAINT fk_rental_customer
+	 * FOREIGN KEY (customer_id)
+	 * REFERENCES sakila.customer (customer_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CustomerRecord fetchCustomer() {
@@ -150,8 +156,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.staff_id]
-	 * REFERENCES staff [sakila.staff.staff_id]
+	 * CONSTRAINT fk_rental_staff
+	 * FOREIGN KEY (staff_id)
+	 * REFERENCES sakila.staff (staff_id)
 	 * </pre></code>
 	 */
 	public void setStaffId(java.lang.Byte value) {
@@ -162,8 +169,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.staff_id]
-	 * REFERENCES staff [sakila.staff.staff_id]
+	 * CONSTRAINT fk_rental_staff
+	 * FOREIGN KEY (staff_id)
+	 * REFERENCES sakila.staff (staff_id)
 	 * </pre></code>
 	 */
 	public java.lang.Byte getStaffId() {
@@ -174,8 +182,9 @@ public class RentalRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.staff_id]
-	 * REFERENCES staff [sakila.staff.staff_id]
+	 * CONSTRAINT fk_rental_staff
+	 * FOREIGN KEY (staff_id)
+	 * REFERENCES sakila.staff (staff_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.StaffRecord fetchStaff() {

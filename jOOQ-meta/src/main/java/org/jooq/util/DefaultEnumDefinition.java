@@ -55,6 +55,11 @@ public class DefaultEnumDefinition extends AbstractDefinition implements EnumDef
         this.isSynthetic = isSynthetic;
     }
 
+    @Override
+    public List<Definition> getDefinitionPath() {
+        return Arrays.<Definition>asList(getSchema(), this);
+    }
+
     public void addLiteral(String literal) {
         literals.add(literal);
     }

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Countryregioncurrency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord> {
 
-	private static final long serialVersionUID = -1356075110;
+	private static final long serialVersionUID = -524007537;
 
 	/**
 	 * The singleton instance of CountryRegionCurrency
@@ -34,8 +34,9 @@ public class Countryregioncurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CountryRegionCurrency.CountryRegionCode]
-	 * REFERENCES CountryRegion [Person.CountryRegion.CountryRegionCode]
+	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
+	 * FOREIGN KEY (CountryRegionCode)
+	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord, java.lang.String> COUNTRYREGIONCODE = createField("CountryRegionCode", org.jooq.impl.SQLDataType.NVARCHAR, this);
@@ -46,8 +47,9 @@ public class Countryregioncurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CountryRegionCurrency.CurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
+	 * FOREIGN KEY (CurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord, java.lang.String> CURRENCYCODE = createField("CurrencyCode", org.jooq.impl.SQLDataType.NCHAR, this);

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  */
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -756575566;
+	private static final long serialVersionUID = 440028521;
 
 	/**
 	 * An uncommented item
@@ -44,8 +44,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_DIRECTORY.PARENT_ID]
-	 * REFERENCES T_DIRECTORY [TEST.T_DIRECTORY.ID]
+	 * CONSTRAINT PK_T_DIRECTORY_SELF
+	 * FOREIGN KEY (PARENT_ID)
+	 * REFERENCES TEST.T_DIRECTORY (ID)
 	 * </pre></code>
 	 */
 	public void setParentId(java.lang.Integer value) {
@@ -56,8 +57,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_DIRECTORY.PARENT_ID]
-	 * REFERENCES T_DIRECTORY [TEST.T_DIRECTORY.ID]
+	 * CONSTRAINT PK_T_DIRECTORY_SELF
+	 * FOREIGN KEY (PARENT_ID)
+	 * REFERENCES TEST.T_DIRECTORY (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getParentId() {
@@ -68,8 +70,9 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_DIRECTORY.PARENT_ID]
-	 * REFERENCES T_DIRECTORY [TEST.T_DIRECTORY.ID]
+	 * CONSTRAINT PK_T_DIRECTORY_SELF
+	 * FOREIGN KEY (PARENT_ID)
+	 * REFERENCES TEST.T_DIRECTORY (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord fetchTDirectory() {

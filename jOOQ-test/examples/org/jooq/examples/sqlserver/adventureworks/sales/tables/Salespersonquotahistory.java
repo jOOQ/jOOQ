@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salespersonquotahistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord> {
 
-	private static final long serialVersionUID = 1427441008;
+	private static final long serialVersionUID = 361497276;
 
 	/**
 	 * The singleton instance of SalesPersonQuotaHistory
@@ -34,8 +34,9 @@ public class Salespersonquotahistory extends org.jooq.impl.UpdatableTableImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesPersonQuotaHistory.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
+	 * CONSTRAINT FK_SalesPersonQuotaHistory_SalesPerson_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord, java.lang.Integer> SALESPERSONID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);

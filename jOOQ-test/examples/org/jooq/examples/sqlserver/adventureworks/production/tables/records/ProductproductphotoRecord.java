@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord> {
 
-	private static final long serialVersionUID = 1344173135;
+	private static final long serialVersionUID = -363431521;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductProductPhoto_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductProductPhoto_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")
@@ -49,8 +51,9 @@ public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductPhotoID]
-	 * REFERENCES ProductPhoto [Production.ProductPhoto.ProductPhotoID]
+	 * CONSTRAINT FK_ProductProductPhoto_ProductPhoto_ProductPhotoID
+	 * FOREIGN KEY (ProductPhotoID)
+	 * REFERENCES Production.ProductPhoto (ProductPhotoID)
 	 * </pre></code>
 	 */
 	public void setProductphotoid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class ProductproductphotoRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductPhotoID]
-	 * REFERENCES ProductPhoto [Production.ProductPhoto.ProductPhotoID]
+	 * CONSTRAINT FK_ProductProductPhoto_ProductPhoto_ProductPhotoID
+	 * FOREIGN KEY (ProductPhotoID)
+	 * REFERENCES Production.ProductPhoto (ProductPhotoID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductPhotoID")

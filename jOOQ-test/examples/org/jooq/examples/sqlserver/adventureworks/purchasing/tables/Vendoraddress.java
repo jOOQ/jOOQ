@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Vendoraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord> {
 
-	private static final long serialVersionUID = -1347212992;
+	private static final long serialVersionUID = -1691610135;
 
 	/**
 	 * The singleton instance of VendorAddress
@@ -34,8 +34,9 @@ public class Vendoraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorAddress.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_VendorAddress_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord, java.lang.Integer> VENDORID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Vendoraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_VendorAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord, java.lang.Integer> ADDRESSID = createField("AddressID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -56,8 +58,9 @@ public class Vendoraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorAddress.AddressTypeID]
-	 * REFERENCES AddressType [Person.AddressType.AddressTypeID]
+	 * CONSTRAINT FK_VendorAddress_AddressType_AddressTypeID
+	 * FOREIGN KEY (AddressTypeID)
+	 * REFERENCES Person.AddressType (AddressTypeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendoraddressRecord, java.lang.Integer> ADDRESSTYPEID = createField("AddressTypeID", org.jooq.impl.SQLDataType.INTEGER, this);

@@ -158,13 +158,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-
-        // [#1126] TODO refactor this into input/output/label name
-        String n = (definition instanceof SchemaDefinition)
-            ? definition.getDatabase().getOutputSchema(definition.getName())
-            : definition.getName();
-
-        return GenerationUtil.convertToJavaIdentifier(n);
+        return GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
     }
 
     @Override
@@ -311,11 +305,8 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
         // [#282] In multi-schema setups, the schema name goes into the package
         if (definition.getDatabase().getSchemata().size() > 1) {
-            String inputSchema = definition.getSchema().getName();
-            String outputSchema = definition.getDatabase().getOutputSchema(inputSchema);
-
             sb.append(".");
-            sb.append(GenerationUtil.convertToJavaIdentifierEnum(outputSchema).toLowerCase());
+            sb.append(GenerationUtil.convertToJavaIdentifierEnum(definition.getSchema().getOutputName()).toLowerCase());
         }
 
         // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
@@ -352,12 +343,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     private String getJavaClassName0(Definition definition, String suffix) {
         StringBuilder result = new StringBuilder();
 
-        // [#1126] TODO refactor this into input/output/label name
-        String n = (definition instanceof SchemaDefinition)
-            ? definition.getDatabase().getOutputSchema(definition.getName())
-            : definition.getName();
-
-        String name = GenerationUtil.convertToJavaIdentifier(n);
+        String name = GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
         result.append(StringUtils.toCamelCase(name));
 
         // The POJO suffix doesn't really apply to the file name

@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -1603217158;
+	private static final long serialVersionUID = 1739323452;
 
 	/**
 	 * An uncommented item
@@ -16,8 +16,9 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_986_1.REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID]
+	 * CONSTRAINT T_986_1__FK_986
+	 * FOREIGN KEY (REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public void setRef(java.lang.Integer value) {
@@ -30,8 +31,9 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_986_1.REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID]
+	 * CONSTRAINT T_986_1__FK_986
+	 * FOREIGN KEY (REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getRef() {
@@ -44,8 +46,9 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_986_1.REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID]
+	 * CONSTRAINT T_986_1__FK_986
+	 * FOREIGN KEY (REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {

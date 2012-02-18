@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> {
 
-	private static final long serialVersionUID = 1646656767;
+	private static final long serialVersionUID = -1099268047;
 
 	/**
 	 * The singleton instance of BillOfMaterials
@@ -39,8 +39,9 @@ public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ProductAssemblyID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
+	 * FOREIGN KEY (ProductAssemblyID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, java.lang.Integer> PRODUCTASSEMBLYID = createField("ProductAssemblyID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -49,8 +50,9 @@ public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ComponentID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
+	 * FOREIGN KEY (ComponentID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, java.lang.Integer> COMPONENTID = createField("ComponentID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -69,8 +71,9 @@ public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
+	 * FOREIGN KEY (UnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, java.lang.String> UNITMEASURECODE = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);

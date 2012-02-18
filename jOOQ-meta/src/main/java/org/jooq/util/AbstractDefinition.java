@@ -90,13 +90,86 @@ public abstract class AbstractDefinition implements Definition {
     }
 
     @Override
+    public final String getInputName() {
+        return name;
+    }
+
+    /**
+     * Subclasses may override this method
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public String getOutputName() {
+        return getInputName();
+    }
+
+    /**
+     * Subclasses may override this method
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public String getJavaName() {
+        return getOutputName();
+    }
+
+    @Override
     public final String getComment() {
         return comment;
     }
 
     @Override
-    public String getQualifiedName() {
-        return getName();
+    public final String getQualifiedName() {
+        return getQualifiedInputName();
+    }
+
+    /**
+     * Subclasses may override this method
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getQualifiedInputName() {
+        StringBuilder sb = new StringBuilder();
+
+        String separator = "";
+        for (Definition part : getDefinitionPath()) {
+            if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
+                continue;
+            }
+
+            sb.append(separator);
+            sb.append(part.getInputName());
+
+            separator = ".";
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Subclasses may override this method
+     *
+     * {@inheritDoc}
+     */
+    @Override
+    public final String getQualifiedOutputName() {
+       StringBuilder sb = new StringBuilder();
+
+        String separator = "";
+        for (Definition part : getDefinitionPath()) {
+            if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
+                continue;
+            }
+
+            sb.append(separator);
+            sb.append(part.getOutputName());
+
+            separator = ".";
+        }
+
+        return sb.toString();
     }
 
     @Override

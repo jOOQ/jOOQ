@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employeeaddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord> {
 
-	private static final long serialVersionUID = -531891983;
+	private static final long serialVersionUID = -215460871;
 
 	/**
 	 * The singleton instance of EmployeeAddress
@@ -34,8 +34,9 @@ public class Employeeaddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord, java.lang.Integer> EMPLOYEEID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Employeeaddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord, java.lang.Integer> ADDRESSID = createField("AddressID", org.jooq.impl.SQLDataType.INTEGER, this);

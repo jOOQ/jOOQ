@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productdocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> {
 
-	private static final long serialVersionUID = 1163041736;
+	private static final long serialVersionUID = -304107770;
 
 	/**
 	 * The singleton instance of ProductDocument
@@ -34,8 +34,9 @@ public class Productdocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductDocument_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Productdocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.DocumentID]
-	 * REFERENCES Document [Production.Document.DocumentID]
+	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
+	 * FOREIGN KEY (DocumentID)
+	 * REFERENCES Production.Document (DocumentID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord, java.lang.Integer> DOCUMENTID = createField("DocumentID", org.jooq.impl.SQLDataType.INTEGER, this);

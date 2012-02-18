@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 2094644070;
+	private static final long serialVersionUID = -1525056889;
 
 	/**
 	 * An uncommented item
@@ -44,8 +44,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.author_id]
-	 * REFERENCES t_author [dbo.t_author.id]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (author_id)
+	 * REFERENCES dbo.t_author (id)
 	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
@@ -56,8 +57,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.author_id]
-	 * REFERENCES t_author [dbo.t_author.id]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (author_id)
+	 * REFERENCES dbo.t_author (id)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getAuthorId() {
@@ -68,8 +70,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.author_id]
-	 * REFERENCES t_author [dbo.t_author.id]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (author_id)
+	 * REFERENCES dbo.t_author (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
@@ -83,8 +86,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.co_author_id]
-	 * REFERENCES t_author [dbo.t_author.id]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES dbo.t_author (id)
 	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -95,8 +99,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.co_author_id]
-	 * REFERENCES t_author [dbo.t_author.id]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES dbo.t_author (id)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getCoAuthorId() {
@@ -107,8 +112,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.co_author_id]
-	 * REFERENCES t_author [dbo.t_author.id]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES dbo.t_author (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
@@ -164,8 +170,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.language_id]
-	 * REFERENCES t_language [dbo.t_language.id]
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES dbo.t_language (id)
 	 * </pre></code>
 	 */
 	public void setLanguageId(org.jooq.test.ase.generatedclasses.enums.TLanguage value) {
@@ -176,8 +183,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book.language_id]
-	 * REFERENCES t_language [dbo.t_language.id]
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES dbo.t_language (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.TLanguage getLanguageId() {

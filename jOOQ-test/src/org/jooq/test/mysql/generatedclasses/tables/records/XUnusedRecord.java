@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -605102100;
+	private static final long serialVersionUID = 1614127736;
 
 	/**
 	 * An uncommented item
@@ -92,8 +92,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
@@ -104,8 +105,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef() {
@@ -116,8 +118,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -132,8 +135,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
@@ -144,8 +148,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getNameRef() {

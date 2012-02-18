@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Employee", schema = "HumanResources")
 public class EmployeeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord> {
 
-	private static final long serialVersionUID = -624955183;
+	private static final long serialVersionUID = 951054893;
 
 	/**
 	 * An uncommented item
@@ -51,8 +51,9 @@ public class EmployeeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.Employee.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_Employee_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public void setContactid(java.lang.Integer value) {
@@ -63,8 +64,9 @@ public class EmployeeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.Employee.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_Employee_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactID")
@@ -91,8 +93,9 @@ public class EmployeeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.Employee.ManagerID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_Employee_Employee_ManagerID
+	 * FOREIGN KEY (ManagerID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setManagerid(java.lang.Integer value) {
@@ -103,8 +106,9 @@ public class EmployeeRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.Employee.ManagerID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_Employee_Employee_ManagerID
+	 * FOREIGN KEY (ManagerID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ManagerID")

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productproductphoto extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord> {
 
-	private static final long serialVersionUID = 295162446;
+	private static final long serialVersionUID = -829336424;
 
 	/**
 	 * The singleton instance of ProductProductPhoto
@@ -34,8 +34,9 @@ public class Productproductphoto extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductProductPhoto_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Productproductphoto extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductProductPhoto.ProductPhotoID]
-	 * REFERENCES ProductPhoto [Production.ProductPhoto.ProductPhotoID]
+	 * CONSTRAINT FK_ProductProductPhoto_ProductPhoto_ProductPhotoID
+	 * FOREIGN KEY (ProductPhotoID)
+	 * REFERENCES Production.ProductPhoto (ProductPhotoID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductproductphotoRecord, java.lang.Integer> PRODUCTPHOTOID = createField("ProductPhotoID", org.jooq.impl.SQLDataType.INTEGER, this);

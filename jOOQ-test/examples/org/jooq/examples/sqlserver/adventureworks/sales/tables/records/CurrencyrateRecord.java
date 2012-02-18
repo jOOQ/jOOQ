@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
 public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord> {
 
-	private static final long serialVersionUID = -1942718225;
+	private static final long serialVersionUID = 1169145337;
 
 	/**
 	 * An uncommented item
@@ -51,8 +51,9 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.FromCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
+	 * FOREIGN KEY (FromCurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	public void setFromcurrencycode(java.lang.String value) {
@@ -63,8 +64,9 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.FromCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CurrencyRate_Currency_FromCurrencyCode
+	 * FOREIGN KEY (FromCurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "FromCurrencyCode")
@@ -76,8 +78,9 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.ToCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
+	 * FOREIGN KEY (ToCurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	public void setTocurrencycode(java.lang.String value) {
@@ -88,8 +91,9 @@ public class CurrencyrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CurrencyRate.ToCurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CurrencyRate_Currency_ToCurrencyCode
+	 * FOREIGN KEY (ToCurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ToCurrencyCode")

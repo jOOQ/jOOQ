@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 833212298;
+	private static final long serialVersionUID = -91061995;
 
 	/**
 	 * An uncommented item
@@ -16,8 +16,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.BOOK_STORE_NAME]
-	 * REFERENCES t_book_store [dbo.t_book_store.NAME]
+	 * CONSTRAINT fk_b2bs_bs_name
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES dbo.t_book_store (NAME)
 	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
@@ -30,8 +31,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.BOOK_STORE_NAME]
-	 * REFERENCES t_book_store [dbo.t_book_store.NAME]
+	 * CONSTRAINT fk_b2bs_bs_name
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES dbo.t_book_store (NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getBookStoreName() {
@@ -44,8 +46,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.BOOK_STORE_NAME]
-	 * REFERENCES t_book_store [dbo.t_book_store.NAME]
+	 * CONSTRAINT fk_b2bs_bs_name
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES dbo.t_book_store (NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
@@ -61,8 +64,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.BOOK_ID]
-	 * REFERENCES t_book [dbo.t_book.ID]
+	 * CONSTRAINT fk_b2bs_b_id
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES dbo.t_book (ID)
 	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
@@ -75,8 +79,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.BOOK_ID]
-	 * REFERENCES t_book [dbo.t_book.ID]
+	 * CONSTRAINT fk_b2bs_b_id
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES dbo.t_book (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getBookId() {
@@ -89,8 +94,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.BOOK_ID]
-	 * REFERENCES t_book [dbo.t_book.ID]
+	 * CONSTRAINT fk_b2bs_b_id
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES dbo.t_book (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord fetchTBook() {

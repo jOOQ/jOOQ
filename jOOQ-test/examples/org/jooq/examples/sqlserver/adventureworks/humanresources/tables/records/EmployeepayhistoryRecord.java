@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeepayhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord> {
 
-	private static final long serialVersionUID = 1378569322;
+	private static final long serialVersionUID = 1698824138;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class EmployeepayhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeePayHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setEmployeeid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class EmployeepayhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeePayHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "EmployeeID")

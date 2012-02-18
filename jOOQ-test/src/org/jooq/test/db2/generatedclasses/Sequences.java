@@ -11,12 +11,12 @@ package org.jooq.test.db2.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence LUKAS.LUKAS.S_AUTHOR_ID
+	 * The sequence LUKAS.S_AUTHOR_ID
 	 */
 	public static final org.jooq.Sequence<java.lang.Integer> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Integer>("S_AUTHOR_ID", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The sequence LUKAS.LUKAS.S_TRIGGER_ID
+	 * The sequence LUKAS.S_TRIGGER_ID
 	 */
 	public static final org.jooq.Sequence<java.lang.Integer> S_TRIGGER_ID = new org.jooq.impl.SequenceImpl<java.lang.Integer>("S_TRIGGER_ID", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
 

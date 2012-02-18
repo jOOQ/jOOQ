@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "ShoppingCartItem", schema = "Sales")
 public class ShoppingcartitemRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord> {
 
-	private static final long serialVersionUID = -1240643851;
+	private static final long serialVersionUID = 1836636529;
 
 	/**
 	 * An uncommented item
@@ -66,8 +66,9 @@ public class ShoppingcartitemRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ShoppingCartItem.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -78,8 +79,9 @@ public class ShoppingcartitemRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ShoppingCartItem.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")

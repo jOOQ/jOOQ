@@ -12,7 +12,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1908698739;
+	private static final long serialVersionUID = 2070823663;
 
 	/**
 	 * An uncommented item
@@ -109,8 +109,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref]
-	 * REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
+	 * CONSTRAINT x_unused__fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
@@ -121,8 +122,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref]
-	 * REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
+	 * CONSTRAINT x_unused__fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "id_ref")
@@ -134,8 +136,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref]
-	 * REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
+	 * CONSTRAINT x_unused__fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -285,8 +288,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref]
-	 * REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
+	 * CONSTRAINT x_unused__fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
@@ -297,8 +301,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_unused.id_ref, public.x_unused.name_ref]
-	 * REFERENCES x_unused [public.x_unused.id, public.x_unused.name]
+	 * CONSTRAINT x_unused__fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "name_ref")

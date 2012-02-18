@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = 1015562248;
+	private static final long serialVersionUID = 2146432111;
 
 	/**
 	 * The singleton instance of Store
@@ -34,8 +34,9 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Store.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_Store_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord, java.lang.Integer> CUSTOMERID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -49,8 +50,9 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Store.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
+	 * CONSTRAINT FK_Store_SalesPerson_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord, java.lang.Integer> SALESPERSONID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);

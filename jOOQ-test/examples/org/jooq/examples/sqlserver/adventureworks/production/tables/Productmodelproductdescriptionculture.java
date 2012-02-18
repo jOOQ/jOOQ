@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productmodelproductdescriptionculture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord> {
 
-	private static final long serialVersionUID = 803060941;
+	private static final long serialVersionUID = -1905363182;
 
 	/**
 	 * The singleton instance of ProductModelProductDescriptionCulture
@@ -34,8 +34,9 @@ public class Productmodelproductdescriptionculture extends org.jooq.impl.Updatab
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord, java.lang.Integer> PRODUCTMODELID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Productmodelproductdescriptionculture extends org.jooq.impl.Updatab
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductDescriptionID]
-	 * REFERENCES ProductDescription [Production.ProductDescription.ProductDescriptionID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID
+	 * FOREIGN KEY (ProductDescriptionID)
+	 * REFERENCES Production.ProductDescription (ProductDescriptionID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord, java.lang.Integer> PRODUCTDESCRIPTIONID = createField("ProductDescriptionID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -58,8 +60,9 @@ public class Productmodelproductdescriptionculture extends org.jooq.impl.Updatab
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.CultureID]
-	 * REFERENCES Culture [Production.Culture.CultureID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_Culture_CultureID
+	 * FOREIGN KEY (CultureID)
+	 * REFERENCES Production.Culture (CultureID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord, java.lang.String> CULTUREID = createField("CultureID", org.jooq.impl.SQLDataType.NCHAR, this);

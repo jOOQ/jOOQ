@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productlistpricehistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductlistpricehistoryRecord> {
 
-	private static final long serialVersionUID = -1794881187;
+	private static final long serialVersionUID = 797519320;
 
 	/**
 	 * The singleton instance of ProductListPriceHistory
@@ -34,8 +34,9 @@ public class Productlistpricehistory extends org.jooq.impl.UpdatableTableImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductListPriceHistory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductListPriceHistory_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductlistpricehistoryRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);

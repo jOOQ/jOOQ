@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1705027502;
+	private static final long serialVersionUID = -852080572;
 
 	/**
 	 * An uncommented item
@@ -32,8 +32,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
@@ -44,8 +45,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getXUnusedId() {
@@ -56,8 +58,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -72,8 +75,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedName(java.lang.String value) {
@@ -84,8 +88,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getXUnusedName() {

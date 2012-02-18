@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Workorder extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord> {
 
-	private static final long serialVersionUID = -1734455965;
+	private static final long serialVersionUID = 1483596639;
 
 	/**
 	 * The singleton instance of WorkOrder
@@ -39,8 +39,9 @@ public class Workorder extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_WorkOrder_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -79,8 +80,9 @@ public class Workorder extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ScrapReasonID]
-	 * REFERENCES ScrapReason [Production.ScrapReason.ScrapReasonID]
+	 * CONSTRAINT FK_WorkOrder_ScrapReason_ScrapReasonID
+	 * FOREIGN KEY (ScrapReasonID)
+	 * REFERENCES Production.ScrapReason (ScrapReasonID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord, java.lang.Short> SCRAPREASONID = createField("ScrapReasonID", org.jooq.impl.SQLDataType.SMALLINT, this);

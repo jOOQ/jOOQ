@@ -10,7 +10,7 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 697808797;
+	private static final long serialVersionUID = 1396314349;
 
 	/**
 	 * The singleton instance of T_BOOK
@@ -41,8 +41,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 * The author ID in entity 'author'
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.T_BOOK.AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [PUBLIC.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
@@ -51,8 +52,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.T_BOOK.CO_AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [PUBLIC.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES PUBLIC.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
@@ -76,8 +78,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 * The language of the book
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.T_BOOK.LANGUAGE_ID]
-	 * REFERENCES T_LANGUAGE [PUBLIC.T_LANGUAGE.ID]
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES PUBLIC.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, org.jooq.test.h2.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.h2.generatedclasses.enums.TLanguage.class), T_BOOK);

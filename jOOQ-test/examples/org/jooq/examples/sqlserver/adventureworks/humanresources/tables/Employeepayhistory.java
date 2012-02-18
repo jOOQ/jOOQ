@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employeepayhistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord> {
 
-	private static final long serialVersionUID = -1401019921;
+	private static final long serialVersionUID = -901061054;
 
 	/**
 	 * The singleton instance of EmployeePayHistory
@@ -34,8 +34,9 @@ public class Employeepayhistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeePayHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeePayHistory_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord, java.lang.Integer> EMPLOYEEID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);

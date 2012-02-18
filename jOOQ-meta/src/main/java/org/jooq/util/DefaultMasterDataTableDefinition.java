@@ -37,6 +37,7 @@ package org.jooq.util;
 
 import static org.jooq.impl.Factory.field;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Record;
@@ -58,6 +59,11 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
         super(delegate.getDatabase(), delegate.getSchema(), delegate.getName(), delegate.getComment());
 
         this.delegate = delegate;
+    }
+
+    @Override
+    public List<Definition> getDefinitionPath() {
+        return Arrays.<Definition>asList(getSchema(), this);
     }
 
     @Override

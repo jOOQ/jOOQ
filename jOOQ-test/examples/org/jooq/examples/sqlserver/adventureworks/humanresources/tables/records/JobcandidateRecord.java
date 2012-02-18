@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "JobCandidate", schema = "HumanResources")
 public class JobcandidateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord> {
 
-	private static final long serialVersionUID = 1475341113;
+	private static final long serialVersionUID = -591303533;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class JobcandidateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.JobCandidate.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_JobCandidate_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setEmployeeid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class JobcandidateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.JobCandidate.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_JobCandidate_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "EmployeeID")

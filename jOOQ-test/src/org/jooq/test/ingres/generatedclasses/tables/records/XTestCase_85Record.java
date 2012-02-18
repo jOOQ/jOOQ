@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  */
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1399514050;
+	private static final long serialVersionUID = 24175244;
 
 	/**
 	 * An uncommented item
@@ -32,8 +32,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_85.x_unused_id, test.x_test_case_85.x_unused_name]
-	 * REFERENCES x_unused [test.x_unused.id, test.x_unused.name]
+	 * CONSTRAINT fk_x_test_case_85
+	 * FOREIGN KEY (x_unused_id, x_unused_name)
+	 * REFERENCES test.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
@@ -44,8 +45,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_85.x_unused_id, test.x_test_case_85.x_unused_name]
-	 * REFERENCES x_unused [test.x_unused.id, test.x_unused.name]
+	 * CONSTRAINT fk_x_test_case_85
+	 * FOREIGN KEY (x_unused_id, x_unused_name)
+	 * REFERENCES test.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getXUnusedId() {
@@ -56,8 +58,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_85.x_unused_id, test.x_test_case_85.x_unused_name]
-	 * REFERENCES x_unused [test.x_unused.id, test.x_unused.name]
+	 * CONSTRAINT fk_x_test_case_85
+	 * FOREIGN KEY (x_unused_id, x_unused_name)
+	 * REFERENCES test.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ingres.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -72,8 +75,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_85.x_unused_id, test.x_test_case_85.x_unused_name]
-	 * REFERENCES x_unused [test.x_unused.id, test.x_unused.name]
+	 * CONSTRAINT fk_x_test_case_85
+	 * FOREIGN KEY (x_unused_id, x_unused_name)
+	 * REFERENCES test.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public void setXUnusedName(java.lang.String value) {
@@ -84,8 +88,9 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_test_case_85.x_unused_id, test.x_test_case_85.x_unused_name]
-	 * REFERENCES x_unused [test.x_unused.id, test.x_unused.name]
+	 * CONSTRAINT fk_x_test_case_85
+	 * FOREIGN KEY (x_unused_id, x_unused_name)
+	 * REFERENCES test.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public java.lang.String getXUnusedName() {

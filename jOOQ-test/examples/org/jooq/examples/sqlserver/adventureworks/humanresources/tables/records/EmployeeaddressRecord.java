@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord> {
 
-	private static final long serialVersionUID = -800723272;
+	private static final long serialVersionUID = -1044309264;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setEmployeeid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeeAddress_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "EmployeeID")
@@ -49,8 +51,9 @@ public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public void setAddressid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class EmployeeaddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_EmployeeAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "AddressID")

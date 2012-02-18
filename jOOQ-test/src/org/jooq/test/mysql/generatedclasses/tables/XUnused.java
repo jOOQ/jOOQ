@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -110819350;
+	private static final long serialVersionUID = 1373892964;
 
 	/**
 	 * The singleton instance of x_unused
@@ -53,8 +53,9 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
@@ -63,8 +64,9 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test.x_unused.ID_REF, test.x_unused.NAME_REF]
-	 * REFERENCES x_unused [test.x_unused.ID, test.x_unused.NAME]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES test.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, X_UNUSED);

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesPerson", schema = "Sales")
 public class SalespersonRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord> {
 
-	private static final long serialVersionUID = -130534165;
+	private static final long serialVersionUID = 1260445981;
 
 	/**
 	 * An uncommented item
@@ -18,8 +18,9 @@ public class SalespersonRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesPerson.SalesPersonID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setSalespersonid(java.lang.Integer value) {
@@ -32,8 +33,9 @@ public class SalespersonRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesPerson.SalesPersonID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_SalesPerson_Employee_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Id
@@ -46,8 +48,9 @@ public class SalespersonRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesPerson.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	public void setTerritoryid(java.lang.Integer value) {
@@ -58,8 +61,9 @@ public class SalespersonRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesPerson.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_SalesPerson_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "TerritoryID")

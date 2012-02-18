@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord> {
 
-	private static final long serialVersionUID = -747812886;
+	private static final long serialVersionUID = -130132566;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	public void setProductmodelid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductModelID")
@@ -49,8 +51,9 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductDescriptionID]
-	 * REFERENCES ProductDescription [Production.ProductDescription.ProductDescriptionID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID
+	 * FOREIGN KEY (ProductDescriptionID)
+	 * REFERENCES Production.ProductDescription (ProductDescriptionID)
 	 * </pre></code>
 	 */
 	public void setProductdescriptionid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.ProductDescriptionID]
-	 * REFERENCES ProductDescription [Production.ProductDescription.ProductDescriptionID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID
+	 * FOREIGN KEY (ProductDescriptionID)
+	 * REFERENCES Production.ProductDescription (ProductDescriptionID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductDescriptionID")
@@ -78,8 +82,9 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.CultureID]
-	 * REFERENCES Culture [Production.Culture.CultureID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_Culture_CultureID
+	 * FOREIGN KEY (CultureID)
+	 * REFERENCES Production.Culture (CultureID)
 	 * </pre></code>
 	 */
 	public void setCultureid(java.lang.String value) {
@@ -92,8 +97,9 @@ public class ProductmodelproductdescriptioncultureRecord extends org.jooq.impl.U
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelProductDescriptionCulture.CultureID]
-	 * REFERENCES Culture [Production.Culture.CultureID]
+	 * CONSTRAINT FK_ProductModelProductDescriptionCulture_Culture_CultureID
+	 * FOREIGN KEY (CultureID)
+	 * REFERENCES Production.Culture (CultureID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CultureID")

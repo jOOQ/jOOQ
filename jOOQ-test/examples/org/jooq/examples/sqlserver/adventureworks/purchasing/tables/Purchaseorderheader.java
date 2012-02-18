@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> {
 
-	private static final long serialVersionUID = 254365243;
+	private static final long serialVersionUID = 556405387;
 
 	/**
 	 * The singleton instance of PurchaseOrderHeader
@@ -49,8 +49,9 @@ public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, java.lang.Integer> EMPLOYEEID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -59,8 +60,9 @@ public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, java.lang.Integer> VENDORID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -69,8 +71,9 @@ public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
+	 * FOREIGN KEY (ShipMethodID)
+	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, java.lang.Integer> SHIPMETHODID = createField("ShipMethodID", org.jooq.impl.SQLDataType.INTEGER, this);

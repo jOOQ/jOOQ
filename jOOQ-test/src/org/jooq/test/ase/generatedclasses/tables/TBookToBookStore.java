@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1656302744;
+	private static final long serialVersionUID = 837471033;
 
 	/**
 	 * The singleton instance of t_book_to_book_store
@@ -34,8 +34,9 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.book_store_name]
-	 * REFERENCES t_book_store [dbo.t_book_store.name]
+	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
+	 * FOREIGN KEY (book_store_name)
+	 * REFERENCES dbo.t_book_store (name)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
@@ -46,8 +47,9 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_book_to_book_store.book_id]
-	 * REFERENCES t_book [dbo.t_book.id]
+	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
+	 * FOREIGN KEY (book_id)
+	 * REFERENCES dbo.t_book (id)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);

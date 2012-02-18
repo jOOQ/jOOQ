@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = -1147880250;
+	private static final long serialVersionUID = 2040732694;
 
 	/**
 	 * An uncommented item
@@ -44,8 +44,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.inventory.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_inventory_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public void setFilmId(java.lang.Short value) {
@@ -56,8 +57,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.inventory.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_inventory_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getFilmId() {
@@ -68,8 +70,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.inventory.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_inventory_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {
@@ -83,8 +86,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.inventory.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_inventory_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public void setStoreId(java.lang.Byte value) {
@@ -95,8 +99,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.inventory.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_inventory_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public java.lang.Byte getStoreId() {
@@ -107,8 +112,9 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.inventory.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_inventory_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.StoreRecord fetchStore() {

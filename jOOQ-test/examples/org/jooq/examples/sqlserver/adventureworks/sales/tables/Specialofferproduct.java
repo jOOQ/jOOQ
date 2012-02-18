@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Specialofferproduct extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> {
 
-	private static final long serialVersionUID = -1165021845;
+	private static final long serialVersionUID = -433976387;
 
 	/**
 	 * The singleton instance of SpecialOfferProduct
@@ -34,8 +34,9 @@ public class Specialofferproduct extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.SpecialOfferID]
-	 * REFERENCES SpecialOffer [Sales.SpecialOffer.SpecialOfferID]
+	 * CONSTRAINT FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID
+	 * FOREIGN KEY (SpecialOfferID)
+	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord, java.lang.Integer> SPECIALOFFERID = createField("SpecialOfferID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Specialofferproduct extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_SpecialOfferProduct_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);

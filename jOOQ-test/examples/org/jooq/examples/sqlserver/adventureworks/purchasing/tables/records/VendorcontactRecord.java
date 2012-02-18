@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord> {
 
-	private static final long serialVersionUID = -437539680;
+	private static final long serialVersionUID = -1537626226;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorContact.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	public void setVendorid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorContact.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_VendorContact_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "VendorID")
@@ -49,8 +51,9 @@ public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorContact.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_VendorContact_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public void setContactid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorContact.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_VendorContact_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactID")
@@ -76,8 +80,9 @@ public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorContact.ContactTypeID]
-	 * REFERENCES ContactType [Person.ContactType.ContactTypeID]
+	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
+	 * FOREIGN KEY (ContactTypeID)
+	 * REFERENCES Person.ContactType (ContactTypeID)
 	 * </pre></code>
 	 */
 	public void setContacttypeid(java.lang.Integer value) {
@@ -88,8 +93,9 @@ public class VendorcontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.VendorContact.ContactTypeID]
-	 * REFERENCES ContactType [Person.ContactType.ContactTypeID]
+	 * CONSTRAINT FK_VendorContact_ContactType_ContactTypeID
+	 * FOREIGN KEY (ContactTypeID)
+	 * REFERENCES Person.ContactType (ContactTypeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactTypeID")

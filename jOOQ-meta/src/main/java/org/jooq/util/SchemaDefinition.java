@@ -36,6 +36,9 @@
 
 package org.jooq.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.tools.StringUtils;
 
 /**
@@ -50,9 +53,14 @@ public class SchemaDefinition extends AbstractDefinition {
 	}
 
 	@Override
-	public final String getQualifiedName() {
-		return getDatabase().getOutputSchema(getName());
-	}
+    public final String getOutputName() {
+	    return getDatabase().getOutputSchema(getInputName());
+    }
+
+    @Override
+    public final List<Definition> getDefinitionPath() {
+        return Arrays.<Definition>asList(this);
+    }
 
     public boolean isDefaultSchema() {
         return StringUtils.isBlank(getName());

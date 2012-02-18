@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Customer", schema = "Sales")
 public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = -596009645;
+	private static final long serialVersionUID = -2030490317;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Customer.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_Customer_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	public void setTerritoryid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Customer.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_Customer_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "TerritoryID")

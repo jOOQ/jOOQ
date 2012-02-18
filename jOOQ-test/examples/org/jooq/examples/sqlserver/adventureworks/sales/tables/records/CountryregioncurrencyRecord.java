@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CountryregioncurrencyRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord> {
 
-	private static final long serialVersionUID = 1087822745;
+	private static final long serialVersionUID = 1002708753;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class CountryregioncurrencyRecord extends org.jooq.impl.UpdatableRecordIm
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CountryRegionCurrency.CountryRegionCode]
-	 * REFERENCES CountryRegion [Person.CountryRegion.CountryRegionCode]
+	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
+	 * FOREIGN KEY (CountryRegionCode)
+	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
 	public void setCountryregioncode(java.lang.String value) {
@@ -34,8 +35,9 @@ public class CountryregioncurrencyRecord extends org.jooq.impl.UpdatableRecordIm
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CountryRegionCurrency.CountryRegionCode]
-	 * REFERENCES CountryRegion [Person.CountryRegion.CountryRegionCode]
+	 * CONSTRAINT FK_CountryRegionCurrency_CountryRegion_CountryRegionCode
+	 * FOREIGN KEY (CountryRegionCode)
+	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CountryRegionCode")
@@ -49,8 +51,9 @@ public class CountryregioncurrencyRecord extends org.jooq.impl.UpdatableRecordIm
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CountryRegionCurrency.CurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
+	 * FOREIGN KEY (CurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	public void setCurrencycode(java.lang.String value) {
@@ -63,8 +66,9 @@ public class CountryregioncurrencyRecord extends org.jooq.impl.UpdatableRecordIm
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CountryRegionCurrency.CurrencyCode]
-	 * REFERENCES Currency [Sales.Currency.CurrencyCode]
+	 * CONSTRAINT FK_CountryRegionCurrency_Currency_CurrencyCode
+	 * FOREIGN KEY (CurrencyCode)
+	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CurrencyCode")

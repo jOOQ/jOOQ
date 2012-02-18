@@ -37,6 +37,7 @@
 package org.jooq.util;
 
 
+
 /**
  * A base implementation for column definitions.
  *

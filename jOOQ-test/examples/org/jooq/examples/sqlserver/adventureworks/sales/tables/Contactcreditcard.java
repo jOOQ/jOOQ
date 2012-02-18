@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Contactcreditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> {
 
-	private static final long serialVersionUID = 1001487545;
+	private static final long serialVersionUID = 770344322;
 
 	/**
 	 * The singleton instance of ContactCreditCard
@@ -34,8 +34,9 @@ public class Contactcreditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord, java.lang.Integer> CONTACTID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Contactcreditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
+	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
+	 * FOREIGN KEY (CreditCardID)
+	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord, java.lang.Integer> CREDITCARDID = createField("CreditCardID", org.jooq.impl.SQLDataType.INTEGER, this);

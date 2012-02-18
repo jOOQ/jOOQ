@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 408514843;
+	private static final long serialVersionUID = 1370796485;
 
 	/**
 	 * The singleton instance of T_986_2
@@ -34,8 +34,9 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_986_2.REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID]
+	 * CONSTRAINT T_986_2__FK_986
+	 * FOREIGN KEY (REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_2);

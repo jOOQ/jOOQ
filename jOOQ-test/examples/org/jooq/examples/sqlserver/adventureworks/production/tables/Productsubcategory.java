@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productsubcategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord> {
 
-	private static final long serialVersionUID = -1717349144;
+	private static final long serialVersionUID = -731503621;
 
 	/**
 	 * The singleton instance of ProductSubcategory
@@ -39,8 +39,9 @@ public class Productsubcategory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductSubcategory.ProductCategoryID]
-	 * REFERENCES ProductCategory [Production.ProductCategory.ProductCategoryID]
+	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
+	 * FOREIGN KEY (ProductCategoryID)
+	 * REFERENCES Production.ProductCategory (ProductCategoryID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord, java.lang.Integer> PRODUCTCATEGORYID = createField("ProductCategoryID", org.jooq.impl.SQLDataType.INTEGER, this);

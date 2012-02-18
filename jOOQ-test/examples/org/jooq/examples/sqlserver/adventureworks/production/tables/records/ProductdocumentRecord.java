@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> {
 
-	private static final long serialVersionUID = 468156792;
+	private static final long serialVersionUID = 1550378312;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductDocument_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductDocument_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")
@@ -49,8 +51,9 @@ public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.DocumentID]
-	 * REFERENCES Document [Production.Document.DocumentID]
+	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
+	 * FOREIGN KEY (DocumentID)
+	 * REFERENCES Production.Document (DocumentID)
 	 * </pre></code>
 	 */
 	public void setDocumentid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class ProductdocumentRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductDocument.DocumentID]
-	 * REFERENCES Document [Production.Document.DocumentID]
+	 * CONSTRAINT FK_ProductDocument_Document_DocumentID
+	 * FOREIGN KEY (DocumentID)
+	 * REFERENCES Production.Document (DocumentID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "DocumentID")

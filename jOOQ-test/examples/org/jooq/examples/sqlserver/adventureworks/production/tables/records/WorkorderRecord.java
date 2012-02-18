@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "WorkOrder", schema = "Production")
 public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderRecord> {
 
-	private static final long serialVersionUID = -1456152415;
+	private static final long serialVersionUID = 2132074961;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_WorkOrder_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_WorkOrder_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")
@@ -151,8 +153,9 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ScrapReasonID]
-	 * REFERENCES ScrapReason [Production.ScrapReason.ScrapReasonID]
+	 * CONSTRAINT FK_WorkOrder_ScrapReason_ScrapReasonID
+	 * FOREIGN KEY (ScrapReasonID)
+	 * REFERENCES Production.ScrapReason (ScrapReasonID)
 	 * </pre></code>
 	 */
 	public void setScrapreasonid(java.lang.Short value) {
@@ -163,8 +166,9 @@ public class WorkorderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrder.ScrapReasonID]
-	 * REFERENCES ScrapReason [Production.ScrapReason.ScrapReasonID]
+	 * CONSTRAINT FK_WorkOrder_ScrapReason_ScrapReasonID
+	 * FOREIGN KEY (ScrapReasonID)
+	 * REFERENCES Production.ScrapReason (ScrapReasonID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ScrapReasonID")

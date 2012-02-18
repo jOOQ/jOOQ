@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> {
 
-	private static final long serialVersionUID = 1658015315;
+	private static final long serialVersionUID = 1308727119;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.CustomerID]
-	 * REFERENCES Store [Sales.Store.CustomerID]
+	 * CONSTRAINT FK_StoreContact_Store_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Store (CustomerID)
 	 * </pre></code>
 	 */
 	public void setCustomerid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.CustomerID]
-	 * REFERENCES Store [Sales.Store.CustomerID]
+	 * CONSTRAINT FK_StoreContact_Store_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Store (CustomerID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CustomerID")
@@ -49,8 +51,9 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_StoreContact_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public void setContactid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_StoreContact_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactID")
@@ -76,8 +80,9 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactTypeID]
-	 * REFERENCES ContactType [Person.ContactType.ContactTypeID]
+	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
+	 * FOREIGN KEY (ContactTypeID)
+	 * REFERENCES Person.ContactType (ContactTypeID)
 	 * </pre></code>
 	 */
 	public void setContacttypeid(java.lang.Integer value) {
@@ -88,8 +93,9 @@ public class StorecontactRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactTypeID]
-	 * REFERENCES ContactType [Person.ContactType.ContactTypeID]
+	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
+	 * FOREIGN KEY (ContactTypeID)
+	 * REFERENCES Person.ContactType (ContactTypeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactTypeID")

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = 1027108941;
+	private static final long serialVersionUID = 419946034;
 
 	/**
 	 * The singleton instance of Address
@@ -54,8 +54,9 @@ public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.Address.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
+	 * CONSTRAINT FK_Address_StateProvince_StateProvinceID
+	 * FOREIGN KEY (StateProvinceID)
+	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord, java.lang.Integer> STATEPROVINCEID = createField("StateProvinceID", org.jooq.impl.SQLDataType.INTEGER, this);

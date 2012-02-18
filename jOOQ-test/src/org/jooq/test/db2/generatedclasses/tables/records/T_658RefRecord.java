@@ -8,14 +8,15 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -988605270;
+	private static final long serialVersionUID = 1169500822;
 
 	/**
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_11]
-	 * REFERENCES T_658_11 [LUKAS.T_658_11.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_11
+	 * FOREIGN KEY (REF_11)
+	 * REFERENCES LUKAS.T_658_11 (ID)
 	 * </pre></code>
 	 */
 	public void setRef_11(org.jooq.test.db2.generatedclasses.enums.T_658_11 value) {
@@ -26,8 +27,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_11]
-	 * REFERENCES T_658_11 [LUKAS.T_658_11.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_11
+	 * FOREIGN KEY (REF_11)
+	 * REFERENCES LUKAS.T_658_11 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.enums.T_658_11 getRef_11() {
@@ -38,8 +40,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_21]
-	 * REFERENCES T_658_21 [LUKAS.T_658_21.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_21
+	 * FOREIGN KEY (REF_21)
+	 * REFERENCES LUKAS.T_658_21 (ID)
 	 * </pre></code>
 	 */
 	public void setRef_21(org.jooq.test.db2.generatedclasses.enums.T_658_21 value) {
@@ -50,8 +53,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_21]
-	 * REFERENCES T_658_21 [LUKAS.T_658_21.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_21
+	 * FOREIGN KEY (REF_21)
+	 * REFERENCES LUKAS.T_658_21 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.enums.T_658_21 getRef_21() {
@@ -62,8 +66,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_31]
-	 * REFERENCES T_658_31 [LUKAS.T_658_31.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_31
+	 * FOREIGN KEY (REF_31)
+	 * REFERENCES LUKAS.T_658_31 (ID)
 	 * </pre></code>
 	 */
 	public void setRef_31(org.jooq.test.db2.generatedclasses.enums.T_658_31 value) {
@@ -74,8 +79,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_31]
-	 * REFERENCES T_658_31 [LUKAS.T_658_31.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_31
+	 * FOREIGN KEY (REF_31)
+	 * REFERENCES LUKAS.T_658_31 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.enums.T_658_31 getRef_31() {
@@ -86,8 +92,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_12]
-	 * REFERENCES T_658_12 [LUKAS.T_658_12.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_12
+	 * FOREIGN KEY (REF_12)
+	 * REFERENCES LUKAS.T_658_12 (ID)
 	 * </pre></code>
 	 */
 	public void setRef_12(org.jooq.test.db2.generatedclasses.enums.T_658_12 value) {
@@ -98,8 +105,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_12]
-	 * REFERENCES T_658_12 [LUKAS.T_658_12.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_12
+	 * FOREIGN KEY (REF_12)
+	 * REFERENCES LUKAS.T_658_12 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.enums.T_658_12 getRef_12() {
@@ -110,8 +118,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_22]
-	 * REFERENCES T_658_22 [LUKAS.T_658_22.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_22
+	 * FOREIGN KEY (REF_22)
+	 * REFERENCES LUKAS.T_658_22 (ID)
 	 * </pre></code>
 	 */
 	public void setRef_22(org.jooq.test.db2.generatedclasses.enums.T_658_22 value) {
@@ -122,8 +131,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_22]
-	 * REFERENCES T_658_22 [LUKAS.T_658_22.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_22
+	 * FOREIGN KEY (REF_22)
+	 * REFERENCES LUKAS.T_658_22 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.enums.T_658_22 getRef_22() {
@@ -134,8 +144,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_32]
-	 * REFERENCES T_658_32 [LUKAS.T_658_32.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_32
+	 * FOREIGN KEY (REF_32)
+	 * REFERENCES LUKAS.T_658_32 (ID)
 	 * </pre></code>
 	 */
 	public void setRef_32(org.jooq.test.db2.generatedclasses.enums.T_658_32 value) {
@@ -146,8 +157,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.T_658_REF.REF_32]
-	 * REFERENCES T_658_32 [LUKAS.T_658_32.ID]
+	 * CONSTRAINT T_658_REF__FK_T_658_32
+	 * FOREIGN KEY (REF_32)
+	 * REFERENCES LUKAS.T_658_32 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.enums.T_658_32 getRef_32() {

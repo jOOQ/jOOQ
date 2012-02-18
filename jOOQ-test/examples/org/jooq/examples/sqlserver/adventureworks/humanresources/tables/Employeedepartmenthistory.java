@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employeedepartmenthistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord> {
 
-	private static final long serialVersionUID = -864360513;
+	private static final long serialVersionUID = 1881222030;
 
 	/**
 	 * The singleton instance of EmployeeDepartmentHistory
@@ -34,8 +34,9 @@ public class Employeedepartmenthistory extends org.jooq.impl.UpdatableTableImpl<
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord, java.lang.Integer> EMPLOYEEID = createField("EmployeeID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Employeedepartmenthistory extends org.jooq.impl.UpdatableTableImpl<
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.DepartmentID]
-	 * REFERENCES Department [HumanResources.Department.DepartmentID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Department_DepartmentID
+	 * FOREIGN KEY (DepartmentID)
+	 * REFERENCES HumanResources.Department (DepartmentID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord, java.lang.Short> DEPARTMENTID = createField("DepartmentID", org.jooq.impl.SQLDataType.SMALLINT, this);
@@ -58,8 +60,9 @@ public class Employeedepartmenthistory extends org.jooq.impl.UpdatableTableImpl<
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.EmployeeDepartmentHistory.ShiftID]
-	 * REFERENCES Shift [HumanResources.Shift.ShiftID]
+	 * CONSTRAINT FK_EmployeeDepartmentHistory_Shift_ShiftID
+	 * FOREIGN KEY (ShiftID)
+	 * REFERENCES HumanResources.Shift (ShiftID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeedepartmenthistoryRecord, java.lang.Byte> SHIFTID = createField("ShiftID", org.jooq.impl.SQLDataType.TINYINT, this);

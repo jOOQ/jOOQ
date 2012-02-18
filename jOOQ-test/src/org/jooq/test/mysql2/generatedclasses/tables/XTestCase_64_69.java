@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1939677200;
+	private static final long serialVersionUID = 956846942;
 
 	/**
 	 * The singleton instance of x_test_case_64_69
@@ -41,8 +41,9 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.x_test_case_64_69.UNUSED_ID]
-	 * REFERENCES x_unused [test2.x_unused.ID, test2.x_unused.NAME]
+	 * CONSTRAINT fk_x_test_case_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES test2.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this);

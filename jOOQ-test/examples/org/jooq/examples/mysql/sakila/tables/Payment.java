@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = -1063579742;
+	private static final long serialVersionUID = 1331275866;
 
 	/**
 	 * The singleton instance of payment
@@ -39,8 +39,9 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.payment.customer_id]
-	 * REFERENCES customer [sakila.customer.customer_id]
+	 * CONSTRAINT fk_payment_customer
+	 * FOREIGN KEY (customer_id)
+	 * REFERENCES sakila.customer (customer_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Short> CUSTOMER_ID = createField("customer_id", org.jooq.impl.SQLDataType.SMALLINT, this);
@@ -49,8 +50,9 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.payment.staff_id]
-	 * REFERENCES staff [sakila.staff.staff_id]
+	 * CONSTRAINT fk_payment_staff
+	 * FOREIGN KEY (staff_id)
+	 * REFERENCES sakila.staff (staff_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);
@@ -59,8 +61,9 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.payment.rental_id]
-	 * REFERENCES rental [sakila.rental.rental_id]
+	 * CONSTRAINT fk_payment_rental
+	 * FOREIGN KEY (rental_id)
+	 * REFERENCES sakila.rental (rental_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Integer> RENTAL_ID = createField("rental_id", org.jooq.impl.SQLDataType.INTEGER, this);

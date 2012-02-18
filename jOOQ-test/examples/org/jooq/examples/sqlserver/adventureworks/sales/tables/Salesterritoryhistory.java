@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesterritoryhistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord> {
 
-	private static final long serialVersionUID = 1073462747;
+	private static final long serialVersionUID = -324180422;
 
 	/**
 	 * The singleton instance of SalesTerritoryHistory
@@ -34,8 +34,9 @@ public class Salesterritoryhistory extends org.jooq.impl.UpdatableTableImpl<org.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesTerritoryHistory.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
+	 * CONSTRAINT FK_SalesTerritoryHistory_SalesPerson_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord, java.lang.Integer> SALESPERSONID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Salesterritoryhistory extends org.jooq.impl.UpdatableTableImpl<org.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesTerritoryHistory.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_SalesTerritoryHistory_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord, java.lang.Integer> TERRITORYID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);

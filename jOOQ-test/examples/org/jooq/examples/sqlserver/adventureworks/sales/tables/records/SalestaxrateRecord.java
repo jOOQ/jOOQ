@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalestaxrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord> {
 
-	private static final long serialVersionUID = -453441598;
+	private static final long serialVersionUID = 694416114;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class SalestaxrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesTaxRate.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
+	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
+	 * FOREIGN KEY (StateProvinceID)
+	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
 	public void setStateprovinceid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class SalestaxrateRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesTaxRate.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
+	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
+	 * FOREIGN KEY (StateProvinceID)
+	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "StateProvinceID")

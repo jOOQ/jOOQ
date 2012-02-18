@@ -38,6 +38,7 @@ package org.jooq.util;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -67,15 +68,8 @@ extends AbstractDefinition {
     }
 
     @Override
-    public final String getQualifiedName() {
-        if (StringUtils.isBlank(getSchema().getName())) {
-            return getName();
-        }
-        else {
-            return
-                getDatabase().getOutputSchema(getSchema().getName()) + "." +
-                getName();
-        }
+    public final List<Definition> getDefinitionPath() {
+        return Arrays.<Definition>asList(getSchema(), this);
     }
 
     protected final List<E> getElements() {

@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> {
 
-	private static final long serialVersionUID = -157427903;
+	private static final long serialVersionUID = 817840637;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.WorkOrderID]
-	 * REFERENCES WorkOrder [Production.WorkOrder.WorkOrderID]
+	 * CONSTRAINT FK_WorkOrderRouting_WorkOrder_WorkOrderID
+	 * FOREIGN KEY (WorkOrderID)
+	 * REFERENCES Production.WorkOrder (WorkOrderID)
 	 * </pre></code>
 	 */
 	public void setWorkorderid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.WorkOrderID]
-	 * REFERENCES WorkOrder [Production.WorkOrder.WorkOrderID]
+	 * CONSTRAINT FK_WorkOrderRouting_WorkOrder_WorkOrderID
+	 * FOREIGN KEY (WorkOrderID)
+	 * REFERENCES Production.WorkOrder (WorkOrderID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "WorkOrderID")
@@ -85,8 +87,9 @@ public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
+	 * CONSTRAINT FK_WorkOrderRouting_Location_LocationID
+	 * FOREIGN KEY (LocationID)
+	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
 	public void setLocationid(java.lang.Short value) {
@@ -97,8 +100,9 @@ public class WorkorderroutingRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
+	 * CONSTRAINT FK_WorkOrderRouting_Location_LocationID
+	 * FOREIGN KEY (LocationID)
+	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "LocationID")

@@ -47,8 +47,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -70,9 +68,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
-import org.jooq.conf.Execution;
 import org.jooq.conf.Settings;
-import org.jooq.conf.StatementType;
 import org.jooq.impl.Factory;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
 import org.jooq.test._.testcases.CRUDTests;
@@ -607,14 +603,7 @@ public abstract class jOOQAbstractTest<
     }
 
     protected final Factory create() {
-        if (System.getProperty("org.jooq.test.statement-type") == "STATEMENT") {
-            Settings settings = new Settings();
-            Execution execution = new Execution().withStatementType(StatementType.STATEMENT);
-            return create(settings.withExecution(execution));
-        }
-        else {
-            return create(null);
-        }
+        return create(null);
     }
 
     protected final SQLDialect getDialect() throws Exception {

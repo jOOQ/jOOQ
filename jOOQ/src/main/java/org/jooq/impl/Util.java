@@ -71,9 +71,6 @@ import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.Type;
-import org.jooq.conf.Execution;
-import org.jooq.conf.Settings;
-import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
@@ -846,30 +843,6 @@ final class Util {
     static final int hash(Object object) {
         return 0x7FFFFFF & object.hashCode();
     }
-
-    // ------------------------------------------------------------------------
-    // Settings convenience access
-    // ------------------------------------------------------------------------
-
-    /**
-     * Get the statement type from the settings
-     */
-    static final StatementType getStatementType(Settings settings) {
-        if (settings != null) {
-            Execution execution = settings.getExecution();
-
-            if (execution != null) {
-                StatementType result = execution.getStatementType();
-
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
-
-        return StatementType.PREPARED_STATEMENT;
-    }
-
 
     // ------------------------------------------------------------------------
     // XXX This section is taken from the H2 Database

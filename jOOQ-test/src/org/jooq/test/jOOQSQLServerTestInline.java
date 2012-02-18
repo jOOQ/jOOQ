@@ -51,7 +51,7 @@ public class jOOQSQLServerTestInline extends jOOQSQLServerTest {
     protected DboFactory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withExecution(new Execution()
-                .withStatementType(StatementType.STATEMENT));
+                .withStatementType(StatementType.STATIC_STATEMENT));
         return new DboFactory(getConnection(), settings);
     }
 }

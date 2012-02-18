@@ -316,7 +316,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         Factory create = create(new Settings()
             .withExecution(new Execution()
-            .withStatementType(StatementType.STATEMENT)));
+            .withStatementType(StatementType.STATIC_STATEMENT)));
 
         Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
         Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
@@ -348,7 +348,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         Factory create = create(new Settings()
             .withExecution(new Execution()
-            .withStatementType(StatementType.STATEMENT)));
+            .withStatementType(StatementType.STATIC_STATEMENT)));
 
         DATE date = create.newRecord(TDates());
         date.setValue(TDates_ID(), 1);

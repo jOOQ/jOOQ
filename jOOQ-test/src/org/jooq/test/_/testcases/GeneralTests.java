@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.deg;
@@ -698,6 +699,11 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
     @Test
     public void testBatchSingle() throws Exception {
+        if (!executePreparedStatements(create().getSettings())) {
+            log.info("SKIPPINT", "Single batch tests with statement type = STATEMENT");
+            return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         int[] result = create().batch(create().insertInto(TAuthor())

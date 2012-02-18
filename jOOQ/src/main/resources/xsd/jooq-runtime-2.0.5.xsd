@@ -92,7 +92,7 @@
 
 	<simpleType name="StatementType">
 		<restriction base="string">
-			<enumeration value="STATEMENT"/>
+			<enumeration value="STATIC_STATEMENT"/>
 			<enumeration value="PREPARED_STATEMENT"/>
 		</restriction>
 	</simpleType>

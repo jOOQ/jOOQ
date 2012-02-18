@@ -89,6 +89,7 @@ import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.GeneratorStrategy.Mode;
 
 
 /**
@@ -290,14 +291,14 @@ public class DefaultGenerator implements Generator {
 
 			// Generating the factory
             // -----------------------------------------------------------------
-            log.info("Generating factory", strategy.getFileName(schema, "Factory"));
+            log.info("Generating factory", strategy.getFileName(schema, Mode.FACTORY));
 
-            outF = new GenerationWriter(strategy.getFile(schema, "Factory"));
+            outF = new GenerationWriter(strategy.getFile(schema, Mode.FACTORY));
             printHeader(outF, schema);
             printClassJavadoc(outF, schema);
 
             outF.print("public class ");
-            outF.print(strategy.getJavaClassName(schema, "Factory"));
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
             outF.print(" extends ");
             outF.print(database.getDialect().getFactory());
             outF.println(" {");
@@ -310,7 +311,7 @@ public class DefaultGenerator implements Generator {
             outF.println("\t * @param connection The connection to use with objects created from this factory");
             outF.println("\t */");
             outF.print("\tpublic ");
-            outF.print(strategy.getJavaClassName(schema, "Factory"));
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
             outF.print("(");
             outF.print(Connection.class);
             outF.println(" connection) {");
@@ -323,7 +324,7 @@ public class DefaultGenerator implements Generator {
                 outF.println("\t * Create a factory with a connection and a schema mapping");
                 outF.println("\t * ");
                 outF.print("\t * @deprecated - 2.0.5 - Use {@link #");
-                outF.print(strategy.getJavaClassName(schema, "Factory"));
+                outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
                 outF.print("(");
                 outF.print(Connection.class);
                 outF.print(", ");
@@ -332,7 +333,7 @@ public class DefaultGenerator implements Generator {
                 outF.println("\t */");
                 outF.println("\t@Deprecated");
                 outF.print("\tpublic ");
-                outF.print(strategy.getJavaClassName(schema, "Factory"));
+                outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
                 outF.print("(");
                 outF.print(Connection.class);
                 outF.print(" connection, ");
@@ -350,7 +351,7 @@ public class DefaultGenerator implements Generator {
             outF.println("\t * @param settings The settings to apply to objects created from this factory");
             outF.println("\t */");
             outF.print("\tpublic ");
-            outF.print(strategy.getJavaClassName(schema, "Factory"));
+            outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
             outF.print("(");
             outF.print(Connection.class);
             outF.print(" connection, ");
@@ -568,7 +569,7 @@ public class DefaultGenerator implements Generator {
         			out.print(" extends ");
         			out.print(baseClass);
         			out.print("<");
-        			out.print(strategy.getFullJavaClassName(table, "Record"));
+        			out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
         			out.println("> {");
         			out.printSerial();
         			printSingletonInstance(table, out);
@@ -623,7 +624,7 @@ public class DefaultGenerator implements Generator {
                             out.print("\tpublic ");
                             out.print(Identity.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(table, "Record"));
+                            out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.print(", ");
                             out.print(getJavaType(table.getIdentity().getType()));
                             out.println("> getIdentity() {");
@@ -647,7 +648,7 @@ public class DefaultGenerator implements Generator {
                             out.print("\tpublic ");
                             out.print(UniqueKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(table, "Record"));
+                            out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.println("> getMainKey() {");
 
                             out.print("\t\treturn ");
@@ -671,7 +672,7 @@ public class DefaultGenerator implements Generator {
                             out.print("<");
                             out.print(UniqueKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(table, "Record"));
+                            out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.println(">> getKeys() {");
 
                             out.print("\t\treturn ");
@@ -679,7 +680,7 @@ public class DefaultGenerator implements Generator {
                             out.print(".<");
                             out.print(UniqueKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(table, "Record"));
+                            out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.print(">>asList(");
 
                             String separator = "";
@@ -708,7 +709,7 @@ public class DefaultGenerator implements Generator {
                             out.print("<");
                             out.print(ForeignKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(table, "Record"));
+                            out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.println(", ?>> getReferences() {");
 
                             out.print("\t\treturn ");
@@ -716,7 +717,7 @@ public class DefaultGenerator implements Generator {
                             out.print(".<");
                             out.print(ForeignKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(table, "Record"));
+                            out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
                             out.print(", ?>>asList(");
 
                             String separator = "";
@@ -781,8 +782,8 @@ public class DefaultGenerator implements Generator {
                 try {
                     log.info("Generating table POJO", strategy.getFileName(table));
 
-                    GenerationWriter out = new GenerationWriter(strategy.getFile(table, "Pojo"));
-                    printHeader(out, table, "Pojo");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.POJO));
+                    printHeader(out, table, Mode.POJO);
                     printClassJavadoc(out, table);
                     printTableJPAAnnotation(out, table);
 
@@ -920,7 +921,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tpublic static final ");
                         out.print(Identity.class);
                         out.print("<");
-                        out.print(strategy.getFullJavaClassName(identity.getContainer(), "Record"));
+                        out.print(strategy.getFullJavaClassName(identity.getContainer(), Mode.RECORD));
                         out.print(", ");
                         out.print(getJavaType(identity.getType()));
                         out.print("> IDENTITY_");
@@ -950,7 +951,7 @@ public class DefaultGenerator implements Generator {
                             out.print("\tpublic static final ");
                             out.print(UniqueKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(uniqueKey.getTable(), "Record"));
+                            out.print(strategy.getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
                             out.print("> ");
                             out.print(strategy.getJavaIdentifier(uniqueKey));
                             out.print(" = createUniqueKey(");
@@ -992,9 +993,9 @@ public class DefaultGenerator implements Generator {
                             out.print("\tpublic static final ");
                             out.print(ForeignKey.class);
                             out.print("<");
-                            out.print(strategy.getFullJavaClassName(foreignKey.getKeyTable(), "Record"));
+                            out.print(strategy.getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
                             out.print(", ");
-                            out.print(strategy.getFullJavaClassName(foreignKey.getReferencedTable(), "Record"));
+                            out.print(strategy.getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
                             out.print("> ");
                             out.print(strategy.getJavaIdentifier(foreignKey));
                             out.print(" = createForeignKey(");
@@ -1040,10 +1041,10 @@ public class DefaultGenerator implements Generator {
 
     		for (TableDefinition table : database.getTables(schema)) {
     		    try {
-        			log.info("Generating record", strategy.getFileName(table, "Record"));
+        			log.info("Generating record", strategy.getFileName(table, Mode.RECORD));
 
-        			GenerationWriter out = new GenerationWriter(strategy.getFile(table, "Record"));
-        			printHeader(out, table, "Record");
+        			GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.RECORD));
+        			printHeader(out, table, Mode.RECORD);
         			printClassJavadoc(out, table);
         			printTableJPAAnnotation(out, table);
 
@@ -1056,11 +1057,11 @@ public class DefaultGenerator implements Generator {
         			}
 
         			out.print("public class ");
-        			out.print(strategy.getJavaClassName(table, "Record"));
+        			out.print(strategy.getJavaClassName(table, Mode.RECORD));
         			out.print(" extends ");
         			out.print(baseClass);
         			out.print("<");
-        			out.print(strategy.getFullJavaClassName(table, "Record"));
+        			out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
         			out.println("> {");
         			out.printSerial();
 
@@ -1070,9 +1071,9 @@ public class DefaultGenerator implements Generator {
 
         			out.println();
         			out.println("\t/**");
-        			out.println("\t * Create a detached " + strategy.getJavaClassName(table, "Record"));
+        			out.println("\t * Create a detached " + strategy.getJavaClassName(table, Mode.RECORD));
         			out.println("\t */");
-                    out.println("\tpublic " + strategy.getJavaClassName(table, "Record") + "() {");
+                    out.println("\tpublic " + strategy.getJavaClassName(table, Mode.RECORD) + "() {");
                     out.print("\t\tsuper(");
                     out.print(strategy.getFullJavaIdentifierUC(table));
                     out.println(");");
@@ -1106,7 +1107,7 @@ public class DefaultGenerator implements Generator {
                     out.print(" extends ");
                     out.print(UDTImpl.class);
                     out.print("<");
-                    out.print(strategy.getFullJavaClassName(udt, "Record"));
+                    out.print(strategy.getFullJavaClassName(udt, Mode.RECORD));
                     out.print(">");
 
                     // [#799] Oracle UDTs with member procedures have similarities
@@ -1167,7 +1168,7 @@ public class DefaultGenerator implements Generator {
                     if (outS != null) {
                         outS.printInitialisationStatement(
                             "addMapping(\"" + schema.getOutputName() + "." + udt.getName() + "\", " +
-                            strategy.getFullJavaClassName(udt, "Record") + ".class);");
+                            strategy.getFullJavaClassName(udt, Mode.RECORD) + ".class);");
                     }
                 } catch (Exception e) {
                     log.error("Error while generating udt " + udt, e);
@@ -1186,18 +1187,18 @@ public class DefaultGenerator implements Generator {
 
             for (UDTDefinition udt : database.getUDTs(schema)) {
                 try {
-                    log.info("Generating UDT record", strategy.getFileName(udt, "Record"));
+                    log.info("Generating UDT record", strategy.getFileName(udt, Mode.RECORD));
 
-                    GenerationWriter out = new GenerationWriter(strategy.getFile(udt, "Record"));
-                    printHeader(out, udt, "Record");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(udt, Mode.RECORD));
+                    printHeader(out, udt, Mode.RECORD);
                     printClassJavadoc(out, udt);
 
                     out.print("public class ");
-                    out.print(strategy.getJavaClassName(udt, "Record"));
+                    out.print(strategy.getJavaClassName(udt, Mode.RECORD));
                     out.print(" extends ");
                     out.print(UDTRecordImpl.class);
                     out.print("<");
-                    out.print(strategy.getFullJavaClassName(udt, "Record"));
+                    out.print(strategy.getFullJavaClassName(udt, Mode.RECORD));
                     out.println("> {");
 
                     out.printSerial();
@@ -1225,7 +1226,7 @@ public class DefaultGenerator implements Generator {
                     }
 
                     out.println();
-                    out.println("\tpublic " + strategy.getJavaClassName(udt, "Record") + "() {");
+                    out.println("\tpublic " + strategy.getJavaClassName(udt, Mode.RECORD) + "() {");
 
                     out.print("\t\tsuper(");
                     out.print(strategy.getFullJavaIdentifierUC(udt));
@@ -1310,14 +1311,14 @@ public class DefaultGenerator implements Generator {
 
             for (ArrayDefinition array : database.getArrays(schema)) {
                 try {
-                    log.info("Generating ARRAY", strategy.getFileName(array, "Record"));
+                    log.info("Generating ARRAY", strategy.getFileName(array, Mode.RECORD));
 
-                    GenerationWriter out = new GenerationWriter(strategy.getFile(array, "Record"));
-                    printHeader(out, array, "Record");
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(array, Mode.RECORD));
+                    printHeader(out, array, Mode.RECORD);
                     printClassJavadoc(out, array);
 
                     out.print("public class ");
-                    out.print(strategy.getJavaClassName(array, "Record"));
+                    out.print(strategy.getJavaClassName(array, Mode.RECORD));
                     out.print(" extends ");
                     out.print(ArrayRecordImpl.class);
                     out.print("<");
@@ -1327,7 +1328,7 @@ public class DefaultGenerator implements Generator {
 
                     out.println();
                     out.print("\tpublic ");
-                    out.print(strategy.getJavaClassName(array, "Record"));
+                    out.print(strategy.getJavaClassName(array, Mode.RECORD));
                     out.print("(");
                     out.print(Configuration.class);
                     out.println(" configuration) {");
@@ -1342,7 +1343,7 @@ public class DefaultGenerator implements Generator {
 
                     out.println();
                     out.print("\tpublic ");
-                    out.print(strategy.getJavaClassName(array, "Record"));
+                    out.print(strategy.getJavaClassName(array, Mode.RECORD));
                     out.print("(");
                     out.print(Configuration.class);
                     out.print(" configuration, ");
@@ -1355,7 +1356,7 @@ public class DefaultGenerator implements Generator {
 
                     out.println();
                     out.print("\tpublic ");
-                    out.print(strategy.getJavaClassName(array, "Record"));
+                    out.print(strategy.getJavaClassName(array, Mode.RECORD));
                     out.print("(");
                     out.print(Configuration.class);
                     out.print(" configuration, ");
@@ -1578,7 +1579,6 @@ public class DefaultGenerator implements Generator {
 	}
 
     private void printTableJPAAnnotation(GenerationWriter out, TableDefinition table) {
-        Database database = table.getDatabase();
         SchemaDefinition schema = table.getSchema();
 
         if (generateJPAAnnotations()) {
@@ -2167,9 +2167,9 @@ public class DefaultGenerator implements Generator {
         out.print("\tprivate static final ");
         out.print(Class.class);
         out.print("<");
-        out.print(strategy.getFullJavaClassName(definition, "Record"));
+        out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
         out.print("> __RECORD_TYPE = ");
-        out.print(strategy.getFullJavaClassName(definition, "Record"));
+        out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
         out.println(".class;");
 
         out.println();
@@ -2180,7 +2180,7 @@ public class DefaultGenerator implements Generator {
         out.print("\tpublic ");
         out.print(Class.class);
         out.print("<");
-        out.print(strategy.getFullJavaClassName(definition, "Record"));
+        out.print(strategy.getFullJavaClassName(definition, Mode.RECORD));
         out.println("> getRecordType() {");
         out.println("\t\treturn __RECORD_TYPE;");
         out.println("\t}");
@@ -2287,7 +2287,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tpublic ");
                         out.print(List.class);
                         out.print("<");
-                        out.print(strategy.getFullJavaClassName(referencing, "Record"));
+                        out.print(strategy.getFullJavaClassName(referencing, Mode.RECORD));
                         out.print("> fetch");
                         out.print(strategy.getJavaClassName(referencing));
 
@@ -2362,7 +2362,7 @@ public class DefaultGenerator implements Generator {
                 if (!skipGeneration) {
                     printFieldJavaDoc(out, column);
                     out.print("\tpublic ");
-                    out.print(strategy.getFullJavaClassName(referenced, "Record"));
+                    out.print(strategy.getFullJavaClassName(referenced, Mode.RECORD));
                     out.print(" fetch");
                     out.print(strategy.getJavaClassName(referenced));
 
@@ -2445,7 +2445,7 @@ public class DefaultGenerator implements Generator {
 		out.print("<");
 
 		if (hasType) {
-		    out.print(strategy.getFullJavaClassName(type, "Record"));
+		    out.print(strategy.getFullJavaClassName(type, Mode.RECORD));
 		    out.print(", ");
 		}
 
@@ -2632,14 +2632,14 @@ public class DefaultGenerator implements Generator {
     }
 
     private void printHeader(GenerationWriter out, Definition definition) {
-        printHeader(out, definition, "");
+        printHeader(out, definition, Mode.DEFAULT);
     }
 
-	private void printHeader(GenerationWriter out, Definition definition, String suffix) {
+	private void printHeader(GenerationWriter out, Definition definition, Mode mode) {
 		out.println("/**");
 		out.println(" * This class is generated by jOOQ");
 		out.println(" */");
-		out.println("package " + strategy.getJavaPackageName(definition, suffix) + ";");
+		out.println("package " + strategy.getJavaPackageName(definition, mode) + ";");
 		out.println();
 	}
 
@@ -2715,7 +2715,7 @@ public class DefaultGenerator implements Generator {
 
         // Check for Oracle-style VARRAY types
         else if (db.getArray(schema, u) != null) {
-            type = strategy.getFullJavaClassName(db.getArray(schema, u), "Record");
+            type = strategy.getFullJavaClassName(db.getArray(schema, u), Mode.RECORD);
         }
 
         // Check for ENUM types
@@ -2725,7 +2725,7 @@ public class DefaultGenerator implements Generator {
 
         // Check for UDTs
         else if (db.getUDT(schema, u) != null) {
-            type = strategy.getFullJavaClassName(db.getUDT(schema, u), "Record");
+            type = strategy.getFullJavaClassName(db.getUDT(schema, u), Mode.RECORD);
         }
 
         // Try finding a basic standard SQL type according to the current dialect
@@ -2765,7 +2765,7 @@ public class DefaultGenerator implements Generator {
 
             sb.append(getJavaTypeReference(db, array.getElementType()));
             sb.append(".asArrayDataType(");
-            sb.append(strategy.getFullJavaClassName(array, "Record"));
+            sb.append(strategy.getFullJavaClassName(array, Mode.RECORD));
             sb.append(".class)");
         }
         else if (db.getUDT(schema, u) != null) {

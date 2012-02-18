@@ -53,7 +53,7 @@ CREATE TABLE t_dates (
   id int,
   d date,
   t time,
-  ts timestamp,
+  ts datetime,
   d_int int,
   ts_bigint bigint,
 

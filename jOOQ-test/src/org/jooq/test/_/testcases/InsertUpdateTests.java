@@ -52,7 +52,6 @@ import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.max;
-import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 
@@ -749,7 +748,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             .fetchOne(c));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testTruncate() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -766,7 +764,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         // This is being tested with an unreferenced table as some RDBMS don't
         // Allow this
-        create().truncate((Table) table("t_book_to_book_store")).execute();
-        assertEquals(0, create().fetch(table("t_book_to_book_store")).size());
+        create().truncate(TDates()).execute();
+        assertEquals(0, create().fetch(TDates()).size());
     }
 }

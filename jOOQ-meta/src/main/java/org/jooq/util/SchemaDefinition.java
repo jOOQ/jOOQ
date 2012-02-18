@@ -52,7 +52,8 @@ public class SchemaDefinition extends AbstractDefinition {
 		super(database, null, name, comment);
 	}
 
-	@Override
+	@SuppressWarnings("deprecation")
+    @Override
     public final String getOutputName() {
 	    return getDatabase().getOutputSchema(getInputName());
     }

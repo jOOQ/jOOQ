@@ -42,6 +42,7 @@ import static org.jooq.tools.StringUtils.leftPad;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -93,7 +94,7 @@ final class Util {
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
      */
-    static <R extends ArrayRecord<?>> R newArrayRecord(Class<R> type, Configuration configuration) {
+    static final <R extends ArrayRecord<?>> R newArrayRecord(Class<R> type, Configuration configuration) {
         try {
             return type.getConstructor(Configuration.class).newInstance(configuration);
         }
@@ -108,28 +109,28 @@ final class Util {
     /**
      * Create a new record
      */
-    static <R extends Record> R newRecord(Class<R> type) {
+    static final <R extends Record> R newRecord(Class<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
+    static final <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
         return newRecord(type, provider, null);
     }
 
     /**
      * Create a new record
      */
-    static <R extends Record> R newRecord(Type<R> type) {
+    static final <R extends Record> R newRecord(Type<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static <R extends Record> R newRecord(Type<R> type, Configuration configuration) {
+    static final <R extends Record> R newRecord(Type<R> type, Configuration configuration) {
         return newRecord(type.getRecordType(), type, configuration);
     }
 
@@ -137,7 +138,7 @@ final class Util {
      * Create a new record
      */
     @SuppressWarnings("unchecked")
-    static <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
+    static final <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
         try {
             R result;
 
@@ -301,7 +302,7 @@ final class Util {
     /**
      * Create SQL
      */
-    static void toSQLReference(RenderContext context, String sql, List<Param<?>> bindings) {
+    static final void toSQLReference(RenderContext context, String sql, List<Param<?>> bindings) {
 
         // Replace bind variables by their associated bind values
         if (context.inline()) {
@@ -352,7 +353,7 @@ final class Util {
     /**
      * Create {@link Param} objects from bind values
      */
-    static List<Param<?>> bindings(Object... bindings) {
+    static final List<Param<?>> bindings(Object... bindings) {
         // [#724] When bindings is null, this is probably due to API-misuse
         // The user probably meant new Object[] { null }
         if (bindings == null) {
@@ -375,7 +376,7 @@ final class Util {
      *
      * @see #toSQLReference(RenderContext, String, List)
      */
-    static void toSQLReferenceWithParentheses(RenderContext context, String sql, List<Param<?>> bindings) {
+    static final void toSQLReferenceWithParentheses(RenderContext context, String sql, List<Param<?>> bindings) {
         context.sql("(");
         toSQLReference(context, sql, bindings);
         context.sql(")");
@@ -385,7 +386,7 @@ final class Util {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static void toSQLNames(RenderContext context, Collection<? extends NamedQueryPart> list) {
+    static final void toSQLNames(RenderContext context, Collection<? extends NamedQueryPart> list) {
         String separator = "";
 
         for (NamedQueryPart part : list) {
@@ -398,7 +399,7 @@ final class Util {
     /**
      * Combine a field with an array of fields
      */
-    static Field<?>[] combine(Field<?> field, Field<?>... fields) {
+    static final Field<?>[] combine(Field<?> field, Field<?>... fields) {
         if (fields == null) {
             return new Field[] { field };
         }
@@ -414,7 +415,7 @@ final class Util {
     /**
      * Combine a field with an array of fields
      */
-    static Field<?>[] combine(Field<?> field1, Field<?> field2, Field<?>... fields) {
+    static final Field<?>[] combine(Field<?> field1, Field<?> field2, Field<?>... fields) {
         if (fields == null) {
             return new Field[] { field1, field2 };
         }
@@ -431,7 +432,7 @@ final class Util {
     /**
      * Combine a field with an array of fields
      */
-    static Field<?>[] combine(Field<?> field1, Field<?> field2, Field<?> field3, Field<?>... fields) {
+    static final Field<?>[] combine(Field<?> field1, Field<?> field2, Field<?> field3, Field<?>... fields) {
         if (fields == null) {
             return new Field[] { field1, field2, field3 };
         }
@@ -448,7 +449,7 @@ final class Util {
     /**
      * Translate a {@link SQLException} to a {@link DataAccessException}
      */
-    static DataAccessException translate(String task, String sql, SQLException e) {
+    static final DataAccessException translate(String task, String sql, SQLException e) {
         String message = task + "; SQL [" + sql + "]; " + e.getMessage();
         return new DataAccessException(message, e);
     }
@@ -456,7 +457,7 @@ final class Util {
     /**
      * Safely close a statement
      */
-    static void safeClose(Statement statement) {
+    static final void safeClose(Statement statement) {
         if (statement != null) {
             try {
                 statement.close();
@@ -468,7 +469,7 @@ final class Util {
     /**
      * Safely close a result set
      */
-    static void safeClose(ResultSet resultSet) {
+    static final void safeClose(ResultSet resultSet) {
         if (resultSet != null) {
             try {
                 resultSet.close();
@@ -480,7 +481,7 @@ final class Util {
     /**
      * Safely close a cursor
      */
-    static void safeClose(Cursor<?> cursor) {
+    static final void safeClose(Cursor<?> cursor) {
         if (cursor != null) {
             try {
                 cursor.close();
@@ -492,15 +493,41 @@ final class Util {
     /**
      * Safely close a result set and / or a statement
      */
-    static void safeClose(ResultSet resultSet, PreparedStatement statement) {
+    static final void safeClose(ResultSet resultSet, PreparedStatement statement) {
         safeClose(resultSet);
         safeClose(statement);
     }
 
     /**
+     * Extract an underlying connection
+     */
+    static final Connection getDriverConnection(Configuration configuration) {
+        if (configuration != null) {
+            Connection connection = configuration.getConnection();
+
+            if (connection != null) {
+
+                // If the connection is wrapped by jOOQ, extract the underlying
+                // connection
+                if (connection.getClass() == ConnectionProxy.class) {
+                    connection = ((ConnectionProxy) connection).getDelegate();
+                }
+
+                // [#1157] TODO: If jOOQ's extended tracing / logging feature
+                // allows for further wrapping a connection, this must be
+                // treated here...
+
+                return connection;
+            }
+        }
+
+        throw new DataAccessException("Cannot get a JDBC driver connection from configuration: " + configuration);
+    }
+
+    /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
-    private static boolean isJPAAvailable() {
+    private static final boolean isJPAAvailable() {
         if (isJPAAvailable == null) {
             try {
                 Class.forName(Column.class.getName());
@@ -764,7 +791,7 @@ final class Util {
      * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("deprecation")
-    static Schema getMappedSchema(Configuration configuration, Schema schema) {
+    static final Schema getMappedSchema(Configuration configuration, Schema schema) {
         if (configuration.getSchemaMapping() != null) {
             return configuration.getSchemaMapping().map(schema);
         }
@@ -777,7 +804,7 @@ final class Util {
      * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("deprecation")
-    static Table<?> getMappedTable(Configuration configuration, Table<?> table) {
+    static final Table<?> getMappedTable(Configuration configuration, Table<?> table) {
         if (configuration.getSchemaMapping() != null) {
             return configuration.getSchemaMapping().map(table);
         }
@@ -789,7 +816,7 @@ final class Util {
     /**
      * Wrap a piece of SQL code in parentheses, if not wrapped already
      */
-    static String wrapInParentheses(String sql) {
+    static final String wrapInParentheses(String sql) {
         if (sql.startsWith("(")) {
             return sql;
         }
@@ -801,14 +828,14 @@ final class Util {
     /**
      * Expose the internal API of an {@link Attachable}
      */
-    static AttachableInternal internal(Attachable part) {
+    static final AttachableInternal internal(Attachable part) {
         return part.internalAPI(AttachableInternal.class);
     }
 
     /**
      * Expose the internal API of a {@link QueryPart}
      */
-    static QueryPartInternal internal(QueryPart part) {
+    static final QueryPartInternal internal(QueryPart part) {
         return part.internalAPI(QueryPartInternal.class);
     }
 
@@ -816,7 +843,7 @@ final class Util {
      * Return a non-negative hash code for a {@link QueryPart}, taking into
      * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
      */
-    static int hash(Object object) {
+    static final int hash(Object object) {
         return 0x7FFFFFF & object.hashCode();
     }
 
@@ -827,7 +854,7 @@ final class Util {
     /**
      * Get the statement type from the settings
      */
-    static StatementType getStatementType(Settings settings) {
+    static final StatementType getStatementType(Settings settings) {
         if (settings != null) {
             Execution execution = settings.getExecution();
 
@@ -856,7 +883,7 @@ final class Util {
      * @param value the byte array
      * @return the hex encoded string
      */
-    static String convertBytesToHex(byte[] value) {
+    static final String convertBytesToHex(byte[] value) {
         return convertBytesToHex(value, value.length);
     }
 
@@ -867,7 +894,7 @@ final class Util {
      * @param len the number of bytes to encode
      * @return the hex encoded string
      */
-    static String convertBytesToHex(byte[] value, int len) {
+    static final String convertBytesToHex(byte[] value, int len) {
         char[] buff = new char[len + len];
         char[] hex = HEX;
         for (int i = 0; i < len; i++) {
@@ -881,7 +908,7 @@ final class Util {
     /**
      * Postgres uses octals instead of hex encoding
      */
-    static String convertBytesToPostgresOctal(byte[] binary) {
+    static final String convertBytesToPostgresOctal(byte[] binary) {
         StringBuilder sb = new StringBuilder();
 
         for (byte b : binary) {

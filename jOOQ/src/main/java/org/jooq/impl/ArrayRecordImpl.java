@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Util.getDriverConnection;
+import static org.jooq.tools.reflect.Reflect.on;
+
 import java.lang.reflect.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,7 +53,6 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
-import org.jooq.util.oracle.OracleUtils;
 
 /**
  * A common base class for Oracle ARRAY types
@@ -180,8 +182,10 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
         SQLDialect dialect = getConfiguration().getDialect();
 
         switch (dialect) {
-            case ORACLE:
-                return OracleUtils.createArray(getConfiguration().getConnection(), this);
+            case ORACLE: {
+                // [#1161] Use reflection to avoid compile-time on ojdbc
+                return on(getDriverConnection(getConfiguration())).call("createARRAY", getName(), get()).get();
+            }
 
             default:
                 throw new SQLDialectNotSupportedException(

@@ -244,7 +244,15 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Connection getConnection() {
-        return (connection == null ? null : new ConnectionProxy(connection, settings));
+        if (connection == null) {
+            return null;
+        }
+        else if (connection.getClass() == ConnectionProxy.class) {
+            return connection;
+        }
+        else {
+            return new ConnectionProxy(connection, settings);
+        }
     }
 
     /**

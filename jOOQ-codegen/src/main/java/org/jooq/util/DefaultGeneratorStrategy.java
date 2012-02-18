@@ -122,6 +122,12 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
+    public String getFullJavaIdentifier(Definition definition) {
+        return getFullJavaIdentifierUC(definition);
+    }
+
+    @Override
+    @Deprecated
     public String getJavaIdentifierUC(Definition definition) {
         String identifier = getJavaIdentifier(definition).toUpperCase();
 
@@ -140,6 +146,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
+    @Deprecated
     public String getFullJavaIdentifierUC(Definition definition) {
         StringBuilder sb = new StringBuilder();
 

@@ -74,14 +74,28 @@ public interface GeneratorStrategy {
     String getJavaIdentifier(Definition definition);
 
     /**
-     * @return The Java identifier representing this object, e.g. [MY_TABLE]
+     * This is applied to definitions that can result in singleton static and
+     * instance members. For instance, the singleton instance of a
+     * {@link TableDefinition} is a java identifier
+     *
+     * @return The Java identifier representing this object, e.g. [my_table]
      */
+    String getFullJavaIdentifier(Definition definition);
+
+    /**
+     * @return The Java identifier representing this object, e.g. [MY_TABLE]
+     * @deprecated - 2.0.5 - This is no longer used. Use
+     *             {@link #getJavaIdentifier(Definition)} instead
+     */
+    @Deprecated
     String getJavaIdentifierUC(Definition definition);
 
     /**
      * @return The Java identifier representing this object, e.g.
      *         [org.jooq.generated.MY_TABLE]
+     * @deprecated - 2.0.5 - This is no longer used. Use {@link #getFullJavaIdentifier(Definition)} instead
      */
+    @Deprecated
     String getFullJavaIdentifierUC(Definition definition);
 
     /**

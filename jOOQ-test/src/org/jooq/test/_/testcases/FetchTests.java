@@ -43,7 +43,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.val;
-import static org.joor.Reflect.on;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -83,9 +83,9 @@ import org.jooq.test._.FinalWithAnnotations;
 import org.jooq.test._.FinalWithoutAnnotations;
 import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
-import org.joor.Reflect;
-import org.joor.ReflectException;
 import org.junit.Test;
 
 public class FetchTests<

@@ -53,19 +53,12 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-@SuppressWarnings("unused")
 public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
     private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
 
     private String                           targetDirectory;
     private String                           targetPackage;
-    private String                           tableClassPrefix;
-    private String                           tableClassSuffix;
-    private String                           recordClassPrefix;
-    private String                           recordClassSuffix;
-    private String                           scheme;
-
     private boolean                          instanceFields;
 
     // -------------------------------------------------------------------------
@@ -75,31 +68,6 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     @Override
     public void setInstanceFields(boolean instanceFields) {
         this.instanceFields = instanceFields;
-    }
-
-    @Override
-    public void setMetaClassPrefix(String prefix) {
-        this.tableClassPrefix = prefix;
-    }
-
-    @Override
-    public void setMetaClassSuffix(String suffix) {
-        this.tableClassSuffix = suffix;
-    }
-
-    @Override
-    public void setRecordClassPrefix(String prefix) {
-        this.recordClassPrefix = prefix;
-    }
-
-    @Override
-    public void setRecordClassSuffix(String suffix) {
-        this.recordClassSuffix = suffix;
-    }
-
-    @Override
-    public void setMemberScheme(String scheme) {
-        this.scheme = scheme;
     }
 
     @Override
@@ -127,33 +95,25 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     // -------------------------------------------------------------------------
 
     @Override
-    public String getFileName(Definition definition) {
-        return getJavaClassName(definition) + ".java";
+    public final String getFileName(Definition definition) {
+        return getFileName(definition, Mode.DEFAULT);
     }
 
     @Override
-    public String getFileName(Definition definition, String suffix) {
-
-        // The POJO suffix doesn't really apply to the file name
-        // TODO: Replace the term "suffix" by "mode"
-        if ("Pojo".equals(suffix)) {
-            return getJavaClassName(definition) + ".java";
-        }
-        else {
-            return getJavaClassName(definition) + suffix + ".java";
-        }
+    public final String getFileName(Definition definition, Mode mode) {
+        return getJavaClassName(definition, mode) + ".java";
     }
 
     @Override
-    public File getFile(Definition definition) {
-        return getFile(definition, "");
+    public final File getFile(Definition definition) {
+        return getFile(definition, Mode.DEFAULT);
     }
 
     @Override
-    public File getFile(Definition definition, String suffix) {
+    public final File getFile(Definition definition, Mode mode) {
         String dir = getTargetDirectory();
-        String pkg = getJavaPackageName(definition, suffix).replaceAll("\\.", "/");
-        return new File(dir + "/" + pkg, getFileName(definition, suffix));
+        String pkg = getJavaPackageName(definition, mode).replaceAll("\\.", "/");
+        return new File(dir + "/" + pkg, getFileName(definition, mode));
     }
 
     @Override
@@ -283,22 +243,22 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public String getJavaClassName(Definition definition) {
-        return getJavaClassName(definition, "");
+    public final String getJavaClassName(Definition definition) {
+        return getJavaClassName(definition, Mode.DEFAULT);
     }
 
     @Override
-    public String getJavaClassName(Definition definition, String suffix) {
-        return getJavaClassName0(definition, suffix);
+    public String getJavaClassName(Definition definition, Mode mode) {
+        return getJavaClassName0(definition, mode);
     }
 
     @Override
-    public String getJavaPackageName(Definition definition) {
-        return getJavaPackageName(definition, "");
+    public final String getJavaPackageName(Definition definition) {
+        return getJavaPackageName(definition, Mode.DEFAULT);
     }
 
     @Override
-    public String getJavaPackageName(Definition definition, String suffix) {
+    public String getJavaPackageName(Definition definition, Mode mode) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(getTargetPackage());
@@ -316,12 +276,12 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         }
 
         // Record are yet in another subpackage
-        if ("Record".equals(suffix)) {
+        if (mode == Mode.RECORD) {
             sb.append(".records");
         }
 
         // POJOs too
-        else if ("Pojo".equals(suffix)) {
+        else if (mode == Mode.POJO) {
             sb.append(".pojos");
         }
 
@@ -329,27 +289,28 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public String getJavaClassNameLC(Definition definition) {
-        return getJavaClassNameLC(definition, "");
+    public final String getJavaClassNameLC(Definition definition) {
+        return getJavaClassNameLC(definition, Mode.DEFAULT);
     }
 
     @Override
-    public String getJavaClassNameLC(Definition definition, String suffix) {
-        String result = getJavaClassName0(definition, suffix);
+    public String getJavaClassNameLC(Definition definition, Mode mode) {
+        String result = getJavaClassName0(definition, mode);
 
         return result.substring(0, 1).toLowerCase() + result.substring(1);
     }
 
-    private String getJavaClassName0(Definition definition, String suffix) {
+    private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
 
         String name = GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
         result.append(StringUtils.toCamelCase(name));
 
-        // The POJO suffix doesn't really apply to the file name
-        // TODO: Replace the term "suffix" by "mode"
-        if (!"Pojo".equals(suffix) && !StringUtils.isEmpty(suffix)) {
-            result.append(suffix);
+        if (mode == Mode.RECORD) {
+            result.append("Record");
+        }
+        else if (mode == Mode.FACTORY) {
+            result.append("Factory");
         }
 
         if (!StringUtils.isBlank(definition.getOverload())) {
@@ -360,17 +321,17 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    public String getFullJavaClassName(Definition definition) {
-        return getFullJavaClassName(definition, "");
+    public final String getFullJavaClassName(Definition definition) {
+        return getFullJavaClassName(definition, Mode.DEFAULT);
     }
 
     @Override
-    public String getFullJavaClassName(Definition definition, String suffix) {
+    public final String getFullJavaClassName(Definition definition, Mode mode) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(getJavaPackageName(definition, suffix));
+        sb.append(getJavaPackageName(definition, mode));
         sb.append(".");
-        sb.append(getJavaClassName(definition, suffix));
+        sb.append(getJavaClassName(definition, mode));
 
         return sb.toString();
     }
@@ -414,6 +375,4 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         // Default always to the main package
         return "";
     }
-
-
 }

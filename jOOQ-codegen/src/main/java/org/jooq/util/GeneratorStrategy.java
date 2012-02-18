@@ -65,14 +65,12 @@ public interface GeneratorStrategy {
     void setTargetPackage(String packageName);
 
     /**
-     * @return The Java identifier representing this object, e.g.
-     *         [my_table]
+     * @return The Java identifier representing this object, e.g. [my_table]
      */
     String getJavaIdentifier(Definition definition);
 
     /**
-     * @return The Java identifier representing this object, e.g.
-     *         [MY_TABLE]
+     * @return The Java identifier representing this object, e.g. [MY_TABLE]
      */
     String getJavaIdentifierUC(Definition definition);
 
@@ -95,6 +93,9 @@ public interface GeneratorStrategy {
     String getJavaGetterName(Definition definition);
 
     /**
+     * This is the same as calling
+     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
+     *
      * @return The Java class name representing this object, e.g. [MyTable]
      */
     String getJavaClassName(Definition definition);
@@ -103,7 +104,7 @@ public interface GeneratorStrategy {
      * @return The Java class name representing this object, e.g.
      *         [MyTableSuffix]
      */
-    String getJavaClassName(Definition definition, String suffix);
+    String getJavaClassName(Definition definition, Mode mode);
 
     /**
      * @return The Java package name of this object, e.g. [org.jooq.generated]
@@ -111,9 +112,12 @@ public interface GeneratorStrategy {
     String getJavaPackageName(Definition definition);
 
     /**
+     * This is the same as calling
+     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
+     *
      * @return The Java package name of this object, e.g. [org.jooq.generated]
      */
-    String getJavaPackageName(Definition definition, String suffix);
+    String getJavaPackageName(Definition definition, Mode mode);
 
     /**
      * @return The Java class name representing this object, starting with a
@@ -122,10 +126,13 @@ public interface GeneratorStrategy {
     String getJavaClassNameLC(Definition definition);
 
     /**
+     * This is the same as calling
+     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
+     *
      * @return The Java class name representing this object, starting with a
      *         lower case character, e.g. [myTableSuffix]
      */
-    String getJavaClassNameLC(Definition definition, String suffix);
+    String getJavaClassNameLC(Definition definition, Mode mode);
 
     /**
      * @return The full Java class name representing this object, e.g.
@@ -134,10 +141,13 @@ public interface GeneratorStrategy {
     String getFullJavaClassName(Definition definition);
 
     /**
+     * This is the same as calling
+     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
+     *
      * @return The full Java class name representing this object, e.g.
      *         [org.jooq.generated.MyTable][suffix]
      */
-    String getFullJavaClassName(Definition definition, String suffix);
+    String getFullJavaClassName(Definition definition, Mode mode);
 
     /**
      * @return Get the target package's subpackage for this definition
@@ -154,7 +164,7 @@ public interface GeneratorStrategy {
      * @return The Java class file name representing this object, e.g.
      *         [MyTableSuffix.java]
      */
-    String getFileName(Definition definition, String suffix);
+    String getFileName(Definition definition, Mode mode);
 
     /**
      * @return The Java class file name representing this object, e.g.
@@ -166,35 +176,41 @@ public interface GeneratorStrategy {
      * @return The Java class file name representing this object, e.g.
      *         [C:\org\jooq\generated\MyTableSuffix.java]
      */
-    File getFile(Definition definition, String suffix);
-
-    /**
-     * Set the prefix to be used for table classes
-     */
-    void setMetaClassPrefix(String prefix);
-
-    /**
-     * Set the suffix to be used for table classes
-     */
-    void setMetaClassSuffix(String suffix);
-
-    /**
-     * Set the prefix to be used for record classes
-     */
-    void setRecordClassPrefix(String prefix);
-
-    /**
-     * Set the suffix to be used for record classes
-     */
-    void setRecordClassSuffix(String suffix);
-
-    /**
-     * Set the naming scheme for various objects
-     */
-    void setMemberScheme(String scheme);
+    File getFile(Definition definition, Mode mode);
 
     /**
      * Whether fields are instance fields (as opposed to static fields)
      */
     void setInstanceFields(boolean instanceFields);
+
+    /**
+     * The "mode" by which an artefact should be named
+     */
+    enum Mode {
+
+        /**
+         * The default mode. This is used when any {@link Definition}'s meta
+         * type is being rendered.
+         */
+        DEFAULT,
+
+        /**
+         * The record mode. This is used when a {@link TableDefinition} or a
+         * {@link UDTDefinition}'s record class is being rendered.
+         */
+        RECORD,
+
+        /**
+         * The pojo mode. This is used when a {@link TableDefinition}'s pojo
+         * class is being rendered
+         */
+        POJO,
+
+        /**
+         * The factory mode. This is used when a {@link SchemaDefinition}'s
+         * factory class is being rendered
+         */
+        FACTORY,
+
+    }
 }

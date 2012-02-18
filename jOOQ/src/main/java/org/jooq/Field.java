@@ -480,6 +480,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).contains(13)</code>
      *
      * @see Factory#escape(String, char)
      * @see #like(Object, char)
@@ -492,6 +495,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).contains(13)</code>
      *
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)
@@ -504,6 +510,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWith(11)</code>
      *
      * @see Factory#escape(String, char)
      * @see #like(Object, char)
@@ -516,6 +525,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).startsWith(11)</code>
      *
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)
@@ -528,6 +540,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWith(33)</code>
      *
      * @see Factory#escape(String, char)
      * @see #like(Object, char)
@@ -540,6 +555,9 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
+     * <p>
+     * Note: This also works with numbers, for instance
+     * <code>val(1133).endsWith(33)</code>
      *
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)

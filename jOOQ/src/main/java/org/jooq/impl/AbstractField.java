@@ -41,6 +41,7 @@ import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
@@ -78,6 +79,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
      * Generated UID
      */
     private static final long serialVersionUID = 2884811923648354905L;
+    private static final char ESCAPE = '!';
 
     AbstractField(String name, DataType<T> type) {
         super(name, type);
@@ -381,58 +383,63 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition contains(T value) {
-        Field<String> concat = Factory.concat(
-            Factory.literal("'%'"),
-            Factory.val(escape("" + value, '!')),
-            Factory.literal("'%'"));
-
-        return like(concat, '!');
+        Field<String> concat = Factory.concat(literal("'%'"), escapeForLike(value), literal("'%'"));
+        return like(concat, ESCAPE);
     }
 
     @Override
     public final Condition contains(Field<T> value) {
-        Field<String> concat = Factory.concat(
-            Factory.literal("'%'"),
-            escape(value.cast(String.class), '!'),
-            Factory.literal("'%'"));
-
-        return like(concat, '!');
+        Field<String> concat = Factory.concat(literal("'%'"), escapeForLike(value), literal("'%'"));
+        return like(concat, ESCAPE);
     }
 
     @Override
     public final Condition startsWith(T value) {
-        Field<String> concat = Factory.concat(
-            Factory.val(escape("" + value, '!')),
-            Factory.literal("'%'"));
-
-        return like(concat, '!');
+        Field<String> concat = Factory.concat(escapeForLike(value), literal("'%'"));
+        return like(concat, ESCAPE);
     }
 
     @Override
     public final Condition startsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(
-            escape(value.cast(String.class), '!'),
-            Factory.literal("'%'"));
-
-        return like(concat, '!');
+        Field<String> concat = Factory.concat(escapeForLike(value), literal("'%'"));
+        return like(concat, ESCAPE);
     }
 
     @Override
     public final Condition endsWith(T value) {
-        Field<String> concat = Factory.concat(
-            Factory.literal("'%'"),
-            Factory.val(escape("" + value, '!')));
-
-        return like(concat, '!');
+        Field<String> concat = Factory.concat(literal("'%'"), escapeForLike(value));
+        return like(concat, ESCAPE);
     }
 
     @Override
     public final Condition endsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(
-            Factory.literal("'%'"),
-            escape(value.cast(String.class), '!'));
+        Field<String> concat = Factory.concat(literal("'%'"), escapeForLike(value));
+        return like(concat, ESCAPE);
+    }
 
-        return like(concat, '!');
+    /**
+     * Utility method to escape strings or "toString" other objects
+     */
+    private final Field<String> escapeForLike(Object value) {
+        if (value != null && value.getClass() == String.class) {
+            return val(escape("" + value, ESCAPE));
+        }
+        else {
+            return val("" + value);
+        }
+    }
+
+    /**
+     * Utility method to escape string fields, or cast other fields
+     */
+    @SuppressWarnings("unchecked")
+    private final Field<String> escapeForLike(Field<?> field) {
+        if (nullSafe(field).getDataType().isString()) {
+            return escape((Field<String>) field, ESCAPE);
+        }
+        else {
+            return field.cast(String.class);
+        }
     }
 
     @Override

@@ -250,6 +250,19 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         assertEquals(2, books.size());
         assertEquals(asList(2, 4), books.getValues(TBook_ID()));
+
+        // [#1160] Add checks for convenience methods using numbers
+        // --------------------------------------------------------
+        books =
+        create().selectFrom(TBook())
+                .where(TBook_PUBLISHED_IN().contains(9))
+                .and(TBook_PUBLISHED_IN().endsWith(88))
+                .and(TBook_PUBLISHED_IN().startsWith(1))
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(1, books.size());
+        assertEquals(asList(3), books.getValues(TBook_ID()));
     }
 
     @Test

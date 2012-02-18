@@ -36,8 +36,7 @@
 
 package org.jooq.impl;
 
-import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
-import static org.jooq.impl.Util.getStatementType;
+import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -132,8 +131,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
                 // [#1145] Depending on the configuration, a prepared statement
                 // or an "ad-hoc" statement is used
-                boolean usePreparedStatement =
-                    getStatementType(getConfiguration().getSettings()) == PREPARED_STATEMENT;
+                boolean usePreparedStatement = executePreparedStatements(getConfiguration().getSettings());
 
                 if (log.isDebugEnabled())
                     log.debug("Executing query", getSQL(true));

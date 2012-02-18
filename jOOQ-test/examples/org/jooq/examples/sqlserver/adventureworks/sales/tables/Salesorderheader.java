@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> {
 
-	private static final long serialVersionUID = -619375985;
+	private static final long serialVersionUID = 583773775;
 
 	/**
 	 * The singleton instance of SalesOrderHeader
@@ -235,24 +235,24 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SalesOrderHeader;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SALESORDERHEADER;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeader_SalesOrderID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESORDERHEADER_SALESORDERID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeader_SalesOrderID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESORDERHEADER_SALESORDERID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Customer_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_SalesPerson_SalesPersonID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_SalesTerritory_TerritoryID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Address_BillToAddressID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_Address_ShipToAddressID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_ShipMethod_ShipMethodID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_CreditCard_CreditCardID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeader_CurrencyRate_CurrencyRateID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_CUSTOMER_CUSTOMERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_CONTACT_CONTACTID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_SALESPERSON_SALESPERSONID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_SALESTERRITORY_TERRITORYID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_ADDRESS_BILLTOADDRESSID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_ADDRESS_SHIPTOADDRESSID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_SHIPMETHOD_SHIPMETHODID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_CREDITCARD_CREDITCARDID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADER_CURRENCYRATE_CURRENCYRATEID);
 	}
 
 	@Override

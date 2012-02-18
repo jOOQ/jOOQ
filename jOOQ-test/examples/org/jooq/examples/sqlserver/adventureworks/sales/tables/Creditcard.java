@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Creditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord> {
 
-	private static final long serialVersionUID = 1920659474;
+	private static final long serialVersionUID = -1073021998;
 
 	/**
 	 * The singleton instance of CreditCard
@@ -76,18 +76,18 @@ public class Creditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_CreditCard;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_CREDITCARD;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CreditCard_CreditCardID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CREDITCARD_CREDITCARDID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CreditCard_CreditCardID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditcardRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CREDITCARD_CREDITCARDID);
 	}
 
 	@Override

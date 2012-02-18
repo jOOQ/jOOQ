@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Actor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> {
 
-	private static final long serialVersionUID = -206991181;
+	private static final long serialVersionUID = 1189100819;
 
 	/**
 	 * The singleton instance of actor
@@ -66,18 +66,18 @@ public class Actor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.ActorRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_actor;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_ACTOR;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.ActorRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_actor_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_ACTOR_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.ActorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.ActorRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_actor_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.ActorRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_ACTOR_PRIMARY);
 	}
 
 	@Override

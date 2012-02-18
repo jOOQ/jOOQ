@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Addresstype extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord> {
 
-	private static final long serialVersionUID = -926609027;
+	private static final long serialVersionUID = 1481421277;
 
 	/**
 	 * The singleton instance of AddressType
@@ -66,18 +66,18 @@ public class Addresstype extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_AddressType;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_ADDRESSTYPE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_AddressType_AddressTypeID;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_ADDRESSTYPE_ADDRESSTYPEID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_AddressType_AddressTypeID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_ADDRESSTYPE_ADDRESSTYPEID);
 	}
 
 	@Override

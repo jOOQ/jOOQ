@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 837471033;
+	private static final long serialVersionUID = -864046311;
 
 	/**
 	 * The singleton instance of t_book_to_book_store
@@ -68,18 +68,18 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
-		return org.jooq.test.ase.generatedclasses.Keys.t_book_to_book_store__pk_b2bs;
+		return org.jooq.test.ase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.t_book_to_book_store__pk_b2bs);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.ase.generatedclasses.Keys.t_book_to_book_store__fk_b2bs_bs_name, org.jooq.test.ase.generatedclasses.Keys.t_book_to_book_store__fk_b2bs_b_id);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.ase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, org.jooq.test.ase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
 	}
 }

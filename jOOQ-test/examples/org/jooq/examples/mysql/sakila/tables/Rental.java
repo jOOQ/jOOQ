@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -1346846253;
+	private static final long serialVersionUID = -431722029;
 
 	/**
 	 * The singleton instance of rental
@@ -99,24 +99,24 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_rental;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_RENTAL;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_rental_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_rental_PRIMARY, org.jooq.examples.mysql.sakila.Keys.KEY_rental_rental_date);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_PRIMARY, org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_RENTAL_DATE);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_rental_inventory, org.jooq.examples.mysql.sakila.Keys.fk_rental_customer, org.jooq.examples.mysql.sakila.Keys.fk_rental_staff);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_RENTAL_INVENTORY, org.jooq.examples.mysql.sakila.Keys.FK_RENTAL_CUSTOMER, org.jooq.examples.mysql.sakila.Keys.FK_RENTAL_STAFF);
 	}
 
 	@Override

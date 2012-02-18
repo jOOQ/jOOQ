@@ -118,18 +118,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        return GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
-    }
-
-    @Override
-    public String getFullJavaIdentifier(Definition definition) {
-        return getFullJavaIdentifierUC(definition);
-    }
-
-    @Override
-    @Deprecated
-    public String getJavaIdentifierUC(Definition definition) {
-        String identifier = getJavaIdentifier(definition).toUpperCase();
+        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getOutputName()).toUpperCase();
 
         // Columns, Attributes, Parameters
         if (definition instanceof ColumnDefinition ||
@@ -137,7 +126,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
 
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
 
-            if (identifier.equals(getJavaIdentifierUC(e.getContainer()))) {
+            if (identifier.equals(getJavaIdentifier(e.getContainer()))) {
                 return identifier + "_";
             }
         }
@@ -146,8 +135,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
-    @Deprecated
-    public String getFullJavaIdentifierUC(Definition definition) {
+    public final String getFullJavaIdentifier(Definition definition) {
         StringBuilder sb = new StringBuilder();
 
         // Columns
@@ -155,7 +143,7 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
 
             if (instanceFields) {
-                sb.append(getFullJavaIdentifierUC(e.getContainer()));
+                sb.append(getFullJavaIdentifier(e.getContainer()));
             }
             else {
                 sb.append(getFullJavaClassName(e.getContainer()));
@@ -174,9 +162,21 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         }
 
         sb.append(".");
-        sb.append(getJavaIdentifierUC(definition));
+        sb.append(getJavaIdentifier(definition));
 
         return sb.toString();
+    }
+
+    @Override
+    @Deprecated
+    public final String getJavaIdentifierUC(Definition definition) {
+        return getJavaIdentifier(definition);
+    }
+
+    @Override
+    @Deprecated
+    public final String getFullJavaIdentifierUC(Definition definition) {
+        return getFullJavaIdentifier(definition);
     }
 
     @Override

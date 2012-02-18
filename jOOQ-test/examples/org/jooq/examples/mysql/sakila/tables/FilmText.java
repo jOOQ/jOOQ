@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> {
 
-	private static final long serialVersionUID = 407078123;
+	private static final long serialVersionUID = -460487445;
 
 	/**
 	 * The singleton instance of film_text
@@ -61,13 +61,13 @@ public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_film_text_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_FILM_TEXT_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_film_text_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_FILM_TEXT_PRIMARY);
 	}
 
 	@Override

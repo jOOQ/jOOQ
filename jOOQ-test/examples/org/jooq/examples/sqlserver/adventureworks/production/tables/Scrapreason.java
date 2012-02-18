@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Scrapreason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord> {
 
-	private static final long serialVersionUID = 330543686;
+	private static final long serialVersionUID = 1541425830;
 
 	/**
 	 * The singleton instance of ScrapReason
@@ -61,18 +61,18 @@ public class Scrapreason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ScrapReason;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_SCRAPREASON;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ScrapReason_ScrapReasonID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_SCRAPREASON_SCRAPREASONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ScrapReason_ScrapReasonID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_SCRAPREASON_SCRAPREASONID);
 	}
 
 	@Override

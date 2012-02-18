@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = 1753197824;
+	private static final long serialVersionUID = -235168512;
 
 	/**
 	 * The singleton instance of language
@@ -61,18 +61,18 @@ public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.lang.Byte> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_language;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_LANGUAGE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_language_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_LANGUAGE_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_language_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_LANGUAGE_PRIMARY);
 	}
 
 	@Override

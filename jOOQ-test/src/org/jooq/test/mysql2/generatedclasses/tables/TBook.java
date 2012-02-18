@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -13511367;
+	private static final long serialVersionUID = 1183275449;
 
 	/**
 	 * The singleton instance of t_book
@@ -116,19 +116,19 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> getMainKey() {
-		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_t_book_PRIMARY;
+		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_BOOK_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_t_book_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_BOOK_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.fk_t_book_author_id, org.jooq.test.mysql2.generatedclasses.Keys.fk_t_book_co_author_id);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.mysql2.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID);
 	}
 
 	@Override

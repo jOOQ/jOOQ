@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Workorderrouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> {
 
-	private static final long serialVersionUID = 356229763;
+	private static final long serialVersionUID = 1643281027;
 
 	/**
 	 * The singleton instance of WorkOrderRouting
@@ -122,19 +122,19 @@ public class Workorderrouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WORKORDERROUTING_WORKORDERID_PRODUCTID_OPERATIONSEQUENCE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WorkOrderRouting_WorkOrderID_ProductID_OperationSequence);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WORKORDERROUTING_WORKORDERID_PRODUCTID_OPERATIONSEQUENCE);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_WorkOrderRouting_WorkOrder_WorkOrderID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_WorkOrderRouting_Location_LocationID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_WORKORDERROUTING_WORKORDER_WORKORDERID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_WORKORDERROUTING_LOCATION_LOCATIONID);
 	}
 
 	@Override

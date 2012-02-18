@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1203225380;
+	private static final long serialVersionUID = 1531071300;
 
 	/**
 	 * The singleton instance of t_triggers
@@ -54,17 +54,17 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.my
 
 	@Override
 	public org.jooq.Identity<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.mysql.generatedclasses.Keys.IDENTITY_t_triggers;
+		return org.jooq.test.mysql.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord> getMainKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_t_triggers_PRIMARY;
+		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_TRIGGERS_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_t_triggers_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_TRIGGERS_PRIMARY);
 	}
 }

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Shipmethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord> {
 
-	private static final long serialVersionUID = -1257494619;
+	private static final long serialVersionUID = -685790235;
 
 	/**
 	 * The singleton instance of ShipMethod
@@ -76,18 +76,18 @@ public class Shipmethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_ShipMethod;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_SHIPMETHOD;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_ShipMethod_ShipMethodID;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_SHIPMETHOD_SHIPMETHODID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_ShipMethod_ShipMethodID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_SHIPMETHOD_SHIPMETHODID);
 	}
 
 	@Override

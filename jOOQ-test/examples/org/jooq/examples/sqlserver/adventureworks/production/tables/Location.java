@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Location extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord> {
 
-	private static final long serialVersionUID = 2095263512;
+	private static final long serialVersionUID = 1113550648;
 
 	/**
 	 * The singleton instance of Location
@@ -71,18 +71,18 @@ public class Location extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_Location;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_LOCATION;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Location_LocationID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_LOCATION_LOCATIONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Location_LocationID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_LOCATION_LOCATIONID);
 	}
 
 	@Override

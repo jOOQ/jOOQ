@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productdocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> {
 
-	private static final long serialVersionUID = -304107770;
+	private static final long serialVersionUID = -623427834;
 
 	/**
 	 * The singleton instance of ProductDocument
@@ -75,19 +75,19 @@ public class Productdocument extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductDocument_ProductID_DocumentID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTDOCUMENT_PRODUCTID_DOCUMENTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductDocument_ProductID_DocumentID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTDOCUMENT_PRODUCTID_DOCUMENTID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductDocument_Product_ProductID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductDocument_Document_DocumentID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdocumentRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTDOCUMENT_PRODUCT_PRODUCTID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTDOCUMENT_DOCUMENT_DOCUMENTID);
 	}
 
 	@Override

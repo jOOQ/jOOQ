@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = -985010671;
+	private static final long serialVersionUID = -957103727;
 
 	/**
 	 * The singleton instance of address
@@ -92,24 +92,24 @@ public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_address;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_ADDRESS;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_address_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_ADDRESS_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_address_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_ADDRESS_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_address_city);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_ADDRESS_CITY);
 	}
 
 	@Override

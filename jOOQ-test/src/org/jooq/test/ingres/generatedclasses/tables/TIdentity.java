@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1348232023;
+	private static final long serialVersionUID = -1305219959;
 
 	/**
 	 * The singleton instance of t_identity
@@ -47,6 +47,6 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.ingres.gene
 
 	@Override
 	public org.jooq.Identity<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.ingres.generatedclasses.Keys.IDENTITY_t_identity;
+		return org.jooq.test.ingres.generatedclasses.Keys.IDENTITY_T_IDENTITY;
 	}
 }

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -634951985;
+	private static final long serialVersionUID = -1348018481;
 
 	/**
 	 * The singleton instance of t_725_lob_test
@@ -56,13 +56,13 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> getMainKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.pk_t_725_lob_test;
+		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_725_LOB_TEST;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.pk_t_725_lob_test);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_725_LOB_TEST);
 	}
 
 	@Override

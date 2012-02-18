@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employeepayhistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord> {
 
-	private static final long serialVersionUID = -901061054;
+	private static final long serialVersionUID = 1249015394;
 
 	/**
 	 * The singleton instance of EmployeePayHistory
@@ -79,19 +79,19 @@ public class Employeepayhistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeePayHistory_EmployeeID_RateChangeDate;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EMPLOYEEPAYHISTORY_EMPLOYEEID_RATECHANGEDATE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeePayHistory_EmployeeID_RateChangeDate);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EMPLOYEEPAYHISTORY_EMPLOYEEID_RATECHANGEDATE);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EmployeePayHistory_Employee_EmployeeID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeepayhistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EMPLOYEEPAYHISTORY_EMPLOYEE_EMPLOYEEID);
 	}
 
 	@Override

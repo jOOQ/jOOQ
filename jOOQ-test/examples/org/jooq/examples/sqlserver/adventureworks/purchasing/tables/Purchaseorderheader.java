@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> {
 
-	private static final long serialVersionUID = 556405387;
+	private static final long serialVersionUID = 2054556363;
 
 	/**
 	 * The singleton instance of PurchaseOrderHeader
@@ -129,24 +129,24 @@ public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jo
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_PurchaseOrderHeader;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_PURCHASEORDERHEADER;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PurchaseOrderHeader_PurchaseOrderID;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PURCHASEORDERHEADER_PURCHASEORDERID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PurchaseOrderHeader_PurchaseOrderID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PURCHASEORDERHEADER_PURCHASEORDERID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PurchaseOrderHeader_Employee_EmployeeID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PurchaseOrderHeader_Vendor_VendorID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PurchaseOrderHeader_ShipMethod_ShipMethodID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PURCHASEORDERHEADER_EMPLOYEE_EMPLOYEEID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PURCHASEORDERHEADER_VENDOR_VENDORID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_PURCHASEORDERHEADER_SHIPMETHOD_SHIPMETHODID);
 	}
 
 	@Override

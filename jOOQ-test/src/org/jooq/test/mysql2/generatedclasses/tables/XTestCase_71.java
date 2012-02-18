@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -325103941;
+	private static final long serialVersionUID = -1253277093;
 
 	/**
 	 * The singleton instance of x_test_case_71
@@ -64,19 +64,19 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> getMainKey() {
-		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_x_test_case_71_PRIMARY;
+		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_x_test_case_71_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.fk_x_test_case_71);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.FK_X_TEST_CASE_71);
 	}
 
 	@Override

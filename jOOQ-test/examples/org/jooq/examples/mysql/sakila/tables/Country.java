@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Country extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> {
 
-	private static final long serialVersionUID = 1933661629;
+	private static final long serialVersionUID = 317294109;
 
 	/**
 	 * The singleton instance of country
@@ -61,18 +61,18 @@ public class Country extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.CountryRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_country;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_COUNTRY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_country_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_COUNTRY_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CountryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CountryRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_country_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CountryRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_COUNTRY_PRIMARY);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -845180461;
+	private static final long serialVersionUID = 1823166931;
 
 	/**
 	 * The singleton instance of t_book_store
@@ -49,13 +49,13 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.p
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.uk_t_book_store_name;
+		return org.jooq.test.postgres.generatedclasses.Keys.UK_T_BOOK_STORE_NAME;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.uk_t_book_store_name);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1073803749;
+	private static final long serialVersionUID = 1701123611;
 
 	/**
 	 * The singleton instance of t_dates
@@ -76,13 +76,13 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> getMainKey() {
-		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_t_dates_PRIMARY;
+		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_DATES_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_t_dates_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_DATES_PRIMARY);
 	}
 
 	@Override

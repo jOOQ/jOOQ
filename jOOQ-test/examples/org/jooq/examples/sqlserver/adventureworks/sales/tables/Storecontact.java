@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Storecontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> {
 
-	private static final long serialVersionUID = -670763970;
+	private static final long serialVersionUID = 112614558;
 
 	/**
 	 * The singleton instance of StoreContact
@@ -91,19 +91,19 @@ public class Storecontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_StoreContact_CustomerID_ContactID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_STORECONTACT_CUSTOMERID_CONTACTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_StoreContact_CustomerID_ContactID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_STORECONTACT_CUSTOMERID_CONTACTID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_StoreContact_Store_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_StoreContact_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_StoreContact_ContactType_ContactTypeID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_STORECONTACT_STORE_CUSTOMERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_STORECONTACT_CONTACT_CONTACTID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_STORECONTACT_CONTACTTYPE_CONTACTTYPEID);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> {
 
-	private static final long serialVersionUID = 595540630;
+	private static final long serialVersionUID = -41610474;
 
 	/**
 	 * The singleton instance of SalesOrderDetail
@@ -121,24 +121,24 @@ public class Salesorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SalesOrderDetail;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SALESORDERDETAIL;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESORDERDETAIL_SALESORDERID_SALESORDERDETAILID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESORDERDETAIL_SALESORDERID_SALESORDERDETAILID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERDETAIL_SALESORDERHEADER_SALESORDERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERDETAIL_SPECIALOFFERPRODUCT_SPECIALOFFERIDPRODUCTID);
 	}
 
 	@Override

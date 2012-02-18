@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Currency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord> {
 
-	private static final long serialVersionUID = 1733446063;
+	private static final long serialVersionUID = -2104461905;
 
 	/**
 	 * The singleton instance of Currency
@@ -61,13 +61,13 @@ public class Currency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Currency_CurrencyCode;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CURRENCY_CURRENCYCODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Currency_CurrencyCode);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CURRENCY_CURRENCYCODE);
 	}
 
 	@Override

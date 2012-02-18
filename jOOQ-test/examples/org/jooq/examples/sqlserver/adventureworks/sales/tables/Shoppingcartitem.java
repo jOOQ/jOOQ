@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Shoppingcartitem extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord> {
 
-	private static final long serialVersionUID = -1558166555;
+	private static final long serialVersionUID = 2029622437;
 
 	/**
 	 * The singleton instance of ShoppingCartItem
@@ -82,24 +82,24 @@ public class Shoppingcartitem extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_ShoppingCartItem;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SHOPPINGCARTITEM;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ShoppingCartItem_ShoppingCartItemID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SHOPPINGCARTITEM_SHOPPINGCARTITEMID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ShoppingCartItem_ShoppingCartItemID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SHOPPINGCARTITEM_SHOPPINGCARTITEMID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_ShoppingCartItem_Product_ProductID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SHOPPINGCARTITEM_PRODUCT_PRODUCTID);
 	}
 
 	@Override

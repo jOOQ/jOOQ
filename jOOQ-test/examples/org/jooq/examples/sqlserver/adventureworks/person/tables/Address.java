@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = 419946034;
+	private static final long serialVersionUID = 1698389618;
 
 	/**
 	 * The singleton instance of Address
@@ -92,24 +92,24 @@ public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_Address;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_ADDRESS;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Address_AddressID;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_ADDRESS_ADDRESSID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Address_AddressID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_ADDRESS_ADDRESSID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_Address_StateProvince_StateProvinceID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_ADDRESS_STATEPROVINCE_STATEPROVINCEID);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Transactionhistoryarchive extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryarchiveRecord> {
 
-	private static final long serialVersionUID = -763109539;
+	private static final long serialVersionUID = 461320029;
 
 	/**
 	 * The singleton instance of TransactionHistoryArchive
@@ -91,13 +91,13 @@ public class Transactionhistoryarchive extends org.jooq.impl.UpdatableTableImpl<
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryarchiveRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistoryArchive_TransactionID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TRANSACTIONHISTORYARCHIVE_TRANSACTIONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryarchiveRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryarchiveRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistoryArchive_TransactionID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryarchiveRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TRANSACTIONHISTORYARCHIVE_TRANSACTIONID);
 	}
 
 	@Override

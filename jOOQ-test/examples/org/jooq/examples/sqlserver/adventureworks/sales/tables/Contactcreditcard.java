@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Contactcreditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> {
 
-	private static final long serialVersionUID = 770344322;
+	private static final long serialVersionUID = 743749122;
 
 	/**
 	 * The singleton instance of ContactCreditCard
@@ -75,19 +75,19 @@ public class Contactcreditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ContactCreditCard_ContactID_CreditCardID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CONTACTCREDITCARD_CONTACTID_CREDITCARDID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ContactCreditCard_ContactID_CreditCardID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CONTACTCREDITCARD_CONTACTID_CREDITCARDID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_ContactCreditCard_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_ContactCreditCard_CreditCard_CreditCardID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CONTACTCREDITCARD_CONTACT_CONTACTID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CONTACTCREDITCARD_CREDITCARD_CREDITCARDID);
 	}
 
 	@Override

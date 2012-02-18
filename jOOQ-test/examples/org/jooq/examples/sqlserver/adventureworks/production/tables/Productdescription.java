@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productdescription extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord> {
 
-	private static final long serialVersionUID = -312925904;
+	private static final long serialVersionUID = 1174382896;
 
 	/**
 	 * The singleton instance of ProductDescription
@@ -66,18 +66,18 @@ public class Productdescription extends org.jooq.impl.UpdatableTableImpl<org.joo
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ProductDescription;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_PRODUCTDESCRIPTION;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductDescription_ProductDescriptionID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTDESCRIPTION_PRODUCTDESCRIPTIONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductDescription_ProductDescriptionID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductdescriptionRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTDESCRIPTION_PRODUCTDESCRIPTIONID);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Culture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord> {
 
-	private static final long serialVersionUID = 628809527;
+	private static final long serialVersionUID = 1315770167;
 
 	/**
 	 * The singleton instance of Culture
@@ -61,13 +61,13 @@ public class Culture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Culture_CultureID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_CULTURE_CULTUREID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Culture_CultureID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.CultureRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_CULTURE_CULTUREID);
 	}
 
 	@Override

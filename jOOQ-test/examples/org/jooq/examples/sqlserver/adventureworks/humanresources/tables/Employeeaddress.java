@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employeeaddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord> {
 
-	private static final long serialVersionUID = -215460871;
+	private static final long serialVersionUID = 1796654073;
 
 	/**
 	 * The singleton instance of EmployeeAddress
@@ -80,19 +80,19 @@ public class Employeeaddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeeAddress_EmployeeID_AddressID;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EMPLOYEEADDRESS_EMPLOYEEID_ADDRESSID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeeAddress_EmployeeID_AddressID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EMPLOYEEADDRESS_EMPLOYEEID_ADDRESSID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EmployeeAddress_Employee_EmployeeID, org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EmployeeAddress_Address_AddressID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeaddressRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EMPLOYEEADDRESS_EMPLOYEE_EMPLOYEEID, org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_EMPLOYEEADDRESS_ADDRESS_ADDRESSID);
 	}
 
 	@Override

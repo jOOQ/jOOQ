@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> {
 
-	private static final long serialVersionUID = 1620862351;
+	private static final long serialVersionUID = -367503985;
 
 	/**
 	 * The singleton instance of category
@@ -61,18 +61,18 @@ public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord, java.lang.Byte> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_category;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_CATEGORY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_category_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_CATEGORY_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_category_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_CATEGORY_PRIMARY);
 	}
 
 	@Override

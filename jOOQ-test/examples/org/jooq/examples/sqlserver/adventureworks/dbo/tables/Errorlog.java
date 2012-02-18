@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class Errorlog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorlogRecord> {
 
-	private static final long serialVersionUID = 214614102;
+	private static final long serialVersionUID = -603995050;
 
 	/**
 	 * The singleton instance of ErrorLog
@@ -91,18 +91,18 @@ public class Errorlog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorlogRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.IDENTITY_ErrorLog;
+		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.IDENTITY_ERRORLOG;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorlogRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_ErrorLog_ErrorLogID;
+		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_ERRORLOG_ERRORLOGID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorlogRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorlogRecord>>asList(org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_ErrorLog_ErrorLogID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorlogRecord>>asList(org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_ERRORLOG_ERRORLOGID);
 	}
 
 	@Override

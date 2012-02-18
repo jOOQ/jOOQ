@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class Awbuildversion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord> {
 
-	private static final long serialVersionUID = -603861149;
+	private static final long serialVersionUID = 1157382947;
 
 	/**
 	 * The singleton instance of AWBuildVersion
@@ -66,18 +66,18 @@ public class Awbuildversion extends org.jooq.impl.UpdatableTableImpl<org.jooq.ex
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord, java.lang.Byte> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.IDENTITY_AWBuildVersion;
+		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.IDENTITY_AWBUILDVERSION;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_AWBuildVersion_SystemInformationID;
+		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_AWBUILDVERSION_SYSTEMINFORMATIONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord>>asList(org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_AWBuildVersion_SystemInformationID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord>>asList(org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_AWBUILDVERSION_SYSTEMINFORMATIONID);
 	}
 
 	@Override

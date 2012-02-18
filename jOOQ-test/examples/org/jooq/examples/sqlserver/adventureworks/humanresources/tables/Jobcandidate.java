@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Jobcandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord> {
 
-	private static final long serialVersionUID = -1332370938;
+	private static final long serialVersionUID = 1487592966;
 
 	/**
 	 * The singleton instance of JobCandidate
@@ -75,24 +75,24 @@ public class Jobcandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_JobCandidate;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_JOBCANDIDATE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JobCandidate_JobCandidateID;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JOBCANDIDATE_JOBCANDIDATEID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JobCandidate_JobCandidateID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JOBCANDIDATE_JOBCANDIDATEID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_JobCandidate_Employee_EmployeeID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobcandidateRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.FK_JOBCANDIDATE_EMPLOYEE_EMPLOYEEID);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Unitmeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord> {
 
-	private static final long serialVersionUID = 1635099363;
+	private static final long serialVersionUID = -1976296797;
 
 	/**
 	 * The singleton instance of UnitMeasure
@@ -61,13 +61,13 @@ public class Unitmeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UnitMeasure_UnitMeasureCode;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UNITMEASURE_UNITMEASURECODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UnitMeasure_UnitMeasureCode);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UNITMEASURE_UNITMEASURECODE);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 658537331;
+	private static final long serialVersionUID = 268642163;
 
 	/**
 	 * The singleton instance of t_book
@@ -102,18 +102,18 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.ge
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord> getMainKey() {
-		return org.jooq.test.ase.generatedclasses.Keys.t_book__pk_t_book;
+		return org.jooq.test.ase.generatedclasses.Keys.T_BOOK__PK_T_BOOK;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.t_book__pk_t_book);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.T_BOOK__PK_T_BOOK);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.ase.generatedclasses.Keys.t_book__fk_t_book_author_id, org.jooq.test.ase.generatedclasses.Keys.t_book__fk_t_book_co_author_id);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.ase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.ase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID);
 	}
 }

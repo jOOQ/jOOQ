@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord> {
 
-	private static final long serialVersionUID = 468305199;
+	private static final long serialVersionUID = -2069239505;
 
 	/**
 	 * The singleton instance of Contact
@@ -124,18 +124,18 @@ public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_Contact;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_CONTACT;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Contact_ContactID;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CONTACT_CONTACTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Contact_ContactID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CONTACT_CONTACTID);
 	}
 
 	@Override

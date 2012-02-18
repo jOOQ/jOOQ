@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord> {
 
-	private static final long serialVersionUID = -1271244431;
+	private static final long serialVersionUID = 222785905;
 
 	/**
 	 * The singleton instance of Shift
@@ -71,18 +71,18 @@ public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord, java.lang.Byte> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_Shift;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_SHIFT;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Shift_ShiftID;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_SHIFT_SHIFTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Shift_ShiftID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_SHIFT_SHIFTID);
 	}
 
 	@Override

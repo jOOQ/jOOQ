@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1958458578;
+	private static final long serialVersionUID = 915600530;
 
 	/**
 	 * The singleton instance of t_booleans
@@ -94,12 +94,12 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.pk_t_booleans_id;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOLEANS_ID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.pk_t_booleans_id);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOLEANS_ID);
 	}
 }

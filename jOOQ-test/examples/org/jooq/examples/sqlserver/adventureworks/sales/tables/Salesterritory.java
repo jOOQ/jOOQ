@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesterritory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord> {
 
-	private static final long serialVersionUID = -455870756;
+	private static final long serialVersionUID = -1284104484;
 
 	/**
 	 * The singleton instance of SalesTerritory
@@ -96,18 +96,18 @@ public class Salesterritory extends org.jooq.impl.UpdatableTableImpl<org.jooq.ex
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SalesTerritory;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SALESTERRITORY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTerritory_TerritoryID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESTERRITORY_TERRITORYID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTerritory_TerritoryID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESTERRITORY_TERRITORYID);
 	}
 
 	@Override

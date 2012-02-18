@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Currencyrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord> {
 
-	private static final long serialVersionUID = -1107103472;
+	private static final long serialVersionUID = 402103504;
 
 	/**
 	 * The singleton instance of CurrencyRate
@@ -93,24 +93,24 @@ public class Currencyrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_CurrencyRate;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_CURRENCYRATE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CurrencyRate_CurrencyRateID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CURRENCYRATE_CURRENCYRATEID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CurrencyRate_CurrencyRateID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CURRENCYRATE_CURRENCYRATEID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CurrencyRate_Currency_FromCurrencyCode, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CurrencyRate_Currency_ToCurrencyCode);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyrateRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CURRENCYRATE_CURRENCY_FROMCURRENCYCODE, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CURRENCYRATE_CURRENCY_TOCURRENCYCODE);
 	}
 
 	@Override

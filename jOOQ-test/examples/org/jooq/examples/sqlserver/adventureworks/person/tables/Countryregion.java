@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Countryregion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord> {
 
-	private static final long serialVersionUID = -639610908;
+	private static final long serialVersionUID = -1661818716;
 
 	/**
 	 * The singleton instance of CountryRegion
@@ -61,13 +61,13 @@ public class Countryregion extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CountryRegion_CountryRegionCode;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_COUNTRYREGION_COUNTRYREGIONCODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CountryRegion_CountryRegionCode);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryregionRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_COUNTRYREGION_COUNTRYREGIONCODE);
 	}
 
 	@Override

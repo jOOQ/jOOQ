@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productcosthistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord> {
 
-	private static final long serialVersionUID = -1199138308;
+	private static final long serialVersionUID = -412852772;
 
 	/**
 	 * The singleton instance of ProductCostHistory
@@ -79,19 +79,19 @@ public class Productcosthistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductCostHistory_ProductID_StartDate;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTCOSTHISTORY_PRODUCTID_STARTDATE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductCostHistory_ProductID_StartDate);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTCOSTHISTORY_PRODUCTID_STARTDATE);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductCostHistory_Product_ProductID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductcosthistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTCOSTHISTORY_PRODUCT_PRODUCTID);
 	}
 
 	@Override

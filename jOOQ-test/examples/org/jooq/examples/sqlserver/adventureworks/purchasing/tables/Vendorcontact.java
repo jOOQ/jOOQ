@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Vendorcontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord> {
 
-	private static final long serialVersionUID = 291012197;
+	private static final long serialVersionUID = -2029532539;
 
 	/**
 	 * The singleton instance of VendorContact
@@ -86,19 +86,19 @@ public class Vendorcontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VendorContact_VendorID_ContactID;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VENDORCONTACT_VENDORID_CONTACTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VendorContact_VendorID_ContactID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VENDORCONTACT_VENDORID_CONTACTID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VendorContact_Vendor_VendorID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VendorContact_Contact_ContactID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VendorContact_ContactType_ContactTypeID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorcontactRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VENDORCONTACT_VENDOR_VENDORID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VENDORCONTACT_CONTACT_CONTACTID, org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.FK_VENDORCONTACT_CONTACTTYPE_CONTACTTYPEID);
 	}
 
 	@Override

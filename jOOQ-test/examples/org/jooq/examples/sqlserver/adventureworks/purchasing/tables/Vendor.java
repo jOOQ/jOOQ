@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Vendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord> {
 
-	private static final long serialVersionUID = -851124315;
+	private static final long serialVersionUID = 1429593029;
 
 	/**
 	 * The singleton instance of Vendor
@@ -86,18 +86,18 @@ public class Vendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.s
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_Vendor;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.IDENTITY_VENDOR;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_Vendor_VendorID;
+		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VENDOR_VENDORID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_Vendor_VendorID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorRecord>>asList(org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_VENDOR_VENDORID);
 	}
 
 	@Override

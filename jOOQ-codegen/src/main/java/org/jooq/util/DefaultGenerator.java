@@ -278,7 +278,7 @@ public class DefaultGenerator implements Generator {
 			outS.println("\t/**");
 			outS.println("\t * The singleton instance of " + schema.getOutputName());
 			outS.println("\t */");
-			outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifierUC(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
+			outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifier(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
 
 			outS.println();
 			printNoFurtherInstancesAllowedJavadoc(outS);
@@ -335,9 +335,7 @@ public class DefaultGenerator implements Generator {
                 outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
                 outF.print("(");
                 outF.print(Connection.class);
-                outF.print(" connection, ");
-                outF.print(org.jooq.SchemaMapping.class);
-                outF.println(" mapping) {");
+                outF.println(" connection, org.jooq.SchemaMapping mapping) {");
                 outF.println("\t\tsuper(connection, mapping);");
                 outF.println("\t}");
             }
@@ -385,19 +383,19 @@ public class DefaultGenerator implements Generator {
                 out.print(getJavaType(sequence.getType()));
                 out.print(">");
                 out.print(" ");
-                out.print(strategy.getJavaIdentifierUC(sequence));
+                out.print(strategy.getJavaIdentifier(sequence));
                 out.print(" = new ");
                 out.print(SequenceImpl.class);
                 out.print("<");
                 out.print(getJavaType(sequence.getType()));
                 out.print(">");
                 out.print("(\"");
-                out.print(sequence.getName());
+                out.print(sequence.getOutputName());
                 out.print("\"");
 
                 if (!schema.isDefaultSchema()) {
                     out.print(", ");
-                    out.print(strategy.getFullJavaIdentifierUC(schema));
+                    out.print(strategy.getFullJavaIdentifier(schema));
                 } else {
                     out.print(", null");
                 }
@@ -482,7 +480,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tprivate final ");
                         out.print(data.getField(column.getName()).getType());
                         out.print(" ");
-                        out.println(strategy.getJavaClassNameLC(column) + ";");
+                        out.println(strategy.getJavaMemberName(column) + ";");
                     }
 
                     // Constructor
@@ -494,7 +492,7 @@ public class DefaultGenerator implements Generator {
                         out.print(separator);
                         out.print(data.getField(column.getName()).getType());
                         out.print(" ");
-                        out.print(strategy.getJavaClassNameLC(column));
+                        out.print(strategy.getJavaMemberName(column));
 
                         separator = ", ";
                     }
@@ -502,9 +500,9 @@ public class DefaultGenerator implements Generator {
                     out.println(") {");
                     for (ColumnDefinition column : columns) {
                         out.print("\t\tthis.");
-                        out.print(strategy.getJavaClassNameLC(column));
+                        out.print(strategy.getJavaMemberName(column));
                         out.print(" = ");
-                        out.print(strategy.getJavaClassNameLC(column));
+                        out.print(strategy.getJavaMemberName(column));
                         out.println(";");
                     }
                     out.println("\t}");
@@ -515,7 +513,7 @@ public class DefaultGenerator implements Generator {
                     out.print("\tpublic ");
                     out.print(data.getField(pk.getName()).getType());
                     out.println(" getPrimaryKey() {");
-                    out.println("\t\treturn " + strategy.getJavaClassNameLC(pk) + ";");
+                    out.println("\t\treturn " + strategy.getJavaMemberName(pk) + ";");
                     out.println("\t}");
 
                     // Getters
@@ -523,11 +521,11 @@ public class DefaultGenerator implements Generator {
                         printFieldJavaDoc(out, column);
                         out.print("\tpublic final ");
                         out.print(data.getField(column.getName()).getType());
-                        out.print(" get");
-                        out.print(strategy.getJavaClassName(column));
+                        out.print(" ");
+                        out.print(strategy.getJavaGetterName(column));
                         out.println("() {");
                         out.print("\t\treturn ");
-                        out.print(strategy.getJavaClassNameLC(column));
+                        out.print(strategy.getJavaMemberName(column));
                         out.println(";");
                         out.println("\t}");
                     }
@@ -583,9 +581,9 @@ public class DefaultGenerator implements Generator {
         			out.println("\tprivate " + strategy.getJavaClassName(table) + "() {");
 
         			if (!schema.isDefaultSchema()) {
-        			    out.println("\t\tsuper(\"" + table.getName() + "\", " + strategy.getFullJavaIdentifierUC(schema) + ");");
+        			    out.println("\t\tsuper(\"" + table.getOutputName() + "\", " + strategy.getFullJavaIdentifier(schema) + ");");
         			} else {
-        			    out.println("\t\tsuper(\"" + table.getName() + "\");");
+        			    out.println("\t\tsuper(\"" + table.getOutputName() + "\");");
         			}
 
         			out.println("\t}");
@@ -602,11 +600,9 @@ public class DefaultGenerator implements Generator {
             			out.println(" alias) {");
 
             			out.print("\t\tsuper(alias, ");
-            			out.print(strategy.getFullJavaIdentifierUC(schema));
+            			out.print(strategy.getFullJavaIdentifier(schema));
             			out.print(", ");
-            			out.print(strategy.getFullJavaClassName(table));
-            	        out.print(".");
-            	        out.print(strategy.getJavaIdentifierUC(table));
+            			out.print(strategy.getFullJavaIdentifier(table));
             	        out.println(");");
             			out.println("\t}");
         			}
@@ -803,7 +799,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tprivate ");
                         out.print(StringUtils.rightPad(getJavaType(column.getType()), maxLength));
                         out.print(" ");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
                         out.println(";");
                     }
 
@@ -819,7 +815,7 @@ public class DefaultGenerator implements Generator {
                         out.println("() {");
 
                         out.print("\t\treturn this.");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
                         out.println(";");
                         out.println("\t}");
 
@@ -830,13 +826,13 @@ public class DefaultGenerator implements Generator {
                         out.print("(");
                         out.print(getJavaType(column.getType()));
                         out.print(" ");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
                         out.println(") {");
 
                         out.print("\t\tthis.");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
                         out.print(" = ");
-                        out.print(convertToJavaIdentifierEnum(strategy.getJavaClassNameLC(column)));
+                        out.print(convertToJavaIdentifierEnum(strategy.getJavaMemberName(column)));
                         out.println(";");
                         out.println("\t}");
                     }
@@ -880,11 +876,9 @@ public class DefaultGenerator implements Generator {
                 out.print("\tpublic static ");
                 out.print(strategy.getFullJavaClassName(table));
                 out.print(" ");
-                out.print(strategy.getJavaIdentifierUC(table));
+                out.print(strategy.getJavaIdentifier(table));
                 out.print(" = ");
-                out.print(strategy.getFullJavaClassName(table));
-                out.print(".");
-                out.print(strategy.getJavaIdentifierUC(table));
+                out.print(strategy.getFullJavaIdentifier(table));
                 out.println(";");
             }
 
@@ -926,9 +920,9 @@ public class DefaultGenerator implements Generator {
                         out.print("> IDENTITY_");
                         out.print(strategy.getJavaIdentifier(identity.getContainer()));
                         out.print(" = createIdentity(");
-                        out.print(strategy.getFullJavaIdentifierUC(identity.getContainer()));
+                        out.print(strategy.getFullJavaIdentifier(identity.getContainer()));
                         out.print(", ");
-                        out.print(strategy.getFullJavaIdentifierUC(identity));
+                        out.print(strategy.getFullJavaIdentifier(identity));
                         out.println(");");
                     }
                 }
@@ -954,13 +948,13 @@ public class DefaultGenerator implements Generator {
                             out.print("> ");
                             out.print(strategy.getJavaIdentifier(uniqueKey));
                             out.print(" = createUniqueKey(");
-                            out.print(strategy.getFullJavaIdentifierUC(uniqueKey.getTable()));
+                            out.print(strategy.getFullJavaIdentifier(uniqueKey.getTable()));
                             out.print(", ");
 
                             String separator = "";
                             for (ColumnDefinition column : uniqueKey.getKeyColumns()) {
                                 out.print(separator);
-                                out.print(strategy.getFullJavaIdentifierUC(column));
+                                out.print(strategy.getFullJavaIdentifier(column));
                                 separator = ", ";
                             }
 
@@ -999,6 +993,7 @@ public class DefaultGenerator implements Generator {
                             out.print(strategy.getJavaIdentifier(foreignKey));
                             out.print(" = createForeignKey(");
 
+                            // Beware of cross-schema referencing foreign keys
                             if (!foreignKey.getSchema().equals(foreignKey.getReferencedKey().getSchema())) {
                                 out.print(strategy.getJavaPackageName(foreignKey.getReferencedKey().getSchema()));
                                 out.print(".Keys.");
@@ -1006,13 +1001,13 @@ public class DefaultGenerator implements Generator {
 
                             out.print(strategy.getJavaIdentifier(foreignKey.getReferencedKey()));
                             out.print(", ");
-                            out.print(strategy.getFullJavaIdentifierUC(foreignKey.getKeyTable()));
+                            out.print(strategy.getFullJavaIdentifier(foreignKey.getKeyTable()));
                             out.print(", ");
 
                             String separator = "";
                             for (ColumnDefinition column : foreignKey.getKeyColumns()) {
                                 out.print(separator);
-                                out.print(strategy.getFullJavaIdentifierUC(column));
+                                out.print(strategy.getFullJavaIdentifier(column));
                                 separator = ", ";
                             }
 
@@ -1074,7 +1069,7 @@ public class DefaultGenerator implements Generator {
         			out.println("\t */");
                     out.println("\tpublic " + strategy.getJavaClassName(table, Mode.RECORD) + "() {");
                     out.print("\t\tsuper(");
-                    out.print(strategy.getFullJavaIdentifierUC(table));
+                    out.print(strategy.getFullJavaIdentifier(table));
                     out.println(");");
                     out.println("\t}");
         			out.println("}");
@@ -1154,9 +1149,9 @@ public class DefaultGenerator implements Generator {
                     out.println("\tprivate " + strategy.getJavaClassName(udt) + "() {");
 
                     if (!schema.isDefaultSchema()) {
-                        out.println("\t\tsuper(\"" + udt.getName() + "\", " + strategy.getFullJavaIdentifierUC(schema) + ");");
+                        out.println("\t\tsuper(\"" + udt.getOutputName() + "\", " + strategy.getFullJavaIdentifier(schema) + ");");
                     } else {
-                        out.println("\t\tsuper(\"" + udt.getName() + "\");");
+                        out.println("\t\tsuper(\"" + udt.getOutputName() + "\");");
                     }
 
                     out.println("\t}");
@@ -1166,7 +1161,7 @@ public class DefaultGenerator implements Generator {
 
                     if (outS != null) {
                         outS.printInitialisationStatement(
-                            "addMapping(\"" + schema.getOutputName() + "." + udt.getName() + "\", " +
+                            "addMapping(\"" + udt.getQualifiedOutputName() + "\", " +
                             strategy.getFullJavaClassName(udt, Mode.RECORD) + ".class);");
                     }
                 } catch (Exception e) {
@@ -1228,7 +1223,7 @@ public class DefaultGenerator implements Generator {
                     out.println("\tpublic " + strategy.getJavaClassName(udt, Mode.RECORD) + "() {");
 
                     out.print("\t\tsuper(");
-                    out.print(strategy.getFullJavaIdentifierUC(udt));
+                    out.print(strategy.getFullJavaIdentifier(udt));
                     out.println(");");
 
                     out.println("\t}");
@@ -1287,11 +1282,9 @@ public class DefaultGenerator implements Generator {
                 out.print("\tpublic static ");
                 out.print(strategy.getFullJavaClassName(udt));
                 out.print(" ");
-                out.print(strategy.getJavaIdentifierUC(udt));
+                out.print(strategy.getJavaIdentifier(udt));
                 out.print(" = ");
-                out.print(strategy.getFullJavaClassName(udt));
-                out.print(".");
-                out.print(strategy.getJavaIdentifierUC(udt));
+                out.print(strategy.getFullJavaIdentifier(udt));
                 out.println(";");
             }
 
@@ -1332,9 +1325,7 @@ public class DefaultGenerator implements Generator {
                     out.print(Configuration.class);
                     out.println(" configuration) {");
                     out.print("\t\tsuper(\"");
-                    out.print(array.getSchema().getName());
-                    out.print(".");
-                    out.print(array.getName());
+                    out.print(array.getQualifiedOutputName());
                     out.print("\", ");
                     out.print(getJavaTypeReference(database, array.getElementType()));
                     out.println(", configuration);");
@@ -1512,12 +1503,12 @@ public class DefaultGenerator implements Generator {
 
                     outPkg.println();
                     outPkg.println("\t/**");
-                    outPkg.println("\t * The singleton instance of " + strategy.getJavaIdentifierUC(pkg));
+                    outPkg.println("\t * The singleton instance of " + strategy.getJavaIdentifier(pkg)); // TODO [#1166]
                     outPkg.println("\t */");
                     outPkg.print("\tpublic static ");
                     outPkg.print(strategy.getFullJavaClassName(pkg));
                     outPkg.print(" ");
-                    outPkg.print(strategy.getJavaIdentifierUC(pkg));
+                    outPkg.print(strategy.getJavaIdentifier(pkg));
                     outPkg.print(" = new ");
                     outPkg.print(strategy.getFullJavaClassName(pkg));
                     outPkg.println("();");
@@ -1545,9 +1536,9 @@ public class DefaultGenerator implements Generator {
                     printNoFurtherInstancesAllowedJavadoc(outPkg);
                     outPkg.println("\tprivate " + strategy.getJavaClassName(pkg) + "() {");
                     outPkg.print("\t\tsuper(\"");
-                    outPkg.print(strategy.getJavaIdentifierUC(pkg));
+                    outPkg.print(pkg.getOutputName());
                     outPkg.print("\", ");
-                    outPkg.print(strategy.getFullJavaIdentifierUC(schema));
+                    outPkg.print(strategy.getFullJavaIdentifier(schema));
                     outPkg.println(");");
                     outPkg.println("\t}");
                     outPkg.println("}");
@@ -1793,8 +1784,8 @@ public class DefaultGenerator implements Generator {
             out.println("\t/**");
             out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the routine");
             out.println("\t */");
-        	out.print("\tpublic void set");
-            out.print(strategy.getJavaClassName(parameter));
+        	out.print("\tpublic void ");
+            out.print(strategy.getJavaSetterName(parameter));
             out.print("(");
             printNumberType(out, parameter.getType());
             out.println(" value) {");
@@ -1807,7 +1798,7 @@ public class DefaultGenerator implements Generator {
                 out.print("Value");
             }
             out.print("(");
-            out.print(strategy.getJavaIdentifierUC(parameter));
+            out.print(strategy.getJavaIdentifier(parameter));
             out.println(", value);");
         	out.println("\t}");
 
@@ -1822,8 +1813,8 @@ public class DefaultGenerator implements Generator {
                 out.print(Select.class);
                 out.println("} statement!");
                 out.println("\t */");
-                out.print("\tpublic void set");
-                out.print(strategy.getJavaClassName(parameter));
+                out.print("\tpublic void ");
+                out.print(strategy.getJavaSetterName(parameter));
                 out.print("(");
                 out.print(Field.class);
                 out.print("<");
@@ -1838,7 +1829,7 @@ public class DefaultGenerator implements Generator {
                     out.print("Field");
                 }
                 out.print("(");
-                out.print(strategy.getJavaIdentifierUC(parameter));
+                out.print(strategy.getJavaIdentifier(parameter));
                 out.println(", field);");
                 out.println("\t}");
         	}
@@ -1857,7 +1848,7 @@ public class DefaultGenerator implements Generator {
                 out.println("() {");
 
                 out.print("\t\treturn getValue(");
-                out.print(strategy.getJavaIdentifierUC(parameter));
+                out.print(strategy.getJavaIdentifier(parameter));
                 out.println(");");
                 out.println("\t}");
             }
@@ -1883,7 +1874,7 @@ public class DefaultGenerator implements Generator {
 
         out.println();
         out.println("\t/**");
-        out.println("\t * Get " + strategy.getJavaIdentifierUC(function) + " as a field");
+        out.println("\t * Get " + strategy.getJavaIdentifier(function) + " as a field"); // TODO [#1166]
         out.println("\t *");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
@@ -1947,7 +1938,7 @@ public class DefaultGenerator implements Generator {
 
         out.println();
         out.println("\t/**");
-        out.println("\t * Invoke " + strategy.getJavaIdentifierUC(function));
+        out.println("\t * Invoke " + strategy.getJavaIdentifier(function)); // TODO [#1166]
         out.println("\t *");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
@@ -2053,7 +2044,7 @@ public class DefaultGenerator implements Generator {
 
         out.println();
         out.println("\t/**");
-        out.println("\t * Invoke " + strategy.getJavaIdentifierUC(procedure));
+        out.println("\t * Invoke " + strategy.getJavaIdentifier(procedure)); // TODO [#1166]
         out.println("\t *");
 
         for (ParameterDefinition parameter : procedure.getAllParameters()) {
@@ -2197,12 +2188,12 @@ public class DefaultGenerator implements Generator {
     private void printSingletonInstance(Definition definition, GenerationWriter out) {
         out.println();
         out.println("\t/**");
-        out.println("\t * The singleton instance of " + definition.getName());
+        out.println("\t * The singleton instance of " + definition.getOutputName()); // TODO [#1166]
         out.println("\t */");
         out.print("\tpublic static final ");
         out.print(strategy.getFullJavaClassName(definition));
         out.print(" ");
-        out.print(strategy.getJavaIdentifierUC(definition));
+        out.print(strategy.getJavaIdentifier(definition));
         out.print(" = new ");
         out.print(strategy.getFullJavaClassName(definition));
         out.println("();");
@@ -2214,7 +2205,7 @@ public class DefaultGenerator implements Generator {
             out.print(".");
             out.print("Sequences");
             out.print(".");
-            out.print(strategy.getJavaIdentifierUC(definition));
+            out.print(strategy.getJavaIdentifier(definition));
         }
         else {
             out.print(strategy.getFullJavaIdentifier(definition));
@@ -2459,7 +2450,7 @@ public class DefaultGenerator implements Generator {
 
 		out.print(getJavaType(column.getType()));
 		out.print("> ");
-		out.print(strategy.getJavaIdentifierUC(column));
+		out.print(strategy.getJavaIdentifier(column));
 
 		if (declaredMemberClass == TableField.class) {
 		    out.print(" = createField");
@@ -2482,11 +2473,11 @@ public class DefaultGenerator implements Generator {
 			        out.print(", this");
 			    }
 			    else {
-			        out.print(", " + strategy.getJavaIdentifierUC(type));
+			        out.print(", " + strategy.getJavaIdentifier(type));
 			    }
 			}
 			else {
-			    out.print(", " + strategy.getJavaIdentifierUC(type));
+			    out.print(", " + strategy.getJavaIdentifier(type));
 			}
 		}
 

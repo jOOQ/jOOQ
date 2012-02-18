@@ -10,7 +10,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 993654145;
+	private static final long serialVersionUID = -346398335;
 
 	/**
 	 * The singleton instance of t_author
@@ -71,12 +71,12 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingr
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
-		return org.jooq.test.ingres.generatedclasses.Keys.pk_t_author;
+		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.pk_t_author);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 }

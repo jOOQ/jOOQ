@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = 1331275866;
+	private static final long serialVersionUID = 1337466;
 
 	/**
 	 * The singleton instance of payment
@@ -99,24 +99,24 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_payment;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_PAYMENT;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_payment_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_PAYMENT_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_payment_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_PAYMENT_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_payment_customer, org.jooq.examples.mysql.sakila.Keys.fk_payment_staff, org.jooq.examples.mysql.sakila.Keys.fk_payment_rental);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_PAYMENT_CUSTOMER, org.jooq.examples.mysql.sakila.Keys.FK_PAYMENT_STAFF, org.jooq.examples.mysql.sakila.Keys.FK_PAYMENT_RENTAL);
 	}
 
 	@Override

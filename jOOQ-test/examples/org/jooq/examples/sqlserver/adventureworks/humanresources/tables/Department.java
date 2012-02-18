@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Department extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord> {
 
-	private static final long serialVersionUID = 1891140250;
+	private static final long serialVersionUID = -1360685382;
 
 	/**
 	 * The singleton instance of Department
@@ -66,18 +66,18 @@ public class Department extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_Department;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.IDENTITY_DEPARTMENT;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Department_DepartmentID;
+		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_DEPARTMENT_DEPARTMENTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Department_DepartmentID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.DepartmentRecord>>asList(org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_DEPARTMENT_DEPARTMENTID);
 	}
 
 	@Override

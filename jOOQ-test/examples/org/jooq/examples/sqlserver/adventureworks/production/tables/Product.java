@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord> {
 
-	private static final long serialVersionUID = -1243866310;
+	private static final long serialVersionUID = -1375993030;
 
 	/**
 	 * The singleton instance of Product
@@ -195,24 +195,24 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_Product;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_PRODUCT;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Product_ProductID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCT_PRODUCTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Product_ProductID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCT_PRODUCTID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_Product_UnitMeasure_SizeUnitMeasureCode, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_Product_UnitMeasure_WeightUnitMeasureCode, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_Product_ProductSubcategory_ProductSubcategoryID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_Product_ProductModel_ProductModelID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCT_UNITMEASURE_SIZEUNITMEASURECODE, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCT_UNITMEASURE_WEIGHTUNITMEASURECODE, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCT_PRODUCTSUBCATEGORY_PRODUCTSUBCATEGORYID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCT_PRODUCTMODEL_PRODUCTMODELID);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = 2146432111;
+	private static final long serialVersionUID = 65884399;
 
 	/**
 	 * The singleton instance of Store
@@ -91,19 +91,19 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Store_CustomerID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_STORE_CUSTOMERID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Store_CustomerID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_STORE_CUSTOMERID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Store_Customer_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Store_SalesPerson_SalesPersonID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StoreRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_STORE_CUSTOMER_CUSTOMERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_STORE_SALESPERSON_SALESPERSONID);
 	}
 
 	@Override

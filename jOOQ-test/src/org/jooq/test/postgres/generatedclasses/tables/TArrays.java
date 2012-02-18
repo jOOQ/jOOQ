@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 315978354;
+	private static final long serialVersionUID = 1751903858;
 
 	/**
 	 * The singleton instance of t_arrays
@@ -81,13 +81,13 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> getMainKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.pk_t_arrays;
+		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_ARRAYS;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.pk_t_arrays);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_ARRAYS);
 	}
 
 	@Override

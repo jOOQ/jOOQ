@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesterritoryhistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord> {
 
-	private static final long serialVersionUID = -324180422;
+	private static final long serialVersionUID = 814165498;
 
 	/**
 	 * The singleton instance of SalesTerritoryHistory
@@ -92,19 +92,19 @@ public class Salesterritoryhistory extends org.jooq.impl.UpdatableTableImpl<org.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTerritoryHistory_SalesPersonID_StartDate_TerritoryID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESTERRITORYHISTORY_SALESPERSONID_STARTDATE_TERRITORYID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTerritoryHistory_SalesPersonID_StartDate_TerritoryID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESTERRITORYHISTORY_SALESPERSONID_STARTDATE_TERRITORYID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesTerritoryHistory_SalesPerson_SalesPersonID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesTerritoryHistory_SalesTerritory_TerritoryID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesterritoryhistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESTERRITORYHISTORY_SALESPERSON_SALESPERSONID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESTERRITORYHISTORY_SALESTERRITORY_TERRITORYID);
 	}
 
 	@Override

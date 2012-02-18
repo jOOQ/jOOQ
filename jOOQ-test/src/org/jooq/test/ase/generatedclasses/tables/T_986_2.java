@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1912420485;
+	private static final long serialVersionUID = -1810675909;
 
 	/**
 	 * The singleton instance of t_986_2
@@ -44,12 +44,12 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record> getMainKey() {
-		return org.jooq.test.ase.generatedclasses.Keys.t_986_2__pk_986;
+		return org.jooq.test.ase.generatedclasses.Keys.T_986_2__PK_986;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record>>asList(org.jooq.test.ase.generatedclasses.Keys.t_986_2__pk_986);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record>>asList(org.jooq.test.ase.generatedclasses.Keys.T_986_2__PK_986);
 	}
 }

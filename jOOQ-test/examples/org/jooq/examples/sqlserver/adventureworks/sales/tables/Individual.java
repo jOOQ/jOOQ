@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord> {
 
-	private static final long serialVersionUID = -102034299;
+	private static final long serialVersionUID = -1514574715;
 
 	/**
 	 * The singleton instance of Individual
@@ -81,19 +81,19 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Individual_CustomerID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_INDIVIDUAL_CUSTOMERID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Individual_CustomerID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_INDIVIDUAL_CUSTOMERID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Individual_Customer_CustomerID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Individual_Contact_ContactID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_INDIVIDUAL_CUSTOMER_CUSTOMERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_INDIVIDUAL_CONTACT_CONTACTID);
 	}
 
 	@Override

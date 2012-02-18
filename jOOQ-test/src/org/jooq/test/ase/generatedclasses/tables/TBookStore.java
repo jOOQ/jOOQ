@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 824598880;
+	private static final long serialVersionUID = 1447027040;
 
 	/**
 	 * The singleton instance of t_book_store
@@ -42,12 +42,12 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.a
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
-		return org.jooq.test.ase.generatedclasses.Keys.t_book_store__uk_t_book_store_name;
+		return org.jooq.test.ase.generatedclasses.Keys.T_BOOK_STORE__UK_T_BOOK_STORE_NAME;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.t_book_store__uk_t_book_store_name);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.T_BOOK_STORE__UK_T_BOOK_STORE_NAME);
 	}
 }

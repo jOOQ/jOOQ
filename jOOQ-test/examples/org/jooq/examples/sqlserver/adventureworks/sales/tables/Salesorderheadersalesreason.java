@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesorderheadersalesreason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> {
 
-	private static final long serialVersionUID = 1937743755;
+	private static final long serialVersionUID = -2011121685;
 
 	/**
 	 * The singleton instance of SalesOrderHeaderSalesReason
@@ -75,19 +75,19 @@ public class Salesorderheadersalesreason extends org.jooq.impl.UpdatableTableImp
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESORDERHEADERSALESREASON_SALESORDERID_SALESREASONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESORDERHEADERSALESREASON_SALESORDERID_SALESREASONID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADERSALESREASON_SALESORDERHEADER_SALESORDERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESORDERHEADERSALESREASON_SALESREASON_SALESREASONID);
 	}
 
 	@Override

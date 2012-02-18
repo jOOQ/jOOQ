@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 934675642;
+	private static final long serialVersionUID = 151743482;
 
 	/**
 	 * The singleton instance of t_639_numbers_table
@@ -104,12 +104,12 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord> getMainKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_t_639_numbers_table_PRIMARY;
+		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_639_NUMBERS_TABLE_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_t_639_numbers_table_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_639_NUMBERS_TABLE_PRIMARY);
 	}
 }

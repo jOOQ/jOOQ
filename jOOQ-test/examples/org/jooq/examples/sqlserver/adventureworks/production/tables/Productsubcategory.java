@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productsubcategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord> {
 
-	private static final long serialVersionUID = -731503621;
+	private static final long serialVersionUID = 1430871099;
 
 	/**
 	 * The singleton instance of ProductSubcategory
@@ -77,24 +77,24 @@ public class Productsubcategory extends org.jooq.impl.UpdatableTableImpl<org.joo
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ProductSubcategory;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_PRODUCTSUBCATEGORY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductSubcategory_ProductSubcategoryID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTSUBCATEGORY_PRODUCTSUBCATEGORYID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductSubcategory_ProductSubcategoryID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTSUBCATEGORY_PRODUCTSUBCATEGORYID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductSubcategory_ProductCategory_ProductCategoryID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTSUBCATEGORY_PRODUCTCATEGORY_PRODUCTCATEGORYID);
 	}
 
 	@Override

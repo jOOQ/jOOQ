@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Stateprovince extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord> {
 
-	private static final long serialVersionUID = 1405711968;
+	private static final long serialVersionUID = 1494278752;
 
 	/**
 	 * The singleton instance of StateProvince
@@ -98,24 +98,24 @@ public class Stateprovince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_StateProvince;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_STATEPROVINCE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_StateProvince_StateProvinceID;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_STATEPROVINCE_STATEPROVINCEID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_StateProvince_StateProvinceID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_STATEPROVINCE_STATEPROVINCEID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_StateProvince_CountryRegion_CountryRegionCode, org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_StateProvince_SalesTerritory_TerritoryID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_STATEPROVINCE_COUNTRYREGION_COUNTRYREGIONCODE, org.jooq.examples.sqlserver.adventureworks.person.Keys.FK_STATEPROVINCE_SALESTERRITORY_TERRITORYID);
 	}
 
 	@Override

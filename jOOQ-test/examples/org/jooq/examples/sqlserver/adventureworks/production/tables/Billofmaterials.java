@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> {
 
-	private static final long serialVersionUID = -1099268047;
+	private static final long serialVersionUID = -1969503055;
 
 	/**
 	 * The singleton instance of BillOfMaterials
@@ -109,24 +109,24 @@ public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_BillOfMaterials;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_BILLOFMATERIALS;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BillOfMaterials_BillOfMaterialsID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BILLOFMATERIALS_BILLOFMATERIALSID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BillOfMaterials_BillOfMaterialsID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BILLOFMATERIALS_BILLOFMATERIALSID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BillOfMaterials_Product_ProductAssemblyID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BillOfMaterials_Product_ComponentID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BillOfMaterials_UnitMeasure_UnitMeasureCode);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BILLOFMATERIALS_PRODUCT_PRODUCTASSEMBLYID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BILLOFMATERIALS_PRODUCT_COMPONENTID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_BILLOFMATERIALS_UNITMEASURE_UNITMEASURECODE);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord> {
 
-	private static final long serialVersionUID = -30360922;
+	private static final long serialVersionUID = -816151866;
 
 	/**
 	 * The singleton instance of Illustration
@@ -64,18 +64,18 @@ public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_Illustration;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ILLUSTRATION;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Illustration_IllustrationID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ILLUSTRATION_ILLUSTRATIONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Illustration_IllustrationID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ILLUSTRATION_ILLUSTRATIONID);
 	}
 
 	@Override

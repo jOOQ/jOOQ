@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1352625513;
+	private static final long serialVersionUID = -1377580695;
 
 	/**
 	 * The singleton instance of t_639_numbers_table
@@ -104,12 +104,12 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.pk_t_639_numbers_table_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE_ID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.pk_t_639_numbers_table_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE_ID);
 	}
 }

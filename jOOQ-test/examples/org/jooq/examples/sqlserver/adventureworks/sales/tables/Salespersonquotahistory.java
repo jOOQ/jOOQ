@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salespersonquotahistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord> {
 
-	private static final long serialVersionUID = 361497276;
+	private static final long serialVersionUID = -2081290468;
 
 	/**
 	 * The singleton instance of SalesPersonQuotaHistory
@@ -79,19 +79,19 @@ public class Salespersonquotahistory extends org.jooq.impl.UpdatableTableImpl<or
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesPersonQuotaHistory_SalesPersonID_QuotaDate;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESPERSONQUOTAHISTORY_SALESPERSONID_QUOTADATE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesPersonQuotaHistory_SalesPersonID_QuotaDate);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESPERSONQUOTAHISTORY_SALESPERSONID_QUOTADATE);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesPersonQuotaHistory_SalesPerson_SalesPersonID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonquotahistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESPERSONQUOTAHISTORY_SALESPERSON_SALESPERSONID);
 	}
 
 	@Override

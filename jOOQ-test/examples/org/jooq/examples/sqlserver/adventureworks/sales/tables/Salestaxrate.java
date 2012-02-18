@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salestaxrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord> {
 
-	private static final long serialVersionUID = 1419503831;
+	private static final long serialVersionUID = -430116521;
 
 	/**
 	 * The singleton instance of SalesTaxRate
@@ -87,24 +87,24 @@ public class Salestaxrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SalesTaxRate;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SALESTAXRATE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTaxRate_SalesTaxRateID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESTAXRATE_SALESTAXRATEID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTaxRate_SalesTaxRateID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESTAXRATE_SALESTAXRATEID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesTaxRate_StateProvince_StateProvinceID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESTAXRATE_STATEPROVINCE_STATEPROVINCEID);
 	}
 
 	@Override

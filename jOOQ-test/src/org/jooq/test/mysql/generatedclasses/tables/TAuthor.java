@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -851164435;
+	private static final long serialVersionUID = 406111981;
 
 	/**
 	 * The singleton instance of t_author
@@ -71,12 +71,12 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_t_author_PRIMARY;
+		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_t_author_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY);
 	}
 }

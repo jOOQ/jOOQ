@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -735395340;
+	private static final long serialVersionUID = 127978004;
 
 	/**
 	 * The singleton instance of t_book_to_book_store
@@ -77,19 +77,19 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
-		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_t_book_to_book_store_PRIMARY;
+		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_t_book_to_book_store_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.fk_b2bs_bs_name, org.jooq.test.mysql2.generatedclasses.Keys.fk_b2bs_b_id);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.mysql2.generatedclasses.Keys.FK_B2BS_BS_NAME, org.jooq.test.mysql2.generatedclasses.Keys.FK_B2BS_B_ID);
 	}
 
 	@Override

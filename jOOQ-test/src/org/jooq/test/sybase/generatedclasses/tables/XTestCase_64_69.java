@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -778969050;
+	private static final long serialVersionUID = 953707622;
 
 	/**
 	 * The singleton instance of x_test_case_64_69
@@ -62,19 +62,19 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> getMainKey() {
-		return org.jooq.test.sybase.generatedclasses.Keys.x_test_case_64_69__pk_x_test_case_64_69;
+		return org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_64_69__PK_X_TEST_CASE_64_69;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.sybase.generatedclasses.Keys.x_test_case_64_69__pk_x_test_case_64_69);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_64_69__PK_X_TEST_CASE_64_69);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.x_test_case_64_69__fk_x_test_case_64_69);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1980455217;
+	private static final long serialVersionUID = -2099140913;
 
 	/**
 	 * The singleton instance of t_author
@@ -78,13 +78,13 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
-		return org.jooq.test.sybase.generatedclasses.Keys.t_author__pk_t_author;
+		return org.jooq.test.sybase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.t_author__pk_t_author);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR);
 	}
 
 	@Override

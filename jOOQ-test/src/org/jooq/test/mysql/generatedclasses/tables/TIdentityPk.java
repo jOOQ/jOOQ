@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -1457560768;
+	private static final long serialVersionUID = 1094770400;
 
 	/**
 	 * The singleton instance of t_identity_pk
@@ -49,17 +49,17 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 
 	@Override
 	public org.jooq.Identity<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.mysql.generatedclasses.Keys.IDENTITY_t_identity_pk;
+		return org.jooq.test.mysql.generatedclasses.Keys.IDENTITY_T_IDENTITY_PK;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_t_identity_pk_PRIMARY;
+		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_IDENTITY_PK_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_t_identity_pk_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_IDENTITY_PK_PRIMARY);
 	}
 }

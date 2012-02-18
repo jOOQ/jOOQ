@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Specialoffer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord> {
 
-	private static final long serialVersionUID = -1467932022;
+	private static final long serialVersionUID = -1751669110;
 
 	/**
 	 * The singleton instance of SpecialOffer
@@ -101,18 +101,18 @@ public class Specialoffer extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SpecialOffer;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_SPECIALOFFER;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOffer_SpecialOfferID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SPECIALOFFER_SPECIALOFFERID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOffer_SpecialOfferID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SPECIALOFFER_SPECIALOFFERID);
 	}
 
 	@Override

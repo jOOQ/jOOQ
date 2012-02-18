@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productreview extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord> {
 
-	private static final long serialVersionUID = 2080536679;
+	private static final long serialVersionUID = -280842201;
 
 	/**
 	 * The singleton instance of ProductReview
@@ -92,24 +92,24 @@ public class Productreview extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_ProductReview;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_PRODUCTREVIEW;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductReview_ProductReviewID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTREVIEW_PRODUCTREVIEWID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductReview_ProductReviewID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTREVIEW_PRODUCTREVIEWID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductReview_Product_ProductID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductreviewRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTREVIEW_PRODUCT_PRODUCTID);
 	}
 
 	@Override

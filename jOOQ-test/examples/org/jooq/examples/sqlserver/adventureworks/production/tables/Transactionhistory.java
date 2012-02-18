@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Transactionhistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord> {
 
-	private static final long serialVersionUID = 129093828;
+	private static final long serialVersionUID = -1465427772;
 
 	/**
 	 * The singleton instance of TransactionHistory
@@ -97,24 +97,24 @@ public class Transactionhistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_TransactionHistory;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_TRANSACTIONHISTORY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistory_TransactionID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TRANSACTIONHISTORY_TRANSACTIONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistory_TransactionID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TRANSACTIONHISTORY_TRANSACTIONID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_TransactionHistory_Product_ProductID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_TRANSACTIONHISTORY_PRODUCT_PRODUCTID);
 	}
 
 	@Override

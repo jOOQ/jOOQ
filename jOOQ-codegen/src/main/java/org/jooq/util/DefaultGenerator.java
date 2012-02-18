@@ -247,7 +247,6 @@ public class DefaultGenerator implements Generator {
 		}
     }
 
-    @SuppressWarnings("deprecation")
     private void generate(
             Database database,
             SchemaDefinition schema,

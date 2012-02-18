@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -2109235097;
+	private static final long serialVersionUID = 1774781543;
 
 	/**
 	 * The singleton instance of t_booleans
@@ -101,13 +101,13 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> getMainKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.pk_t_booleans;
+		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOLEANS;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.pk_t_booleans);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOLEANS);
 	}
 
 	@Override

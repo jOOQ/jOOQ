@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = 1339946034;
+	private static final long serialVersionUID = -919216910;
 
 	/**
 	 * The singleton instance of store
@@ -78,24 +78,24 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, java.lang.Byte> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_store;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_STORE;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_store_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_STORE_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_store_PRIMARY, org.jooq.examples.mysql.sakila.Keys.KEY_store_idx_unique_manager);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_STORE_PRIMARY, org.jooq.examples.mysql.sakila.Keys.KEY_STORE_IDX_UNIQUE_MANAGER);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_store_staff, org.jooq.examples.mysql.sakila.Keys.fk_store_address);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_STORE_STAFF, org.jooq.examples.mysql.sakila.Keys.FK_STORE_ADDRESS);
 	}
 
 	@Override

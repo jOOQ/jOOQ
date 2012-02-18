@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1461721392;
+	private static final long serialVersionUID = 940422448;
 
 	/**
 	 * The singleton instance of t_booleans
@@ -94,12 +94,12 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.my
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> getMainKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_t_booleans_PRIMARY;
+		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOLEANS_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_t_booleans_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOLEANS_PRIMARY);
 	}
 }

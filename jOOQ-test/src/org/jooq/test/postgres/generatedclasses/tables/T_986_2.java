@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1951157798;
+	private static final long serialVersionUID = -1770651142;
 
 	/**
 	 * The singleton instance of t_986_2
@@ -56,7 +56,7 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.t_986_2__fk_986);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record, ?>>asList(org.jooq.test.postgres.generatedclasses.Keys.T_986_2__FK_986);
 	}
 
 	@Override

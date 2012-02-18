@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = -1410657101;
+	private static final long serialVersionUID = -1511715725;
 
 	/**
 	 * The singleton instance of inventory
@@ -78,24 +78,24 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_inventory;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_INVENTORY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_inventory_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_INVENTORY_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_inventory_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_INVENTORY_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_inventory_film, org.jooq.examples.mysql.sakila.Keys.fk_inventory_store);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_INVENTORY_FILM, org.jooq.examples.mysql.sakila.Keys.FK_INVENTORY_STORE);
 	}
 
 	@Override

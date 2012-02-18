@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> {
 
-	private static final long serialVersionUID = -765903162;
+	private static final long serialVersionUID = -1110098234;
 
 	/**
 	 * The singleton instance of film
@@ -123,24 +123,24 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_film;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_FILM;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_film_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_FILM_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_film_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_FILM_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_film_language, org.jooq.examples.mysql.sakila.Keys.fk_film_language_original);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_FILM_LANGUAGE, org.jooq.examples.mysql.sakila.Keys.FK_FILM_LANGUAGE_ORIGINAL);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 907461816;
+	private static final long serialVersionUID = -1095306056;
 
 	/**
 	 * The singleton instance of x_test_case_71
@@ -55,18 +55,18 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record> getMainKey() {
-		return org.jooq.test.ase.generatedclasses.Keys.x_test_case_71__pk_x_test_case_71;
+		return org.jooq.test.ase.generatedclasses.Keys.X_TEST_CASE_71__PK_X_TEST_CASE_71;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.ase.generatedclasses.Keys.x_test_case_71__pk_x_test_case_71);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.ase.generatedclasses.Keys.X_TEST_CASE_71__PK_X_TEST_CASE_71);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.ase.generatedclasses.Keys.x_test_case_71__fk_x_test_case_71);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.ase.generatedclasses.Keys.X_TEST_CASE_71__FK_X_TEST_CASE_71);
 	}
 }

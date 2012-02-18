@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> {
 
-	private static final long serialVersionUID = 1252428992;
+	private static final long serialVersionUID = 182205856;
 
 	/**
 	 * The singleton instance of staff
@@ -113,24 +113,24 @@ public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.Byte> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_staff;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_STAFF;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_staff_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_STAFF_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_staff_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_STAFF_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_staff_address, org.jooq.examples.mysql.sakila.Keys.fk_staff_store);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_STAFF_ADDRESS, org.jooq.examples.mysql.sakila.Keys.FK_STAFF_STORE);
 	}
 
 	@Override

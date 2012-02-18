@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Specialofferproduct extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> {
 
-	private static final long serialVersionUID = -433976387;
+	private static final long serialVersionUID = 121484221;
 
 	/**
 	 * The singleton instance of SpecialOfferProduct
@@ -80,19 +80,19 @@ public class Specialofferproduct extends org.jooq.impl.UpdatableTableImpl<org.jo
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOfferProduct_SpecialOfferID_ProductID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SPECIALOFFERPRODUCT_SPECIALOFFERID_PRODUCTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOfferProduct_SpecialOfferID_ProductID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SPECIALOFFERPRODUCT_SPECIALOFFERID_PRODUCTID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SpecialOfferProduct_Product_ProductID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SPECIALOFFERPRODUCT_SPECIALOFFER_SPECIALOFFERID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SPECIALOFFERPRODUCT_PRODUCT_PRODUCTID);
 	}
 
 	@Override

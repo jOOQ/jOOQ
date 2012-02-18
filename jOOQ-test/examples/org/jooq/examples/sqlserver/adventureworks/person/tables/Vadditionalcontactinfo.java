@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Vadditionalcontactinfo extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.VadditionalcontactinfoRecord> {
 
-	private static final long serialVersionUID = -865746020;
+	private static final long serialVersionUID = 796945340;
 
 	/**
 	 * The singleton instance of vAdditionalContactInfo
@@ -129,7 +129,7 @@ public class Vadditionalcontactinfo extends org.jooq.impl.TableImpl<org.jooq.exa
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.person.tables.records.VadditionalcontactinfoRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_vAdditionalContactInfo;
+		return org.jooq.examples.sqlserver.adventureworks.person.Keys.IDENTITY_VADDITIONALCONTACTINFO;
 	}
 
 	@Override

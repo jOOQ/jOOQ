@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -575141505;
+	private static final long serialVersionUID = 860783999;
 
 	/**
 	 * The singleton instance of t_author
@@ -76,13 +76,13 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
-		return org.jooq.test.postgres.generatedclasses.Keys.pk_t_author;
+		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.pk_t_author);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.postgres.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 
 	@Override

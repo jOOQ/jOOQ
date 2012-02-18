@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> {
 
-	private static final long serialVersionUID = 378378475;
+	private static final long serialVersionUID = 1340751115;
 
 	/**
 	 * The singleton instance of film_actor
@@ -75,19 +75,19 @@ public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_film_actor_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_FILM_ACTOR_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_film_actor_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_FILM_ACTOR_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_film_actor_actor, org.jooq.examples.mysql.sakila.Keys.fk_film_actor_film);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_FILM_ACTOR_ACTOR, org.jooq.examples.mysql.sakila.Keys.FK_FILM_ACTOR_FILM);
 	}
 
 	@Override

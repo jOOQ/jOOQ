@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesperson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord> {
 
-	private static final long serialVersionUID = 421155092;
+	private static final long serialVersionUID = -170641196;
 
 	/**
 	 * The singleton instance of SalesPerson
@@ -103,19 +103,19 @@ public class Salesperson extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesPerson_SalesPersonID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESPERSON_SALESPERSONID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesPerson_SalesPersonID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SALESPERSON_SALESPERSONID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesPerson_Employee_SalesPersonID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SalesPerson_SalesTerritory_TerritoryID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalespersonRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESPERSON_EMPLOYEE_SALESPERSONID, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_SALESPERSON_SALESTERRITORY_TERRITORYID);
 	}
 
 	@Override

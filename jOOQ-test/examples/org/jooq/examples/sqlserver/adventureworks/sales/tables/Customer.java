@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = 2042404207;
+	private static final long serialVersionUID = -1926425297;
 
 	/**
 	 * The singleton instance of Customer
@@ -82,24 +82,24 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_Customer;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.IDENTITY_CUSTOMER;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Customer_CustomerID;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CUSTOMER_CUSTOMERID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Customer_CustomerID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CUSTOMER_CUSTOMERID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_Customer_SalesTerritory_TerritoryID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CUSTOMER_SALESTERRITORY_TERRITORYID);
 	}
 
 	@Override

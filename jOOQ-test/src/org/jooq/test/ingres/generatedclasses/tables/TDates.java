@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -133678646;
+	private static final long serialVersionUID = 584102218;
 
 	/**
 	 * The singleton instance of t_dates
@@ -69,12 +69,12 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingre
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord> getMainKey() {
-		return org.jooq.test.ingres.generatedclasses.Keys.pk_t_dates;
+		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_DATES;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.pk_t_dates);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.ingres.generatedclasses.Keys.PK_T_DATES);
 	}
 }

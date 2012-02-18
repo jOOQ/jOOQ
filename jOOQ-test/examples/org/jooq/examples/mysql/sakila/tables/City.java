@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = -1730970391;
+	private static final long serialVersionUID = -1930075895;
 
 	/**
 	 * The singleton instance of city
@@ -72,24 +72,24 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_city;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_CITY;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_city_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_CITY_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_city_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_CITY_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_city_country);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_CITY_COUNTRY);
 	}
 
 	@Override

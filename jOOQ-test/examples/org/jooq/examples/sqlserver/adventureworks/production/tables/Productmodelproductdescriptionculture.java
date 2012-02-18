@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productmodelproductdescriptionculture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord> {
 
-	private static final long serialVersionUID = -1905363182;
+	private static final long serialVersionUID = 1778538258;
 
 	/**
 	 * The singleton instance of ProductModelProductDescriptionCulture
@@ -88,19 +88,19 @@ public class Productmodelproductdescriptionculture extends org.jooq.impl.Updatab
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE_PRODUCTMODELID_PRODUCTDESCRIPTIONID_CULTUREID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE_PRODUCTMODELID_PRODUCTDESCRIPTIONID_CULTUREID);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_ProductModelProductDescriptionCulture_Culture_CultureID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelproductdescriptioncultureRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE_PRODUCTMODEL_PRODUCTMODELID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE_PRODUCTDESCRIPTION_PRODUCTDESCRIPTIONID, org.jooq.examples.sqlserver.adventureworks.production.Keys.FK_PRODUCTMODELPRODUCTDESCRIPTIONCULTURE_CULTURE_CULTUREID);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Countryregioncurrency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord> {
 
-	private static final long serialVersionUID = -524007537;
+	private static final long serialVersionUID = -1264976881;
 
 	/**
 	 * The singleton instance of CountryRegionCurrency
@@ -75,19 +75,19 @@ public class Countryregioncurrency extends org.jooq.impl.UpdatableTableImpl<org.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode;
+		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_COUNTRYREGIONCURRENCY_COUNTRYREGIONCODE_CURRENCYCODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_COUNTRYREGIONCURRENCY_COUNTRYREGIONCODE_CURRENCYCODE);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CountryRegionCurrency_CountryRegion_CountryRegionCode, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_CountryRegionCurrency_Currency_CurrencyCode);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryregioncurrencyRecord, ?>>asList(org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_COUNTRYREGIONCURRENCY_COUNTRYREGION_COUNTRYREGIONCODE, org.jooq.examples.sqlserver.adventureworks.sales.Keys.FK_COUNTRYREGIONCURRENCY_CURRENCY_CURRENCYCODE);
 	}
 
 	@Override

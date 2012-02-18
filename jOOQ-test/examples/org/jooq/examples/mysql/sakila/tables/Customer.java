@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = 741996350;
+	private static final long serialVersionUID = 1474086718;
 
 	/**
 	 * The singleton instance of customer
@@ -103,24 +103,24 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, java.lang.Short> getIdentity() {
-		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_customer;
+		return org.jooq.examples.mysql.sakila.Keys.IDENTITY_CUSTOMER;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> getMainKey() {
-		return org.jooq.examples.mysql.sakila.Keys.KEY_customer_PRIMARY;
+		return org.jooq.examples.mysql.sakila.Keys.KEY_CUSTOMER_PRIMARY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_customer_PRIMARY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord>>asList(org.jooq.examples.mysql.sakila.Keys.KEY_CUSTOMER_PRIMARY);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.fk_customer_store, org.jooq.examples.mysql.sakila.Keys.fk_customer_address);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, ?>>asList(org.jooq.examples.mysql.sakila.Keys.FK_CUSTOMER_STORE, org.jooq.examples.mysql.sakila.Keys.FK_CUSTOMER_ADDRESS);
 	}
 
 	@Override

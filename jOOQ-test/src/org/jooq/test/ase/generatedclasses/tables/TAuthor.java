@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 467657054;
+	private static final long serialVersionUID = 993218910;
 
 	/**
 	 * The singleton instance of t_author
@@ -69,12 +69,12 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
-		return org.jooq.test.ase.generatedclasses.Keys.t_author__pk_t_author;
+		return org.jooq.test.ase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.t_author__pk_t_author);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.ase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR);
 	}
 }

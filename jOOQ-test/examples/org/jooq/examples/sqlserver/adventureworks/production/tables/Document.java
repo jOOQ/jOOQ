@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Document extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord> {
 
-	private static final long serialVersionUID = 1670019557;
+	private static final long serialVersionUID = 688306693;
 
 	/**
 	 * The singleton instance of Document
@@ -96,18 +96,18 @@ public class Document extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 
 	@Override
 	public org.jooq.Identity<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_Document;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.IDENTITY_DOCUMENT;
 	}
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord> getMainKey() {
-		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Document_DocumentID;
+		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_DOCUMENT_DOCUMENTID;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Document_DocumentID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.DocumentRecord>>asList(org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_DOCUMENT_DOCUMENTID);
 	}
 
 	@Override

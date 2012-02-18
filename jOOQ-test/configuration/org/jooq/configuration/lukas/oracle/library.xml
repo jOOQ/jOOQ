@@ -120,6 +120,8 @@
             <deprecated>true</deprecated>
             <instanceFields>true</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
+            <pojos>true</pojos>
+            <jpaAnnotations>true</jpaAnnotations>
         </generate>
         <target>
             <packageName>org.jooq.test.oracle.generatedclasses</packageName>

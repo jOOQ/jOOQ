@@ -247,7 +247,7 @@ CREATE SEQUENCE s_triggers_sequence
 /
 
 CREATE TABLE t_dates (
-  id int,
+  id number(7),
   d date,
   t timestamp,
   ts timestamp,

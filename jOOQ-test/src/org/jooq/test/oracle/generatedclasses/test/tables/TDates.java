@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1807149145;
+	private static final long serialVersionUID = -800772737;
 
 	/**
 	 * The singleton instance of T_DATES
@@ -33,7 +33,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	 * 
 	 * PRIMARY KEY
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * An uncommented item

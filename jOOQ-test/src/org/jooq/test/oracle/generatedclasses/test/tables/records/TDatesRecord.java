@@ -8,14 +8,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  */
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 71390418;
+	private static final long serialVersionUID = 2123150840;
 
 	/**
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
 	 */
-	public void setId(java.math.BigDecimal value) {
+	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.ID, value);
 	}
 
@@ -24,7 +24,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * 
 	 * PRIMARY KEY
 	 */
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.ID);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = 132256521;
+	private static final long serialVersionUID = -1730970391;
 
 	/**
 	 * The singleton instance of city
@@ -44,8 +44,9 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.city.country_id]
-	 * REFERENCES country [sakila.country.country_id]
+	 * CONSTRAINT fk_city_country
+	 * FOREIGN KEY (country_id)
+	 * REFERENCES sakila.country (country_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CityRecord, java.lang.Short> COUNTRY_ID = createField("country_id", org.jooq.impl.SQLDataType.SMALLINT, this);

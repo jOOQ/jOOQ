@@ -142,6 +142,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    @Deprecated
     public String getOutputSchema(String inputSchema) {
         for (Schema schema : configuredSchemata) {
             if (inputSchema.equals(schema.getInputSchema())) {

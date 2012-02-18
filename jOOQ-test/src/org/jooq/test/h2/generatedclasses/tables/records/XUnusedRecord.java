@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1368358872;
+	private static final long serialVersionUID = -2133981856;
 
 	/**
 	 * An uncommented item
@@ -76,8 +76,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF, PUBLIC.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
+	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
@@ -88,8 +89,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF, PUBLIC.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
+	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef() {
@@ -100,8 +102,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF, PUBLIC.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
+	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
@@ -112,8 +115,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.ID_REF, PUBLIC.X_UNUSED.NAME_REF, PUBLIC.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID, PUBLIC.X_UNUSED.NAME]
+	 * CONSTRAINT FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, ID_REF, NAME_REF, NAME_REF)
+	 * REFERENCES PUBLIC.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getNameRef() {

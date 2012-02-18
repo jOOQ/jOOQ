@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Shoppingcartitem extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord> {
 
-	private static final long serialVersionUID = -1686388857;
+	private static final long serialVersionUID = -1558166555;
 
 	/**
 	 * The singleton instance of ShoppingCartItem
@@ -49,8 +49,9 @@ public class Shoppingcartitem extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ShoppingCartItem.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ShoppingCartItem_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingcartitemRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);

@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CityRecord> {
 
-	private static final long serialVersionUID = -906691002;
+	private static final long serialVersionUID = 969805918;
 
 	/**
 	 * An uncommented item
@@ -58,8 +58,9 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.city.country_id]
-	 * REFERENCES country [sakila.country.country_id]
+	 * CONSTRAINT fk_city_country
+	 * FOREIGN KEY (country_id)
+	 * REFERENCES sakila.country (country_id)
 	 * </pre></code>
 	 */
 	public void setCountryId(java.lang.Short value) {
@@ -70,8 +71,9 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.city.country_id]
-	 * REFERENCES country [sakila.country.country_id]
+	 * CONSTRAINT fk_city_country
+	 * FOREIGN KEY (country_id)
+	 * REFERENCES sakila.country (country_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getCountryId() {
@@ -82,8 +84,9 @@ public class CityRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.city.country_id]
-	 * REFERENCES country [sakila.country.country_id]
+	 * CONSTRAINT fk_city_country
+	 * FOREIGN KEY (country_id)
+	 * REFERENCES sakila.country (country_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CountryRecord fetchCountry() {

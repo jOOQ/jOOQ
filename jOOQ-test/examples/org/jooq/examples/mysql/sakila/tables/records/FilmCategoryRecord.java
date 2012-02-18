@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> {
 
-	private static final long serialVersionUID = 207084909;
+	private static final long serialVersionUID = 484678669;
 
 	/**
 	 * An uncommented item
@@ -16,8 +16,9 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_category_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public void setFilmId(java.lang.Short value) {
@@ -30,8 +31,9 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_category_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getFilmId() {
@@ -44,8 +46,9 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_category_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {
@@ -61,8 +64,9 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.category_id]
-	 * REFERENCES category [sakila.category.category_id]
+	 * CONSTRAINT fk_film_category_category
+	 * FOREIGN KEY (category_id)
+	 * REFERENCES sakila.category (category_id)
 	 * </pre></code>
 	 */
 	public void setCategoryId(java.lang.Byte value) {
@@ -75,8 +79,9 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.category_id]
-	 * REFERENCES category [sakila.category.category_id]
+	 * CONSTRAINT fk_film_category_category
+	 * FOREIGN KEY (category_id)
+	 * REFERENCES sakila.category (category_id)
 	 * </pre></code>
 	 */
 	public java.lang.Byte getCategoryId() {
@@ -89,8 +94,9 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.category_id]
-	 * REFERENCES category [sakila.category.category_id]
+	 * CONSTRAINT fk_film_category_category
+	 * FOREIGN KEY (category_id)
+	 * REFERENCES sakila.category (category_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CategoryRecord fetchCategory() {

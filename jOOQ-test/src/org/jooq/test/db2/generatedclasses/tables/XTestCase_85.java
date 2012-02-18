@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -652205554;
+	private static final long serialVersionUID = -1631943254;
 
 	/**
 	 * The singleton instance of X_TEST_CASE_85
@@ -39,8 +39,9 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("X_UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
@@ -49,8 +50,9 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_TEST_CASE_85.X_UNUSED_ID, LUKAS.X_TEST_CASE_85.X_UNUSED_NAME]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_TEST_CASE_85__FK_X_TEST_CASE_85
+	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, X_TEST_CASE_85);

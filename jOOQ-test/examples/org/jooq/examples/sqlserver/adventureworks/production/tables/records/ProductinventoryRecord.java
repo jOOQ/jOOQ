@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductinventoryRecord> {
 
-	private static final long serialVersionUID = 281701012;
+	private static final long serialVersionUID = 685148630;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductInventory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductInventory_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductInventory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductInventory_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")
@@ -49,8 +51,9 @@ public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductInventory.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
+	 * CONSTRAINT FK_ProductInventory_Location_LocationID
+	 * FOREIGN KEY (LocationID)
+	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
 	public void setLocationid(java.lang.Short value) {
@@ -63,8 +66,9 @@ public class ProductinventoryRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductInventory.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
+	 * CONSTRAINT FK_ProductInventory_Location_LocationID
+	 * FOREIGN KEY (LocationID)
+	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "LocationID")

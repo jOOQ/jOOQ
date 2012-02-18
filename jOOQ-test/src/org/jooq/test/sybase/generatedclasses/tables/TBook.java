@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -2016322812;
+	private static final long serialVersionUID = -210728530;
 
 	/**
 	 * The singleton instance of t_book
@@ -41,8 +41,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -51,8 +52,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.CO_AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -76,8 +78,9 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.LANGUAGE_ID]
-	 * REFERENCES t_language [dba.t_language.id]
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES dba.t_language (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.sybase.generatedclasses.enums.TLanguage.class), this);

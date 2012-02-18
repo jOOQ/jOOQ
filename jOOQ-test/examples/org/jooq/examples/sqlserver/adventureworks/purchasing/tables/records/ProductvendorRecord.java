@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord> {
 
-	private static final long serialVersionUID = 1825944154;
+	private static final long serialVersionUID = 71727860;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductVendor_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductVendor_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")
@@ -49,8 +51,9 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	public void setVendorid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "VendorID")
@@ -181,8 +185,9 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
+	 * FOREIGN KEY (UnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public void setUnitmeasurecode(java.lang.String value) {
@@ -193,8 +198,9 @@ public class ProductvendorRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
+	 * FOREIGN KEY (UnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "UnitMeasureCode")

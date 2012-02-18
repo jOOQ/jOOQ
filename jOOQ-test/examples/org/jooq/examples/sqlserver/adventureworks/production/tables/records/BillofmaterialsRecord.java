@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "BillOfMaterials", schema = "Production")
 public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> {
 
-	private static final long serialVersionUID = -509911625;
+	private static final long serialVersionUID = 241256449;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ProductAssemblyID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
+	 * FOREIGN KEY (ProductAssemblyID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductassemblyid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ProductAssemblyID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_BillOfMaterials_Product_ProductAssemblyID
+	 * FOREIGN KEY (ProductAssemblyID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductAssemblyID")
@@ -61,8 +63,9 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ComponentID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
+	 * FOREIGN KEY (ComponentID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setComponentid(java.lang.Integer value) {
@@ -73,8 +76,9 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.ComponentID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_BillOfMaterials_Product_ComponentID
+	 * FOREIGN KEY (ComponentID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ComponentID")
@@ -116,8 +120,9 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
+	 * FOREIGN KEY (UnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public void setUnitmeasurecode(java.lang.String value) {
@@ -128,8 +133,9 @@ public class BillofmaterialsRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.BillOfMaterials.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_BillOfMaterials_UnitMeasure_UnitMeasureCode
+	 * FOREIGN KEY (UnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "UnitMeasureCode")

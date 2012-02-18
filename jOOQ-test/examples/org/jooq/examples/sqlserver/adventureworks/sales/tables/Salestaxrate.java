@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salestaxrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord> {
 
-	private static final long serialVersionUID = 554105775;
+	private static final long serialVersionUID = 1419503831;
 
 	/**
 	 * The singleton instance of SalesTaxRate
@@ -39,8 +39,9 @@ public class Salestaxrate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesTaxRate.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
+	 * CONSTRAINT FK_SalesTaxRate_StateProvince_StateProvinceID
+	 * FOREIGN KEY (StateProvinceID)
+	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalestaxrateRecord, java.lang.Integer> STATEPROVINCEID = createField("StateProvinceID", org.jooq.impl.SQLDataType.INTEGER, this);

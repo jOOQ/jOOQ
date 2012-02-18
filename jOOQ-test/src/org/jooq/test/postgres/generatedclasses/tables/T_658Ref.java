@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -127167658;
+	private static final long serialVersionUID = -900598214;
 
 	/**
 	 * The singleton instance of t_658_ref
@@ -32,8 +32,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.t_658_ref.ref_11]
-	 * REFERENCES t_658_11 [public.t_658_11.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_11
+	 * FOREIGN KEY (ref_11)
+	 * REFERENCES public.t_658_11 (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.postgres.generatedclasses.enums.T_658_11> REF_11 = createField("ref_11", org.jooq.impl.SQLDataType.CHAR.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.T_658_11.class), this);
@@ -42,8 +43,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.t_658_ref.ref_21]
-	 * REFERENCES t_658_21 [public.t_658_21.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_21
+	 * FOREIGN KEY (ref_21)
+	 * REFERENCES public.t_658_21 (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.postgres.generatedclasses.enums.T_658_21> REF_21 = createField("ref_21", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.T_658_21.class), this);
@@ -52,8 +54,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.t_658_ref.ref_31]
-	 * REFERENCES t_658_31 [public.t_658_31.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_31
+	 * FOREIGN KEY (ref_31)
+	 * REFERENCES public.t_658_31 (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.postgres.generatedclasses.enums.T_658_31> REF_31 = createField("ref_31", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.T_658_31.class), this);
@@ -62,8 +65,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.t_658_ref.ref_12]
-	 * REFERENCES t_658_12 [public.t_658_12.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_12
+	 * FOREIGN KEY (ref_12)
+	 * REFERENCES public.t_658_12 (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.postgres.generatedclasses.enums.T_658_12> REF_12 = createField("ref_12", org.jooq.impl.SQLDataType.CHAR.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.T_658_12.class), this);
@@ -72,8 +76,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.t_658_ref.ref_22]
-	 * REFERENCES t_658_22 [public.t_658_22.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_22
+	 * FOREIGN KEY (ref_22)
+	 * REFERENCES public.t_658_22 (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.postgres.generatedclasses.enums.T_658_22> REF_22 = createField("ref_22", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.T_658_22.class), this);
@@ -82,8 +87,9 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.t_658_ref.ref_32]
-	 * REFERENCES t_658_32 [public.t_658_32.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_32
+	 * FOREIGN KEY (ref_32)
+	 * REFERENCES public.t_658_32 (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.postgres.generatedclasses.enums.T_658_32> REF_32 = createField("ref_32", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.postgres.generatedclasses.enums.T_658_32.class), this);

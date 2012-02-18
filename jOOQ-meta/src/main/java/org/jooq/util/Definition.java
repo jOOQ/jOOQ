@@ -36,6 +36,7 @@
 
 package org.jooq.util;
 
+import java.util.List;
 
 /**
  * A general interface defining any database object, such as tables, views,
@@ -56,9 +57,30 @@ public interface Definition {
     SchemaDefinition getSchema();
 
     /**
-     * @return The name of this object, e.g. [my_table]
+     * @return The name of this object, e.g. [my_table]. This corresponds to
+     *         {@link #getInputName()}
      */
     String getName();
+
+    /**
+     * @return The name of this object, e.g. [my_table], as defined in the
+     *         source database.
+     */
+    String getInputName();
+
+    /**
+     * @return The name of this object, e.g. [my_table], as defined for the
+     *         target database. This may differ from the input name if schema /
+     *         table rewriting is applied.
+     */
+    String getOutputName();
+
+    /**
+     * @return The name of this object, e.g. [my_table], as defined for the
+     *         generated source code. This may differ from the output name, if
+     *         some re-configuration has been done.
+     */
+    String getJavaName();
 
     /**
      * @return The comment of this object
@@ -66,9 +88,28 @@ public interface Definition {
     String getComment();
 
     /**
-     * @return A qualified name for this object
+     * @return A path of definitions for this definition, e.g.
+     *         <code>[schema].[package].[routine].[parameter]</code>
+     */
+    List<Definition> getDefinitionPath();
+
+    /**
+     * @return A qualified name for this object (corresponding to
+     *         {@link #getName()})
      */
     String getQualifiedName();
+
+    /**
+     * @return A qualified name for this object (corresponding to
+     *         {@link #getInputName()})
+     */
+    String getQualifiedInputName();
+
+    /**
+     * @return A qualified name for this object (corresponding to
+     *         {@link #getOutputName()})
+     */
+    String getQualifiedOutputName();
 
     /**
      * @return The overload suffix if applicable

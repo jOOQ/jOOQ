@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Individual", schema = "Sales")
 public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.IndividualRecord> {
 
-	private static final long serialVersionUID = 1818733005;
+	private static final long serialVersionUID = 423878033;
 
 	/**
 	 * An uncommented item
@@ -18,8 +18,9 @@ public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Individual.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_Individual_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	public void setCustomerid(java.lang.Integer value) {
@@ -32,8 +33,9 @@ public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Individual.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_Individual_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Id
@@ -46,8 +48,9 @@ public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Individual.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_Individual_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public void setContactid(java.lang.Integer value) {
@@ -58,8 +61,9 @@ public class IndividualRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.Individual.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_Individual_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactID")

@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> {
 
-	private static final long serialVersionUID = -2132629814;
+	private static final long serialVersionUID = -765903162;
 
 	/**
 	 * The singleton instance of film
@@ -54,8 +54,9 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.Byte> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.TINYINT, this);
@@ -64,8 +65,9 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.original_language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language_original
+	 * FOREIGN KEY (original_language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.Byte> ORIGINAL_LANGUAGE_ID = createField("original_language_id", org.jooq.impl.SQLDataType.TINYINT, this);

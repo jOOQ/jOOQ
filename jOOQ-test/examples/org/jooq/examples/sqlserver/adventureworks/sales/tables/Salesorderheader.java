@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> {
 
-	private static final long serialVersionUID = -166253841;
+	private static final long serialVersionUID = -619375985;
 
 	/**
 	 * The singleton instance of SalesOrderHeader
@@ -84,8 +84,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_SalesOrderHeader_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> CUSTOMERID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -94,8 +95,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_SalesOrderHeader_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> CONTACTID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -104,8 +106,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
+	 * CONSTRAINT FK_SalesOrderHeader_SalesPerson_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> SALESPERSONID = createField("SalesPersonID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -114,8 +117,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_SalesOrderHeader_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> TERRITORYID = createField("TerritoryID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -124,8 +128,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.BillToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_SalesOrderHeader_Address_BillToAddressID
+	 * FOREIGN KEY (BillToAddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> BILLTOADDRESSID = createField("BillToAddressID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -134,8 +139,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_SalesOrderHeader_Address_ShipToAddressID
+	 * FOREIGN KEY (ShipToAddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> SHIPTOADDRESSID = createField("ShipToAddressID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -144,8 +150,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
+	 * CONSTRAINT FK_SalesOrderHeader_ShipMethod_ShipMethodID
+	 * FOREIGN KEY (ShipMethodID)
+	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> SHIPMETHODID = createField("ShipMethodID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -154,8 +161,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
+	 * CONSTRAINT FK_SalesOrderHeader_CreditCard_CreditCardID
+	 * FOREIGN KEY (CreditCardID)
+	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> CREDITCARDID = createField("CreditCardID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -169,8 +177,9 @@ public class Salesorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CurrencyRateID]
-	 * REFERENCES CurrencyRate [Sales.CurrencyRate.CurrencyRateID]
+	 * CONSTRAINT FK_SalesOrderHeader_CurrencyRate_CurrencyRateID
+	 * FOREIGN KEY (CurrencyRateID)
+	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord, java.lang.Integer> CURRENCYRATEID = createField("CurrencyRateID", org.jooq.impl.SQLDataType.INTEGER, this);

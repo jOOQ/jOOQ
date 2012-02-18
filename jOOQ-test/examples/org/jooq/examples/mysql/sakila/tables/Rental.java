@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -190087407;
+	private static final long serialVersionUID = -1346846253;
 
 	/**
 	 * The singleton instance of rental
@@ -44,8 +44,9 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.inventory_id]
-	 * REFERENCES inventory [sakila.inventory.inventory_id]
+	 * CONSTRAINT fk_rental_inventory
+	 * FOREIGN KEY (inventory_id)
+	 * REFERENCES sakila.inventory (inventory_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Integer> INVENTORY_ID = createField("inventory_id", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -54,8 +55,9 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.customer_id]
-	 * REFERENCES customer [sakila.customer.customer_id]
+	 * CONSTRAINT fk_rental_customer
+	 * FOREIGN KEY (customer_id)
+	 * REFERENCES sakila.customer (customer_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Short> CUSTOMER_ID = createField("customer_id", org.jooq.impl.SQLDataType.SMALLINT, this);
@@ -69,8 +71,9 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.rental.staff_id]
-	 * REFERENCES staff [sakila.staff.staff_id]
+	 * CONSTRAINT fk_rental_staff
+	 * FOREIGN KEY (staff_id)
+	 * REFERENCES sakila.staff (staff_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.RentalRecord, java.lang.Byte> STAFF_ID = createField("staff_id", org.jooq.impl.SQLDataType.TINYINT, this);

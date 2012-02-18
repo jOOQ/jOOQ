@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = 72829924;
+	private static final long serialVersionUID = -1506444876;
 
 	/**
 	 * An uncommented item
@@ -56,8 +56,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_customer_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public void setStoreId(java.lang.Byte value) {
@@ -68,8 +69,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_customer_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public java.lang.Byte getStoreId() {
@@ -80,8 +82,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_customer_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.StoreRecord fetchStore() {
@@ -137,8 +140,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.address_id]
-	 * REFERENCES address [sakila.address.address_id]
+	 * CONSTRAINT fk_customer_address
+	 * FOREIGN KEY (address_id)
+	 * REFERENCES sakila.address (address_id)
 	 * </pre></code>
 	 */
 	public void setAddressId(java.lang.Short value) {
@@ -149,8 +153,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.address_id]
-	 * REFERENCES address [sakila.address.address_id]
+	 * CONSTRAINT fk_customer_address
+	 * FOREIGN KEY (address_id)
+	 * REFERENCES sakila.address (address_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getAddressId() {
@@ -161,8 +166,9 @@ public class CustomerRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.address_id]
-	 * REFERENCES address [sakila.address.address_id]
+	 * CONSTRAINT fk_customer_address
+	 * FOREIGN KEY (address_id)
+	 * REFERENCES sakila.address (address_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.AddressRecord fetchAddress() {

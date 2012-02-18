@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_71", schema = "public")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -792974538;
+	private static final long serialVersionUID = -85546243;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_test_case_71.test_case_64_69_id]
-	 * REFERENCES x_test_case_64_69 [public.x_test_case_64_69.id]
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * FOREIGN KEY (test_case_64_69_id)
+	 * REFERENCES public.x_test_case_64_69 (id)
 	 * </pre></code>
 	 */
 	public void setTestCase_64_69Id(java.lang.Short value) {
@@ -48,8 +49,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_test_case_71.test_case_64_69_id]
-	 * REFERENCES x_test_case_64_69 [public.x_test_case_64_69.id]
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * FOREIGN KEY (test_case_64_69_id)
+	 * REFERENCES public.x_test_case_64_69 (id)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "test_case_64_69_id")
@@ -61,8 +63,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [public.x_test_case_71.test_case_64_69_id]
-	 * REFERENCES x_test_case_64_69 [public.x_test_case_64_69.id]
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * FOREIGN KEY (test_case_64_69_id)
+	 * REFERENCES public.x_test_case_64_69 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {

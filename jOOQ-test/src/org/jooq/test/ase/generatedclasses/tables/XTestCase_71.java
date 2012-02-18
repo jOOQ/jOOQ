@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 137354747;
+	private static final long serialVersionUID = 907461816;
 
 	/**
 	 * The singleton instance of x_test_case_71
@@ -39,8 +39,9 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_71.TEST_CASE_64_69_ID]
-	 * REFERENCES x_test_case_64_69 [dbo.x_test_case_64_69.ID]
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * FOREIGN KEY (TEST_CASE_64_69_ID)
+	 * REFERENCES dbo.x_test_case_64_69 (ID)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);

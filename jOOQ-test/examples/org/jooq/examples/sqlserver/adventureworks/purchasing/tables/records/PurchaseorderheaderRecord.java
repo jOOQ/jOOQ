@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "PurchaseOrderHeader", schema = "Purchasing")
 public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> {
 
-	private static final long serialVersionUID = -455800583;
+	private static final long serialVersionUID = -933770247;
 
 	/**
 	 * An uncommented item
@@ -66,8 +66,9 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public void setEmployeeid(java.lang.Integer value) {
@@ -78,8 +79,9 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.EmployeeID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_Employee_EmployeeID
+	 * FOREIGN KEY (EmployeeID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "EmployeeID")
@@ -91,8 +93,9 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	public void setVendorid(java.lang.Integer value) {
@@ -103,8 +106,9 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "VendorID")
@@ -116,8 +120,9 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
+	 * FOREIGN KEY (ShipMethodID)
+	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
 	public void setShipmethodid(java.lang.Integer value) {
@@ -128,8 +133,9 @@ public class PurchaseorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
+	 * CONSTRAINT FK_PurchaseOrderHeader_ShipMethod_ShipMethodID
+	 * FOREIGN KEY (ShipMethodID)
+	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ShipMethodID")

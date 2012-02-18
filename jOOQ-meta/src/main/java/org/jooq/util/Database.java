@@ -150,8 +150,11 @@ public interface Database {
     List<String> getInputSchemata();
 
     /**
-     *  The output schema is the schema used by jooq-codegen in class names
+     * The output schema is the schema used by jooq-codegen in class names
+     *
+     * @deprecated - 2.0.5 - This will be implemented in each {@link Definition#getOutputName()}
      */
+    @Deprecated
     String getOutputSchema(String inputSchema);
 
     /**

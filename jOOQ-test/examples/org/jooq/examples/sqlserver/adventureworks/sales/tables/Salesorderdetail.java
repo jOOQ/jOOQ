@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Salesorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord> {
 
-	private static final long serialVersionUID = -407837673;
+	private static final long serialVersionUID = 595540630;
 
 	/**
 	 * The singleton instance of SalesOrderDetail
@@ -34,8 +34,9 @@ public class Salesorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
+	 * CONSTRAINT FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID
+	 * FOREIGN KEY (SalesOrderID)
+	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, java.lang.Integer> SALESORDERID = createField("SalesOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -61,8 +62,9 @@ public class Salesorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
+	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
+	 * FOREIGN KEY (SpecialOfferID, ProductID)
+	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -71,8 +73,9 @@ public class Salesorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderDetail.SpecialOfferID, Sales.SalesOrderDetail.ProductID]
-	 * REFERENCES SpecialOfferProduct [Sales.SpecialOfferProduct.SpecialOfferID, Sales.SpecialOfferProduct.ProductID]
+	 * CONSTRAINT FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID
+	 * FOREIGN KEY (SpecialOfferID, ProductID)
+	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderdetailRecord, java.lang.Integer> SPECIALOFFERID = createField("SpecialOfferID", org.jooq.impl.SQLDataType.INTEGER, this);

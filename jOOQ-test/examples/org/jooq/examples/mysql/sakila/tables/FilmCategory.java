@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> {
 
-	private static final long serialVersionUID = 1695281437;
+	private static final long serialVersionUID = 589056337;
 
 	/**
 	 * The singleton instance of film_category
@@ -34,8 +34,9 @@ public class FilmCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.film_id]
-	 * REFERENCES film [sakila.film.film_id]
+	 * CONSTRAINT fk_film_category_film
+	 * FOREIGN KEY (film_id)
+	 * REFERENCES sakila.film (film_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord, java.lang.Short> FILM_ID = createField("film_id", org.jooq.impl.SQLDataType.SMALLINT, this);
@@ -46,8 +47,9 @@ public class FilmCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film_category.category_id]
-	 * REFERENCES category [sakila.category.category_id]
+	 * CONSTRAINT fk_film_category_category
+	 * FOREIGN KEY (category_id)
+	 * REFERENCES sakila.category (category_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord, java.lang.Byte> CATEGORY_ID = createField("category_id", org.jooq.impl.SQLDataType.TINYINT, this);

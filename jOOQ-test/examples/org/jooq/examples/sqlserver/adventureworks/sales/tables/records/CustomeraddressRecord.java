@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord> {
 
-	private static final long serialVersionUID = -1045228540;
+	private static final long serialVersionUID = -18148744;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	public void setCustomerid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CustomerID")
@@ -49,8 +51,9 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public void setAddressid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "AddressID")
@@ -76,8 +80,9 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressTypeID]
-	 * REFERENCES AddressType [Person.AddressType.AddressTypeID]
+	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
+	 * FOREIGN KEY (AddressTypeID)
+	 * REFERENCES Person.AddressType (AddressTypeID)
 	 * </pre></code>
 	 */
 	public void setAddresstypeid(java.lang.Integer value) {
@@ -88,8 +93,9 @@ public class CustomeraddressRecord extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressTypeID]
-	 * REFERENCES AddressType [Person.AddressType.AddressTypeID]
+	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
+	 * FOREIGN KEY (AddressTypeID)
+	 * REFERENCES Person.AddressType (AddressTypeID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "AddressTypeID")

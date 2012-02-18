@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductSubcategory", schema = "Production")
 public class ProductsubcategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord> {
 
-	private static final long serialVersionUID = -1625373226;
+	private static final long serialVersionUID = 456393660;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class ProductsubcategoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductSubcategory.ProductCategoryID]
-	 * REFERENCES ProductCategory [Production.ProductCategory.ProductCategoryID]
+	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
+	 * FOREIGN KEY (ProductCategoryID)
+	 * REFERENCES Production.ProductCategory (ProductCategoryID)
 	 * </pre></code>
 	 */
 	public void setProductcategoryid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class ProductsubcategoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductSubcategory.ProductCategoryID]
-	 * REFERENCES ProductCategory [Production.ProductCategory.ProductCategoryID]
+	 * CONSTRAINT FK_ProductSubcategory_ProductCategory_ProductCategoryID
+	 * FOREIGN KEY (ProductCategoryID)
+	 * REFERENCES Production.ProductCategory (ProductCategoryID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductCategoryID")

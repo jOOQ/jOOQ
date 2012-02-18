@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = 477614846;
+	private static final long serialVersionUID = 741996350;
 
 	/**
 	 * The singleton instance of customer
@@ -39,8 +39,9 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.store_id]
-	 * REFERENCES store [sakila.store.store_id]
+	 * CONSTRAINT fk_customer_store
+	 * FOREIGN KEY (store_id)
+	 * REFERENCES sakila.store (store_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, java.lang.Byte> STORE_ID = createField("store_id", org.jooq.impl.SQLDataType.TINYINT, this);
@@ -64,8 +65,9 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.customer.address_id]
-	 * REFERENCES address [sakila.address.address_id]
+	 * CONSTRAINT fk_customer_address
+	 * FOREIGN KEY (address_id)
+	 * REFERENCES sakila.address (address_id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, java.lang.Short> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.SMALLINT, this);

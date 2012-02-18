@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1390387081;
+	private static final long serialVersionUID = 633459480;
 
 	/**
 	 * An uncommented item
@@ -126,8 +126,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_UNUSED.ID_REF, LUKAS.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_UNUSED__FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
@@ -138,8 +139,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_UNUSED.ID_REF, LUKAS.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_UNUSED__FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef() {
@@ -150,8 +152,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_UNUSED.ID_REF, LUKAS.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_UNUSED__FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -306,8 +309,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_UNUSED.ID_REF, LUKAS.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_UNUSED__FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
@@ -318,8 +322,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [LUKAS.X_UNUSED.ID_REF, LUKAS.X_UNUSED.NAME_REF]
-	 * REFERENCES X_UNUSED [LUKAS.X_UNUSED.ID, LUKAS.X_UNUSED.NAME]
+	 * CONSTRAINT X_UNUSED__FK_X_UNUSED_SELF
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES LUKAS.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getNameRef() {

@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 355607049;
+	private static final long serialVersionUID = -757434142;
 
 	/**
 	 * The book ID
@@ -50,8 +50,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * The author ID in entity 'author'
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [test2.t_author.ID]
+	 * CONSTRAINT fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
@@ -62,8 +63,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * The author ID in entity 'author'
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [test2.t_author.ID]
+	 * CONSTRAINT fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID")
@@ -75,8 +77,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * The author ID in entity 'author'
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [test2.t_author.ID]
+	 * CONSTRAINT fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
@@ -90,8 +93,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.co_author_id]
-	 * REFERENCES t_author [test2.t_author.ID]
+	 * CONSTRAINT fk_t_book_co_author_id
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -102,8 +106,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.co_author_id]
-	 * REFERENCES t_author [test2.t_author.ID]
+	 * CONSTRAINT fk_t_book_co_author_id
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "co_author_id")
@@ -115,8 +120,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.co_author_id]
-	 * REFERENCES t_author [test2.t_author.ID]
+	 * CONSTRAINT fk_t_book_co_author_id
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
@@ -175,8 +181,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * The language of the book
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.LANGUAGE_ID]
-	 * REFERENCES t_language [test2.t_language.ID]
+	 * CONSTRAINT fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES test2.t_language (ID)
 	 * </pre></code>
 	 */
 	public void setLanguageId(org.jooq.test.mysql2.generatedclasses.enums.TLanguage value) {
@@ -187,8 +194,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * The language of the book
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [test2.t_book.LANGUAGE_ID]
-	 * REFERENCES t_language [test2.t_language.ID]
+	 * CONSTRAINT fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES test2.t_language (ID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID")

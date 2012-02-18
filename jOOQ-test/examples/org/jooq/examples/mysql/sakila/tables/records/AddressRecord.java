@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = -1773246577;
+	private static final long serialVersionUID = 1459879401;
 
 	/**
 	 * An uncommented item
@@ -110,8 +110,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.address.city_id]
-	 * REFERENCES city [sakila.city.city_id]
+	 * CONSTRAINT fk_address_city
+	 * FOREIGN KEY (city_id)
+	 * REFERENCES sakila.city (city_id)
 	 * </pre></code>
 	 */
 	public void setCityId(java.lang.Short value) {
@@ -122,8 +123,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.address.city_id]
-	 * REFERENCES city [sakila.city.city_id]
+	 * CONSTRAINT fk_address_city
+	 * FOREIGN KEY (city_id)
+	 * REFERENCES sakila.city (city_id)
 	 * </pre></code>
 	 */
 	public java.lang.Short getCityId() {
@@ -134,8 +136,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.address.city_id]
-	 * REFERENCES city [sakila.city.city_id]
+	 * CONSTRAINT fk_address_city
+	 * FOREIGN KEY (city_id)
+	 * REFERENCES sakila.city (city_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.CityRecord fetchCity() {

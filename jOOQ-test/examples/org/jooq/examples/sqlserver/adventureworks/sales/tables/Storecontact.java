@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Storecontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord> {
 
-	private static final long serialVersionUID = 1181555549;
+	private static final long serialVersionUID = -670763970;
 
 	/**
 	 * The singleton instance of StoreContact
@@ -34,8 +34,9 @@ public class Storecontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.CustomerID]
-	 * REFERENCES Store [Sales.Store.CustomerID]
+	 * CONSTRAINT FK_StoreContact_Store_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Store (CustomerID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord, java.lang.Integer> CUSTOMERID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Storecontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_StoreContact_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord, java.lang.Integer> CONTACTID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -56,8 +58,9 @@ public class Storecontact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.StoreContact.ContactTypeID]
-	 * REFERENCES ContactType [Person.ContactType.ContactTypeID]
+	 * CONSTRAINT FK_StoreContact_ContactType_ContactTypeID
+	 * FOREIGN KEY (ContactTypeID)
+	 * REFERENCES Person.ContactType (ContactTypeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.StorecontactRecord, java.lang.Integer> CONTACTTYPEID = createField("ContactTypeID", org.jooq.impl.SQLDataType.INTEGER, this);

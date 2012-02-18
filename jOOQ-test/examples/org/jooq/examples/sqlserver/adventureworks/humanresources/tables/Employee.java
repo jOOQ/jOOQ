@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Employee extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord> {
 
-	private static final long serialVersionUID = -505944958;
+	private static final long serialVersionUID = -265353789;
 
 	/**
 	 * The singleton instance of Employee
@@ -44,8 +44,9 @@ public class Employee extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.Employee.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_Employee_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord, java.lang.Integer> CONTACTID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -59,8 +60,9 @@ public class Employee extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [HumanResources.Employee.ManagerID]
-	 * REFERENCES Employee [HumanResources.Employee.EmployeeID]
+	 * CONSTRAINT FK_Employee_Employee_ManagerID
+	 * FOREIGN KEY (ManagerID)
+	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeRecord, java.lang.Integer> MANAGERID = createField("ManagerID", org.jooq.impl.SQLDataType.INTEGER, this);

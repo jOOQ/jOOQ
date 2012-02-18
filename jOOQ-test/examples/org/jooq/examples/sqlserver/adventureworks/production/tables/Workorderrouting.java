@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Workorderrouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> {
 
-	private static final long serialVersionUID = 1024532929;
+	private static final long serialVersionUID = 356229763;
 
 	/**
 	 * The singleton instance of WorkOrderRouting
@@ -34,8 +34,9 @@ public class Workorderrouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.WorkOrderID]
-	 * REFERENCES WorkOrder [Production.WorkOrder.WorkOrderID]
+	 * CONSTRAINT FK_WorkOrderRouting_WorkOrder_WorkOrderID
+	 * FOREIGN KEY (WorkOrderID)
+	 * REFERENCES Production.WorkOrder (WorkOrderID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord, java.lang.Integer> WORKORDERID = createField("WorkOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -58,8 +59,9 @@ public class Workorderrouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.WorkOrderRouting.LocationID]
-	 * REFERENCES Location [Production.Location.LocationID]
+	 * CONSTRAINT FK_WorkOrderRouting_Location_LocationID
+	 * FOREIGN KEY (LocationID)
+	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord, java.lang.Short> LOCATIONID = createField("LocationID", org.jooq.impl.SQLDataType.SMALLINT, this);

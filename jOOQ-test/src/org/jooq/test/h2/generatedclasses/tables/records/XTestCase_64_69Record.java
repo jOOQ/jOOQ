@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1964090058;
+	private static final long serialVersionUID = -1112669922;
 
 	/**
 	 * An uncommented item
@@ -44,8 +44,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_TEST_CASE_64_69.UNUSED_ID]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID]
+	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES PUBLIC.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public void setUnusedId(java.lang.Integer value) {
@@ -56,8 +57,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_TEST_CASE_64_69.UNUSED_ID]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID]
+	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES PUBLIC.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getUnusedId() {
@@ -68,8 +70,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [PUBLIC.X_TEST_CASE_64_69.UNUSED_ID]
-	 * REFERENCES X_UNUSED [PUBLIC.X_UNUSED.ID]
+	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES PUBLIC.X_UNUSED (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {

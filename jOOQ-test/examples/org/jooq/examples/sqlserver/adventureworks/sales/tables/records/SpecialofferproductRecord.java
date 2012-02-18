@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialofferproductRecord> {
 
-	private static final long serialVersionUID = 2051955326;
+	private static final long serialVersionUID = -172296742;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.SpecialOfferID]
-	 * REFERENCES SpecialOffer [Sales.SpecialOffer.SpecialOfferID]
+	 * CONSTRAINT FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID
+	 * FOREIGN KEY (SpecialOfferID)
+	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
 	 * </pre></code>
 	 */
 	public void setSpecialofferid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.SpecialOfferID]
-	 * REFERENCES SpecialOffer [Sales.SpecialOffer.SpecialOfferID]
+	 * CONSTRAINT FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID
+	 * FOREIGN KEY (SpecialOfferID)
+	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SpecialOfferID")
@@ -49,8 +51,9 @@ public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_SpecialOfferProduct_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class SpecialofferproductRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SpecialOfferProduct.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_SpecialOfferProduct_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")

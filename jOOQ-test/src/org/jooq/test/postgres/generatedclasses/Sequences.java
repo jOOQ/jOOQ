@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence public.public.s_author_id
+	 * The sequence public.s_author_id
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("s_author_id", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
 

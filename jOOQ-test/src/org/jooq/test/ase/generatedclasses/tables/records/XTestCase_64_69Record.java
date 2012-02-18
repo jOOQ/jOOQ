@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ase.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1281426225;
+	private static final long serialVersionUID = -473897550;
 
 	/**
 	 * An uncommented item
@@ -44,8 +44,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_64_69.UNUSED_ID]
-	 * REFERENCES x_unused [dbo.x_unused.ID]
+	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES dbo.x_unused (ID)
 	 * </pre></code>
 	 */
 	public void setUnusedId(java.lang.Integer value) {
@@ -56,8 +57,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_64_69.UNUSED_ID]
-	 * REFERENCES x_unused [dbo.x_unused.ID]
+	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES dbo.x_unused (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getUnusedId() {
@@ -68,8 +70,9 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_64_69.UNUSED_ID]
-	 * REFERENCES x_unused [dbo.x_unused.ID]
+	 * CONSTRAINT x_test_case_64_69__fk_x_test_case_64_69
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES dbo.x_unused (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {

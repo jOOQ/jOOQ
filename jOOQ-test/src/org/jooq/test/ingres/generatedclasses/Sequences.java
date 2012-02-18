@@ -11,7 +11,7 @@ package org.jooq.test.ingres.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence test.test.s_author_id
+	 * The sequence test.s_author_id
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("s_author_id", org.jooq.test.ingres.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.BIGINT);
 

@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 87264446;
+	private static final long serialVersionUID = 2142328536;
 
 	/**
 	 * An uncommented item
@@ -32,8 +32,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_71.test_case_64_69_id]
-	 * REFERENCES x_test_case_64_69 [dbo.x_test_case_64_69.id]
+	 * CONSTRAINT fk_x_test_case_71
+	 * FOREIGN KEY (test_case_64_69_id)
+	 * REFERENCES dbo.x_test_case_64_69 (id)
 	 * </pre></code>
 	 */
 	public void setTestCase_64_69Id(java.lang.Integer value) {
@@ -44,8 +45,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_71.test_case_64_69_id]
-	 * REFERENCES x_test_case_64_69 [dbo.x_test_case_64_69.id]
+	 * CONSTRAINT fk_x_test_case_71
+	 * FOREIGN KEY (test_case_64_69_id)
+	 * REFERENCES dbo.x_test_case_64_69 (id)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getTestCase_64_69Id() {
@@ -56,8 +58,9 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_test_case_71.test_case_64_69_id]
-	 * REFERENCES x_test_case_64_69 [dbo.x_test_case_64_69.id]
+	 * CONSTRAINT fk_x_test_case_71
+	 * FOREIGN KEY (test_case_64_69_id)
+	 * REFERENCES dbo.x_test_case_64_69 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {

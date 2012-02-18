@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "Address", schema = "Person")
 public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = -307762430;
+	private static final long serialVersionUID = -2082331920;
 
 	/**
 	 * An uncommented item
@@ -81,8 +81,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.Address.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
+	 * CONSTRAINT FK_Address_StateProvince_StateProvinceID
+	 * FOREIGN KEY (StateProvinceID)
+	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
 	public void setStateprovinceid(java.lang.Integer value) {
@@ -93,8 +94,9 @@ public class AddressRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.Address.StateProvinceID]
-	 * REFERENCES StateProvince [Person.StateProvince.StateProvinceID]
+	 * CONSTRAINT FK_Address_StateProvince_StateProvinceID
+	 * FOREIGN KEY (StateProvinceID)
+	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "StateProvinceID")

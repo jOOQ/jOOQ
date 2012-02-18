@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1775475251;
+	private static final long serialVersionUID = -496099882;
 
 	/**
 	 * An uncommented item
@@ -46,8 +46,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
@@ -58,8 +59,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getAuthorId() {
@@ -70,8 +72,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_author_id
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
@@ -85,8 +88,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.CO_AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -97,8 +101,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.CO_AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getCoAuthorId() {
@@ -109,8 +114,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.CO_AUTHOR_ID]
-	 * REFERENCES t_author [dba.t_author.ID]
+	 * CONSTRAINT t_book__fk_t_book_co_author_id
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES dba.t_author (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
@@ -166,8 +172,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.LANGUAGE_ID]
-	 * REFERENCES t_language [dba.t_language.id]
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES dba.t_language (id)
 	 * </pre></code>
 	 */
 	public void setLanguageId(org.jooq.test.sybase.generatedclasses.enums.TLanguage value) {
@@ -178,8 +185,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dba.t_book.LANGUAGE_ID]
-	 * REFERENCES t_language [dba.t_language.id]
+	 * CONSTRAINT t_book__fk_t_book_language_id
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES dba.t_language (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.TLanguage getLanguageId() {

@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord> {
 
-	private static final long serialVersionUID = 1439570437;
+	private static final long serialVersionUID = 725401697;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.PurchaseOrderID]
-	 * REFERENCES PurchaseOrderHeader [Purchasing.PurchaseOrderHeader.PurchaseOrderID]
+	 * CONSTRAINT FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID
+	 * FOREIGN KEY (PurchaseOrderID)
+	 * REFERENCES Purchasing.PurchaseOrderHeader (PurchaseOrderID)
 	 * </pre></code>
 	 */
 	public void setPurchaseorderid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.PurchaseOrderID]
-	 * REFERENCES PurchaseOrderHeader [Purchasing.PurchaseOrderHeader.PurchaseOrderID]
+	 * CONSTRAINT FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID
+	 * FOREIGN KEY (PurchaseOrderID)
+	 * REFERENCES Purchasing.PurchaseOrderHeader (PurchaseOrderID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "PurchaseOrderID")
@@ -96,8 +98,9 @@ public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_PurchaseOrderDetail_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -108,8 +111,9 @@ public class PurchaseorderdetailRecord extends org.jooq.impl.UpdatableRecordImpl
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_PurchaseOrderDetail_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")

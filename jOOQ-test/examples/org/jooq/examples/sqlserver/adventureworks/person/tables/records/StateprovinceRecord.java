@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "StateProvince", schema = "Person")
 public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateprovinceRecord> {
 
-	private static final long serialVersionUID = 655325962;
+	private static final long serialVersionUID = -1569670222;
 
 	/**
 	 * An uncommented item
@@ -51,8 +51,9 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.StateProvince.CountryRegionCode]
-	 * REFERENCES CountryRegion [Person.CountryRegion.CountryRegionCode]
+	 * CONSTRAINT FK_StateProvince_CountryRegion_CountryRegionCode
+	 * FOREIGN KEY (CountryRegionCode)
+	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
 	public void setCountryregioncode(java.lang.String value) {
@@ -63,8 +64,9 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.StateProvince.CountryRegionCode]
-	 * REFERENCES CountryRegion [Person.CountryRegion.CountryRegionCode]
+	 * CONSTRAINT FK_StateProvince_CountryRegion_CountryRegionCode
+	 * FOREIGN KEY (CountryRegionCode)
+	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CountryRegionCode")
@@ -106,8 +108,9 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.StateProvince.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_StateProvince_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	public void setTerritoryid(java.lang.Integer value) {
@@ -118,8 +121,9 @@ public class StateprovinceRecord extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Person.StateProvince.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_StateProvince_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "TerritoryID")

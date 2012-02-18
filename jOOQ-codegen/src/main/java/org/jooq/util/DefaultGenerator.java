@@ -276,14 +276,14 @@ public class DefaultGenerator implements Generator {
 			outS.printSerial();
 			outS.println();
 			outS.println("\t/**");
-			outS.println("\t * The singleton instance of " + database.getOutputSchema(schema.getName()));
+			outS.println("\t * The singleton instance of " + schema.getOutputName());
 			outS.println("\t */");
 			outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifierUC(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
 
 			outS.println();
 			printNoFurtherInstancesAllowedJavadoc(outS);
 			outS.println("\tprivate " + strategy.getJavaClassName(schema) + "() {");
-			outS.println("\t\tsuper(\"" + database.getOutputSchema(schema.getName()) + "\");");
+			outS.println("\t\tsuper(\"" + schema.getOutputName() + "\");");
 			outS.println("\t}");
 
 			outS.printInitialisationStatementsPlaceholder();
@@ -370,7 +370,7 @@ public class DefaultGenerator implements Generator {
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Sequences.java"));
             printHeader(out, schema);
-            printClassJavadoc(out, "Convenience access to all sequences in " + database.getOutputSchema(schema.getName()));
+            printClassJavadoc(out, "Convenience access to all sequences in " + schema.getOutputName());
             out.println("public final class Sequences {");
 
             for (SequenceDefinition sequence : database.getSequences(schema)) {
@@ -861,7 +861,7 @@ public class DefaultGenerator implements Generator {
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Tables.java"));
             printHeader(out, schema);
-            printClassJavadoc(out, "Convenience access to all tables in " + database.getOutputSchema(schema.getName()));
+            printClassJavadoc(out, "Convenience access to all tables in " + schema.getOutputName());
             out.println("public final class Tables {");
 
             for (TableDefinition table : database.getTables(schema)) {
@@ -903,7 +903,7 @@ public class DefaultGenerator implements Generator {
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "Keys.java"));
             printHeader(out, schema);
-            printClassJavadoc(out, "A class modelling foreign key relationships between tables of the " + database.getOutputSchema(schema.getName()) + " schema");
+            printClassJavadoc(out, "A class modelling foreign key relationships between tables of the " + schema.getOutputName() + " schema");
 
             out.suppressWarnings("unchecked");
             out.print("public class Keys extends ");
@@ -1166,7 +1166,7 @@ public class DefaultGenerator implements Generator {
 
                     if (outS != null) {
                         outS.printInitialisationStatement(
-                            "addMapping(\"" + database.getOutputSchema(schema.getName()) + "." + udt.getName() + "\", " +
+                            "addMapping(\"" + schema.getOutputName() + "." + udt.getName() + "\", " +
                             strategy.getFullJavaClassName(udt, "Record") + ".class);");
                     }
                 } catch (Exception e) {
@@ -1275,7 +1275,7 @@ public class DefaultGenerator implements Generator {
 
             GenerationWriter out = new GenerationWriter(new File(targetSchemaDir, "UDTs.java"));
             printHeader(out, schema);
-            printClassJavadoc(out, "Convenience access to all UDTs in " + database.getOutputSchema(schema.getName()));
+            printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getOutputName());
             out.println("public final class UDTs {");
 
             for (UDTDefinition udt : database.getUDTs(schema)) {
@@ -1448,7 +1448,7 @@ public class DefaultGenerator implements Generator {
 
             GenerationWriter outR = new GenerationWriter(new File(targetSchemaDir, "Routines.java"));
             printHeader(outR, schema);
-            printClassJavadoc(outR, "Convenience access to all stored procedures and functions in " + database.getOutputSchema(schema.getName()));
+            printClassJavadoc(outR, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
 
             outR.println("public final class Routines {");
             for (RoutineDefinition routine : database.getRoutines(schema)) {
@@ -1589,7 +1589,7 @@ public class DefaultGenerator implements Generator {
 
             if (!schema.isDefaultSchema()) {
                 out.print(", schema = \"");
-                out.print(database.getOutputSchema(schema.getName()).replace("\"", "\\\""));
+                out.print(schema.getOutputName().replace("\"", "\\\""));
                 out.print("\"");
             }
 
@@ -2530,13 +2530,31 @@ public class DefaultGenerator implements Generator {
 	        if (foreignKey != null) {
 	            out.println("\t * <p>");
 	            out.println("\t * <code><pre>");
-	            out.print("\t * FOREIGN KEY ");
-	            out.println(foreignKey.getKeyColumns().toString());
 
+	            out.print("\t * CONSTRAINT ");
+	            out.println(foreignKey.getOutputName());
+	            out.print("\t * FOREIGN KEY (");
+
+	            String separator = "";
+	            for (ColumnDefinition fkColumn : foreignKey.getKeyColumns()) {
+	                out.print(separator);
+	                out.print(fkColumn.getOutputName());
+	                separator = ", ";
+	            }
+
+	            out.println(")");
 	            out.print("\t * REFERENCES ");
-	            out.print(foreignKey.getReferencedTable().getName());
-	            out.print(" ");
-	            out.println(foreignKey.getReferencedColumns().toString());
+	            out.print(foreignKey.getReferencedTable().getQualifiedOutputName());
+	            out.print(" (");
+
+	            separator = "";
+                for (ColumnDefinition fkColumn : foreignKey.getReferencedColumns()) {
+                    out.print(separator);
+                    out.print(fkColumn.getOutputName());
+                    separator = ", ";
+                }
+
+                out.println(")");
 	            out.println("\t * </pre></code>");
 	        }
 		}

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Productvendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord> {
 
-	private static final long serialVersionUID = -1540282869;
+	private static final long serialVersionUID = 1608637935;
 
 	/**
 	 * The singleton instance of ProductVendor
@@ -34,8 +34,9 @@ public class Productvendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_ProductVendor_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Productvendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.VendorID]
-	 * REFERENCES Vendor [Purchasing.Vendor.VendorID]
+	 * CONSTRAINT FK_ProductVendor_Vendor_VendorID
+	 * FOREIGN KEY (VendorID)
+	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord, java.lang.Integer> VENDORID = createField("VendorID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -91,8 +93,9 @@ public class Productvendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.ProductVendor.UnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_ProductVendor_UnitMeasure_UnitMeasureCode
+	 * FOREIGN KEY (UnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductvendorRecord, java.lang.String> UNITMEASURECODE = createField("UnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);

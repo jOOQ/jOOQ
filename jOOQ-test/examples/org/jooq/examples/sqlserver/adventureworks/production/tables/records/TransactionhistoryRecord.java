@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "TransactionHistory", schema = "Production")
 public class TransactionhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionhistoryRecord> {
 
-	private static final long serialVersionUID = 1391335592;
+	private static final long serialVersionUID = -724556028;
 
 	/**
 	 * An uncommented item
@@ -36,8 +36,9 @@ public class TransactionhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.TransactionHistory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_TransactionHistory_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public void setProductid(java.lang.Integer value) {
@@ -48,8 +49,9 @@ public class TransactionhistoryRecord extends org.jooq.impl.UpdatableRecordImpl<
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.TransactionHistory.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_TransactionHistory_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductID")

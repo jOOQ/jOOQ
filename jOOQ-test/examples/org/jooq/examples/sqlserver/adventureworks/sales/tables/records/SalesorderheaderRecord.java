@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesOrderHeader", schema = "Sales")
 public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheaderRecord> {
 
-	private static final long serialVersionUID = 930050894;
+	private static final long serialVersionUID = 1013060440;
 
 	/**
 	 * An uncommented item
@@ -171,8 +171,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_SalesOrderHeader_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	public void setCustomerid(java.lang.Integer value) {
@@ -183,8 +184,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_SalesOrderHeader_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CustomerID")
@@ -196,8 +198,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_SalesOrderHeader_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public void setContactid(java.lang.Integer value) {
@@ -208,8 +211,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_SalesOrderHeader_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactID")
@@ -221,8 +225,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
+	 * CONSTRAINT FK_SalesOrderHeader_SalesPerson_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
 	public void setSalespersonid(java.lang.Integer value) {
@@ -233,8 +238,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.SalesPersonID]
-	 * REFERENCES SalesPerson [Sales.SalesPerson.SalesPersonID]
+	 * CONSTRAINT FK_SalesOrderHeader_SalesPerson_SalesPersonID
+	 * FOREIGN KEY (SalesPersonID)
+	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SalesPersonID")
@@ -246,8 +252,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_SalesOrderHeader_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	public void setTerritoryid(java.lang.Integer value) {
@@ -258,8 +265,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.TerritoryID]
-	 * REFERENCES SalesTerritory [Sales.SalesTerritory.TerritoryID]
+	 * CONSTRAINT FK_SalesOrderHeader_SalesTerritory_TerritoryID
+	 * FOREIGN KEY (TerritoryID)
+	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "TerritoryID")
@@ -271,8 +279,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.BillToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_SalesOrderHeader_Address_BillToAddressID
+	 * FOREIGN KEY (BillToAddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public void setBilltoaddressid(java.lang.Integer value) {
@@ -283,8 +292,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.BillToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_SalesOrderHeader_Address_BillToAddressID
+	 * FOREIGN KEY (BillToAddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "BillToAddressID")
@@ -296,8 +306,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_SalesOrderHeader_Address_ShipToAddressID
+	 * FOREIGN KEY (ShipToAddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public void setShiptoaddressid(java.lang.Integer value) {
@@ -308,8 +319,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipToAddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_SalesOrderHeader_Address_ShipToAddressID
+	 * FOREIGN KEY (ShipToAddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ShipToAddressID")
@@ -321,8 +333,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
+	 * CONSTRAINT FK_SalesOrderHeader_ShipMethod_ShipMethodID
+	 * FOREIGN KEY (ShipMethodID)
+	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
 	public void setShipmethodid(java.lang.Integer value) {
@@ -333,8 +346,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.ShipMethodID]
-	 * REFERENCES ShipMethod [Purchasing.ShipMethod.ShipMethodID]
+	 * CONSTRAINT FK_SalesOrderHeader_ShipMethod_ShipMethodID
+	 * FOREIGN KEY (ShipMethodID)
+	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ShipMethodID")
@@ -346,8 +360,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
+	 * CONSTRAINT FK_SalesOrderHeader_CreditCard_CreditCardID
+	 * FOREIGN KEY (CreditCardID)
+	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
 	public void setCreditcardid(java.lang.Integer value) {
@@ -358,8 +373,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
+	 * CONSTRAINT FK_SalesOrderHeader_CreditCard_CreditCardID
+	 * FOREIGN KEY (CreditCardID)
+	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CreditCardID")
@@ -386,8 +402,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CurrencyRateID]
-	 * REFERENCES CurrencyRate [Sales.CurrencyRate.CurrencyRateID]
+	 * CONSTRAINT FK_SalesOrderHeader_CurrencyRate_CurrencyRateID
+	 * FOREIGN KEY (CurrencyRateID)
+	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
 	 * </pre></code>
 	 */
 	public void setCurrencyrateid(java.lang.Integer value) {
@@ -398,8 +415,9 @@ public class SalesorderheaderRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeader.CurrencyRateID]
-	 * REFERENCES CurrencyRate [Sales.CurrencyRate.CurrencyRateID]
+	 * CONSTRAINT FK_SalesOrderHeader_CurrencyRate_CurrencyRateID
+	 * FOREIGN KEY (CurrencyRateID)
+	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CurrencyRateID")

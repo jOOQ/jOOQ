@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productmodelillustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelillustrationRecord> {
 
-	private static final long serialVersionUID = 555772616;
+	private static final long serialVersionUID = -1724454838;
 
 	/**
 	 * The singleton instance of ProductModelIllustration
@@ -34,8 +34,9 @@ public class Productmodelillustration extends org.jooq.impl.UpdatableTableImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelillustrationRecord, java.lang.Integer> PRODUCTMODELID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Productmodelillustration extends org.jooq.impl.UpdatableTableImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.IllustrationID]
-	 * REFERENCES Illustration [Production.Illustration.IllustrationID]
+	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
+	 * FOREIGN KEY (IllustrationID)
+	 * REFERENCES Production.Illustration (IllustrationID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelillustrationRecord, java.lang.Integer> ILLUSTRATIONID = createField("IllustrationID", org.jooq.impl.SQLDataType.INTEGER, this);

@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesorderheadersalesreasonRecord> {
 
-	private static final long serialVersionUID = 218224695;
+	private static final long serialVersionUID = 1566288435;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRe
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
+	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
+	 * FOREIGN KEY (SalesOrderID)
+	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
 	public void setSalesorderid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRe
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesOrderID]
-	 * REFERENCES SalesOrderHeader [Sales.SalesOrderHeader.SalesOrderID]
+	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID
+	 * FOREIGN KEY (SalesOrderID)
+	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SalesOrderID")
@@ -49,8 +51,9 @@ public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRe
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesReasonID]
-	 * REFERENCES SalesReason [Sales.SalesReason.SalesReasonID]
+	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
+	 * FOREIGN KEY (SalesReasonID)
+	 * REFERENCES Sales.SalesReason (SalesReasonID)
 	 * </pre></code>
 	 */
 	public void setSalesreasonid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class SalesorderheadersalesreasonRecord extends org.jooq.impl.UpdatableRe
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.SalesOrderHeaderSalesReason.SalesReasonID]
-	 * REFERENCES SalesReason [Sales.SalesReason.SalesReasonID]
+	 * CONSTRAINT FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID
+	 * FOREIGN KEY (SalesReasonID)
+	 * REFERENCES Sales.SalesReason (SalesReasonID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "SalesReasonID")

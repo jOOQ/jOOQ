@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Customeraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord> {
 
-	private static final long serialVersionUID = 824139938;
+	private static final long serialVersionUID = 1198569361;
 
 	/**
 	 * The singleton instance of CustomerAddress
@@ -34,8 +34,9 @@ public class Customeraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.CustomerID]
-	 * REFERENCES Customer [Sales.Customer.CustomerID]
+	 * CONSTRAINT FK_CustomerAddress_Customer_CustomerID
+	 * FOREIGN KEY (CustomerID)
+	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord, java.lang.Integer> CUSTOMERID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -46,8 +47,9 @@ public class Customeraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressID]
-	 * REFERENCES Address [Person.Address.AddressID]
+	 * CONSTRAINT FK_CustomerAddress_Address_AddressID
+	 * FOREIGN KEY (AddressID)
+	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord, java.lang.Integer> ADDRESSID = createField("AddressID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -56,8 +58,9 @@ public class Customeraddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.CustomerAddress.AddressTypeID]
-	 * REFERENCES AddressType [Person.AddressType.AddressTypeID]
+	 * CONSTRAINT FK_CustomerAddress_AddressType_AddressTypeID
+	 * FOREIGN KEY (AddressTypeID)
+	 * REFERENCES Person.AddressType (AddressTypeID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomeraddressRecord, java.lang.Integer> ADDRESSTYPEID = createField("AddressTypeID", org.jooq.impl.SQLDataType.INTEGER, this);

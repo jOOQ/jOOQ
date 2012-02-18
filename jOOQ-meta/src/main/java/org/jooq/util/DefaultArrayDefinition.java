@@ -35,6 +35,9 @@
  */
 package org.jooq.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 
 public class DefaultArrayDefinition extends AbstractDefinition implements ArrayDefinition {
 
@@ -44,6 +47,11 @@ public class DefaultArrayDefinition extends AbstractDefinition implements ArrayD
         super(schema.getDatabase(), schema, name, "");
 
         this.type = type;
+    }
+
+    @Override
+    public List<Definition> getDefinitionPath() {
+        return Arrays.<Definition>asList(getSchema(), this);
     }
 
     @Override

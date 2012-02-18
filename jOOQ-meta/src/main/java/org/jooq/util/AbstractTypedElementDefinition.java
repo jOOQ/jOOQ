@@ -37,11 +37,13 @@ package org.jooq.util;
 
 import static org.jooq.impl.FieldTypeHelper.getDialectDataType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.DataType;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.ForcedType;
 
 abstract class AbstractTypedElementDefinition<T extends Definition>
@@ -76,6 +78,16 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     @Override
     public final T getContainer() {
         return container;
+    }
+
+    @Override
+    public List<Definition> getDefinitionPath() {
+        List<Definition> result = new ArrayList<Definition>();
+
+        result.addAll(getContainer().getDefinitionPath());
+        result.add(this);
+
+        return result;
     }
 
     @Override
@@ -132,18 +144,5 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
         }
 
         return type;
-    }
-
-    @Override
-    public final String getQualifiedName() {
-        if (StringUtils.isBlank(getSchema().getName())) {
-            return getContainer().getName() + "." + getName();
-        }
-        else {
-            return
-                getDatabase().getOutputSchema(getSchema().getName()) + "." +
-                getContainer().getName() + "." +
-                getName();
-        }
     }
 }

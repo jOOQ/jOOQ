@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Purchaseorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord> {
 
-	private static final long serialVersionUID = 660224766;
+	private static final long serialVersionUID = 465533084;
 
 	/**
 	 * The singleton instance of PurchaseOrderDetail
@@ -34,8 +34,9 @@ public class Purchaseorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.PurchaseOrderID]
-	 * REFERENCES PurchaseOrderHeader [Purchasing.PurchaseOrderHeader.PurchaseOrderID]
+	 * CONSTRAINT FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID
+	 * FOREIGN KEY (PurchaseOrderID)
+	 * REFERENCES Purchasing.PurchaseOrderHeader (PurchaseOrderID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord, java.lang.Integer> PURCHASEORDERID = createField("PurchaseOrderID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -61,8 +62,9 @@ public class Purchaseorderdetail extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Purchasing.PurchaseOrderDetail.ProductID]
-	 * REFERENCES Product [Production.Product.ProductID]
+	 * CONSTRAINT FK_PurchaseOrderDetail_Product_ProductID
+	 * FOREIGN KEY (ProductID)
+	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderdetailRecord, java.lang.Integer> PRODUCTID = createField("ProductID", org.jooq.impl.SQLDataType.INTEGER, this);

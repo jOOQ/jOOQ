@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductmodelillustrationRecord> {
 
-	private static final long serialVersionUID = -327564872;
+	private static final long serialVersionUID = -2023736968;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecor
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	public void setProductmodelid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecor
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_ProductModelIllustration_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ProductModelID")
@@ -49,8 +51,9 @@ public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecor
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.IllustrationID]
-	 * REFERENCES Illustration [Production.Illustration.IllustrationID]
+	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
+	 * FOREIGN KEY (IllustrationID)
+	 * REFERENCES Production.Illustration (IllustrationID)
 	 * </pre></code>
 	 */
 	public void setIllustrationid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class ProductmodelillustrationRecord extends org.jooq.impl.UpdatableRecor
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.ProductModelIllustration.IllustrationID]
-	 * REFERENCES Illustration [Production.Illustration.IllustrationID]
+	 * CONSTRAINT FK_ProductModelIllustration_Illustration_IllustrationID
+	 * FOREIGN KEY (IllustrationID)
+	 * REFERENCES Production.Illustration (IllustrationID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "IllustrationID")

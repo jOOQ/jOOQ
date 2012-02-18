@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
  */
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 395875355;
+	private static final long serialVersionUID = 1743235324;
 
 	/**
 	 * An uncommented item
@@ -102,8 +102,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_unused.id_ref, dbo.x_unused.name_ref]
-	 * REFERENCES x_unused [dbo.x_unused.id, dbo.x_unused.name]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
@@ -114,8 +115,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_unused.id_ref, dbo.x_unused.name_ref]
-	 * REFERENCES x_unused [dbo.x_unused.id, dbo.x_unused.name]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef() {
@@ -126,8 +128,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_unused.id_ref, dbo.x_unused.name_ref]
-	 * REFERENCES x_unused [dbo.x_unused.id, dbo.x_unused.name]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -254,8 +257,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_unused.id_ref, dbo.x_unused.name_ref]
-	 * REFERENCES x_unused [dbo.x_unused.id, dbo.x_unused.name]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
@@ -266,8 +270,9 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.x_unused.id_ref, dbo.x_unused.name_ref]
-	 * REFERENCES x_unused [dbo.x_unused.id, dbo.x_unused.name]
+	 * CONSTRAINT fk_x_unused_self
+	 * FOREIGN KEY (id_ref, name_ref)
+	 * REFERENCES dbo.x_unused (id, name)
 	 * </pre></code>
 	 */
 	public java.lang.String getNameRef() {

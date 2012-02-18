@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord> {
 
-	private static final long serialVersionUID = -1549436448;
+	private static final long serialVersionUID = -1243866310;
 
 	/**
 	 * The singleton instance of Product
@@ -89,8 +89,9 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.SizeUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_Product_UnitMeasure_SizeUnitMeasureCode
+	 * FOREIGN KEY (SizeUnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, java.lang.String> SIZEUNITMEASURECODE = createField("SizeUnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
@@ -99,8 +100,9 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.WeightUnitMeasureCode]
-	 * REFERENCES UnitMeasure [Production.UnitMeasure.UnitMeasureCode]
+	 * CONSTRAINT FK_Product_UnitMeasure_WeightUnitMeasureCode
+	 * FOREIGN KEY (WeightUnitMeasureCode)
+	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, java.lang.String> WEIGHTUNITMEASURECODE = createField("WeightUnitMeasureCode", org.jooq.impl.SQLDataType.NCHAR, this);
@@ -134,8 +136,9 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductSubcategoryID]
-	 * REFERENCES ProductSubcategory [Production.ProductSubcategory.ProductSubcategoryID]
+	 * CONSTRAINT FK_Product_ProductSubcategory_ProductSubcategoryID
+	 * FOREIGN KEY (ProductSubcategoryID)
+	 * REFERENCES Production.ProductSubcategory (ProductSubcategoryID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, java.lang.Integer> PRODUCTSUBCATEGORYID = createField("ProductSubcategoryID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -144,8 +147,9 @@ public class Product extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Production.Product.ProductModelID]
-	 * REFERENCES ProductModel [Production.ProductModel.ProductModelID]
+	 * CONSTRAINT FK_Product_ProductModel_ProductModelID
+	 * FOREIGN KEY (ProductModelID)
+	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductRecord, java.lang.Integer> PRODUCTMODELID = createField("ProductModelID", org.jooq.impl.SQLDataType.INTEGER, this);

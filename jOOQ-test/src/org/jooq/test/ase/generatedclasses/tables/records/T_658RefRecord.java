@@ -8,14 +8,15 @@ package org.jooq.test.ase.generatedclasses.tables.records;
  */
 public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ase.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = 2049059429;
+	private static final long serialVersionUID = -111217515;
 
 	/**
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_11]
-	 * REFERENCES t_658_11 [dbo.t_658_11.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_11
+	 * FOREIGN KEY (ref_11)
+	 * REFERENCES dbo.t_658_11 (id)
 	 * </pre></code>
 	 */
 	public void setRef_11(org.jooq.test.ase.generatedclasses.enums.T_658_11 value) {
@@ -26,8 +27,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_11]
-	 * REFERENCES t_658_11 [dbo.t_658_11.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_11
+	 * FOREIGN KEY (ref_11)
+	 * REFERENCES dbo.t_658_11 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.T_658_11 getRef_11() {
@@ -38,8 +40,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_21]
-	 * REFERENCES t_658_21 [dbo.t_658_21.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_21
+	 * FOREIGN KEY (ref_21)
+	 * REFERENCES dbo.t_658_21 (id)
 	 * </pre></code>
 	 */
 	public void setRef_21(org.jooq.test.ase.generatedclasses.enums.T_658_21 value) {
@@ -50,8 +53,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_21]
-	 * REFERENCES t_658_21 [dbo.t_658_21.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_21
+	 * FOREIGN KEY (ref_21)
+	 * REFERENCES dbo.t_658_21 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.T_658_21 getRef_21() {
@@ -62,8 +66,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_31]
-	 * REFERENCES t_658_31 [dbo.t_658_31.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_31
+	 * FOREIGN KEY (ref_31)
+	 * REFERENCES dbo.t_658_31 (id)
 	 * </pre></code>
 	 */
 	public void setRef_31(org.jooq.test.ase.generatedclasses.enums.T_658_31 value) {
@@ -74,8 +79,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_31]
-	 * REFERENCES t_658_31 [dbo.t_658_31.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_31
+	 * FOREIGN KEY (ref_31)
+	 * REFERENCES dbo.t_658_31 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.T_658_31 getRef_31() {
@@ -86,8 +92,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_12]
-	 * REFERENCES t_658_12 [dbo.t_658_12.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_12
+	 * FOREIGN KEY (ref_12)
+	 * REFERENCES dbo.t_658_12 (id)
 	 * </pre></code>
 	 */
 	public void setRef_12(org.jooq.test.ase.generatedclasses.enums.T_658_12 value) {
@@ -98,8 +105,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_12]
-	 * REFERENCES t_658_12 [dbo.t_658_12.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_12
+	 * FOREIGN KEY (ref_12)
+	 * REFERENCES dbo.t_658_12 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.T_658_12 getRef_12() {
@@ -110,8 +118,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_22]
-	 * REFERENCES t_658_22 [dbo.t_658_22.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_22
+	 * FOREIGN KEY (ref_22)
+	 * REFERENCES dbo.t_658_22 (id)
 	 * </pre></code>
 	 */
 	public void setRef_22(org.jooq.test.ase.generatedclasses.enums.T_658_22 value) {
@@ -122,8 +131,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_22]
-	 * REFERENCES t_658_22 [dbo.t_658_22.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_22
+	 * FOREIGN KEY (ref_22)
+	 * REFERENCES dbo.t_658_22 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.T_658_22 getRef_22() {
@@ -134,8 +144,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_32]
-	 * REFERENCES t_658_32 [dbo.t_658_32.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_32
+	 * FOREIGN KEY (ref_32)
+	 * REFERENCES dbo.t_658_32 (id)
 	 * </pre></code>
 	 */
 	public void setRef_32(org.jooq.test.ase.generatedclasses.enums.T_658_32 value) {
@@ -146,8 +157,9 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [dbo.t_658_ref.ref_32]
-	 * REFERENCES t_658_32 [dbo.t_658_32.id]
+	 * CONSTRAINT t_658_ref__fk_t_658_32
+	 * FOREIGN KEY (ref_32)
+	 * REFERENCES dbo.t_658_32 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.ase.generatedclasses.enums.T_658_32 getRef_32() {

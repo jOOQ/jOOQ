@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables.records;
  */
 public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> {
 
-	private static final long serialVersionUID = -1809172545;
+	private static final long serialVersionUID = 572677983;
 
 	/**
 	 * An uncommented item
@@ -110,8 +110,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public void setLanguageId(java.lang.Byte value) {
@@ -122,8 +123,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public java.lang.Byte getLanguageId() {
@@ -134,8 +136,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language
+	 * FOREIGN KEY (language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.LanguageRecord fetchLanguageByLanguageId() {
@@ -149,8 +152,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.original_language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language_original
+	 * FOREIGN KEY (original_language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public void setOriginalLanguageId(java.lang.Byte value) {
@@ -161,8 +165,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.original_language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language_original
+	 * FOREIGN KEY (original_language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public java.lang.Byte getOriginalLanguageId() {
@@ -173,8 +178,9 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [sakila.film.original_language_id]
-	 * REFERENCES language [sakila.language.language_id]
+	 * CONSTRAINT fk_film_language_original
+	 * FOREIGN KEY (original_language_id)
+	 * REFERENCES sakila.language (language_id)
 	 * </pre></code>
 	 */
 	public org.jooq.examples.mysql.sakila.tables.records.LanguageRecord fetchLanguageByOriginalLanguageId() {

@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 806837457;
+	private static final long serialVersionUID = 156801511;
 
 	/**
 	 * The book store name
@@ -18,8 +18,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME]
-	 * REFERENCES T_BOOK_STORE [TEST.T_BOOK_STORE.NAME]
+	 * CONSTRAINT FK_B2BS_BS_NAME
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES TEST.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
@@ -32,8 +33,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME]
-	 * REFERENCES T_BOOK_STORE [TEST.T_BOOK_STORE.NAME]
+	 * CONSTRAINT FK_B2BS_BS_NAME
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES TEST.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getBookStoreName() {
@@ -46,8 +48,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME]
-	 * REFERENCES T_BOOK_STORE [TEST.T_BOOK_STORE.NAME]
+	 * CONSTRAINT FK_B2BS_BS_NAME
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES TEST.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
 	public java.util.List<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> fetchTBookSaleList() {
@@ -64,8 +67,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME]
-	 * REFERENCES T_BOOK_STORE [TEST.T_BOOK_STORE.NAME]
+	 * CONSTRAINT FK_B2BS_BS_NAME
+	 * FOREIGN KEY (BOOK_STORE_NAME)
+	 * REFERENCES TEST.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord fetchTBookStore() {
@@ -81,8 +85,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID]
-	 * REFERENCES T_BOOK [TEST.T_BOOK.ID]
+	 * CONSTRAINT FK_B2BS_B_ID
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES TEST.T_BOOK (ID)
 	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
@@ -95,8 +100,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID]
-	 * REFERENCES T_BOOK [TEST.T_BOOK.ID]
+	 * CONSTRAINT FK_B2BS_B_ID
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES TEST.T_BOOK (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getBookId() {
@@ -109,8 +115,9 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID]
-	 * REFERENCES T_BOOK [TEST.T_BOOK.ID]
+	 * CONSTRAINT FK_B2BS_B_ID
+	 * FOREIGN KEY (BOOK_ID)
+	 * REFERENCES TEST.T_BOOK (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord fetchTBook() {

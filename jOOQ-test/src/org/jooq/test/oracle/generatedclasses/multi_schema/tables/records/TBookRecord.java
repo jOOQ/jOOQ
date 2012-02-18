@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1667731665;
+	private static final long serialVersionUID = 2073539442;
 
 	/**
 	 * An uncommented item
@@ -32,8 +32,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [MULTI_SCHEMA.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
@@ -44,8 +45,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [MULTI_SCHEMA.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getAuthorId() {
@@ -56,8 +58,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [MULTI_SCHEMA.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
@@ -71,8 +74,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [MULTI_SCHEMA.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
@@ -83,8 +87,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [MULTI_SCHEMA.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getCoAuthorId() {
@@ -95,8 +100,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID]
-	 * REFERENCES T_AUTHOR [MULTI_SCHEMA.T_AUTHOR.ID]
+	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
+	 * FOREIGN KEY (CO_AUTHOR_ID)
+	 * REFERENCES MULTI_SCHEMA.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
@@ -152,8 +158,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.LANGUAGE_ID]
-	 * REFERENCES T_LANGUAGE [TEST.T_LANGUAGE.ID]
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
 	public void setLanguageId(org.jooq.test.oracle.generatedclasses.test.enums.TLanguage value) {
@@ -164,8 +171,9 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [MULTI_SCHEMA.T_BOOK.LANGUAGE_ID]
-	 * REFERENCES T_LANGUAGE [TEST.T_LANGUAGE.ID]
+	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.enums.TLanguage getLanguageId() {

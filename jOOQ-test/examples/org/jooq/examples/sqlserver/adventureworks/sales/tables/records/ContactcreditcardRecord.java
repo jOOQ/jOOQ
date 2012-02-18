@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> {
 
-	private static final long serialVersionUID = -924548417;
+	private static final long serialVersionUID = -1016352697;
 
 	/**
 	 * An uncommented item
@@ -20,8 +20,9 @@ public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	public void setContactid(java.lang.Integer value) {
@@ -34,8 +35,9 @@ public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.ContactID]
-	 * REFERENCES Contact [Person.Contact.ContactID]
+	 * CONSTRAINT FK_ContactCreditCard_Contact_ContactID
+	 * FOREIGN KEY (ContactID)
+	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "ContactID")
@@ -49,8 +51,9 @@ public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
+	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
+	 * FOREIGN KEY (CreditCardID)
+	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
 	public void setCreditcardid(java.lang.Integer value) {
@@ -63,8 +66,9 @@ public class ContactcreditcardRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * PRIMARY KEY
 	 * <p>
 	 * <code><pre>
-	 * FOREIGN KEY [Sales.ContactCreditCard.CreditCardID]
-	 * REFERENCES CreditCard [Sales.CreditCard.CreditCardID]
+	 * CONSTRAINT FK_ContactCreditCard_CreditCard_CreditCardID
+	 * FOREIGN KEY (CreditCardID)
+	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
 	@javax.persistence.Column(name = "CreditCardID")

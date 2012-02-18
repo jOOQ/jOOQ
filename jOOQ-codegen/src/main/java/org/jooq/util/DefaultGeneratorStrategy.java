@@ -182,6 +182,11 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
         return "get" + disambiguateMethod(definition, getJavaClassName(definition));
     }
 
+    @Override
+    public String getJavaMethodName(Definition definition) {
+        return disambiguateMethod(definition, getJavaClassName0LC(definition, Mode.DEFAULT));
+    }
+
     /**
      * [#182] Method name disambiguation is important to avoid name clashes due
      * to pre-existing getters / setters in super classes
@@ -289,14 +294,29 @@ public class DefaultGeneratorStrategy implements GeneratorStrategy {
     }
 
     @Override
+    @Deprecated
     public final String getJavaClassNameLC(Definition definition) {
-        return getJavaClassNameLC(definition, Mode.DEFAULT);
+        return getJavaMemberName(definition, Mode.DEFAULT);
     }
 
     @Override
-    public String getJavaClassNameLC(Definition definition, Mode mode) {
-        String result = getJavaClassName0(definition, mode);
+    @Deprecated
+    public final String getJavaClassNameLC(Definition definition, Mode mode) {
+        return getJavaMemberName(definition, mode);
+    }
 
+    @Override
+    public final String getJavaMemberName(Definition definition) {
+        return getJavaMemberName(definition, Mode.DEFAULT);
+    }
+
+    @Override
+    public String getJavaMemberName(Definition definition, Mode mode) {
+        return getJavaClassName0LC(definition, mode);
+    }
+
+    private String getJavaClassName0LC(Definition definition, Mode mode) {
+        String result = getJavaClassName0(definition, mode);
         return result.substring(0, 1).toLowerCase() + result.substring(1);
     }
 

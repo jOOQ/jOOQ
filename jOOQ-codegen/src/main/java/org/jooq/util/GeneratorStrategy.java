@@ -65,6 +65,10 @@ public interface GeneratorStrategy {
     void setTargetPackage(String packageName);
 
     /**
+     * This is applied to definitions that can result in singleton static and
+     * instance members. For instance, the singleton instance of a
+     * {@link TableDefinition} is a java identifier
+     *
      * @return The Java identifier representing this object, e.g. [my_table]
      */
     String getJavaIdentifier(Definition definition);
@@ -81,16 +85,36 @@ public interface GeneratorStrategy {
     String getFullJavaIdentifierUC(Definition definition);
 
     /**
+     * This is applied to definitions that can result in setters of a container.
+     * For example, the definition could be a {@link ColumnDefinition}, the
+     * container a {@link TableDefinition}. Then this would apply to records and
+     * POJOs. Also, the definition could be an {@link AttributeDefinition} and
+     * the container a {@link UDTDefinition}
+     *
      * @return The Java setter method name representing this object, e.g.
      *         [setMyTable]
      */
     String getJavaSetterName(Definition definition);
 
     /**
+     * This is applied to definitions that can result in getters of a container.
+     * For example, the definition could be a {@link ColumnDefinition}, the
+     * container a {@link TableDefinition}. Then this would apply to records and
+     * POJOs. Also, the definition could be an {@link AttributeDefinition} and
+     * the container a {@link UDTDefinition}
+     *
      * @return The Java getter method name representing this object, e.g.
      *         [getMyTable]
      */
     String getJavaGetterName(Definition definition);
+
+    /**
+     * This is applied to definitions that can result in methods. For example,
+     * the definition could be a {@link RoutineDefinition}
+     *
+     * @return The Java method name representing this object, e.g. [myFunction]
+     */
+    String getJavaMethodName(Definition definition);
 
     /**
      * This is the same as calling
@@ -107,14 +131,14 @@ public interface GeneratorStrategy {
     String getJavaClassName(Definition definition, Mode mode);
 
     /**
+     * This is the same as calling
+     * <code>getJavaPackageName(definition, Mode.DEFAULT)</code>
+     *
      * @return The Java package name of this object, e.g. [org.jooq.generated]
      */
     String getJavaPackageName(Definition definition);
 
     /**
-     * This is the same as calling
-     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
-     *
      * @return The Java package name of this object, e.g. [org.jooq.generated]
      */
     String getJavaPackageName(Definition definition, Mode mode);
@@ -122,17 +146,56 @@ public interface GeneratorStrategy {
     /**
      * @return The Java class name representing this object, starting with a
      *         lower case character, e.g. [myTable]
+     * @deprecated - 2.0.5 - Use {@link #getJavaMemberName(Definition)} or
+     *             {@link #getJavaMethodName(Definition)} instead. The notion of
+     *             this being a class name starting with a lower-case letter is
+     *             too intrusive for custom generator strategies.
      */
+    @Deprecated
     String getJavaClassNameLC(Definition definition);
 
     /**
+     * @return The Java class name representing this object, starting with a
+     *         lower case character, e.g. [myTableSuffix]
+     * @deprecated - 2.0.5 - Use {@link #getJavaMemberName(Definition, Mode)} or
+     *             {@link #getJavaMethodName(Definition)} instead. The notion of
+     *             this being a class name starting with a lower-case letter is
+     *             too intrusive for custom generator strategies.
+     */
+    @Deprecated
+    String getJavaClassNameLC(Definition definition, Mode mode);
+
+    /**
+     * The "java member name" is applied where a definition is used as a member
+     * (for POJOs) or as a method argument (for setters). Example definitions
+     * are
+     * <ul>
+     * <li> {@link ColumnDefinition}</li>
+     * <li> {@link ParameterDefinition}</li>
+     * <li> {@link AttributeDefinition}</li>
+     * </ul>
      * This is the same as calling
-     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
+     * <code>getJavaMemberName(definition, Mode.DEFAULT)</code>
+     *
+     * @return The Java class name representing this object, starting with a
+     *         lower case character, e.g. [myTable]
+     */
+    String getJavaMemberName(Definition definition);
+
+    /**
+     * The "java member name" is applied where a definition is used as a member
+     * (for POJOs) or as a method argument (for setters). Example definitions
+     * are
+     * <ul>
+     * <li> {@link ColumnDefinition}</li>
+     * <li> {@link ParameterDefinition}</li>
+     * <li> {@link AttributeDefinition}</li>
+     * </ul>
      *
      * @return The Java class name representing this object, starting with a
      *         lower case character, e.g. [myTableSuffix]
      */
-    String getJavaClassNameLC(Definition definition, Mode mode);
+    String getJavaMemberName(Definition definition, Mode mode);
 
     /**
      * @return The full Java class name representing this object, e.g.
@@ -142,7 +205,7 @@ public interface GeneratorStrategy {
 
     /**
      * This is the same as calling
-     * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
+     * <code>getFullJavaClassName(definition, Mode.DEFAULT)</code>
      *
      * @return The full Java class name representing this object, e.g.
      *         [org.jooq.generated.MyTable][suffix]

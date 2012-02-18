@@ -967,7 +967,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a not exists condition.
+     * Create an exists condition.
      * <p>
      * <code>EXISTS ([query])</code>
      */

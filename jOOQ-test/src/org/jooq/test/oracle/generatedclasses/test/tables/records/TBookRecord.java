@@ -8,9 +8,11 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
  *
  * An entity holding books
  */
+@javax.persistence.Entity
+@javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -296790288;
+	private static final long serialVersionUID = -777564483;
 
 	/**
 	 * The book ID
@@ -26,6 +28,8 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * 
 	 * PRIMARY KEY
 	 */
+	@javax.persistence.Id
+	@javax.persistence.Column(name = "ID", unique = true)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.ID);
 	}
@@ -64,6 +68,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES TEST.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
+	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.AUTHOR_ID);
 	}
@@ -106,6 +111,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES TEST.T_AUTHOR (ID)
 	 * </pre></code>
 	 */
+	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID);
 	}
@@ -136,6 +142,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
+	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.DETAILS_ID);
 	}
@@ -150,6 +157,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The book's title
 	 */
+	@javax.persistence.Column(name = "TITLE")
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.TITLE);
 	}
@@ -164,6 +172,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The year the book was published in
 	 */
+	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.PUBLISHED_IN);
 	}
@@ -190,6 +199,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES TEST.T_LANGUAGE (ID)
 	 * </pre></code>
 	 */
+	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public org.jooq.test.oracle.generatedclasses.test.enums.TLanguage getLanguageId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.LANGUAGE_ID);
 	}
@@ -204,6 +214,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some textual content of the book
 	 */
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CONTENT_TEXT);
 	}
@@ -218,6 +229,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * Some binary content of the book
 	 */
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CONTENT_PDF);
 	}

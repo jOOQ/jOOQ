@@ -74,6 +74,10 @@ class ConnectionProxy implements Connection {
         this.settings = settings;
     }
 
+    final Connection getDelegate() {
+        return delegate;
+    }
+
     // ------------------------------------------------------------------------
     // XXX Creation of PreparedStatements
     // ------------------------------------------------------------------------

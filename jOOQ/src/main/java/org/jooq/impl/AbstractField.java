@@ -536,6 +536,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
+    public final Condition equalIgnoreCase(String value) {
+        return equalIgnoreCase(val(value));
+    }
+
+    @Override
+    public final Condition equalIgnoreCase(Field<String> value) {
+        return Factory.lower(cast(String.class)).equal(Factory.lower(value));
+    }
+
+    @Override
     public final Condition equal(Select<?> query) {
         return new SelectQueryAsSubQueryCondition(query, this, SubQueryOperator.EQUALS);
     }
@@ -584,6 +594,16 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     @Override
     public final Condition notEqual(Field<T> field) {
         return new CompareCondition(this, nullSafe(field), Comparator.NOT_EQUALS);
+    }
+
+    @Override
+    public final Condition notEqualIgnoreCase(String value) {
+        return notEqualIgnoreCase(val(value));
+    }
+
+    @Override
+    public final Condition notEqualIgnoreCase(Field<String> value) {
+        return Factory.lower(cast(String.class)).notEqual(Factory.lower(value));
     }
 
     @Override

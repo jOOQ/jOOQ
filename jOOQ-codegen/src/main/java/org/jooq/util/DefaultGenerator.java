@@ -1883,7 +1883,7 @@ public class DefaultGenerator implements Generator {
         out.println("\t *");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
-            out.println("\t * @param " + strategy.getJavaClassNameLC(parameter));
+            out.println("\t * @param " + strategy.getJavaMemberName(parameter));
         }
 
         out.println("\t */");
@@ -1892,7 +1892,7 @@ public class DefaultGenerator implements Generator {
         out.print("<");
         out.print(getJavaType(function.getReturnType()));
         out.print("> ");
-        out.print(strategy.getJavaClassNameLC(function));
+        out.print(strategy.getJavaMethodName(function));
         out.print("(");
 
         String separator = "";
@@ -1909,7 +1909,7 @@ public class DefaultGenerator implements Generator {
             }
 
             out.print(" ");
-            out.print(strategy.getJavaClassNameLC(parameter));
+            out.print(strategy.getJavaMemberName(parameter));
 
             separator = ", ";
         }
@@ -1922,7 +1922,11 @@ public class DefaultGenerator implements Generator {
         out.println("();");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
-            out.println("\t\tf.set" + strategy.getJavaClassName(parameter) + "(" + strategy.getJavaClassNameLC(parameter) + ");");
+            out.print("\t\tf.");
+            out.print(strategy.getJavaSetterName(parameter));
+            out.print("(");
+            out.print(strategy.getJavaMemberName(parameter));
+            out.println(");");
         }
 
         out.println();
@@ -1943,7 +1947,7 @@ public class DefaultGenerator implements Generator {
         out.println("\t *");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
-            out.println("\t * @param " + strategy.getJavaClassNameLC(parameter));
+            out.println("\t * @param " + strategy.getJavaMemberName(parameter));
         }
 
         printThrowsDataAccessException(out);
@@ -1956,7 +1960,7 @@ public class DefaultGenerator implements Generator {
 
         out.print(getJavaType(function.getReturnType()));
         out.print(" ");
-        out.print(strategy.getJavaClassNameLC(function));
+        out.print(strategy.getJavaMethodName(function));
         out.print("(");
 
         String glue = "";
@@ -1975,7 +1979,7 @@ public class DefaultGenerator implements Generator {
             out.print(glue);
             printNumberType(out, parameter.getType());
             out.print(" ");
-            out.print(strategy.getJavaClassNameLC(parameter));
+            out.print(strategy.getJavaMemberName(parameter));
 
             glue = ", ";
         }
@@ -1988,15 +1992,15 @@ public class DefaultGenerator implements Generator {
         out.println("();");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
-            out.print("\t\tf.set");
-            out.print(strategy.getJavaClassName(parameter));
+            out.print("\t\tf.");
+            out.print(strategy.getJavaSetterName(parameter));
             out.print("(");
 
             if (instance && parameter.equals(function.getInParameters().get(0))) {
                 out.print("this");
             }
             else {
-                out.print(strategy.getJavaClassNameLC(parameter));
+                out.print(strategy.getJavaMemberName(parameter));
             }
 
             out.println(");");
@@ -2049,7 +2053,7 @@ public class DefaultGenerator implements Generator {
         out.println("\t *");
 
         for (ParameterDefinition parameter : procedure.getAllParameters()) {
-            out.print("\t * @param " + strategy.getJavaClassNameLC(parameter) + " ");
+            out.print("\t * @param " + strategy.getJavaMemberName(parameter) + " ");
 
             if (procedure.getInParameters().contains(parameter)) {
                 if (procedure.getOutParameters().contains(parameter)) {
@@ -2081,7 +2085,7 @@ public class DefaultGenerator implements Generator {
             out.print(strategy.getFullJavaClassName(procedure) + " ");
         }
 
-        out.print(strategy.getJavaClassNameLC(procedure));
+        out.print(strategy.getJavaMethodName(procedure));
         out.print("(");
 
         String glue = "";
@@ -2100,7 +2104,7 @@ public class DefaultGenerator implements Generator {
             out.print(glue);
             printNumberType(out, parameter.getType());
             out.print(" ");
-            out.print(strategy.getJavaClassNameLC(parameter));
+            out.print(strategy.getJavaMemberName(parameter));
 
             glue = ", ";
         }
@@ -2113,15 +2117,15 @@ public class DefaultGenerator implements Generator {
         out.println("();");
 
         for (ParameterDefinition parameter : procedure.getInParameters()) {
-            out.print("\t\tp.set");
-            out.print(strategy.getJavaClassName(parameter));
+            out.print("\t\tp.");
+            out.print(strategy.getJavaSetterName(parameter));
             out.print("(");
 
             if (instance && parameter.equals(procedure.getInParameters().get(0))) {
                 out.print("this");
             }
             else {
-                out.print(strategy.getJavaClassNameLC(parameter));
+                out.print(strategy.getJavaMemberName(parameter));
             }
 
             out.println(");");
@@ -2141,14 +2145,14 @@ public class DefaultGenerator implements Generator {
 
         if (procedure.getOutParameters().size() > 0) {
             if (instance) {
-                out.print("\t\tfrom(p.get");
-                out.print(strategy.getJavaClassName(procedure.getOutParameters().get(0)));
+                out.print("\t\tfrom(p.");
+                out.print(strategy.getJavaGetterName(procedure.getOutParameters().get(0)));
                 out.println("());");
             }
 
             if (procedure.getOutParameters().size() == 1) {
-                out.print("\t\treturn p.get");
-                out.print(strategy.getJavaClassName(procedure.getOutParameters().get(0)));
+                out.print("\t\treturn p.");
+                out.print(strategy.getJavaGetterName(procedure.getOutParameters().get(0)));
                 out.println("();");
             }
             else if (procedure.getOutParameters().size() > 1) {

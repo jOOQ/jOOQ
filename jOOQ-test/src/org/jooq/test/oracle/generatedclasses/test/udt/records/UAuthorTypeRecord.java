@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> {
 
-	private static final long serialVersionUID = -963444002;
+	private static final long serialVersionUID = 1548726640;
 
 
 	/**
@@ -54,7 +54,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Invoke COUNT_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.COUNT_BOOKS
 	 *
 	 * @param self
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -68,7 +68,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Invoke GET_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param self IN OUT parameter
 	 * @param book1 OUT parameter
@@ -86,7 +86,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Invoke LOAD
+	 * Call TEST.U_AUTHOR_TYPE.LOAD
 	 *
 	 * @param self IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query

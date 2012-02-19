@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_BOOLEANS extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> {
 
-	private static final long serialVersionUID = 1526986297;
+	private static final long serialVersionUID = 1978954881;
 
 	/**
-	 * The singleton instance of T_BOOLEANS
+	 * The singleton instance of TEST.T_BOOLEANS
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS T_BOOLEANS = new org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS();
 

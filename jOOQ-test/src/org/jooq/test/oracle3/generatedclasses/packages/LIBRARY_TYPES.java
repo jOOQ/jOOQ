@@ -10,12 +10,12 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  */
 public final class LIBRARY_TYPES extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -109949385;
+	private static final long serialVersionUID = -2052712041;
 
 	/**
-	 * The singleton instance of LIBRARY_TYPES
+	 * The singleton instance of TEST.LIBRARY_TYPES
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES LIBRARY_TYPES = new org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES();
+	public static final org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES LIBRARY_TYPES = new org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES();
 	/**
 	 * No further instances allowed
 	 */

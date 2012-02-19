@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class V_INCOMPLETE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> {
 
-	private static final long serialVersionUID = -666619982;
+	private static final long serialVersionUID = -2020480946;
 
 	/**
-	 * The singleton instance of V_INCOMPLETE
+	 * The singleton instance of TEST.V_INCOMPLETE
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE V_INCOMPLETE = new org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE();
 

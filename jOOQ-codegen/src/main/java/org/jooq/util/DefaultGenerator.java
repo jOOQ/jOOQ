@@ -289,7 +289,7 @@ public class DefaultGenerator implements Generator {
 			outS.printSerial();
 			outS.println();
 			outS.println("\t/**");
-			outS.println("\t * The singleton instance of " + schema.getOutputName());
+			outS.println("\t * The singleton instance of " + schema.getQualifiedOutputName());
 			outS.println("\t */");
 			outS.println("\tpublic static final " + strategy.getJavaClassName(schema) + " " + strategy.getJavaIdentifier(schema) + " = new " + strategy.getJavaClassName(schema) + "();");
 
@@ -387,7 +387,7 @@ public class DefaultGenerator implements Generator {
             for (SequenceDefinition sequence : database.getSequences(schema)) {
                 out.println();
                 out.println("\t/**");
-                out.println("\t * The sequence " + sequence.getQualifiedName());
+                out.println("\t * The sequence " + sequence.getQualifiedOutputName());
                 out.println("\t */");
 
                 out.print("\tpublic static final ");
@@ -881,7 +881,7 @@ public class DefaultGenerator implements Generator {
                     out.println("\t * " + table.getComment());
                 }
                 else {
-                    out.println("\t * The table " + table.getQualifiedName());
+                    out.println("\t * The table " + table.getQualifiedOutputName());
                 }
 
                 out.println("\t */");
@@ -1289,7 +1289,7 @@ public class DefaultGenerator implements Generator {
             for (UDTDefinition udt : database.getUDTs(schema)) {
                 out.println();
                 out.println("\t/**");
-                out.println("\t * The type " + udt.getQualifiedName());
+                out.println("\t * The type " + udt.getQualifiedOutputName());
                 out.println("\t */");
 
                 out.print("\tpublic static ");
@@ -1390,14 +1390,14 @@ public class DefaultGenerator implements Generator {
 
             for (EnumDefinition e : database.getEnums(schema)) {
                 try {
-                    log.info("Generating ENUM", strategy.getFileName(e));
+                    log.info("Generating ENUM", strategy.getFileName(e, Mode.ENUM));
 
-                    GenerationWriter out = new GenerationWriter(strategy.getFile(e));
+                    GenerationWriter out = new GenerationWriter(strategy.getFile(e, Mode.ENUM));
                     printHeader(out, e);
                     printClassJavadoc(out, e);
 
                     out.print("public enum ");
-                    out.print(strategy.getJavaClassName(e));
+                    out.print(strategy.getJavaClassName(e, Mode.ENUM));
                     out.print(" implements ");
                     out.print(EnumType.class);
                     out.print(" {");
@@ -1412,7 +1412,7 @@ public class DefaultGenerator implements Generator {
                     out.println();
                     out.println("\tprivate final java.lang.String literal;");
                     out.println();
-                    out.println("\tprivate " + strategy.getJavaClassName(e) + "(java.lang.String literal) {");
+                    out.println("\tprivate " + strategy.getJavaClassName(e, Mode.ENUM) + "(java.lang.String literal) {");
                     out.println("\t\tthis.literal = literal;");
                     out.println("\t}");
                     out.println();
@@ -1513,18 +1513,7 @@ public class DefaultGenerator implements Generator {
                     outPkg.print(PackageImpl.class);
                     outPkg.println(" {");
                     outPkg.printSerial();
-
-                    outPkg.println();
-                    outPkg.println("\t/**");
-                    outPkg.println("\t * The singleton instance of " + strategy.getJavaIdentifier(pkg)); // TODO [#1166]
-                    outPkg.println("\t */");
-                    outPkg.print("\tpublic static ");
-                    outPkg.print(strategy.getFullJavaClassName(pkg));
-                    outPkg.print(" ");
-                    outPkg.print(strategy.getJavaIdentifier(pkg));
-                    outPkg.print(" = new ");
-                    outPkg.print(strategy.getFullJavaClassName(pkg));
-                    outPkg.println("();");
+                    printSingletonInstance(pkg, outPkg);
 
                     for (RoutineDefinition routine : pkg.getRoutines()) {
                         try {
@@ -1795,7 +1784,7 @@ public class DefaultGenerator implements Generator {
         for (ParameterDefinition parameter : routine.getInParameters()) {
         	out.println();
             out.println("\t/**");
-            out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the routine");
+            out.println("\t * Set the <code>" + parameter.getOutputName() + "</code> parameter to the routine");
             out.println("\t */");
         	out.print("\tpublic void ");
             out.print(strategy.getJavaSetterName(parameter, Mode.DEFAULT));
@@ -1818,7 +1807,7 @@ public class DefaultGenerator implements Generator {
         	if (routine.isSQLUsable()) {
         	    out.println();
                 out.println("\t/**");
-                out.println("\t * Set the <code>" + parameter.getName() + "</code> parameter to the function");
+                out.println("\t * Set the <code>" + parameter.getOutputName() + "</code> parameter to the function");
                 out.println("\t * <p>");
                 out.print("\t * Use this method only, if the function is called as a {@link ");
                 out.print(Field.class);
@@ -1887,7 +1876,7 @@ public class DefaultGenerator implements Generator {
 
         out.println();
         out.println("\t/**");
-        out.println("\t * Get " + strategy.getJavaIdentifier(function) + " as a field"); // TODO [#1166]
+        out.println("\t * Get " + function.getQualifiedOutputName() + " as a field");
         out.println("\t *");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
@@ -1951,7 +1940,7 @@ public class DefaultGenerator implements Generator {
 
         out.println();
         out.println("\t/**");
-        out.println("\t * Invoke " + strategy.getJavaIdentifier(function)); // TODO [#1166]
+        out.println("\t * Call " + function.getQualifiedOutputName());
         out.println("\t *");
 
         for (ParameterDefinition parameter : function.getInParameters()) {
@@ -2057,7 +2046,7 @@ public class DefaultGenerator implements Generator {
 
         out.println();
         out.println("\t/**");
-        out.println("\t * Invoke " + strategy.getJavaIdentifier(procedure)); // TODO [#1166]
+        out.println("\t * Call " + procedure.getQualifiedOutputName());
         out.println("\t *");
 
         for (ParameterDefinition parameter : procedure.getAllParameters()) {
@@ -2201,7 +2190,7 @@ public class DefaultGenerator implements Generator {
     private void printSingletonInstance(Definition definition, GenerationWriter out) {
         out.println();
         out.println("\t/**");
-        out.println("\t * The singleton instance of " + definition.getOutputName()); // TODO [#1166]
+        out.println("\t * The singleton instance of " + definition.getQualifiedOutputName());
         out.println("\t */");
         out.print("\tpublic static final ");
         out.print(strategy.getFullJavaClassName(definition));

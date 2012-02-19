@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class O_INVALID_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.O_INVALID_TYPE> {
 
-	private static final long serialVersionUID = 702977250;
+	private static final long serialVersionUID = -940025096;
 
 	/**
-	 * The singleton instance of O_INVALID_TYPE
+	 * The singleton instance of TEST.O_INVALID_TYPE
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE O_INVALID_TYPE = new org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE();
 

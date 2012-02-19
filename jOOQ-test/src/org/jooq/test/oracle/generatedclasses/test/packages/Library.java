@@ -10,15 +10,15 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
  */
 public final class Library extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 1978963318;
+	private static final long serialVersionUID = 1264882467;
 
 	/**
-	 * The singleton instance of LIBRARY
+	 * The singleton instance of TEST.LIBRARY
 	 */
-	public static org.jooq.test.oracle.generatedclasses.test.packages.Library LIBRARY = new org.jooq.test.oracle.generatedclasses.test.packages.Library();
+	public static final org.jooq.test.oracle.generatedclasses.test.packages.Library LIBRARY = new org.jooq.test.oracle.generatedclasses.test.packages.Library();
 
 	/**
-	 * Invoke PKG_F_AUTHOR_EXISTS
+	 * Call TEST.LIBRARY.PKG_F_AUTHOR_EXISTS
 	 *
 	 * @param authorName
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -32,7 +32,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PKG_F_AUTHOR_EXISTS as a field
+	 * Get TEST.LIBRARY.PKG_F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
 	 */
@@ -44,7 +44,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PKG_F_AUTHOR_EXISTS as a field
+	 * Get TEST.LIBRARY.PKG_F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
 	 */
@@ -56,7 +56,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PKG_F_AUTHOR_EXISTS
+	 * Call TEST.LIBRARY.PKG_F_AUTHOR_EXISTS
 	 *
 	 * @param authorName
 	 * @param unused
@@ -72,7 +72,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PKG_F_AUTHOR_EXISTS as a field
+	 * Get TEST.LIBRARY.PKG_F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
 	 * @param unused
@@ -86,7 +86,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PKG_F_AUTHOR_EXISTS as a field
+	 * Get TEST.LIBRARY.PKG_F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
 	 * @param unused
@@ -100,7 +100,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PKG_F_UNUSED
+	 * Call TEST.LIBRARY.PKG_F_UNUSED
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -112,7 +112,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PKG_F_UNUSED as a field
+	 * Get TEST.LIBRARY.PKG_F_UNUSED as a field
 	 *
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> pkgFUnused() {
@@ -122,7 +122,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PKG_F378
+	 * Call TEST.LIBRARY.PKG_F378
 	 *
 	 * @param returnValue OUT parameter
 	 * @param i IN parameter
@@ -140,7 +140,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PKG_P_AUTHOR_EXISTS
+	 * Call TEST.LIBRARY.PKG_P_AUTHOR_EXISTS
 	 *
 	 * @param authorName IN parameter
 	 * @param result OUT parameter
@@ -155,7 +155,7 @@ public final class Library extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PKG_P_AUTHOR_EXISTS
+	 * Call TEST.LIBRARY.PKG_P_AUTHOR_EXISTS
 	 *
 	 * @param authorName IN parameter
 	 * @param result OUT parameter

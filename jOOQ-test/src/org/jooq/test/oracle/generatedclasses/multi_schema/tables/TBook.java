@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1077079576;
+	private static final long serialVersionUID = -1856734085;
 
 	/**
-	 * The singleton instance of T_BOOK
+	 * The singleton instance of MULTI_SCHEMA.T_BOOK
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook T_BOOK = new org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook();
 

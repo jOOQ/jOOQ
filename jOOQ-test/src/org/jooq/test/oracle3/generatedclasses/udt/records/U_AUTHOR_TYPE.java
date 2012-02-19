@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> {
 
-	private static final long serialVersionUID = 851714395;
+	private static final long serialVersionUID = -893216533;
 
 
 	/**
@@ -54,12 +54,12 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Invoke COUNT_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.COUNT_BOOKS
 	 *
 	 * @param SELF
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public java.math.BigDecimal call_countBooks() {
+	public java.math.BigDecimal call_COUNT_BOOKS() {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS();
 		f.setSELF(this);
 
@@ -68,7 +68,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Invoke GET_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param SELF IN OUT parameter
 	 * @param BOOK1 OUT parameter
@@ -76,7 +76,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	 * @param BOOKS OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS call_getBooks() {
+	public org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS call_GET_BOOKS() {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS();
 		p.setSELF(this);
 
@@ -86,12 +86,12 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Invoke LOAD
+	 * Call TEST.U_AUTHOR_TYPE.LOAD
 	 *
 	 * @param SELF IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_load() {
+	public org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_LOAD() {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD();
 		p.setSELF(this);
 

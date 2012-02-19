@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> {
 
-	private static final long serialVersionUID = 1280141708;
+	private static final long serialVersionUID = 919076356;
 
 	/**
-	 * The singleton instance of X_TEST_CASE_85
+	 * The singleton instance of TEST.X_TEST_CASE_85
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85 X_TEST_CASE_85 = new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85();
 

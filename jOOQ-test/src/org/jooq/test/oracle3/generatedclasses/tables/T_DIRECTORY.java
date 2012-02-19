@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> {
 
-	private static final long serialVersionUID = 1850742447;
+	private static final long serialVersionUID = 1563360727;
 
 	/**
-	 * The singleton instance of T_DIRECTORY
+	 * The singleton instance of TEST.T_DIRECTORY
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY T_DIRECTORY = new org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY();
 

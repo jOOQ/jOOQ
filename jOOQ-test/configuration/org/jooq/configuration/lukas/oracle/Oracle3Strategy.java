@@ -43,7 +43,7 @@ import org.jooq.util.Definition;
  *
  * @author Lukas Eder
  */
-public class CustomGeneratorStrategy extends DefaultGeneratorStrategy {
+public class Oracle3Strategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {

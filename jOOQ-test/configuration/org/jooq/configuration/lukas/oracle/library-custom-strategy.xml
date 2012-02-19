@@ -12,7 +12,7 @@
        	</name>
 		<strategy>
 			<name>
-				org.jooq.configuration.lukas.oracle.CustomGeneratorStrategy
+				org.jooq.configuration.lukas.oracle.Oracle3Strategy
 			</name>
 		</strategy>
         <database>

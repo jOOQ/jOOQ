@@ -13,12 +13,12 @@ public final class Routines {
 	/**
 	 * Call TEST.F_976
 	 *
-	 * @param i
+	 * @param dateAsTimestampi
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.sql.Timestamp f_976(org.jooq.Configuration configuration, java.sql.Timestamp i) {
-		org.jooq.test.oracle2.generatedclasses.routines.F_976 f = new org.jooq.test.oracle2.generatedclasses.routines.F_976();
-		f.setI(i);
+	public static java.sql.Timestamp f_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
+		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976();
+		f.setI(dateAsTimestampi);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -27,11 +27,11 @@ public final class Routines {
 	/**
 	 * Get TEST.F_976 as a field
 	 *
-	 * @param i
+	 * @param dateAsTimestampi
 	 */
-	public static org.jooq.Field<java.sql.Timestamp> f_976(java.sql.Timestamp i) {
-		org.jooq.test.oracle2.generatedclasses.routines.F_976 f = new org.jooq.test.oracle2.generatedclasses.routines.F_976();
-		f.setI(i);
+	public static org.jooq.Field<java.sql.Timestamp> f_976(java.sql.Timestamp dateAsTimestampi) {
+		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976();
+		f.setI(dateAsTimestampi);
 
 		return f.asField();
 	}
@@ -39,11 +39,11 @@ public final class Routines {
 	/**
 	 * Get TEST.F_976 as a field
 	 *
-	 * @param i
+	 * @param dateAsTimestampi
 	 */
-	public static org.jooq.Field<java.sql.Timestamp> f_976(org.jooq.Field<java.sql.Timestamp> i) {
-		org.jooq.test.oracle2.generatedclasses.routines.F_976 f = new org.jooq.test.oracle2.generatedclasses.routines.F_976();
-		f.setI(i);
+	public static org.jooq.Field<java.sql.Timestamp> f_976(org.jooq.Field<java.sql.Timestamp> dateAsTimestampi) {
+		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976 f = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampF_976();
+		f.setI(dateAsTimestampi);
 
 		return f.asField();
 	}
@@ -51,13 +51,13 @@ public final class Routines {
 	/**
 	 * Call TEST.P_976
 	 *
-	 * @param i IN parameter
-	 * @param o OUT parameter
+	 * @param dateAsTimestampi IN parameter
+	 * @param dateAsTimestampo OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.sql.Timestamp p_976(org.jooq.Configuration configuration, java.sql.Timestamp i) {
-		org.jooq.test.oracle2.generatedclasses.routines.P_976 p = new org.jooq.test.oracle2.generatedclasses.routines.P_976();
-		p.setI(i);
+	public static java.sql.Timestamp p_976(org.jooq.Configuration configuration, java.sql.Timestamp dateAsTimestampi) {
+		org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampP_976 p = new org.jooq.test.oracle2.generatedclasses.routines.DateAsTimestampP_976();
+		p.setI(dateAsTimestampi);
 
 		p.execute(configuration);
 		return p.getO();

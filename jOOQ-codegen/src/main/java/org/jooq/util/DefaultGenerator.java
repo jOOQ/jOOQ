@@ -1755,23 +1755,21 @@ public class DefaultGenerator implements Generator {
         }
 
         for (ParameterDefinition parameter : routine.getAllParameters()) {
-        	String parameterNameUC = parameter.getName().toUpperCase();
-
         	out.print("\t\t");
 
         	if (parameter.equals(routine.getReturnValue())) {
-        	    out.println("setReturnParameter(" + parameterNameUC + ");");
+        	    out.println("setReturnParameter(" + strategy.getJavaIdentifier(parameter) + ");");
         	}
         	else if (routine.getInParameters().contains(parameter)) {
         		if (routine.getOutParameters().contains(parameter)) {
-        			out.println("addInOutParameter(" + parameterNameUC + ");");
+        			out.println("addInOutParameter(" + strategy.getJavaIdentifier(parameter) + ");");
         		}
         		else {
-        			out.println("addInParameter(" + parameterNameUC + ");");
+        			out.println("addInParameter(" + strategy.getJavaIdentifier(parameter) + ");");
         		}
         	}
         	else {
-        		out.println("addOutParameter(" + parameterNameUC + ");");
+        		out.println("addOutParameter(" + strategy.getJavaIdentifier(parameter) + ");");
         	}
         }
 

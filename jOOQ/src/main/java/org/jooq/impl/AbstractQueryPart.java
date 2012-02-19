@@ -115,7 +115,7 @@ abstract class AbstractQueryPart implements QueryPartInternal, AttachableInterna
      */
     @Override
     public final String getSQL() {
-        if (executePreparedStatements(create().getSettings())) {
+        if (executePreparedStatements(getConfiguration().getSettings())) {
             return getSQL(false);
         }
         else {

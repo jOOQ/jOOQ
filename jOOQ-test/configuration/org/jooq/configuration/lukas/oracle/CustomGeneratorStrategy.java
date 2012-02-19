@@ -47,27 +47,27 @@ public class CustomGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        return definition.getJavaName();
+        return definition.getOutputName();
     }
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        return "set" + definition.getJavaName();
+        return "set" + definition.getOutputName();
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        return "get" + definition.getJavaName();
+        return "get" + definition.getOutputName();
     }
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        return "call_" + super.getJavaMethodName(definition, mode);
+        return "call_" + definition.getOutputName();
     }
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
-        return definition.getJavaName();
+        return definition.getOutputName();
     }
 
     @Override
@@ -77,6 +77,6 @@ public class CustomGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaMemberName(Definition definition, Mode mode) {
-        return definition.getJavaName();
+        return definition.getOutputName();
     }
 }

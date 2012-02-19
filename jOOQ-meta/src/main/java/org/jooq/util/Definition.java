@@ -76,13 +76,6 @@ public interface Definition {
     String getOutputName();
 
     /**
-     * @return The name of this object, e.g. [my_table], as defined for the
-     *         generated source code. This may differ from the output name, if
-     *         some re-configuration has been done.
-     */
-    String getJavaName();
-
-    /**
      * @return The comment of this object
      */
     String getComment();

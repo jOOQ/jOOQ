@@ -120,12 +120,12 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        return "set" + disambiguateMethod(definition, getJavaClassName(definition));
+        return "set" + disambiguateMethod(definition, getJavaClassName0(definition, Mode.DEFAULT));
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        return "get" + disambiguateMethod(definition, getJavaClassName(definition));
+        return "get" + disambiguateMethod(definition, getJavaClassName0(definition, Mode.DEFAULT));
     }
 
     @Override

@@ -13,7 +13,7 @@ public final class Tables {
 	/**
 	 * The table TEST.T_976
 	 */
-	public static org.jooq.test.oracle2.generatedclasses.tables.T_976 T_976 = org.jooq.test.oracle2.generatedclasses.tables.T_976.T_976;
+	public static org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976 DATE_AS_TIMESTAMP_T_976 = org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976;
 
 	/**
 	 * No instances

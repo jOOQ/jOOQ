@@ -14,7 +14,7 @@ public class Keys extends org.jooq.impl.AbstractKeys {
 	// IDENTITY definitions
 
 	// UNIQUE and PRIMARY KEY definitions
-	public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.T_976Record> PK_T_976 = createUniqueKey(org.jooq.test.oracle2.generatedclasses.tables.T_976.T_976, org.jooq.test.oracle2.generatedclasses.tables.T_976.T_976.ID);
+	public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> DATE_AS_TIMESTAMP_PK_T_976 = createUniqueKey(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID);
 
 	// FOREIGN KEY definitions
 

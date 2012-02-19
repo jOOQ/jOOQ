@@ -104,16 +104,6 @@ public abstract class AbstractDefinition implements Definition {
         return getInputName();
     }
 
-    /**
-     * Subclasses may override this method
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public String getJavaName() {
-        return getOutputName();
-    }
-
     @Override
     public final String getComment() {
         return comment;

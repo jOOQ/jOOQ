@@ -102,7 +102,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getJavaName()).toUpperCase();
+        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getOutputName()).toUpperCase();
 
         // Columns, Attributes, Parameters
         if (definition instanceof ColumnDefinition ||
@@ -207,7 +207,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         // [#282] In multi-schema setups, the schema name goes into the package
         if (definition.getDatabase().getSchemata().size() > 1) {
             sb.append(".");
-            sb.append(convertToJavaIdentifier(definition.getSchema().getJavaName()).toLowerCase());
+            sb.append(convertToJavaIdentifier(definition.getSchema().getOutputName()).toLowerCase());
         }
 
         // Some definitions have their dedicated subpackages, e.g. "tables", "routines"
@@ -242,7 +242,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
 
-        String name = GenerationUtil.convertToJavaIdentifier(definition.getJavaName());
+        String name = GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
         result.append(StringUtils.toCamelCase(name));
 
         if (mode == Mode.RECORD) {

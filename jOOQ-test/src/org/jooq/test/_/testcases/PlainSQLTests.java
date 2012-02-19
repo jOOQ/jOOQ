@@ -64,6 +64,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
+import org.jooq.impl.Factory;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -388,6 +389,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             @Override
             public void bind(BindContext context) {
+                context.setData("Foo-Field", "Baz");
+
                 try {
                     context.statement().setInt(context.nextIndex(), 2);
                 }
@@ -415,6 +418,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             @Override
             public void bind(BindContext context) {
+                context.setData("Foo-Condition", "Baz");
+
                 try {
                     context.bind(IDx2);
                     context.statement().setInt(context.nextIndex(), 3);
@@ -425,7 +430,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             }
         };
 
-        Result<Record> result = create()
+        // [#1169] Some additional checks to see if custom data is correctly
+        // passed on to custom QueryParts
+        Factory create = create();
+        create.setData("Foo-Field", "Bar");
+        create.setData("Foo-Condition", "Bar");
+
+        Result<Record> result = create
             .select(TBook_ID(), IDx2)
             .from(TBook())
             .where(c)
@@ -440,5 +451,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(Integer.valueOf(4), result.getValue(0, IDx2));
         assertEquals(Integer.valueOf(6), result.getValue(1, IDx2));
         assertEquals(Integer.valueOf(8), result.getValue(2, IDx2));
+
+        // [#1169] Check again
+        assertEquals("Baz", create.getData("Foo-Field"));
+        assertEquals("Baz", create.getData("Foo-Condition"));
     }
 }

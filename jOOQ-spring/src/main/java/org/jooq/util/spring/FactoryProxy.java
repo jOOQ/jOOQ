@@ -42,6 +42,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -116,7 +117,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     private NativeJdbcExtractor            nativeJdbcExtractor;
 
     // -------------------------------------------------------------------------
-    // Spring injection API
+    // XXX Spring injection API
     // -------------------------------------------------------------------------
 
     @Required
@@ -162,7 +163,7 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     // -------------------------------------------------------------------------
-    // Configuration API
+    // XXX Configuration API
     // -------------------------------------------------------------------------
 
     @Override
@@ -186,8 +187,23 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
         return getDelegate().getConnection();
     }
 
+    @Override
+    public final Map<String, Object> getData() {
+        return getDelegate().getData();
+    }
+
+    @Override
+    public final Object getData(String key) {
+        return getDelegate().getData(key);
+    }
+
+    @Override
+    public final Object setData(String key, Object value) {
+        return getDelegate().setData(key, value);
+    }
+
     // -------------------------------------------------------------------------
-    // FactoryOperations API
+    // XXX FactoryOperations API
     // -------------------------------------------------------------------------
 
     @Override

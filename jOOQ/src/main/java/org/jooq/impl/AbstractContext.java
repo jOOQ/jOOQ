@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import java.sql.Connection;
+import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -69,7 +70,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     }
 
     // ------------------------------------------------------------------------
-    // Context API
+    // XXX Context API
     // ------------------------------------------------------------------------
 
     @Override
@@ -119,7 +120,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     }
 
     // ------------------------------------------------------------------------
-    // Configuration API
+    // XXX Configuration API
     // ------------------------------------------------------------------------
 
     @Override
@@ -136,6 +137,21 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Deprecated
     public final org.jooq.SchemaMapping getSchemaMapping() {
         return configuration.getSchemaMapping();
+    }
+
+    @Override
+    public final Map<String, Object> getData() {
+        return configuration.getData();
+    }
+
+    @Override
+    public final Object getData(String key) {
+        return configuration.getData(key);
+    }
+
+    @Override
+    public final Object setData(String key, Object value) {
+        return configuration.setData(key, value);
     }
 
     @Override

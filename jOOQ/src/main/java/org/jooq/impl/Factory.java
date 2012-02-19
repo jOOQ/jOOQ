@@ -67,7 +67,9 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXB;
 
@@ -168,9 +170,10 @@ public class Factory implements FactoryOperations {
     @SuppressWarnings("deprecation")
     private final org.jooq.SchemaMapping mapping;
     private final Settings               settings;
+    private final Map<String, Object>    data;
 
     // -------------------------------------------------------------------------
-    // Constructors
+    // XXX Constructors
     // -------------------------------------------------------------------------
 
     /**
@@ -181,7 +184,7 @@ public class Factory implements FactoryOperations {
      * @param dialect The dialect to use with objects created from this factory
      */
     public Factory(Connection connection, SQLDialect dialect) {
-        this(connection, dialect, new Settings(), null);
+        this(connection, dialect, new Settings(), null, null);
     }
 
     /**
@@ -198,7 +201,7 @@ public class Factory implements FactoryOperations {
      */
     @Deprecated
     public Factory(Connection connection, SQLDialect dialect, org.jooq.SchemaMapping mapping) {
-        this(connection, dialect, null, null);
+        this(connection, dialect, null, null, null);
     }
 
     /**
@@ -213,22 +216,23 @@ public class Factory implements FactoryOperations {
      */
     @SuppressWarnings("deprecation")
     public Factory(Connection connection, SQLDialect dialect, Settings settings) {
-        this(connection, dialect, settings, org.jooq.SchemaMapping.fromSettings(settings));
+        this(connection, dialect, settings, org.jooq.SchemaMapping.fromSettings(settings), null);
     }
 
     /**
      * Do the instanciation
      */
     @SuppressWarnings("deprecation")
-    private Factory(Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping) {
+    private Factory(Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
         this.connection = connection;
         this.dialect = dialect;
         this.settings = settings != null ? settings : new Settings();
         this.mapping = mapping != null ? mapping : org.jooq.SchemaMapping.fromSettings(settings);
+        this.data = data != null ? data : new HashMap<String, Object>();
     }
 
     // -------------------------------------------------------------------------
-    // Configuration API
+    // XXX Configuration API
     // -------------------------------------------------------------------------
 
     /**
@@ -272,8 +276,32 @@ public class Factory implements FactoryOperations {
         return settings;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Map<String, Object> getData() {
+        return data;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Object getData(String key) {
+        return data.get(key);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Object setData(String key, Object value) {
+        return data.put(key, value);
+    }
+
     // -------------------------------------------------------------------------
-    // RenderContext and BindContext accessors
+    // XXX RenderContext and BindContext accessors
     // -------------------------------------------------------------------------
 
     /**
@@ -348,7 +376,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Attachable and Serializable API
+    // XXX Attachable and Serializable API
     // -------------------------------------------------------------------------
 
     /**
@@ -370,7 +398,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Access to the loader API
+    // XXX Access to the loader API
     // -------------------------------------------------------------------------
 
     /**
@@ -382,7 +410,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Conversion of objects into tables
+    // XXX Conversion of objects into tables
     // -------------------------------------------------------------------------
 
     /**
@@ -532,7 +560,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Plain SQL object factory
+    // XXX Plain SQL object factory
     // -------------------------------------------------------------------------
 
     /**
@@ -924,7 +952,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // JDBC convenience methods
+    // XXX JDBC convenience methods
     // -------------------------------------------------------------------------
 
     /**
@@ -947,7 +975,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Global Condition factory
+    // XXX Global Condition factory
     // -------------------------------------------------------------------------
 
     /**
@@ -987,7 +1015,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Global Query factory
+    // XXX Global Query factory
     // -------------------------------------------------------------------------
 
     /**
@@ -1168,7 +1196,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // DDL Statements
+    // XXX DDL Statements
     // -------------------------------------------------------------------------
 
     /**
@@ -1180,7 +1208,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Other queries for identites and sequences
+    // XXX Other queries for identites and sequences
     // -------------------------------------------------------------------------
 
     /**
@@ -1303,7 +1331,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Global Record factory
+    // XXX Global Record factory
     // -------------------------------------------------------------------------
 
     /**
@@ -1333,7 +1361,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Global Field and Function factory
+    // XXX Global Field and Function factory
     // -------------------------------------------------------------------------
 
     /**
@@ -1691,7 +1719,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // String function factory
+    // XXX String function factory
     // -------------------------------------------------------------------------
 
     /**
@@ -2258,7 +2286,7 @@ public class Factory implements FactoryOperations {
     }
 
     // ------------------------------------------------------------------------
-    // Date and time functions
+    // XXX Date and time functions
     // ------------------------------------------------------------------------
 
     /**
@@ -2282,7 +2310,7 @@ public class Factory implements FactoryOperations {
     }
 
     // ------------------------------------------------------------------------
-    // Construction of special grouping functions
+    // XXX Construction of special grouping functions
     // ------------------------------------------------------------------------
 
     /**
@@ -2484,7 +2512,7 @@ public class Factory implements FactoryOperations {
     }
 
     // ------------------------------------------------------------------------
-    // Bitwise operations
+    // XXX Bitwise operations
     // ------------------------------------------------------------------------
 
     /**
@@ -2917,7 +2945,7 @@ public class Factory implements FactoryOperations {
     }
 
     // ------------------------------------------------------------------------
-    // Mathematical functions
+    // XXX Mathematical functions
     // ------------------------------------------------------------------------
 
     /**
@@ -3576,7 +3604,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Aggregate functions
+    // XXX Aggregate functions
     // -------------------------------------------------------------------------
 
     /**
@@ -3769,7 +3797,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Window functions
+    // XXX Window functions
     // -------------------------------------------------------------------------
 
     /**
@@ -3957,7 +3985,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Bind values
+    // XXX Bind values
     // -------------------------------------------------------------------------
 
     /**
@@ -4202,7 +4230,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Literals
+    // XXX Literals
     // -------------------------------------------------------------------------
 
     /**
@@ -4386,7 +4414,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Pseudo fields and date time functions
+    // XXX Pseudo fields and date time functions
     // -------------------------------------------------------------------------
 
     /**
@@ -4438,7 +4466,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Fast querying
+    // XXX Fast querying
     // -------------------------------------------------------------------------
 
     /**
@@ -4581,7 +4609,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Static initialisation of dialect-specific data types
+    // XXX Static initialisation of dialect-specific data types
     // -------------------------------------------------------------------------
 
     static {
@@ -4594,7 +4622,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // Internals
+    // XXX Internals
     // -------------------------------------------------------------------------
 
     private static int filterDeleteOne(int i) {
@@ -4627,7 +4655,11 @@ public class Factory implements FactoryOperations {
         StringWriter writer = new StringWriter();
         JAXB.marshal(settings, writer);
 
-        return "Factory [connected=" + (connection != null) + ", dialect=" + dialect + ", settings=\n" + writer + "]";
+        return "Factory [\n\tconnected=" + (connection != null) +
+            ",\n\tdialect=" + dialect +
+            ",\n\tdata=" + data +
+            ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
+            "\n]";
     }
 
     static {
@@ -4658,7 +4690,12 @@ public class Factory implements FactoryOperations {
             return getNewFactory(DefaultConfiguration.DEFAULT_CONFIGURATION);
         }
         else {
-            return new Factory(configuration.getConnection(), configuration.getDialect(), configuration.getSettings());
+            return new Factory(
+                configuration.getConnection(),
+                configuration.getDialect(),
+                configuration.getSettings(),
+                null,
+                configuration.getData());
         }
     }
 

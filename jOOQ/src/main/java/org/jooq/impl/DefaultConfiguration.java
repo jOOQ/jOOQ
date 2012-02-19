@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
@@ -77,13 +79,28 @@ final class DefaultConfiguration implements Configuration {
         return new Settings();
     }
 
+    @Override
+    public Map<String, Object> getData() {
+        return new HashMap<String, Object>();
+    }
+
+    @Override
+    public Object getData(String key) {
+        return null;
+    }
+
+    @Override
+    public Object setData(String key, Object value) {
+        return null;
+    }
+
     /**
      * No further instances
      */
     private DefaultConfiguration() {}
 
     // -------------------------------------------------------------------------
-    // The Object API
+    // XXX The Object API
     // -------------------------------------------------------------------------
 
     @Override

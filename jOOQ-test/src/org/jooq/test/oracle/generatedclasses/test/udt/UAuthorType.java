@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
  */
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = -956699475;
+	private static final long serialVersionUID = -703790379;
 
 	/**
-	 * The singleton instance of U_AUTHOR_TYPE
+	 * The singleton instance of TEST.U_AUTHOR_TYPE
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType U_AUTHOR_TYPE = new org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType();
 
@@ -44,7 +44,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, U_AUTHOR_TYPE);
 
 	/**
-	 * Invoke COUNT_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.COUNT_BOOKS
 	 *
 	 * @param self
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -58,7 +58,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Get COUNT_BOOKS as a field
+	 * Get TEST.U_AUTHOR_TYPE.COUNT_BOOKS as a field
 	 *
 	 * @param self
 	 */
@@ -70,7 +70,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Get COUNT_BOOKS as a field
+	 * Get TEST.U_AUTHOR_TYPE.COUNT_BOOKS as a field
 	 *
 	 * @param self
 	 */
@@ -82,7 +82,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Invoke GET_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param self IN OUT parameter
 	 * @param book1 OUT parameter
@@ -99,7 +99,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	}
 
 	/**
-	 * Invoke LOAD
+	 * Call TEST.U_AUTHOR_TYPE.LOAD
 	 *
 	 * @param self IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query

@@ -10,15 +10,15 @@ package org.jooq.test.oracle2.generatedclasses.packages;
  */
 public final class Pkg_976 extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 168438594;
+	private static final long serialVersionUID = -1422493116;
 
 	/**
-	 * The singleton instance of PKG_976
+	 * The singleton instance of TEST.PKG_976
 	 */
-	public static org.jooq.test.oracle2.generatedclasses.packages.Pkg_976 PKG_976 = new org.jooq.test.oracle2.generatedclasses.packages.Pkg_976();
+	public static final org.jooq.test.oracle2.generatedclasses.packages.Pkg_976 PKG_976 = new org.jooq.test.oracle2.generatedclasses.packages.Pkg_976();
 
 	/**
-	 * Invoke F_976
+	 * Call TEST.PKG_976.F_976
 	 *
 	 * @param i
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -32,7 +32,7 @@ public final class Pkg_976 extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get F_976 as a field
+	 * Get TEST.PKG_976.F_976 as a field
 	 *
 	 * @param i
 	 */
@@ -44,7 +44,7 @@ public final class Pkg_976 extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get F_976 as a field
+	 * Get TEST.PKG_976.F_976 as a field
 	 *
 	 * @param i
 	 */
@@ -56,7 +56,7 @@ public final class Pkg_976 extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke P_976
+	 * Call TEST.PKG_976.P_976
 	 *
 	 * @param i IN parameter
 	 * @param o OUT parameter

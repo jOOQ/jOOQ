@@ -10,10 +10,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> {
 
-	private static final long serialVersionUID = 1280161097;
+	private static final long serialVersionUID = -412214899;
 
 	/**
-	 * The singleton instance of X_UNUSED
+	 * The singleton instance of TEST.X_UNUSED
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED X_UNUSED = new org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED();
 

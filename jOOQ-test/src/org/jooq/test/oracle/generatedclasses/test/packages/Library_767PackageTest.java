@@ -10,15 +10,15 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
  */
 public final class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -2092661576;
+	private static final long serialVersionUID = -1922518932;
 
 	/**
-	 * The singleton instance of LIBRARY_767_PACKAGE_TEST
+	 * The singleton instance of TEST.LIBRARY_767_PACKAGE_TEST
 	 */
-	public static org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest LIBRARY_767_PACKAGE_TEST = new org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest();
+	public static final org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest LIBRARY_767_PACKAGE_TEST = new org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest();
 
 	/**
-	 * Invoke LIBRARY_767_PACKAGE_TEST
+	 * Call TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -30,7 +30,7 @@ public final class Library_767PackageTest extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get LIBRARY_767_PACKAGE_TEST as a field
+	 * Get TEST.LIBRARY_767_PACKAGE_TEST.LIBRARY_767_PACKAGE_TEST as a field
 	 *
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> library_767PackageTest() {

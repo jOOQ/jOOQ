@@ -8,10 +8,10 @@ package org.jooq.test.oracle2.generatedclasses.udt;
  */
 public class T_976ObjectType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle2.generatedclasses.udt.records.T_976ObjectTypeRecord> {
 
-	private static final long serialVersionUID = -221445980;
+	private static final long serialVersionUID = 223918244;
 
 	/**
-	 * The singleton instance of T_976_OBJECT_TYPE
+	 * The singleton instance of TEST.T_976_OBJECT_TYPE
 	 */
 	public static final org.jooq.test.oracle2.generatedclasses.udt.T_976ObjectType T_976_OBJECT_TYPE = new org.jooq.test.oracle2.generatedclasses.udt.T_976ObjectType();
 

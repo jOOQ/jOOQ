@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_BOOK_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> {
 
-	private static final long serialVersionUID = 1933167696;
+	private static final long serialVersionUID = 1347132554;
 
 	/**
-	 * The singleton instance of U_BOOK_TYPE
+	 * The singleton instance of TEST.U_BOOK_TYPE
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE U_BOOK_TYPE = new org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE();
 

@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1431619590;
+	private static final long serialVersionUID = -1892306852;
 
 	/**
-	 * The singleton instance of V_BOOK
+	 * The singleton instance of TEST.V_BOOK
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.VBook V_BOOK = new org.jooq.test.oracle.generatedclasses.test.tables.VBook();
 

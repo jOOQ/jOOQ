@@ -10,10 +10,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> {
 
-	private static final long serialVersionUID = -990769525;
+	private static final long serialVersionUID = -1523042847;
 
 	/**
-	 * The singleton instance of T_BOOK
+	 * The singleton instance of TEST.T_BOOK
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_BOOK T_BOOK = new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK();
 

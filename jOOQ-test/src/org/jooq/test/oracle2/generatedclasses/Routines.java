@@ -11,7 +11,7 @@ package org.jooq.test.oracle2.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Invoke F_976
+	 * Call TEST.F_976
 	 *
 	 * @param i
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -25,7 +25,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_976 as a field
+	 * Get TEST.F_976 as a field
 	 *
 	 * @param i
 	 */
@@ -37,7 +37,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_976 as a field
+	 * Get TEST.F_976 as a field
 	 *
 	 * @param i
 	 */
@@ -49,7 +49,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_976
+	 * Call TEST.P_976
 	 *
 	 * @param i IN parameter
 	 * @param o OUT parameter

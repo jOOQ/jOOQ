@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
  */
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements org.jooq.Package {
 
-	private static final long serialVersionUID = -744793482;
+	private static final long serialVersionUID = 953432194;
 
 	/**
-	 * The singleton instance of U_AUTHOR_TYPE
+	 * The singleton instance of TEST.U_AUTHOR_TYPE
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE U_AUTHOR_TYPE = new org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE();
 
@@ -44,12 +44,12 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, U_AUTHOR_TYPE);
 
 	/**
-	 * Invoke COUNT_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.COUNT_BOOKS
 	 *
 	 * @param SELF
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal call_countBooks(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
+	public static java.math.BigDecimal call_COUNT_BOOKS(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS();
 		f.setSELF(SELF);
 
@@ -58,11 +58,11 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Get COUNT_BOOKS as a field
+	 * Get TEST.U_AUTHOR_TYPE.COUNT_BOOKS as a field
 	 *
 	 * @param SELF
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_countBooks(org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
+	public static org.jooq.Field<java.math.BigDecimal> call_COUNT_BOOKS(org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS();
 		f.setSELF(SELF);
 
@@ -70,11 +70,11 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Get COUNT_BOOKS as a field
+	 * Get TEST.U_AUTHOR_TYPE.COUNT_BOOKS as a field
 	 *
 	 * @param SELF
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> call_countBooks(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> SELF) {
+	public static org.jooq.Field<java.math.BigDecimal> call_COUNT_BOOKS(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> SELF) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS();
 		f.setSELF(SELF);
 
@@ -82,7 +82,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Invoke GET_BOOKS
+	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
 	 *
 	 * @param SELF IN OUT parameter
 	 * @param BOOK1 OUT parameter
@@ -90,7 +90,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	 * @param BOOKS OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS call_getBooks(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
+	public static org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS call_GET_BOOKS(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS();
 		p.setSELF(SELF);
 
@@ -99,12 +99,12 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * Invoke LOAD
+	 * Call TEST.U_AUTHOR_TYPE.LOAD
 	 *
 	 * @param SELF IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_load(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
+	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_LOAD(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE SELF) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD();
 		p.setSELF(SELF);
 

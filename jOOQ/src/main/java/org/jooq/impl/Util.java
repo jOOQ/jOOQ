@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Integer.toOctalString;
 import static org.jooq.impl.Factory.getDataType;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -60,6 +61,8 @@ import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
 import org.jooq.Cursor;
 import org.jooq.DataType;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.NamedQueryPart;
@@ -73,6 +76,8 @@ import org.jooq.Table;
 import org.jooq.Type;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.LoggerListener;
+import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -86,7 +91,7 @@ final class Util {
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
      * classpath.
      */
-    private static Boolean isJPAAvailable;
+    private static Boolean               isJPAAvailable;
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
@@ -454,6 +459,14 @@ final class Util {
     /**
      * Safely close a statement
      */
+    static final void safeClose(ExecuteContext ctx) {
+        safeClose(ctx.resultSet());
+        safeClose(ctx.statement());
+    }
+
+    /**
+     * Safely close a statement
+     */
     static final void safeClose(Statement statement) {
         if (statement != null) {
             try {
@@ -808,6 +821,27 @@ final class Util {
         else {
             return table;
         }
+    }
+
+    static final List<ExecuteListener> getListeners(Configuration configuration) {
+        List<ExecuteListener> result = new ArrayList<ExecuteListener>();
+
+        if (!FALSE.equals(configuration.getSettings().isExecuteLogging())) {
+            result.add(new StopWatchListener());
+            result.add(new LoggerListener());
+        }
+
+        for (String listener : configuration.getSettings().getExecuteListeners()) {
+            try {
+                // [#1170] TODO: Cache these classes?
+                result.add((ExecuteListener) Class.forName(listener).newInstance());
+            }
+            catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return result;
     }
 
     /**

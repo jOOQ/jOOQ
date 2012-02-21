@@ -35,36 +35,30 @@
  */
 package org.jooq.impl;
 
-import java.sql.Connection;
-import java.util.Map;
-
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.SQLDialect;
-import org.jooq.conf.Settings;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractContext<C extends Context<C>> implements Context<C> {
+abstract class AbstractContext<C extends Context<C>> extends AbstractConfiguration implements Context<C> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 4796952332163571043L;
 
-    final Configuration       configuration;
     boolean                   declareFields;
     boolean                   declareTables;
     boolean                   subquery;
     int                       index;
 
     AbstractContext(Configuration configuration) {
-        this.configuration = configuration;
+        super(configuration);
     }
 
     AbstractContext(Configuration configuration, boolean declareFields, boolean declareTables) {
-        this.configuration = configuration;
+        this(configuration);
         this.declareFields = declareFields;
         this.declareTables = declareTables;
     }
@@ -120,44 +114,8 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     }
 
     // ------------------------------------------------------------------------
-    // XXX Configuration API
+    // XXX Object API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final SQLDialect getDialect() {
-        return configuration.getDialect();
-    }
-
-    @Override
-    public final Connection getConnection() {
-        return configuration.getConnection();
-    }
-
-    @Override
-    @Deprecated
-    public final org.jooq.SchemaMapping getSchemaMapping() {
-        return configuration.getSchemaMapping();
-    }
-
-    @Override
-    public final Map<String, Object> getData() {
-        return configuration.getData();
-    }
-
-    @Override
-    public final Object getData(String key) {
-        return configuration.getData(key);
-    }
-
-    @Override
-    public final Object setData(String key, Object value) {
-        return configuration.setData(key, value);
-    }
-
-    @Override
-    public final Settings getSettings() {
-        return configuration.getSettings();
-    }
 
     void toString(StringBuilder sb) {
         sb.append(  "bind index   [");

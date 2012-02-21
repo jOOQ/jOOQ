@@ -19,19 +19,18 @@
 
 	<complexType name="Settings">
 		<all>
-			<!-- Configure query rendering properties -->
-			<element name="rendering" type="jooq-runtime:Rendering" minOccurs="0" maxOccurs="1"/>
-
-			<!-- Configure query execution properties -->
-			<element name="execution" type="jooq-runtime:Execution" minOccurs="0" maxOccurs="1"/>
-		</all>
-	</complexType>
-
-	<complexType name="Rendering">
-		<all>
 			<!-- Configure render mapping for runtime schema / table rewriting in
 			     generated SQL -->
 			<element name="renderMapping" type="jooq-runtime:RenderMapping" minOccurs="0" maxOccurs="1"/>
+
+			<!-- The type of statement that is to be executed -->
+			<element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
+
+			<!-- When set to true, this will add jOOQ's default logging ExecuteListeners -->
+			<element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
+
+			<!-- The event listeners to be notified upon execution events -->
+			<element name="executeListeners" type="jooq-runtime:ExecuteListeners" minOccurs="0" maxOccurs="1"/>
 		</all>
 	</complexType>
 
@@ -83,17 +82,24 @@
 		</all>
 	</complexType>
 
-	<complexType name="Execution">
-		<all>
-			<!-- The type of statement that is to be executed -->
-			<element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
-		</all>
-	</complexType>
-
 	<simpleType name="StatementType">
 		<restriction base="string">
+
+			<!-- Execute statements with inlined bind values, avoiding JDBC's
+			     PreparedStatements -->
 			<enumeration value="STATIC_STATEMENT"/>
+
+			<!-- Execute statements with bind values, using JDBC's
+			     PreparedStatements -->
 			<enumeration value="PREPARED_STATEMENT"/>
 		</restriction>
 	</simpleType>
+
+	<complexType name="ExecuteListeners">
+		<sequence>
+
+			<!-- An event listener implementing org.jooq.ExecuteListener -->
+			<element name="executeListener" type="string" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
 </schema>

@@ -33,47 +33,55 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.conf;
-
-import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
-import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+package org.jooq;
 
 import java.sql.PreparedStatement;
-import java.sql.Statement;
+import java.sql.ResultSet;
 
 /**
- * Convenience methods for jOOQ runtime settings
+ * A context object for {@link Query} execution passed to registered
+ * {@link ExecuteListener}'s.
+ * <p>
+ * Expect most of this context's objects to be <code>nullable</code>!
  *
  * @author Lukas Eder
  */
-public final class SettingsTools {
+public interface ExecuteContext extends Configuration {
+
+    Configuration configuration();
+
+    // TODO Routines?
+    // Nullable!
+    Query query();
+
+    // Nullable!
+    void sql(String sql);
+
+    String sql();
 
     /**
-     * Get the statement type from the settings
+     * Override the context's {@link PreparedStatement}
+     * <p>
+     * Use this to wrap the <code>PreparedStatement</code> executed by jOOQ with
+     * your custom wrapper statement, logging bind variables and query
+     * execution. Beware
      */
-    public static final StatementType getStatementType(Settings settings) {
-        if (settings != null) {
-            StatementType result = settings.getStatementType();
+    void statement(PreparedStatement statement);
 
-            if (result != null) {
-                return result;
-            }
-        }
+    PreparedStatement statement();
 
-        return PREPARED_STATEMENT;
-    }
+    // Nullable!
+    void resultSet(ResultSet resultSet);
 
-    /**
-     * Whether a {@link PreparedStatement} should be executed
-     */
-    public static final boolean executePreparedStatements(Settings settings) {
-        return getStatementType(settings) == PREPARED_STATEMENT;
-    }
+    ResultSet resultSet();
 
-    /**
-     * Whether static {@link Statement} should be executed
-     */
-    public static final boolean executeStaticStatements(Settings settings) {
-        return getStatementType(settings) == STATIC_STATEMENT;
-    }
+    // Nullable
+    void record(Record record);
+
+    Record record();
+
+    void result(Result<?> result);
+
+    Result<?> result();
+
 }

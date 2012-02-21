@@ -37,7 +37,6 @@ package org.jooq;
 
 import org.jooq.tools.JooqLogger;
 
-
 /**
  * A public static registry that can provide factories ({@link Configuration}'s)
  * to {@link Attachable}'s upon deserialisation. The registry acts as an
@@ -47,11 +46,14 @@ import org.jooq.tools.JooqLogger;
  * <p>
  * This functionality is experimental. It may change again in the future. Use it
  * at your own risk.
- *
+ * 
  * @author Lukas Eder
  * @see <a
  *      href="http://groups.google.com/group/jooq-user/browse_thread/thread/d33e9a902707d111">http://groups.google.com/group/jooq-user/browse_thread/thread/d33e9a902707d111</a>
+ * @deprecated - 2.0.5 - Use {@link ExecuteListener#init(ExecuteContext)}
+ *             instead
  */
+@Deprecated
 public final class ConfigurationRegistry {
 
     private static JooqLogger log = JooqLogger.getLogger(ConfigurationRegistry.class);
@@ -95,6 +97,8 @@ public final class ConfigurationRegistry {
      *            <code>null</code> to reset the provider.
      */
     public static void setProvider(ConfigurationProvider provider) {
+        log.warn("Deprecation", "org.jooq.ConfigurationRegistry is deprecated. Use org.jooq.ExecuteListener instead");
+
         if (provider != null) {
             log.info("Registering provider", provider);
         }

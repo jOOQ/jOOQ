@@ -39,7 +39,6 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -54,6 +53,8 @@ import java.util.concurrent.Future;
 
 import org.jooq.Configuration;
 import org.jooq.Cursor;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.FutureResult;
@@ -111,27 +112,25 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    protected final PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
-        PreparedStatement statement = super.prepare(configuration, sql);
+    protected final void prepare(ExecuteContext ctx) throws SQLException {
+        super.prepare(ctx);
 
         if (size > 0) {
             if (log.isDebugEnabled())
                 log.debug("Setting fetch size", size);
 
-            statement.setFetchSize(size);
+            ctx.statement().setFetchSize(size);
         }
-
-        return statement;
     }
 
     @Override
-    protected final int execute(Configuration configuration, PreparedStatement statement) throws SQLException {
-        Connection connection = configuration.getConnection();
+    protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        Connection connection = ctx.getConnection();
         boolean autoCommit = false;
 
         // [#706] Postgres requires two separate queries running in the same
         // transaction to be executed when fetching refcursor types
-        if (configuration.getDialect() == SQLDialect.POSTGRES && isSelectingRefCursor()) {
+        if (ctx.getDialect() == SQLDialect.POSTGRES && isSelectingRefCursor()) {
             autoCommit = connection.getAutoCommit();
 
             if (autoCommit) {
@@ -143,12 +142,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
 
         try {
-            ResultSet rs = statement.executeQuery();
+            listener.executeStart(ctx);
+            ctx.resultSet(ctx.statement().executeQuery());
+            listener.executeEnd(ctx);
 
             // Fetch a single result set
             if (!many) {
-                FieldList fields = new FieldList(getFields(rs.getMetaData()));
-                cursor = new CursorImpl<R>(configuration, fields, rs, statement, getRecordType());
+                listener.fetchStart(ctx);
+                FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
+                cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType());
 
                 if (!lazy) {
                     result = cursor.fetch();
@@ -161,20 +163,21 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 results = new ArrayList<Result<Record>>();
 
                 for (;;) {
-                    FieldProvider fields = new MetaDataFieldProvider(configuration, rs.getMetaData());
-                    Cursor<Record> c = new CursorImpl<Record>(configuration, fields, rs);
+                    listener.fetchStart(ctx);
+                    FieldProvider fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData());
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields);
                     results.add(c.fetch());
 
-                    if (statement.getMoreResults()) {
-                        rs = statement.getResultSet();
+                    if (ctx.statement().getMoreResults()) {
+                        ctx.resultSet(ctx.statement().getResultSet());
                     }
                     else {
                         break;
                     }
                 }
 
-                statement.getMoreResults(Statement.CLOSE_ALL_RESULTS);
-                statement.close();
+                ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+                ctx.statement().close();
             }
         }
         finally {

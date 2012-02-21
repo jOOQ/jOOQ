@@ -76,13 +76,13 @@ public interface Configuration extends Serializable {
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(String, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link EventListener} objects to
+     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects to
      * be made available at render, bind, execution, fetch time.
      * <p>
-     * See {@link EventListener} for more details.
+     * See {@link ExecuteListener} for more details.
      *
      * @return The custom data. This is never <code>null</code>
-     * @see EventListener
+     * @see ExecuteListener
      */
     Map<String, Object> getData();
 
@@ -91,15 +91,15 @@ public interface Configuration extends Serializable {
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(String, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link EventListener} objects to
+     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects to
      * be made available at render, bind, execution, fetch time.
      * <p>
-     * See {@link EventListener} for more details.
+     * See {@link ExecuteListener} for more details.
      *
      * @param key A key to identify the custom data
      * @return The custom data or <code>null</code> if no such data is contained
      *         in this <code>Configuration</code>
-     * @see EventListener
+     * @see ExecuteListener
      */
     Object getData(String key);
 
@@ -108,21 +108,21 @@ public interface Configuration extends Serializable {
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(String, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link EventListener} objects to
+     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects to
      * be made available at render, bind, execution, fetch time.
      * <p>
      * Be sure that your custom data implements {@link Serializable} if you want
      * to serialise this <code>Configuration</code> or objects referencing this
      * <code>Configuration</code>, e.g. your {@link Record} types.
      * <p>
-     * See {@link EventListener} for more details.
+     * See {@link ExecuteListener} for more details.
      *
      * @param key A key to identify the custom data
      * @param value The custom data or <code>null</code> to unset the custom
      *            data
      * @return The previously set custom data or <code>null</code> if no data
      *         was previously set for the given key
-     * @see EventListener
+     * @see ExecuteListener
      */
     Object setData(String key, Object value);
 

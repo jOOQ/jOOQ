@@ -56,7 +56,6 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
-import org.jooq.conf.Rendering;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
@@ -120,13 +119,12 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
     @Test
     public void testTableMapping() throws Exception {
         Settings settings = new Settings()
-            .withRendering(new Rendering()
             .withRenderMapping(new RenderMapping()
             .withSchemata(new MappedSchema()
             .withInput(TAuthor().getSchema().getName())
             .withTables(
                 new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
-                new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName())))));
+                new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName()))));
 
         Select<Record> q =
         create(settings).select(TBook_TITLE())
@@ -160,14 +158,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         // Map to self. This will work even for single-schema RDBMS
         // ---------------------------------------------------------------------
         Settings settings = new Settings()
-            .withRendering(new Rendering()
             .withRenderMapping(new RenderMapping()
             .withSchemata(new MappedSchema()
             .withInput(TAuthor().getSchema().getName())
             .withOutput(TAuthor().getSchema().getName())
             .withTables(
                 new MappedTable().withInput(TAuthor().getName()).withOutput(TAuthor().getName()),
-                new MappedTable().withInput(TBook().getName()).withOutput(TBook().getName())))));
+                new MappedTable().withInput(TBook().getName()).withOutput(TBook().getName()))));
 
         Select<Record> query =
         create(settings).select(TBook_TITLE())
@@ -218,11 +215,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         // Map to a second schema
         // ---------------------------------------------------------------------
         settings = new Settings()
-            .withRendering(new Rendering()
             .withRenderMapping(new RenderMapping()
             .withSchemata(new MappedSchema()
             .withInput(TAuthor().getSchema().getName())
-            .withOutput(TAuthor().getSchema().getName() + "2"))));
+            .withOutput(TAuthor().getSchema().getName() + "2")));
 
         Select<Record> q =
         create(settings).select(TBook_TITLE())
@@ -264,14 +260,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         // Map both schema AND tables
         // --------------------------
         settings = new Settings()
-            .withRendering(new Rendering()
             .withRenderMapping(new RenderMapping()
             .withSchemata(new MappedSchema()
             .withInput(TAuthor().getSchema().getName())
             .withOutput(TAuthor().getSchema().getName() + "2")
             .withTables(
                 new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
-                new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName())))));
+                new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName()))));
 
         q =
         create(settings).select(TBook_TITLE())

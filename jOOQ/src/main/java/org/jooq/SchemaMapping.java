@@ -43,7 +43,6 @@ import java.util.Map.Entry;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
-import org.jooq.conf.Rendering;
 import org.jooq.conf.Settings;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
@@ -319,22 +318,18 @@ public class SchemaMapping implements Serializable {
         SchemaMapping result = new SchemaMapping(false);
 
         if (settings != null) {
-            Rendering rendering = settings.getRendering();
+            RenderMapping r = settings.getRenderMapping();
 
-            if (rendering != null) {
-                RenderMapping r = rendering.getRenderMapping();
+            if (r != null) {
+                if (!StringUtils.isEmpty(r.getDefaultSchema())) {
+                    result.use(r.getDefaultSchema());
+                }
 
-                if (r != null) {
-                    if (!StringUtils.isEmpty(r.getDefaultSchema())) {
-                        result.use(r.getDefaultSchema());
-                    }
+                for (MappedSchema schema : r.getSchemata()) {
+                    result.add(schema.getInput(), schema.getOutput());
 
-                    for (MappedSchema schema : r.getSchemata()) {
-                        result.add(schema.getInput(), schema.getOutput());
-
-                        for (MappedTable table : schema.getTables()) {
-                            log.warn("TODO", "Re-implement table mapping for table " + table);
-                        }
+                    for (MappedTable table : schema.getTables()) {
+                        log.warn("TODO", "Re-implement table mapping for table " + table);
                     }
                 }
             }

@@ -82,11 +82,12 @@ import org.jooq.BindContext;
 import org.jooq.Case;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.ConfigurationRegistry;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.FactoryOperations;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
@@ -965,12 +966,18 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Result<Record> fetch(ResultSet rs) {
+        ExecuteListener listener = new ExecuteListeners(this);
+        ExecuteContext ctx = new DefaultExecuteContext(this, null);
+
         try {
             FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
-            return new CursorImpl<Record>(this, fields, rs).fetch();
+
+            ctx.resultSet(rs);
+            listener.fetchStart(ctx);
+            return new CursorImpl<Record>(ctx, listener, fields).fetch();
         }
         catch (SQLException e) {
-            throw Util.translate("Factory.fetch", null, e);
+            throw Util.translate("Factory.fetch", ctx.sql(), e);
         }
     }
 
@@ -4721,6 +4728,7 @@ public class Factory implements FactoryOperations {
         out.defaultWriteObject();
     }
 
+    @SuppressWarnings("deprecation")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
 
@@ -4728,7 +4736,7 @@ public class Factory implements FactoryOperations {
             log.debug("Deserialising", this);
         }
 
-        Configuration registered = ConfigurationRegistry.provideFor(this);
+        Configuration registered = org.jooq.ConfigurationRegistry.provideFor(this);
         if (registered != null) {
             connection = registered.getConnection();
         }

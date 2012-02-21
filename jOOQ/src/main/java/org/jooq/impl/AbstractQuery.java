@@ -39,16 +39,15 @@ package org.jooq.impl;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.jooq.Configuration;
-import org.jooq.ConfigurationRegistry;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
 
 /**
  * @author Lukas Eder
@@ -102,13 +101,13 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
         return this;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public final int execute() {
         if (isExecutable()) {
-            StopWatch watch = new StopWatch();
 
             // Let listeners provide a configuration to this query
-            Configuration configuration = ConfigurationRegistry.provideFor(getConfiguration());
+            Configuration configuration = org.jooq.ConfigurationRegistry.provideFor(getConfiguration());
             if (configuration == null) {
                 configuration = getConfiguration();
             }
@@ -118,50 +117,39 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 throw new DetachedException("Cannot execute query. No Connection configured");
             }
 
+            ExecuteListener listener = new ExecuteListeners(configuration);
+            ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
+
             // Ensure that all depending Attachables are attached
             attach(configuration);
-            watch.splitTrace("Parts attached");
 
-            PreparedStatement statement = null;
-            String sql = null;
             int result = 0;
             try {
-                sql = getSQL();
-                watch.splitTrace("SQL rendered");
+                listener.renderStart(ctx);
+                ctx.sql(getSQL());
+                listener.renderEnd(ctx);
 
-                // [#1145] Depending on the configuration, a prepared statement
-                // or an "ad-hoc" statement is used
-                boolean usePreparedStatement = executePreparedStatements(getConfiguration().getSettings());
-
-                if (log.isDebugEnabled())
-                    log.debug("Executing query", getSQL(true));
-                if (log.isTraceEnabled() && usePreparedStatement)
-                    log.trace("Preparing statement", sql);
-
-                statement = prepare(configuration, sql);
+                listener.prepareStart(ctx);
+                prepare(ctx);
+                listener.prepareEnd(ctx);
 
                 // [#1145] Bind variables only for true prepared statements
-                if (usePreparedStatement) {
-                    watch.splitTrace("Statement prepared");
-
-                    create(configuration).bind(this, statement);
-                    watch.splitTrace("Variables bound");
+                if (executePreparedStatements(getConfiguration().getSettings())) {
+                    listener.bindStart(ctx);
+                    create(configuration).bind(this, ctx.statement());
+                    listener.bindEnd(ctx);
                 }
 
-                result = execute(configuration, statement);
-                watch.splitTrace("Statement executed");
-
+                result = execute(ctx, listener);
                 return result;
             }
             catch (SQLException e) {
-                throw Util.translate("AbstractQuery.execute", sql, e);
+                throw Util.translate("AbstractQuery.execute", ctx.sql(), e);
             }
             finally {
                 if (!keepStatementOpen()) {
-                    Util.safeClose(statement);
+                    Util.safeClose(ctx);
                 }
-
-                watch.splitDebug("Statement executed");
             }
         }
         else {
@@ -184,25 +172,23 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
     /**
      * Default implementation for preparing a statement. Subclasses may override
      * this method.
-     *
-     * @param configuration The configuration holding a connection
-     * @param sql The generated SQL
-     * @return The prepared statement
      */
-    protected PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
-        return configuration.getConnection().prepareStatement(sql);
+    protected void prepare(ExecuteContext ctx) throws SQLException {
+        ctx.statement(ctx.getConnection().prepareStatement(ctx.sql()));
     }
 
     /**
      * Default implementation for query execution using a prepared statement.
      * Subclasses may override this method.
-     *
-     * @param configuration The configuration that is used for this query's
-     *            execution.
-     * @param statement The statement to be executed.
      */
-    protected int execute(Configuration configuration, PreparedStatement statement) throws SQLException {
-        return statement.executeUpdate();
+    protected int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+        int result = 0;
+
+        listener.executeStart(ctx);
+        result = ctx.statement().executeUpdate();
+        listener.executeEnd(ctx);
+
+        return result;
     }
 
     /**

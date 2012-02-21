@@ -40,7 +40,6 @@ import static org.jooq.impl.Factory.val;
 import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -54,6 +53,8 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
@@ -305,23 +306,25 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    protected final PreparedStatement prepare(Configuration configuration, String sql) throws SQLException {
-        Connection connection = configuration.getConnection();
+    protected final void prepare(ExecuteContext ctx) throws SQLException {
+        Connection connection = ctx.getConnection();
 
         // Just in case, always set Sybase ASE statement mode to return
         // Generated keys if client code wants to SELECT @@identity afterwards
-        if (configuration.getDialect() == SQLDialect.ASE) {
-            return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        if (ctx.getDialect() == SQLDialect.ASE) {
+            ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
+            return;
         }
 
         // Normal statement preparing if no values should be returned
         else if (returning.isEmpty()) {
-            return super.prepare(configuration, sql);
+            super.prepare(ctx);
+            return;
         }
 
         // Values should be returned from the INSERT
         else {
-            switch (configuration.getDialect()) {
+            switch (ctx.getDialect()) {
 
                 // Postgres uses the RETURNING clause in SQL
                 case POSTGRES:
@@ -329,7 +332,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case SQLITE:
                 // Sybase will select @@identity after the INSERT
                 case SYBASE:
-                    return super.prepare(configuration, sql);
+                    super.prepare(ctx);
+                    return;
 
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
@@ -339,7 +343,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case INGRES:
                 case MYSQL:
                 case SQLSERVER:
-                    return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
+                    return;
 
                 // The default is to return all requested fields directly
                 default: {
@@ -349,28 +354,28 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                         names.add(field.getName());
                     }
 
-                    return connection.prepareStatement(sql, names.toArray(new String[names.size()]));
+                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(new String[names.size()])));
+                    return;
                 }
             }
         }
     }
 
     @Override
-    protected final int execute(Configuration configuration, PreparedStatement statement) throws SQLException {
+    protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         if (returning.isEmpty()) {
-            return super.execute(configuration, statement);
+            return super.execute(ctx, listener);
         }
         else {
             int result = 1;
             ResultSet rs;
-
-            switch (configuration.getDialect()) {
+            switch (ctx.getDialect()) {
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
-                    result = statement.executeUpdate();
+                    result = ctx.statement().executeUpdate();
 
-                    SQLiteFactory create = new SQLiteFactory(configuration.getConnection());
+                    SQLiteFactory create = new SQLiteFactory(ctx.getConnection());
                     returned =
                     create.select(returning)
                           .from(getInto())
@@ -385,8 +390,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
                 case SYBASE: {
-                    result = statement.executeUpdate();
-                    selectReturning(configuration, create(configuration).lastID());
+                    result = ctx.statement().executeUpdate();
+                    selectReturning(ctx.configuration(), create(ctx).lastID());
                     return result;
                 }
 
@@ -398,8 +403,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case INGRES:
                 case MYSQL:
                 case SQLSERVER: {
-                    result = statement.executeUpdate();
-                    rs = statement.getGeneratedKeys();
+                    result = ctx.statement().executeUpdate();
+                    rs = ctx.statement().getGeneratedKeys();
 
                     try {
                         List<Object> list = new ArrayList<Object>();
@@ -407,7 +412,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                             list.add(rs.getObject(1));
                         }
 
-                        selectReturning(configuration, list.toArray());
+                        selectReturning(ctx, list.toArray());
                         return result;
                     }
                     finally {
@@ -418,7 +423,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Postgres can execute the INSERT .. RETURNING clause like
                 // a select clause. JDBC support is not implemented
                 case POSTGRES: {
-                    rs = statement.executeQuery();
+                    rs = ctx.statement().executeQuery();
 
                     break;
                 }
@@ -428,15 +433,19 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case HSQLDB:
                 case ORACLE:
                 default: {
-                    result = statement.executeUpdate();
-                    rs = statement.getGeneratedKeys();
+                    result = ctx.statement().executeUpdate();
+                    rs = ctx.statement().getGeneratedKeys();
 
                     break;
                 }
             }
 
-            CursorImpl<R> cursor = new CursorImpl<R>(configuration, returning, rs, statement, getInto().getRecordType());
-            returned = cursor.fetch();
+            ExecuteListener listener2 = new ExecuteListeners(ctx.configuration());
+            ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration(), null);
+
+            ctx2.resultSet(rs);
+            listener2.fetchStart(ctx2);
+            returned = new CursorImpl<R>(ctx2, listener2, returning, getInto().getRecordType()).fetch();
             return result;
         }
     }

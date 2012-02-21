@@ -54,6 +54,8 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DataType;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Package;
 import org.jooq.Parameter;
@@ -65,8 +67,6 @@ import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.tools.Convert;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
 
 /**
  * A common base class for stored procedures
@@ -81,7 +81,6 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
      * Generated UID
      */
     private static final long                 serialVersionUID = 6330037113167106443L;
-    private static final JooqLogger           log              = JooqLogger.getLogger(AbstractRoutine.class);
 
     private final Package                     pkg;
     private final List<Parameter<?>>          allParameters;
@@ -242,30 +241,25 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     private final int executeCallableStatement() {
-        StopWatch watch = new StopWatch();
-
         Configuration configuration = attachable.getConfiguration();
-        CallableStatement statement = null;
-        String sql = null;
+        ExecuteListener listener = new ExecuteListeners(configuration);
+        ExecuteContext ctx = new DefaultExecuteContext(configuration, null);
+
         try {
             Connection connection = configuration.getConnection();
 
-            sql = create(configuration).render(this);
-            watch.splitTrace("SQL rendered");
+            listener.renderStart(ctx);
+            ctx.sql(create(configuration).render(this));
+            listener.renderEnd(ctx);
 
-            if (log.isDebugEnabled())
-                log.debug("Executing routine", create(configuration).renderInlined(this));
-            if (log.isTraceEnabled())
-                log.trace("Preparing statement", sql);
+            listener.prepareStart(ctx);
+            ctx.statement(connection.prepareCall(ctx.sql()));
+            listener.prepareEnd(ctx);
 
-            statement = connection.prepareCall(sql);
-            watch.splitTrace("Statement prepared");
-
-            create(configuration).bind(this, statement);
-            watch.splitTrace("Variables bound");
-
-            registerOutParameters(configuration, statement);
-            watch.splitTrace("OUT params registered");
+            listener.bindStart(ctx);
+            create(configuration).bind(this, ctx.statement());
+            registerOutParameters(configuration, (CallableStatement) ctx.statement());
+            listener.bindEnd(ctx);
 
             // Postgres requires two separate queries running in the same
             // transaction to be executed when fetching refcursor types
@@ -274,25 +268,22 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                 connection.setAutoCommit(false);
             }
 
-            statement.execute();
+            listener.executeStart(ctx);
+            ctx.statement().execute();
+            listener.executeEnd(ctx);
 
             if (autoCommit && configuration.getDialect() == SQLDialect.POSTGRES) {
                 connection.setAutoCommit(autoCommit);
             }
 
-            watch.splitTrace("Routine called");
-
-            fetchOutParameters(configuration, statement);
-            watch.splitTrace("OUT params fetched");
-
+            fetchOutParameters(ctx);
             return 0;
         }
-        catch (SQLException exc) {
-            throw translate("AbstractRoutine.executeCallableStatement", sql, exc);
+        catch (SQLException e) {
+            throw translate("AbstractRoutine.executeCallableStatement", ctx.sql(), e);
         }
         finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Routine executed");
+            Util.safeClose(ctx);
         }
     }
 
@@ -378,15 +369,14 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
         context.literal(getName());
     }
 
-    private final void fetchOutParameters(Configuration configuration, CallableStatement statement) throws SQLException {
+    private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
         for (Parameter<?> parameter : getParameters()) {
             int index = parameterIndexes.get(parameter);
 
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
-                results.put(parameter, FieldTypeHelper.getFromStatement(
-                    configuration, statement, parameter.getType(), index));
+                results.put(parameter, FieldTypeHelper.getFromStatement(ctx, parameter.getType(), index));
             }
         }
     }

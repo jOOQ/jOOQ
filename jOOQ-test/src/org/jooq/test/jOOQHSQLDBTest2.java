@@ -66,7 +66,6 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
-import org.jooq.conf.Rendering;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
 import org.jooq.test.hsqldb.generatedclasses.Public;
@@ -117,11 +116,10 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
 	@Override
     protected Factory create(Settings settings) {
 	    settings = (settings != null) ? settings : new Settings();
-	    settings.withRendering(new Rendering()
-	            .withRenderMapping(new RenderMapping()
+	    settings.withRenderMapping(new RenderMapping()
 	            .withSchemata(new MappedSchema()
 	            .withInput(TAuthor().getSchema().getName())
-	            .withOutput(Public.PUBLIC.getName()))));
+	            .withOutput(Public.PUBLIC.getName())));
         return new PublicFactory(getConnection(), settings);
     }
 

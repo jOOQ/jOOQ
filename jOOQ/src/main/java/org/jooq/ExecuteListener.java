@@ -35,6 +35,54 @@
  */
 package org.jooq;
 
-public interface EventListener {
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import org.jooq.conf.Settings;
+import org.jooq.impl.Factory;
+import org.jooq.tools.JooqLogger;
+
+/**
+ * An event listener for {@link Query} render, prepare, bind, execute, fetch
+ * steps.
+ * <p>
+ * <code>EventListener</code> is a base type for loggers, debuggers, profilers,
+ * data collectors that can be hooked into a jOOQ {@link Factory} using the
+ * {@link Settings#getEventListeners()} property, passing <code>Settings</code>
+ * to {@link Factory#Factory(java.sql.Connection, SQLDialect, Settings)}
+ * <p>
+ * Advanced <code>EventListeners</code> can also provide custom implementations
+ * of {@link Connection}, {@link PreparedStatement} and {@link ResultSet} to
+ * jOOQ in apropriate methods.
+ * <p>
+ * If nothing is specified, the default is to use {@link JooqLogger} as the only
+ * event listener.
+ *
+ * @author Lukas Eder
+ */
+public interface ExecuteListener {
+
+    void init(ExecuteContext ctx);
+
+    void renderStart(ExecuteContext ctx);
+    void renderEnd(ExecuteContext ctx);
+
+    void prepareStart(ExecuteContext ctx);
+    void prepareEnd(ExecuteContext ctx);
+
+    void bindStart(ExecuteContext ctx);
+    void bindEnd(ExecuteContext ctx);
+
+    void executeStart(ExecuteContext ctx);
+    void executeEnd(ExecuteContext ctx);
+
+    void recordStart(ExecuteContext ctx);
+    void recordEnd(ExecuteContext ctx);
+
+    void resultStart(ExecuteContext ctx);
+    void resultEnd(ExecuteContext ctx);
+
+    void fetchStart(ExecuteContext ctx);
+    void fetchEnd(ExecuteContext ctx);
 }

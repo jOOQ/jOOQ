@@ -38,7 +38,6 @@ package org.jooq.test;
 
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
-import org.jooq.conf.Rendering;
 import org.jooq.conf.Settings;
 import org.jooq.test.mysql.generatedclasses.TestFactory;
 
@@ -63,11 +62,10 @@ public class jOOQMySQLTestSchemaMapping extends jOOQMySQLTest {
     @Override
     protected TestFactory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
-        settings.withRendering(new Rendering()
-                .withRenderMapping(new RenderMapping()
+        settings.withRenderMapping(new RenderMapping()
                 .withSchemata(new MappedSchema()
                 .withInput(TAuthor().getSchema().getName())
-                .withOutput(TAuthor().getSchema().getName() + getSchemaSuffix()))));
+                .withOutput(TAuthor().getSchema().getName() + getSchemaSuffix())));
         return new TestFactory(getConnection(), settings);
     }
 }

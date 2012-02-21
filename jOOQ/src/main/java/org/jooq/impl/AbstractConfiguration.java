@@ -33,47 +33,67 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.conf;
+package org.jooq.impl;
 
-import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
-import static org.jooq.conf.StatementType.STATIC_STATEMENT;
+import java.sql.Connection;
+import java.util.Map;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
+import org.jooq.Configuration;
+import org.jooq.SQLDialect;
+import org.jooq.conf.Settings;
 
 /**
- * Convenience methods for jOOQ runtime settings
+ * A base class for all objects implementing {@link Configuration}, wrapping
+ * another configuration.
  *
  * @author Lukas Eder
  */
-public final class SettingsTools {
+abstract class AbstractConfiguration implements Configuration {
 
     /**
-     * Get the statement type from the settings
+     * Generated UID
      */
-    public static final StatementType getStatementType(Settings settings) {
-        if (settings != null) {
-            StatementType result = settings.getStatementType();
+    private static final long   serialVersionUID = -8527430313425232841L;
 
-            if (result != null) {
-                return result;
-            }
-        }
+    final Configuration configuration;
 
-        return PREPARED_STATEMENT;
+    AbstractConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
-    /**
-     * Whether a {@link PreparedStatement} should be executed
-     */
-    public static final boolean executePreparedStatements(Settings settings) {
-        return getStatementType(settings) == PREPARED_STATEMENT;
+    @Override
+    public final SQLDialect getDialect() {
+        return configuration.getDialect();
     }
 
-    /**
-     * Whether static {@link Statement} should be executed
-     */
-    public static final boolean executeStaticStatements(Settings settings) {
-        return getStatementType(settings) == STATIC_STATEMENT;
+    @Override
+    public final Connection getConnection() {
+        return configuration.getConnection();
+    }
+
+    @Override
+    @Deprecated
+    public final org.jooq.SchemaMapping getSchemaMapping() {
+        return configuration.getSchemaMapping();
+    }
+
+    @Override
+    public final Settings getSettings() {
+        return configuration.getSettings();
+    }
+
+    @Override
+    public final Map<String, Object> getData() {
+        return configuration.getData();
+    }
+
+    @Override
+    public final Object getData(String key) {
+        return configuration.getData(key);
+    }
+
+    @Override
+    public final Object setData(String key, Object value) {
+        return configuration.setData(key, value);
     }
 }

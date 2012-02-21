@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.getNewFactory;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Array;
@@ -58,13 +60,11 @@ import java.util.Map;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
-import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.EnumType;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.MasterDataType;
-import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -280,16 +280,18 @@ public final class FieldTypeHelper {
         }
     }
 
-    public static <T> T getFromResultSet(Configuration configuration, ResultSet rs, Field<T> field, int index)
+    static <T> T getFromResultSet(ExecuteContext ctx, Field<T> field, int index)
         throws SQLException {
 
         Class<? extends T> type = field.getType();
-        return getFromResultSet(configuration, rs, type, index);
+        return getFromResultSet(ctx, type, index);
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T getFromResultSet(Configuration configuration, ResultSet rs, Class<? extends T> type, int index)
+    private static <T> T getFromResultSet(ExecuteContext ctx, Class<? extends T> type, int index)
         throws SQLException {
+
+        ResultSet rs = ctx.resultSet();
 
         if (type == Blob.class) {
             return (T) rs.getBlob(index);
@@ -299,7 +301,7 @@ public final class FieldTypeHelper {
         }
         else if (type == BigInteger.class) {
         	// The SQLite JDBC driver doesn't support BigDecimals
-            if (configuration.getDialect() == SQLDialect.SQLITE) {
+            if (ctx.getDialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<? extends T>) BigInteger.class);
             }
             else {
@@ -309,7 +311,7 @@ public final class FieldTypeHelper {
         }
         else if (type == BigDecimal.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
-            if (configuration.getDialect() == SQLDialect.SQLITE) {
+            if (ctx.getDialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<? extends T>) BigDecimal.class);
             }
             else {
@@ -326,7 +328,7 @@ public final class FieldTypeHelper {
             return (T) rs.getClob(index);
         }
         else if (type == Date.class) {
-            return (T) getDate(configuration.getDialect(), rs, index);
+            return (T) getDate(ctx.getDialect(), rs, index);
         }
         else if (type == Double.class) {
             return (T) checkWasNull(rs, Double.valueOf(rs.getDouble(index)));
@@ -347,10 +349,10 @@ public final class FieldTypeHelper {
             return (T) rs.getString(index);
         }
         else if (type == Time.class) {
-            return (T) getTime(configuration.getDialect(), rs, index);
+            return (T) getTime(ctx.getDialect(), rs, index);
         }
         else if (type == Timestamp.class) {
-            return (T) getTimestamp(configuration.getDialect(), rs, index);
+            return (T) getTimestamp(ctx.getDialect(), rs, index);
         }
         else if (type == UByte.class) {
             String string = rs.getString(index);
@@ -371,19 +373,19 @@ public final class FieldTypeHelper {
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
-            switch (configuration.getDialect()) {
+            switch (ctx.getDialect()) {
                 case POSTGRES: {
-                    return pgGetArray(configuration, rs, type, index);
+                    return pgGetArray(ctx, type, index);
                 }
 
                 default:
                     // Note: due to a HSQLDB bug, it is not recommended to call rs.getObject() here:
                     // See https://sourceforge.net/tracker/?func=detail&aid=3181365&group_id=23316&atid=378131
-                    return (T) convertArray(rs.getArray(index), (Class<? extends Object[]> )type);
+                    return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
             }
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(configuration, rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
+            return (T) getArrayRecord(ctx, rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, rs.getString(index));
@@ -392,7 +394,7 @@ public final class FieldTypeHelper {
             return (T) getMasterDataType(type, rs.getObject(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (configuration.getDialect()) {
+            switch (ctx.getDialect()) {
                 case POSTGRES:
                     return (T) pgNewUDTRecord(type, rs.getObject(index));
             }
@@ -401,9 +403,7 @@ public final class FieldTypeHelper {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) rs.getObject(index);
-            FieldProvider fields = new MetaDataFieldProvider(configuration, nested.getMetaData());
-            Cursor<Record> cursor = new CursorImpl<Record>(configuration, fields, nested);
-            return (T) cursor.fetch();
+            return (T) getNewFactory(ctx).fetch(nested);
         }
         else {
             return (T) rs.getObject(index);
@@ -567,7 +567,9 @@ public final class FieldTypeHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getFromStatement(Configuration configuration, CallableStatement stmt, Class<? extends T> type, int index) throws SQLException {
+    public static <T> T getFromStatement(ExecuteContext ctx, Class<? extends T> type, int index) throws SQLException {
+        CallableStatement stmt = (CallableStatement) ctx.statement();
+
         if (type == Blob.class) {
             return (T) stmt.getBlob(index);
         }
@@ -639,7 +641,7 @@ public final class FieldTypeHelper {
             return (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(configuration, stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
+            return (T) getArrayRecord(ctx, stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stmt.getString(index));
@@ -648,7 +650,7 @@ public final class FieldTypeHelper {
             return (T) getMasterDataType(type, stmt.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (configuration.getDialect()) {
+            switch (ctx.getDialect()) {
                 case POSTGRES:
                     return (T) pgNewUDTRecord(type, stmt.getObject(index));
             }
@@ -657,9 +659,7 @@ public final class FieldTypeHelper {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);
-            FieldProvider fields = new MetaDataFieldProvider(configuration, nested.getMetaData());
-            Cursor<Record> cursor = new CursorImpl<Record>(configuration, fields, nested);
-            return (T) cursor.fetch();
+            return (T) getNewFactory(ctx).fetch(nested);
         }
         else {
             return (T) stmt.getObject(index);
@@ -923,8 +923,10 @@ public final class FieldTypeHelper {
      * Workarounds for the unimplemented Postgres JDBC driver features
      */
     @SuppressWarnings("unchecked")
-    private static <T> T pgGetArray(Configuration configuration, ResultSet rs, Class<? extends T> type, int index)
+    private static <T> T pgGetArray(ExecuteContext ctx, Class<? extends T> type, int index)
         throws SQLException {
+
+        ResultSet rs = ctx.resultSet();
 
         // Get the JDBC Array and check for null. If null, that's OK
         Array array = rs.getArray(index);
@@ -943,9 +945,9 @@ public final class FieldTypeHelper {
 
             // Try fetching the array as a JDBC ResultSet
             try {
-                ResultSet elements = array.getResultSet();
-                while (elements.next()) {
-                    result.add(getFromResultSet(configuration, elements, type.getComponentType(), 2));
+                ctx.resultSet(array.getResultSet());
+                while (ctx.resultSet().next()) {
+                    result.add(getFromResultSet(ctx, type.getComponentType(), 2));
                 }
             }
 
@@ -954,6 +956,10 @@ public final class FieldTypeHelper {
                 log.error("Cannot parse Postgres array: " + rs.getString(index));
                 log.error(fatal);
                 return null;
+            }
+
+            finally {
+                ctx.resultSet(rs);
             }
 
             return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);

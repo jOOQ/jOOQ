@@ -33,49 +33,64 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.tools;
+package org.jooq.impl;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
-import org.jooq.impl.DefaultExecuteListener;
 
 /**
- * A default {@link ExecuteListener} that just logs events to java.util.logging,
- * log4j, or slf4j using the {@link JooqLogger}
+ * A publicly available default implementation of {@link ExecuteListener}.
+ * <p>
+ * Use this to stay compatible with future API changes (i.e. added methods to
+ * <code>ExecuteListener</code>)
  *
  * @author Lukas Eder
  */
-public class LoggerListener extends DefaultExecuteListener {
-
-    private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
+public class DefaultExecuteListener implements ExecuteListener {
 
     @Override
-    public void executeStart(ExecuteContext ctx) {
-        if (log.isDebugEnabled()) {
-            if (ctx.query() != null) {
-                log.debug("Executing query", ctx.query().getSQL(true));
-            }
-            else if (!StringUtils.isBlank(ctx.sql())) {
-                log.debug("Executing query", ctx.sql());
-            }
-        }
-    }
+    public void init(ExecuteContext ctx) {}
 
     @Override
-    public void recordEnd(ExecuteContext ctx) {
-        if (log.isTraceEnabled() && ctx.record() != null)
-            log.trace("Record fetched", ctx.record());
-    }
+    public void renderStart(ExecuteContext ctx) {}
 
     @Override
-    public void resultEnd(ExecuteContext ctx) {
-        if (log.isDebugEnabled() && ctx.result() != null) {
-            String comment = "Fetched result";
+    public void renderEnd(ExecuteContext ctx) {}
 
-            for (String line : ctx.result().format(5).split("\n")) {
-                log.debug(comment, line);
-                comment = "";
-            }
-        }
-    }
+    @Override
+    public void prepareStart(ExecuteContext ctx) {}
+
+    @Override
+    public void prepareEnd(ExecuteContext ctx) {}
+
+    @Override
+    public void bindStart(ExecuteContext ctx) {}
+
+    @Override
+    public void bindEnd(ExecuteContext ctx) {}
+
+    @Override
+    public void executeStart(ExecuteContext ctx) {}
+
+    @Override
+    public void executeEnd(ExecuteContext ctx) {}
+
+    @Override
+    public void recordStart(ExecuteContext ctx) {}
+
+    @Override
+    public void recordEnd(ExecuteContext ctx) {}
+
+    @Override
+    public void resultStart(ExecuteContext ctx) {}
+
+    @Override
+    public void resultEnd(ExecuteContext ctx) {}
+
+    @Override
+    public void fetchStart(ExecuteContext ctx) {}
+
+    @Override
+    public void fetchEnd(ExecuteContext ctx) {}
+
 }

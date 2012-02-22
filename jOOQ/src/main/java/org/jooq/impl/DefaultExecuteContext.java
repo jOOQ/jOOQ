@@ -39,11 +39,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.jooq.Configuration;
+import org.jooq.Delete;
 import org.jooq.ExecuteContext;
+import org.jooq.Insert;
+import org.jooq.Merge;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Routine;
+import org.jooq.Truncate;
+import org.jooq.Update;
 
 /**
  * A default iplementation for the {@link ExecuteContext}
@@ -88,12 +94,36 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     }
 
     @Override
+    public final ExecuteType type() {
+        if (routine != null) {
+            return ExecuteType.ROUTINE;
+        }
+        else if (query != null) {
+            if (query instanceof ResultQuery) {
+                return ExecuteType.READ;
+            }
+            else if (query instanceof Insert
+                || query instanceof Update
+                || query instanceof Delete
+                || query instanceof Merge) {
+
+                return ExecuteType.WRITE;
+            }
+            else if (query instanceof Truncate) {
+                return ExecuteType.DDL;
+            }
+        }
+
+        return ExecuteType.OTHER;
+    }
+
+    @Override
     public final Query query() {
         return query;
     }
 
     @Override
-    public final Routine routine() {
+    public final Routine<?> routine() {
         return routine;
     }
 

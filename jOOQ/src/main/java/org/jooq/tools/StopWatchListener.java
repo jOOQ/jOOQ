@@ -49,7 +49,7 @@ public class StopWatchListener implements ExecuteListener {
     private final StopWatch watch = new StopWatch();
 
     @Override
-    public void init(ExecuteContext ctx) {
+    public void start(ExecuteContext ctx) {
         watch.splitTrace("Initialising");
     }
 
@@ -99,8 +99,8 @@ public class StopWatchListener implements ExecuteListener {
     }
 
     @Override
-    public void fetchEnd(ExecuteContext ctx) {
-        watch.splitDebug("Results fetched");
+    public void resultStart(ExecuteContext ctx) {
+        watch.splitTrace("Fetching result");
     }
 
     @Override
@@ -114,12 +114,17 @@ public class StopWatchListener implements ExecuteListener {
     }
 
     @Override
-    public void resultStart(ExecuteContext ctx) {
-        watch.splitTrace("Fetching result");
+    public void resultEnd(ExecuteContext ctx) {
+        watch.splitTrace("Result fetched");
     }
 
     @Override
-    public void resultEnd(ExecuteContext ctx) {
-        watch.splitTrace("Result fetched");
+    public void fetchEnd(ExecuteContext ctx) {
+        watch.splitTrace("Results fetched");
+    }
+
+    @Override
+    public void end(ExecuteContext ctx) {
+        watch.splitDebug("Finishing");
     }
 }

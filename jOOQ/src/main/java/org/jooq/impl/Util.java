@@ -459,9 +459,10 @@ final class Util {
     /**
      * Safely close a statement
      */
-    static final void safeClose(ExecuteContext ctx) {
+    static final void safeClose(ExecuteListener listener, ExecuteContext ctx) {
         safeClose(ctx.resultSet());
         safeClose(ctx.statement());
+        listener.end(ctx);
     }
 
     /**

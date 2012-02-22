@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import java.util.List;
 
-import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.conf.Settings;
@@ -52,13 +51,17 @@ class ExecuteListeners implements ExecuteListener {
 
     private final List<ExecuteListener> listeners;
 
-    ExecuteListeners(Configuration configuration) {
-        listeners = Util.getListeners(configuration);
+    ExecuteListeners(ExecuteContext ctx) {
+        listeners = Util.getListeners(ctx);
+
+        start(ctx);
     }
 
     @Override
-    public final void init(ExecuteContext ctx) {
-        throw new UnsupportedOperationException();
+    public final void start(ExecuteContext ctx) {
+        for (ExecuteListener listener : listeners) {
+            listener.start(ctx);
+        }
     }
 
     @Override
@@ -125,9 +128,9 @@ class ExecuteListeners implements ExecuteListener {
     }
 
     @Override
-    public final void fetchEnd(ExecuteContext ctx) {
+    public final void resultStart(ExecuteContext ctx) {
         for (ExecuteListener listener : listeners) {
-            listener.fetchEnd(ctx);
+            listener.resultStart(ctx);
         }
     }
 
@@ -146,16 +149,23 @@ class ExecuteListeners implements ExecuteListener {
     }
 
     @Override
-    public void resultStart(ExecuteContext ctx) {
+    public final void resultEnd(ExecuteContext ctx) {
         for (ExecuteListener listener : listeners) {
-            listener.resultStart(ctx);
+            listener.resultEnd(ctx);
         }
     }
 
     @Override
-    public void resultEnd(ExecuteContext ctx) {
+    public final void fetchEnd(ExecuteContext ctx) {
         for (ExecuteListener listener : listeners) {
-            listener.resultEnd(ctx);
+            listener.fetchEnd(ctx);
+        }
+    }
+
+    @Override
+    public final void end(ExecuteContext ctx) {
+        for (ExecuteListener listener : listeners) {
+            listener.end(ctx);
         }
     }
 }

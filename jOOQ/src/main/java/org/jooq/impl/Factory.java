@@ -966,14 +966,13 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Result<Record> fetch(ResultSet rs) {
-        ExecuteListener listener = new ExecuteListeners(this);
-        ExecuteContext ctx = new DefaultExecuteContext(this, null);
+        ExecuteContext ctx = new DefaultExecuteContext(this);
+        ExecuteListener listener = new ExecuteListeners(ctx);
 
         try {
             FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
 
             ctx.resultSet(rs);
-            listener.fetchStart(ctx);
             return new CursorImpl<Record>(ctx, listener, fields).fetch();
         }
         catch (SQLException e) {

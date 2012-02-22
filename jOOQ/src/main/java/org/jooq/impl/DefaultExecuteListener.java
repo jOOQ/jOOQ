@@ -49,7 +49,7 @@ import org.jooq.ExecuteListener;
 public class DefaultExecuteListener implements ExecuteListener {
 
     @Override
-    public void init(ExecuteContext ctx) {}
+    public void start(ExecuteContext ctx) {}
 
     @Override
     public void renderStart(ExecuteContext ctx) {}
@@ -76,21 +76,24 @@ public class DefaultExecuteListener implements ExecuteListener {
     public void executeEnd(ExecuteContext ctx) {}
 
     @Override
+    public void fetchStart(ExecuteContext ctx) {}
+
+    @Override
+    public void resultStart(ExecuteContext ctx) {}
+
+    @Override
     public void recordStart(ExecuteContext ctx) {}
 
     @Override
     public void recordEnd(ExecuteContext ctx) {}
 
     @Override
-    public void resultStart(ExecuteContext ctx) {}
-
-    @Override
     public void resultEnd(ExecuteContext ctx) {}
 
     @Override
-    public void fetchStart(ExecuteContext ctx) {}
+    public void fetchEnd(ExecuteContext ctx) {}
 
     @Override
-    public void fetchEnd(ExecuteContext ctx) {}
+    public void end(ExecuteContext ctx) {}
 
 }

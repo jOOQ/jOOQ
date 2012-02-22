@@ -440,11 +440,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
             }
 
-            ExecuteListener listener2 = new ExecuteListeners(ctx.configuration());
-            ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration(), null);
+            ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration());
+            ExecuteListener listener2 = new ExecuteListeners(ctx2);
 
             ctx2.resultSet(rs);
-            listener2.fetchStart(ctx2);
             returned = new CursorImpl<R>(ctx2, listener2, returning, getInto().getRecordType()).fetch();
             return result;
         }

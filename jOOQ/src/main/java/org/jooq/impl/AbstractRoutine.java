@@ -242,8 +242,8 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     private final int executeCallableStatement() {
         Configuration configuration = attachable.getConfiguration();
-        ExecuteListener listener = new ExecuteListeners(configuration);
-        ExecuteContext ctx = new DefaultExecuteContext(configuration, null);
+        ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
+        ExecuteListener listener = new ExecuteListeners(ctx);
 
         try {
             Connection connection = configuration.getConnection();
@@ -283,7 +283,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             throw translate("AbstractRoutine.executeCallableStatement", ctx.sql(), e);
         }
         finally {
-            Util.safeClose(ctx);
+            Util.safeClose(listener, ctx);
         }
     }
 

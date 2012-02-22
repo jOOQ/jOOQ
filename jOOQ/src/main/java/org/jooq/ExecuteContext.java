@@ -38,6 +38,8 @@ package org.jooq;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.jooq.conf.StatementType;
+
 /**
  * A context object for {@link Query} execution passed to registered
  * {@link ExecuteListener}'s.
@@ -45,43 +47,109 @@ import java.sql.ResultSet;
  * Expect most of this context's objects to be <code>nullable</code>!
  *
  * @author Lukas Eder
+ * @see ExecuteListener
  */
 public interface ExecuteContext extends Configuration {
 
+    /**
+     * The configuration wrapped by this context
+     */
     Configuration configuration();
 
-    // TODO Routines?
-    // Nullable!
+    /**
+     * The jOOQ {@link Query} that is being executed or <code>null</code> if the
+     * query is unknown or if there was no jOOQ <code>Query</code>
+     *
+     * @see #routine()
+     */
     Query query();
 
-    // Nullable!
-    void sql(String sql);
+    /**
+     * The jOOQ {@link Routine} that is being executed or <code>null</code> if
+     * the query is unknown or if there was no jOOQ <code>Routine</code>
+     *
+     * @see #routine()
+     */
+    Routine<?> routine();
 
+    /**
+     * The SQL that is being executed or <code>null</code> if the SQL statement
+     * is unknown or if there was no SQL statement
+     */
     String sql();
 
     /**
-     * Override the context's {@link PreparedStatement}
+     * Override the SQL statement that is being executed. This may have no
+     * effect, if called at the wrong moment.
+     *
+     * @see ExecuteListener#renderEnd(ExecuteContext)
+     * @see ExecuteListener#prepareStart(ExecuteContext)
+     */
+    void sql(String sql);
+
+    /**
+     * The {@link PreparedStatement} that is being executed or <code>null</code>
+     * if the statement is unknown or if there was no statement.
      * <p>
-     * Use this to wrap the <code>PreparedStatement</code> executed by jOOQ with
-     * your custom wrapper statement, logging bind variables and query
-     * execution. Beware
+     * This can be any of the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     */
+    PreparedStatement statement();
+
+    /**
+     * Override the {@link PreparedStatement} that is being executed. This may
+     * have no effect, if called at the wrong moment.
+     *
+     * @see ExecuteListener#prepareEnd(ExecuteContext)
+     * @see ExecuteListener#bindStart(ExecuteContext)
      */
     void statement(PreparedStatement statement);
 
-    PreparedStatement statement();
-
-    // Nullable!
-    void resultSet(ResultSet resultSet);
-
+    /**
+     * The {@link ResultSet} that is being fetched or <code>null</code> if the
+     * result set is unknown or if no result set is being fetched.
+     */
     ResultSet resultSet();
 
-    // Nullable
-    void record(Record record);
+    /**
+     * Override the {@link ResultSet} that is being fetched. This may have no
+     * effect, if called at the wrong moment.
+     *
+     * @see ExecuteListener#executeEnd(ExecuteContext)
+     * @see ExecuteListener#fetchStart(ExecuteContext)
+     */
+    void resultSet(ResultSet resultSet);
 
+    /**
+     * The last record that was fetched from the result set, or
+     * <code>null</code> if no record has been fetched.
+     */
     Record record();
 
-    void result(Result<?> result);
+    /**
+     * Calling this has no effect. It is being used by jOOQ internally.
+     */
+    void record(Record record);
 
+    /**
+     * The last result that was fetched from the result set, or
+     * <code>null</code> if no result has been fetched.
+     */
     Result<?> result();
+
+    /**
+     * Calling this has no effect. It is being used by jOOQ internally.
+     */
+    void result(Result<?> result);
 
 }

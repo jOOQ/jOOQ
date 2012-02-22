@@ -125,6 +125,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     public final Iterator<R> iterator() {
         if (iterator == null) {
             iterator = new CursorIterator();
+            listener.fetchStart(ctx);
         }
 
         return iterator;
@@ -236,9 +237,9 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         @Override
         public final void close() throws SQLException {
-            listener.fetchEnd(ctx);
             ctx.resultSet().close();
             ctx.statement().close();
+            listener.fetchEnd(ctx);
         }
 
         @Override

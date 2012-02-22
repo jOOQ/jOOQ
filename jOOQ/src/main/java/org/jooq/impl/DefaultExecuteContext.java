@@ -43,6 +43,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Routine;
 
 /**
  * A default iplementation for the {@link ExecuteContext}
@@ -58,6 +59,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
     // Persistent attributes
     private final Query                 query;
+    private final Routine<?>            routine;
     private String                      sql;
 
     // Transient attributes
@@ -67,18 +69,32 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private transient Result<?>         result;
 
     DefaultExecuteContext(Configuration configuration) {
-        this(configuration, null);
+        this(configuration, null, null);
     }
 
     DefaultExecuteContext(Configuration configuration, Query query) {
+        this(configuration, query, null);
+    }
+
+    DefaultExecuteContext(Configuration configuration, Routine<?> routine) {
+        this(configuration, null, routine);
+    }
+
+    private DefaultExecuteContext(Configuration configuration, Query query, Routine<?> routine) {
         super(configuration);
 
         this.query = query;
+        this.routine = routine;
     }
 
     @Override
     public final Query query() {
         return query;
+    }
+
+    @Override
+    public final Routine routine() {
+        return routine;
     }
 
     @Override

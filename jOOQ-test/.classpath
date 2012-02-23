@@ -25,5 +25,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jtds-1.2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.163.jar" sourcepath="/jOOQ-sources/h2-1.3.163-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-sql-console"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

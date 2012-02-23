@@ -52,7 +52,7 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 	public void renderStart(ExecuteContext ctx) {
 		isLogging = !SqlQueryDebuggerRegister.getSqlQueryDebuggerList().isEmpty();
 		startPreparationTime = 0;
-		endPreparationTime = 0;
+		aggregatedPreparationDuration = 0;
 		startBindTime = 0;
 		endBindTime = 0;
 		startExecutionTime = 0;
@@ -60,7 +60,7 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 	}
 
 	private long startPreparationTime;
-	private long endPreparationTime;
+	private long aggregatedPreparationDuration;
 
 	@Override
 	public void prepareStart(ExecuteContext ctx) {
@@ -75,7 +75,7 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 		if(!isLogging) {
 			return;
 		}
-		endPreparationTime = System.currentTimeMillis();
+		aggregatedPreparationDuration += System.currentTimeMillis() - startPreparationTime;
 		PreparedStatement statement = ctx.statement();
 		ctx.statement(new UsageTrackingPreparedStatement(statement));
 	}
@@ -121,16 +121,23 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 			return;
 		}
 		ResultSet resultSet = ctx.resultSet();
-		String sql = ctx.sql();
-		SqlQueryType sqlQueryType = getSqlQueryType(sql);
-		PreparedStatement statement = ctx.statement();
-		if(statement instanceof UsageTrackingPreparedStatement) {
-			String parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
-			if(parameterDescription != null) {
-				sql += " -> " + parameterDescription;
-			}
+		String[] sql = ctx.batchSQL();
+		// Temporary code to avoid bug of BatchSingle not filling the batchSQL array.
+		if(sql.length == 1 && sql[0] == null) {
+		    sql = new String[] {ctx.sql()};
 		}
-		SqlQueryDebuggerData sqlQueryDebuggerData = new SqlQueryDebuggerData(sqlQueryType, new String[] {sql}, startPreparationTime == 0? null: endPreparationTime - startPreparationTime, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		SqlQueryType sqlQueryType = getSqlQueryType(sql[0]);
+		if(sql.length == 1) {
+		    PreparedStatement statement = ctx.statement();
+		    if(statement instanceof UsageTrackingPreparedStatement) {
+		        String parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
+		        if(parameterDescription != null) {
+		            // Make a copy to not change internal structure.
+		            sql = new String[] {sql[0] + " -> " + parameterDescription};
+		        }
+		    }
+		}
+		SqlQueryDebuggerData sqlQueryDebuggerData = new SqlQueryDebuggerData(sqlQueryType, sql, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
 		for(SqlQueryDebugger listener: sqlQueryDebuggerList) {
 			listener.debugQueries(sqlQueryDebuggerData);
 		}

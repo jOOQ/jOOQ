@@ -38,6 +38,7 @@ package org.jooq.debugger.console;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
 import java.awt.Insets;
 import java.awt.Point;
@@ -61,6 +62,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -71,6 +73,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
@@ -126,12 +129,15 @@ public class SqlLoggerPane extends JPanel {
     private boolean isReadQueryTypeDisplayed = true;
     private boolean isWriteQueryTypeDisplayed = true;
     private boolean isOtherQueryTypeDisplayed = true;
+    private boolean isScrollLocked;
 
     public SqlLoggerPane() {
         super(new BorderLayout());
         setOpaque(false);
-        JPanel loggerHeaderPanel = new JPanel();
+        JPanel loggerHeaderPanel = new JPanel(new BorderLayout());
         loggerHeaderPanel.setOpaque(false);
+        JPanel loggerHeaderWestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        loggerHeaderWestPanel.setOpaque(false);
         loggerLogCheckBox = new JCheckBox("Log");
         loggerLogCheckBox.setOpaque(false);
         loggerLogCheckBox.addItemListener(new ItemListener() {
@@ -140,7 +146,7 @@ public class SqlLoggerPane extends JPanel {
                 setLogging(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
-        loggerHeaderPanel.add(loggerLogCheckBox);
+        loggerHeaderWestPanel.add(loggerLogCheckBox);
         JButton loggerClearButton = new JButton("Clear");
         loggerClearButton.setOpaque(false);
         loggerClearButton.addActionListener(new ActionListener() {
@@ -157,7 +163,7 @@ public class SqlLoggerPane extends JPanel {
                 updateStatusLabel();
             }
         });
-        loggerHeaderPanel.add(loggerClearButton);
+        loggerHeaderWestPanel.add(loggerClearButton);
         JCheckBox loggerThreadCheckBox = new JCheckBox("Threads", true);
         loggerThreadCheckBox.setOpaque(false);
         loggerThreadCheckBox.addItemListener(new ItemListener() {
@@ -169,7 +175,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderPanel.add(loggerThreadCheckBox);
+        loggerHeaderWestPanel.add(loggerThreadCheckBox);
         JCheckBox loggerTimestampCheckBox = new JCheckBox("Timestamps", true);
         loggerTimestampCheckBox.setOpaque(false);
         loggerTimestampCheckBox.addItemListener(new ItemListener() {
@@ -181,7 +187,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderPanel.add(loggerTimestampCheckBox);
+        loggerHeaderWestPanel.add(loggerTimestampCheckBox);
         JCheckBox loggerDurationCheckBox = new JCheckBox("Exec Time", true);
         loggerDurationCheckBox.setOpaque(false);
         loggerDurationCheckBox.addItemListener(new ItemListener() {
@@ -193,20 +199,20 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderPanel.add(loggerDurationCheckBox);
+        loggerHeaderWestPanel.add(loggerDurationCheckBox);
         JCheckBox preparedStatementDataCheckBox = new JCheckBox("PS Data", true);
         preparedStatementDataCheckBox.setOpaque(false);
         preparedStatementDataCheckBox.addItemListener(new ItemListener() {
-        	@Override
-        	public void itemStateChanged(ItemEvent e) {
-        		boolean isPreparedStatementDataShown = e.getStateChange() == ItemEvent.SELECTED;
-        		XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
-        		columnModel.setColumnVisible(columnModel.getColumnByModelIndex(COLUMN_PS_PREPARATION_DURATION), isPreparedStatementDataShown);
-        		columnModel.setColumnVisible(columnModel.getColumnByModelIndex(COLUMN_PS_BINDING_DURATION), isPreparedStatementDataShown);
-        		table.adjustLastColumn();
-        	}
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                boolean isPreparedStatementDataShown = e.getStateChange() == ItemEvent.SELECTED;
+                XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
+                columnModel.setColumnVisible(columnModel.getColumnByModelIndex(COLUMN_PS_PREPARATION_DURATION), isPreparedStatementDataShown);
+                columnModel.setColumnVisible(columnModel.getColumnByModelIndex(COLUMN_PS_BINDING_DURATION), isPreparedStatementDataShown);
+                table.adjustLastColumn();
+            }
         });
-        loggerHeaderPanel.add(preparedStatementDataCheckBox);
+        loggerHeaderWestPanel.add(preparedStatementDataCheckBox);
         JCheckBox resultSetDataCheckBox = new JCheckBox("RS Data", true);
         resultSetDataCheckBox.setOpaque(false);
         resultSetDataCheckBox.addItemListener(new ItemListener() {
@@ -220,7 +226,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderPanel.add(resultSetDataCheckBox);
+        loggerHeaderWestPanel.add(resultSetDataCheckBox);
         JCheckBox duplicationCountCheckBox = new JCheckBox("Duplication", true);
         duplicationCountCheckBox.setOpaque(false);
         duplicationCountCheckBox.addItemListener(new ItemListener() {
@@ -232,7 +238,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderPanel.add(duplicationCountCheckBox);
+        loggerHeaderWestPanel.add(duplicationCountCheckBox);
         JCheckBox loggerReadQueryTypeCheckBox = new JCheckBox("Read", isReadQueryTypeDisplayed);
         loggerReadQueryTypeCheckBox.setOpaque(false);
         loggerReadQueryTypeCheckBox.addItemListener(new ItemListener() {
@@ -242,7 +248,7 @@ public class SqlLoggerPane extends JPanel {
                 refreshRows();
             }
         });
-        loggerHeaderPanel.add(loggerReadQueryTypeCheckBox);
+        loggerHeaderWestPanel.add(loggerReadQueryTypeCheckBox);
         JCheckBox loggerWriteQueryTypeCheckBox = new JCheckBox("Write", isWriteQueryTypeDisplayed);
         loggerWriteQueryTypeCheckBox.setOpaque(false);
         loggerWriteQueryTypeCheckBox.addItemListener(new ItemListener() {
@@ -252,7 +258,7 @@ public class SqlLoggerPane extends JPanel {
                 refreshRows();
             }
         });
-        loggerHeaderPanel.add(loggerWriteQueryTypeCheckBox);
+        loggerHeaderWestPanel.add(loggerWriteQueryTypeCheckBox);
         JCheckBox loggerOtherQueryTypeCheckBox = new JCheckBox("Other", isOtherQueryTypeDisplayed);
         loggerOtherQueryTypeCheckBox.setOpaque(false);
         loggerOtherQueryTypeCheckBox.addItemListener(new ItemListener() {
@@ -262,7 +268,20 @@ public class SqlLoggerPane extends JPanel {
                 refreshRows();
             }
         });
-        loggerHeaderPanel.add(loggerOtherQueryTypeCheckBox);
+        loggerHeaderWestPanel.add(loggerOtherQueryTypeCheckBox);
+        loggerHeaderPanel.add(loggerHeaderWestPanel, BorderLayout.WEST);
+        JToggleButton scrollLockButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
+        scrollLockButton.setMargin(new Insets(2, 2, 2, 2));
+        scrollLockButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                isScrollLocked = e.getStateChange() == ItemEvent.SELECTED;
+            }
+        });
+        JPanel loggerHeaderEastPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        loggerHeaderEastPanel.setOpaque(false);
+        loggerHeaderEastPanel.add(scrollLockButton);
+        loggerHeaderPanel.add(loggerHeaderEastPanel, BorderLayout.EAST);
         add(loggerHeaderPanel, BorderLayout.NORTH);
         table = new JTableX(new AbstractTableModel() {
             @Override
@@ -283,12 +302,12 @@ public class SqlLoggerPane extends JPanel {
                         return duration < 0? null: duration;
                     }
                     case COLUMN_PS_PREPARATION_DURATION: {
-                    	Long duration = queryDebuggingInfo.getPrepardeStatementPreparationDuration();
-                    	return duration == null? null: duration;
+                        Long duration = queryDebuggingInfo.getPrepardeStatementPreparationDuration();
+                        return duration == null? null: duration;
                     }
                     case COLUMN_PS_BINDING_DURATION: {
-                    	Long duration = queryDebuggingInfo.getPrepardeStatementBindingDuration();
-                    	return duration == null? null: duration;
+                        Long duration = queryDebuggingInfo.getPrepardeStatementBindingDuration();
+                        return duration == null? null: duration;
                     }
                     case COLUMN_RS_LIFETIME: {
                         SqlQueryDebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
@@ -343,9 +362,9 @@ public class SqlLoggerPane extends JPanel {
                     case COLUMN_EXEC_TIME:
                         return "Exec time (ms)";
                     case COLUMN_PS_PREPARATION_DURATION:
-                    	return "PS preparation (ms)";
+                        return "PS preparation (ms)";
                     case COLUMN_PS_BINDING_DURATION:
-                    	return "PS binding (ms)";
+                        return "PS binding (ms)";
                     case COLUMN_RS_LIFETIME:
                         return "RS lifetime (ms)";
                     case COLUMN_RS_READ:
@@ -544,25 +563,39 @@ public class SqlLoggerPane extends JPanel {
         updateStatusLabel();
     }
 
+    private static final int MAX_NUMBER_OF_ROWS = 10000;
+
     private void addRow(QueryDebuggingInfo queryDebuggingInfo) {
+        if(queryDebuggingInfoList.size() == MAX_NUMBER_OF_ROWS) {
+            QueryDebuggingInfo discaredDebuggingInfo = queryDebuggingInfoList.remove(0);
+            if(displayedQueryDebuggingInfoList.size() > 0 && displayedQueryDebuggingInfoList.get(0) == discaredDebuggingInfo) {
+                displayedQueryDebuggingInfoList.remove(0);
+                for(int i=displayedQueryDebuggingInfoList.size()-1; i>=0; i--) {
+                    displayedQueryDebuggingInfoList.get(i).setDisplayedRow(i);
+                }
+                ((AbstractTableModel)table.getModel()).fireTableRowsDeleted(0, 0);
+            }
+        }
         queryDebuggingInfoList.add(queryDebuggingInfo);
         addDisplayedRow(queryDebuggingInfo);
         int displayedRow = queryDebuggingInfo.getDisplayedRow();
         if(displayedRow >= 0) {
             ((AbstractTableModel)table.getModel()).fireTableRowsInserted(displayedRow, displayedRow);
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    // Sort the line column if it is the primary sort key in ascending order.
-                    List<? extends SortKey> sortKeys = table.getRowSorter().getSortKeys();
-                    if(sortKeys.size() >= 1) {
-                        SortKey sortKey = sortKeys.get(0);
-                        if(sortKey.getColumn() == COLUMN_LINE && sortKey.getSortOrder() == SortOrder.ASCENDING) {
-                            table.scrollRectToVisible(new Rectangle(0, table.getHeight() - 1, 1, 1));
+            if(!isScrollLocked) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Sort the line column if it is the primary sort key in ascending order.
+                        List<? extends SortKey> sortKeys = table.getRowSorter().getSortKeys();
+                        if(sortKeys.size() >= 1) {
+                            SortKey sortKey = sortKeys.get(0);
+                            if(sortKey.getColumn() == COLUMN_LINE && sortKey.getSortOrder() == SortOrder.ASCENDING) {
+                                table.scrollRectToVisible(new Rectangle(0, table.getHeight() - 1, 1, 1));
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
         }
         updateStatusLabel();
     }
@@ -602,15 +635,12 @@ public class SqlLoggerPane extends JPanel {
         private long timestamp;
         private SqlQueryDebuggerData sqlQueryDebuggerData;
         private Throwable throwable;
-        private String threadName;
-        private long threadId;
         private int duplicationCount;
-        public QueryDebuggingInfo(long timestamp, SqlQueryDebuggerData sqlQueryDebuggerData, Throwable throwable, String threadName, long threadId) {
+        public QueryDebuggingInfo(long timestamp, SqlQueryDebuggerData sqlQueryDebuggerData) {
             this.timestamp = timestamp;
             this.sqlQueryDebuggerData = sqlQueryDebuggerData;
-            this.throwable = throwable;
-            this.threadName = threadName;
-            this.threadId = threadId;
+            this.throwable = new Exception("Statement Stack trace");
+            throwable.setStackTrace(sqlQueryDebuggerData.getCallerStackTraceElements());
         }
         public long getTimestamp() {
             return timestamp;
@@ -619,10 +649,10 @@ public class SqlLoggerPane extends JPanel {
             return sqlQueryDebuggerData;
         }
         public Long getPrepardeStatementPreparationDuration() {
-        	return sqlQueryDebuggerData.getPreparedStatementPreparationDuration();
+            return sqlQueryDebuggerData.getPreparedStatementPreparationDuration();
         }
         public Long getPrepardeStatementBindingDuration() {
-        	return sqlQueryDebuggerData.getPreparedStatementBindingDuration();
+            return sqlQueryDebuggerData.getPreparedStatementBindingDuration();
         }
         public long getExecutionDuration() {
             return sqlQueryDebuggerData.getExecutionDuration();
@@ -637,10 +667,10 @@ public class SqlLoggerPane extends JPanel {
             return throwable;
         }
         public String getThreadName() {
-            return threadName;
+            return sqlQueryDebuggerData.getThreadName();
         }
         public long getThreadId() {
-            return threadId;
+            return sqlQueryDebuggerData.getThreadID();
         }
         public void setDuplicationCount(int duplicationCount) {
             this.duplicationCount = duplicationCount;
@@ -676,8 +706,7 @@ public class SqlLoggerPane extends JPanel {
             sqlQueryDebugger = new SqlQueryDebugger() {
                 @Override
                 public void debugQueries(SqlQueryDebuggerData sqlQueryDebuggerData) {
-                    Thread thread = Thread.currentThread();
-                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), sqlQueryDebuggerData, new Exception("Statement Stack trace"), thread.getName(), thread.getId()));
+                    debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), sqlQueryDebuggerData));
                 }
                 public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
                     if(!SwingUtilities.isEventDispatchThread()) {
@@ -708,7 +737,7 @@ public class SqlLoggerPane extends JPanel {
                             queryDebuggingInfo.setSqlQueryDebuggerResultSetData(sqlQueryDebuggerResultSetData);
                             XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                             boolean isResultSetDataShown = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(COLUMN_RS_LIFETIME));
-                             if(isResultSetDataShown) {
+                            if(isResultSetDataShown) {
                                 updateRow(queryDebuggingInfo);
                             }
                             break;
@@ -818,119 +847,119 @@ public class SqlLoggerPane extends JPanel {
     }
 
     private void registerTooltip() {
-    	class TableTipListener extends MouseInputAdapter implements TableModelListener {
-    		private Timer enterTimer;
-    		public TableTipListener() {
-    			enterTimer = new Timer(750, new ActionListener() {
-    				@Override
-    				public void actionPerformed(ActionEvent e) {
-    					processTip();
-    				}
-    			});
-    			enterTimer.setRepeats(false);
-			}
-    		private Point point;
-    		@Override
-    		public void mouseEntered(MouseEvent e) {
-    			point = SwingUtilities.convertPoint(table, e.getPoint(), table.getParent());
-    			enterTimer.start();
-    		}
-    		@Override
-    		public void mouseMoved(MouseEvent e) {
-    			point = SwingUtilities.convertPoint(table, e.getPoint(), table.getParent());
-    			if(tip == null) {
-    				enterTimer.restart();
-    			} else {
-    				processTip();
-    			}
-    		}
-    		@Override
-    		public void mousePressed(MouseEvent e) {
-    			enterTimer.stop();
-    			processTip(null);
-    		}
-			private void processTip() {
-				String text = getMultilineTooltip(SwingUtilities.convertPoint(table.getParent(), point, table));
-				processTip(text);
-			}
-    		@Override
-    		public void mouseExited(MouseEvent e) {
-    			point = null;
-    			enterTimer.stop();
-    			processTip(null);
-    		}
-    		private String lastText;
-    		private Popup tip;
-    		private void processTip(String text) {
-				if(Utils.equals(lastText, text)) {
-					return;
-				}
-    			lastText = text;
-    			if(tip != null) {
-    				tip.hide();
-    				tip = null;
-    			}
-    			if(text != null) {
-    				PopupFactory popupFactory = PopupFactory.getSharedInstance();
-    				JTextArea textContent = new JTextArea(text);
-    				textContent.setFont(UIManager.getFont("ToolTip.font"));
-    				textContent.setBackground(UIManager.getColor("ToolTip.background"));
-    				textContent.setForeground(UIManager.getColor("ToolTip.foreground"));
-    				textContent.setBorder(UIManager.getBorder("ToolTip.border"));
-    				Point location = new Point(point);
-    				SwingUtilities.convertPointToScreen(location, table.getParent());
-    	            GraphicsConfiguration gc = table.getGraphicsConfiguration();
-    	            Rectangle sBounds = gc.getBounds();
-    	            Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
-    	            sBounds.x += screenInsets.left;
-    	            sBounds.y += screenInsets.top;
-    	            sBounds.width -= screenInsets.left + screenInsets.right;
-    	            sBounds.height -= screenInsets.top + screenInsets.bottom;
-    	            Dimension tipSize = textContent.getPreferredSize();
-//    	            tipSize.height = Math.min(tipSize.height, 500);
-    	            textContent.setPreferredSize(tipSize);
-    				location.x += 20;
-    				location.x = Math.min(location.x, sBounds.x + sBounds.width - tipSize.width);
-    				if(location.y + tipSize.height > sBounds.y + sBounds.height && location.y - 40 - tipSize.height >= sBounds.y) {
-    					location.y -= 40 + tipSize.height;
-    				}
-    				location.y += 20;
-    		        tip = popupFactory.getPopup(null, textContent, location.x, location.y);
-    		        tip.show();
-    			}
-    		}
-    		@Override
-    		public void tableChanged(TableModelEvent e) {
-    			if(tip != null) {
-    				processTip();
-    			}
-    		}
-		};
-		TableTipListener tableTipListener = new TableTipListener();
-		table.addMouseListener(tableTipListener);
-		table.addMouseMotionListener(tableTipListener);
-		table.getModel().addTableModelListener(tableTipListener);
+        class TableTipListener extends MouseInputAdapter implements TableModelListener {
+            private Timer enterTimer;
+            public TableTipListener() {
+                enterTimer = new Timer(750, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        processTip();
+                    }
+                });
+                enterTimer.setRepeats(false);
+            }
+            private Point point;
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                point = SwingUtilities.convertPoint(table, e.getPoint(), table.getParent());
+                enterTimer.start();
+            }
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                point = SwingUtilities.convertPoint(table, e.getPoint(), table.getParent());
+                if(tip == null) {
+                    enterTimer.restart();
+                } else {
+                    processTip();
+                }
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                enterTimer.stop();
+                processTip(null);
+            }
+            private void processTip() {
+                String text = getMultilineTooltip(SwingUtilities.convertPoint(table.getParent(), point, table));
+                processTip(text);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                point = null;
+                enterTimer.stop();
+                processTip(null);
+            }
+            private String lastText;
+            private Popup tip;
+            private void processTip(String text) {
+                if(Utils.equals(lastText, text)) {
+                    return;
+                }
+                lastText = text;
+                if(tip != null) {
+                    tip.hide();
+                    tip = null;
+                }
+                if(text != null) {
+                    PopupFactory popupFactory = PopupFactory.getSharedInstance();
+                    JTextArea textContent = new JTextArea(text);
+                    textContent.setFont(UIManager.getFont("ToolTip.font"));
+                    textContent.setBackground(UIManager.getColor("ToolTip.background"));
+                    textContent.setForeground(UIManager.getColor("ToolTip.foreground"));
+                    textContent.setBorder(UIManager.getBorder("ToolTip.border"));
+                    Point location = new Point(point);
+                    SwingUtilities.convertPointToScreen(location, table.getParent());
+                    GraphicsConfiguration gc = table.getGraphicsConfiguration();
+                    Rectangle sBounds = gc.getBounds();
+                    Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
+                    sBounds.x += screenInsets.left;
+                    sBounds.y += screenInsets.top;
+                    sBounds.width -= screenInsets.left + screenInsets.right;
+                    sBounds.height -= screenInsets.top + screenInsets.bottom;
+                    Dimension tipSize = textContent.getPreferredSize();
+//                  tipSize.height = Math.min(tipSize.height, 500);
+                    textContent.setPreferredSize(tipSize);
+                    location.x += 20;
+                    location.x = Math.min(location.x, sBounds.x + sBounds.width - tipSize.width);
+                    if(location.y + tipSize.height > sBounds.y + sBounds.height && location.y - 40 - tipSize.height >= sBounds.y) {
+                        location.y -= 40 + tipSize.height;
+                    }
+                    location.y += 20;
+                    tip = popupFactory.getPopup(null, textContent, location.x, location.y);
+                    tip.show();
+                }
+            }
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if(tip != null) {
+                    processTip();
+                }
+            }
+        };
+        TableTipListener tableTipListener = new TableTipListener();
+        table.addMouseListener(tableTipListener);
+        table.addMouseMotionListener(tableTipListener);
+        table.getModel().addTableModelListener(tableTipListener);
     }
 
-	private String getMultilineTooltip(Point p) {
-		int row = table.rowAtPoint(p);
-		if(row < 0) {
-		    return null;
-		}
-		int column = table.columnAtPoint(p);
-		if(column < 0) {
-		    return null;
-		}
-		row = table.convertRowIndexToModel(row);
-		column = table.convertColumnIndexToModel(column);
-		if(column != COLUMN_QUERY) {
-		    return null;
-		}
-		final QueryDebuggingInfo queryDebuggingInfo = displayedQueryDebuggingInfoList.get(row);
-		if(queryDebuggingInfo != null) {
-		    return queryDebuggingInfo.getThreadName() + " [" + queryDebuggingInfo.getThreadId() + "]\n" + getStackTrace(queryDebuggingInfo);
-		}
-		return null;
-	}
+    private String getMultilineTooltip(Point p) {
+        int row = table.rowAtPoint(p);
+        if(row < 0) {
+            return null;
+        }
+        int column = table.columnAtPoint(p);
+        if(column < 0) {
+            return null;
+        }
+        row = table.convertRowIndexToModel(row);
+        column = table.convertColumnIndexToModel(column);
+        if(column != COLUMN_QUERY) {
+            return null;
+        }
+        final QueryDebuggingInfo queryDebuggingInfo = displayedQueryDebuggingInfoList.get(row);
+        if(queryDebuggingInfo != null) {
+            return queryDebuggingInfo.getThreadName() + " [" + queryDebuggingInfo.getThreadId() + "]\n" + getStackTrace(queryDebuggingInfo);
+        }
+        return null;
+    }
 
 }

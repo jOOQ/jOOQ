@@ -271,6 +271,7 @@ public class SqlLoggerPane extends JPanel {
         loggerHeaderWestPanel.add(loggerOtherQueryTypeCheckBox);
         loggerHeaderPanel.add(loggerHeaderWestPanel, BorderLayout.WEST);
         JToggleButton scrollLockButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
+        scrollLockButton.setToolTipText("Scroll Lock");
         scrollLockButton.setMargin(new Insets(2, 2, 2, 2));
         scrollLockButton.addItemListener(new ItemListener() {
             @Override

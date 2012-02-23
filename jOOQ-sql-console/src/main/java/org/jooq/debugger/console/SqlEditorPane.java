@@ -140,6 +140,7 @@ public class SqlEditorPane extends JPanel {
     private SqlTextArea editorTextArea;
     private JPanel southPanel = new JPanel(new BorderLayout());
     private boolean isDBEditable;
+    private JButton startButton;
     private JButton stopButton;
 
     SqlEditorPane(DatabaseDescriptor databaseDescriptor) {
@@ -147,20 +148,21 @@ public class SqlEditorPane extends JPanel {
         this.databaseDescriptor = databaseDescriptor;
         this.isDBEditable = !databaseDescriptor.isReadOnly();
         setOpaque(false);
-        JPanel northPanel = new JPanel();
+        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
         northPanel.setOpaque(false);
-        JCheckBox limitCheckBox = new JCheckBox("10000 top rows", isUsingMaxRowCount);
-        limitCheckBox.addItemListener(new ItemListener() {
+        startButton = new JButton("Run");
+        startButton.setOpaque(false);
+        startButton.setToolTipText("Run the (selected) text (F5)");
+        startButton.addActionListener(new ActionListener() {
             @Override
-            public void itemStateChanged(ItemEvent e) {
-                isUsingMaxRowCount = e.getStateChange() == ItemEvent.SELECTED;
+            public void actionPerformed(ActionEvent e) {
+                evaluateInternal();
             }
         });
-        limitCheckBox.setOpaque(false);
-        northPanel.add(limitCheckBox);
+        northPanel.add(startButton);
         stopButton = new JButton("Stop");
+        stopButton.setVisible(false);
         stopButton.setOpaque(false);
-        stopButton.setEnabled(false);
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -176,6 +178,15 @@ public class SqlEditorPane extends JPanel {
         displayedRowCountField.setValue(100000);
         displayedRowCountField.setColumns(7);
         northPanel.add(displayedRowCountField);
+        JCheckBox limitCheckBox = new JCheckBox("Parse 10000 rows max", isUsingMaxRowCount);
+        limitCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                isUsingMaxRowCount = e.getStateChange() == ItemEvent.SELECTED;
+            }
+        });
+        limitCheckBox.setOpaque(false);
+        northPanel.add(limitCheckBox);
         add(northPanel, BorderLayout.NORTH);
 //        editorTextArea = new JTextArea();
         editorTextArea = new SqlTextArea();
@@ -190,7 +201,7 @@ public class SqlEditorPane extends JPanel {
                         }
                         break;
                     case KeyEvent.VK_F5:
-                        if(!stopButton.isEnabled()) {
+                        if(startButton.isEnabled()) {
                             evaluateInternal();
                         }
                         break;
@@ -340,7 +351,8 @@ public class SqlEditorPane extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                stopButton.setEnabled(true);
+                startButton.setVisible(false);
+                stopButton.setVisible(true);
                 stopButton.setToolTipText("Query started on " + Utils.formatDateTimeTZ(new Date()));
             }
         });
@@ -536,8 +548,8 @@ public class SqlEditorPane extends JPanel {
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    stopButton.setEnabled(false);
-                    stopButton.setToolTipText(null);
+                    startButton.setVisible(true);
+                    stopButton.setVisible(false);
                 }
             });
             if(!isDBEditable) {

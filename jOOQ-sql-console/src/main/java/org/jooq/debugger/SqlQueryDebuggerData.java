@@ -44,17 +44,24 @@ import java.io.Serializable;
  */
 public class SqlQueryDebuggerData implements Serializable {
 
-	private static volatile int nextID;
+    private static volatile int nextID;
 
-	private int id;
+    private int id;
     private SqlQueryType queryType;
     private String[] queries;
     private Long preparationDuration;
     private Long bindingDuration;
     private long executionDuration;
+    private String threadName;
+    private long threadID;
+    private StackTraceElement[] callerStackTraceElements;
 
     public SqlQueryDebuggerData(SqlQueryType queryType, String[] queries, Long preparationDuration, Long bindingDuration, long executionDuration) {
-    	this.id = nextID++;
+        this.id = nextID++;
+        Thread currentThread = Thread.currentThread();
+        this.threadName = currentThread.getName();
+        this.threadID = currentThread.getId();
+        this.callerStackTraceElements = new Exception().getStackTrace();
         this.queryType = queryType;
         this.queries = queries;
         this.preparationDuration = preparationDuration;
@@ -63,8 +70,20 @@ public class SqlQueryDebuggerData implements Serializable {
     }
 
     public int getID() {
-		return id;
-	}
+        return id;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public long getThreadID() {
+        return threadID;
+    }
+
+    public StackTraceElement[] getCallerStackTraceElements() {
+        return callerStackTraceElements;
+    }
 
     public SqlQueryType getQueryType() {
         return queryType;
@@ -75,12 +94,12 @@ public class SqlQueryDebuggerData implements Serializable {
     }
 
     public Long getPreparedStatementPreparationDuration() {
-		return preparationDuration;
-	}
+        return preparationDuration;
+    }
 
     public Long getPreparedStatementBindingDuration() {
-		return bindingDuration;
-	}
+        return bindingDuration;
+    }
 
     public long getExecutionDuration() {
         return executionDuration;

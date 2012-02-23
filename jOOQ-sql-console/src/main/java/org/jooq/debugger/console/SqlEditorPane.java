@@ -69,6 +69,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -87,6 +88,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -125,8 +127,6 @@ import org.jooq.debugger.console.misc.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 
-import chrriis.dj.swingsuite.JNumberEntryField;
-
 /**
  * @author Christopher Deckers
  */
@@ -134,7 +134,7 @@ public class SqlEditorPane extends JPanel {
 
     private static final int MAX_ROW_COUNT = 10000;
     private boolean isUsingMaxRowCount = true;
-    private JNumberEntryField<Integer> displayedRowCountField;
+    private JFormattedTextField displayedRowCountField;
 
     private DatabaseDescriptor databaseDescriptor;
     private SqlTextArea editorTextArea;
@@ -170,7 +170,11 @@ public class SqlEditorPane extends JPanel {
         });
         northPanel.add(stopButton);
         northPanel.add(new JLabel("No display when rows >"));
-        displayedRowCountField = new JNumberEntryField<Integer>(100000, 7, 1, Integer.MAX_VALUE);
+        NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+        displayedRowCountField = new JFormattedTextField(numberFormat);
+        displayedRowCountField.setHorizontalAlignment(JFormattedTextField.RIGHT);
+        displayedRowCountField.setValue(100000);
+        displayedRowCountField.setColumns(7);
         northPanel.add(displayedRowCountField);
         add(northPanel, BorderLayout.NORTH);
 //        editorTextArea = new JTextArea();
@@ -320,7 +324,7 @@ public class SqlEditorPane extends JPanel {
     private volatile Thread evaluationThread;
 
     private void evaluate_unrestricted(final String sql) {
-        final int maxDisplayedRowCount = displayedRowCountField.getNumber();
+        final int maxDisplayedRowCount = ((Number)displayedRowCountField.getValue()).intValue();
         evaluationThread = new Thread("SQLConsole - Evaluation") {
             @Override
             public void run() {

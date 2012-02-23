@@ -36,25 +36,19 @@
 package org.jooq.impl;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BatchBindStep;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Query;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
 
 /**
  * @author Lukas Eder
  */
 class BatchSingle implements BatchBindStep {
-
-    /**
-     * Generated UID
-     */
-    private static final JooqLogger log              = JooqLogger.getLogger(BatchSingle.class);
 
     private final Factory           create;
     private final Query             query;
@@ -74,41 +68,39 @@ class BatchSingle implements BatchBindStep {
 
     @Override
     public final int[] execute() {
-        StopWatch watch = new StopWatch();
         Connection connection = create.getConnection();
-        PreparedStatement statement = null;
-        String sql = null;
+
+        ExecuteContext ctx = new DefaultExecuteContext(create, query);
+        ExecuteListener listener = new ExecuteListeners(ctx);
 
         try {
+            listener.renderStart(ctx);
+            ctx.sql(create.render(query));
+            listener.renderEnd(ctx);
 
-            sql = create.render(query);
-            watch.splitTrace("SQL rendered");
-
-            if (log.isDebugEnabled())
-                log.debug("Executing query", create.renderInlined(query));
-            if (log.isTraceEnabled())
-                log.trace("Preparing statement", sql);
-
-            statement = connection.prepareStatement(sql);
-            watch.splitTrace("Statement prepared");
+            listener.prepareStart(ctx);
+            ctx.statement(connection.prepareStatement(ctx.sql()));
+            listener.prepareEnd(ctx);
 
             for (Object[] bindValues : allBindValues) {
-                new DefaultBindContext(create, statement).bindValues(bindValues);
-                statement.addBatch();
+                listener.bindStart(ctx);
+                new DefaultBindContext(create, ctx.statement()).bindValues(bindValues);
+                listener.bindEnd(ctx);
+
+                ctx.statement().addBatch();
             }
 
-            watch.splitTrace("Variables bound");
-            int[] result = statement.executeBatch();
-            watch.splitTrace("Statement executed");
+            listener.executeStart(ctx);
+            int[] result = ctx.statement().executeBatch();
+            listener.executeEnd(ctx);
 
             return result;
         }
         catch (SQLException e) {
-            throw Util.translate("BatchSingle.execute", sql, e);
+            throw Util.translate("BatchSingle.execute", ctx.sql(), e);
         }
         finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Statement executed");
+            Util.safeClose(listener, ctx);
         }
     }
 }

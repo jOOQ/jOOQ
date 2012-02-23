@@ -73,119 +73,152 @@ import org.jooq.tools.StopWatchListener;
  * <th>Use case [2]</th>
  * <th>Use case [3]</th>
  * <th>Use case [4]</th>
+ * <th>Use case [5]</th>
+ * <th>Use case [6]</th>
  * </tr>
  * <tr>
  * <td> {@link #start(ExecuteContext)}</code></td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #renderStart(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #renderEnd(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #prepareStart(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #prepareEnd(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #bindStart(ExecuteContext)}</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, Nx (for every value set)</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #bindEnd(ExecuteContext)}</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
  * <td>No</td>
- * <td>Yes</td>
- * </tr>
+ * <td>Yes, Nx (for every value set)</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1
  * <tr>
  * <td> {@link #executeStart(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #executeEnd(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * <td>No</td>
- * <td>Yes</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * <tr>
  * <td> {@link #fetchStart(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
  * <td>No</td>
  * </tr>
  * <tr>
  * <td> {@link #resultStart(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
  * <td>No</td>
  * </tr>
  * <tr>
  * <td> {@link #recordStart(ExecuteContext)}<br/>
  * </td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>No</td>
+ * <td>No</td>
  * <td>No</td>
  * </tr>
  * <tr>
  * <td> {@link #recordEnd(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>No</td>
+ * <td>No</td>
  * <td>No</td>
  * </tr>
  * <tr>
  * <td> {@link #resultEnd(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
  * <td>No</td>
  * </tr>
  * <tr>
  * <td> {@link #fetchEnd(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
  * <td>No</td>
  * </tr>
  * <tr>
  * <td> {@link #end(ExecuteContext)}</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>Yes</td>
- * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
  * </tr>
  * </table>
  * <br/>
@@ -197,6 +230,8 @@ import org.jooq.tools.StopWatchListener;
  * {@link StatementType#STATIC_STATEMENT}</li>
  * <li>Used with {@link Factory#fetch(ResultSet)} or with
  * {@link InsertResultStep#fetch()}</li>
+ * <li>Used with {@link Factory#batch(Query)}</li>
+ * <li>Used with {@link Factory#batch(Query[])}</li>
  * <li>Used with a {@link Routine} standalone call</li>
  * </ol>
  * <p>

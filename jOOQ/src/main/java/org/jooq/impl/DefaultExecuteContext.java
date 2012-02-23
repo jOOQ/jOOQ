@@ -68,6 +68,9 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private final Routine<?>            routine;
     private String                      sql;
 
+    private final Query[]               batchQueries;
+    private final String[]              batchSQL;
+
     // Transient attributes
     private transient PreparedStatement statement;
     private transient ResultSet         resultSet;
@@ -75,22 +78,28 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private transient Result<?>         result;
 
     DefaultExecuteContext(Configuration configuration) {
-        this(configuration, null, null);
+        this(configuration, null, null, null);
+    }
+
+    DefaultExecuteContext(Configuration configuration, Query[] batchQueries) {
+        this(configuration, null, batchQueries, null);
     }
 
     DefaultExecuteContext(Configuration configuration, Query query) {
-        this(configuration, query, null);
+        this(configuration, query, new Query[] { query }, null);
     }
 
     DefaultExecuteContext(Configuration configuration, Routine<?> routine) {
-        this(configuration, null, routine);
+        this(configuration, null, null, routine);
     }
 
-    private DefaultExecuteContext(Configuration configuration, Query query, Routine<?> routine) {
+    private DefaultExecuteContext(Configuration configuration, Query query, Query[] batchQueries, Routine<?> routine) {
         super(configuration);
 
         this.query = query;
+        this.batchQueries = batchQueries;
         this.routine = routine;
+        this.batchSQL = (batchQueries == null ? null : new String[batchQueries.length]);
     }
 
     @Override
@@ -123,6 +132,11 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     }
 
     @Override
+    public final Query[] batchQueries() {
+        return batchQueries;
+    }
+
+    @Override
     public final Routine<?> routine() {
         return routine;
     }
@@ -135,6 +149,11 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     @Override
     public final String sql() {
         return sql;
+    }
+
+    @Override
+    public final String[] batchSQL() {
+        return batchSQL;
     }
 
     @Override

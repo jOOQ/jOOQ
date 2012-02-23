@@ -136,7 +136,7 @@ public class SqlLoggerPane extends JPanel {
         setOpaque(false);
         JPanel loggerHeaderPanel = new JPanel(new BorderLayout());
         loggerHeaderPanel.setOpaque(false);
-        JPanel loggerHeaderWestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JPanel loggerHeaderWestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
         loggerHeaderWestPanel.setOpaque(false);
         loggerLogCheckBox = new JCheckBox("Log");
         loggerLogCheckBox.setOpaque(false);
@@ -278,7 +278,7 @@ public class SqlLoggerPane extends JPanel {
                 isScrollLocked = e.getStateChange() == ItemEvent.SELECTED;
             }
         });
-        JPanel loggerHeaderEastPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        JPanel loggerHeaderEastPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 2, 2));
         loggerHeaderEastPanel.setOpaque(false);
         loggerHeaderEastPanel.add(scrollLockButton);
         loggerHeaderPanel.add(loggerHeaderEastPanel, BorderLayout.EAST);

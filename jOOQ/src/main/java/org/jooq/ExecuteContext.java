@@ -66,10 +66,30 @@ public interface ExecuteContext extends Configuration {
     /**
      * The jOOQ {@link Query} that is being executed or <code>null</code> if the
      * query is unknown or if there was no jOOQ <code>Query</code>
+     * <p>
+     * If {@link #batchQueries()} returns several <code>Query</code> objects,
+     * this will always return the currently rendered / prepared
+     * <code>Query</code>, or <code>null</code>, if no <code>Query</code> is
+     * currently being rendered / prepared
      *
      * @see #routine()
+     * @see #batchQueries()
      */
     Query query();
+
+    /**
+     * The jOOQ {@link Query} objects that are being executed in batch mode, or
+     * <code>null</code> if the query is unknown or if there was no jOOQ
+     * <code>Query</code>
+     * <p>
+     * If a single <code>Query</code> is executed in non-batch mode, this will
+     * return an array of length <code>1</code>, containing that
+     * <code>Query</code>
+     *
+     * @see #query()
+     * @see #routine()
+     */
+    Query[] batchQueries();
 
     /**
      * The jOOQ {@link Routine} that is being executed or <code>null</code> if
@@ -93,6 +113,19 @@ public interface ExecuteContext extends Configuration {
      * @see ExecuteListener#prepareStart(ExecuteContext)
      */
     void sql(String sql);
+
+    /**
+     * The generated SQL statements that are being executed in batch mode, or
+     * <code>null</code> if the query is unknown or if there was no SQL statement
+     * <p>
+     * If a single <code>Query</code> is executed in non-batch mode, this will
+     * return an array of length <code>1</code>, containing that
+     * <code>Query</code>
+     *
+     * @see #query()
+     * @see #routine()
+     */
+    String[] batchSQL();
 
     /**
      * The {@link PreparedStatement} that is being executed or <code>null</code>

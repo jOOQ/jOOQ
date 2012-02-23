@@ -87,7 +87,11 @@ class PreparedStatementProxy implements PreparedStatement {
     }
 
     private PreparedStatementProxy(Connection connection, String sql, MethodType type) throws SQLException {
-        this(connection, sql, type,  connection.createStatement());
+        this(connection, sql, type, connection.createStatement());
+    }
+
+    PreparedStatementProxy(Connection connection) throws SQLException {
+        this(connection, null, MethodType.BATCH);
     }
 
     PreparedStatementProxy(Connection connection, String sql) throws SQLException {
@@ -161,7 +165,13 @@ class PreparedStatementProxy implements PreparedStatement {
          * Corresponds to
          * {@link Connection#prepareStatement(String, String[])
          */
-        SQL_CN
+        SQL_CN,
+
+        /**
+         * Corresponds to {@link Connection#createStatement()} and
+         * {@link Statement#executeBatch()}
+         */
+        BATCH
     }
 
     // ------------------------------------------------------------------------
@@ -364,7 +374,7 @@ class PreparedStatementProxy implements PreparedStatement {
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Unsupported batch methods
+    // XXX: Supported and unsupported batch methods
     // ------------------------------------------------------------------------
 
     @Override
@@ -374,17 +384,17 @@ class PreparedStatementProxy implements PreparedStatement {
 
     @Override
     public final void clearBatch() throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch execute statements on PreparedStatementProxy");
+        delegate.clearBatch();
     }
 
     @Override
     public final int[] executeBatch() throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch execute statements on PreparedStatementProxy");
+        return delegate.executeBatch();
     }
 
     @Override
     public final void addBatch(String query) throws SQLException {
-        throw new UnsupportedOperationException("Cannot batch execute statements on PreparedStatementProxy");
+        delegate.addBatch(query);
     }
 
     // ------------------------------------------------------------------------

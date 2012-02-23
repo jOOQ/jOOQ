@@ -37,22 +37,16 @@ package org.jooq.impl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.jooq.Batch;
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Query;
-import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StopWatch;
 
 /**
  * @author Lukas Eder
  */
 class BatchMultiple implements Batch {
-
-    /**
-     * Generated UID
-     */
-    private static final JooqLogger log              = JooqLogger.getLogger(BatchMultiple.class);
 
     private final Factory           create;
     private final Query[]           queries;
@@ -64,35 +58,40 @@ class BatchMultiple implements Batch {
 
     @Override
     public final int[] execute() {
-        StopWatch watch = new StopWatch();
         Connection connection = create.getConnection();
-        Statement statement = null;
-        String sql = null;
+
+        ExecuteContext ctx = new DefaultExecuteContext(create, queries);
+        ExecuteListener listener = new ExecuteListeners(ctx);
 
         try {
-            statement = connection.createStatement();
+            ctx.statement(new PreparedStatementProxy(connection));
 
-            for (Query query : queries) {
-                sql = create.renderInlined(query);
-                watch.splitTrace("SQL rendered");
-
-                if (log.isDebugEnabled())
-                    log.debug("Adding batch", sql);
-
-                statement.addBatch(sql);
+            String[] batchSQL = ctx.batchSQL();
+            for (int i = 0; i < queries.length; i++) {
+                listener.renderStart(ctx);
+                batchSQL[i] = create.renderInlined(queries[i]);
+                listener.renderEnd(ctx);
             }
 
-            int[] result = statement.executeBatch();
-            watch.splitTrace("Statement executed");
+            for (String sql : batchSQL) {
+                ctx.sql(sql);
+                listener.prepareStart(ctx);
+                ctx.statement().addBatch(sql);
+                listener.prepareEnd(ctx);
+                ctx.sql(null);
+            }
+
+            listener.executeStart(ctx);
+            int[] result = ctx.statement().executeBatch();
+            listener.executeEnd(ctx);
 
             return result;
         }
         catch (SQLException e) {
-            throw Util.translate("BatchMultiple.execute", sql, e);
+            throw Util.translate("BatchMultiple.execute", ctx.sql(), e);
         }
         finally {
-            Util.safeClose(statement);
-            watch.splitDebug("Statement executed");
+            Util.safeClose(listener, ctx);
         }
     }
 }

@@ -9,11 +9,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jooq</groupId>
-	<artifactId>jooq-codegen</artifactId>
+	<artifactId>jooq-sql-console</artifactId>
 	<version>2.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>jOOQ Codegen</name>
+	<name>jOOQ</name>
 	<description>jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, advanced data types, and Java in a fluent, intuitive DSL.</description>
 	<url>http://www.jooq.org</url>
 
@@ -118,7 +118,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -127,69 +127,67 @@
                     <downloadSources>true</downloadSources>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.1.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>bundle-manifest</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <supportedProjectTypes>
+                        <supportedProjectType>jar</supportedProjectType>
+                    </supportedProjectTypes>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>*</Export-Package>
+                        <Import-Package>
+                            javax.persistence;resolution:=optional,
+                            oracle.sql;resolution:=optional,
+                            org.apache.log4j;resolution:=optional,
+                            *
+                        </Import-Package>
+                        <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <archive>
+                        <!-- add the generated manifest to the jar -->
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
 		</plugins>
-	</build>
+    </build>
 
 	<issueManagement>
 		<system>Trac</system>
 		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
 	</issueManagement>
-	
 	<developers>
 		<developer>
 			<name>Lukas Eder</name>
 			<email>lukas.eder@gmail.com</email>
 		</developer>
 		<developer>
-			<name>Espen Stromsnes</name>
-			<email>estromsnes@gmail.com</email>
+			<name>Christopher Deckers</name>
+			<email>chriis@gmail.com</email>
 		</developer>
 	</developers>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq</artifactId>
-			<version>2.0.5-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jooq</groupId>
-			<artifactId>jooq-meta</artifactId>
-			<version>2.0.5-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.ant</groupId>
-			<artifactId>ant</artifactId>
-			<version>1.8.2</version>
-			<scope>provided</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>integration</artifactId>
-			<version>1.6.1</version>
-			<type>jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.1</version>
-			<type>jar</type>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
 	</dependencies>
 </project>

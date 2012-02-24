@@ -51,6 +51,12 @@ class ExecuteListeners implements ExecuteListener {
 
     private final List<ExecuteListener> listeners;
 
+    // In some setups, these two events may get mixed up chronologically by the
+    // Cursor. Postpone fetchEnd event until after resultEnd event, if there is
+    // an open Result
+    private boolean                     resultStart;
+    private boolean                     fetchEnd;
+
     ExecuteListeners(ExecuteContext ctx) {
         listeners = Util.getListeners(ctx);
 
@@ -129,6 +135,8 @@ class ExecuteListeners implements ExecuteListener {
 
     @Override
     public final void resultStart(ExecuteContext ctx) {
+        resultStart = true;
+
         for (ExecuteListener listener : listeners) {
             listener.resultStart(ctx);
         }
@@ -150,15 +158,26 @@ class ExecuteListeners implements ExecuteListener {
 
     @Override
     public final void resultEnd(ExecuteContext ctx) {
+        resultStart = false;
+
         for (ExecuteListener listener : listeners) {
             listener.resultEnd(ctx);
+        }
+
+        if (fetchEnd) {
+            fetchEnd(ctx);
         }
     }
 
     @Override
     public final void fetchEnd(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners) {
-            listener.fetchEnd(ctx);
+        if (resultStart) {
+            fetchEnd = true;
+        }
+        else {
+            for (ExecuteListener listener : listeners) {
+                listener.fetchEnd(ctx);
+            }
         }
     }
 

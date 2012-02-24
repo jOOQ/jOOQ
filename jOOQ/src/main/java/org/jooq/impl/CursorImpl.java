@@ -148,11 +148,15 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final Result<R> fetch(int number) {
-        ctx.result(null);
-        listener.resultStart(ctx);
+        // [#1157] This invokes listener.fetchStart(ctx), which has to be called
+        // Before listener.resultStart(ctx)
+        iterator();
 
         ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), fields);
         R record = null;
+
+        ctx.result(result);
+        listener.resultStart(ctx);
 
         for (int i = 0; i < number && ((record = fetchOne()) != null); i++) {
             result.addRecord(record);
@@ -160,6 +164,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         ctx.result(result);
         listener.resultEnd(ctx);
+
         return result;
     }
 
@@ -1219,10 +1224,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
             try {
                 if (!isClosed && rs.next()) {
-                    ctx.record(null);
+                    record = Util.newRecord(type, fields, ctx.configuration());
+
+                    ctx.record(record);
                     listener.recordStart(ctx);
 
-                    record = Util.newRecord(type, fields, ctx.configuration());
                     final List<Field<?>> fieldList = fields.getFields();
                     final int size = fieldList.size();
 

@@ -592,6 +592,8 @@ public interface ExecuteListener {
      * </li>
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#result()}: The set of records that are about to
+     * be fetched.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not
@@ -631,6 +633,8 @@ public interface ExecuteListener {
      * </li>
      * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
      * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#record()}: The <code>Record</code> that is
+     * about to be fetched.</li>
      * </ul>
      * <p>
      * Note that this method is not called when executing queries that do not

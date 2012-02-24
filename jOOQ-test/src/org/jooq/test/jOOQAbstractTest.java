@@ -1338,8 +1338,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testExecuteListener() throws Exception {
-        new ExecuteListenerTests(this).testExecuteListener();
+    public void testExecuteListenerOnResultQuery() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerOnResultQuery();
     }
 
     @Test

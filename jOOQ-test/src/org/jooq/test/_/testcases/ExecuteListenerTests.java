@@ -35,8 +35,27 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
+import static org.jooq.impl.Factory.val;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
+import org.jooq.ExecuteType;
+import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
+import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -67,7 +86,319 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
     }
 
     @Test
-    public void testExecuteListener() throws Exception {
+    public void testExecuteListenerOnResultQuery() throws Exception {
+        Factory create = create(new Settings()
+            .withExecuteListeners(ResultQueryListener.class.getName()));
 
+        create.setData("Foo", "Bar");
+        create.setData("Bar", "Baz");
+
+        Result<?> result =
+        create.select(TBook_ID(), val("Hello"))
+              .from(TBook())
+              .where(TBook_ID().in(1, 2))
+              .fetch();
+
+        // Check correct order of listener method invocation
+        assertEquals(1, ResultQueryListener.start);
+        assertEquals(2, ResultQueryListener.renderStart);
+        assertEquals(3, ResultQueryListener.renderEnd);
+        assertEquals(4, ResultQueryListener.prepareStart);
+        assertEquals(5, ResultQueryListener.prepareEnd);
+        assertEquals(6, ResultQueryListener.bindStart);
+        assertEquals(7, ResultQueryListener.bindEnd);
+        assertEquals(8, ResultQueryListener.executeStart);
+        assertEquals(9, ResultQueryListener.executeEnd);
+        assertEquals(10, ResultQueryListener.fetchStart);
+        assertEquals(11, ResultQueryListener.resultStart);
+        assertEquals(asList(12, 14), ResultQueryListener.recordStart);
+        assertEquals(asList(13, 15), ResultQueryListener.recordEnd);
+        assertEquals(16, ResultQueryListener.resultEnd);
+        assertEquals(17, ResultQueryListener.fetchEnd);
+        assertEquals(18, ResultQueryListener.end);
+        assertEquals(2, result.size());
+    }
+
+    public static class ResultQueryListener implements ExecuteListener {
+
+        // A counter that is incremented in callback methods
+        private static int           callbackCount = 0;
+
+        // Fields that are used to check whether callback methods were called
+        // in the expected order
+        public static int            start;
+        public static int            renderStart;
+        public static int            renderEnd;
+        public static int            prepareStart;
+        public static int            prepareEnd;
+        public static int            bindStart;
+        public static int            bindEnd;
+        public static int            executeStart;
+        public static int            executeEnd;
+        public static int            fetchStart;
+        public static int            resultStart;
+        public static List<Integer>  recordStart   = new ArrayList<Integer>();
+        public static List<Integer>  recordEnd     = new ArrayList<Integer>();
+        public static int            resultEnd;
+        public static int            fetchEnd;
+        public static int            end;
+
+        public static Queue<Integer> ids = new LinkedList<Integer>(asList(1, 2));
+
+        @SuppressWarnings("serial")
+        private void checkBase(ExecuteContext ctx) {
+            assertNotNull(ctx.query());
+            assertNotNull(ctx.batchQueries());
+            assertTrue(ctx.query().toString().contains("select"));
+            assertTrue(ctx.batchQueries()[0].toString().contains("select"));
+            assertEquals(ctx.query(), ctx.batchQueries()[0]);
+            assertEquals(1, ctx.batchSQL().length);
+
+            assertEquals("Bar", ctx.getData("Foo"));
+            assertEquals("Baz", ctx.getData("Bar"));
+            assertEquals(new HashMap<String, String>() {{
+                put("Foo", "Bar");
+                put("Bar", "Baz");
+            }}, ctx.getData());
+
+            assertNull(ctx.routine());
+            assertEquals(ExecuteType.READ, ctx.type());
+        }
+
+        private void checkSQL(ExecuteContext ctx, boolean patched) {
+            assertTrue(ctx.batchSQL()[0].contains("select"));
+            assertTrue(ctx.sql().contains("select"));
+            assertEquals(ctx.sql(), ctx.batchSQL()[0]);
+
+            if (patched) {
+                assertTrue(ctx.sql().contains("as my_field"));
+            }
+        }
+
+        @SuppressWarnings("unused")
+        private void checkStatement(ExecuteContext ctx, boolean patched) {
+            assertNotNull(ctx.statement());
+        }
+
+        @SuppressWarnings("unused")
+        private void checkResultSet(ExecuteContext ctx, boolean patched) {
+            assertNotNull(ctx.resultSet());
+        }
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            start = ++callbackCount;
+            checkBase(ctx);
+
+            assertNull(ctx.batchSQL()[0]);
+            assertNull(ctx.sql());
+            assertNull(ctx.statement());
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void renderStart(ExecuteContext ctx) {
+            renderStart = ++callbackCount;
+            checkBase(ctx);
+
+            assertNull(ctx.batchSQL()[0]);
+            assertNull(ctx.sql());
+            assertNull(ctx.statement());
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void renderEnd(ExecuteContext ctx) {
+            renderEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, false);
+
+            assertNull(ctx.statement());
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+
+            ctx.sql(ctx.sql().replaceFirst("from", "as my_field from"));
+            checkSQL(ctx, true);
+        }
+
+        @Override
+        public void prepareStart(ExecuteContext ctx) {
+            prepareStart = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+
+            assertNull(ctx.statement());
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void prepareEnd(ExecuteContext ctx) {
+            prepareEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+
+            checkStatement(ctx, false);
+            // TODO Patch statement
+            checkStatement(ctx, true);
+
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void bindStart(ExecuteContext ctx) {
+            bindStart = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void bindEnd(ExecuteContext ctx) {
+            bindEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void executeStart(ExecuteContext ctx) {
+            executeStart = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            executeEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+
+            checkResultSet(ctx, false);
+            // TODO patch result set
+            checkResultSet(ctx, true);
+
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void fetchStart(ExecuteContext ctx) {
+            fetchStart = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+        }
+
+        @Override
+        public void resultStart(ExecuteContext ctx) {
+            resultStart = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+
+            assertNull(ctx.record());
+            assertNotNull(ctx.result());
+            assertTrue(ctx.result().isEmpty());
+        }
+
+        @Override
+        public void recordStart(ExecuteContext ctx) {
+            recordStart.add(++callbackCount);
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+
+            assertNotNull(ctx.record());
+            assertEquals(2, ctx.record().getFields().size());
+
+            assertNull(ctx.record().getValue(0));
+            assertNull(ctx.record().getValue(1));
+        }
+
+        @Override
+        public void recordEnd(ExecuteContext ctx) {
+            recordEnd.add(++callbackCount);
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+
+            assertNotNull(ctx.record());
+            assertEquals(2, ctx.record().getFields().size());
+
+            assertEquals(ids.remove(), ctx.record().getValue(0));
+            assertEquals("Hello", ctx.record().getValue(1));
+        }
+
+        @Override
+        public void resultEnd(ExecuteContext ctx) {
+            resultEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+            assertNotNull(ctx.record());
+            assertEquals(2, ctx.record().getFields().size());
+
+            assertNotNull(ctx.result());
+            assertEquals(2, ctx.result().size());
+        }
+
+        @Override
+        public void fetchEnd(ExecuteContext ctx) {
+            fetchEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+            assertNotNull(ctx.record());
+            assertEquals(2, ctx.record().getFields().size());
+
+            assertNotNull(ctx.result());
+            assertEquals(2, ctx.result().size());
+        }
+
+        @Override
+        public void end(ExecuteContext ctx) {
+            end = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+            checkResultSet(ctx, true);
+            assertNotNull(ctx.record());
+            assertEquals(2, ctx.record().getFields().size());
+
+            assertNotNull(ctx.result());
+            assertEquals(2, ctx.result().size());
+        }
     }
 }

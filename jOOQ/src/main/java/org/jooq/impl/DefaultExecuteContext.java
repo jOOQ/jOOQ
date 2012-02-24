@@ -98,11 +98,11 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         super(configuration);
 
         this.query = query;
-        this.batchQueries = batchQueries;
+        this.batchQueries = (batchQueries == null ? new Query[0] : batchQueries);
         this.routine = routine;
 
-        if (batchQueries != null) {
-            this.batchSQL = new String[batchQueries.length];
+        if (this.batchQueries.length > 0) {
+            this.batchSQL = new String[this.batchQueries.length];
         }
         else if (routine != null) {
             this.batchSQL = new String[1];
@@ -116,6 +116,9 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     public final ExecuteType type() {
         if (routine != null) {
             return ExecuteType.ROUTINE;
+        }
+        else if (batchQueries.length > 1) {
+            return ExecuteType.BATCH;
         }
         else if (query != null) {
             if (query instanceof ResultQuery) {
@@ -154,6 +157,11 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     @Override
     public final void sql(String s) {
         this.sql = s;
+
+        // If this isn't a batch query
+        if (batchSQL.length == 1) {
+            batchSQL[0] = s;
+        }
     }
 
     @Override

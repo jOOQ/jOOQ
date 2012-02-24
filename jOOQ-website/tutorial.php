@@ -74,7 +74,7 @@ set up the jOOQ code generator can be found here:<br/>
 </p>
 <p>
 The easiest way to generate a schema is to copy the jOOQ jar files (there should be 3)
-and the MySQL Connector jar file to a temporary directory. Then, create a guestbook.properties
+and the MySQL Connector jar file to a temporary directory. Then, create a guestbook.xml
 that looks like this:
 </p>
 <pre class="prettyprint lang-xml">
@@ -142,11 +142,11 @@ will cause the <code>test.generated.Posts</code> and
 <code>generator.target.directory</code> - the directory to output to.
 </p>
 <p>
-Once you have the JAR files and guestbook.properties in your temp directory, type this
+Once you have the JAR files and guestbook.xml in your temp directory, type this
 (use colons instead of semi-colons on UNIX/Linux systems):
 </p>
 <pre>
-java -classpath jooq-2.0.0.jar;jooq-meta-2.0.0.jar;jooq-codegen-2.0.0.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.properties
+java -classpath jooq-2.0.0.jar;jooq-meta-2.0.0.jar;jooq-codegen-2.0.0.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.xml
 </pre>
 <p>
 Note the prefix slash before guestbook.properies.
@@ -158,7 +158,7 @@ If everything has worked, you should see this in your console output:
 </p>
 <pre>
 Nov 1, 2011 7:25:06 PM org.jooq.impl.JooqLogger info
-INFO: Initialising properties  : /guestbook.properties
+INFO: Initialising properties  : /guestbook.xml
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Database parameters
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info

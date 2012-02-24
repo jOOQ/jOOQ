@@ -41,6 +41,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.val;
 
@@ -411,6 +412,11 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
     @Test
     public void testExecuteListenerOnBatchSingle() {
+        if (!executePreparedStatements(create().getSettings())) {
+            log.info("SKIPPINT", "Single batch tests with statement type = STATEMENT");
+            return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         Factory create = create(new Settings()

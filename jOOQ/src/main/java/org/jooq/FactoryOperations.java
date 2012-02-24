@@ -554,7 +554,7 @@ public interface FactoryOperations extends Configuration {
      * Statement s = connection.createStatement();
      *
      * for (Query query : queries) {
-     *     s.addBatch(renderInlined(query));
+     *     s.addBatch(query.getSQL(true));
      * }
      *
      * s.execute();
@@ -576,7 +576,7 @@ public interface FactoryOperations extends Configuration {
      * </pre></code>
      * <p>
      * This essentially runs the following logic: <code><pre>
-     * Statement s = connection.prepareStatement(render(query));
+     * Statement s = connection.prepareStatement(query.getSQL(false));
      *
      * for (Object[] bindValues : allBindValues) {
      *     for (Object bindValue : bindValues) {

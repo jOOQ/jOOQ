@@ -119,7 +119,8 @@ public interface Query extends QueryPart {
      * <p>
      * See {@link #getSQL()} for more details
      *
-     * @param inline Whether to inline bind variables
+     * @param inline Whether to inline bind variables. This overrides values in
+     *            {@link Settings#getStatementType()}
      * @return The generated SQL
      */
     String getSQL(boolean inline);

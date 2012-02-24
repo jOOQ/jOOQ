@@ -41,6 +41,7 @@ import java.sql.ResultSet;
 import org.jooq.Configuration;
 import org.jooq.Delete;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteType;
 import org.jooq.Insert;
 import org.jooq.Merge;
 import org.jooq.Query;
@@ -99,7 +100,16 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         this.query = query;
         this.batchQueries = batchQueries;
         this.routine = routine;
-        this.batchSQL = (batchQueries == null ? null : new String[batchQueries.length]);
+
+        if (batchQueries != null) {
+            this.batchSQL = new String[batchQueries.length];
+        }
+        else if (routine != null) {
+            this.batchSQL = new String[1];
+        }
+        else {
+            this.batchSQL = new String[0];
+        }
     }
 
     @Override

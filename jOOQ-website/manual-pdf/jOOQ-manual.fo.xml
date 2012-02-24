@@ -5680,12 +5680,15 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								dedicated developer databases, and a common integration database. In the
 								code generation configuration, you would then write.
 							</fo:block>
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">#Use this as the developer's schema:
-generator.database.input-schema=LUKAS_DEV_SCHEMA
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<schemata>
+  <schema>
+    <!-- Use this as the developer's schema: -->
+    <inputSchema>LUKAS_DEV_SCHEMA</inputSchema>
 
-#Use this as the integration / production database:
-generator.database.output-schema=PROD
-</fo:block>
+    <!-- Use this as the integration / production database: -->
+    <outputSchema>PROD</outputSchema>
+  </schema>
+</schemata>]]></fo:block>
 							<fo:block font-size="11pt">
 								See the manual's section about
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="META">jooq-codegen configuration</fo:basic-link>

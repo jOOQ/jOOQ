@@ -131,12 +131,15 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								dedicated developer databases, and a common integration database. In the
 								code generation configuration, you would then write.
 							</p>
-<pre class="prettyprint">#Use this as the developer's schema:
-generator.database.input-schema=LUKAS_DEV_SCHEMA
+<pre class="prettyprint lang-xml">&lt;schemata&gt;
+  &lt;schema&gt;
+    &lt;!-- Use this as the developer's schema: --&gt;
+    &lt;inputSchema&gt;LUKAS_DEV_SCHEMA&lt;/inputSchema&gt;
 
-#Use this as the integration / production database:
-generator.database.output-schema=PROD
-</pre>
+    &lt;!-- Use this as the integration / production database: --&gt;
+    &lt;outputSchema&gt;PROD&lt;/outputSchema&gt;
+  &lt;/schema&gt;
+&lt;/schemata&gt;</pre>
 							<p>
 								See the manual's section about
 								<a href="<?=$root?>/manual/META/" title="jOOQ Manual reference: Meta model code generation">jooq-codegen configuration</a>

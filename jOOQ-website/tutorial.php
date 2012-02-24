@@ -1,13 +1,13 @@
-<?php 
+<?php
 require 'frame.php';
 function getH1() {
-	echo 'Tutorial: Getting started quickly with jOOQ';
+    echo 'Tutorial: Getting started quickly with jOOQ';
 }
 function getSlogan() {
-	return "Get up and running quickly with jOOQ following these first simple steps.";
+    return "Get up and running quickly with jOOQ following these first simple steps.";
 }
 function getActiveMenu() {
-	return "tutorial";
+    return "tutorial";
 }
 function printContent() {
 ?>
@@ -17,14 +17,14 @@ Download and run jOOQ in 6 easy steps:
 </p>
 
 <ul>
-	<li><a href="#step0">Preparation: Download jOOQ and your SQL driver</a></li>
-	<li><a href="#step1">Step 1: Create a SQL database and a table</a></li>
-	<li><a href="#step2">Step 2: Generate classes</a></li>
-	<li><a href="#step3">Step 3: Write a main class and establish a MySQL connection</a></li>
-	<li><a href="#step4">Step 4: Write a query using jOOQ's DSL</a></li>
-	<li><a href="#step5">Step 5: Iterate over results</a></li>
-	<li><a href="#step6">Step 6: Explore!</a></li>
-	<li><a href="#FAQ">FAQ</a></li>
+    <li><a href="#step0">Preparation: Download jOOQ and your SQL driver</a></li>
+    <li><a href="#step1">Step 1: Create a SQL database and a table</a></li>
+    <li><a href="#step2">Step 2: Generate classes</a></li>
+    <li><a href="#step3">Step 3: Write a main class and establish a MySQL connection</a></li>
+    <li><a href="#step4">Step 4: Write a query using jOOQ's DSL</a></li>
+    <li><a href="#step5">Step 5: Iterate over results</a></li>
+    <li><a href="#step6">Step 6: Explore!</a></li>
+    <li><a href="#FAQ">FAQ</a></li>
 </ul>
 
 <h2 id="step0">Preparation: Download jOOQ and your SQL driver</h2>
@@ -67,61 +67,75 @@ CREATE TABLE `posts` (
 
 <h2 id="step2">Step 2: Generate classes</h2>
 <p>
-In this step, we're going to use jOOQ's command line tools to generate classes that 
+In this step, we're going to use jOOQ's command line tools to generate classes that
 map to the Posts table we just created. More detailed information about how to
 set up the jOOQ code generator can be found here:<br/>
-<a href="http://www.jooq.org/manual/META/Configuration/" target="_blank" title="jOOQ manual pages about setting up the code generator">http://www.jooq.org/manual/META/Configuration/</a> 
+<a href="http://www.jooq.org/manual/META/Configuration/" target="_blank" title="jOOQ manual pages about setting up the code generator">http://www.jooq.org/manual/META/Configuration/</a>
 </p>
 <p>
 The easiest way to generate a schema is to copy the jOOQ jar files (there should be 3)
 and the MySQL Connector jar file to a temporary directory. Then, create a guestbook.properties
 that looks like this:
 </p>
-<pre class="prettyprint lang-properties">
-#Configure the database connection here
-jdbc.Driver=com.mysql.jdbc.Driver
-jdbc.URL=jdbc:mysql://localhost:3306/guestbook
-jdbc.User=root
-jdbc.Password=
+<pre class="prettyprint lang-xml">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+&lt;configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd">
+  &lt;!-- Configure the database connection here -->
+  &lt;jdbc>
+    &lt;driver>com.mysql.jdbc.Driver&lt;/driver>
+    &lt;url>jdbc:mysql://localhost:3306/guestbook&lt;/url>
+    &lt;user>root&lt;/user>
+    &lt;password>&lt;/password>
+  &lt;/jdbc>
 
-#The default code generator. You can override this one, to generate your own code style
-#Defaults to org.jooq.util.DefaultGenerator
-generator=org.jooq.util.DefaultGenerator
+  &lt;generator>
+    &lt;!-- The default code generator. You can override this one, to generate your own code style
+         Defaults to org.jooq.util.DefaultGenerator -->
+    &lt;name>org.jooq.util.DefaultGenerator&lt;/name>
 
-#The database type. The format here is:
-#generator.database=org.util.[database].[database]Database
-generator.database=org.jooq.util.mysql.MySQLDatabase
+    &lt;database>
+      &lt;!-- The database type. The format here is:
+           org.util.[database].[database]Database -->
+      &lt;name>org.jooq.util.mysql.MySQLDatabase&lt;/name>
 
-#The database schema (or owner, user, database name) to be generated
-generator.database.input-schema=guestbook
+      &lt;!-- The database schema (or owner, user, database name) to be generated -->
+      &lt;inputSchema>guestbook&lt;/inputSchema>
 
-#All elements that are generated from your schema (several Java regular expressions, separated by comma)
-#Watch out for case-sensitivity. Depending on your database, this might be important!
-generator.database.includes=.*
+      &lt;!-- All elements that are generated from your schema (several Java regular expressions, separated by comma)
+           Watch out for case-sensitivity. Depending on your database, this might be important! -->
+      &lt;includes>.*&lt;/includes>
 
-#All elements that are excluded from your schema (several Java regular expressions, separated by comma). Excludes match before includes
-generator.database.excludes=
+      &lt;!-- All elements that are excluded from your schema (several Java regular expressions, separated by comma).
+              Excludes match before includes -->
+      &lt;excludes>&lt;/excludes>
+    &lt;/database>
 
-#Primary key / foreign key relations should be generated and used. 
-#This will be a prerequisite for various advanced features
-#Defaults to false
-generator.generate.relations=true
+    &lt;generate>
+      &lt;!-- Primary key / foreign key relations should be generated and used.
+           This will be a prerequisite for various advanced features
+           Defaults to false -->
+      &lt;relations>true&lt;/relations>
+    &lt;/generate>
 
-#The destination package of your generated classes (within the destination directory)
-generator.target.package=test.generated
+    &lt;target>
+      &lt;!-- The destination package of your generated classes (within the destination directory) -->
+      &lt;packageName>test.generated&lt;/packageName>
 
-#The destination directory of your generated classes
-generator.target.directory=C:/workspace/MySQLTest/src
+      &lt;!-- The destination directory of your generated classes -->
+      &lt;directory>C:/workspace/MySQLTest/src&lt;/directory>
+    &lt;/target>
+  &lt;/generator>
+&lt;/configuration>
 </pre>
 <p>
-Replace the username with whatever user has the appropriate privileges. 
+Replace the username with whatever user has the appropriate privileges.
 You'll want to look at the other values and replace as necessary.
 Here are the two interesting properties:
 </p>
 <p>
 <code>generator.target.package</code> - set this to the parent package you want
 to create for the generated classes. The setting of <code>test.generated</code>
-will cause the <code>test.generated.Posts</code> and 
+will cause the <code>test.generated.Posts</code> and
 <code>test.generated.PostsRecord</code> to be created
 </p>
 <p>
@@ -129,7 +143,7 @@ will cause the <code>test.generated.Posts</code> and
 </p>
 <p>
 Once you have the JAR files and guestbook.properties in your temp directory, type this
-(use colons instead of semi-colons on UNIX/Linux systems): 
+(use colons instead of semi-colons on UNIX/Linux systems):
 </p>
 <pre>
 java -classpath jooq-2.0.0.jar;jooq-meta-2.0.0.jar;jooq-codegen-2.0.0.jar;mysql-connector-java-5.1.18-bin.jar;. org.jooq.util.GenerationTool /guestbook.properties
@@ -138,7 +152,7 @@ java -classpath jooq-2.0.0.jar;jooq-meta-2.0.0.jar;jooq-codegen-2.0.0.jar;mysql-
 Note the prefix slash before guestbook.properies.
 Even though it's in our working directory, we need to prepend a slash, as it is
 loaded from the classpath.
-Replace the filenames with your filenames. 
+Replace the filenames with your filenames.
 In this example, jOOQ 2.0.0 is being used.
 If everything has worked, you should see this in your console output:
 </p>
@@ -146,7 +160,7 @@ If everything has worked, you should see this in your console output:
 Nov 1, 2011 7:25:06 PM org.jooq.impl.JooqLogger info
 INFO: Initialising properties  : /guestbook.properties
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Database parameters      
+INFO: Database parameters
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: ----------------------------------------------------------
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -212,7 +226,7 @@ INFO: GENERATION FINISHED!     : Total: 791.688ms, +9.143ms
 Let's just write a vanilla main class in the project containing the generated classes:
 </p>
 <pre class="prettyprint lang-java">
-// For convenience, always static import your generated tables and 
+// For convenience, always static import your generated tables and
 // jOOQ functions to decrease verbosity:
 import static test.generated.Tables.*;
 import static org.jooq.impl.Factory.*;
@@ -220,11 +234,11 @@ import static org.jooq.impl.Factory.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         Connection conn = null;
-        
+
         String userName = "root";
         String password = "";
         String url = "jdbc:mysql://localhost:3306/guestbook";
-        
+
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
@@ -239,33 +253,33 @@ public class Main {
 }
 </pre>
 <p>
-This is pretty standard code for establishing a MySQL connection. 
+This is pretty standard code for establishing a MySQL connection.
 </p>
 
 
 <h2 id="step4">Step 4: Write a query using jOOQ's DSL</h2>
 <p>
-Let's add a simple query: 
+Let's add a simple query:
 </p>
 <pre class="prettyprint lang-java">
 GuestbookFactory create = new GuestbookFactory(conn);
 Result&lt;?&gt; result = create.select().from(POSTS).fetch();
 </pre>
 <p>
-First get an instance of <code>GuestbookFactory</code> so we can write a simple 
-<code>SELECT</code> query. We pass an instance of the MySQL connection to 
-<code>GuestbookFactory</code>. Note that the factory doesn't close the connection. 
+First get an instance of <code>GuestbookFactory</code> so we can write a simple
+<code>SELECT</code> query. We pass an instance of the MySQL connection to
+<code>GuestbookFactory</code>. Note that the factory doesn't close the connection.
 We'll have to do that ourselves.
 </p>
 <p>
-We then use jOOQ's DSL to return an instance of Result. We'll be using this result in 
+We then use jOOQ's DSL to return an instance of Result. We'll be using this result in
 the next step.
 </p>
 
 
 <h2 id="step5">Step 5: Iterate over results</h2>
 <p>
-After the line where we retrieve the results, let's iterate over the results and 
+After the line where we retrieve the results, let's iterate over the results and
 print out the data:
 </p>
 <pre class="prettyprint lang-java">
@@ -273,17 +287,17 @@ for (Record r : result) {
     Long id = r.getValue(POSTS.ID);
     String title = r.getValue(POSTS.TITLE);
     String description = r.getValue(POSTS.BODY);
-   
+
     System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
 }
 </pre>
 <p>
-The full program should now look like this: 
+The full program should now look like this:
 </p>
 <pre class="prettyprint lang-java">
 package test;
 
-// For convenience, always static import your generated tables and 
+// For convenience, always static import your generated tables and
 // jOOQ functions to decrease verbosity:
 import static test.generated.Tables.*;
 import static org.jooq.impl.Factory.*;
@@ -306,23 +320,23 @@ public class Main {
      */
     public static void main(String[] args) {
         Connection conn = null;
-        
+
         String userName = "root";
         String password = "";
         String url = "jdbc:mysql://localhost:3306/guestbook";
-        
+
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
             GuestbookFactory create = new GuestbookFactory(conn);
             Result result = create.select().from(POSTS).fetch();
-        
+
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);
                 String title = r.getValue(POSTS.TITLE);
                 String description = r.getValue(POSTS.BODY);
-            
+
                 System.out.println("ID: " + id + " title: " + title + " desciption: " + description);
             }
         } catch (Exception e) {
@@ -350,8 +364,8 @@ jOOQ has grown to be a comprehensive SQL library. For more information, please c
 <a href="https://groups.google.com/forum/#!forum/jooq-user" title="jOOQ news group">https://groups.google.com/forum/#!forum/jooq-user</a>
 </p>
 <p>
-	This tutorial is the courtesy of Ikai Lan. See the original source here:<br/>
-  	<a href="http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/" target="_blank" title="Ikai Lan's jOOQ tutorial">http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/</a>
+    This tutorial is the courtesy of Ikai Lan. See the original source here:<br/>
+      <a href="http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/" target="_blank" title="Ikai Lan's jOOQ tutorial">http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/</a>
 </p>
 
 <h2 id="FAQ">FAQ</h2>
@@ -363,8 +377,8 @@ Before you go on and read the whole manual, there are a couple of interesting qu
 <b class="mono">Q:</b> When I generate source code from MySQL, can I also use it on another database?<br/>
 <b class="mono">A:</b> Yes! The generated Java code will work for all supported databases, not only for the database driver that you used when you generated the code.
 </p>
-	
-<p>    
+
+<p>
 <b class="mono">Q:</b> When I generate source code from my developer database, can I also use it on production?<br/>
 <b class="mono">A:</b> Yes! You can map your schema at code generation time or at run time. <a href="http://www.jooq.org/manual/ADVANCED/SchemaMapping/" title="Schema mapping functionality in jOOQ">See the manual for details.</a>
 </p>
@@ -379,6 +393,6 @@ Before you go on and read the whole manual, there are a couple of interesting qu
 <b class="mono">A:</b> Yes! This has been done by other users and will be documented soon. <a href="http://stackoverflow.com/questions/4474365/jooq-and-spring" title="Stack Overflow question about using jOOQ with Spring">See this Stack Overflow question for details.</a>
 </p>
 
-<?php 
+<?php
 }
 ?>

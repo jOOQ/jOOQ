@@ -40,6 +40,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.vals;
@@ -104,9 +105,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         log.info("Executing", select.getSQL());
         PreparedStatement stmt = jOOQAbstractTest.connection.prepareStatement(select.getSQL());
-        int i = 0;
-        for (Object value : select.getBindValues()) {
-            stmt.setObject(++i, value);
+
+        // [#1145] Don't set bind values if not needed
+        if (executePreparedStatements(create().getSettings())) {
+            int i = 0;
+            for (Object value : select.getBindValues()) {
+                stmt.setObject(++i, value);
+            }
         }
 
         ResultSet rs = stmt.executeQuery();

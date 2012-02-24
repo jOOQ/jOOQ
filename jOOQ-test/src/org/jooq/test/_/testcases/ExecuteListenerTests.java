@@ -58,6 +58,7 @@ import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -102,23 +103,26 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
               .where(TBook_ID().in(1, 2))
               .fetch();
 
+        // [#1145] When inlining variables, no bind events are triggered
+        int plus = (SettingsTools.executePreparedStatements(create.getSettings()) ? 2 : 0);
+
         // Check correct order of listener method invocation
         assertEquals(1, ResultQueryListener.start);
         assertEquals(2, ResultQueryListener.renderStart);
         assertEquals(3, ResultQueryListener.renderEnd);
         assertEquals(4, ResultQueryListener.prepareStart);
         assertEquals(5, ResultQueryListener.prepareEnd);
-        assertEquals(6, ResultQueryListener.bindStart);
-        assertEquals(7, ResultQueryListener.bindEnd);
-        assertEquals(8, ResultQueryListener.executeStart);
-        assertEquals(9, ResultQueryListener.executeEnd);
-        assertEquals(10, ResultQueryListener.fetchStart);
-        assertEquals(11, ResultQueryListener.resultStart);
-        assertEquals(asList(12, 14), ResultQueryListener.recordStart);
-        assertEquals(asList(13, 15), ResultQueryListener.recordEnd);
-        assertEquals(16, ResultQueryListener.resultEnd);
-        assertEquals(17, ResultQueryListener.fetchEnd);
-        assertEquals(18, ResultQueryListener.end);
+        assertEquals(plus > 2 ? 6 : 0, ResultQueryListener.bindStart);
+        assertEquals(plus > 0 ? 7 : 0, ResultQueryListener.bindEnd);
+        assertEquals(6 + plus, ResultQueryListener.executeStart);
+        assertEquals(7 + plus, ResultQueryListener.executeEnd);
+        assertEquals(8 + plus, ResultQueryListener.fetchStart);
+        assertEquals(9 + plus, ResultQueryListener.resultStart);
+        assertEquals(asList(10 + plus, 12 + plus), ResultQueryListener.recordStart);
+        assertEquals(asList(11 + plus, 13 + plus), ResultQueryListener.recordEnd);
+        assertEquals(14 + plus, ResultQueryListener.resultEnd);
+        assertEquals(15 + plus, ResultQueryListener.fetchEnd);
+        assertEquals(16 + plus, ResultQueryListener.end);
         assertEquals(2, result.size());
     }
 

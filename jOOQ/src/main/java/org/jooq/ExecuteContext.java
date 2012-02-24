@@ -191,44 +191,4 @@ public interface ExecuteContext extends Configuration {
      * Calling this has no effect. It is being used by jOOQ internally.
      */
     void result(Result<?> result);
-
-    /**
-     * The type of database interaction that is being executed with this
-     * context.
-     */
-    enum ExecuteType {
-
-        /**
-         * A <code>SELECT</code> query is being executed
-         */
-        READ,
-
-        /**
-         * An <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>,
-         * <code>MERGE</code> query is being executed
-         */
-        WRITE,
-
-        /**
-         * A routine (stored procedure or function) is being executed
-         */
-        ROUTINE,
-
-        /**
-         * A batch statement is being executed (not yet supported)
-         */
-        BATCH,
-
-        /**
-         * A DDL statement is being executed
-         * <p>
-         * Currently, this only applies to <code>TRUNCATE</code> statements
-         */
-        DDL,
-
-        /**
-         * An other (unknown) type of database interaction is being executed
-         */
-        OTHER,
-    }
 }

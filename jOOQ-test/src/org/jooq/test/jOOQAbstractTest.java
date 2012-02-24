@@ -382,9 +382,16 @@ public abstract class jOOQAbstractTest<
         log.info("TEST STATISTICS");
         log.info("---------------");
 
+        int total = 0;
         for (ExecuteType type : ExecuteType.values()) {
+            Integer count = TestStatisticsListener.STATISTICS.get(type);
+            if (count != null) total += count;
+
             log.info(type.name(), TestStatisticsListener.STATISTICS.get(type) + " executions");
         }
+
+        log.info("---------------");
+        log.info("Total", total);
     }
 
     public final Connection getConnection() {
@@ -1340,6 +1347,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerOnResultQuery();
+    }
+
+    @Test
+    public void testExecuteListenerOnBatchSingle() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerOnBatchSingle();
     }
 
     @Test

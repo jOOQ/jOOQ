@@ -293,7 +293,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
     @Test
     public void testPlainSQLResultQuery() throws Exception {
-        String sql = create().select(param("p", String.class).as("p")).getSQL();
+        String sql = create().select(param("p", String.class).as("p")).getSQL(false);
         ResultQuery<Record> q = create().resultQuery(sql, "10");
 
         Result<Record> fetch1 = q.fetch();

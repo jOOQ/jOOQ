@@ -37,6 +37,7 @@
 package org.jooq.debugger.console;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GraphicsConfiguration;
@@ -63,6 +64,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.Box;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -91,6 +93,7 @@ import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jooq.debugger.SqlQueryDebugger;
 import org.jooq.debugger.SqlQueryDebuggerData;
@@ -111,17 +114,24 @@ public class SqlLoggerPane extends JPanel {
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss.SSS");
 
     private static final int COLUMN_LINE = 0;
-    private static final int COLUMN_THREAD = 1;
-    private static final int COLUMN_TIMESTAMP = 2;
-    private static final int COLUMN_PS_PREPARATION_DURATION = 3;
-    private static final int COLUMN_PS_BINDING_DURATION = 4;
-    private static final int COLUMN_EXEC_TIME = 5;
-    private static final int COLUMN_RS_LIFETIME = 6;
-    private static final int COLUMN_RS_READ = 7;
-    private static final int COLUMN_RS_READ_ROWS = 8;
-    private static final int COLUMN_DUPLICATION_COUNT = 9;
-    private static final int COLUMN_QUERY = 10;
+    private static final int COLUMN_TYPE = 1;
+    private static final int COLUMN_THREAD = 2;
+    private static final int COLUMN_TIMESTAMP = 3;
+    private static final int COLUMN_PS_PREPARATION_DURATION = 4;
+    private static final int COLUMN_PS_BINDING_DURATION = 5;
+    private static final int COLUMN_EXEC_TIME = 6;
+    private static final int COLUMN_RS_LIFETIME = 7;
+    private static final int COLUMN_RS_READ = 8;
+    private static final int COLUMN_RS_READ_ROWS = 9;
+    private static final int COLUMN_DUPLICATION_COUNT = 10;
+    private static final int COLUMN_QUERY = 11;
     private static final int COLUMN_COUNT = COLUMN_QUERY + 1;
+
+    private final ImageIcon INSERT_ICON = new ImageIcon(getClass().getResource("resources/SqlInsert16.png"));
+    private final ImageIcon UPDATE_ICON = new ImageIcon(getClass().getResource("resources/SqlUpdate16.png"));
+    private final ImageIcon DELETE_ICON = new ImageIcon(getClass().getResource("resources/SqlDelete16.png"));
+    private final ImageIcon OTHER_ICON = new ImageIcon(getClass().getResource("resources/SqlOther16.png"));
+    private final ImageIcon SELECT_ICON = new ImageIcon(getClass().getResource("resources/SqlSelect16.png"));
 
     private SqlQueryDebugger sqlQueryDebugger;
     private JTableX table;
@@ -315,6 +325,9 @@ public class SqlLoggerPane extends JPanel {
                     case COLUMN_LINE: {
                         return rowIndex + 1;
                     }
+                    case COLUMN_TYPE: {
+                        return queryDebuggingInfo.getQueryType();
+                    }
                     case COLUMN_THREAD: {
                         return queryDebuggingInfo.getThreadName() + " [" + queryDebuggingInfo.getThreadId() + "]";
                     }
@@ -379,6 +392,8 @@ public class SqlLoggerPane extends JPanel {
                 switch(column) {
                     case COLUMN_LINE:
                         return "Line";
+                    case COLUMN_TYPE:
+                        return "Type";
                     case COLUMN_THREAD:
                         return "Thread";
                     case COLUMN_TIMESTAMP:
@@ -407,6 +422,7 @@ public class SqlLoggerPane extends JPanel {
             public Class<?> getColumnClass(int columnIndex) {
                 switch(columnIndex) {
                     case COLUMN_LINE: return Integer.class;
+                    case COLUMN_TYPE: return SqlQueryType.class;
                     case COLUMN_PS_PREPARATION_DURATION: return Long.class;
                     case COLUMN_PS_BINDING_DURATION: return Long.class;
                     case COLUMN_EXEC_TIME: return Long.class;
@@ -418,12 +434,7 @@ public class SqlLoggerPane extends JPanel {
                 return super.getColumnClass(columnIndex);
             }
 
-        })/* {
-            @Override
-            public String getToolTipText(MouseEvent e) {
-                return createMultilineTooltip(e);
-            }
-        }*/;
+        });
         registerTooltip();
         table.setAutoCreateRowSorter(true);
         table.getRowSorter().setSortKeys(Arrays.asList(new RowSorter.SortKey(COLUMN_LINE, SortOrder.ASCENDING)));
@@ -432,12 +443,34 @@ public class SqlLoggerPane extends JPanel {
         table.createDefaultColumnsFromModel();
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         columnModel.getColumnByModelIndex(COLUMN_LINE).setPreferredWidth(30);
+        columnModel.getColumnByModelIndex(COLUMN_TYPE).setPreferredWidth(20);
         columnModel.getColumnByModelIndex(COLUMN_TIMESTAMP).setPreferredWidth(80);
         columnModel.getColumnByModelIndex(COLUMN_THREAD).setPreferredWidth(150);
         columnModel.getColumnByModelIndex(COLUMN_DUPLICATION_COUNT).setPreferredWidth(40);
         table.setColumnSelectionAllowed(true);
         table.setFillsViewportHeight(true);
 //        ToolTipManager.sharedInstance().registerComponent(table);
+        table.setDefaultRenderer(SqlQueryType.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if(c instanceof JLabel) {
+                    Icon icon = null;
+                    int modelRow = table.convertRowIndexToModel(row);
+                    QueryDebuggingInfo queryDebuggingInfo = displayedQueryDebuggingInfoList.get(modelRow);
+                    switch(queryDebuggingInfo.getQueryType()) {
+                        case SELECT: icon = SELECT_ICON; break;
+                        case INSERT: icon = INSERT_ICON; break;
+                        case UPDATE: icon = UPDATE_ICON; break;
+                        case DELETE: icon = DELETE_ICON; break;
+                        case OTHER: icon = OTHER_ICON; break;
+                    }
+                    ((JLabel)c).setText(null);
+                    ((JLabel)c).setIcon(icon);
+                }
+                return c;
+            }
+        });
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -627,8 +660,12 @@ public class SqlLoggerPane extends JPanel {
     private void addDisplayedRow(QueryDebuggingInfo queryDebuggingInfo) {
         boolean isDisplayed = false;
         switch(queryDebuggingInfo.getQueryType()) {
-            case READ: isDisplayed = isReadQueryTypeDisplayed; break;
-            case WRITE: isDisplayed = isWriteQueryTypeDisplayed; break;
+            case SELECT: isDisplayed = isReadQueryTypeDisplayed; break;
+            case INSERT:
+            case UPDATE:
+            case DELETE:
+                isDisplayed = isWriteQueryTypeDisplayed;
+                break;
             case OTHER: isDisplayed = isOtherQueryTypeDisplayed; break;
         }
         int displayedRow = -1;

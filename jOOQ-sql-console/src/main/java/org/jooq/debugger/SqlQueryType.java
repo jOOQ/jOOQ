@@ -40,7 +40,9 @@ package org.jooq.debugger;
  * @author Christopher Deckers
  */
 public enum SqlQueryType {
-    READ,
-    WRITE,
+    SELECT,
+    INSERT,
+    UPDATE,
+    DELETE,
     OTHER,
 }

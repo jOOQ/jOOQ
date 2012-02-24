@@ -1355,6 +1355,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testExecuteListenerOnBatchMultiple() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerOnBatchMultiple();
+    }
+
+    @Test
     public void testLoader() throws Exception {
         new LoaderTests(this).testLoader();
     }

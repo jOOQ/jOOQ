@@ -294,7 +294,7 @@ public class UsageTrackingPreparedStatement implements PreparedStatement {
     @Override
     public void setNString(int parameterIndex, String x) throws SQLException {
         stmt.setNString(parameterIndex, x);
-        logValue(parameterIndex, x == null? null: '"' + x + '"');
+        logValue(parameterIndex, x == null? null: '\'' + x.replace("'", "''") + '\'');
     }
 
     @Override
@@ -354,7 +354,7 @@ public class UsageTrackingPreparedStatement implements PreparedStatement {
     @Override
     public void setString(int parameterIndex, String x) throws SQLException {
         stmt.setString(parameterIndex, x);
-        logValue(parameterIndex, x == null? null: '"' + x + '"');
+        logValue(parameterIndex, x == null? null: '\'' + x.replace("'", "''") + '\'');
     }
 
     @Override
@@ -624,7 +624,6 @@ public class UsageTrackingPreparedStatement implements PreparedStatement {
         return stmt;
     }
 
-    private boolean isNew = true;
 	private StringBuilder sb = new StringBuilder();
 	private List<String> paramList = new ArrayList<String>();
 
@@ -641,25 +640,22 @@ public class UsageTrackingPreparedStatement implements PreparedStatement {
     		}
     	}
     	sb.append("]");
-    	isNew = true;
     }
 
     private void logValue(int parameterIndex, Object o) {
-    	isNew = false;
-		int missingLength = parameterIndex + 1 - paramList.size();
+    	// parameters in SQL are 1-based
+		int missingLength = parameterIndex - paramList.size();
     	for(int i=0; i<missingLength; i++) {
     		paramList.add(null);
     	}
-    	paramList.set(parameterIndex, String.valueOf(o));
+    	paramList.set(parameterIndex-1, String.valueOf(o));
 	}
 
     public String getParameterDescription() {
-    	if(isNew) {
-    		if(paramList.isEmpty() && sb.length() == 0) {
-    			return null;
-    		}
-//    		commitParameterDescription();
+    	if(paramList.isEmpty() && sb.length() == 0) {
+    	    return null;
     	}
+    	commitParameterDescription();
     	return sb.toString();
     }
 

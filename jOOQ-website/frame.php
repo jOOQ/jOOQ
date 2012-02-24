@@ -1,4 +1,4 @@
-<?php 
+<?php
   $root = "";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -11,11 +11,11 @@
 		<meta property="og:image" content="http://www.jooq.org/img/logo.png" />
 		<meta property="og:site_name" content="jOOQ" />
 		<meta property="fb:admins" content="649865547" />
-		
+
 		<meta name="description" content="jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, UDTs, and Java in a fluent API. Supported DBs are DB2, Derby, Ingres, H2, HSQLDB, MySQL, Oracle, Postgres, SQLite, SQL Server, Sybase"/>
 		<meta name="author" content="Lukas Eder"/>
 		<meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI"/>
-		
+
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet" />
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>
@@ -26,14 +26,14 @@
 		<div id="wrapper">
 			<div class="block">
 			    <div id="navigation">
-			        <?php 
+			        <?php
 			        $menu = getActiveMenu();
 			        ?>
 			    	<div class="navigation-item-left <?php if ($menu == 'home') print 'navigation-item-active'?>">
 			    		<a href="<?=$root?>/" title="jOOQ Home Page">Home</a>
 		    		</div>
 			    	<div class="navigation-item-left <?php if ($menu == 'tutorial') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/tutorial.php" title="jOOQ Tutorial : The First Steps">Tutorial & FAQ</a>
+			    		<a href="<?=$root?>/tutorial.php" title="jOOQ Tutorial : The First Steps">Tutorial</a>
 			    	</div>
 			    	<div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
 			    		<a href="https://sourceforge.net/projects/jooq/files/" title="jOOQ Download">Download</a>
@@ -64,10 +64,10 @@
 				<div id="content">
 				<div id="tweets">
 					<div class="tweet-item">
-						<a href="http://twitter.com/share" 
-							class="twitter-share-button" 
+						<a href="http://twitter.com/share"
+							class="twitter-share-button"
 							data-url="http://www.jooq.org"
-							data-text="#jOOQ - A nice database abstraction library for Java" 
+							data-text="#jOOQ - A nice database abstraction library for Java"
 							data-count="horizontal" data-via="JavaOOQ">Tweet</a>
 						<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 					</div>
@@ -83,16 +83,16 @@
 						  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
 						  fjs.parentNode.insertBefore(js, fjs);
 						}(document, 'script', 'facebook-jssdk'));</script>
-						<div class="fb-like" 
-							data-send="false" 
+						<div class="fb-like"
+							data-send="false"
 							data-href="http://www.jooq.org"
-							data-layout="button_count" 
-							data-width="450" 
-							data-show-faces="true" 
+							data-layout="button_count"
+							data-width="450"
+							data-show-faces="true"
 							data-font="verdana"></div>
 					</div>
 				</div>
-				
+
 					<table width="100%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="700" valign="top">
@@ -100,10 +100,10 @@
 							<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
 						</tr>
 					</table>
-	
-					<?php 
+
+					<?php
 					  $slogan = getSlogan();
-					  
+
 					  if ($slogan != '') {
 					  	print '<p class="slogan">' . $slogan . '</p>';
 					  }
@@ -111,14 +111,14 @@
 				    ?>
 					<br/>
 				</div>
-				
+
 				<div id="footer">
-					<p class="right">jOOQ is brought to you by <a href="http://lukaseder.wordpress.com" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>. 
+					<p class="right">jOOQ is brought to you by <a href="http://lukaseder.wordpress.com" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
 					Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2 License">Apache 2 licence</a></p>
 				</div>
 			</div>
 		</div>
-		
+
 		<a href="https://github.com/lukaseder/jOOQ"> <img
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>

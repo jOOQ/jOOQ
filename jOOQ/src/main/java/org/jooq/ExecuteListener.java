@@ -127,7 +127,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * <td>No</td>
  * <td>Yes, Nx (for every value set)</td>
- * <td>Yes, 1x</td>
+ * <td>No</td>
  * <td>Yes, 1x</td>
  * </tr>
  * <tr>
@@ -136,7 +136,7 @@ import org.jooq.tools.StopWatchListener;
  * <td>No</td>
  * <td>No</td>
  * <td>Yes, Nx (for every value set)</td>
- * <td>Yes, 1x</td>
+ * <td>No</td>
  * <td>Yes, 1
  * <tr>
  * <td> {@link #executeStart(ExecuteContext)}</td>

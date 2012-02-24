@@ -53,6 +53,7 @@ import java.util.Queue;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
+import org.jooq.Field;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -455,8 +456,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         public static int            executeEnd;
         public static int            end;
 
-        public static Queue<Integer> ids = new LinkedList<Integer>(asList(1, 2));
-
         @SuppressWarnings("serial")
         private void checkBase(ExecuteContext ctx) {
             assertNull(ctx.query());
@@ -558,6 +557,229 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             checkBase(ctx);
             checkSQL(ctx, true);
             checkStatement(ctx, true);
+        }
+
+        @Override
+        public void executeStart(ExecuteContext ctx) {
+            executeStart = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+        }
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            executeEnd = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+        }
+
+        @Override
+        public void fetchStart(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void resultStart(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void recordStart(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void recordEnd(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void resultEnd(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void fetchEnd(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void end(ExecuteContext ctx) {
+            end = ++callbackCount;
+            checkBase(ctx);
+            checkSQL(ctx, true);
+            checkStatement(ctx, true);
+        }
+    }
+
+    @Test
+    public void testExecuteListenerOnBatchMultiple() {
+        jOOQAbstractTest.reset = false;
+
+        Factory create = create(new Settings()
+            .withExecuteListeners(BatchMultipleListener.class.getName()));
+
+        create.setData("Foo", "Bar");
+        create.setData("Bar", "Baz");
+
+        int[] result = create.batch(
+            create().insertInto(TAuthor())
+                    .set(TAuthor_ID(), 8)
+                    .set(TAuthor_LAST_NAME(), "Gamma"),
+
+            create().insertInto(TAuthor())
+                    .set(TAuthor_ID(), 9)
+                    .set(TAuthor_LAST_NAME(), "Helm"),
+
+            create().insertInto(TBook())
+                    .set(TBook_ID(), 6)
+                    .set(TBook_AUTHOR_ID(), 8)
+                    .set(TBook_PUBLISHED_IN(), 1994)
+                    .set((Field<Integer>)TBook_LANGUAGE_ID(), 1)
+                    .set(TBook_CONTENT_TEXT(), "Design Patterns are awesome")
+                    .set(TBook_TITLE(), "Design Patterns"),
+
+            create().insertInto(TAuthor())
+                    .set(TAuthor_ID(), 10)
+                    .set(TAuthor_LAST_NAME(), "Johnson")).execute();
+
+        assertEquals(4, result.length);
+        assertEquals(5, create().fetch(TBook()).size());
+        assertEquals(1, create().fetch(TBook(), TBook_AUTHOR_ID().equal(8)).size());
+
+        // Check correct order of listener method invocation
+        assertEquals(1, BatchMultipleListener.start);
+        assertEquals(asList(2, 4, 6, 8), BatchMultipleListener.renderStart);
+        assertEquals(asList(3, 5, 7, 9), BatchMultipleListener.renderEnd);
+        assertEquals(asList(10, 12, 14, 16), BatchMultipleListener.prepareStart);
+        assertEquals(asList(11, 13, 15, 17), BatchMultipleListener.prepareEnd);
+        assertEquals(18, BatchMultipleListener.executeStart);
+        assertEquals(19, BatchMultipleListener.executeEnd);
+        assertEquals(20, BatchMultipleListener.end);
+    }
+
+    public static class BatchMultipleListener implements ExecuteListener {
+
+        // A counter that is incremented in callback methods
+        private static int           callbackCount = 0;
+        private static int           rendered      = 0;
+        private static int           prepared      = 0;
+
+        // Fields that are used to check whether callback methods were called
+        // in the expected order
+        public static int            start;
+        public static List<Integer>  renderStart   = new ArrayList<Integer>();
+        public static List<Integer>  renderEnd     = new ArrayList<Integer>();
+        public static List<Integer>  prepareStart  = new ArrayList<Integer>();
+        public static List<Integer>  prepareEnd    = new ArrayList<Integer>();
+        public static int            executeStart;
+        public static int            executeEnd;
+        public static int            end;
+
+        public static Queue<Integer> ids = new LinkedList<Integer>(asList(1, 2));
+
+        @SuppressWarnings("serial")
+        private void checkBase(ExecuteContext ctx) {
+            assertNull(ctx.query());
+            assertNotNull(ctx.batchQueries());
+            assertTrue(ctx.batchQueries()[0].toString().contains("insert"));
+            assertTrue(ctx.batchQueries()[1].toString().contains("insert"));
+            assertTrue(ctx.batchQueries()[2].toString().contains("insert"));
+            assertTrue(ctx.batchQueries()[3].toString().contains("insert"));
+            assertEquals(4, ctx.batchSQL().length);
+
+            assertEquals("Bar", ctx.getData("Foo"));
+            assertEquals("Baz", ctx.getData("Bar"));
+            assertEquals(new HashMap<String, String>() {{
+                put("Foo", "Bar");
+                put("Bar", "Baz");
+            }}, ctx.getData());
+
+            assertNull(ctx.routine());
+            assertNull(ctx.resultSet());
+            assertNull(ctx.record());
+            assertNull(ctx.result());
+
+            assertEquals(ExecuteType.BATCH, ctx.type());
+        }
+
+        private void checkSQL(ExecuteContext ctx, boolean patched) {
+            for (int i = 0; i < rendered; i++) {
+                assertTrue(ctx.batchQueries()[i].toString().contains("insert"));
+
+                if (patched) {
+                    assertTrue(ctx.batchSQL()[i].contains("values    ("));
+                }
+            }
+        }
+
+        @SuppressWarnings("unused")
+        private void checkStatement(ExecuteContext ctx, boolean patched) {
+            assertNotNull(ctx.statement());
+        }
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            start = ++callbackCount;
+            checkBase(ctx);
+
+            assertNull(ctx.batchSQL()[0]);
+            assertNull(ctx.batchSQL()[1]);
+            assertNull(ctx.batchSQL()[2]);
+            assertNull(ctx.batchSQL()[3]);
+            assertNull(ctx.sql());
+            assertNull(ctx.statement());
+        }
+
+        @Override
+        public void renderStart(ExecuteContext ctx) {
+            renderStart.add(++callbackCount);
+            checkBase(ctx);
+            checkStatement(ctx, false);
+            checkSQL(ctx, false);
+
+            assertNull(ctx.sql());
+        }
+
+        @Override
+        public void renderEnd(ExecuteContext ctx) {
+            renderEnd.add(++callbackCount);
+            rendered++;
+            checkBase(ctx);
+            checkStatement(ctx, false);
+            checkSQL(ctx, false);
+
+            ctx.batchSQL()[rendered - 1] = ctx.batchSQL()[rendered - 1].replaceFirst("values\\s+", "values    ");
+            checkSQL(ctx, true);
+        }
+
+        @Override
+        public void prepareStart(ExecuteContext ctx) {
+            prepareStart.add(++callbackCount);
+            checkBase(ctx);
+            checkStatement(ctx, false);
+            checkSQL(ctx, true);
+        }
+
+        @Override
+        public void prepareEnd(ExecuteContext ctx) {
+            prepareEnd.add(++callbackCount);
+            prepared++;
+            checkBase(ctx);
+            checkStatement(ctx, false);
+            checkSQL(ctx, true);
+        }
+
+        @Override
+        public void bindStart(ExecuteContext ctx) {
+            fail();
+        }
+
+        @Override
+        public void bindEnd(ExecuteContext ctx) {
+            fail();
         }
 
         @Override

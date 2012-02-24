@@ -379,6 +379,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             @Override
             public void toSQL(RenderContext context) {
+                context.setData("Foo-Field", "Baz");
+
                 if (context.inline()) {
                     context.sql(TBook_ID().getName() + " * 2");
                 }
@@ -389,8 +391,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             @Override
             public void bind(BindContext context) {
-                context.setData("Foo-Field", "Baz");
-
                 try {
                     context.statement().setInt(context.nextIndex(), 2);
                 }
@@ -405,6 +405,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             @Override
             public void toSQL(RenderContext context) {
+                context.setData("Foo-Condition", "Baz");
+
                 context.sql(IDx2);
                 context.sql(" > ");
 
@@ -418,8 +420,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             @Override
             public void bind(BindContext context) {
-                context.setData("Foo-Condition", "Baz");
-
                 try {
                     context.bind(IDx2);
                     context.statement().setInt(context.nextIndex(), 3);

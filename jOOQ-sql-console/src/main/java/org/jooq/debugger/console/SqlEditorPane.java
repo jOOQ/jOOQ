@@ -82,6 +82,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.Box;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
@@ -101,6 +102,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -148,10 +150,15 @@ public class SqlEditorPane extends JPanel {
         this.databaseDescriptor = databaseDescriptor;
         this.isDBEditable = !databaseDescriptor.isReadOnly();
         setOpaque(false);
-        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JPanel northPanel = new JPanel(new BorderLayout());
         northPanel.setOpaque(false);
-        startButton = new JButton("Run");
+        JToolBar northWestPanel = new JToolBar();
+        northWestPanel.setOpaque(false);
+        northWestPanel.setFloatable(false);
+        startButton = new JButton(new ImageIcon(getClass().getResource("resources/Play16.png")));
         startButton.setOpaque(false);
+        startButton.setFocusable(false);
+//        startButton.setMargin(new Insets(2, 2, 2, 2));
         startButton.setToolTipText("Run the (selected) text (F5)");
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -159,10 +166,12 @@ public class SqlEditorPane extends JPanel {
                 evaluateInternal();
             }
         });
-        northPanel.add(startButton);
-        stopButton = new JButton("Stop");
+        northWestPanel.add(startButton);
+        stopButton = new JButton(new ImageIcon(getClass().getResource("resources/Stop16.png")));
         stopButton.setVisible(false);
         stopButton.setOpaque(false);
+        stopButton.setFocusable(false);
+//        stopButton.setMargin(new Insets(2, 2, 2, 2));
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -170,14 +179,10 @@ public class SqlEditorPane extends JPanel {
                 closeConnection();
             }
         });
-        northPanel.add(stopButton);
-        northPanel.add(new JLabel("No display when rows >"));
-        NumberFormat numberFormat = NumberFormat.getIntegerInstance();
-        displayedRowCountField = new JFormattedTextField(numberFormat);
-        displayedRowCountField.setHorizontalAlignment(JFormattedTextField.RIGHT);
-        displayedRowCountField.setValue(100000);
-        displayedRowCountField.setColumns(7);
-        northPanel.add(displayedRowCountField);
+        northWestPanel.add(stopButton);
+        northPanel.add(northWestPanel, BorderLayout.WEST);
+        JPanel northEastPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+        northEastPanel.setOpaque(false);
         JCheckBox limitCheckBox = new JCheckBox("Parse 10000 rows max", isUsingMaxRowCount);
         limitCheckBox.addItemListener(new ItemListener() {
             @Override
@@ -186,7 +191,16 @@ public class SqlEditorPane extends JPanel {
             }
         });
         limitCheckBox.setOpaque(false);
-        northPanel.add(limitCheckBox);
+        northEastPanel.add(limitCheckBox);
+        northEastPanel.add(Box.createHorizontalStrut(5));
+        northEastPanel.add(new JLabel("No display when rows >"));
+        NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+        displayedRowCountField = new JFormattedTextField(numberFormat);
+        displayedRowCountField.setHorizontalAlignment(JFormattedTextField.RIGHT);
+        displayedRowCountField.setValue(100000);
+        displayedRowCountField.setColumns(7);
+        northEastPanel.add(displayedRowCountField);
+        northPanel.add(northEastPanel, BorderLayout.CENTER);
         add(northPanel, BorderLayout.NORTH);
 //        editorTextArea = new JTextArea();
         editorTextArea = new SqlTextArea();

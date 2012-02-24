@@ -37,6 +37,15 @@
 package org.jooq.debugger.console;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.Dialog.ModalityType;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -45,15 +54,26 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.font.TextAttribute;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -81,8 +101,78 @@ public class SqlConsoleFrame extends JFrame {
 
     public SqlConsoleFrame(final DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab) {
     	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    	JMenuBar menuBar = new JMenuBar();
+    	JMenu fileMenu = new JMenu("File");
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    performCleanup();
+                } catch(Exception ex) {
+                    ex.printStackTrace();
+                }
+                System.exit(0);
+            }
+        });
+        fileMenu.add(exitMenuItem);
+        menuBar.add(fileMenu);
+    	JMenu helpMenu = new JMenu("Help");
+    	JMenuItem aboutMenuItem = new JMenuItem("About");
+    	aboutMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final JDialog aboutDialog = new JDialog(SqlConsoleFrame.this, "About jOOQ SQL Console", ModalityType.APPLICATION_MODAL);
+                aboutDialog.setResizable(false);
+                Container contentPane = aboutDialog.getContentPane();
+                JPanel centerPane = new JPanel(new GridBagLayout());
+                centerPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                centerPane.add(new JLabel("jOOQ library: "), new GridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+                centerPane.add(new JLabel("Lukas Eder"), new GridBagConstraints(1, 0, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
+                centerPane.add(new JLabel("SQL Console: "), new GridBagConstraints(0, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                centerPane.add(new JLabel("Christopher Deckers"), new GridBagConstraints(1, 1, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                centerPane.add(new JLabel("License: "), new GridBagConstraints(0, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                centerPane.add(new JLabel("Apache License, Version 2.0"), new GridBagConstraints(1, 2, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                centerPane.add(new JLabel("Web site: "), new GridBagConstraints(0, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                JLabel siteLabel = new JLabel("http://www.jooq.org");
+                siteLabel.setForeground(Color.BLUE);
+                Map<TextAttribute, Object> attributeMap = new HashMap<TextAttribute, Object>();
+                attributeMap.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_LOW_ONE_PIXEL);
+                siteLabel.setFont(siteLabel.getFont().deriveFont(attributeMap));
+                siteLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                siteLabel.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        try {
+                            Desktop.getDesktop().browse(new URI("http://www.jooq.org"));
+                        }
+                        catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                centerPane.add(siteLabel, new GridBagConstraints(1, 3, 1, 1, 0, 0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 0), 0, 0));
+                contentPane.add(centerPane, BorderLayout.CENTER);
+                JPanel southPane = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                JButton okButton = new JButton("OK");
+                okButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        aboutDialog.dispose();
+                    }
+                });
+                southPane.add(okButton);
+                contentPane.add(southPane, BorderLayout.SOUTH);
+                aboutDialog.pack();
+                aboutDialog.setLocationRelativeTo(SqlConsoleFrame.this);
+                aboutDialog.setVisible(true);
+            }
+        });
+        helpMenu.add(aboutMenuItem);
+        menuBar.add(helpMenu);
+        setJMenuBar(menuBar);
         mainTabbedPane = new JTabbedPane();
-        String title = "SQL Console";
+        String title = "jOOQ SQL Console";
         if(editorDatabaseDescriptor != null) {
         	String schemaName = editorDatabaseDescriptor.getSchema().getName();
         	if(schemaName != null && schemaName.length() != 0) {
@@ -106,16 +196,24 @@ public class SqlConsoleFrame extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if(sqlLoggerPane != null) {
-                    sqlLoggerPane.setLogging(false);
-                }
-                if(editorTabbedPane != null) {
-                	for(int i=editorTabbedPane.getTabCount()-2; i>=0; i--) {
-                		((SqlEditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
-                	}
+                try {
+                    performCleanup();
+                } catch(Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
+    }
+
+    private void performCleanup() {
+        if(sqlLoggerPane != null) {
+            sqlLoggerPane.setLogging(false);
+        }
+        if(editorTabbedPane != null) {
+            for(int i=editorTabbedPane.getTabCount()-2; i>=0; i--) {
+                ((SqlEditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
+            }
+        }
     }
 
     private SqlLoggerPane sqlLoggerPane;

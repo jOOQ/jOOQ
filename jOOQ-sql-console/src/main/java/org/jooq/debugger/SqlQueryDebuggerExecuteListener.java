@@ -78,7 +78,6 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 		}
 		aggregatedPreparationDuration += System.currentTimeMillis() - startPreparationTime;
 		PreparedStatement statement = ctx.statement();
-
 		// TODO: How to wrap CallableStatement ?
 		// Wrapping it with UsageTrackingPreparedStatement will cause
 		// ClassCastExceptions in jOOQ. Maybe there is a design issue?
@@ -129,10 +128,6 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 		}
 		ResultSet resultSet = ctx.resultSet();
 		String[] sql = ctx.batchSQL();
-		// Temporary code to avoid bug of BatchSingle not filling the batchSQL array.
-		if(sql.length == 1 && sql[0] == null) {
-		    sql = new String[] {ctx.sql()};
-		}
 		SqlQueryType sqlQueryType = getSqlQueryType(sql[0]);
 		if(sql.length == 1) {
 		    PreparedStatement statement = ctx.statement();

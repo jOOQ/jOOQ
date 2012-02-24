@@ -4017,12 +4017,15 @@ create.selectFrom(T_AUTHOR).fetch();</java>
 								dedicated developer databases, and a common integration database. In the
 								code generation configuration, you would then write.
 							</p>
-<config>#Use this as the developer's schema:
-generator.database.input-schema=LUKAS_DEV_SCHEMA
+<xml><![CDATA[<schemata>
+  <schema>
+    <!-- Use this as the developer's schema: -->
+    <inputSchema>LUKAS_DEV_SCHEMA</inputSchema>
 
-#Use this as the integration / production database:
-generator.database.output-schema=PROD
-</config>
+    <!-- Use this as the integration / production database: -->
+    <outputSchema>PROD</outputSchema>
+  </schema>
+</schemata>]]></xml>
 							<p>
 								See the manual's section about
 								<reference id="META" title="jooq-codegen configuration"/>

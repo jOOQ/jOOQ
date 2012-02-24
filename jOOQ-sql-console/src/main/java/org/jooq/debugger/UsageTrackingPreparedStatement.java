@@ -61,6 +61,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * @author Christopher Deckers
+ */
 public class UsageTrackingPreparedStatement implements PreparedStatement {
 
 	private PreparedStatement stmt;
@@ -642,7 +645,7 @@ public class UsageTrackingPreparedStatement implements PreparedStatement {
     	sb.append("]");
     }
 
-    private void logValue(int parameterIndex, Object o) {
+    protected void logValue(int parameterIndex, Object o) {
     	// parameters in SQL are 1-based
 		int missingLength = parameterIndex - paramList.size();
     	for(int i=0; i<missingLength; i++) {

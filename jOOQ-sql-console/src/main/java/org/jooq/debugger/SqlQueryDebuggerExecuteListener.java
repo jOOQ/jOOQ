@@ -183,14 +183,17 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 
     private static SqlQueryType getSqlQueryType(String query) {
         String queryLC = query.toLowerCase(Locale.ENGLISH).trim();
-        if(queryLC.startsWith("insert ") ||
-                queryLC.startsWith("update ") ||
-                queryLC.startsWith("delete ")) {
-            return SqlQueryType.WRITE;
+        if(queryLC.startsWith("insert ")) {
+            return SqlQueryType.INSERT;
         }
-        if(queryLC.startsWith("select ") ||
-                queryLC.startsWith("with ")) {
-            return SqlQueryType.READ;
+        if(queryLC.startsWith("update ")) {
+            return SqlQueryType.UPDATE;
+        }
+        if(queryLC.startsWith("delete ")) {
+            return SqlQueryType.DELETE;
+        }
+        if(queryLC.startsWith("select ")) {
+            return SqlQueryType.SELECT;
         }
         return SqlQueryType.OTHER;
     }

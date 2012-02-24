@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteType;
 import org.jooq.impl.DefaultExecuteListener;
 
 public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
@@ -77,7 +78,13 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 		}
 		aggregatedPreparationDuration += System.currentTimeMillis() - startPreparationTime;
 		PreparedStatement statement = ctx.statement();
-		ctx.statement(new UsageTrackingPreparedStatement(statement));
+
+		// TODO: How to wrap CallableStatement ?
+		// Wrapping it with UsageTrackingPreparedStatement will cause
+		// ClassCastExceptions in jOOQ. Maybe there is a design issue?
+		if (ctx.type() != ExecuteType.ROUTINE) {
+		    ctx.statement(new UsageTrackingPreparedStatement(statement));
+		}
 	}
 
 	private long startBindTime;

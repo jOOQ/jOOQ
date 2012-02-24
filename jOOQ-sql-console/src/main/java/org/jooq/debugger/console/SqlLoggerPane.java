@@ -63,7 +63,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -137,8 +136,8 @@ public class SqlLoggerPane extends JPanel {
     private JTableX table;
     private SqlTextArea textArea;
     private JLabel loggerStatusLabel;
-    private JButton loggerLoggingOnButton;
-    private JButton loggerLoggingOffButton;
+    private JButton loggerOnButton;
+    private JButton loggerOffButton;
     private boolean isLogging;
     private boolean isReadQueryTypeDisplayed = true;
     private boolean isWriteQueryTypeDisplayed = true;
@@ -153,30 +152,30 @@ public class SqlLoggerPane extends JPanel {
         JToolBar loggerHeaderWestPanel = new JToolBar();
         loggerHeaderWestPanel.setFloatable(false);
         loggerHeaderWestPanel.setOpaque(false);
-        loggerLoggingOnButton = new JButton(new ImageIcon(getClass().getResource("resources/Running16.png")));
-        loggerLoggingOnButton.setOpaque(false);
-        loggerLoggingOnButton.setFocusable(false);
-        loggerLoggingOnButton.setToolTipText("Activate logging");
-        loggerLoggingOnButton.addActionListener(new ActionListener() {
+        loggerOnButton = new JButton(new ImageIcon(getClass().getResource("resources/Running16.png")));
+        loggerOnButton.setOpaque(false);
+        loggerOnButton.setFocusable(false);
+        loggerOnButton.setToolTipText("Activate logging");
+        loggerOnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setLogging(true);
             }
         });
-        loggerHeaderWestPanel.add(loggerLoggingOnButton);
-        loggerLoggingOffButton = new JButton(new ImageIcon(getClass().getResource("resources/Paused16.png")));
-        loggerLoggingOffButton.setOpaque(false);
-        loggerLoggingOffButton.setFocusable(false);
-        loggerLoggingOffButton.setToolTipText("Deactivate logging");
-        loggerLoggingOffButton.setVisible(false);
-        loggerLoggingOffButton.addActionListener(new ActionListener() {
+        loggerHeaderWestPanel.add(loggerOnButton);
+        loggerOffButton = new JButton(new ImageIcon(getClass().getResource("resources/Paused16.png")));
+        loggerOffButton.setOpaque(false);
+        loggerOffButton.setFocusable(false);
+        loggerOffButton.setToolTipText("Deactivate logging");
+        loggerOffButton.setVisible(false);
+        loggerOffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setLogging(false);
-                loggerLoggingOnButton.requestFocus();
+                loggerOnButton.requestFocus();
             }
         });
-        loggerHeaderWestPanel.add(loggerLoggingOffButton);
+        loggerHeaderWestPanel.add(loggerOffButton);
         JButton loggerClearButton = new JButton(new ImageIcon(getClass().getResource("resources/Clear16.png")));
         loggerClearButton.setOpaque(false);
         loggerClearButton.setFocusable(false);
@@ -196,19 +195,19 @@ public class SqlLoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerClearButton);
-        JToggleButton scrollLockButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
-        scrollLockButton.setFocusable(false);
-        scrollLockButton.setToolTipText("Scroll Lock");
-        scrollLockButton.addItemListener(new ItemListener() {
+        JToggleButton scrollLockToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
+        scrollLockToggleButton.setFocusable(false);
+        scrollLockToggleButton.setToolTipText("Scroll Lock");
+        scrollLockToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 isScrollLocked = e.getStateChange() == ItemEvent.SELECTED;
             }
         });
-        loggerHeaderWestPanel.add(scrollLockButton);
+        loggerHeaderWestPanel.add(scrollLockToggleButton);
         loggerHeaderPanel.add(loggerHeaderWestPanel, BorderLayout.WEST);
-        JPanel loggerHeaderEastPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
-        loggerHeaderEastPanel.setOpaque(false);
+        JPanel loggerHeaderCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
+        loggerHeaderCenterPanel.setOpaque(false);
         JCheckBox loggerThreadCheckBox = new JCheckBox("Threads", true);
         loggerThreadCheckBox.setOpaque(false);
         loggerThreadCheckBox.addItemListener(new ItemListener() {
@@ -220,7 +219,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderEastPanel.add(loggerThreadCheckBox);
+        loggerHeaderCenterPanel.add(loggerThreadCheckBox);
         JCheckBox loggerTimestampCheckBox = new JCheckBox("Timestamps", true);
         loggerTimestampCheckBox.setOpaque(false);
         loggerTimestampCheckBox.addItemListener(new ItemListener() {
@@ -232,7 +231,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderEastPanel.add(loggerTimestampCheckBox);
+        loggerHeaderCenterPanel.add(loggerTimestampCheckBox);
         JCheckBox preparedStatementDataCheckBox = new JCheckBox("PS Data", true);
         preparedStatementDataCheckBox.setOpaque(false);
         preparedStatementDataCheckBox.addItemListener(new ItemListener() {
@@ -245,7 +244,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderEastPanel.add(preparedStatementDataCheckBox);
+        loggerHeaderCenterPanel.add(preparedStatementDataCheckBox);
         JCheckBox loggerDurationCheckBox = new JCheckBox("Exec Time", true);
         loggerDurationCheckBox.setOpaque(false);
         loggerDurationCheckBox.addItemListener(new ItemListener() {
@@ -257,7 +256,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderEastPanel.add(loggerDurationCheckBox);
+        loggerHeaderCenterPanel.add(loggerDurationCheckBox);
         JCheckBox resultSetDataCheckBox = new JCheckBox("RS Data", true);
         resultSetDataCheckBox.setOpaque(false);
         resultSetDataCheckBox.addItemListener(new ItemListener() {
@@ -271,7 +270,7 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderEastPanel.add(resultSetDataCheckBox);
+        loggerHeaderCenterPanel.add(resultSetDataCheckBox);
         JCheckBox duplicationCountCheckBox = new JCheckBox("Duplication", true);
         duplicationCountCheckBox.setOpaque(false);
         duplicationCountCheckBox.addItemListener(new ItemListener() {
@@ -283,39 +282,45 @@ public class SqlLoggerPane extends JPanel {
                 table.adjustLastColumn();
             }
         });
-        loggerHeaderEastPanel.add(duplicationCountCheckBox);
-        loggerHeaderEastPanel.add(Box.createHorizontalStrut(10));
-        JCheckBox loggerReadQueryTypeCheckBox = new JCheckBox("Read", isReadQueryTypeDisplayed);
-        loggerReadQueryTypeCheckBox.setOpaque(false);
-        loggerReadQueryTypeCheckBox.addItemListener(new ItemListener() {
+        loggerHeaderCenterPanel.add(duplicationCountCheckBox);
+        loggerHeaderPanel.add(loggerHeaderCenterPanel, BorderLayout.CENTER);
+        JToolBar loggerHeaderEastPanel = new JToolBar();
+        loggerHeaderEastPanel.setFloatable(false);
+        loggerHeaderEastPanel.setOpaque(false);
+        JToggleButton loggerReadQueryTypeToggleButton = new JToggleButton(SELECT_ICON, isReadQueryTypeDisplayed);
+        loggerReadQueryTypeToggleButton.setOpaque(false);
+        loggerReadQueryTypeToggleButton.setToolTipText("Show/hide read statements");
+        loggerReadQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 isReadQueryTypeDisplayed = e.getStateChange() == ItemEvent.SELECTED;
                 refreshRows();
             }
         });
-        loggerHeaderEastPanel.add(loggerReadQueryTypeCheckBox);
-        JCheckBox loggerWriteQueryTypeCheckBox = new JCheckBox("Write", isWriteQueryTypeDisplayed);
-        loggerWriteQueryTypeCheckBox.setOpaque(false);
-        loggerWriteQueryTypeCheckBox.addItemListener(new ItemListener() {
+        loggerHeaderEastPanel.add(loggerReadQueryTypeToggleButton);
+        JToggleButton loggerWriteQueryTypeToggleButton = new JToggleButton(UPDATE_ICON, isWriteQueryTypeDisplayed);
+        loggerWriteQueryTypeToggleButton.setOpaque(false);
+        loggerWriteQueryTypeToggleButton.setToolTipText("Show/hide modification statements");
+        loggerWriteQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 isWriteQueryTypeDisplayed = e.getStateChange() == ItemEvent.SELECTED;
                 refreshRows();
             }
         });
-        loggerHeaderEastPanel.add(loggerWriteQueryTypeCheckBox);
-        JCheckBox loggerOtherQueryTypeCheckBox = new JCheckBox("Other", isOtherQueryTypeDisplayed);
-        loggerOtherQueryTypeCheckBox.setOpaque(false);
-        loggerOtherQueryTypeCheckBox.addItemListener(new ItemListener() {
+        loggerHeaderEastPanel.add(loggerWriteQueryTypeToggleButton);
+        JToggleButton loggerOtherQueryTypeToggleButton = new JToggleButton(OTHER_ICON, isOtherQueryTypeDisplayed);
+        loggerOtherQueryTypeToggleButton.setOpaque(false);
+        loggerOtherQueryTypeToggleButton.setToolTipText("Show/hide other types of statements");
+        loggerOtherQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 isOtherQueryTypeDisplayed = e.getStateChange() == ItemEvent.SELECTED;
                 refreshRows();
             }
         });
-        loggerHeaderEastPanel.add(loggerOtherQueryTypeCheckBox);
-        loggerHeaderPanel.add(loggerHeaderEastPanel, BorderLayout.CENTER);
+        loggerHeaderEastPanel.add(loggerOtherQueryTypeToggleButton);
+        loggerHeaderPanel.add(loggerHeaderEastPanel, BorderLayout.EAST);
         add(loggerHeaderPanel, BorderLayout.NORTH);
         table = new JTableX(new AbstractTableModel() {
             @Override
@@ -762,8 +767,8 @@ public class SqlLoggerPane extends JPanel {
             return;
         }
         this.isLogging = isLogging;
-        loggerLoggingOnButton.setVisible(!isLogging);
-        loggerLoggingOffButton.setVisible(isLogging);
+        loggerOnButton.setVisible(!isLogging);
+        loggerOffButton.setVisible(isLogging);
         if(sqlQueryDebugger != null) {
             SqlQueryDebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
             sqlQueryDebugger = null;

@@ -79,8 +79,7 @@ public interface ExecuteContext extends Configuration {
 
     /**
      * The jOOQ {@link Query} objects that are being executed in batch mode, or
-     * <code>null</code> if the query is unknown or if there was no jOOQ
-     * <code>Query</code>
+     * empty if the query is unknown or if there was no jOOQ <code>Query</code>
      * <p>
      * If a single <code>Query</code> is executed in non-batch mode, this will
      * return an array of length <code>1</code>, containing that
@@ -88,6 +87,8 @@ public interface ExecuteContext extends Configuration {
      *
      * @see #query()
      * @see #routine()
+     * @return The executed <code>Query</code> object(s). This is never
+     *         <code>null</code>
      */
     Query[] batchQueries();
 
@@ -116,7 +117,7 @@ public interface ExecuteContext extends Configuration {
 
     /**
      * The generated SQL statements that are being executed in batch mode, or
-     * <code>null</code> if the query is unknown or if there was no SQL statement
+     * empty if the query is unknown or if there was no SQL statement
      * <p>
      * If a single <code>Query</code> is executed in non-batch mode, this will
      * return an array of length <code>1</code>, containing that
@@ -124,6 +125,7 @@ public interface ExecuteContext extends Configuration {
      *
      * @see #query()
      * @see #routine()
+     * @return The generated SQL statement(s). This is never <code>null</code>
      */
     String[] batchSQL();
 

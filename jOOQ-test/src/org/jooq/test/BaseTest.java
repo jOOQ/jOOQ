@@ -63,7 +63,9 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
+import org.jooq.debugger.SqlQueryDebuggerExecuteListener;
 import org.jooq.impl.Factory;
+import org.jooq.test._.TestStatisticsListener;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -589,7 +591,10 @@ public abstract class BaseTest<
     }
 
     protected Factory create(Settings settings) {
-        return delegate.create(settings);
+        Factory create = delegate.create(settings);
+        create.getSettings().getExecuteListeners().add(TestStatisticsListener.class.getName());
+        create.getSettings().getExecuteListeners().add(SqlQueryDebuggerExecuteListener.class.getName());
+        return create;
     }
 
     protected final Connection getConnection() {

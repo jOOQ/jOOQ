@@ -55,6 +55,7 @@ import java.util.Properties;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
+import org.jooq.ExecuteType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -72,10 +73,12 @@ import org.jooq.conf.Settings;
 import org.jooq.debugger.SqlQueryDebuggerExecuteListener;
 import org.jooq.debugger.console.remote.SqlRemoteQueryDebuggerServer;
 import org.jooq.impl.Factory;
+import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.DataTypeTests;
 import org.jooq.test._.testcases.EnumTests;
+import org.jooq.test._.testcases.ExecuteListenerTests;
 import org.jooq.test._.testcases.ExoticTests;
 import org.jooq.test._.testcases.FetchTests;
 import org.jooq.test._.testcases.FormatTests;
@@ -198,6 +201,7 @@ public abstract class jOOQAbstractTest<
     public static Map<String, String>           scripts            = new HashMap<String, String>();
 
     private static SqlRemoteQueryDebuggerServer SERVER;
+    private static TestStatisticsListener       STATISTICS;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -374,6 +378,13 @@ public abstract class jOOQAbstractTest<
         }
 
         connection.close();
+
+        log.info("TEST STATISTICS");
+        log.info("---------------");
+
+        for (ExecuteType type : ExecuteType.values()) {
+            log.info(type.name(), TestStatisticsListener.STATISTICS.get(type) + " executions");
+        }
     }
 
     public final Connection getConnection() {
@@ -616,7 +627,10 @@ public abstract class jOOQAbstractTest<
     }
 
     protected final Factory create() {
-        Settings settings = new Settings().withExecuteListeners(SqlQueryDebuggerExecuteListener.class.getName());
+        Settings settings = new Settings().withExecuteListeners(
+            TestStatisticsListener.class.getName(),
+            SqlQueryDebuggerExecuteListener.class.getName());
+
         return create(settings);
     }
 
@@ -1321,6 +1335,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testPivotClause() throws Exception {
         new ExoticTests(this).testPivotClause();
+    }
+
+    @Test
+    public void testExecuteListener() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListener();
     }
 
     @Test

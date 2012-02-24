@@ -65,12 +65,8 @@ public interface ExecuteContext extends Configuration {
 
     /**
      * The jOOQ {@link Query} that is being executed or <code>null</code> if the
-     * query is unknown or if there was no jOOQ <code>Query</code>
-     * <p>
-     * If {@link #batchQueries()} returns several <code>Query</code> objects,
-     * this will always return the currently rendered / prepared
-     * <code>Query</code>, or <code>null</code>, if no <code>Query</code> is
-     * currently being rendered / prepared
+     * query is unknown, if it is a batch query, or if there was no jOOQ
+     * <code>Query</code>
      *
      * @see #routine()
      * @see #batchQueries()

@@ -70,7 +70,7 @@ class BatchSingle implements BatchBindStep {
     public final int[] execute() {
         Connection connection = create.getConnection();
 
-        ExecuteContext ctx = new DefaultExecuteContext(create, query);
+        ExecuteContext ctx = new DefaultExecuteContext(create, new Query[] { query });
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         try {

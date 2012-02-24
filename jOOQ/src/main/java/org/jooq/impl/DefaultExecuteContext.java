@@ -114,12 +114,23 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
     @Override
     public final ExecuteType type() {
+
+        // This can only be a routine
         if (routine != null) {
             return ExecuteType.ROUTINE;
         }
+
+        // This can only be a BatchSingle execution
+        else if (batchQueries.length == 1 && query == null) {
+            return ExecuteType.BATCH;
+        }
+
+        // This can only be a BatchMultiple execution
         else if (batchQueries.length > 1) {
             return ExecuteType.BATCH;
         }
+
+        // Any other type of query
         else if (query != null) {
             if (query instanceof ResultQuery) {
                 return ExecuteType.READ;
@@ -136,6 +147,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
             }
         }
 
+        // No query available
         return ExecuteType.OTHER;
     }
 

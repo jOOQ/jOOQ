@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_ADDRESS_TABLE extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> {
 
-	private static final long serialVersionUID = 1823960995;
+	private static final long serialVersionUID = 918621864;
 
 	public U_ADDRESS_TABLE(org.jooq.Configuration configuration) {
-		super("TEST.U_ADDRESS_TABLE", org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE.getDataType(), configuration);
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_ADDRESS_TABLE", org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE.getDataType(), configuration);
 	}
 
 	public U_ADDRESS_TABLE(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE... array) {

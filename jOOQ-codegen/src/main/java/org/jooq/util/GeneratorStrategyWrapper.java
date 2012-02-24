@@ -114,7 +114,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             String alternative = convertToJavaIdentifier(delegate.getJavaClassName(definition, Mode.DEFAULT));
 
             if (className.equalsIgnoreCase(alternative)) {
-                log.warn("Error", "Factory has the same name as Schema, forcing Factory suffix. Consider correcting your strategy");
+                log.warn("Configuration problem", "Factory has the same name as Schema, forcing Factory suffix. Consider correcting your strategy");
                 className += "Factory";
             }
         }

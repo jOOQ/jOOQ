@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_STRING_TABLE extends org.jooq.impl.ArrayRecordImpl<java.lang.String> {
 
-	private static final long serialVersionUID = -1475283291;
+	private static final long serialVersionUID = -242805138;
 
 	public U_STRING_TABLE(org.jooq.Configuration configuration) {
-		super("TEST.U_STRING_TABLE", org.jooq.impl.SQLDataType.VARCHAR, configuration);
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_STRING_TABLE", org.jooq.impl.SQLDataType.VARCHAR, configuration);
 	}
 
 	public U_STRING_TABLE(org.jooq.Configuration configuration, java.lang.String... array) {

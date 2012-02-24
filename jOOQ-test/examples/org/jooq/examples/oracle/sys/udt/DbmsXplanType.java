@@ -8,10 +8,10 @@ package org.jooq.examples.oracle.sys.udt;
  */
 public class DbmsXplanType extends org.jooq.impl.UDTImpl<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> {
 
-	private static final long serialVersionUID = -1806027566;
+	private static final long serialVersionUID = -1155864431;
 
 	/**
-	 * The singleton instance of DBMS_XPLAN_TYPE
+	 * The singleton instance of SYS.DBMS_XPLAN_TYPE
 	 */
 	public static final org.jooq.examples.oracle.sys.udt.DbmsXplanType DBMS_XPLAN_TYPE = new org.jooq.examples.oracle.sys.udt.DbmsXplanType();
 

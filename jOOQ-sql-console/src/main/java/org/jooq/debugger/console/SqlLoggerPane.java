@@ -152,7 +152,7 @@ public class SqlLoggerPane extends JPanel {
         JToolBar loggerHeaderWestPanel = new JToolBar();
         loggerHeaderWestPanel.setFloatable(false);
         loggerHeaderWestPanel.setOpaque(false);
-        loggerOnButton = new JButton(new ImageIcon(getClass().getResource("resources/Running16.png")));
+        loggerOnButton = new JButton(new ImageIcon(getClass().getResource("resources/Paused16.png")));
         loggerOnButton.setOpaque(false);
         loggerOnButton.setFocusable(false);
         loggerOnButton.setToolTipText("Activate logging");
@@ -163,7 +163,7 @@ public class SqlLoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerOnButton);
-        loggerOffButton = new JButton(new ImageIcon(getClass().getResource("resources/Paused16.png")));
+        loggerOffButton = new JButton(new ImageIcon(getClass().getResource("resources/Running16.png")));
         loggerOffButton.setOpaque(false);
         loggerOffButton.setFocusable(false);
         loggerOffButton.setToolTipText("Deactivate logging");
@@ -176,35 +176,6 @@ public class SqlLoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerOffButton);
-        JButton loggerClearButton = new JButton(new ImageIcon(getClass().getResource("resources/Clear16.png")));
-        loggerClearButton.setOpaque(false);
-        loggerClearButton.setFocusable(false);
-        loggerClearButton.setToolTipText("Clear collected data");
-        loggerClearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                queryDebuggingInfoList.clear();
-                textArea.setText("");
-                int originalRowCount = displayedQueryDebuggingInfoList.size();
-                displayedQueryDebuggingInfoList.clear();
-                queriesToCountMap.clear();
-                if(originalRowCount > 0) {
-                    ((AbstractTableModel)table.getModel()).fireTableRowsDeleted(0, originalRowCount - 1);
-                }
-                updateStatusLabel();
-            }
-        });
-        loggerHeaderWestPanel.add(loggerClearButton);
-        JToggleButton scrollLockToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
-        scrollLockToggleButton.setFocusable(false);
-        scrollLockToggleButton.setToolTipText("Scroll Lock");
-        scrollLockToggleButton.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                isScrollLocked = e.getStateChange() == ItemEvent.SELECTED;
-            }
-        });
-        loggerHeaderWestPanel.add(scrollLockToggleButton);
         loggerHeaderPanel.add(loggerHeaderWestPanel, BorderLayout.WEST);
         JPanel loggerHeaderCenterPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
         loggerHeaderCenterPanel.setOpaque(false);
@@ -289,6 +260,7 @@ public class SqlLoggerPane extends JPanel {
         loggerHeaderEastPanel.setOpaque(false);
         JToggleButton loggerReadQueryTypeToggleButton = new JToggleButton(SELECT_ICON, isReadQueryTypeDisplayed);
         loggerReadQueryTypeToggleButton.setOpaque(false);
+        loggerReadQueryTypeToggleButton.setFocusable(false);
         loggerReadQueryTypeToggleButton.setToolTipText("Show/hide read statements");
         loggerReadQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
@@ -300,6 +272,7 @@ public class SqlLoggerPane extends JPanel {
         loggerHeaderEastPanel.add(loggerReadQueryTypeToggleButton);
         JToggleButton loggerWriteQueryTypeToggleButton = new JToggleButton(UPDATE_ICON, isWriteQueryTypeDisplayed);
         loggerWriteQueryTypeToggleButton.setOpaque(false);
+        loggerWriteQueryTypeToggleButton.setFocusable(false);
         loggerWriteQueryTypeToggleButton.setToolTipText("Show/hide modification statements");
         loggerWriteQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
@@ -311,6 +284,7 @@ public class SqlLoggerPane extends JPanel {
         loggerHeaderEastPanel.add(loggerWriteQueryTypeToggleButton);
         JToggleButton loggerOtherQueryTypeToggleButton = new JToggleButton(OTHER_ICON, isOtherQueryTypeDisplayed);
         loggerOtherQueryTypeToggleButton.setOpaque(false);
+        loggerOtherQueryTypeToggleButton.setFocusable(false);
         loggerOtherQueryTypeToggleButton.setToolTipText("Show/hide other types of statements");
         loggerOtherQueryTypeToggleButton.addItemListener(new ItemListener() {
             @Override
@@ -320,6 +294,36 @@ public class SqlLoggerPane extends JPanel {
             }
         });
         loggerHeaderEastPanel.add(loggerOtherQueryTypeToggleButton);
+        JButton loggerClearButton = new JButton(new ImageIcon(getClass().getResource("resources/Clear16.png")));
+        loggerClearButton.setOpaque(false);
+        loggerClearButton.setFocusable(false);
+        loggerClearButton.setToolTipText("Clear collected data");
+        loggerClearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                queryDebuggingInfoList.clear();
+                textArea.setText("");
+                int originalRowCount = displayedQueryDebuggingInfoList.size();
+                displayedQueryDebuggingInfoList.clear();
+                queriesToCountMap.clear();
+                if(originalRowCount > 0) {
+                    ((AbstractTableModel)table.getModel()).fireTableRowsDeleted(0, originalRowCount - 1);
+                }
+                updateStatusLabel();
+            }
+        });
+        loggerHeaderEastPanel.add(new JToolBar.Separator());
+        loggerHeaderEastPanel.add(loggerClearButton);
+        JToggleButton scrollLockToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
+        scrollLockToggleButton.setFocusable(false);
+        scrollLockToggleButton.setToolTipText("Scroll Lock");
+        scrollLockToggleButton.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                isScrollLocked = e.getStateChange() == ItemEvent.SELECTED;
+            }
+        });
+        loggerHeaderEastPanel.add(scrollLockToggleButton);
         loggerHeaderPanel.add(loggerHeaderEastPanel, BorderLayout.EAST);
         add(loggerHeaderPanel, BorderLayout.NORTH);
         table = new JTableX(new AbstractTableModel() {

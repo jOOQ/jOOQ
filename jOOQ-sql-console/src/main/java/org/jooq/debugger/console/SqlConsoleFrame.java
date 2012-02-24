@@ -66,6 +66,7 @@ import java.util.Map;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -380,7 +381,46 @@ public class SqlConsoleFrame extends JFrame {
         isAdjusting = true;
         int index = editorTabbedPane.getTabCount() - 1;
         final SqlEditorPane sqlEditorPane = new SqlEditorPane(databaseDescriptor);
-        editorTabbedPane.insertTab("Context " + contextCount++, null, sqlEditorPane, null, index);
+        String title = "Context " + contextCount++;
+        editorTabbedPane.insertTab(title, null, sqlEditorPane, null, index);
+        final JPanel tabComponent = new JPanel(new BorderLayout());
+        tabComponent.setOpaque(false);
+        tabComponent.add(new JLabel(title), BorderLayout.CENTER);
+        final JLabel closeLabel = new JLabel(new ImageIcon(getClass().getResource("resources/CloseGray16.png")));
+        closeLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if(!closeLabel.contains(e.getPoint())) {
+                    return;
+                }
+                isAdjusting = true;
+                if(editorTabbedPane.getTabCount() > 2) {
+                    for(int i=editorTabbedPane.getTabCount()-1; i>=0; i--) {
+                        if(editorTabbedPane.getTabComponentAt(i) == tabComponent) {
+                            ((SqlEditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
+                            editorTabbedPane.removeTabAt(i);
+                            if(i == editorTabbedPane.getTabCount() - 1) {
+                                editorTabbedPane.setSelectedIndex(i - 1);
+                            }
+                            break;
+                        }
+                    }
+                }
+                isAdjusting = false;
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(editorTabbedPane.getTabCount() > 2) {
+                    closeLabel.setIcon(new ImageIcon(getClass().getResource("resources/Close16.png")));
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                closeLabel.setIcon(new ImageIcon(getClass().getResource("resources/CloseGray16.png")));
+            }
+        });
+        tabComponent.add(closeLabel, BorderLayout.EAST);
+        editorTabbedPane.setTabComponentAt(index, tabComponent);
         editorTabbedPane.setSelectedIndex(index);
         isAdjusting = false;
         sqlEditorPane.adjustDefaultFocus();

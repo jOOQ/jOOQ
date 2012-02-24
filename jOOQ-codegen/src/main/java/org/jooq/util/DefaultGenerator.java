@@ -1337,8 +1337,10 @@ public class DefaultGenerator implements Generator {
                     out.print("(");
                     out.print(Configuration.class);
                     out.println(" configuration) {");
-                    out.print("\t\tsuper(\"");
-                    out.print(array.getQualifiedOutputName());
+                    out.print("\t\tsuper(");
+                    out.print(strategy.getFullJavaIdentifier(schema));
+                    out.print(", \"");
+                    out.print(array.getOutputName());
                     out.print("\", ");
                     out.print(getJavaTypeReference(database, array.getElementType()));
                     out.println(", configuration);");

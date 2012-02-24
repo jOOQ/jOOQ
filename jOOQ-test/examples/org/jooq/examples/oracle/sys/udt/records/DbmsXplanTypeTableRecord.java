@@ -8,10 +8,10 @@ package org.jooq.examples.oracle.sys.udt.records;
  */
 public class DbmsXplanTypeTableRecord extends org.jooq.impl.ArrayRecordImpl<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> {
 
-	private static final long serialVersionUID = -1946214818;
+	private static final long serialVersionUID = 712588998;
 
 	public DbmsXplanTypeTableRecord(org.jooq.Configuration configuration) {
-		super("SYS.DBMS_XPLAN_TYPE_TABLE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType(), configuration);
+		super(org.jooq.examples.oracle.sys.Sys.SYS, "DBMS_XPLAN_TYPE_TABLE", org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType(), configuration);
 	}
 
 	public DbmsXplanTypeTableRecord(org.jooq.Configuration configuration, org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord... array) {

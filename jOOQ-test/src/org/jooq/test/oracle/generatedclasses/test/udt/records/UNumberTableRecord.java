@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UNumberTableRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.Integer> {
 
-	private static final long serialVersionUID = 638753476;
+	private static final long serialVersionUID = 2097237876;
 
 	public UNumberTableRecord(org.jooq.Configuration configuration) {
-		super("TEST.U_NUMBER_TABLE", org.jooq.impl.SQLDataType.INTEGER, configuration);
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_TABLE", org.jooq.impl.SQLDataType.INTEGER, configuration);
 	}
 
 	public UNumberTableRecord(org.jooq.Configuration configuration, java.lang.Integer... array) {

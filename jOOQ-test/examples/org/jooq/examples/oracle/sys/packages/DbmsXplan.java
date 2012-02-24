@@ -10,15 +10,15 @@ package org.jooq.examples.oracle.sys.packages;
  */
 public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -1690923682;
+	private static final long serialVersionUID = -1584769552;
 
 	/**
-	 * The singleton instance of DBMS_XPLAN
+	 * The singleton instance of SYS.DBMS_XPLAN
 	 */
-	public static org.jooq.examples.oracle.sys.packages.DbmsXplan DBMS_XPLAN = new org.jooq.examples.oracle.sys.packages.DbmsXplan();
+	public static final org.jooq.examples.oracle.sys.packages.DbmsXplan DBMS_XPLAN = new org.jooq.examples.oracle.sys.packages.DbmsXplan();
 
 	/**
-	 * Invoke BUILD_PLAN_XML
+	 * Call SYS.DBMS_XPLAN.BUILD_PLAN_XML
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -44,7 +44,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get BUILD_PLAN_XML as a field
+	 * Get SYS.DBMS_XPLAN.BUILD_PLAN_XML as a field
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -68,7 +68,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get BUILD_PLAN_XML as a field
+	 * Get SYS.DBMS_XPLAN.BUILD_PLAN_XML as a field
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -92,7 +92,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DIFF_PLAN
+	 * Call SYS.DBMS_XPLAN.DIFF_PLAN
 	 *
 	 * @param sqlText
 	 * @param outline
@@ -110,7 +110,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN as a field
 	 *
 	 * @param sqlText
 	 * @param outline
@@ -126,7 +126,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN as a field
 	 *
 	 * @param sqlText
 	 * @param outline
@@ -142,7 +142,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DIFF_PLAN_AWR
+	 * Call SYS.DBMS_XPLAN.DIFF_PLAN_AWR
 	 *
 	 * @param sqlId
 	 * @param planHashValue1
@@ -160,7 +160,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_AWR as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_AWR as a field
 	 *
 	 * @param sqlId
 	 * @param planHashValue1
@@ -176,7 +176,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_AWR as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_AWR as a field
 	 *
 	 * @param sqlId
 	 * @param planHashValue1
@@ -192,7 +192,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DIFF_PLAN_CURSOR
+	 * Call SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR
 	 *
 	 * @param sqlId
 	 * @param cursorChildNum1
@@ -210,7 +210,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_CURSOR as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR as a field
 	 *
 	 * @param sqlId
 	 * @param cursorChildNum1
@@ -226,7 +226,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_CURSOR as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_CURSOR as a field
 	 *
 	 * @param sqlId
 	 * @param cursorChildNum1
@@ -242,7 +242,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DIFF_PLAN_OUTLINE
+	 * Call SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE
 	 *
 	 * @param sqlText
 	 * @param outline1
@@ -262,7 +262,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_OUTLINE as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE as a field
 	 *
 	 * @param sqlText
 	 * @param outline1
@@ -280,7 +280,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_OUTLINE as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_OUTLINE as a field
 	 *
 	 * @param sqlText
 	 * @param outline1
@@ -298,7 +298,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DIFF_PLAN_SQL_BASELINE
+	 * Call SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE
 	 *
 	 * @param baselinePlanName1
 	 * @param baselinePlanName2
@@ -314,7 +314,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_SQL_BASELINE as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE as a field
 	 *
 	 * @param baselinePlanName1
 	 * @param baselinePlanName2
@@ -328,7 +328,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DIFF_PLAN_SQL_BASELINE as a field
+	 * Get SYS.DBMS_XPLAN.DIFF_PLAN_SQL_BASELINE as a field
 	 *
 	 * @param baselinePlanName1
 	 * @param baselinePlanName2
@@ -342,7 +342,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DISPLAY
+	 * Call SYS.DBMS_XPLAN.DISPLAY
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -362,7 +362,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY as a field
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -380,7 +380,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY as a field
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -398,7 +398,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DISPLAY_AWR
+	 * Call SYS.DBMS_XPLAN.DISPLAY_AWR
 	 *
 	 * @param sqlId
 	 * @param planHashValue
@@ -418,7 +418,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_AWR as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_AWR as a field
 	 *
 	 * @param sqlId
 	 * @param planHashValue
@@ -436,7 +436,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_AWR as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_AWR as a field
 	 *
 	 * @param sqlId
 	 * @param planHashValue
@@ -454,7 +454,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DISPLAY_CURSOR
+	 * Call SYS.DBMS_XPLAN.DISPLAY_CURSOR
 	 *
 	 * @param sqlId
 	 * @param cursorChildNo
@@ -472,7 +472,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_CURSOR as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_CURSOR as a field
 	 *
 	 * @param sqlId
 	 * @param cursorChildNo
@@ -488,7 +488,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_CURSOR as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_CURSOR as a field
 	 *
 	 * @param sqlId
 	 * @param cursorChildNo
@@ -504,7 +504,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DISPLAY_PLAN
+	 * Call SYS.DBMS_XPLAN.DISPLAY_PLAN
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -526,7 +526,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_PLAN as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_PLAN as a field
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -546,7 +546,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_PLAN as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_PLAN as a field
 	 *
 	 * @param tableName
 	 * @param statementId
@@ -566,7 +566,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DISPLAY_SQL_PLAN_BASELINE
+	 * Call SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE
 	 *
 	 * @param sqlHandle
 	 * @param planName
@@ -584,7 +584,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_SQL_PLAN_BASELINE as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE as a field
 	 *
 	 * @param sqlHandle
 	 * @param planName
@@ -600,7 +600,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_SQL_PLAN_BASELINE as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE as a field
 	 *
 	 * @param sqlHandle
 	 * @param planName
@@ -616,7 +616,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke DISPLAY_SQLSET
+	 * Call SYS.DBMS_XPLAN.DISPLAY_SQLSET
 	 *
 	 * @param sqlsetName
 	 * @param sqlId
@@ -638,7 +638,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_SQLSET as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_SQLSET as a field
 	 *
 	 * @param sqlsetName
 	 * @param sqlId
@@ -658,7 +658,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get DISPLAY_SQLSET as a field
+	 * Get SYS.DBMS_XPLAN.DISPLAY_SQLSET as a field
 	 *
 	 * @param sqlsetName
 	 * @param sqlId
@@ -678,7 +678,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke FORMAT_NUMBER
+	 * Call SYS.DBMS_XPLAN.FORMAT_NUMBER
 	 *
 	 * @param num
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -692,7 +692,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_NUMBER as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_NUMBER as a field
 	 *
 	 * @param num
 	 */
@@ -704,7 +704,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_NUMBER as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_NUMBER as a field
 	 *
 	 * @param num
 	 */
@@ -716,7 +716,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke FORMAT_NUMBER2
+	 * Call SYS.DBMS_XPLAN.FORMAT_NUMBER2
 	 *
 	 * @param num
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -730,7 +730,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_NUMBER2 as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_NUMBER2 as a field
 	 *
 	 * @param num
 	 */
@@ -742,7 +742,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_NUMBER2 as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_NUMBER2 as a field
 	 *
 	 * @param num
 	 */
@@ -754,7 +754,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke FORMAT_SIZE
+	 * Call SYS.DBMS_XPLAN.FORMAT_SIZE
 	 *
 	 * @param num
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -768,7 +768,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_SIZE as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_SIZE as a field
 	 *
 	 * @param num
 	 */
@@ -780,7 +780,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_SIZE as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_SIZE as a field
 	 *
 	 * @param num
 	 */
@@ -792,7 +792,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke FORMAT_SIZE2
+	 * Call SYS.DBMS_XPLAN.FORMAT_SIZE2
 	 *
 	 * @param num
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -806,7 +806,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_SIZE2 as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_SIZE2 as a field
 	 *
 	 * @param num
 	 */
@@ -818,7 +818,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_SIZE2 as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_SIZE2 as a field
 	 *
 	 * @param num
 	 */
@@ -830,7 +830,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke FORMAT_TIME_S
+	 * Call SYS.DBMS_XPLAN.FORMAT_TIME_S
 	 *
 	 * @param num
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -844,7 +844,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_TIME_S as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_TIME_S as a field
 	 *
 	 * @param num
 	 */
@@ -856,7 +856,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get FORMAT_TIME_S as a field
+	 * Get SYS.DBMS_XPLAN.FORMAT_TIME_S as a field
 	 *
 	 * @param num
 	 */
@@ -868,7 +868,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke GET_PLANDIFF_REPORT_XML
+	 * Call SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML
 	 *
 	 * @param reportRef
 	 * @param tid
@@ -886,7 +886,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get GET_PLANDIFF_REPORT_XML as a field
+	 * Get SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML as a field
 	 *
 	 * @param reportRef
 	 * @param tid
@@ -902,7 +902,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get GET_PLANDIFF_REPORT_XML as a field
+	 * Get SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML as a field
 	 *
 	 * @param reportRef
 	 * @param tid
@@ -918,7 +918,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PREPARE_PLAN_XML_QUERY
+	 * Call SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY
 	 *
 	 * @param planQuery
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -932,7 +932,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PREPARE_PLAN_XML_QUERY as a field
+	 * Get SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY as a field
 	 *
 	 * @param planQuery
 	 */
@@ -944,7 +944,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PREPARE_PLAN_XML_QUERY as a field
+	 * Get SYS.DBMS_XPLAN.PREPARE_PLAN_XML_QUERY as a field
 	 *
 	 * @param planQuery
 	 */
@@ -956,7 +956,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke PREPARE_RECORDS
+	 * Call SYS.DBMS_XPLAN.PREPARE_RECORDS
 	 *
 	 * @param planCur
 	 * @param iFormatFlags
@@ -972,7 +972,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PREPARE_RECORDS as a field
+	 * Get SYS.DBMS_XPLAN.PREPARE_RECORDS as a field
 	 *
 	 * @param planCur
 	 * @param iFormatFlags
@@ -986,7 +986,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Get PREPARE_RECORDS as a field
+	 * Get SYS.DBMS_XPLAN.PREPARE_RECORDS as a field
 	 *
 	 * @param planCur
 	 * @param iFormatFlags
@@ -1000,7 +1000,7 @@ public final class DbmsXplan extends org.jooq.impl.PackageImpl {
 	}
 
 	/**
-	 * Invoke VALIDATE_FORMAT
+	 * Call SYS.DBMS_XPLAN.VALIDATE_FORMAT
 	 *
 	 * @param returnValue OUT parameter
 	 * @param hasplanstats IN parameter

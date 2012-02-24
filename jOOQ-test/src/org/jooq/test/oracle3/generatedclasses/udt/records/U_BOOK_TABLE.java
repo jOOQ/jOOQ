@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
  */
 public class U_BOOK_TABLE extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> {
 
-	private static final long serialVersionUID = -390590629;
+	private static final long serialVersionUID = -951762056;
 
 	public U_BOOK_TABLE(org.jooq.Configuration configuration) {
-		super("TEST.U_BOOK_TABLE", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType(), configuration);
+		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_BOOK_TABLE", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType(), configuration);
 	}
 
 	public U_BOOK_TABLE(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE... array) {

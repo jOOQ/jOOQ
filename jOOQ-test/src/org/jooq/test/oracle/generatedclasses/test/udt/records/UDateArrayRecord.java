@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UDateArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> {
 
-	private static final long serialVersionUID = 2138678382;
+	private static final long serialVersionUID = 1034385286;
 
 	public UDateArrayRecord(org.jooq.Configuration configuration) {
-		super("TEST.U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, configuration);
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_DATE_ARRAY", org.jooq.impl.SQLDataType.DATE, configuration);
 	}
 
 	public UDateArrayRecord(org.jooq.Configuration configuration, java.sql.Date... array) {

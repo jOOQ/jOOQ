@@ -8,10 +8,10 @@ package org.jooq.test.oracle2.generatedclasses.udt.records;
  */
 public class DateAsTimestampT_976VarrayTypeRecord extends org.jooq.impl.ArrayRecordImpl<java.sql.Date> {
 
-	private static final long serialVersionUID = 976857228;
+	private static final long serialVersionUID = -635251963;
 
 	public DateAsTimestampT_976VarrayTypeRecord(org.jooq.Configuration configuration) {
-		super("TEST.T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.DATE, configuration);
+		super(org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, "T_976_VARRAY_TYPE", org.jooq.impl.SQLDataType.DATE, configuration);
 	}
 
 	public DateAsTimestampT_976VarrayTypeRecord(org.jooq.Configuration configuration, java.sql.Date... array) {

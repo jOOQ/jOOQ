@@ -51,6 +51,7 @@ import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
+import org.jooq.Schema;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 
@@ -66,18 +67,43 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -908937248705184108L;
+    private static final long serialVersionUID = -908937248705184108L;
 
-    private final DataType<T>       type;
-    private final String            name;
-    private T[]                     array;
+    private final Schema      schema;
+    private final DataType<T> type;
+    private final String      name;
+    private T[]               array;
+
+    /**
+     * Create an empty array record
+     *
+     * @deprecated - 2.0.5 [#1179] - Please regenerate your schema and use
+     *             {@link #ArrayRecordImpl(Schema, String, DataType, Configuration)}
+     *             instead
+     */
+    @Deprecated
+    protected ArrayRecordImpl(String name, DataType<T> type, Configuration configuration) {
+        this(null, name, type, configuration);
+    }
+
+    /**
+     * Create an empty array record
+     *
+     * @deprecated - 2.0.5 [#1179] - Please regenerate your schema and use
+     *             {@link #ArrayRecordImpl(Schema, String, DataType)} instead
+     */
+    @Deprecated
+    protected ArrayRecordImpl(String name, DataType<T> type) {
+        this(null, name, type);
+    }
 
     /**
      * Create an empty array record
      */
-    protected ArrayRecordImpl(String name, DataType<T> type, Configuration configuration) {
+    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type, Configuration configuration) {
         super(configuration);
 
+        this.schema = schema;
         this.name = name;
         this.type = type;
     }
@@ -85,8 +111,8 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
     /**
      * Create an empty array record
      */
-    protected ArrayRecordImpl(String name, DataType<T> type) {
-        this(name, type, null);
+    protected ArrayRecordImpl(Schema schema, String name, DataType<T> type) {
+        this(schema, name, type, null);
     }
 
     // -------------------------------------------------------------------------
@@ -147,7 +173,19 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
             this.array = null;
         }
         else {
-            this.array = Convert.convert(array.getArray(), type.getArrayType());
+            Object o;
+
+            // [#1179] This is needed to load TABLE OF OBJECT
+            // [#884] TODO: This name is used in inlined SQL. It should be
+            // correctly escaped and schema mapped!
+            if (schema != null) {
+                o = array.getArray(schema.getTypeMapping());
+            }
+            else {
+                o = array.getArray();
+            }
+
+            this.array = Convert.convert(o, type.getArrayType());
         }
     }
 
@@ -169,7 +207,16 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
 
     @Override
     public final String getName() {
-        return name;
+
+        // [#1179] When Schema is present, the name is not fully qualified
+        if (schema != null) {
+            return schema.getName() + "." + name;
+        }
+
+        // When Schema is absent, the name is fully qualified (deprecated, pre 2.0.5)
+        else {
+            return name;
+        }
     }
 
     @Override
@@ -188,8 +235,7 @@ public class ArrayRecordImpl<T> extends AbstractStore<T> implements ArrayRecord<
             }
 
             default:
-                throw new SQLDialectNotSupportedException(
-                    "Cannot create Array for dialect : " + dialect);
+                throw new SQLDialectNotSupportedException("Cannot create Array for dialect : " + dialect);
         }
     }
 

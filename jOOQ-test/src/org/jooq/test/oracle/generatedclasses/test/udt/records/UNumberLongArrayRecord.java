@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
  */
 public class UNumberLongArrayRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.Long> {
 
-	private static final long serialVersionUID = 1099407865;
+	private static final long serialVersionUID = -29383523;
 
 	public UNumberLongArrayRecord(org.jooq.Configuration configuration) {
-		super("TEST.U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT, configuration);
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_LONG_ARRAY", org.jooq.impl.SQLDataType.BIGINT, configuration);
 	}
 
 	public UNumberLongArrayRecord(org.jooq.Configuration configuration, java.lang.Long... array) {

@@ -62,6 +62,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -439,6 +440,7 @@ public class SqlLoggerPane extends JPanel {
                     case COLUMN_RS_READ: return Integer.class;
                     case COLUMN_RS_READ_ROWS: return Integer.class;
                     case COLUMN_DUPLICATION_COUNT: return Integer.class;
+                    case COLUMN_QUERY: return String.class;
                 }
                 return super.getColumnClass(columnIndex);
             }
@@ -478,6 +480,17 @@ public class SqlLoggerPane extends JPanel {
                     ((JLabel)c).setIcon(icon);
                 }
                 return c;
+            }
+        });
+        table.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+            private Pattern pattern = Pattern.compile("[\\t\\n\\x0B\\f\\r]+");
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                // Convert special whitespace characters to a space.
+                if(value != null) {
+                    value = pattern.matcher((String)value).replaceAll(" ");
+                }
+                return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             }
         });
         table.addMouseListener(new MouseAdapter() {

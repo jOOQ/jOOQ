@@ -700,7 +700,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
     @Test
     public void testBatchSingle() throws Exception {
         if (!executePreparedStatements(create().getSettings())) {
-            log.info("SKIPPINT", "Single batch tests with statement type = STATEMENT");
+            log.info("SKIPPING", "Single batch tests with statement type = STATEMENT");
             return;
         }
 

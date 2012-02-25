@@ -113,7 +113,22 @@ public class SqlConsoleFrame extends JFrame {
                 } catch(Exception ex) {
                     ex.printStackTrace();
                 }
-                System.exit(0);
+                if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+                    switch(getDefaultCloseOperation()) {
+                        case HIDE_ON_CLOSE:
+                            setVisible(false);
+                            break;
+                        case DISPOSE_ON_CLOSE:
+                            dispose();
+                            break;
+                        case EXIT_ON_CLOSE:
+                            System.exit(0);
+                            break;
+                        case DO_NOTHING_ON_CLOSE:
+                        default:
+                            break;
+                    }
+                }
             }
         });
         fileMenu.add(exitMenuItem);

@@ -36,6 +36,8 @@
  */
 package org.jooq.debugger;
 
+import java.util.Locale;
+
 /**
  * @author Christopher Deckers
  */
@@ -45,4 +47,72 @@ public enum SqlQueryType {
     UPDATE,
     DELETE,
     OTHER,
+
+    ;
+
+    public static SqlQueryType detectType(String sql) {
+        String queryLC = sql.toLowerCase(Locale.ENGLISH).trim();
+        if(queryLC.startsWith("insert ")) {
+            return SqlQueryType.INSERT;
+        }
+        if(queryLC.startsWith("update ")) {
+            return SqlQueryType.UPDATE;
+        }
+        if(queryLC.startsWith("delete ")) {
+            return SqlQueryType.DELETE;
+        }
+        if(queryLC.startsWith("select ")) {
+            return SqlQueryType.SELECT;
+        }
+        if(queryLC.startsWith("with ")) {
+            // Let's skip the table definition to see what action is performed.
+            queryLC = queryLC.replaceAll("[\\t\\n\\x0B\\f\\r]+", " ");
+            queryLC = queryLC.substring("with ".length());
+            boolean isFindingWithStatementEnd = true;
+            while(isFindingWithStatementEnd) {
+                isFindingWithStatementEnd = false;
+                // Let's consider the query is properly created, and the "as" is at the right place.
+                int index  = queryLC.indexOf(" as (");
+                if(index == -1) {
+                    break;
+                }
+                int length = queryLC.length();
+                boolean isQuote = false;
+                int pCount = 1;
+                for(int i=index + " as (".length(); i<length; i++) {
+                    char c = queryLC.charAt(i);
+                    switch(c) {
+                        case '\'':
+                            isQuote = !isQuote;
+                            break;
+                        case '(':
+                            if(!isQuote) {
+                                pCount++;
+                            }
+                            break;
+                        case ')':
+                            if(!isQuote) {
+                                pCount--;
+                            }
+                            break;
+                    }
+                    if(pCount == 0) {
+                        queryLC = queryLC.substring(i + 1).trim();
+                        if(queryLC.startsWith(",")) {
+                            // Another table definition in the with clause, so let's do another round.
+                            isFindingWithStatementEnd = true;
+                            break;
+                        } else {
+                            // We removed the with part. Let's ask the type of this.
+                            return detectType(queryLC);
+                        }
+                    }
+                }
+            }
+            // If we couldn't find a proper with structure, default to OTHER.
+            return SqlQueryType.OTHER;
+        }
+        return SqlQueryType.OTHER;
+    }
+
 }

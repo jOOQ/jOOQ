@@ -40,7 +40,6 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
-import java.util.Locale;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
@@ -128,7 +127,7 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 		}
 		ResultSet resultSet = ctx.resultSet();
 		String[] sql = ctx.batchSQL();
-		SqlQueryType sqlQueryType = getSqlQueryType(sql[0]);
+		SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
 		if(sql.length == 1) {
 		    PreparedStatement statement = ctx.statement();
 		    if(statement instanceof UsageTrackingPreparedStatement) {
@@ -180,22 +179,5 @@ public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
 //		}
 //		endFetchTime = System.currentTimeMillis();
 //	}
-
-    private static SqlQueryType getSqlQueryType(String query) {
-        String queryLC = query.toLowerCase(Locale.ENGLISH).trim();
-        if(queryLC.startsWith("insert ")) {
-            return SqlQueryType.INSERT;
-        }
-        if(queryLC.startsWith("update ")) {
-            return SqlQueryType.UPDATE;
-        }
-        if(queryLC.startsWith("delete ")) {
-            return SqlQueryType.DELETE;
-        }
-        if(queryLC.startsWith("select ")) {
-            return SqlQueryType.SELECT;
-        }
-        return SqlQueryType.OTHER;
-    }
 
 }

@@ -72,14 +72,18 @@ public enum SqlQueryType {
             while(isFindingWithStatementEnd) {
                 isFindingWithStatementEnd = false;
                 // Let's consider the query is properly created, and the "as" is at the right place.
-                int index  = queryLC.indexOf(" as (");
+                int index = queryLC.indexOf(" as ");
                 if(index == -1) {
+                    break;
+                }
+                queryLC = queryLC.trim();
+                if(!queryLC.startsWith("(")) {
                     break;
                 }
                 int length = queryLC.length();
                 boolean isQuote = false;
                 int pCount = 1;
-                for(int i=index + " as (".length(); i<length; i++) {
+                for(int i=1; i<length; i++) {
                     char c = queryLC.charAt(i);
                     switch(c) {
                         case '\'':

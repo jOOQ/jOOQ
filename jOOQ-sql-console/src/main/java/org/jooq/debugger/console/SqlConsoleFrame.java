@@ -104,7 +104,9 @@ public class SqlConsoleFrame extends JFrame {
     	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	JMenuBar menuBar = new JMenuBar();
     	JMenu fileMenu = new JMenu("File");
+    	fileMenu.setMnemonic('F');
         JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.setMnemonic('x');
         exitMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -113,28 +115,28 @@ public class SqlConsoleFrame extends JFrame {
                 } catch(Exception ex) {
                     ex.printStackTrace();
                 }
-                if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-                    switch(getDefaultCloseOperation()) {
-                        case HIDE_ON_CLOSE:
-                            setVisible(false);
-                            break;
-                        case DISPOSE_ON_CLOSE:
-                            dispose();
-                            break;
-                        case EXIT_ON_CLOSE:
-                            System.exit(0);
-                            break;
-                        case DO_NOTHING_ON_CLOSE:
-                        default:
-                            break;
-                    }
+                switch(getDefaultCloseOperation()) {
+                    case HIDE_ON_CLOSE:
+                        setVisible(false);
+                        break;
+                    case DISPOSE_ON_CLOSE:
+                        dispose();
+                        break;
+                    case EXIT_ON_CLOSE:
+                        System.exit(0);
+                        break;
+                    case DO_NOTHING_ON_CLOSE:
+                    default:
+                        break;
                 }
             }
         });
         fileMenu.add(exitMenuItem);
         menuBar.add(fileMenu);
     	JMenu helpMenu = new JMenu("Help");
+    	helpMenu.setMnemonic('H');
     	JMenuItem aboutMenuItem = new JMenuItem("About");
+    	aboutMenuItem.setMnemonic('A');
     	aboutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

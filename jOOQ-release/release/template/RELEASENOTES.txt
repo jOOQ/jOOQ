@@ -9,6 +9,111 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.0.5 - February 26, 2012
+=================================================================
+
+This release finally introduced basic runtime configuration
+features for the jOOQ Factory. This configuration now includes:
+
+- Execute listener and SQL tracing support. jOOQ allows you to
+  hook your own listeners into jOOQ's query execution engine to
+  be notified of all sorts of events
+- The existing SchemaMapping features. They are now part of the
+  runtime configuration
+- StatementType settings. Specify whether a Factory should
+  execute java.sql.PreparedStatements (with bind variables) or
+  static java.sql.Statements with inlined variables.
+
+The listener and tracing support has been requested by
+Christopher Deckers, a new jOOQ user who has had the courtesy to
+contribute the new jOOQ Console, which is documented here:
+
+http://www.jooq.org/manual/ADVANCED/Console/
+
+Apart from that, another long-requested feature is now fully
+implemented: The GeneratorStrategy, allowing for custom naming
+strategies in generated source code. This will allow for
+generating custom table / record class name prefixes / suffixes,
+as well as overriding the default behaviour for rendering UPPER,
+lower and CamelCase artefacts. See the manual for details:
+
+http://www.jooq.org/manual/META/Configuration/
+
+Features and improvements
+-------------------------
+#93   - Add Field.equalIgnoreCase(), Field.notEqualIgnoreCase()
+#408  - Add class prefixes, suffixes and other options to the
+        code generator
+#492  - Add runtime configuration
+#1107 - Let Field.contains() support the Postgres ARRAY @> ARRAY
+        operator
+#1140 - Add ResultQuery.fetchResultSet() to return the underlying
+        JDBC result set
+#1143 - Add Result.isNotEmpty() for convenience
+#1145 - Add runtime configuration to specify whether jOOQ should
+        execute java.sql.PreparedStatement (with bind variables)
+        or a java.sql.Statement (with inlined parameters)
+#1146 - Add Query.getSQL(boolean) to indicate that bind values
+        should be inlined (as a convenience for
+        Factory.renderInlined(QueryPart))
+#1148 - Add Cursor.resultSet() to expose the underlying ResultSet
+#1149 - Allow for optional
+        "http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd"
+        namespace in jooq-codegen configuration
+#1152 - Add <E extends java.lang.Enum<E> & org.jooq.EnumType>
+        E MySQLFactory.enumType(Class<E>, int) for enum reverse
+        lookups of MySQL-specific enums
+#1159 - Support matching numbers with LIKE, e.g. ID LIKE '%33%'
+#1160 - Implement Field.contains(), .startsWith(), .endsWith()
+        for numeric values, too
+#1161 - Use reflection to remove compile-time dependency on
+        ojdbc for creating ARRAYs
+#1162 - Integrate jOOR into jOOQ for simpler reflection
+#1164 - Distinguish between Definition.getInputName(),
+        .getOutputName()
+#1165 - Add constraint name to generated javadoc
+#1167 - Trivial issue with org.jooq.Factory.exists Javadoc -
+        GitHub issue #10
+#1169 - Add Configuration.setData(), getData() to convey custom
+        data in a configuration's lifecycle
+#1172 - Add runtime configuration to deactivate JooqLogger
+#1177 - Add jOOQ-Console module to jOOQ
+#1184 - Add DataType.isArray()
+
+API changes (backwards-compatible)
+----------------------------------
+#1142 - Rename Result.exportXML() to Result.intoXML() to stay
+        more consistent
+#1151 - Deprecate SchemaMapping in favour of new runtime
+        configuration
+
+Bug fixes
+---------
+#978  - Schema.getTables() and similar methods return empty lists
+        when Schema is mapped with SchemaMapping
+#1153 - Bad inlining of booleans in Sybase ASE / DB2 / Oracle
+        SQL Server / SQLite
+#1154 - Bad inlining of byte[] in most dialects
+#1155 - byte[] are erroneously converted to String when using
+        Record.intoArray()
+#1156 - Bad inlining of DATE / TIME / TIMESTAMP data types in
+        Ingres (and other dialects, when the setting differs from
+        the default)
+#1166 - Some generated Javadoc uses naming strategy or plain
+        output name, instead of qualified output name
+#1168 - Oracle packages are generated as static, instead of
+        static final
+#1175 - Factory.use() seems to render SQL with the Schema name
+        still present
+#1179 - Oracle-generated ArrayRecords need a reference to
+        org.jooq.Schema to read TABLE of OBJECT from stored
+        procedures
+
+Test cases
+----------
+#1147 - Add integration tests for executing SQL generated using
+        Factory.renderInlined()
+
 Version 2.0.4 - February 12, 2012
 =================================================================
 

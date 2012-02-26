@@ -201,7 +201,6 @@ public abstract class jOOQAbstractTest<
     public static Map<String, String>     scripts            = new HashMap<String, String>();
 
     private static RemoteDebuggerServer   SERVER;
-    private static TestStatisticsListener STATISTICS;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -209,6 +208,7 @@ public abstract class jOOQAbstractTest<
         String allSQL = scripts.get(script);
         if (allSQL == null) {
             try {
+                log.info("Loading", script);
                 File file = new File(getClass().getResource(script).toURI());
                 allSQL = FileUtils.readFileToString(file);
                 testSQLWatch.splitDebug("Loaded SQL file");

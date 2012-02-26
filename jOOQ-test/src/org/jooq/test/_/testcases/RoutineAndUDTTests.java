@@ -881,6 +881,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         if (TArrays_NUMBER_R() != null) {
             Result<Record> result;
 
+            // [#1184] Test data type
+            assertTrue(TArrays_NUMBER_R().getDataType().isArray());
+            assertFalse(TBook_ID().getDataType().isArray());
+
             // An empty array
             // --------------
             ArrayRecord<Integer> array = newNUMBER_R();
@@ -989,6 +993,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             Result<Record> result;
             Table<?> table;
             Integer[] array;
+
+            // [#1184] Test data type
+            assertTrue(TArrays_NUMBER().getDataType().isArray());
+            assertFalse(TBook_ID().getDataType().isArray());
 
             // Cross join the array table with the unnested string array value
             // ---------------------------------------------------------------

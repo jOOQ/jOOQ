@@ -403,7 +403,7 @@ public class Console extends JFrame {
         final JPanel tabComponent = new JPanel(new BorderLayout());
         tabComponent.setOpaque(false);
         tabComponent.add(new JLabel(title), BorderLayout.CENTER);
-        final JLabel closeLabel = new JLabel(new ImageIcon(getClass().getResource("resources/CloseGray16.png")));
+        final JLabel closeLabel = new JLabel(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/CloseGray16.png")));
         closeLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -428,12 +428,12 @@ public class Console extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if(editorTabbedPane.getTabCount() > 2) {
-                    closeLabel.setIcon(new ImageIcon(getClass().getResource("resources/Close16.png")));
+                    closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Close16.png")));
                 }
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                closeLabel.setIcon(new ImageIcon(getClass().getResource("resources/CloseGray16.png")));
+                closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/CloseGray16.png")));
             }
         });
         tabComponent.add(closeLabel, BorderLayout.EAST);

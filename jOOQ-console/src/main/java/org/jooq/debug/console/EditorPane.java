@@ -155,7 +155,7 @@ public class EditorPane extends JPanel {
         JToolBar northWestPanel = new JToolBar();
         northWestPanel.setOpaque(false);
         northWestPanel.setFloatable(false);
-        startButton = new JButton(new ImageIcon(getClass().getResource("resources/Play16.png")));
+        startButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Play16.png")));
         startButton.setOpaque(false);
         startButton.setFocusable(false);
 //        startButton.setMargin(new Insets(2, 2, 2, 2));
@@ -167,7 +167,7 @@ public class EditorPane extends JPanel {
             }
         });
         northWestPanel.add(startButton);
-        stopButton = new JButton(new ImageIcon(getClass().getResource("resources/Stop16.png")));
+        stopButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Stop16.png")));
         stopButton.setVisible(false);
         stopButton.setOpaque(false);
         stopButton.setFocusable(false);
@@ -780,7 +780,7 @@ public class EditorPane extends JPanel {
                 }
             });
             final JPanel filterPane = new JPanel(flowLayout);
-            final JToggleButton filterToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/Search16.png")));
+            final JToggleButton filterToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Search16.png")));
             filterToggleButton.setToolTipText("Filter (" + KeyEvent.getKeyModifiersText(InputEvent.CTRL_MASK) + "+" + KeyEvent.getKeyText(KeyEvent.VK_F) + ")");
             filterToggleButton.setMargin(new Insets(0, 0, 0, 0));
             filterPane.add(filterToggleButton);
@@ -950,9 +950,9 @@ public class EditorPane extends JPanel {
             final JPopupMenu w = new JPopupMenu();
             final JList jList = new JList(words);
             jList.setCellRenderer(new DefaultListCellRenderer() {
-            	private ImageIcon tableIcon = new ImageIcon(getClass().getResource("resources/Table16.png"));
-            	private ImageIcon tableColumnIcon = new ImageIcon(getClass().getResource("resources/TableColumn16.png"));
-            	private ImageIcon sqlIcon = new ImageIcon(getClass().getResource("resources/SQL16.png"));
+            	private ImageIcon tableIcon = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Table16.png"));
+            	private ImageIcon tableColumnIcon = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TableColumn16.png"));
+            	private ImageIcon sqlIcon = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SQL16.png"));
                 @Override
                 public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                     Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

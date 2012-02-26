@@ -64,9 +64,9 @@
 		<mkdir dir="${dir.release}/${version}/lib" />
 		<mkdir dir="${dir.release}/${version}/src" />
 
-		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-console/target/jooq-${version}.jar"/>
-		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-console/target/jooq-${version}-sources.jar"/>
-		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-console/target/jooq-${version}-javadoc.jar"/>
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}.jar"/>
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-sources.jar"/>
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-javadoc.jar"/>
 
 		<copy todir="${dir.release}/${version}">
 			<fileset dir="${dir.release}/template">

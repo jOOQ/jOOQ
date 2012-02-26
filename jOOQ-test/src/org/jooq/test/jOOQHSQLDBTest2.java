@@ -54,6 +54,7 @@ import static org.jooq.test.oracle.generatedclasses.test.Tables.V_LIBRARY;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -67,6 +68,7 @@ import org.jooq.UpdatableTable;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.impl.Factory;
 import org.jooq.test.hsqldb.generatedclasses.Public;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
@@ -116,10 +118,20 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
 	@Override
     protected Factory create(Settings settings) {
 	    settings = (settings != null) ? settings : new Settings();
-	    settings.withRenderMapping(new RenderMapping()
-	            .withSchemata(new MappedSchema()
-	            .withInput(TAuthor().getSchema().getName())
-	            .withOutput(Public.PUBLIC.getName())));
+        RenderMapping mapping = SettingsTools.getRenderMapping(settings);
+        List<MappedSchema> schemata = mapping.getSchemata();
+
+        if (schemata.size() == 0) {
+            schemata.add(new MappedSchema()
+                .withInput(TAuthor().getSchema().getName())
+                .withOutput(Public.PUBLIC.getName()));
+        }
+        else {
+            schemata.get(0)
+                .withInput(TAuthor().getSchema().getName())
+                .withOutput(Public.PUBLIC.getName());
+        }
+
         return new PublicFactory(getConnection(), settings);
     }
 

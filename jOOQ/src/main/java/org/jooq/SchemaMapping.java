@@ -40,7 +40,6 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -178,21 +177,22 @@ public class SchemaMapping implements Serializable {
         if (ignoreMapping) return;
         logDeprecation();
 
-        // Remove existing mapping from map
-        Iterator<MappedSchema> it = mapping.getSchemata().iterator();
-        while (it.hasNext()) {
-            MappedSchema schema = it.next();
-
-            if (inputSchema.equals(schema.getInput())) {
-                it.remove();
+        // Find existing mapped schema
+        MappedSchema schema = null;
+        for (MappedSchema s : mapping.getSchemata()) {
+            if (inputSchema.equals(s.getInput())) {
+                schema = s;
                 break;
             }
         }
 
+        if (schema == null) {
+            schema = new MappedSchema().withInput(inputSchema);
+            mapping.getSchemata().add(schema);
+        }
+
         // Add new mapping
-        mapping.getSchemata().add(new MappedSchema()
-            .withInput(inputSchema)
-            .withOutput(outputSchema));
+        schema.setOutput(outputSchema);
     }
 
     /**
@@ -251,17 +251,16 @@ public class SchemaMapping implements Serializable {
 
         // Try to find a pre-existing schema mapping in the settings
         MappedSchema schema = null;
+        MappedTable table = null;
+
         for (MappedSchema s : mapping.getSchemata()) {
             if (inputTable.getSchema().getName().equals(s.getInput())) {
 
-                // Remove existing mapping from map
-                Iterator<MappedTable> it = s.getTables().iterator();
+                // Find existing mapped table
                 tableLoop:
-                while (it.hasNext()) {
-                    MappedTable table = it.next();
-
-                    if (inputTable.getName().equals(table.getInput())) {
-                        it.remove();
+                for (MappedTable t : s.getTables()) {
+                    if (inputTable.getName().equals(t.getInput())) {
+                        table = t;
                         break tableLoop;
                     }
                 }
@@ -272,15 +271,17 @@ public class SchemaMapping implements Serializable {
         }
 
         if (schema == null) {
-            schema = new MappedSchema();
-            schema.setInput(inputTable.getSchema().getName());
+            schema = new MappedSchema().withInput(inputTable.getSchema().getName());
             mapping.getSchemata().add(schema);
         }
 
+        if (table == null) {
+            table = new MappedTable().withInput(inputTable.getName());
+            schema.getTables().add(table);
+        }
+
         // Add new mapping
-        schema.getTables().add(new MappedTable()
-            .withInput(inputTable.getName())
-            .withOutput(outputTable));
+        table.setOutput(outputTable);
     }
 
     /**

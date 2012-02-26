@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jooq</groupId>
-	<artifactId>jooq-sql-console</artifactId>
+	<artifactId>jooq-console</artifactId>
 	<version>2.0.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -150,9 +150,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Export-Package>*</Export-Package>
                         <Import-Package>
-                            javax.persistence;resolution:=optional,
-                            oracle.sql;resolution:=optional,
-                            org.apache.log4j;resolution:=optional,
+                            org.fife,
                             *
                         </Import-Package>
                         <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>

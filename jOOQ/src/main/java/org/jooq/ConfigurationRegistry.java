@@ -46,12 +46,12 @@ import org.jooq.tools.JooqLogger;
  * <p>
  * This functionality is experimental. It may change again in the future. Use it
  * at your own risk.
- * 
+ *
  * @author Lukas Eder
  * @see <a
  *      href="http://groups.google.com/group/jooq-user/browse_thread/thread/d33e9a902707d111">http://groups.google.com/group/jooq-user/browse_thread/thread/d33e9a902707d111</a>
- * @deprecated - 2.0.5 - Use {@link ExecuteListener#init(ExecuteContext)}
- *             instead
+ * @deprecated - 2.0.5 [#1191] - Use {@link ExecuteListener#start(ExecuteContext)}
+ *             instead (not yet implemented)
  */
 @Deprecated
 public final class ConfigurationRegistry {

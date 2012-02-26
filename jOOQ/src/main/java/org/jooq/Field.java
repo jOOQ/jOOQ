@@ -476,7 +476,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition notLike(String value, char escape);
 
     /**
-     * Convenience method for {@link #like(Object, char)} including proper
+     * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
@@ -494,13 +494,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * </pre></code>
      *
      * @see Factory#escape(String, char)
-     * @see #like(Object, char)
+     * @see #like(String, char)
      */
     @Support
     Condition contains(T value);
 
     /**
-     * Convenience method for {@link #like(Object, char)} including proper
+     * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
@@ -524,7 +524,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition contains(Field<T> value);
 
     /**
-     * Convenience method for {@link #like(Object, char)} including proper
+     * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
@@ -533,13 +533,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <code>val(1133).startsWith(11)</code>
      *
      * @see Factory#escape(String, char)
-     * @see #like(Object, char)
+     * @see #like(String, char)
      */
     @Support
     Condition startsWith(T value);
 
     /**
-     * Convenience method for {@link #like(Object, char)} including proper
+     * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
@@ -554,7 +554,7 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Condition startsWith(Field<T> value);
 
     /**
-     * Convenience method for {@link #like(Object, char)} including proper
+     * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
@@ -563,13 +563,13 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <code>val(1133).endsWith(33)</code>
      *
      * @see Factory#escape(String, char)
-     * @see #like(Object, char)
+     * @see #like(String, char)
      */
     @Support
     Condition endsWith(T value);
 
     /**
-     * Convenience method for {@link #like(Object, char)} including proper
+     * Convenience method for {@link #like(String, char)} including proper
      * adding of wildcards and escaping
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>

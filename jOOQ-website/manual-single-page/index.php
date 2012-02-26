@@ -4463,7 +4463,10 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</pre>
 							<p>
 								Now start your application and the
 								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/console/Console.java" title="Internal API reference: org.jooq.debug.console.Console">org.jooq.debug.console.Console</a>, and start profiling!
+								Use this command to start the console:
 							</p>
+
+<pre class="prettyprint">java -jar jooq-console-2.0.5.jar [host] [port]</pre>
 
 							<div class="screenshot">
 							

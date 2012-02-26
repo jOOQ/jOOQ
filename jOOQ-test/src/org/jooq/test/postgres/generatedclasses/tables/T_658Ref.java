@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -900598214;
+	private static final long serialVersionUID = 1661790169;
 
 	/**
-	 * The singleton instance of t_658_ref
+	 * The singleton instance of public.t_658_ref
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_658Ref T_658_REF = new org.jooq.test.postgres.generatedclasses.tables.T_658Ref();
 

@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 884711017;
+	private static final long serialVersionUID = -1441052876;
 
 	/**
-	 * The singleton instance of t_book
+	 * The singleton instance of public.t_book
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.postgres.generatedclasses.tables.TBook();
 

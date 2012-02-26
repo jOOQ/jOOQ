@@ -709,4 +709,41 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
         assertEquals(U_959.class_, result.get(1));
         assertEquals(U_959.public_, result.get(2));
     }
+
+    @Test
+    public void testPostgresArrayOperations() throws Exception {
+
+        // [#1107] The contains operator @> is implemented in Field.contains()
+        // -------------------------------------------------------------------
+        assertEquals(0,
+        create().selectCount()
+                .from(T_ARRAYS)
+                .where(T_ARRAYS.NUMBER_ARRAY.contains((Integer[])null))
+                .fetchOne(0));
+
+        assertEquals(3,
+        create().selectCount()
+                .from(T_ARRAYS)
+                .where(T_ARRAYS.NUMBER_ARRAY.contains(new Integer[0]))
+                .fetchOne(0));
+
+        assertEquals(2,
+        create().selectCount()
+                .from(T_ARRAYS)
+                .where(T_ARRAYS.NUMBER_ARRAY.contains(new Integer[] { 1 }))
+                .fetchOne(0));
+
+        assertEquals(1,
+        create().selectCount()
+                .from(T_ARRAYS)
+                .where(T_ARRAYS.NUMBER_ARRAY.contains(new Integer[] { 1, 2 }))
+                .fetchOne(0));
+
+        assertEquals(0,
+        create().selectCount()
+                .from(T_ARRAYS)
+                .where(T_ARRAYS.NUMBER_ARRAY.contains(new Integer[] { 1, 2, 3 }))
+                .fetchOne(0));
+
+    }
 }

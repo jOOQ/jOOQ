@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1751903858;
+	private static final long serialVersionUID = -669017663;
 
 	/**
-	 * The singleton instance of t_arrays
+	 * The singleton instance of public.t_arrays
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TArrays T_ARRAYS = new org.jooq.test.postgres.generatedclasses.tables.TArrays();
 

@@ -483,6 +483,15 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <p>
      * Note: This also works with numbers, for instance
      * <code>val(1133).contains(13)</code>
+     * <p>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method also to express the "ARRAY contains" operator. For example:
+     * <code><pre>
+     * // Use this expression
+     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
+     *
+     * // ... to render this SQL
+     * ARRAY[1, 2, 3] @> ARRAY[1, 2]
+     * </pre></code>
      *
      * @see Factory#escape(String, char)
      * @see #like(Object, char)
@@ -498,6 +507,15 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * <p>
      * Note: This also works with numbers, for instance
      * <code>val(1133).contains(13)</code>
+     * <p>
+     * If you're using {@link SQLDialect#POSTGRES}, then you can use this method also to express the "ARRAY contains" operator. For example:
+     * <code><pre>
+     * // Use this expression
+     * val(new Integer[] { 1, 2, 3 }).contains(new Integer[] { 1, 2 })
+     *
+     * // ... to render this SQL
+     * ARRAY[1, 2, 3] @> ARRAY[1, 2]
+     * </pre></code>
      *
      * @see Factory#escape(Field, char)
      * @see #like(Field, char)

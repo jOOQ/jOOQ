@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.udt;
  */
 public class UStreetType extends org.jooq.impl.UDTImpl<org.jooq.test.postgres.generatedclasses.udt.records.UStreetTypeRecord> {
 
-	private static final long serialVersionUID = -318438597;
+	private static final long serialVersionUID = -578196600;
 
 	/**
-	 * The singleton instance of u_street_type
+	 * The singleton instance of public.u_street_type
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.udt.UStreetType U_STREET_TYPE = new org.jooq.test.postgres.generatedclasses.udt.UStreetType();
 

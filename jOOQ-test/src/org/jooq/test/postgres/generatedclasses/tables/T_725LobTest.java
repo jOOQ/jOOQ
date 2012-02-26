@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1348018481;
+	private static final long serialVersionUID = 1840202374;
 
 	/**
-	 * The singleton instance of t_725_lob_test
+	 * The singleton instance of public.t_725_lob_test
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.postgres.generatedclasses.tables.T_725LobTest();
 

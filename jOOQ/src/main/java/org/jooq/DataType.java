@@ -210,4 +210,9 @@ public interface DataType<T> extends Serializable {
      * </ul>
      */
     boolean isBinary();
+
+    /**
+     * Whether this data type is an array type.
+     */
+    boolean isArray();
 }

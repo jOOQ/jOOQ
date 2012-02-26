@@ -454,6 +454,12 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         return type == byte[].class;
     }
 
+    @Override
+    public final boolean isArray() {
+        return ArrayRecord.class.isAssignableFrom(type)
+            || (!isBinary() && type.isArray());
+    }
+
     // ------------------------------------------------------------------------
     // The Object API
     // ------------------------------------------------------------------------

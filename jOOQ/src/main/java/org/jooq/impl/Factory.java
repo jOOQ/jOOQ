@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.SettingsTools.getRenderMapping;
 import static org.jooq.impl.Util.combine;
 
 import java.io.IOException;
@@ -1312,7 +1313,8 @@ public class Factory implements FactoryOperations {
                     result = query("set search_path = " + schemaName).execute();
                     break;
 
-                // SQL Server do not support such a syntax
+                // SQL Server do not support such a syntax for selecting
+                // schemata, only for selecting databases
                 case SQLSERVER:
                     break;
 
@@ -1322,6 +1324,7 @@ public class Factory implements FactoryOperations {
             }
         }
         finally {
+            getRenderMapping(settings).setDefaultSchema(schema.getName());
             mapping.use(mapping.map(schema));
         }
 
@@ -4691,6 +4694,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get a default <code>Factory</code> with a {@link Connection}
      */
+    @SuppressWarnings("deprecation")
     final static Factory getNewFactory(Configuration configuration) {
         if (configuration == null) {
             return getNewFactory(DefaultConfiguration.DEFAULT_CONFIGURATION);
@@ -4700,7 +4704,7 @@ public class Factory implements FactoryOperations {
                 configuration.getConnection(),
                 configuration.getDialect(),
                 configuration.getSettings(),
-                null,
+                configuration.getSchemaMapping(),
                 configuration.getData());
         }
     }

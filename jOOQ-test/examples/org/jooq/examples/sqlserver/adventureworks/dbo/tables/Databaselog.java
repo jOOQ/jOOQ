@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class Databaselog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaselogRecord> {
 
-	private static final long serialVersionUID = 1850384950;
+	private static final long serialVersionUID = 706521811;
 
 	/**
-	 * The singleton instance of DatabaseLog
+	 * The singleton instance of dbo.DatabaseLog
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.dbo.tables.Databaselog DATABASELOG = new org.jooq.examples.sqlserver.adventureworks.dbo.tables.Databaselog();
 

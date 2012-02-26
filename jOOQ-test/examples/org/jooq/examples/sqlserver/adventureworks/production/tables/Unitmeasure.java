@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Unitmeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitmeasureRecord> {
 
-	private static final long serialVersionUID = -1976296797;
+	private static final long serialVersionUID = -621853198;
 
 	/**
-	 * The singleton instance of UnitMeasure
+	 * The singleton instance of Production.UnitMeasure
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure UNITMEASURE = new org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure();
 

@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = -235168512;
+	private static final long serialVersionUID = 1447539917;
 
 	/**
-	 * The singleton instance of language
+	 * The singleton instance of sakila.language
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Language LANGUAGE = new org.jooq.examples.mysql.sakila.tables.Language();
 

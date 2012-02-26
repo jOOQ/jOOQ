@@ -8,10 +8,10 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.ase.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1135188791;
+	private static final long serialVersionUID = -1138187802;
 
 	/**
-	 * The singleton instance of v_library
+	 * The singleton instance of dbo.v_library
 	 */
 	public static final org.jooq.test.ase.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.ase.generatedclasses.tables.VLibrary();
 

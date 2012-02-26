@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila;
 public final class Routines {
 
 	/**
-	 * Invoke FILM_IN_STOCK
+	 * Call sakila.film_in_stock
 	 *
 	 * @param pFilmId IN parameter
 	 * @param pStoreId IN parameter
@@ -28,7 +28,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke FILM_NOT_IN_STOCK
+	 * Call sakila.film_not_in_stock
 	 *
 	 * @param pFilmId IN parameter
 	 * @param pStoreId IN parameter
@@ -45,7 +45,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke GET_CUSTOMER_BALANCE
+	 * Call sakila.get_customer_balance
 	 *
 	 * @param pCustomerId
 	 * @param pEffectiveDate
@@ -61,7 +61,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get GET_CUSTOMER_BALANCE as a field
+	 * Get sakila.get_customer_balance as a field
 	 *
 	 * @param pCustomerId
 	 * @param pEffectiveDate
@@ -75,7 +75,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get GET_CUSTOMER_BALANCE as a field
+	 * Get sakila.get_customer_balance as a field
 	 *
 	 * @param pCustomerId
 	 * @param pEffectiveDate
@@ -89,7 +89,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke INVENTORY_HELD_BY_CUSTOMER
+	 * Call sakila.inventory_held_by_customer
 	 *
 	 * @param pInventoryId
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -103,7 +103,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get INVENTORY_HELD_BY_CUSTOMER as a field
+	 * Get sakila.inventory_held_by_customer as a field
 	 *
 	 * @param pInventoryId
 	 */
@@ -115,7 +115,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get INVENTORY_HELD_BY_CUSTOMER as a field
+	 * Get sakila.inventory_held_by_customer as a field
 	 *
 	 * @param pInventoryId
 	 */
@@ -127,7 +127,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke INVENTORY_IN_STOCK
+	 * Call sakila.inventory_in_stock
 	 *
 	 * @param pInventoryId
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -141,7 +141,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get INVENTORY_IN_STOCK as a field
+	 * Get sakila.inventory_in_stock as a field
 	 *
 	 * @param pInventoryId
 	 */
@@ -153,7 +153,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get INVENTORY_IN_STOCK as a field
+	 * Get sakila.inventory_in_stock as a field
 	 *
 	 * @param pInventoryId
 	 */
@@ -165,7 +165,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke REWARDS_REPORT
+	 * Call sakila.rewards_report
 	 *
 	 * @param minMonthlyPurchases IN parameter
 	 * @param minDollarAmountPurchased IN parameter

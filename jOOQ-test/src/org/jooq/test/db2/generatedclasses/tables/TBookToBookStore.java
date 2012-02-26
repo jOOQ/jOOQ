@@ -8,10 +8,10 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 37943985;
+	private static final long serialVersionUID = -26955765;
 
 	/**
-	 * The singleton instance of T_BOOK_TO_BOOK_STORE
+	 * The singleton instance of LUKAS.T_BOOK_TO_BOOK_STORE
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.db2.generatedclasses.tables.TBookToBookStore();
 

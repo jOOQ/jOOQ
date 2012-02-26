@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Invoke F317
+	 * Call test2.f317
 	 *
 	 * @param p1
 	 * @param p2
@@ -31,7 +31,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get test2.f317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -49,7 +49,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get test2.f317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -67,7 +67,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_AUTHOR_EXISTS
+	 * Call test2.f_author_exists
 	 *
 	 * @param authorName
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -81,7 +81,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get test2.f_author_exists as a field
 	 *
 	 * @param authorName
 	 */
@@ -93,7 +93,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get test2.f_author_exists as a field
 	 *
 	 * @param authorName
 	 */
@@ -105,7 +105,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_NUMBER
+	 * Call test2.f_number
 	 *
 	 * @param n
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -119,7 +119,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get test2.f_number as a field
 	 *
 	 * @param n
 	 */
@@ -131,7 +131,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get test2.f_number as a field
 	 *
 	 * @param n
 	 */
@@ -143,7 +143,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ONE
+	 * Call test2.f_one
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -155,7 +155,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ONE as a field
+	 * Get test2.f_one as a field
 	 *
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
@@ -165,7 +165,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P391
+	 * Call test2.p391
 	 *
 	 * @param i1 IN parameter
 	 * @param io1 IN OUT parameter
@@ -187,7 +187,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_AUTHOR_EXISTS
+	 * Call test2.p_author_exists
 	 *
 	 * @param authorName IN parameter
 	 * @param result OUT parameter
@@ -202,7 +202,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR
+	 * Call test2.p_create_author
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -213,7 +213,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR_BY_NAME
+	 * Call test2.p_create_author_by_name
 	 *
 	 * @param firstName IN parameter
 	 * @param lastName IN parameter
@@ -228,7 +228,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_UNUSED
+	 * Call test2.p_unused
 	 *
 	 * @param in1 IN parameter
 	 * @param out1 OUT parameter

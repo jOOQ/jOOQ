@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Scrapreason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapreasonRecord> {
 
-	private static final long serialVersionUID = 1541425830;
+	private static final long serialVersionUID = 580272481;
 
 	/**
-	 * The singleton instance of ScrapReason
+	 * The singleton instance of Production.ScrapReason
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason SCRAPREASON = new org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason();
 

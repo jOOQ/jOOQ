@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Location extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.LocationRecord> {
 
-	private static final long serialVersionUID = 1113550648;
+	private static final long serialVersionUID = 25520779;
 
 	/**
-	 * The singleton instance of Location
+	 * The singleton instance of Production.Location
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Location LOCATION = new org.jooq.examples.sqlserver.adventureworks.production.tables.Location();
 

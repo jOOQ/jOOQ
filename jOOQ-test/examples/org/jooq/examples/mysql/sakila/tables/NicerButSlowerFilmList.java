@@ -10,10 +10,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> {
 
-	private static final long serialVersionUID = 475763695;
+	private static final long serialVersionUID = 1299502060;
 
 	/**
-	 * The singleton instance of nicer_but_slower_film_list
+	 * The singleton instance of sakila.nicer_but_slower_film_list
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList NICER_BUT_SLOWER_FILM_LIST = new org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList();
 

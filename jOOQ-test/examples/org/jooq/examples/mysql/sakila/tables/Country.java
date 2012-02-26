@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Country extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> {
 
-	private static final long serialVersionUID = 317294109;
+	private static final long serialVersionUID = 2078454832;
 
 	/**
-	 * The singleton instance of country
+	 * The singleton instance of sakila.country
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Country COUNTRY = new org.jooq.examples.mysql.sakila.tables.Country();
 

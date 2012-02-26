@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Vproductanddescription extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.VproductanddescriptionRecord> {
 
-	private static final long serialVersionUID = 1692755194;
+	private static final long serialVersionUID = -2109447545;
 
 	/**
-	 * The singleton instance of vProductAndDescription
+	 * The singleton instance of Production.vProductAndDescription
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductanddescription VPRODUCTANDDESCRIPTION = new org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductanddescription();
 

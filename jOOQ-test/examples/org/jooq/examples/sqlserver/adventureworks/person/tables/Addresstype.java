@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Addresstype extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddresstypeRecord> {
 
-	private static final long serialVersionUID = 1481421277;
+	private static final long serialVersionUID = 1661751674;
 
 	/**
-	 * The singleton instance of AddressType
+	 * The singleton instance of Person.AddressType
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype ADDRESSTYPE = new org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype();
 

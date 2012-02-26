@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -431722029;
+	private static final long serialVersionUID = 1698068118;
 
 	/**
-	 * The singleton instance of rental
+	 * The singleton instance of sakila.rental
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Rental RENTAL = new org.jooq.examples.mysql.sakila.tables.Rental();
 

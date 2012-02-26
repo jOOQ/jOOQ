@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> {
 
-	private static final long serialVersionUID = 182205856;
+	private static final long serialVersionUID = 1379424237;
 
 	/**
-	 * The singleton instance of staff
+	 * The singleton instance of sakila.staff
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Staff STAFF = new org.jooq.examples.mysql.sakila.tables.Staff();
 

@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Productsubcategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductsubcategoryRecord> {
 
-	private static final long serialVersionUID = 1430871099;
+	private static final long serialVersionUID = -1113082872;
 
 	/**
-	 * The singleton instance of ProductSubcategory
+	 * The singleton instance of Production.ProductSubcategory
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory PRODUCTSUBCATEGORY = new org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory();
 

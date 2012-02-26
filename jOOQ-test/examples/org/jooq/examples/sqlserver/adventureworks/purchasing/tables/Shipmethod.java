@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Shipmethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipmethodRecord> {
 
-	private static final long serialVersionUID = -685790235;
+	private static final long serialVersionUID = -697695385;
 
 	/**
-	 * The singleton instance of ShipMethod
+	 * The singleton instance of Purchasing.ShipMethod
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod SHIPMETHOD = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod();
 

@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.ShiftRecord> {
 
-	private static final long serialVersionUID = 222785905;
+	private static final long serialVersionUID = -1345109855;
 
 	/**
-	 * The singleton instance of Shift
+	 * The singleton instance of HumanResources.Shift
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift SHIFT = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift();
 

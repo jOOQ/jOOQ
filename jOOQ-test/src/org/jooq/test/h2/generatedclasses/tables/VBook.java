@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1905288283;
+	private static final long serialVersionUID = -2023483396;
 
 	/**
-	 * The singleton instance of V_BOOK
+	 * The singleton instance of PUBLIC.V_BOOK
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.h2.generatedclasses.tables.VBook();
 

@@ -8,10 +8,10 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 268642163;
+	private static final long serialVersionUID = -1352009034;
 
 	/**
-	 * The singleton instance of t_book
+	 * The singleton instance of dbo.t_book
 	 */
 	public static final org.jooq.test.ase.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.ase.generatedclasses.tables.TBook();
 

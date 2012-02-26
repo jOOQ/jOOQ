@@ -8,10 +8,10 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1599575873;
+	private static final long serialVersionUID = 984217237;
 
 	/**
-	 * The singleton instance of V_BOOK
+	 * The singleton instance of TEST.V_BOOK
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.derby.generatedclasses.tables.VBook();
 

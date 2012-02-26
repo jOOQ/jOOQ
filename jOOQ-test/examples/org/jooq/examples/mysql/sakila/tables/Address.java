@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = -957103727;
+	private static final long serialVersionUID = -812771676;
 
 	/**
-	 * The singleton instance of address
+	 * The singleton instance of sakila.address
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Address ADDRESS = new org.jooq.examples.mysql.sakila.tables.Address();
 

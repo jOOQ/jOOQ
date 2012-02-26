@@ -8,10 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -893865997;
+	private static final long serialVersionUID = 731843109;
 
 	/**
-	 * The singleton instance of t_639_numbers_table
+	 * The singleton instance of test2.t_639_numbers_table
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable();
 

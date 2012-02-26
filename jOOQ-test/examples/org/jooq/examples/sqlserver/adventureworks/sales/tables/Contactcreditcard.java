@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Contactcreditcard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactcreditcardRecord> {
 
-	private static final long serialVersionUID = 743749122;
+	private static final long serialVersionUID = -810384636;
 
 	/**
-	 * The singleton instance of ContactCreditCard
+	 * The singleton instance of Sales.ContactCreditCard
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard CONTACTCREDITCARD = new org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard();
 

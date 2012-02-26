@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.ContactRecord> {
 
-	private static final long serialVersionUID = -2069239505;
+	private static final long serialVersionUID = -701588540;
 
 	/**
-	 * The singleton instance of Contact
+	 * The singleton instance of Person.Contact
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.person.tables.Contact CONTACT = new org.jooq.examples.sqlserver.adventureworks.person.tables.Contact();
 

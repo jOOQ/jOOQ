@@ -10,10 +10,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 2094172801;
+	private static final long serialVersionUID = 1698094415;
 
 	/**
-	 * The singleton instance of v_author
+	 * The singleton instance of test2.v_author
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.mysql2.generatedclasses.tables.VAuthor();
 

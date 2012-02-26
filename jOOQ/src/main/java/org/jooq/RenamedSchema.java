@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -33,79 +33,44 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq;
 
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import org.jooq.Configuration;
-import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
-import org.jooq.conf.Settings;
+import org.jooq.impl.SchemaImpl;
 
 /**
- * The default configuration, if no other configuration is supplied
+ * A mapped schema
  *
  * @author Lukas Eder
  */
-final class DefaultConfiguration implements Configuration {
+class RenamedSchema extends SchemaImpl {
 
     /**
      * Generated UID
      */
-    private static final long  serialVersionUID      = -5746537675969065088L;
+    private static final long serialVersionUID = -3579885830845728730L;
 
-    static final Configuration DEFAULT_CONFIGURATION = new DefaultConfiguration();
+    private final Schema      delegate;
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public SQLDialect getDialect() {
-        return SQLDialect.SQL99;
+    RenamedSchema(Schema delegate, String rename) {
+        super(rename);
+
+        this.delegate = delegate;
     }
 
     @Override
-    public Connection getConnection() {
-        return null;
+    public final List<Table<?>> getTables() {
+        return delegate.getTables();
     }
 
     @Override
-    @Deprecated
-    public org.jooq.SchemaMapping getSchemaMapping() {
-        return SchemaMapping.NO_MAPPING;
+    public final List<UDT<?>> getUDTs() {
+        return delegate.getUDTs();
     }
 
     @Override
-    public Settings getSettings() {
-        return new Settings();
-    }
-
-    @Override
-    public Map<String, Object> getData() {
-        return new HashMap<String, Object>();
-    }
-
-    @Override
-    public Object getData(String key) {
-        return null;
-    }
-
-    @Override
-    public Object setData(String key, Object value) {
-        return null;
-    }
-
-    /**
-     * No further instances
-     */
-    private DefaultConfiguration() {}
-
-    // -------------------------------------------------------------------------
-    // XXX The Object API
-    // -------------------------------------------------------------------------
-
-    @Override
-    public String toString() {
-        return new Factory(getConnection(), getDialect(), getSettings()).toString();
+    public final List<Sequence<?>> getSequences() {
+        return delegate.getSequences();
     }
 }

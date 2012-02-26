@@ -218,7 +218,7 @@ public class Factory implements FactoryOperations {
      */
     @SuppressWarnings("deprecation")
     public Factory(Connection connection, SQLDialect dialect, Settings settings) {
-        this(connection, dialect, settings, org.jooq.SchemaMapping.fromSettings(settings), null);
+        this(connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
 
     /**
@@ -229,7 +229,7 @@ public class Factory implements FactoryOperations {
         this.connection = connection;
         this.dialect = dialect;
         this.settings = settings != null ? settings : new Settings();
-        this.mapping = mapping != null ? mapping : org.jooq.SchemaMapping.fromSettings(settings);
+        this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(settings);
         this.data = data != null ? data : new HashMap<String, Object>();
     }
 
@@ -1325,7 +1325,7 @@ public class Factory implements FactoryOperations {
         }
         finally {
             getRenderMapping(settings).setDefaultSchema(schema.getName());
-            mapping.use(mapping.map(schema));
+            mapping.use(schema);
         }
 
         return result;

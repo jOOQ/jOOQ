@@ -45,7 +45,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.impl.DefaultExecuteListener;
 
-public class SqlQueryDebuggerExecuteListener extends DefaultExecuteListener {
+public class DebuggerExecuteListener extends DefaultExecuteListener {
 
 	private boolean isLogging;
 

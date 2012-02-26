@@ -127,11 +127,11 @@ public class LoggerPane extends JPanel {
     private static final int COLUMN_QUERY = 11;
     private static final int COLUMN_COUNT = COLUMN_QUERY + 1;
 
-    private final ImageIcon INSERT_ICON = new ImageIcon(getClass().getResource("resources/SqlInsert16.png"));
-    private final ImageIcon UPDATE_ICON = new ImageIcon(getClass().getResource("resources/SqlUpdate16.png"));
-    private final ImageIcon DELETE_ICON = new ImageIcon(getClass().getResource("resources/SqlDelete16.png"));
-    private final ImageIcon OTHER_ICON = new ImageIcon(getClass().getResource("resources/SqlOther16.png"));
-    private final ImageIcon SELECT_ICON = new ImageIcon(getClass().getResource("resources/SqlSelect16.png"));
+    private final ImageIcon INSERT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlInsert16.png"));
+    private final ImageIcon UPDATE_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlUpdate16.png"));
+    private final ImageIcon DELETE_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlDelete16.png"));
+    private final ImageIcon OTHER_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlOther16.png"));
+    private final ImageIcon SELECT_ICON = new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/SqlSelect16.png"));
 
     private Debugger sqlQueryDebugger;
     private JTableX table;
@@ -153,7 +153,7 @@ public class LoggerPane extends JPanel {
         JToolBar loggerHeaderWestPanel = new JToolBar();
         loggerHeaderWestPanel.setFloatable(false);
         loggerHeaderWestPanel.setOpaque(false);
-        loggerOnButton = new JButton(new ImageIcon(getClass().getResource("resources/Paused16.png")));
+        loggerOnButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Paused16.png")));
         loggerOnButton.setOpaque(false);
         loggerOnButton.setFocusable(false);
         loggerOnButton.setToolTipText("Activate logging");
@@ -164,7 +164,7 @@ public class LoggerPane extends JPanel {
             }
         });
         loggerHeaderWestPanel.add(loggerOnButton);
-        loggerOffButton = new JButton(new ImageIcon(getClass().getResource("resources/Running16.png")));
+        loggerOffButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Running16.png")));
         loggerOffButton.setOpaque(false);
         loggerOffButton.setFocusable(false);
         loggerOffButton.setToolTipText("Deactivate logging");
@@ -295,7 +295,7 @@ public class LoggerPane extends JPanel {
             }
         });
         loggerHeaderEastPanel.add(loggerOtherQueryTypeToggleButton);
-        JButton loggerClearButton = new JButton(new ImageIcon(getClass().getResource("resources/Clear16.png")));
+        JButton loggerClearButton = new JButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Clear16.png")));
         loggerClearButton.setOpaque(false);
         loggerClearButton.setFocusable(false);
         loggerClearButton.setToolTipText("Clear collected data");
@@ -315,7 +315,7 @@ public class LoggerPane extends JPanel {
         });
         loggerHeaderEastPanel.add(new JToolBar.Separator());
         loggerHeaderEastPanel.add(loggerClearButton);
-        JToggleButton scrollLockToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("resources/LockScroll16.png")));
+        JToggleButton scrollLockToggleButton = new JToggleButton(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/LockScroll16.png")));
         scrollLockToggleButton.setFocusable(false);
         scrollLockToggleButton.setToolTipText("Scroll Lock");
         scrollLockToggleButton.addItemListener(new ItemListener() {

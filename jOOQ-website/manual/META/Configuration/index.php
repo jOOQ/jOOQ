@@ -17,7 +17,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">next</a></td>
 </tr>
 </table>
 							<h2>The deliverables</h2>
@@ -85,17 +85,6 @@ function printContent() {
   &lt;/jdbc&gt;
 
   &lt;generator&gt;
-    &lt;!-- The default code generator. You can override this one, to generate your own code style
-         Defaults to org.jooq.util.DefaultGenerator --&gt;
-    &lt;name&gt;org.jooq.util.DefaultGenerator&lt;/name&gt;
-
-    &lt;!-- The naming strategy used for class and field names.
-         You may override this with your custom naming strategy.
-         Defaults to org.jooq.util.DefaultGeneratorStrategy --&gt;
-    &lt;strategy&gt;
-      &lt;name&gt;org.jooq.util.DefaultGeneratorStrategy&lt;/name&gt;
-    &lt;/strategy&gt;
-
     &lt;database&gt;
       &lt;!-- The database dialect from jooq-meta. Available dialects are
            named org.util.[database].[database]Database. Known values are:
@@ -151,97 +140,10 @@ function printContent() {
   &lt;/generator&gt;
 &lt;/configuration&gt;</pre>
 
-							<p>And you can add some optional advanced configuration parameters for the database: </p>
-
-<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the database element: --&gt;
-&lt;database&gt;
-  &lt;!-- Generate java.sql.Timestamp fields for DATE columns. This is
-       particularly useful for Oracle databases.
-       Defaults to false --&gt;
-  &lt;dateAsTimestamp&gt;false&lt;/dateAsTimestamp&gt;
-
-  &lt;!-- Generate jOOU data types for your unsigned data types, which are
-       not natively supported in Java.
-       Defaults to true --&gt;
-  &lt;unsignedTypes&gt;true&lt;/unsignedTypes&gt;
-
-  &lt;!-- The schema that is used in generated source code. This will be the
-       production schema. Use this to override your local development
-       schema name for source code generation. If not specified, this
-       will be the same as the input-schema. --&gt;
-  &lt;outputSchema&gt;[your database schema / owner / name]&lt;/outputSchema&gt;
-
-  &lt;!-- A configuration element to configure several input and/or output
-       schemata for jooq-meta, in case you're using jooq-meta in a multi-
-       schema environment.
-       This cannot be combined with the above inputSchema / outputSchema --&gt;
-  &lt;schemata&gt;
-    &lt;schema&gt;
-      &lt;inputSchema&gt;...&lt;/inputSchema&gt;
-      &lt;outputSchema&gt;...&lt;/outputSchema&gt;
-    &lt;/schema&gt;
-    [ &lt;schema&gt;...&lt;/schema&gt; ... ]
-  &lt;/schemata&gt;
-
-  &lt;!-- A configuration element to configure master data table enum classes --&gt;
-  &lt;masterDataTables&gt;...&lt;/masterDataTables&gt;
-
-  &lt;!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
-  &lt;enumTypes&gt;...&lt;/enumTypes&gt;
-
-  &lt;!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
-  &lt;forcedTypes&gt;...&lt;/forcedTypes&gt;
-&lt;/database&gt;</pre>
-
-                            <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
-
-<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
-&lt;generate&gt;
-  &lt;!-- Primary key / foreign key relations should be generated and used.
-       This is a prerequisite for various advanced features.
-       Defaults to false --&gt;
-  &lt;relations&gt;false&lt;/relations&gt;
-
-  &lt;!-- Generate navigation methods to navigate foreign key relationships
-       directly from Record classes. This is only relevant if relations
-       is set to true, too.
-       Defaults to true --&gt;
-  &lt;navigationMethods&gt;true&lt;/navigationMethods&gt;
-
-  &lt;!-- Generate deprecated code for backwards compatibility
-       Defaults to true --&gt;
-  &lt;deprecated&gt;true&lt;/deprecated&gt;
-
-  &lt;!-- Generate instance fields in your tables, as opposed to static
-       fields. This simplifies aliasing.
-       Defaults to true --&gt;
-  &lt;instanceFields&gt;true&lt;/instanceFields&gt;
-
-  &lt;!-- Generate the javax.annotation.Generated annotation to indicate
-       jOOQ version used for source code.
-       Defaults to true --&gt;
-  &lt;generatedAnnotation&gt;true&lt;/generatedAnnotation&gt;
-
-  &lt;!-- Generate POJOs in addition to Record classes for usage of the
-       ResultQuery.fetchInto(Class) API
-       Defaults to false --&gt;
-  &lt;pojos&gt;false&lt;/pojos&gt;
-
-  &lt;!-- Annotate POJOs and Records with JPA annotations for increased
-       compatibility and better integration with JPA/Hibernate, etc
-       Defaults to false --&gt;
-  &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
-&lt;/generate&gt;</pre>
-
-							<p>Check out the manual's section about
-								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
-								 to find out more
-								about those advanced configuration parameters. </p>
-
-							<p>Also, check out the official XSD file at
+							<p>
+								There are also lots of advanced configuration parameters, which will be
+								treated in the <a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced configuration of the generator">manual's next section</a>
+								Note, you can find the official XSD file at
 							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</a>
 							   for a formal specification</p>
 
@@ -424,7 +326,7 @@ function printContent() {
 								can execute SQL statements with your generated classes.</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">next</a></td>
 </tr>
 </table>
 <?php 

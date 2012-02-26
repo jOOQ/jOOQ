@@ -92,6 +92,9 @@ Object[] fetchArray(String fieldName);
 // Fetch a Cursor for lazy iteration
 Cursor&lt;R&gt; fetchLazy();
 
+// Or a JDBC ResultSet, if you prefer that
+ResultSet fetchResultSet();
+
 // Fetch data asynchronously and let client code
 // decide, when the data must be available.
 // This makes use of the java.util.concurrent API,

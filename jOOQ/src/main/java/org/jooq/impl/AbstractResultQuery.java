@@ -163,7 +163,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
                 for (;;) {
                     FieldProvider fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData());
-                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields);
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, true);
                     results.add(c.fetch());
 
                     if (ctx.statement().getMoreResults()) {

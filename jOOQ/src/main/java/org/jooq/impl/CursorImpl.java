@@ -83,17 +83,25 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient CursorResultSet rs;
     private transient Iterator<R>     iterator;
 
-    @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields) {
-        this(ctx, listener, fields, (Class<? extends R>) RecordImpl.class);
+        this(ctx, listener, fields, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, boolean keepStatementOpen) {
+        this(ctx, listener, fields, (Class<? extends R>) RecordImpl.class, keepStatementOpen);
     }
 
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, Class<? extends R> type) {
+        this(ctx, listener, fields, type, false);
+    }
+
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, Class<? extends R> type, boolean keepStatementOpen) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
         this.type = type;
-        this.rs = new CursorResultSet();
+        this.rs = new CursorResultSet(keepStatementOpen);
     }
 
     @Override
@@ -225,6 +233,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
      */
     private final class CursorResultSet implements ResultSet {
 
+        private final boolean keepStatementOpen;
+
+        CursorResultSet(boolean keepStatementOpen) {
+            this.keepStatementOpen = keepStatementOpen;
+        }
+
         @Override
         public final <T> T unwrap(Class<T> iface) throws SQLException {
             return ctx.resultSet().unwrap(iface);
@@ -243,7 +257,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         @Override
         public final void close() throws SQLException {
             ctx.resultSet().close();
-            ctx.statement().close();
+
+            if (!keepStatementOpen) {
+                ctx.statement().close();
+            }
+
             listener.fetchEnd(ctx);
         }
 

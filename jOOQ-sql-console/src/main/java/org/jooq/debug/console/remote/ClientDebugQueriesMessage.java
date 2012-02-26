@@ -34,16 +34,23 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger;
+package org.jooq.debug.console.remote;
 
+import org.jooq.debug.SqlQueryDebuggerData;
 
 /**
  * @author Christopher Deckers
  */
-public interface SqlQueryDebugger {
+public class ClientDebugQueriesMessage implements Message {
 
-    public void debugQueries(SqlQueryDebuggerData sqlQueryDebuggerData);
+	private SqlQueryDebuggerData sqlQueryDebuggerData;
 
-    public void debugResultSet(int sqlQueryDebuggerDataID, SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData);
+	public ClientDebugQueriesMessage(SqlQueryDebuggerData sqlQueryDebuggerData) {
+		this.sqlQueryDebuggerData = sqlQueryDebuggerData;
+	}
+
+	public SqlQueryDebuggerData getSqlQueryDebuggerData() {
+		return sqlQueryDebuggerData;
+	}
 
 }

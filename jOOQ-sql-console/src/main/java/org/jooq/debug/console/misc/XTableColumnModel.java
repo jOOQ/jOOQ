@@ -1,4 +1,4 @@
-package org.jooq.debugger.console.misc;
+package org.jooq.debug.console.misc;
 
 import java.util.Enumeration;
 import java.util.Vector;

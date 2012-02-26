@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger;
+package org.jooq.debug;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

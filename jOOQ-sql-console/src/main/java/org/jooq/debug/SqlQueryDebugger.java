@@ -34,49 +34,16 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger;
+package org.jooq.debug;
 
-import java.io.Serializable;
 
 /**
  * @author Christopher Deckers
  */
-public class SqlQueryDebuggerResultSetData implements Serializable {
+public interface SqlQueryDebugger {
 
-	private static volatile int nextID;
+    public void debugQueries(SqlQueryDebuggerData sqlQueryDebuggerData);
 
-	private int id;
-    private long lifeTime;
-    private final int readRows;
-    private final int readCount;
-    private final int writeCount;
-
-    public SqlQueryDebuggerResultSetData(long lifeTime, final int readRows, final int readCount, final int writeCount) {
-    	this.id = nextID++;
-        this.lifeTime = lifeTime;
-        this.readRows = readRows;
-        this.readCount = readCount;
-        this.writeCount = writeCount;
-    }
-
-    public int getId() {
-		return id;
-	}
-
-    public long getLifeTime() {
-        return lifeTime;
-    }
-
-    public int getReadRows() {
-        return readRows;
-    }
-
-    public int getReadCount() {
-        return readCount;
-    }
-
-    public int getWriteCount() {
-        return writeCount;
-    }
+    public void debugResultSet(int sqlQueryDebuggerDataID, SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData);
 
 }

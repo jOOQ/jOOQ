@@ -34,21 +34,26 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console.remote;
+package org.jooq.debug.console;
+
+import java.sql.Connection;
+
+import org.jooq.SQLDialect;
+import org.jooq.Schema;
 
 /**
  * @author Christopher Deckers
  */
-public class ServerLoggingActivationMessage implements Message {
+public abstract class DatabaseDescriptor {
 
-	private boolean isLogging;
+	public abstract Schema getSchema();
 
-	public ServerLoggingActivationMessage(boolean isLogging) {
-		this.isLogging = isLogging;
-	}
+	public abstract SQLDialect getSQLDialect();
 
-	public boolean isLogging() {
-		return isLogging;
+	public abstract Connection createConnection();
+
+	public boolean isReadOnly() {
+		return false;
 	}
 
 }

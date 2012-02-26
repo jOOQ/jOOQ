@@ -34,26 +34,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console;
+package org.jooq.debug;
 
-import java.sql.Connection;
+public interface SqlQueryDebuggerRegisterListener {
 
-import org.jooq.SQLDialect;
-import org.jooq.Schema;
-
-/**
- * @author Christopher Deckers
- */
-public abstract class DatabaseDescriptor {
-
-	public abstract Schema getSchema();
-
-	public abstract SQLDialect getSQLDialect();
-
-	public abstract Connection createConnection();
-
-	public boolean isReadOnly() {
-		return false;
-	}
+	public void notifySqlQueryDebuggerListenerListModified();
 
 }

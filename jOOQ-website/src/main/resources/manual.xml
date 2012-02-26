@@ -4243,7 +4243,10 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 							<p>
 								Now start your application and the
 								<reference class="org.jooq.debug.console.Console"/>, and start profiling!
+								Use this command to start the console:
 							</p>
+
+<config>java -jar jooq-console-2.0.5.jar [host] [port]</config>
 
 							<div class="screenshot">
 							<img class="screenshot" src="&lt;?=$root?&gt;/img/jooq-console-01.png" alt="jOOQ Console example"/>

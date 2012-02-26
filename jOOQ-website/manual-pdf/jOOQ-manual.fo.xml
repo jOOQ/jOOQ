@@ -5948,7 +5948,10 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
 							<fo:block font-size="11pt">
 								Now start your application and the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/console/Console.java')">org.jooq.debug.console.Console</fo:basic-link>, and start profiling!
+								Use this command to start the console:
 							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">java -jar jooq-console-2.0.5.jar [host] [port]</fo:block>
 
 							<fo:block font-size="11pt">
 							<fo:block text-align="center">

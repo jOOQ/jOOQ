@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1506754456;
+	private static final long serialVersionUID = 1903538293;
 
 	/**
-	 * The singleton instance of v_author
+	 * The singleton instance of dbo.v_author
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.sqlserver.generatedclasses.tables.VAuthor();
 

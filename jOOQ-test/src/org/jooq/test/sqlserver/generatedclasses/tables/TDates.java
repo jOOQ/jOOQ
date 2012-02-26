@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1042273998;
+	private static final long serialVersionUID = -819961245;
 
 	/**
-	 * The singleton instance of t_dates
+	 * The singleton instance of dbo.t_dates
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TDates T_DATES = new org.jooq.test.sqlserver.generatedclasses.tables.TDates();
 
@@ -47,11 +47,8 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlse
 
 	/**
 	 * An uncommented item
-	 * 
-	 * The SQL type of this item (timestamp, ) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.lang.Object> TS = createField("ts", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("timestamp"), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
 	 * An uncommented item

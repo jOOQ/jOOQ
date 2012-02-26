@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 23361245;
+	private static final long serialVersionUID = -1699240454;
 
 	/**
-	 * The singleton instance of t_identity_pk
+	 * The singleton instance of dbo.t_identity_pk
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk();
 

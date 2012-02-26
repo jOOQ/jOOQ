@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 136781021;
+	private static final long serialVersionUID = 1425037792;
 
 	/**
-	 * The singleton instance of x_unused
+	 * The singleton instance of dbo.x_unused
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.sqlserver.generatedclasses.tables.XUnused();
 

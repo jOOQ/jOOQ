@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1681205304;
+	private static final long serialVersionUID = -284329221;
 
 	/**
-	 * The singleton instance of t_book
+	 * The singleton instance of dbo.t_book
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.sqlserver.generatedclasses.tables.TBook();
 

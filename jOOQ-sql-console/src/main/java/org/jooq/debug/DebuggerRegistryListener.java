@@ -36,65 +36,8 @@
  */
 package org.jooq.debug;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+public interface DebuggerRegistryListener {
 
-/**
- * @author Christopher Deckers
- */
-public class DebuggerRegister {
-
-	private DebuggerRegister() {}
-
-	private static final Object LOCK = new Object();
-	private static final List<Debugger> debuggerList = new ArrayList<Debugger>();
-
-	public static void addSqlQueryDebugger(Debugger sqlQueryDebugger) {
-		synchronized(LOCK) {
-			debuggerList.add(sqlQueryDebugger);
-			for(DebuggerRegisterListener l: debuggerRegisterListenerList) {
-				l.notifySqlQueryDebuggerListenerListModified();
-			}
-		}
-	}
-
-	public static void removeSqlQueryDebugger(Debugger sqlQueryDebugger) {
-		synchronized(LOCK) {
-			debuggerList.remove(sqlQueryDebugger);
-			for(DebuggerRegisterListener l: debuggerRegisterListenerList) {
-				l.notifySqlQueryDebuggerListenerListModified();
-			}
-		}
-	}
-
-	private static final List<DebuggerRegisterListener> debuggerRegisterListenerList = new ArrayList<DebuggerRegisterListener>(1);
-
-	public static void addSqlQueryDebuggerRegisterListener(DebuggerRegisterListener listener) {
-		synchronized(LOCK) {
-			debuggerRegisterListenerList.add(listener);
-		}
-	}
-
-	public static void removeSqlQueryDebuggerRegisterListener(DebuggerRegisterListener listener) {
-		synchronized(LOCK) {
-			debuggerRegisterListenerList.remove(listener);
-		}
-	}
-
-	/*
-	 * @return an immutable list of all the debuggers currently registered.
-	 */
-	public static List<Debugger> getSqlQueryDebuggerList() {
-		synchronized(LOCK) {
-			if(debuggerList.isEmpty()) {
-				// No cost when no loggers
-				return Collections.emptyList();
-			}
-			// Small cost: copy collection and make it immutable.
-			// Generally, no more than one or two listeners in the list.
-			return Collections.unmodifiableList(new ArrayList<Debugger>(debuggerList));
-		}
-	}
+	public void notifyDebuggerListenersModified();
 
 }

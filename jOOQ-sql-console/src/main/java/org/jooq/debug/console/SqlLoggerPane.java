@@ -97,7 +97,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerData;
-import org.jooq.debug.DebuggerRegister;
+import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.DebuggerResultSetData;
 import org.jooq.debug.SqlQueryType;
 import org.jooq.debug.console.misc.JTableX;
@@ -787,7 +787,7 @@ public class SqlLoggerPane extends JPanel {
         loggerOnButton.setVisible(!isLogging);
         loggerOffButton.setVisible(isLogging);
         if(sqlQueryDebugger != null) {
-            DebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
+            DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
             sqlQueryDebugger = null;
         }
         if(isLogging) {
@@ -833,7 +833,7 @@ public class SqlLoggerPane extends JPanel {
                     }
                 }
             };
-            DebuggerRegister.addSqlQueryDebugger(sqlQueryDebugger);
+            DebuggerRegistry.addSqlQueryDebugger(sqlQueryDebugger);
         }
     }
 

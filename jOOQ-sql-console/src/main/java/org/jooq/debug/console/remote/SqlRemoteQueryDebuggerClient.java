@@ -45,8 +45,8 @@ import java.net.Socket;
 
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerData;
-import org.jooq.debug.DebuggerRegister;
-import org.jooq.debug.DebuggerRegisterListener;
+import org.jooq.debug.DebuggerRegistry;
+import org.jooq.debug.DebuggerRegistryListener;
 import org.jooq.debug.DebuggerResultSetData;
 
 /**
@@ -61,14 +61,14 @@ public class SqlRemoteQueryDebuggerClient {
 		Thread thread = new Thread("SQL Remote Debugger Client on port " + port) {
 			@Override
 			public void run() {
-				DebuggerRegisterListener debuggerRegisterListener = null;
+				DebuggerRegistryListener debuggerRegisterListener = null;
 				try {
 					final ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-					debuggerRegisterListener = new DebuggerRegisterListener() {
+					debuggerRegisterListener = new DebuggerRegistryListener() {
 						@Override
-						public void notifySqlQueryDebuggerListenerListModified() {
+						public void notifyDebuggerListenersModified() {
 							try {
-								boolean isLogging = !DebuggerRegister.getSqlQueryDebuggerList().isEmpty();
+								boolean isLogging = !DebuggerRegistry.getDebuggerList().isEmpty();
 								out.writeObject(new ServerLoggingActivationMessage(isLogging));
 								out.flush();
 							} catch (IOException e) {
@@ -76,19 +76,19 @@ public class SqlRemoteQueryDebuggerClient {
 							}
 						}
 					};
-					DebuggerRegister.addSqlQueryDebuggerRegisterListener(debuggerRegisterListener);
+					DebuggerRegistry.addDebuggerRegisterListener(debuggerRegisterListener);
 					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 					for(Message o; (o=(Message)in.readObject()) != null; ) {
 						if(o instanceof ClientDebugQueriesMessage) {
 							DebuggerData sqlQueryDebuggerData = ((ClientDebugQueriesMessage) o).getSqlQueryDebuggerData();
-							for(Debugger debugger: DebuggerRegister.getSqlQueryDebuggerList()) {
+							for(Debugger debugger: DebuggerRegistry.getDebuggerList()) {
 								debugger.debugQueries(sqlQueryDebuggerData);
 							}
 						} else if(o instanceof ClientDebugResultSetMessage) {
 							ClientDebugResultSetMessage m = (ClientDebugResultSetMessage) o;
 							int sqlQueryDebuggerDataID = m.getSqlQueryDebuggerDataID();
 							DebuggerResultSetData clientDebugResultSetData = m.getSqlQueryDebuggerResultSetData();
-							for(Debugger debugger: DebuggerRegister.getSqlQueryDebuggerList()) {
+							for(Debugger debugger: DebuggerRegistry.getDebuggerList()) {
 								debugger.debugResultSet(sqlQueryDebuggerDataID, clientDebugResultSetData);
 							}
 						}
@@ -97,7 +97,7 @@ public class SqlRemoteQueryDebuggerClient {
 					e.printStackTrace();
 				} finally {
 					if(debuggerRegisterListener != null) {
-						DebuggerRegister.removeSqlQueryDebuggerRegisterListener(debuggerRegisterListener);
+						DebuggerRegistry.removeDebuggerRegisterListener(debuggerRegisterListener);
 					}
 				}
 			}

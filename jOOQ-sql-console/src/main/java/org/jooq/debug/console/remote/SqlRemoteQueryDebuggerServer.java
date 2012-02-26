@@ -46,7 +46,7 @@ import java.net.Socket;
 
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerData;
-import org.jooq.debug.DebuggerRegister;
+import org.jooq.debug.DebuggerRegistry;
 import org.jooq.debug.DebuggerResultSetData;
 
 /**
@@ -117,9 +117,9 @@ public class SqlRemoteQueryDebuggerServer {
 						if(o instanceof ServerLoggingActivationMessage) {
 							isLogging = ((ServerLoggingActivationMessage) o).isLogging();
 							if(isLogging) {
-								DebuggerRegister.addSqlQueryDebugger(sqlQueryDebugger);
+								DebuggerRegistry.addSqlQueryDebugger(sqlQueryDebugger);
 							} else {
-								DebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
+								DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
 							}
 						}
 					}
@@ -129,7 +129,7 @@ public class SqlRemoteQueryDebuggerServer {
 					}
 				} finally {
 					if(sqlQueryDebugger != null) {
-						DebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
+						DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
 					}
 				}
 			}

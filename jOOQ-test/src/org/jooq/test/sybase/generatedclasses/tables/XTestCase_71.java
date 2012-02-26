@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -418533254;
+	private static final long serialVersionUID = -1003613275;
 
 	/**
-	 * The singleton instance of x_test_case_71
+	 * The singleton instance of dba.x_test_case_71
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = new org.jooq.test.sybase.generatedclasses.tables.XTestCase_71();
 

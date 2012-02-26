@@ -132,7 +132,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 /**
  * @author Christopher Deckers
  */
-public class SqlEditorPane extends JPanel {
+public class EditorPane extends JPanel {
 
     private static final int MAX_ROW_COUNT = 10000;
     private boolean isUsingMaxRowCount = true;
@@ -145,7 +145,7 @@ public class SqlEditorPane extends JPanel {
     private JButton startButton;
     private JButton stopButton;
 
-    SqlEditorPane(DatabaseDescriptor databaseDescriptor) {
+    EditorPane(DatabaseDescriptor databaseDescriptor) {
         super(new BorderLayout());
         this.databaseDescriptor = databaseDescriptor;
         this.isDBEditable = !databaseDescriptor.isReadOnly();
@@ -868,7 +868,7 @@ public class SqlEditorPane extends JPanel {
         ((TableRowSorter<?>)table.getRowSorter()).setRowFilter(new RowFilter<Object, Object>() {
             @Override
             public boolean include(javax.swing.RowFilter.Entry<? extends Object, ? extends Object> entry) {
-                String lcFilter = SqlEditorPane.this.filter.toLowerCase();
+                String lcFilter = EditorPane.this.filter.toLowerCase();
                 for (int i = entry.getValueCount() - 1; i >= 0; i--) {
                     if (entry.getStringValue(i).toLowerCase().contains(lcFilter)) {
                         return true;

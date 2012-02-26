@@ -34,13 +34,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console.remote;
-
-import java.io.Serializable;
+package org.jooq.debug.console.remote;
 
 /**
  * @author Christopher Deckers
  */
-public interface Message extends Serializable {
+public class ServerLoggingActivationMessage implements Message {
+
+	private boolean isLogging;
+
+	public ServerLoggingActivationMessage(boolean isLogging) {
+		this.isLogging = isLogging;
+	}
+
+	public boolean isLogging() {
+		return isLogging;
+	}
 
 }

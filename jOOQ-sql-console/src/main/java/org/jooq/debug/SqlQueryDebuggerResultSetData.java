@@ -34,75 +34,49 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger;
+package org.jooq.debug;
 
 import java.io.Serializable;
-
 
 /**
  * @author Christopher Deckers
  */
-public class SqlQueryDebuggerData implements Serializable {
+public class SqlQueryDebuggerResultSetData implements Serializable {
 
-    private static volatile int nextID;
+	private static volatile int nextID;
 
-    private int id;
-    private SqlQueryType queryType;
-    private String[] queries;
-    private Long preparationDuration;
-    private Long bindingDuration;
-    private long executionDuration;
-    private String threadName;
-    private long threadID;
-    private StackTraceElement[] callerStackTraceElements;
+	private int id;
+    private long lifeTime;
+    private final int readRows;
+    private final int readCount;
+    private final int writeCount;
 
-    public SqlQueryDebuggerData(SqlQueryType queryType, String[] queries, Long preparationDuration, Long bindingDuration, long executionDuration) {
-        this.id = nextID++;
-        Thread currentThread = Thread.currentThread();
-        this.threadName = currentThread.getName();
-        this.threadID = currentThread.getId();
-        this.callerStackTraceElements = new Exception().getStackTrace();
-        this.queryType = queryType;
-        this.queries = queries;
-        this.preparationDuration = preparationDuration;
-        this.bindingDuration = bindingDuration;
-        this.executionDuration = executionDuration;
+    public SqlQueryDebuggerResultSetData(long lifeTime, final int readRows, final int readCount, final int writeCount) {
+    	this.id = nextID++;
+        this.lifeTime = lifeTime;
+        this.readRows = readRows;
+        this.readCount = readCount;
+        this.writeCount = writeCount;
     }
 
-    public int getID() {
-        return id;
+    public int getId() {
+		return id;
+	}
+
+    public long getLifeTime() {
+        return lifeTime;
     }
 
-    public String getThreadName() {
-        return threadName;
+    public int getReadRows() {
+        return readRows;
     }
 
-    public long getThreadID() {
-        return threadID;
+    public int getReadCount() {
+        return readCount;
     }
 
-    public StackTraceElement[] getCallerStackTraceElements() {
-        return callerStackTraceElements;
-    }
-
-    public SqlQueryType getQueryType() {
-        return queryType;
-    }
-
-    public String[] getQueries() {
-        return queries;
-    }
-
-    public Long getPreparedStatementPreparationDuration() {
-        return preparationDuration;
-    }
-
-    public Long getPreparedStatementBindingDuration() {
-        return bindingDuration;
-    }
-
-    public long getExecutionDuration() {
-        return executionDuration;
+    public int getWriteCount() {
+        return writeCount;
     }
 
 }

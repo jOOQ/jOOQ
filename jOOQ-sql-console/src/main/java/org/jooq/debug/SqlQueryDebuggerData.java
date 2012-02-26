@@ -34,29 +34,75 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console.remote;
+package org.jooq.debug;
 
-import org.jooq.debugger.SqlQueryDebuggerResultSetData;
+import java.io.Serializable;
+
 
 /**
  * @author Christopher Deckers
  */
-public class ClientDebugResultSetMessage implements Message {
+public class SqlQueryDebuggerData implements Serializable {
 
-	private int sqlQueryDebuggerDataID;
-	private SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData;
+    private static volatile int nextID;
 
-	public ClientDebugResultSetMessage(int sqlQueryDebuggerDataID, SqlQueryDebuggerResultSetData sqlQueryDebuggerData) {
-		this.sqlQueryDebuggerDataID = sqlQueryDebuggerDataID;
-		this.sqlQueryDebuggerResultSetData = sqlQueryDebuggerData;
-	}
+    private int id;
+    private SqlQueryType queryType;
+    private String[] queries;
+    private Long preparationDuration;
+    private Long bindingDuration;
+    private long executionDuration;
+    private String threadName;
+    private long threadID;
+    private StackTraceElement[] callerStackTraceElements;
 
-	public int getSqlQueryDebuggerDataID() {
-		return sqlQueryDebuggerDataID;
-	}
+    public SqlQueryDebuggerData(SqlQueryType queryType, String[] queries, Long preparationDuration, Long bindingDuration, long executionDuration) {
+        this.id = nextID++;
+        Thread currentThread = Thread.currentThread();
+        this.threadName = currentThread.getName();
+        this.threadID = currentThread.getId();
+        this.callerStackTraceElements = new Exception().getStackTrace();
+        this.queryType = queryType;
+        this.queries = queries;
+        this.preparationDuration = preparationDuration;
+        this.bindingDuration = bindingDuration;
+        this.executionDuration = executionDuration;
+    }
 
-	public SqlQueryDebuggerResultSetData getSqlQueryDebuggerResultSetData() {
-		return sqlQueryDebuggerResultSetData;
-	}
+    public int getID() {
+        return id;
+    }
+
+    public String getThreadName() {
+        return threadName;
+    }
+
+    public long getThreadID() {
+        return threadID;
+    }
+
+    public StackTraceElement[] getCallerStackTraceElements() {
+        return callerStackTraceElements;
+    }
+
+    public SqlQueryType getQueryType() {
+        return queryType;
+    }
+
+    public String[] getQueries() {
+        return queries;
+    }
+
+    public Long getPreparedStatementPreparationDuration() {
+        return preparationDuration;
+    }
+
+    public Long getPreparedStatementBindingDuration() {
+        return bindingDuration;
+    }
+
+    public long getExecutionDuration() {
+        return executionDuration;
+    }
 
 }

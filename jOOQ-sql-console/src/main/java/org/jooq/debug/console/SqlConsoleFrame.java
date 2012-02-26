@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console;
+package org.jooq.debug.console;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -90,7 +90,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.debugger.console.remote.SqlRemoteQueryDebuggerClient;
+import org.jooq.debug.console.remote.SqlRemoteQueryDebuggerClient;
 
 /**
  * @author Christopher Deckers

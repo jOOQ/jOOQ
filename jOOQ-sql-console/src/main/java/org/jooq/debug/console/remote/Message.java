@@ -34,10 +34,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger;
+package org.jooq.debug.console.remote;
 
-public interface SqlQueryDebuggerRegisterListener {
+import java.io.Serializable;
 
-	public void notifySqlQueryDebuggerListenerListModified();
+/**
+ * @author Christopher Deckers
+ */
+public interface Message extends Serializable {
 
 }

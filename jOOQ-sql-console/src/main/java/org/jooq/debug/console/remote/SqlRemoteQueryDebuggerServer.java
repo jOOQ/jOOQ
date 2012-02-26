@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console.remote;
+package org.jooq.debug.console.remote;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -44,10 +44,10 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.jooq.debugger.SqlQueryDebugger;
-import org.jooq.debugger.SqlQueryDebuggerData;
-import org.jooq.debugger.SqlQueryDebuggerRegister;
-import org.jooq.debugger.SqlQueryDebuggerResultSetData;
+import org.jooq.debug.SqlQueryDebugger;
+import org.jooq.debug.SqlQueryDebuggerData;
+import org.jooq.debug.SqlQueryDebuggerRegister;
+import org.jooq.debug.SqlQueryDebuggerResultSetData;
 
 /**
  * @author Christopher Deckers

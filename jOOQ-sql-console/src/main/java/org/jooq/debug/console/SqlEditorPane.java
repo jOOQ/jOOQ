@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console;
+package org.jooq.debug.console;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -124,8 +124,8 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.debugger.console.misc.JTableX;
-import org.jooq.debugger.console.misc.Utils;
+import org.jooq.debug.console.misc.JTableX;
+import org.jooq.debug.console.misc.Utils;
 
 import org.fife.ui.rtextarea.RTextScrollPane;
 

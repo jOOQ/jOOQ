@@ -34,7 +34,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.debugger.console;
+package org.jooq.debug.console;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -95,15 +95,15 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.jooq.debugger.SqlQueryDebugger;
-import org.jooq.debugger.SqlQueryDebuggerData;
-import org.jooq.debugger.SqlQueryDebuggerRegister;
-import org.jooq.debugger.SqlQueryDebuggerResultSetData;
-import org.jooq.debugger.SqlQueryType;
-import org.jooq.debugger.console.misc.JTableX;
-import org.jooq.debugger.console.misc.RichTextTransferable;
-import org.jooq.debugger.console.misc.Utils;
-import org.jooq.debugger.console.misc.XTableColumnModel;
+import org.jooq.debug.SqlQueryDebugger;
+import org.jooq.debug.SqlQueryDebuggerData;
+import org.jooq.debug.SqlQueryDebuggerRegister;
+import org.jooq.debug.SqlQueryDebuggerResultSetData;
+import org.jooq.debug.SqlQueryType;
+import org.jooq.debug.console.misc.JTableX;
+import org.jooq.debug.console.misc.RichTextTransferable;
+import org.jooq.debug.console.misc.Utils;
+import org.jooq.debug.console.misc.XTableColumnModel;
 
 
 /**

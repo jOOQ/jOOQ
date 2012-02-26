@@ -76,4 +76,15 @@ public final class SettingsTools {
     public static final boolean executeStaticStatements(Settings settings) {
         return getStatementType(settings) == STATIC_STATEMENT;
     }
+
+    /**
+     * Lazy access to {@link RenderMapping}
+     */
+    public static RenderMapping getRenderMapping(Settings settings) {
+        if (settings.getRenderMapping() == null) {
+            settings.setRenderMapping(new RenderMapping());
+        }
+
+        return settings.getRenderMapping();
+    }
 }

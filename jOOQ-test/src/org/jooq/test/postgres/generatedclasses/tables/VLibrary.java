@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 285477391;
+	private static final long serialVersionUID = 1225516368;
 
 	/**
-	 * The singleton instance of v_library
+	 * The singleton instance of public.v_library
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.postgres.generatedclasses.tables.VLibrary();
 

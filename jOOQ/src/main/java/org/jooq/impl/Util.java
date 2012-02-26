@@ -37,7 +37,10 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Integer.toOctalString;
+import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.getDataType;
+import static org.jooq.impl.Factory.nullSafe;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.StringUtils.leftPad;
 
 import java.lang.reflect.Constructor;
@@ -81,17 +84,23 @@ import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
 
 /**
- * General jooq utilities
+ * General jOOQ utilities
  *
  * @author Lukas Eder
  */
 final class Util {
 
     /**
+     * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
+     * clauses.
+     */
+    static final char      ESCAPE = '!';
+
+    /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
      * classpath.
      */
-    private static Boolean               isJPAAvailable;
+    private static Boolean isJPAAvailable;
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
@@ -925,5 +934,30 @@ final class Util {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Utility method to escape strings or "toString" other objects
+     */
+    static final Field<String> escapeForLike(Object value) {
+        if (value != null && value.getClass() == String.class) {
+            return val(escape("" + value, ESCAPE));
+        }
+        else {
+            return val("" + value);
+        }
+    }
+
+    /**
+     * Utility method to escape string fields, or cast other fields
+     */
+    @SuppressWarnings("unchecked")
+    static final Field<String> escapeForLike(Field<?> field) {
+        if (nullSafe(field).getDataType().isString()) {
+            return escape((Field<String>) field, ESCAPE);
+        }
+        else {
+            return field.cast(String.class);
+        }
     }
 }

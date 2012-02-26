@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1418269432;
+	private static final long serialVersionUID = 1016898761;
 
 	/**
-	 * The singleton instance of x_unused
+	 * The singleton instance of public.x_unused
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.postgres.generatedclasses.tables.XUnused();
 

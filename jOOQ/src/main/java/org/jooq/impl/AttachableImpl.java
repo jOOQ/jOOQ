@@ -96,7 +96,9 @@ class AttachableImpl implements AttachableInternal {
         }
 
         for (Attachable attachable : getAttachables()) {
-            attachable.attach(c);
+            if (attachable != null) {
+                attachable.attach(c);
+            }
         }
     }
 

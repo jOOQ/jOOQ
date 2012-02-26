@@ -8,10 +8,10 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1774781543;
+	private static final long serialVersionUID = 1994252730;
 
 	/**
-	 * The singleton instance of t_booleans
+	 * The singleton instance of public.t_booleans
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.postgres.generatedclasses.tables.TBooleans();
 

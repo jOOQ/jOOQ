@@ -95,10 +95,10 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.jooq.debug.SqlQueryDebugger;
-import org.jooq.debug.SqlQueryDebuggerData;
-import org.jooq.debug.SqlQueryDebuggerRegister;
-import org.jooq.debug.SqlQueryDebuggerResultSetData;
+import org.jooq.debug.Debugger;
+import org.jooq.debug.DebuggerData;
+import org.jooq.debug.DebuggerRegister;
+import org.jooq.debug.DebuggerResultSetData;
 import org.jooq.debug.SqlQueryType;
 import org.jooq.debug.console.misc.JTableX;
 import org.jooq.debug.console.misc.RichTextTransferable;
@@ -133,7 +133,7 @@ public class SqlLoggerPane extends JPanel {
     private final ImageIcon OTHER_ICON = new ImageIcon(getClass().getResource("resources/SqlOther16.png"));
     private final ImageIcon SELECT_ICON = new ImageIcon(getClass().getResource("resources/SqlSelect16.png"));
 
-    private SqlQueryDebugger sqlQueryDebugger;
+    private Debugger sqlQueryDebugger;
     private JTableX table;
     private SqlTextArea textArea;
     private JLabel loggerStatusLabel;
@@ -357,15 +357,15 @@ public class SqlLoggerPane extends JPanel {
                         return duration < 0? null: duration;
                     }
                     case COLUMN_RS_LIFETIME: {
-                        SqlQueryDebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+                        DebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
                         return rsData == null? null: rsData.getLifeTime();
                     }
                     case COLUMN_RS_READ: {
-                        SqlQueryDebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+                        DebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
                         return rsData == null? null: rsData.getReadCount();
                     }
                     case COLUMN_RS_READ_ROWS: {
-                        SqlQueryDebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+                        DebuggerResultSetData rsData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
                         return rsData == null? null: rsData.getReadRows();
                     }
                     case COLUMN_DUPLICATION_COUNT: {
@@ -716,10 +716,10 @@ public class SqlLoggerPane extends JPanel {
 
     private static class QueryDebuggingInfo {
         private long timestamp;
-        private SqlQueryDebuggerData sqlQueryDebuggerData;
+        private DebuggerData sqlQueryDebuggerData;
         private Throwable throwable;
         private int duplicationCount;
-        public QueryDebuggingInfo(long timestamp, SqlQueryDebuggerData sqlQueryDebuggerData) {
+        public QueryDebuggingInfo(long timestamp, DebuggerData sqlQueryDebuggerData) {
             this.timestamp = timestamp;
             this.sqlQueryDebuggerData = sqlQueryDebuggerData;
             this.throwable = new Exception("Statement Stack trace");
@@ -728,7 +728,7 @@ public class SqlLoggerPane extends JPanel {
         public long getTimestamp() {
             return timestamp;
         }
-        public SqlQueryDebuggerData getSqlQueryDebuggerData() {
+        public DebuggerData getSqlQueryDebuggerData() {
             return sqlQueryDebuggerData;
         }
         public Long getPrepardeStatementPreparationDuration() {
@@ -761,11 +761,11 @@ public class SqlLoggerPane extends JPanel {
         public int getDuplicationCount() {
             return duplicationCount;
         }
-        private SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData;
-        public void setSqlQueryDebuggerResultSetData(SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData) {
+        private DebuggerResultSetData sqlQueryDebuggerResultSetData;
+        public void setSqlQueryDebuggerResultSetData(DebuggerResultSetData sqlQueryDebuggerResultSetData) {
             this.sqlQueryDebuggerResultSetData = sqlQueryDebuggerResultSetData;
         }
-        public SqlQueryDebuggerResultSetData getSqlQueryDebuggerResultSetData() {
+        public DebuggerResultSetData getSqlQueryDebuggerResultSetData() {
             return sqlQueryDebuggerResultSetData;
         }
         private int displayedRow = -1;
@@ -787,13 +787,13 @@ public class SqlLoggerPane extends JPanel {
         loggerOnButton.setVisible(!isLogging);
         loggerOffButton.setVisible(isLogging);
         if(sqlQueryDebugger != null) {
-            SqlQueryDebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
+            DebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
             sqlQueryDebugger = null;
         }
         if(isLogging) {
-            sqlQueryDebugger = new SqlQueryDebugger() {
+            sqlQueryDebugger = new Debugger() {
                 @Override
-                public void debugQueries(SqlQueryDebuggerData sqlQueryDebuggerData) {
+                public void debugQueries(DebuggerData sqlQueryDebuggerData) {
                     debugQueries(new QueryDebuggingInfo(System.currentTimeMillis(), sqlQueryDebuggerData));
                 }
                 public void debugQueries(final QueryDebuggingInfo queryDebuggingInfo) {
@@ -809,7 +809,7 @@ public class SqlLoggerPane extends JPanel {
                     addRow(queryDebuggingInfo);
                 }
                 @Override
-                public void debugResultSet(final int sqlQueryDebuggerDataID, final SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData) {
+                public void debugResultSet(final int sqlQueryDebuggerDataID, final DebuggerResultSetData sqlQueryDebuggerResultSetData) {
                     if(!SwingUtilities.isEventDispatchThread()) {
                         SwingUtilities.invokeLater(new Runnable() {
                             @Override
@@ -833,7 +833,7 @@ public class SqlLoggerPane extends JPanel {
                     }
                 }
             };
-            SqlQueryDebuggerRegister.addSqlQueryDebugger(sqlQueryDebugger);
+            DebuggerRegister.addSqlQueryDebugger(sqlQueryDebugger);
         }
     }
 
@@ -887,7 +887,7 @@ public class SqlLoggerPane extends JPanel {
                 "<th>Stack trace</th>" +
                 "</tr>\n");
         for(QueryDebuggingInfo queryDebuggingInfo: queryDebuggingInfos) {
-            SqlQueryDebuggerResultSetData resultSetData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
+            DebuggerResultSetData resultSetData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
             htmlSB.append("<tr>\n");
             htmlSB.append("<td>");
             htmlSB.append(queryDebuggingInfo.getThreadName());

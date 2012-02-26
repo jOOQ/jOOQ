@@ -36,20 +36,20 @@
  */
 package org.jooq.debug.console.remote;
 
-import org.jooq.debug.SqlQueryDebuggerData;
+import org.jooq.debug.DebuggerData;
 
 /**
  * @author Christopher Deckers
  */
 public class ClientDebugQueriesMessage implements Message {
 
-	private SqlQueryDebuggerData sqlQueryDebuggerData;
+	private DebuggerData sqlQueryDebuggerData;
 
-	public ClientDebugQueriesMessage(SqlQueryDebuggerData sqlQueryDebuggerData) {
+	public ClientDebugQueriesMessage(DebuggerData sqlQueryDebuggerData) {
 		this.sqlQueryDebuggerData = sqlQueryDebuggerData;
 	}
 
-	public SqlQueryDebuggerData getSqlQueryDebuggerData() {
+	public DebuggerData getSqlQueryDebuggerData() {
 		return sqlQueryDebuggerData;
 	}
 

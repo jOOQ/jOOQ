@@ -44,10 +44,10 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.jooq.debug.SqlQueryDebugger;
-import org.jooq.debug.SqlQueryDebuggerData;
-import org.jooq.debug.SqlQueryDebuggerRegister;
-import org.jooq.debug.SqlQueryDebuggerResultSetData;
+import org.jooq.debug.Debugger;
+import org.jooq.debug.DebuggerData;
+import org.jooq.debug.DebuggerRegister;
+import org.jooq.debug.DebuggerResultSetData;
 
 /**
  * @author Christopher Deckers
@@ -88,14 +88,14 @@ public class SqlRemoteQueryDebuggerServer {
 		Thread clientThread = new Thread("SQL Remote Debugger Server on port " + port) {
 			@Override
 			public void run() {
-				SqlQueryDebugger sqlQueryDebugger = null;
+				Debugger sqlQueryDebugger = null;
 				boolean isLogging = false;
 				try {
 					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 					final ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-					sqlQueryDebugger = new SqlQueryDebugger() {
+					sqlQueryDebugger = new Debugger() {
 						@Override
-						public synchronized void debugQueries(SqlQueryDebuggerData sqlQueryDebuggerData) {
+						public synchronized void debugQueries(DebuggerData sqlQueryDebuggerData) {
 							try {
 								out.writeObject(new ClientDebugQueriesMessage(sqlQueryDebuggerData));
 								out.flush();
@@ -104,7 +104,7 @@ public class SqlRemoteQueryDebuggerServer {
 							}
 						}
 						@Override
-						public synchronized void debugResultSet(int sqlQueryDebuggerDataID, SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData) {
+						public synchronized void debugResultSet(int sqlQueryDebuggerDataID, DebuggerResultSetData sqlQueryDebuggerResultSetData) {
 							try {
 								out.writeObject(new ClientDebugResultSetMessage(sqlQueryDebuggerDataID, sqlQueryDebuggerResultSetData));
 								out.flush();
@@ -117,9 +117,9 @@ public class SqlRemoteQueryDebuggerServer {
 						if(o instanceof ServerLoggingActivationMessage) {
 							isLogging = ((ServerLoggingActivationMessage) o).isLogging();
 							if(isLogging) {
-								SqlQueryDebuggerRegister.addSqlQueryDebugger(sqlQueryDebugger);
+								DebuggerRegister.addSqlQueryDebugger(sqlQueryDebugger);
 							} else {
-								SqlQueryDebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
+								DebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
 							}
 						}
 					}
@@ -129,7 +129,7 @@ public class SqlRemoteQueryDebuggerServer {
 					}
 				} finally {
 					if(sqlQueryDebugger != null) {
-						SqlQueryDebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
+						DebuggerRegister.removeSqlQueryDebugger(sqlQueryDebugger);
 					}
 				}
 			}

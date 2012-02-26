@@ -90,7 +90,7 @@ import javax.swing.event.DocumentListener;
 
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.debug.console.remote.SqlRemoteQueryDebuggerClient;
+import org.jooq.debug.console.remote.RemoteDebuggerClient;
 
 /**
  * @author Christopher Deckers
@@ -464,7 +464,7 @@ public class Console extends JFrame {
     		return;
     	}
     	try {
-    		new SqlRemoteQueryDebuggerClient(args[0], Integer.parseInt(args[1]));
+    		new RemoteDebuggerClient(args[0], Integer.parseInt(args[1]));
     	} catch(Exception e) {
     		e.printStackTrace();
     		return;

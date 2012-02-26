@@ -41,69 +41,114 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.jooq.debug.Debugger;
 import org.jooq.debug.DebuggerData;
 import org.jooq.debug.DebuggerRegistry;
-import org.jooq.debug.DebuggerRegistryListener;
 import org.jooq.debug.DebuggerResultSetData;
 
 /**
  * @author Christopher Deckers
  */
-public class SqlRemoteQueryDebuggerClient {
+public class RemoteDebuggerServer {
 
-	private Socket socket;
+	private final Object LOCK = new Object();
+	private ServerSocket serverSocket;
 
-	public SqlRemoteQueryDebuggerClient(String ip, int port) throws Exception {
-		socket = new Socket(ip, port);
-		Thread thread = new Thread("SQL Remote Debugger Client on port " + port) {
+	public RemoteDebuggerServer(final int port) {
+		Thread serverThread = new Thread("SQL Remote Debugger Server on port " + port) {
 			@Override
 			public void run() {
-				DebuggerRegistryListener debuggerRegisterListener = null;
 				try {
+					synchronized(LOCK) {
+						serverSocket = new ServerSocket(port);
+					}
+					while(true) {
+						ServerSocket serverSocket_;
+						synchronized(LOCK) {
+							serverSocket_ = serverSocket;
+						}
+						if(serverSocket_ != null) {
+							Socket socket = serverSocket_.accept();
+							startServerToClientThread(socket, port);
+						}
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		serverThread.setDaemon(true);
+		serverThread.start();
+	}
+
+	private void startServerToClientThread(final Socket socket, int port) {
+		Thread clientThread = new Thread("SQL Remote Debugger Server on port " + port) {
+			@Override
+			public void run() {
+				Debugger sqlQueryDebugger = null;
+				boolean isLogging = false;
+				try {
+					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 					final ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-					debuggerRegisterListener = new DebuggerRegistryListener() {
+					sqlQueryDebugger = new Debugger() {
 						@Override
-						public void notifyDebuggerListenersModified() {
+						public synchronized void debugQueries(DebuggerData sqlQueryDebuggerData) {
 							try {
-								boolean isLogging = !DebuggerRegistry.getDebuggerList().isEmpty();
-								out.writeObject(new ServerLoggingActivationMessage(isLogging));
+								out.writeObject(new ClientDebugQueriesMessage(sqlQueryDebuggerData));
+								out.flush();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+						@Override
+						public synchronized void debugResultSet(int sqlQueryDebuggerDataID, DebuggerResultSetData sqlQueryDebuggerResultSetData) {
+							try {
+								out.writeObject(new ClientDebugResultSetMessage(sqlQueryDebuggerDataID, sqlQueryDebuggerResultSetData));
 								out.flush();
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
 					};
-					DebuggerRegistry.addDebuggerRegisterListener(debuggerRegisterListener);
-					ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 					for(Message o; (o=(Message)in.readObject()) != null; ) {
-						if(o instanceof ClientDebugQueriesMessage) {
-							DebuggerData sqlQueryDebuggerData = ((ClientDebugQueriesMessage) o).getSqlQueryDebuggerData();
-							for(Debugger debugger: DebuggerRegistry.getDebuggerList()) {
-								debugger.debugQueries(sqlQueryDebuggerData);
-							}
-						} else if(o instanceof ClientDebugResultSetMessage) {
-							ClientDebugResultSetMessage m = (ClientDebugResultSetMessage) o;
-							int sqlQueryDebuggerDataID = m.getSqlQueryDebuggerDataID();
-							DebuggerResultSetData clientDebugResultSetData = m.getSqlQueryDebuggerResultSetData();
-							for(Debugger debugger: DebuggerRegistry.getDebuggerList()) {
-								debugger.debugResultSet(sqlQueryDebuggerDataID, clientDebugResultSetData);
+						if(o instanceof ServerLoggingActivationMessage) {
+							isLogging = ((ServerLoggingActivationMessage) o).isLogging();
+							if(isLogging) {
+								DebuggerRegistry.addSqlQueryDebugger(sqlQueryDebugger);
+							} else {
+								DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
 							}
 						}
 					}
 				} catch(Exception e) {
-					e.printStackTrace();
+					if(isLogging) {
+						e.printStackTrace();
+					}
 				} finally {
-					if(debuggerRegisterListener != null) {
-						DebuggerRegistry.removeDebuggerRegisterListener(debuggerRegisterListener);
+					if(sqlQueryDebugger != null) {
+						DebuggerRegistry.removeSqlQueryDebugger(sqlQueryDebugger);
 					}
 				}
 			}
 		};
-		thread.setDaemon(true);
-		thread.start();
+		clientThread.setDaemon(true);
+		clientThread.start();
+	}
+
+	public void close() {
+		synchronized(LOCK) {
+			if(serverSocket != null) {
+				try {
+					serverSocket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				serverSocket = null;
+			}
+		}
 	}
 
 }

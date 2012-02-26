@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1047842155;
+	private static final long serialVersionUID = 1058795570;
 
 	/**
-	 * The singleton instance of t_639_numbers_table
+	 * The singleton instance of dbo.t_639_numbers_table
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.sqlserver.generatedclasses.tables.T_639NumbersTable();
 

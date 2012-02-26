@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -612878558;
+	private static final long serialVersionUID = -909763073;
 
 	/**
-	 * The singleton instance of t_booleans
+	 * The singleton instance of dbo.t_booleans
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.sqlserver.generatedclasses.tables.TBooleans();
 

@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -2020497736;
+	private static final long serialVersionUID = 775721301;
 
 	/**
-	 * The singleton instance of v_library
+	 * The singleton instance of dbo.v_library
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.sqlserver.generatedclasses.tables.VLibrary();
 

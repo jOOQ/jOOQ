@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -1756031863;
+	private static final long serialVersionUID = 837237350;
 
 	/**
-	 * The singleton instance of t_785
+	 * The singleton instance of dbo.t_785
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.T_785 T_785 = new org.jooq.test.sqlserver.generatedclasses.tables.T_785();
 

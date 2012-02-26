@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -337089824;
+	private static final long serialVersionUID = -1101239363;
 
 	/**
-	 * The singleton instance of x_test_case_85
+	 * The singleton instance of dbo.x_test_case_85
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_85();
 

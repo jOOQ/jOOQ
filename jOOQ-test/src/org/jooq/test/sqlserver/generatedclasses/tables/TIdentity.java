@@ -8,10 +8,10 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1772260513;
+	private static final long serialVersionUID = -982640606;
 
 	/**
-	 * The singleton instance of t_identity
+	 * The singleton instance of dbo.t_identity
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.sqlserver.generatedclasses.tables.TIdentity();
 

@@ -11,7 +11,7 @@ package org.jooq.test.sqlserver.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Invoke F_AUTHOR_EXISTS
+	 * Call dbo.f_author_exists
 	 *
 	 * @param authorName
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -25,7 +25,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get dbo.f_author_exists as a field
 	 *
 	 * @param authorName
 	 */
@@ -37,7 +37,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get dbo.f_author_exists as a field
 	 *
 	 * @param authorName
 	 */
@@ -49,7 +49,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_NUMBER
+	 * Call dbo.f_number
 	 *
 	 * @param n
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -63,7 +63,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get dbo.f_number as a field
 	 *
 	 * @param n
 	 */
@@ -75,7 +75,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get dbo.f_number as a field
 	 *
 	 * @param n
 	 */
@@ -87,7 +87,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ONE
+	 * Call dbo.f_one
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -99,7 +99,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ONE as a field
+	 * Get dbo.f_one as a field
 	 *
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
@@ -109,7 +109,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F317
+	 * Call dbo.f317
 	 *
 	 * @param p1
 	 * @param p2
@@ -129,7 +129,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get dbo.f317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -147,7 +147,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get dbo.f317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -165,7 +165,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_AUTHOR_EXISTS
+	 * Call dbo.p_author_exists
 	 *
 	 * @param authorName IN parameter
 	 * @param result IN OUT parameter
@@ -181,7 +181,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR
+	 * Call dbo.p_create_author
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -192,7 +192,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR_BY_NAME
+	 * Call dbo.p_create_author_by_name
 	 *
 	 * @param firstName IN parameter
 	 * @param lastName IN parameter
@@ -207,7 +207,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_UNUSED
+	 * Call dbo.p_unused
 	 *
 	 * @param in1 IN parameter
 	 * @param out1 IN OUT parameter
@@ -225,7 +225,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P391
+	 * Call dbo.p391
 	 *
 	 * @param i1 IN parameter
 	 * @param io1 IN OUT parameter

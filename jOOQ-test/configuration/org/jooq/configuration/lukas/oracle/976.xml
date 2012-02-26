@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd">
+    <jdbc>
+        <driver>oracle.jdbc.OracleDriver</driver>
+        <url>jdbc:oracle:thin:@localhost:1521:xe</url>
+        <schema>TEST</schema>
+        <user>TEST</user>
+        <password>TEST</password>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <strategy>
+        	<name>org.jooq.configuration.lukas.oracle.Oracle2Strategy</name>
+        </strategy>
+        <database>
+            <name>org.jooq.util.oracle.OracleDatabase</name>
+            <includes>.*976.*</includes>
+            <excludes></excludes>
+            <dateAsTimestamp>true</dateAsTimestamp>
+            <unsignedTypes>true</unsignedTypes>
+        </database>
+        <generate>
+            <relations>true</relations>
+            <deprecated>true</deprecated>
+            <instanceFields>true</instanceFields>
+            <generatedAnnotation>false</generatedAnnotation>
+            <pojos>false</pojos>
+            <jpaAnnotations>false</jpaAnnotations>
+        </generate>
+        <target>
+            <packageName>org.jooq.test.oracle2.generatedclasses</packageName>
+            <directory>./src</directory>
+        </target>
+    </generator>
+</configuration>

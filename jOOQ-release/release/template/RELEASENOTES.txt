@@ -24,11 +24,16 @@ features for the jOOQ Factory. This configuration now includes:
   execute java.sql.PreparedStatements (with bind variables) or
   static java.sql.Statements with inlined variables.
 
+The runtime configuration is documented here:
+
+http://www.jooq.org/manual/JOOQ/Factory/
+
 The listener and tracing support has been requested by
 Christopher Deckers, a new jOOQ user who has had the courtesy to
-contribute the new jOOQ Console, which is documented here:
+contribute the new experimental jOOQ Console, which is
+documented here:
 
-http://www.jooq.org/manual/ADVANCED/Console/
+http://www.jooq.org/manual/ADVANCED/ExecuteListener/
 
 Apart from that, another long-requested feature is now fully
 implemented: The GeneratorStrategy, allowing for custom naming

@@ -3,11 +3,10 @@
 	<property name="dir.workspace" value="${basedir}/.." />
 	<property name="dir.target" value="${basedir}/target" />
 	<property name="dir.release" value="${basedir}/release" />
+	<property name="version" value="2.0.5"/>
 
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="release" description="Release a new version">
-		<property name="version" value="2.0.5"/>
-
 		<mkdir dir="${dir.release}/versions" />
 		<mkdir dir="${dir.release}/${version}" />
 		<mkdir dir="${dir.release}/${version}/lib" />
@@ -53,6 +52,32 @@
 				<include name="*.txt"/>
 				<include name="lib/**"/>
 			</fileset>
+		</zip>
+
+		<delete dir="${dir.release}/${version}"/>
+	</target>
+
+	<!-- Run a full mvn clean package install deploy first before this -->
+	<target name="release-jooq-console" description="Release a new version">
+		<mkdir dir="${dir.release}/versions" />
+		<mkdir dir="${dir.release}/${version}" />
+		<mkdir dir="${dir.release}/${version}/lib" />
+		<mkdir dir="${dir.release}/${version}/src" />
+
+		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-console/target/jooq-${version}.jar"/>
+		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-console/target/jooq-${version}-sources.jar"/>
+		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-console/target/jooq-${version}-javadoc.jar"/>
+
+		<copy todir="${dir.release}/${version}">
+			<fileset dir="${dir.release}/template">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+
+ 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\1.5.0\rsyntaxtextarea-1.5.0.jar"/>
+
+		<zip destfile="${dir.release}/versions/jOOQ-console-${version}.zip">
+			<fileset dir="${dir.release}/${version}"/>
 		</zip>
 
 		<delete dir="${dir.release}/${version}"/>

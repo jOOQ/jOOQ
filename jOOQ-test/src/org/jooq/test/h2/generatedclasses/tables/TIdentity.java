@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 837201561;
+	private static final long serialVersionUID = -259613648;
 
 	/**
-	 * The singleton instance of T_IDENTITY
+	 * The singleton instance of PUBLIC.T_IDENTITY
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.h2.generatedclasses.tables.TIdentity();
 

@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1271799948;
+	private static final long serialVersionUID = 1172400643;
 
 	/**
-	 * The singleton instance of T_ARRAYS
+	 * The singleton instance of PUBLIC.T_ARRAYS
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TArrays T_ARRAYS = new org.jooq.test.h2.generatedclasses.tables.TArrays();
 

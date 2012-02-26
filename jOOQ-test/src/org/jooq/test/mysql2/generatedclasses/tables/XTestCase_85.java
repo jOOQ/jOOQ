@@ -10,10 +10,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -484602315;
+	private static final long serialVersionUID = -1975863193;
 
 	/**
-	 * The singleton instance of x_test_case_85
+	 * The singleton instance of test2.x_test_case_85
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85();
 

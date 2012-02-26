@@ -8,10 +8,10 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1761911263;
+	private static final long serialVersionUID = -657221565;
 
 	/**
-	 * The singleton instance of T_BOOK_TO_BOOK_STORE
+	 * The singleton instance of TEST.T_BOOK_TO_BOOK_STORE
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.derby.generatedclasses.tables.TBookToBookStore();
 

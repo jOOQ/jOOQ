@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.IllustrationRecord> {
 
-	private static final long serialVersionUID = -816151866;
+	private static final long serialVersionUID = 1136344217;
 
 	/**
-	 * The singleton instance of Illustration
+	 * The singleton instance of Production.Illustration
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration ILLUSTRATION = new org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration();
 

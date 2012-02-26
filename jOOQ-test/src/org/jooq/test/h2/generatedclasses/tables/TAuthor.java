@@ -10,10 +10,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1019874387;
+	private static final long serialVersionUID = -1848434356;
 
 	/**
-	 * The singleton instance of T_AUTHOR
+	 * The singleton instance of PUBLIC.T_AUTHOR
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.h2.generatedclasses.tables.TAuthor();
 

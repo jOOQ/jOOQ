@@ -10,10 +10,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> {
 
-	private static final long serialVersionUID = -1849457607;
+	private static final long serialVersionUID = 2068201014;
 
 	/**
-	 * The singleton instance of film_list
+	 * The singleton instance of sakila.film_list
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.FilmList FILM_LIST = new org.jooq.examples.mysql.sakila.tables.FilmList();
 

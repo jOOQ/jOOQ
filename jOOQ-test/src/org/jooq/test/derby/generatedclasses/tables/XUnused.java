@@ -8,10 +8,10 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1206449326;
+	private static final long serialVersionUID = -853732460;
 
 	/**
-	 * The singleton instance of X_UNUSED
+	 * The singleton instance of TEST.X_UNUSED
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.derby.generatedclasses.tables.XUnused();
 

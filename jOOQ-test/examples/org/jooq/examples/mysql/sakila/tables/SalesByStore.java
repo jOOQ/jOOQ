@@ -10,10 +10,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = -1195260819;
+	private static final long serialVersionUID = -983452758;
 
 	/**
-	 * The singleton instance of sales_by_store
+	 * The singleton instance of sakila.sales_by_store
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.SalesByStore SALES_BY_STORE = new org.jooq.examples.mysql.sakila.tables.SalesByStore();
 

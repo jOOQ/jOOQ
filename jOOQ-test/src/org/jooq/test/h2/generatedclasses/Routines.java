@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Invoke F317
+	 * Call PUBLIC.F317
 	 *
 	 * @param p1
 	 * @param p2
@@ -31,7 +31,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get PUBLIC.F317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -49,7 +49,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get PUBLIC.F317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -67,7 +67,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ARRAYS1
+	 * Call PUBLIC.F_ARRAYS1
 	 *
 	 * @param p1
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -81,7 +81,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ARRAYS1 as a field
+	 * Get PUBLIC.F_ARRAYS1 as a field
 	 *
 	 * @param p1
 	 */
@@ -93,7 +93,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ARRAYS1 as a field
+	 * Get PUBLIC.F_ARRAYS1 as a field
 	 *
 	 * @param p1
 	 */
@@ -105,7 +105,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ARRAYS2
+	 * Call PUBLIC.F_ARRAYS2
 	 *
 	 * @param p1
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -119,7 +119,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ARRAYS2 as a field
+	 * Get PUBLIC.F_ARRAYS2 as a field
 	 *
 	 * @param p1
 	 */
@@ -131,7 +131,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ARRAYS2 as a field
+	 * Get PUBLIC.F_ARRAYS2 as a field
 	 *
 	 * @param p1
 	 */
@@ -143,7 +143,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ARRAYS3
+	 * Call PUBLIC.F_ARRAYS3
 	 *
 	 * @param p1
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -157,7 +157,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ARRAYS3 as a field
+	 * Get PUBLIC.F_ARRAYS3 as a field
 	 *
 	 * @param p1
 	 */
@@ -169,7 +169,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ARRAYS3 as a field
+	 * Get PUBLIC.F_ARRAYS3 as a field
 	 *
 	 * @param p1
 	 */
@@ -181,7 +181,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_AUTHOR_EXISTS
+	 * Call PUBLIC.F_AUTHOR_EXISTS
 	 *
 	 * @param p2
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -195,7 +195,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get PUBLIC.F_AUTHOR_EXISTS as a field
 	 *
 	 * @param p2
 	 */
@@ -207,7 +207,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get PUBLIC.F_AUTHOR_EXISTS as a field
 	 *
 	 * @param p2
 	 */
@@ -219,7 +219,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_GET_ONE_CURSOR
+	 * Call PUBLIC.F_GET_ONE_CURSOR
 	 *
 	 * @param p2
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -233,7 +233,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_GET_ONE_CURSOR as a field
+	 * Get PUBLIC.F_GET_ONE_CURSOR as a field
 	 *
 	 * @param p2
 	 */
@@ -245,7 +245,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_GET_ONE_CURSOR as a field
+	 * Get PUBLIC.F_GET_ONE_CURSOR as a field
 	 *
 	 * @param p2
 	 */
@@ -257,7 +257,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_NUMBER
+	 * Call PUBLIC.F_NUMBER
 	 *
 	 * @param p1
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -271,7 +271,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get PUBLIC.F_NUMBER as a field
 	 *
 	 * @param p1
 	 */
@@ -283,7 +283,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get PUBLIC.F_NUMBER as a field
 	 *
 	 * @param p1
 	 */
@@ -295,7 +295,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ONE
+	 * Call PUBLIC.F_ONE
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -307,7 +307,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ONE as a field
+	 * Get PUBLIC.F_ONE as a field
 	 *
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
@@ -317,7 +317,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR
+	 * Call PUBLIC.P_CREATE_AUTHOR
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -328,7 +328,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR_BY_NAME
+	 * Call PUBLIC.P_CREATE_AUTHOR_BY_NAME
 	 *
 	 * @param p2 IN parameter
 	 * @param p3 IN parameter

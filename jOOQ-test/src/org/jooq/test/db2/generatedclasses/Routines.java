@@ -11,7 +11,7 @@ package org.jooq.test.db2.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Invoke F317
+	 * Call LUKAS.F317
 	 *
 	 * @param p1
 	 * @param p2
@@ -31,7 +31,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get LUKAS.F317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -49,7 +49,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get LUKAS.F317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -67,7 +67,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_AUTHOR_EXISTS
+	 * Call LUKAS.F_AUTHOR_EXISTS
 	 *
 	 * @param authorName
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -81,7 +81,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get LUKAS.F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
 	 */
@@ -93,7 +93,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get LUKAS.F_AUTHOR_EXISTS as a field
 	 *
 	 * @param authorName
 	 */
@@ -105,7 +105,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_NUMBER
+	 * Call LUKAS.F_NUMBER
 	 *
 	 * @param n
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -119,7 +119,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get LUKAS.F_NUMBER as a field
 	 *
 	 * @param n
 	 */
@@ -131,7 +131,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get LUKAS.F_NUMBER as a field
 	 *
 	 * @param n
 	 */
@@ -143,7 +143,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ONE
+	 * Call LUKAS.F_ONE
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -155,7 +155,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ONE as a field
+	 * Get LUKAS.F_ONE as a field
 	 *
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
@@ -165,7 +165,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P391
+	 * Call LUKAS.P391
 	 *
 	 * @param i1 IN parameter
 	 * @param io1 IN OUT parameter
@@ -187,7 +187,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_AUTHOR_EXISTS
+	 * Call LUKAS.P_AUTHOR_EXISTS
 	 *
 	 * @param authorName IN parameter
 	 * @param result OUT parameter
@@ -202,7 +202,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR
+	 * Call LUKAS.P_CREATE_AUTHOR
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -213,7 +213,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR_BY_NAME
+	 * Call LUKAS.P_CREATE_AUTHOR_BY_NAME
 	 *
 	 * @param firstName IN parameter
 	 * @param lastName IN parameter
@@ -228,7 +228,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_UNUSED
+	 * Call LUKAS.P_UNUSED
 	 *
 	 * @param in1 IN parameter
 	 * @param out1 OUT parameter

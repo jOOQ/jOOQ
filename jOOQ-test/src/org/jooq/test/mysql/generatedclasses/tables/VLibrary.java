@@ -10,10 +10,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1231312692;
+	private static final long serialVersionUID = -370793248;
 
 	/**
-	 * The singleton instance of v_library
+	 * The singleton instance of test.v_library
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.mysql.generatedclasses.tables.VLibrary();
 

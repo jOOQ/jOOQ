@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class Awbuildversion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AwbuildversionRecord> {
 
-	private static final long serialVersionUID = 1157382947;
+	private static final long serialVersionUID = -1319738074;
 
 	/**
-	 * The singleton instance of AWBuildVersion
+	 * The singleton instance of dbo.AWBuildVersion
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.dbo.tables.Awbuildversion AWBUILDVERSION = new org.jooq.examples.sqlserver.adventureworks.dbo.tables.Awbuildversion();
 

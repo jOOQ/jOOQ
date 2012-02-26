@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Vvendor extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VvendorRecord> {
 
-	private static final long serialVersionUID = -1165269390;
+	private static final long serialVersionUID = -2043433388;
 
 	/**
-	 * The singleton instance of vVendor
+	 * The singleton instance of Purchasing.vVendor
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vvendor VVENDOR = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vvendor();
 

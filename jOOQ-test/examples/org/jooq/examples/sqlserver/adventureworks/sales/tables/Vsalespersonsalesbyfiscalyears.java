@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Vsalespersonsalesbyfiscalyears extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.VsalespersonsalesbyfiscalyearsRecord> {
 
-	private static final long serialVersionUID = -576214911;
+	private static final long serialVersionUID = -477756993;
 
 	/**
-	 * The singleton instance of vSalesPersonSalesByFiscalYears
+	 * The singleton instance of Sales.vSalesPersonSalesByFiscalYears
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Vsalespersonsalesbyfiscalyears VSALESPERSONSALESBYFISCALYEARS = new org.jooq.examples.sqlserver.adventureworks.sales.tables.Vsalespersonsalesbyfiscalyears();
 

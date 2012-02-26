@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Workorderrouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkorderroutingRecord> {
 
-	private static final long serialVersionUID = 1643281027;
+	private static final long serialVersionUID = -2129937840;
 
 	/**
-	 * The singleton instance of WorkOrderRouting
+	 * The singleton instance of Production.WorkOrderRouting
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting WORKORDERROUTING = new org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting();
 

@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -555185800;
+	private static final long serialVersionUID = -104485749;
 
 	/**
-	 * The singleton instance of T_BOOLEANS
+	 * The singleton instance of PUBLIC.T_BOOLEANS
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.h2.generatedclasses.tables.TBooleans();
 

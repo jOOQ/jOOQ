@@ -10,10 +10,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -791876348;
+	private static final long serialVersionUID = -579794226;
 
 	/**
-	 * The singleton instance of x_unused
+	 * The singleton instance of test.x_unused
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.mysql.generatedclasses.tables.XUnused();
 

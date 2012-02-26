@@ -8,10 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1160851707;
+	private static final long serialVersionUID = -1468733415;
 
 	/**
-	 * The singleton instance of t_639_numbers_table
+	 * The singleton instance of test.t_639_numbers_table
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = new org.jooq.test.ingres.generatedclasses.tables.T_639NumbersTable();
 

@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = -1511715725;
+	private static final long serialVersionUID = 465950918;
 
 	/**
-	 * The singleton instance of inventory
+	 * The singleton instance of sakila.inventory
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Inventory INVENTORY = new org.jooq.examples.mysql.sakila.tables.Inventory();
 

@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class Purchaseorderheader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseorderheaderRecord> {
 
-	private static final long serialVersionUID = 2054556363;
+	private static final long serialVersionUID = -377863519;
 
 	/**
-	 * The singleton instance of PurchaseOrderHeader
+	 * The singleton instance of Purchasing.PurchaseOrderHeader
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader PURCHASEORDERHEADER = new org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader();
 

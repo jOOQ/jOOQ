@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Vemployeedepartmenthistory extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.VemployeedepartmenthistoryRecord> {
 
-	private static final long serialVersionUID = -1374297744;
+	private static final long serialVersionUID = 1063814500;
 
 	/**
-	 * The singleton instance of vEmployeeDepartmentHistory
+	 * The singleton instance of HumanResources.vEmployeeDepartmentHistory
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployeedepartmenthistory VEMPLOYEEDEPARTMENTHISTORY = new org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployeedepartmenthistory();
 

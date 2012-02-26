@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class Billofmaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillofmaterialsRecord> {
 
-	private static final long serialVersionUID = -1969503055;
+	private static final long serialVersionUID = 450626034;
 
 	/**
-	 * The singleton instance of BillOfMaterials
+	 * The singleton instance of Production.BillOfMaterials
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials BILLOFMATERIALS = new org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials();
 

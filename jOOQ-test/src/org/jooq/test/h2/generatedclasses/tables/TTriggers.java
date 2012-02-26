@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -303841174;
+	private static final long serialVersionUID = -1465553161;
 
 	/**
-	 * The singleton instance of T_TRIGGERS
+	 * The singleton instance of PUBLIC.T_TRIGGERS
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.h2.generatedclasses.tables.TTriggers();
 

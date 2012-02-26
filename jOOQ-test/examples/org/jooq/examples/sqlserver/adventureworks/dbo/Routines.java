@@ -11,7 +11,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo;
 public final class Routines {
 
 	/**
-	 * Invoke UFNGETACCOUNTINGENDDATE
+	 * Call dbo.ufnGetAccountingEndDate
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -23,7 +23,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETACCOUNTINGENDDATE as a field
+	 * Get dbo.ufnGetAccountingEndDate as a field
 	 *
 	 */
 	public static org.jooq.Field<java.sql.Timestamp> ufngetaccountingenddate() {
@@ -33,7 +33,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETACCOUNTINGSTARTDATE
+	 * Call dbo.ufnGetAccountingStartDate
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -45,7 +45,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETACCOUNTINGSTARTDATE as a field
+	 * Get dbo.ufnGetAccountingStartDate as a field
 	 *
 	 */
 	public static org.jooq.Field<java.sql.Timestamp> ufngetaccountingstartdate() {
@@ -55,7 +55,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETCONTACTINFORMATION
+	 * Call dbo.ufnGetContactInformation
 	 *
 	 * @param contactid
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -69,7 +69,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETCONTACTINFORMATION as a field
+	 * Get dbo.ufnGetContactInformation as a field
 	 *
 	 * @param contactid
 	 */
@@ -81,7 +81,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETCONTACTINFORMATION as a field
+	 * Get dbo.ufnGetContactInformation as a field
 	 *
 	 * @param contactid
 	 */
@@ -93,7 +93,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETDOCUMENTSTATUSTEXT
+	 * Call dbo.ufnGetDocumentStatusText
 	 *
 	 * @param status
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -107,7 +107,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETDOCUMENTSTATUSTEXT as a field
+	 * Get dbo.ufnGetDocumentStatusText as a field
 	 *
 	 * @param status
 	 */
@@ -119,7 +119,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETDOCUMENTSTATUSTEXT as a field
+	 * Get dbo.ufnGetDocumentStatusText as a field
 	 *
 	 * @param status
 	 */
@@ -131,7 +131,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETPRODUCTDEALERPRICE
+	 * Call dbo.ufnGetProductDealerPrice
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -147,7 +147,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPRODUCTDEALERPRICE as a field
+	 * Get dbo.ufnGetProductDealerPrice as a field
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -161,7 +161,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPRODUCTDEALERPRICE as a field
+	 * Get dbo.ufnGetProductDealerPrice as a field
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -175,7 +175,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETPRODUCTLISTPRICE
+	 * Call dbo.ufnGetProductListPrice
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -191,7 +191,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPRODUCTLISTPRICE as a field
+	 * Get dbo.ufnGetProductListPrice as a field
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -205,7 +205,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPRODUCTLISTPRICE as a field
+	 * Get dbo.ufnGetProductListPrice as a field
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -219,7 +219,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETPRODUCTSTANDARDCOST
+	 * Call dbo.ufnGetProductStandardCost
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -235,7 +235,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPRODUCTSTANDARDCOST as a field
+	 * Get dbo.ufnGetProductStandardCost as a field
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -249,7 +249,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPRODUCTSTANDARDCOST as a field
+	 * Get dbo.ufnGetProductStandardCost as a field
 	 *
 	 * @param productid
 	 * @param orderdate
@@ -263,7 +263,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETPURCHASEORDERSTATUSTEXT
+	 * Call dbo.ufnGetPurchaseOrderStatusText
 	 *
 	 * @param status
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -277,7 +277,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPURCHASEORDERSTATUSTEXT as a field
+	 * Get dbo.ufnGetPurchaseOrderStatusText as a field
 	 *
 	 * @param status
 	 */
@@ -289,7 +289,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETPURCHASEORDERSTATUSTEXT as a field
+	 * Get dbo.ufnGetPurchaseOrderStatusText as a field
 	 *
 	 * @param status
 	 */
@@ -301,7 +301,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETSALESORDERSTATUSTEXT
+	 * Call dbo.ufnGetSalesOrderStatusText
 	 *
 	 * @param status
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -315,7 +315,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETSALESORDERSTATUSTEXT as a field
+	 * Get dbo.ufnGetSalesOrderStatusText as a field
 	 *
 	 * @param status
 	 */
@@ -327,7 +327,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETSALESORDERSTATUSTEXT as a field
+	 * Get dbo.ufnGetSalesOrderStatusText as a field
 	 *
 	 * @param status
 	 */
@@ -339,7 +339,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNGETSTOCK
+	 * Call dbo.ufnGetStock
 	 *
 	 * @param productid
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -353,7 +353,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETSTOCK as a field
+	 * Get dbo.ufnGetStock as a field
 	 *
 	 * @param productid
 	 */
@@ -365,7 +365,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNGETSTOCK as a field
+	 * Get dbo.ufnGetStock as a field
 	 *
 	 * @param productid
 	 */
@@ -377,7 +377,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke UFNLEADINGZEROS
+	 * Call dbo.ufnLeadingZeros
 	 *
 	 * @param value
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -391,7 +391,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNLEADINGZEROS as a field
+	 * Get dbo.ufnLeadingZeros as a field
 	 *
 	 * @param value
 	 */
@@ -403,7 +403,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get UFNLEADINGZEROS as a field
+	 * Get dbo.ufnLeadingZeros as a field
 	 *
 	 * @param value
 	 */
@@ -415,7 +415,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPGETBILLOFMATERIALS
+	 * Call dbo.uspGetBillOfMaterials
 	 *
 	 * @param startproductid IN parameter
 	 * @param checkdate IN parameter
@@ -430,7 +430,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPGETEMPLOYEEMANAGERS
+	 * Call dbo.uspGetEmployeeManagers
 	 *
 	 * @param employeeid IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -443,7 +443,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPGETMANAGEREMPLOYEES
+	 * Call dbo.uspGetManagerEmployees
 	 *
 	 * @param managerid IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -456,7 +456,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPGETWHEREUSEDPRODUCTID
+	 * Call dbo.uspGetWhereUsedProductID
 	 *
 	 * @param startproductid IN parameter
 	 * @param checkdate IN parameter
@@ -471,7 +471,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPLOGERROR
+	 * Call dbo.uspLogError
 	 *
 	 * @param errorlogid IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -485,7 +485,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPPRINTERROR
+	 * Call dbo.uspPrintError
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */

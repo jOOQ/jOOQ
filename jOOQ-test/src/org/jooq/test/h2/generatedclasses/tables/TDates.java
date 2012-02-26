@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1756934870;
+	private static final long serialVersionUID = -327566973;
 
 	/**
-	 * The singleton instance of T_DATES
+	 * The singleton instance of PUBLIC.T_DATES
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TDates T_DATES = new org.jooq.test.h2.generatedclasses.tables.TDates();
 

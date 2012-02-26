@@ -8,10 +8,10 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class Vstorewithdemographics extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.VstorewithdemographicsRecord> {
 
-	private static final long serialVersionUID = -1671529408;
+	private static final long serialVersionUID = 1741388098;
 
 	/**
-	 * The singleton instance of vStoreWithDemographics
+	 * The singleton instance of Sales.vStoreWithDemographics
 	 */
 	public static final org.jooq.examples.sqlserver.adventureworks.sales.tables.Vstorewithdemographics VSTOREWITHDEMOGRAPHICS = new org.jooq.examples.sqlserver.adventureworks.sales.tables.Vstorewithdemographics();
 

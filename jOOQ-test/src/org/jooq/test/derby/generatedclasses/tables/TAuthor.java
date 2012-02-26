@@ -8,10 +8,10 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1330180371;
+	private static final long serialVersionUID = -242593401;
 
 	/**
-	 * The singleton instance of T_AUTHOR
+	 * The singleton instance of TEST.T_AUTHOR
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.derby.generatedclasses.tables.TAuthor();
 

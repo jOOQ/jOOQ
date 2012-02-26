@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = -919216910;
+	private static final long serialVersionUID = 316083263;
 
 	/**
-	 * The singleton instance of store
+	 * The singleton instance of sakila.store
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Store STORE = new org.jooq.examples.mysql.sakila.tables.Store();
 

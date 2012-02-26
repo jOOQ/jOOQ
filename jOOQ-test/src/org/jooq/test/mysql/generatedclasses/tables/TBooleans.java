@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 940422448;
+	private static final long serialVersionUID = -1470362434;
 
 	/**
-	 * The singleton instance of t_booleans
+	 * The singleton instance of test.t_booleans
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.mysql.generatedclasses.tables.TBooleans();
 

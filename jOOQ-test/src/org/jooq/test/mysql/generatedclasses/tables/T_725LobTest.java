@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1826586079;
+	private static final long serialVersionUID = -1552079157;
 
 	/**
-	 * The singleton instance of t_725_lob_test
+	 * The singleton instance of test.t_725_lob_test
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.mysql.generatedclasses.tables.T_725LobTest();
 

@@ -11,7 +11,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources;
 public final class Routines {
 
 	/**
-	 * Invoke USPUPDATEEMPLOYEEHIREINFO
+	 * Call HumanResources.uspUpdateEmployeeHireInfo
 	 *
 	 * @param employeeid IN parameter
 	 * @param title IN parameter
@@ -36,7 +36,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPUPDATEEMPLOYEELOGIN
+	 * Call HumanResources.uspUpdateEmployeeLogin
 	 *
 	 * @param employeeid IN parameter
 	 * @param managerid IN parameter
@@ -59,7 +59,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke USPUPDATEEMPLOYEEPERSONALINFO
+	 * Call HumanResources.uspUpdateEmployeePersonalInfo
 	 *
 	 * @param employeeid IN parameter
 	 * @param nationalidnumber IN parameter

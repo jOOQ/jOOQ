@@ -102,7 +102,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getOutputName()).toUpperCase();
+        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getOutputName().toUpperCase());
 
         // Columns, Attributes, Parameters
         if (definition instanceof ColumnDefinition ||

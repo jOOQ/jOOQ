@@ -43,40 +43,40 @@ import java.util.List;
 /**
  * @author Christopher Deckers
  */
-public class SqlQueryDebuggerRegister {
+public class DebuggerRegister {
 
-	private SqlQueryDebuggerRegister() {}
+	private DebuggerRegister() {}
 
 	private static final Object LOCK = new Object();
-	private static final List<SqlQueryDebugger> debuggerList = new ArrayList<SqlQueryDebugger>();
+	private static final List<Debugger> debuggerList = new ArrayList<Debugger>();
 
-	public static void addSqlQueryDebugger(SqlQueryDebugger sqlQueryDebugger) {
+	public static void addSqlQueryDebugger(Debugger sqlQueryDebugger) {
 		synchronized(LOCK) {
 			debuggerList.add(sqlQueryDebugger);
-			for(SqlQueryDebuggerRegisterListener l: debuggerRegisterListenerList) {
+			for(DebuggerRegisterListener l: debuggerRegisterListenerList) {
 				l.notifySqlQueryDebuggerListenerListModified();
 			}
 		}
 	}
 
-	public static void removeSqlQueryDebugger(SqlQueryDebugger sqlQueryDebugger) {
+	public static void removeSqlQueryDebugger(Debugger sqlQueryDebugger) {
 		synchronized(LOCK) {
 			debuggerList.remove(sqlQueryDebugger);
-			for(SqlQueryDebuggerRegisterListener l: debuggerRegisterListenerList) {
+			for(DebuggerRegisterListener l: debuggerRegisterListenerList) {
 				l.notifySqlQueryDebuggerListenerListModified();
 			}
 		}
 	}
 
-	private static final List<SqlQueryDebuggerRegisterListener> debuggerRegisterListenerList = new ArrayList<SqlQueryDebuggerRegisterListener>(1);
+	private static final List<DebuggerRegisterListener> debuggerRegisterListenerList = new ArrayList<DebuggerRegisterListener>(1);
 
-	public static void addSqlQueryDebuggerRegisterListener(SqlQueryDebuggerRegisterListener listener) {
+	public static void addSqlQueryDebuggerRegisterListener(DebuggerRegisterListener listener) {
 		synchronized(LOCK) {
 			debuggerRegisterListenerList.add(listener);
 		}
 	}
 
-	public static void removeSqlQueryDebuggerRegisterListener(SqlQueryDebuggerRegisterListener listener) {
+	public static void removeSqlQueryDebuggerRegisterListener(DebuggerRegisterListener listener) {
 		synchronized(LOCK) {
 			debuggerRegisterListenerList.remove(listener);
 		}
@@ -85,7 +85,7 @@ public class SqlQueryDebuggerRegister {
 	/*
 	 * @return an immutable list of all the debuggers currently registered.
 	 */
-	public static List<SqlQueryDebugger> getSqlQueryDebuggerList() {
+	public static List<Debugger> getSqlQueryDebuggerList() {
 		synchronized(LOCK) {
 			if(debuggerList.isEmpty()) {
 				// No cost when no loggers
@@ -93,7 +93,7 @@ public class SqlQueryDebuggerRegister {
 			}
 			// Small cost: copy collection and make it immutable.
 			// Generally, no more than one or two listeners in the list.
-			return Collections.unmodifiableList(new ArrayList<SqlQueryDebugger>(debuggerList));
+			return Collections.unmodifiableList(new ArrayList<Debugger>(debuggerList));
 		}
 	}
 

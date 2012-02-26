@@ -40,10 +40,10 @@ package org.jooq.debug;
 /**
  * @author Christopher Deckers
  */
-public interface SqlQueryDebugger {
+public interface Debugger {
 
-    public void debugQueries(SqlQueryDebuggerData sqlQueryDebuggerData);
+    public void debugQueries(DebuggerData sqlQueryDebuggerData);
 
-    public void debugResultSet(int sqlQueryDebuggerDataID, SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData);
+    public void debugResultSet(int sqlQueryDebuggerDataID, DebuggerResultSetData sqlQueryDebuggerResultSetData);
 
 }

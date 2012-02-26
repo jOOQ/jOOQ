@@ -51,7 +51,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void renderStart(ExecuteContext ctx) {
-		isLogging = !SqlQueryDebuggerRegister.getSqlQueryDebuggerList().isEmpty();
+		isLogging = !DebuggerRegister.getSqlQueryDebuggerList().isEmpty();
 		startPreparationTime = 0;
 		aggregatedPreparationDuration = 0;
 		startBindTime = 0;
@@ -121,7 +121,7 @@ public class DebugListener extends DefaultExecuteListener {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-		List<SqlQueryDebugger> sqlQueryDebuggerList = SqlQueryDebuggerRegister.getSqlQueryDebuggerList();
+		List<Debugger> sqlQueryDebuggerList = DebuggerRegister.getSqlQueryDebuggerList();
 		if(sqlQueryDebuggerList.isEmpty()) {
 			return;
 		}
@@ -138,8 +138,8 @@ public class DebugListener extends DefaultExecuteListener {
 		        }
 		    }
 		}
-		SqlQueryDebuggerData sqlQueryDebuggerData = new SqlQueryDebuggerData(sqlQueryType, sql, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
-		for(SqlQueryDebugger listener: sqlQueryDebuggerList) {
+		DebuggerData sqlQueryDebuggerData = new DebuggerData(sqlQueryType, sql, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		for(Debugger listener: sqlQueryDebuggerList) {
 			listener.debugQueries(sqlQueryDebuggerData);
 		}
 		if(resultSet != null) {
@@ -147,12 +147,12 @@ public class DebugListener extends DefaultExecuteListener {
 			ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
 				@Override
 				protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-					List<SqlQueryDebugger> sqlQueryDebuggerList = SqlQueryDebuggerRegister.getSqlQueryDebuggerList();
+					List<Debugger> sqlQueryDebuggerList = DebuggerRegister.getSqlQueryDebuggerList();
 					if(sqlQueryDebuggerList.isEmpty()) {
 						return;
 					}
-                    SqlQueryDebuggerResultSetData sqlQueryDebuggerResultSetData = new SqlQueryDebuggerResultSetData(lifeTime, readRows, readCount, writeCount);
-					for(SqlQueryDebugger listener: sqlQueryDebuggerList) {
+                    DebuggerResultSetData sqlQueryDebuggerResultSetData = new DebuggerResultSetData(lifeTime, readRows, readCount, writeCount);
+					for(Debugger listener: sqlQueryDebuggerList) {
 						listener.debugResultSet(sqlQueryDebuggerDataID, sqlQueryDebuggerResultSetData);
 					}
 				}

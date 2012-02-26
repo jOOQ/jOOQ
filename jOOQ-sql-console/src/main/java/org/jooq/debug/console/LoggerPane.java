@@ -109,7 +109,7 @@ import org.jooq.debug.console.misc.XTableColumnModel;
 /**
  * @author Christopher Deckers
  */
-public class SqlLoggerPane extends JPanel {
+public class LoggerPane extends JPanel {
 
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss.SSS");
 
@@ -145,7 +145,7 @@ public class SqlLoggerPane extends JPanel {
     private boolean isOtherQueryTypeDisplayed = true;
     private boolean isScrollLocked;
 
-    public SqlLoggerPane() {
+    public LoggerPane() {
         super(new BorderLayout());
         setOpaque(false);
         JPanel loggerHeaderPanel = new JPanel(new BorderLayout());

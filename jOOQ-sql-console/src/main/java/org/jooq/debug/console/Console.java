@@ -95,12 +95,12 @@ import org.jooq.debug.console.remote.SqlRemoteQueryDebuggerClient;
 /**
  * @author Christopher Deckers
  */
-public class SqlConsoleFrame extends JFrame {
+public class Console extends JFrame {
 
     private JTabbedPane mainTabbedPane;
     private JTabbedPane editorTabbedPane;
 
-    public SqlConsoleFrame(final DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab) {
+    public Console(final DatabaseDescriptor editorDatabaseDescriptor, boolean isShowingLoggingTab) {
     	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     	JMenuBar menuBar = new JMenuBar();
     	JMenu fileMenu = new JMenu("File");
@@ -140,7 +140,7 @@ public class SqlConsoleFrame extends JFrame {
     	aboutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JDialog aboutDialog = new JDialog(SqlConsoleFrame.this, "About jOOQ Console", ModalityType.APPLICATION_MODAL);
+                final JDialog aboutDialog = new JDialog(Console.this, "About jOOQ Console", ModalityType.APPLICATION_MODAL);
                 aboutDialog.setResizable(false);
                 Container contentPane = aboutDialog.getContentPane();
                 JPanel centerPane = new JPanel(new GridBagLayout());
@@ -182,7 +182,7 @@ public class SqlConsoleFrame extends JFrame {
                 southPane.add(okButton);
                 contentPane.add(southPane, BorderLayout.SOUTH);
                 aboutDialog.pack();
-                aboutDialog.setLocationRelativeTo(SqlConsoleFrame.this);
+                aboutDialog.setLocationRelativeTo(Console.this);
                 aboutDialog.setVisible(true);
             }
         });
@@ -229,15 +229,15 @@ public class SqlConsoleFrame extends JFrame {
         }
         if(editorTabbedPane != null) {
             for(int i=editorTabbedPane.getTabCount()-2; i>=0; i--) {
-                ((SqlEditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
+                ((EditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
             }
         }
     }
 
-    private SqlLoggerPane sqlLoggerPane;
+    private LoggerPane sqlLoggerPane;
 
 	private void addLoggerTab() {
-		sqlLoggerPane = new SqlLoggerPane();
+		sqlLoggerPane = new LoggerPane();
 		mainTabbedPane.addTab("Logger", sqlLoggerPane);
 	}
 
@@ -378,7 +378,7 @@ public class SqlConsoleFrame extends JFrame {
 	}
 
     public static void openConsole(DatabaseDescriptor databaseDescriptor, boolean isLoggingActive) {
-    	SqlConsoleFrame sqlConsoleFrame = new SqlConsoleFrame(databaseDescriptor, true);
+    	Console sqlConsoleFrame = new Console(databaseDescriptor, true);
     	sqlConsoleFrame.setLoggingActive(isLoggingActive);
     	sqlConsoleFrame.setVisible(true);
     }
@@ -397,7 +397,7 @@ public class SqlConsoleFrame extends JFrame {
     private void addSQLEditorPane(DatabaseDescriptor databaseDescriptor) {
         isAdjusting = true;
         int index = editorTabbedPane.getTabCount() - 1;
-        final SqlEditorPane sqlEditorPane = new SqlEditorPane(databaseDescriptor);
+        final EditorPane sqlEditorPane = new EditorPane(databaseDescriptor);
         String title = "Context " + contextCount++;
         editorTabbedPane.insertTab(title, null, sqlEditorPane, null, index);
         final JPanel tabComponent = new JPanel(new BorderLayout());
@@ -414,7 +414,7 @@ public class SqlConsoleFrame extends JFrame {
                 if(editorTabbedPane.getTabCount() > 2) {
                     for(int i=editorTabbedPane.getTabCount()-1; i>=0; i--) {
                         if(editorTabbedPane.getTabComponentAt(i) == tabComponent) {
-                            ((SqlEditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
+                            ((EditorPane)editorTabbedPane.getComponentAt(i)).closeConnection();
                             editorTabbedPane.removeTabAt(i);
                             if(i == editorTabbedPane.getTabCount() - 1) {
                                 editorTabbedPane.setSelectedIndex(i - 1);
@@ -443,8 +443,8 @@ public class SqlConsoleFrame extends JFrame {
         sqlEditorPane.adjustDefaultFocus();
     }
 
-    private SqlEditorPane getFocusedEditorPane() {
-        return (SqlEditorPane)editorTabbedPane.getSelectedComponent();
+    private EditorPane getFocusedEditorPane() {
+        return (EditorPane)editorTabbedPane.getSelectedComponent();
     }
 
     private static String[] getTableNames(DatabaseDescriptor databaseDescriptor) {
@@ -477,7 +477,7 @@ public class SqlConsoleFrame extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
             public void run() {
-				SqlConsoleFrame sqlConsoleFrame = new SqlConsoleFrame(null, true);
+				Console sqlConsoleFrame = new Console(null, true);
 				sqlConsoleFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 				sqlConsoleFrame.setVisible(true);
 			}

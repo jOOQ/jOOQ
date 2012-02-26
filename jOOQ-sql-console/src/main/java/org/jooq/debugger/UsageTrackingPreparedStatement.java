@@ -75,6 +75,7 @@ public class UsageTrackingPreparedStatement implements PreparedStatement {
     @Override
     public void addBatch() throws SQLException {
         stmt.addBatch();
+        commitParameterDescription();
     }
 
     @Override

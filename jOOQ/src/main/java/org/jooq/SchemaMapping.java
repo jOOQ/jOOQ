@@ -35,19 +35,23 @@
  */
 package org.jooq;
 
+import static org.jooq.tools.StringUtils.isBlank;
+
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import javax.xml.bind.JAXB;
 
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
-import org.jooq.impl.SchemaImpl;
-import org.jooq.impl.TableImpl;
+import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.StringUtils;
 
 /**
  * General mapping of generated artefacts onto run-time substitutes.
@@ -82,39 +86,51 @@ public class SchemaMapping implements Serializable {
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID  = 8269660159338710470L;
-    private static final JooqLogger     log               = JooqLogger.getLogger(SchemaMapping.class);
-    private static boolean              loggedDeprecation = false;
+    private static final long               serialVersionUID  = 8269660159338710470L;
+    private static final JooqLogger         log               = JooqLogger.getLogger(SchemaMapping.class);
+    private static volatile boolean         loggedDeprecation = false;
 
     /**
      * The default, unmodifiable mapping that just takes generated schemata
+     *
+     * @deprecated - 2.0.5 - Do not reuse this SchemaMapping!
      */
-    public static final SchemaMapping   NO_MAPPING        = new SchemaMapping(false);
+    @Deprecated
+    public static final SchemaMapping       NO_MAPPING        = new SchemaMapping(new Settings(), true);
 
-    /**
-     * The underlying mapping for schemata
-     */
-    private final Map<String, Schema>   schemata          = new HashMap<String, Schema>();
-
-    /**
-     * The underlying mapping for tables
-     */
-    private final Map<String, Table<?>> tables            = new HashMap<String, Table<?>>();
-
-    /**
-     * The default schema
-     */
-    private Schema                      defaultSchema;
+    private final RenderMapping             mapping;
+    private final boolean                   ignoreMapping;
+    private transient Map<String, Schema>   schemata;
+    private transient Map<String, Table<?>> tables;
 
     /**
      * Construct an empty mapping
      */
     public SchemaMapping() {
-        this(true);
+        this(null);
     }
 
-    private SchemaMapping(boolean logDeprecation) {
-        if (logDeprecation && !loggedDeprecation) {
+    /**
+     * Construct a mapping from a {@link Settings} object
+     */
+    public SchemaMapping(Settings settings) {
+        this(settings, false);
+    }
+
+    /**
+     * Auxiliary constructor used for backwards-compatibility.
+     */
+    private SchemaMapping(Settings settings, boolean ignore) {
+        if (settings == null) {
+            logDeprecation();
+        }
+
+        this.mapping = SettingsTools.getRenderMapping(settings);
+        this.ignoreMapping = ignore;
+    }
+
+    private static void logDeprecation() {
+        if (!loggedDeprecation) {
 
             // Log only once
             loggedDeprecation = true;
@@ -132,7 +148,8 @@ public class SchemaMapping implements Serializable {
      * @param schema the default schema
      */
     public void use(Schema schema) {
-        defaultSchema = schema;
+        if (ignoreMapping) return;
+        use(schema.getName());
     }
 
     /**
@@ -145,7 +162,10 @@ public class SchemaMapping implements Serializable {
      * @param schemaName the default schema
      */
     public void use(String schemaName) {
-        defaultSchema = new SchemaImpl(schemaName);
+        if (ignoreMapping) return;
+        logDeprecation();
+
+        mapping.setDefaultSchema(schemaName);
     }
 
     /**
@@ -155,7 +175,24 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(String inputSchema, String outputSchema) {
-        add(inputSchema, new SchemaImpl(outputSchema));
+        if (ignoreMapping) return;
+        logDeprecation();
+
+        // Remove existing mapping from map
+        Iterator<MappedSchema> it = mapping.getSchemata().iterator();
+        while (it.hasNext()) {
+            MappedSchema schema = it.next();
+
+            if (inputSchema.equals(schema.getInput())) {
+                it.remove();
+                break;
+            }
+        }
+
+        // Add new mapping
+        mapping.getSchemata().add(new MappedSchema()
+            .withInput(inputSchema)
+            .withOutput(outputSchema));
     }
 
     /**
@@ -165,7 +202,8 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(String inputSchema, Schema outputSchema) {
-        schemata.put(inputSchema, outputSchema);
+        if (ignoreMapping) return;
+        add(inputSchema, outputSchema.getName());
     }
 
     /**
@@ -175,7 +213,8 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(Schema inputSchema, Schema outputSchema) {
-        add(inputSchema.getName(), outputSchema);
+        if (ignoreMapping) return;
+        add(inputSchema.getName(), outputSchema.getName());
     }
 
     /**
@@ -185,78 +224,166 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(Schema inputSchema, String outputSchema) {
-        add(inputSchema.getName(), new SchemaImpl(outputSchema));
+        if (ignoreMapping) return;
+        add(inputSchema.getName(), outputSchema);
     }
 
     /**
      * Add tables to this mapping
      *
-     * @param generatedTable The table known at codegen time to be mapped
-     * @param configuredTable The table configured at run time to be mapped
+     * @param inputTable The table known at codegen time to be mapped
+     * @param outputTable The table configured at run time to be mapped
      */
-    public void add(Table<?> generatedTable, Table<?> configuredTable) {
-        tables.put(generatedTable.getName(), configuredTable);
+    public void add(Table<?> inputTable, Table<?> outputTable) {
+        if (ignoreMapping) return;
+        add(inputTable, outputTable.getName());
     }
 
     /**
      * Add tables to this mapping
      *
-     * @param generatedTable The table known at codegen time to be mapped
-     * @param configuredTableName The table configured at run time to be mapped
+     * @param inputTable The table known at codegen time to be mapped
+     * @param outputTable The table configured at run time to be mapped
      */
-    public void add(final Table<?> generatedTable, final String configuredTableName) {
+    public void add(final Table<?> inputTable, final String outputTable) {
+        if (ignoreMapping) return;
+        logDeprecation();
 
-        @SuppressWarnings("serial")
-        Table<Record> configuredTable = new TableImpl<Record>(configuredTableName, generatedTable.getSchema()) {{
-            for (Field<?> field : generatedTable.getFields()) {
-                createField(field.getName(), field.getDataType(), this);
+        // Try to find a pre-existing schema mapping in the settings
+        MappedSchema schema = null;
+        for (MappedSchema s : mapping.getSchemata()) {
+            if (inputTable.getSchema().getName().equals(s.getInput())) {
+
+                // Remove existing mapping from map
+                Iterator<MappedTable> it = s.getTables().iterator();
+                tableLoop:
+                while (it.hasNext()) {
+                    MappedTable table = it.next();
+
+                    if (inputTable.getName().equals(table.getInput())) {
+                        it.remove();
+                        break tableLoop;
+                    }
+                }
+
+                schema = s;
+                break;
             }
-        }};
+        }
 
-        add(generatedTable, configuredTable);
+        if (schema == null) {
+            schema = new MappedSchema();
+            schema.setInput(inputTable.getSchema().getName());
+            mapping.getSchemata().add(schema);
+        }
+
+        // Add new mapping
+        schema.getTables().add(new MappedTable()
+            .withInput(inputTable.getName())
+            .withOutput(outputTable));
     }
 
     /**
      * Apply mapping to a given schema
      *
-     * @param generatedSchema The generated schema to be mapped
+     * @param schema The schema to be mapped
      * @return The configured schema
      */
-    public Schema map(Schema generatedSchema) {
+    public Schema map(Schema schema) {
+        if (ignoreMapping) return schema;
         Schema result = null;
 
-        if (generatedSchema != null) {
-            result = schemata.get(generatedSchema.getName());
+        if (schema != null) {
+            String schemaName = schema.getName();
 
-            if (result != null) {
-                return result;
+            // Lazy initialise schema mapping
+            if (!getSchemata().containsKey(schemaName)) {
+                Schema mapped = schema;
+
+                for (MappedSchema s : mapping.getSchemata()) {
+
+                    // A configured mapping was found, add a renamed schema
+                    if (schemaName.equals(s.getInput())) {
+
+                        // Ignore self-mappings and void-mappings
+                        if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
+                            mapped = new RenamedSchema(schema, s.getOutput());
+                        }
+
+                        break;
+                    }
+                }
+
+                // Add mapped schema or self if no mapping was found
+                getSchemata().put(schemaName, mapped);
             }
-            else if (generatedSchema.equals(defaultSchema)) {
-                return null;
+
+            result = getSchemata().get(schemaName);
+
+            // The configured default schema is mapped to "null". This prevents
+            // it from being rendered to SQL
+            if (result.getName().equals(mapping.getDefaultSchema())) {
+                result = null;
             }
         }
 
-        return generatedSchema;
+        return result;
     }
 
     /**
      * Apply mapping to a given table
      *
-     * @param generatedTable The generated table to be mapped
+     * @param table The generated table to be mapped
      * @return The configured table
      */
-    public Table<?> map(Table<?> generatedTable) {
+    public Table<?> map(Table<?> table) {
+        if (ignoreMapping) return table;
         Table<?> result = null;
 
-        if (generatedTable != null) {
-            result = tables.get(generatedTable.getName());
+        if (table != null) {
+            Schema schema = table.getSchema();
 
-            if (result != null) {
-                return result;
+            // Derived table or some other type
+            if (schema == null) {
+                return table;
             }
+
+            // [#1186] TODO: replace this by calling table.getQualifiedName()
+            String schemaName = schema.getName();
+            String tableName = table.getName();
+            String key = schemaName + "." + tableName;
+
+            // Lazy initialise table mapping
+            if (!getTables().containsKey(key)) {
+                Table<?> mapped = table;
+
+                schemaLoop:
+                for (MappedSchema s : mapping.getSchemata()) {
+                    if (schemaName.equals(s.getInput())) {
+                        for (MappedTable t : s.getTables()) {
+
+                            // A configured mapping was found, add a renamed table
+                            if (tableName.equals(t.getInput())) {
+
+                                // Ignore self-mappings and void-mappings
+                                if (!isBlank(t.getOutput()) && !t.getOutput().equals(t.getInput())) {
+                                    mapped = new RenamedTable(table, t.getOutput());
+                                }
+
+                                break schemaLoop;
+                            }
+                        }
+                    }
+                }
+
+                // Add mapped table or self if no mapping was found
+                getTables().put(key, mapped);
+            }
+
+            result = getTables().get(key);
         }
 
-        return generatedTable;
+        return result;
     }
 
     /**
@@ -264,6 +391,7 @@ public class SchemaMapping implements Serializable {
      * Spring
      */
     public void setDefaultSchema(String schema) {
+        if (ignoreMapping) return;
         use(schema);
     }
 
@@ -271,70 +399,36 @@ public class SchemaMapping implements Serializable {
      * Initialise SchemaMapping. Added for better interoperability with Spring
      */
     public void setSchemaMapping(Map<String, String> schemaMap) {
+        if (ignoreMapping) return;
         for (Entry<String, String> entry : schemaMap.entrySet()) {
-            add(new SchemaImpl(entry.getKey()), new SchemaImpl(entry.getValue()));
+            add(entry.getKey(), entry.getValue());
         }
     }
+
+    private final Map<String, Schema> getSchemata() {
+        if (schemata == null) {
+            schemata = new HashMap<String, Schema>();
+        }
+
+        return schemata;
+    }
+
+    private final Map<String, Table<?>> getTables() {
+        if (tables == null) {
+            tables = new HashMap<String, Table<?>>();
+        }
+
+        return tables;
+    }
+
+    // ------------------------------------------------------------------------
+    // Object API
+    // ------------------------------------------------------------------------
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("SchemaMapping[");
-        String separator = "";
-
-        if (!schemata.isEmpty()) {
-            sb.append(separator);
-            sb.append("schemata=");
-            sb.append(schemata);
-            separator = ", ";
-        }
-
-        if (defaultSchema != null) {
-            sb.append(separator);
-            sb.append("use=");
-            sb.append(defaultSchema);
-            separator = ", ";
-        }
-
-        if (!tables.isEmpty()) {
-            sb.append(separator);
-            sb.append("tables=");
-            sb.append(tables);
-            separator = ", ";
-        }
-
-        sb.append("]");
-        return sb.toString();
-    }
-
-    /**
-     * Convert jOOQ runtime {@link Settings} into the deprecated
-     * <code>SchemaMapping</code>
-     * <p>
-     * This method is for JOOQ INTERNAL USE only. Do not reference directly
-     */
-    public static SchemaMapping fromSettings(Settings settings) {
-        SchemaMapping result = new SchemaMapping(false);
-
-        if (settings != null) {
-            RenderMapping r = settings.getRenderMapping();
-
-            if (r != null) {
-                if (!StringUtils.isEmpty(r.getDefaultSchema())) {
-                    result.use(r.getDefaultSchema());
-                }
-
-                for (MappedSchema schema : r.getSchemata()) {
-                    result.add(schema.getInput(), schema.getOutput());
-
-                    for (MappedTable table : schema.getTables()) {
-                        log.warn("TODO", "Re-implement table mapping for table " + table);
-                    }
-                }
-            }
-        }
-
-        return result;
+        StringWriter writer = new StringWriter();
+        JAXB.marshal(mapping, writer);
+        return writer.toString();
     }
 }

@@ -140,7 +140,7 @@ public class SqlConsoleFrame extends JFrame {
     	aboutMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                final JDialog aboutDialog = new JDialog(SqlConsoleFrame.this, "About jOOQ SQL Console", ModalityType.APPLICATION_MODAL);
+                final JDialog aboutDialog = new JDialog(SqlConsoleFrame.this, "About jOOQ Console", ModalityType.APPLICATION_MODAL);
                 aboutDialog.setResizable(false);
                 Container contentPane = aboutDialog.getContentPane();
                 JPanel centerPane = new JPanel(new GridBagLayout());
@@ -190,7 +190,7 @@ public class SqlConsoleFrame extends JFrame {
         menuBar.add(helpMenu);
         setJMenuBar(menuBar);
         mainTabbedPane = new JTabbedPane();
-        String title = "jOOQ SQL Console";
+        String title = "jOOQ Console";
         if(editorDatabaseDescriptor != null) {
         	String schemaName = editorDatabaseDescriptor.getSchema().getName();
         	if(schemaName != null && schemaName.length() != 0) {

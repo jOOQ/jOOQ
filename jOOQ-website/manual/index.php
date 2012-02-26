@@ -137,6 +137,9 @@ function printContent() {
 <a title="Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a>
 </li>
 <li>
+<a title="Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced configuration of the generator</a>
+</li>
+<li>
 <a title="The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a>
 </li>
 <li>
@@ -208,6 +211,9 @@ function printContent() {
 </li>
 <li>
 <a title="Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a>
+</li>
+<li>
+<a title="Execute listeners and SQL tracing" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">Execute listeners and SQL tracing</a>
 </li>
 <li>
 <a title="Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">Adding Oracle hints to queries</a>

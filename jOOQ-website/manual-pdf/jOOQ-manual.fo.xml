@@ -369,6 +369,22 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
+<fo:basic-link internal-destination="AdvancedConfiguration">Advanced configuration of the generator<fo:leader leader-pattern="dots"/>
+<fo:page-number-citation ref-id="AdvancedConfiguration"/>
+</fo:basic-link>
+</fo:inline>
+</fo:block>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">3.</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:block text-align-last="justify">
+<fo:inline>
 <fo:basic-link internal-destination="SCHEMA">The schema, top-level generated artefact<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="SCHEMA"/>
 </fo:basic-link>
@@ -379,7 +395,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">3.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -395,7 +411,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -411,7 +427,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -427,7 +443,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -745,6 +761,22 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
+<fo:basic-link internal-destination="ExecuteListener">Execute listeners and SQL tracing<fo:leader leader-pattern="dots"/>
+<fo:page-number-citation ref-id="ExecuteListener"/>
+</fo:basic-link>
+</fo:inline>
+</fo:block>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:block text-align-last="justify">
+<fo:inline>
 <fo:basic-link internal-destination="OracleHints">Adding Oracle hints to queries<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="OracleHints"/>
 </fo:basic-link>
@@ -755,7 +787,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -771,7 +803,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -787,7 +819,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -803,7 +835,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">8.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -819,7 +851,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">8.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">9.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -1019,10 +1051,8 @@ CREATE TABLE t_book_to_book_store (
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
-<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java')">org.jooq.SchemaMapping</fo:basic-link> :
-    							An optional mapping of schemata. Check out the
-    							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SchemaMapping">SchemaMapping</fo:basic-link>
-    							page for details</fo:block>
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java')">org.jooq.conf.Settings</fo:basic-link> :
+    							An optional runtime configuration.</fo:block>
 </fo:list-item-body>
 </fo:list-item>
 							</fo:list-block>
@@ -1030,6 +1060,42 @@ CREATE TABLE t_book_to_book_store (
 							<fo:block font-size="11pt">If you are planning on using several RDBMS (= SQLDialects) or
 								several distinct JDBC Connections in your software, this will mean
 								that you have to create a new Factory every time. </fo:block>
+
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory settings</fo:block>
+							<fo:block font-size="11pt">
+								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java')">Settings</fo:basic-link> class is a JAXB-annotated
+								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								Subsequent sections of the manual contain some more in-depth explanations about these settings:
+							</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+     								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SchemaMapping">Runtime schema and table mapping</fo:basic-link>
+   								</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+     							<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+     								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="ExecuteListener">Execute listeners and SQL tracing</fo:basic-link>
+     							</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+   							</fo:list-block>
+</fo:block>
+							<fo:block font-size="11pt">
+								Please refer to the jOOQ runtime configuration XSD for more details:<fo:block/>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</fo:basic-link>
+							</fo:block>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory subclasses</fo:block>
 							<fo:block font-size="11pt">
@@ -2095,6 +2161,9 @@ Object[] fetchArray(String fieldName);
 // Fetch a Cursor for lazy iteration
 Cursor<R> fetchLazy();
 
+// Or a JDBC ResultSet, if you prefer that
+ResultSet fetchResultSet();
+
 // Fetch data asynchronously and let client code
 // decide, when the data must be available.
 // This makes use of the java.util.concurrent API,
@@ -2574,17 +2643,6 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
   </jdbc>
 
   <generator>
-    <!-- The default code generator. You can override this one, to generate your own code style
-         Defaults to org.jooq.util.DefaultGenerator -->
-    <name>org.jooq.util.DefaultGenerator</name>
-
-    <!-- The naming strategy used for class and field names.
-         You may override this with your custom naming strategy.
-         Defaults to org.jooq.util.DefaultGeneratorStrategy -->
-    <strategy>
-      <name>org.jooq.util.DefaultGeneratorStrategy</name>
-    </strategy>
-
     <database>
       <!-- The database dialect from jooq-meta. Available dialects are
            named org.util.[database].[database]Database. Known values are:
@@ -2640,97 +2698,10 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
   </generator>
 </configuration>]]></fo:block>
 
-							<fo:block font-size="11pt">And you can add some optional advanced configuration parameters for the database: </fo:block>
-
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added to the database element: -->
-<database>
-  <!-- Generate java.sql.Timestamp fields for DATE columns. This is
-       particularly useful for Oracle databases.
-       Defaults to false -->
-  <dateAsTimestamp>false</dateAsTimestamp>
-
-  <!-- Generate jOOU data types for your unsigned data types, which are
-       not natively supported in Java.
-       Defaults to true -->
-  <unsignedTypes>true</unsignedTypes>
-
-  <!-- The schema that is used in generated source code. This will be the
-       production schema. Use this to override your local development
-       schema name for source code generation. If not specified, this
-       will be the same as the input-schema. -->
-  <outputSchema>[your database schema / owner / name]</outputSchema>
-
-  <!-- A configuration element to configure several input and/or output
-       schemata for jooq-meta, in case you're using jooq-meta in a multi-
-       schema environment.
-       This cannot be combined with the above inputSchema / outputSchema -->
-  <schemata>
-    <schema>
-      <inputSchema>...</inputSchema>
-      <outputSchema>...</outputSchema>
-    </schema>
-    [ <schema>...</schema> ... ]
-  </schemata>
-
-  <!-- A configuration element to configure master data table enum classes -->
-  <masterDataTables>...</masterDataTables>
-
-  <!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk -->
-  <enumTypes>...</enumTypes>
-
-  <!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk -->
-  <forcedTypes>...</forcedTypes>
-</database>]]></fo:block>
-
-                            <fo:block font-size="11pt">Also, you can add some optional advanced configuration parameters for the generator: </fo:block>
-
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added to the generate element: -->
-<generate>
-  <!-- Primary key / foreign key relations should be generated and used.
-       This is a prerequisite for various advanced features.
-       Defaults to false -->
-  <relations>false</relations>
-
-  <!-- Generate navigation methods to navigate foreign key relationships
-       directly from Record classes. This is only relevant if relations
-       is set to true, too.
-       Defaults to true -->
-  <navigationMethods>true</navigationMethods>
-
-  <!-- Generate deprecated code for backwards compatibility
-       Defaults to true -->
-  <deprecated>true</deprecated>
-
-  <!-- Generate instance fields in your tables, as opposed to static
-       fields. This simplifies aliasing.
-       Defaults to true -->
-  <instanceFields>true</instanceFields>
-
-  <!-- Generate the javax.annotation.Generated annotation to indicate
-       jOOQ version used for source code.
-       Defaults to true -->
-  <generatedAnnotation>true</generatedAnnotation>
-
-  <!-- Generate POJOs in addition to Record classes for usage of the
-       ResultQuery.fetchInto(Class) API
-       Defaults to false -->
-  <pojos>false</pojos>
-
-  <!-- Annotate POJOs and Records with JPA annotations for increased
-       compatibility and better integration with JPA/Hibernate, etc
-       Defaults to false -->
-  <jpaAnnotations>false</jpaAnnotations>
-</generate>]]></fo:block>
-
-							<fo:block font-size="11pt">Check out the manual's section about
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="MasterData">master data</fo:basic-link>
-								 to find out more
-								about those advanced configuration parameters. </fo:block>
-
-							<fo:block font-size="11pt">Also, check out the official XSD file at
+							<fo:block font-size="11pt">
+								There are also lots of advanced configuration parameters, which will be
+								treated in the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="AdvancedConfiguration">manual's next section</fo:basic-link>
+								Note, you can find the official XSD file at
 							   <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd')">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</fo:basic-link>
 							   for a formal specification</fo:block>
 
@@ -2954,10 +2925,215 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							<fo:block font-size="11pt">Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you
 								can execute SQL statements with your generated classes.</fo:block>
+						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="AdvancedConfiguration">
+<fo:marker marker-class-name="section">
+<fo:block>2.2. Advanced configuration of the generator</fo:block>
+</fo:marker>2.2. Advanced configuration of the generator</fo:block>
+<fo:block font-size="11pt">jOOQ power users may want to fine-tune their source code generation settings. Here's how to do this</fo:block>
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Code generation</fo:block>
+							<fo:block font-size="11pt">
+								In the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Configuration">previous section</fo:basic-link>
+								we have seen how jOOQ's source code generator is configured and
+								run within a few steps. In this chapter we'll treat some advanced
+								settings
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added directly to the generator element: -->
+<generator>
+  <!-- The default code generator. You can override this one, to generate your own code style
+       Defaults to org.jooq.util.DefaultGenerator -->
+  <name>org.jooq.util.DefaultGenerator</name>
+
+  <!-- The naming strategy used for class and field names.
+       You may override this with your custom naming strategy. Some examples follow
+       Defaults to org.jooq.util.DefaultGeneratorStrategy -->
+  <strategy>
+    <name>org.jooq.util.DefaultGeneratorStrategy</name>
+  </strategy>
+</generator>]]></fo:block>
+
+							<fo:block font-size="11pt">
+								The following example shows how you can override the
+								DefaultGeneratorStrategy to render table and column names the way
+								they are defined in the database, rather than switching them to
+								camel case:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">/**
+ * It is recommended that you extend the DefaultGeneratorStrategy. Most of the
+ * GeneratorStrategy API is already declared final. You only need to override any
+ * of the following methods, for whatever generation behaviour you'd like to achieve
+ *
+ * Beware that most methods also receive a "Mode" object, to tell you whether a
+ * TableDefinition is being rendered as a Table, Record, POJO, etc. Depending on
+ * that information, you can add a suffix only for TableRecords, not for Tables
+ */
+public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
+
+    /**
+     * Override this to specifiy what identifiers in Java should look like.
+     * This will just take the identifier as defined in the database.
+     */
+    @Override
+    public String getJavaIdentifier(Definition definition) {
+        return definition.getOutputName();
+    }
+
+    /**
+     * Override these to specify what a setter in Java should look like. Setters
+     * are used in TableRecords, UDTRecords, and POJOs. This example will name
+     * setters "set[NAME_IN_DATABASE]"
+     */
+    @Override
+    public String getJavaSetterName(Definition definition, Mode mode) {
+        return "set" + definition.getOutputName();
+    }
+
+    /**
+     * Just like setters...
+     */
+    @Override
+    public String getJavaGetterName(Definition definition, Mode mode) {
+        return "get" + definition.getOutputName();
+    }
+
+    /**
+     * Override this method to define what a Java method generated from a database
+     * Definition should look like. This is used mostly for convenience methods
+     * when calling stored procedures and functions. This example shows how to
+     * set a prefix to a CamelCase version of your procedure
+     */
+    @Override
+    public String getJavaMethodName(Definition definition, Mode mode) {
+        return "call" + org.jooq.tools.StringUtils.toCamelCase(definition.getOutputName());
+    }
+
+    /**
+     * Override this method to define how your Java classes and Java files should
+     * be named. This example applies no custom setting and uses CamelCase versions
+     * instead
+     */
+    @Override
+    public String getJavaClassName(Definition definition, Mode mode) {
+        return super.getJavaClassName(definition, mode);
+    }
+
+    /**
+     * Override this method to re-define the package names of your generated
+     * artefacts.
+     */
+    @Override
+    public String getJavaPackageName(Definition definition, Mode mode) {
+        return super.getJavaPackageName(definition, mode);
+    }
+
+    /**
+     * Override this method to define how Java members should be named. This is
+     * used for POJOs and method arguments
+     */
+    @Override
+    public String getJavaMemberName(Definition definition, Mode mode) {
+        return definition.getOutputName();
+    }
+}</fo:block>
+
+							<fo:block font-size="11pt">
+								Within the &lt;generator/&gt; element, there are other configuration elements:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added to the database element: -->
+<database>
+  <!-- Generate java.sql.Timestamp fields for DATE columns. This is
+       particularly useful for Oracle databases.
+       Defaults to false -->
+  <dateAsTimestamp>false</dateAsTimestamp>
+
+  <!-- Generate jOOU data types for your unsigned data types, which are
+       not natively supported in Java.
+       Defaults to true -->
+  <unsignedTypes>true</unsignedTypes>
+
+  <!-- The schema that is used in generated source code. This will be the
+       production schema. Use this to override your local development
+       schema name for source code generation. If not specified, this
+       will be the same as the input-schema. -->
+  <outputSchema>[your database schema / owner / name]</outputSchema>
+
+  <!-- A configuration element to configure several input and/or output
+       schemata for jooq-meta, in case you're using jooq-meta in a multi-
+       schema environment.
+       This cannot be combined with the above inputSchema / outputSchema -->
+  <schemata>
+    <schema>
+      <inputSchema>...</inputSchema>
+      <outputSchema>...</outputSchema>
+    </schema>
+    [ <schema>...</schema> ... ]
+  </schemata>
+
+  <!-- A configuration element to configure master data table enum classes -->
+  <masterDataTables>...</masterDataTables>
+
+  <!-- A configuration element to configure synthetic enum types
+       This is EXPERIMENTAL functionality. Use at your own risk -->
+  <enumTypes>...</enumTypes>
+
+  <!-- A configuration element to configure type overrides for generated
+       artefacts (e.g. in combination with enumTypes)
+       This is EXPERIMENTAL functionality. Use at your own risk -->
+  <forcedTypes>...</forcedTypes>
+</database>]]></fo:block>
+
+                            <fo:block font-size="11pt">Also, you can add some optional advanced configuration parameters for the generator: </fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added to the generate element: -->
+<generate>
+  <!-- Primary key / foreign key relations should be generated and used.
+       This is a prerequisite for various advanced features.
+       Defaults to false -->
+  <relations>false</relations>
+
+  <!-- Generate navigation methods to navigate foreign key relationships
+       directly from Record classes. This is only relevant if relations
+       is set to true, too.
+       Defaults to true -->
+  <navigationMethods>true</navigationMethods>
+
+  <!-- Generate deprecated code for backwards compatibility
+       Defaults to true -->
+  <deprecated>true</deprecated>
+
+  <!-- Generate instance fields in your tables, as opposed to static
+       fields. This simplifies aliasing.
+       Defaults to true -->
+  <instanceFields>true</instanceFields>
+
+  <!-- Generate the javax.annotation.Generated annotation to indicate
+       jOOQ version used for source code.
+       Defaults to true -->
+  <generatedAnnotation>true</generatedAnnotation>
+
+  <!-- Generate POJOs in addition to Record classes for usage of the
+       ResultQuery.fetchInto(Class) API
+       Defaults to false -->
+  <pojos>false</pojos>
+
+  <!-- Annotate POJOs and Records with JPA annotations for increased
+       compatibility and better integration with JPA/Hibernate, etc
+       Defaults to false -->
+  <jpaAnnotations>false</jpaAnnotations>
+</generate>]]></fo:block>
+
+							<fo:block font-size="11pt">
+								Check out the manual's section about
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="MasterData">master data</fo:basic-link>
+								to find out more
+								about those advanced configuration parameters.
+							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SCHEMA">
 <fo:marker marker-class-name="section">
-<fo:block>2.2. The schema, top-level generated artefact</fo:block>
-</fo:marker>2.2. The schema, top-level generated artefact</fo:block>
+<fo:block>2.3. The schema, top-level generated artefact</fo:block>
+</fo:marker>2.3. The schema, top-level generated artefact</fo:block>
 <fo:block font-size="11pt">The schema is the top-level generated object in jOOQ. In many
 							RDBMS, the schema coincides with the owner of tables and other objects
 						</fo:block>
@@ -2993,8 +3169,8 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="TABLE">
 <fo:marker marker-class-name="section">
-<fo:block>2.3. Tables, views and their corresponding records</fo:block>
-</fo:marker>2.3. Tables, views and their corresponding records</fo:block>
+<fo:block>2.4. Tables, views and their corresponding records</fo:block>
+</fo:marker>2.4. Tables, views and their corresponding records</fo:block>
 <fo:block font-size="11pt">
 							The most important generated artefacts are Tables and TableRecords.
 							Every Table has a Record type associated with it that models a single tuple
@@ -3067,8 +3243,8 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:bloc
 }</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURE">
 <fo:marker marker-class-name="section">
-<fo:block>2.4. Procedures and packages</fo:block>
-</fo:marker>2.4. Procedures and packages</fo:block>
+<fo:block>2.5. Procedures and packages</fo:block>
+</fo:marker>2.5. Procedures and packages</fo:block>
 <fo:block font-size="11pt">
 							Procedure support is one of the most important reasons why you should consider
 							jOOQ. jOOQ heavily facilitates the use of stored procedures and
@@ -3293,8 +3469,8 @@ assertNotNull(author.getLastName());</fo:block>
 
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UDT">
 <fo:marker marker-class-name="section">
-<fo:block>2.5. UDT's including ARRAY and ENUM types</fo:block>
-</fo:marker>2.5. UDT's including ARRAY and ENUM types</fo:block>
+<fo:block>2.6. UDT's including ARRAY and ENUM types</fo:block>
+</fo:marker>2.6. UDT's including ARRAY and ENUM types</fo:block>
 <fo:block font-size="11pt">
 							Databases become more powerful when you can structure your data in user
 							defined types. It's time for Java developers to give some credit to
@@ -3678,8 +3854,8 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 								details. </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SEQUENCE">
 <fo:marker marker-class-name="section">
-<fo:block>2.6. Sequences</fo:block>
-</fo:marker>2.6. Sequences</fo:block>
+<fo:block>2.7. Sequences</fo:block>
+</fo:marker>2.7. Sequences</fo:block>
 <fo:block font-size="11pt">
 							jOOQ also generates convenience artefacts for sequences, where this is
 							supported: DB2, Derby, H2, HSQLDB, Oracle, Postgres, and more.
@@ -4156,6 +4332,8 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
     Condition notIn(Select<?> query);
     Condition in(Collection<T> values);
     Condition between(T minValue, T maxValue);
+    Condition contains(T value);
+    Condition contains(Field<T> value);
     Condition equal(T value);
     Condition equal(Field<T> field);
     Condition equal(Select<?> query);
@@ -4165,6 +4343,8 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
     Condition equalAll(Select<?> query);
     Condition equalAll(T... array);
     Condition equalAll(Field<T[]> array);
+    Condition equalIgnoreCase(String value);
+    Condition equalIgnoreCase(Field<String> value);
     Condition notEqual(T value);
     Condition notEqual(Field<T> field);
     Condition notEqual(Select<?> query);
@@ -5599,15 +5779,18 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							<fo:block font-size="11pt">When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java')">org.jooq.SchemaMapping</fo:basic-link>
-								class, that you can equip your Factory
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/RenderMapping.java')">org.jooq.conf.RenderMapping</fo:basic-link>
+								class, that you can equip your Factory's settings
 								with. Take the following example: </fo:block>
 
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")));
 
-// Add the mapping to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries with the "mapped" factory
 create.selectFrom(T_AUTHOR).fetch();</fo:block>
@@ -5621,12 +5804,27 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 							<fo:block font-size="11pt">Your development database may not be restricted to hold only one DEV
 								schema. You may also have a LOG schema and a MASTER schema. Let's say
 								the MASTER schema is shared among all customers, but each customer has
-								their own LOG schema instance. Then you can enhance your SchemaMapping
-								like this: </fo:block>
+								their own LOG schema instance. Then you can enhance your RenderMapping
+								like this (e.g. using an XML configuration file): </fo:block>
 
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
-mapping.add(LOG, "MY_BOOK_WORLD_LOG");</fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd">
+  <renderMapping>
+    <schemata>
+      <schema>
+        <input>DEV</input>
+        <output>MY_BOOK_WORLD</output>
+      </schema>
+      <schema>
+        <input>LOG</input>
+        <output>MY_BOOK_WORLD_LOG</output>
+      </schema>
+    </schemata>
+  </renderMapping>
+</settings>]]></fo:block>
+
+                            <fo:block font-size="11pt">Note, you can load the above XML file like this:</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</fo:block>
 
 							<fo:block font-size="11pt">This will map generated classes from DEV to MY_BOOK_WORLD, from LOG
 								to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you
@@ -5660,12 +5858,17 @@ SELECT * FROM T_AUTHOR</fo:block>
 								applied to all of your tables. This can be achieved by creating the
 								following mapping: </fo:block>
 
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
-mapping.add(T_AUTHOR, "MY_APP__T_AUTHOR");
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")
+                          .withTables(
+         new MappedTable().withInput("T_AUTHOR")
+                          .withOutput("MY_APP__T_AUTHOR"))));
 
-// Add the mapping to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries with the "mapped" factory
 create.selectFrom(T_AUTHOR).fetch();</fo:block>
@@ -5694,10 +5897,73 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="META">jooq-codegen configuration</fo:basic-link>
 								for more details
 							</fo:block>
+						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExecuteListener">
+<fo:marker marker-class-name="section">
+<fo:block>4.3. Execute listeners and SQL tracing</fo:block>
+</fo:marker>4.3. Execute listeners and SQL tracing</fo:block>
+<fo:block font-size="11pt">
+							Feel the heart beat of your SQL statements at a very low level using listeners
+						</fo:block>
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ExecuteListener</fo:block>
+							<fo:block font-size="11pt">
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Factory">jOOQ Factory Settings</fo:basic-link>
+								let you specify a list of <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ExecuteListener.java')">org.jooq.ExecuteListener</fo:basic-link> classes.
+								The ExecuteListener is essentially an event listener for
+								Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a
+								base type for loggers, debuggers, profilers, data collectors. Advanced ExecuteListeners
+								can also provide custom implementations of Connection, PreparedStatement and ResultSet
+								to jOOQ in apropriate methods. For convenience, consider extending
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/DefaultExecuteListener.java')">org.jooq.impl.DefaultExecuteListener</fo:basic-link>
+								instead of implementing this interface. Please read the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html')">ExecuteListener Javadoc</fo:basic-link>
+								for more details
+							</fo:block>
+
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ Console</fo:block>
+							<fo:block font-size="11pt">
+							    The ExecuteListener API was driven by a feature request by Christopher Deckers, who has
+							    had the courtesy to contribute the jOOQ Console, a sample application interfacing
+							    with jOOQ's ExecuteListeners. Please note that the jOOQ Console is still experimental.
+							    Any feedback is very welcome on
+							    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://groups.google.com/group/jooq-user')">the jooq-user group</fo:basic-link>
+							</fo:block>
+							<fo:block font-size="11pt">
+								Here are the steps you need to do to run the console
+							</fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Create a new RemoteDebuggerServer in your application that listens to
+// incoming connections on a given port
+SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
+
+							<fo:block font-size="11pt">
+								And configure the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java')">org.jooq.debug.DebugListener</fo:basic-link> in the
+								Factory's settings:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<settings>
+  <executeListeners>
+    <executeListener>org.jooq.debug.DebugListener</executeListener>
+  </executeListeners>
+</settings>]]></fo:block>
+
+							<fo:block font-size="11pt">
+								Now start your application and the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/console/Console.java')">org.jooq.debug.console.Console</fo:basic-link>, and start profiling!
+							</fo:block>
+
+							<fo:block font-size="11pt">
+							<fo:block text-align="center">
+<fo:external-graphic padding-top="10pt" padding-bottom="10pt" src="url('C:/Users/lukas/workspace/jOOQ-website/img/jooq-console-01.png')"/>
+</fo:block>
+							</fo:block>
+
+							<fo:block font-size="11pt">
+								The jOOQ Console also has other modes of execution, which will be documented here
+								soon.
+							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="OracleHints">
 <fo:marker marker-class-name="section">
-<fo:block>4.3. Adding Oracle hints to queries</fo:block>
-</fo:marker>4.3. Adding Oracle hints to queries</fo:block>
+<fo:block>4.4. Adding Oracle hints to queries</fo:block>
+</fo:marker>4.4. Adding Oracle hints to queries</fo:block>
 <fo:block font-size="11pt">
 							Oracle has a powerful syntax to add hints as comments directly in your SQL
 						</fo:block>
@@ -5718,8 +5984,8 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								SELECT [DISTINCT] keywords and the actual projection list </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONNECTBY">
 <fo:marker marker-class-name="section">
-<fo:block>4.4. The Oracle CONNECT BY clause</fo:block>
-</fo:marker>4.4. The Oracle CONNECT BY clause</fo:block>
+<fo:block>4.5. The Oracle CONNECT BY clause</fo:block>
+</fo:marker>4.5. The Oracle CONNECT BY clause</fo:block>
 <fo:block font-size="11pt">
 							Hierarchical queries are supported by many RDBMS using the WITH clause.
 							Oracle has a very neat and much less verbose syntax for hierarchical
@@ -5772,8 +6038,8 @@ create.select(create.rownum())
 </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PIVOT">
 <fo:marker marker-class-name="section">
-<fo:block>4.5. The Oracle 11g PIVOT clause</fo:block>
-</fo:marker>4.5. The Oracle 11g PIVOT clause</fo:block>
+<fo:block>4.6. The Oracle 11g PIVOT clause</fo:block>
+</fo:marker>4.6. The Oracle 11g PIVOT clause</fo:block>
 <fo:block font-size="11pt">
 				    	    Oracle 11g has formally introduced the very powerful PIVOT clause, which
 				    	    allows to specify a pivot column, expected grouping values for pivoting,
@@ -5798,8 +6064,8 @@ create.select(create.rownum())
 							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Export">
 <fo:marker marker-class-name="section">
-<fo:block>4.6. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
-</fo:marker>4.6. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
+<fo:block>4.7. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
+</fo:marker>4.7. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
 <fo:block font-size="11pt">
 							Get your data out of the Java world. Stream your data using any of the supported, wide-spread formats
 						</fo:block>
@@ -5897,8 +6163,8 @@ String text = create.selectFrom(T_BOOK).fetch().format();</fo:block>
 +---+---------+-----------+</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Import">
 <fo:marker marker-class-name="section">
-<fo:block>4.7. Importing data from XML, CSV</fo:block>
-</fo:marker>4.7. Importing data from XML, CSV</fo:block>
+<fo:block>4.8. Importing data from XML, CSV</fo:block>
+</fo:marker>4.8. Importing data from XML, CSV</fo:block>
 <fo:block font-size="11pt">
 							Use jOOQ to easily merge imported data into your database.
 						</fo:block>
@@ -6007,8 +6273,8 @@ Query query = error.query();]]></fo:block>
 							<fo:block font-size="11pt">This will be implemented soon... </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Batch">
 <fo:marker marker-class-name="section">
-<fo:block>4.8. Using JDBC batch operations</fo:block>
-</fo:marker>4.8. Using JDBC batch operations</fo:block>
+<fo:block>4.9. Using JDBC batch operations</fo:block>
+</fo:marker>4.9. Using JDBC batch operations</fo:block>
 <fo:block font-size="11pt">
 							Some JDBC drivers have highly optimised means of executing batch
 							operations. The JDBC interface for those operations is a bit verbose.

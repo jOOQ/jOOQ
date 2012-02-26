@@ -47,6 +47,9 @@ function printContent() {
 <a title="Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a>
 </li>
 <li>
+<a title="Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced configuration of the generator</a>
+</li>
+<li>
 <a title="The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a>
 </li>
 <li>

@@ -31,6 +31,9 @@ function printContent() {
 <a title="Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a>
 </li>
 <li>
+<a title="Execute listeners and SQL tracing" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">Execute listeners and SQL tracing</a>
+</li>
+<li>
 <a title="Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">Adding Oracle hints to queries</a>
 </li>
 <li>

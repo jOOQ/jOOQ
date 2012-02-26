@@ -131,6 +131,9 @@ function printContent() {
 <a title="Configuration and setup of the generator" href="#Configuration">Configuration and setup of the generator</a>
 </li>
 <li>
+<a title="Advanced configuration of the generator" href="#AdvancedConfiguration">Advanced configuration of the generator</a>
+</li>
+<li>
 <a title="The schema, top-level generated artefact" href="#SCHEMA">The schema, top-level generated artefact</a>
 </li>
 <li>
@@ -202,6 +205,9 @@ function printContent() {
 </li>
 <li>
 <a title="Mapping generated schemata and tables" href="#SchemaMapping">Mapping generated schemata and tables</a>
+</li>
+<li>
+<a title="Execute listeners and SQL tracing" href="#ExecuteListener">Execute listeners and SQL tracing</a>
 </li>
 <li>
 <a title="Adding Oracle hints to queries" href="#OracleHints">Adding Oracle hints to queries</a>
@@ -344,15 +350,42 @@ CREATE TABLE t_book_to_book_store (
     							lifecycle of your Factory</li>
     							
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a> :
-    							An optional mapping of schemata. Check out the
-    							<a href="#SchemaMapping" title="jOOQ Manual reference: Mapping generated schemata and tables">SchemaMapping</a>
-    							page for details</li>
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">org.jooq.conf.Settings</a> :
+    							An optional runtime configuration.</li>
 							
 </ul>
 							<p>If you are planning on using several RDBMS (= SQLDialects) or
 								several distinct JDBC Connections in your software, this will mean
 								that you have to create a new Factory every time. </p>
+
+							<h3>Factory settings</h3>
+							<p>
+								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
+								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								Subsequent sections of the manual contain some more in-depth explanations about these settings:
+							</p>
+							<ul>
+								
+<li>
+     								
+<a href="#SchemaMapping" title="jOOQ Manual reference: Mapping generated schemata and tables">Runtime schema and table mapping</a>
+   								
+</li>
+     							
+<li>
+     								
+<a href="#ExecuteListener" title="jOOQ Manual reference: Execute listeners and SQL tracing">Execute listeners and SQL tracing</a>
+     							
+</li>
+   							
+</ul>
+							<p>
+								Please refer to the jOOQ runtime configuration XSD for more details:<br>
+								
+<a href="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+							
+</p>
 
 							<h3>Factory subclasses</h3>
 							<p>
@@ -1227,6 +1260,9 @@ Object[] fetchArray(String fieldName);
 // Fetch a Cursor for lazy iteration
 Cursor&lt;R&gt; fetchLazy();
 
+// Or a JDBC ResultSet, if you prefer that
+ResultSet fetchResultSet();
+
 // Fetch data asynchronously and let client code
 // decide, when the data must be available.
 // This makes use of the java.util.concurrent API,
@@ -1621,17 +1657,6 @@ public void bind(BindContext context) throws DataAccessException;</pre>
   &lt;/jdbc&gt;
 
   &lt;generator&gt;
-    &lt;!-- The default code generator. You can override this one, to generate your own code style
-         Defaults to org.jooq.util.DefaultGenerator --&gt;
-    &lt;name&gt;org.jooq.util.DefaultGenerator&lt;/name&gt;
-
-    &lt;!-- The naming strategy used for class and field names.
-         You may override this with your custom naming strategy.
-         Defaults to org.jooq.util.DefaultGeneratorStrategy --&gt;
-    &lt;strategy&gt;
-      &lt;name&gt;org.jooq.util.DefaultGeneratorStrategy&lt;/name&gt;
-    &lt;/strategy&gt;
-
     &lt;database&gt;
       &lt;!-- The database dialect from jooq-meta. Available dialects are
            named org.util.[database].[database]Database. Known values are:
@@ -1687,97 +1712,10 @@ public void bind(BindContext context) throws DataAccessException;</pre>
   &lt;/generator&gt;
 &lt;/configuration&gt;</pre>
 
-							<p>And you can add some optional advanced configuration parameters for the database: </p>
-
-<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the database element: --&gt;
-&lt;database&gt;
-  &lt;!-- Generate java.sql.Timestamp fields for DATE columns. This is
-       particularly useful for Oracle databases.
-       Defaults to false --&gt;
-  &lt;dateAsTimestamp&gt;false&lt;/dateAsTimestamp&gt;
-
-  &lt;!-- Generate jOOU data types for your unsigned data types, which are
-       not natively supported in Java.
-       Defaults to true --&gt;
-  &lt;unsignedTypes&gt;true&lt;/unsignedTypes&gt;
-
-  &lt;!-- The schema that is used in generated source code. This will be the
-       production schema. Use this to override your local development
-       schema name for source code generation. If not specified, this
-       will be the same as the input-schema. --&gt;
-  &lt;outputSchema&gt;[your database schema / owner / name]&lt;/outputSchema&gt;
-
-  &lt;!-- A configuration element to configure several input and/or output
-       schemata for jooq-meta, in case you're using jooq-meta in a multi-
-       schema environment.
-       This cannot be combined with the above inputSchema / outputSchema --&gt;
-  &lt;schemata&gt;
-    &lt;schema&gt;
-      &lt;inputSchema&gt;...&lt;/inputSchema&gt;
-      &lt;outputSchema&gt;...&lt;/outputSchema&gt;
-    &lt;/schema&gt;
-    [ &lt;schema&gt;...&lt;/schema&gt; ... ]
-  &lt;/schemata&gt;
-
-  &lt;!-- A configuration element to configure master data table enum classes --&gt;
-  &lt;masterDataTables&gt;...&lt;/masterDataTables&gt;
-
-  &lt;!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
-  &lt;enumTypes&gt;...&lt;/enumTypes&gt;
-
-  &lt;!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
-  &lt;forcedTypes&gt;...&lt;/forcedTypes&gt;
-&lt;/database&gt;</pre>
-
-                            <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
-
-<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
-&lt;generate&gt;
-  &lt;!-- Primary key / foreign key relations should be generated and used.
-       This is a prerequisite for various advanced features.
-       Defaults to false --&gt;
-  &lt;relations&gt;false&lt;/relations&gt;
-
-  &lt;!-- Generate navigation methods to navigate foreign key relationships
-       directly from Record classes. This is only relevant if relations
-       is set to true, too.
-       Defaults to true --&gt;
-  &lt;navigationMethods&gt;true&lt;/navigationMethods&gt;
-
-  &lt;!-- Generate deprecated code for backwards compatibility
-       Defaults to true --&gt;
-  &lt;deprecated&gt;true&lt;/deprecated&gt;
-
-  &lt;!-- Generate instance fields in your tables, as opposed to static
-       fields. This simplifies aliasing.
-       Defaults to true --&gt;
-  &lt;instanceFields&gt;true&lt;/instanceFields&gt;
-
-  &lt;!-- Generate the javax.annotation.Generated annotation to indicate
-       jOOQ version used for source code.
-       Defaults to true --&gt;
-  &lt;generatedAnnotation&gt;true&lt;/generatedAnnotation&gt;
-
-  &lt;!-- Generate POJOs in addition to Record classes for usage of the
-       ResultQuery.fetchInto(Class) API
-       Defaults to false --&gt;
-  &lt;pojos&gt;false&lt;/pojos&gt;
-
-  &lt;!-- Annotate POJOs and Records with JPA annotations for increased
-       compatibility and better integration with JPA/Hibernate, etc
-       Defaults to false --&gt;
-  &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
-&lt;/generate&gt;</pre>
-
-							<p>Check out the manual's section about
-								<a href="#MasterData" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
-								 to find out more
-								about those advanced configuration parameters. </p>
-
-							<p>Also, check out the official XSD file at
+							<p>
+								There are also lots of advanced configuration parameters, which will be
+								treated in the <a href="#AdvancedConfiguration" title="jOOQ Manual reference: Advanced configuration of the generator">manual's next section</a>
+								Note, you can find the official XSD file at
 							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</a>
 							   for a formal specification</p>
 
@@ -1958,8 +1896,210 @@ public void bind(BindContext context) throws DataAccessException;</pre>
 							<p>Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you
 								can execute SQL statements with your generated classes.</p>
+						<h1 id="AdvancedConfiguration">
+<a name="AdvancedConfiguration"></a>2.2. Advanced configuration of the generator</h1><p>jOOQ power users may want to fine-tune their source code generation settings. Here's how to do this</p>
+							<h2>Code generation</h2>
+							<p>
+								In the <a href="#Configuration" title="jOOQ Manual reference: Configuration and setup of the generator">previous section</a>
+								we have seen how jOOQ's source code generator is configured and
+								run within a few steps. In this chapter we'll treat some advanced
+								settings
+							</p>
+
+<pre class="prettyprint lang-xml">&lt;!-- These properties can be added directly to the generator element: --&gt;
+&lt;generator&gt;
+  &lt;!-- The default code generator. You can override this one, to generate your own code style
+       Defaults to org.jooq.util.DefaultGenerator --&gt;
+  &lt;name&gt;org.jooq.util.DefaultGenerator&lt;/name&gt;
+
+  &lt;!-- The naming strategy used for class and field names.
+       You may override this with your custom naming strategy. Some examples follow
+       Defaults to org.jooq.util.DefaultGeneratorStrategy --&gt;
+  &lt;strategy&gt;
+    &lt;name&gt;org.jooq.util.DefaultGeneratorStrategy&lt;/name&gt;
+  &lt;/strategy&gt;
+&lt;/generator&gt;</pre>
+
+							<p>
+								The following example shows how you can override the
+								DefaultGeneratorStrategy to render table and column names the way
+								they are defined in the database, rather than switching them to
+								camel case:
+							</p>
+
+<pre class="prettyprint lang-java">/**
+ * It is recommended that you extend the DefaultGeneratorStrategy. Most of the
+ * GeneratorStrategy API is already declared final. You only need to override any
+ * of the following methods, for whatever generation behaviour you'd like to achieve
+ *
+ * Beware that most methods also receive a "Mode" object, to tell you whether a
+ * TableDefinition is being rendered as a Table, Record, POJO, etc. Depending on
+ * that information, you can add a suffix only for TableRecords, not for Tables
+ */
+public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
+
+    /**
+     * Override this to specifiy what identifiers in Java should look like.
+     * This will just take the identifier as defined in the database.
+     */
+    @Override
+    public String getJavaIdentifier(Definition definition) {
+        return definition.getOutputName();
+    }
+
+    /**
+     * Override these to specify what a setter in Java should look like. Setters
+     * are used in TableRecords, UDTRecords, and POJOs. This example will name
+     * setters "set[NAME_IN_DATABASE]"
+     */
+    @Override
+    public String getJavaSetterName(Definition definition, Mode mode) {
+        return "set" + definition.getOutputName();
+    }
+
+    /**
+     * Just like setters...
+     */
+    @Override
+    public String getJavaGetterName(Definition definition, Mode mode) {
+        return "get" + definition.getOutputName();
+    }
+
+    /**
+     * Override this method to define what a Java method generated from a database
+     * Definition should look like. This is used mostly for convenience methods
+     * when calling stored procedures and functions. This example shows how to
+     * set a prefix to a CamelCase version of your procedure
+     */
+    @Override
+    public String getJavaMethodName(Definition definition, Mode mode) {
+        return "call" + org.jooq.tools.StringUtils.toCamelCase(definition.getOutputName());
+    }
+
+    /**
+     * Override this method to define how your Java classes and Java files should
+     * be named. This example applies no custom setting and uses CamelCase versions
+     * instead
+     */
+    @Override
+    public String getJavaClassName(Definition definition, Mode mode) {
+        return super.getJavaClassName(definition, mode);
+    }
+
+    /**
+     * Override this method to re-define the package names of your generated
+     * artefacts.
+     */
+    @Override
+    public String getJavaPackageName(Definition definition, Mode mode) {
+        return super.getJavaPackageName(definition, mode);
+    }
+
+    /**
+     * Override this method to define how Java members should be named. This is
+     * used for POJOs and method arguments
+     */
+    @Override
+    public String getJavaMemberName(Definition definition, Mode mode) {
+        return definition.getOutputName();
+    }
+}</pre>
+
+							<p>
+								Within the &lt;generator/&gt; element, there are other configuration elements:
+							</p>
+
+<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the database element: --&gt;
+&lt;database&gt;
+  &lt;!-- Generate java.sql.Timestamp fields for DATE columns. This is
+       particularly useful for Oracle databases.
+       Defaults to false --&gt;
+  &lt;dateAsTimestamp&gt;false&lt;/dateAsTimestamp&gt;
+
+  &lt;!-- Generate jOOU data types for your unsigned data types, which are
+       not natively supported in Java.
+       Defaults to true --&gt;
+  &lt;unsignedTypes&gt;true&lt;/unsignedTypes&gt;
+
+  &lt;!-- The schema that is used in generated source code. This will be the
+       production schema. Use this to override your local development
+       schema name for source code generation. If not specified, this
+       will be the same as the input-schema. --&gt;
+  &lt;outputSchema&gt;[your database schema / owner / name]&lt;/outputSchema&gt;
+
+  &lt;!-- A configuration element to configure several input and/or output
+       schemata for jooq-meta, in case you're using jooq-meta in a multi-
+       schema environment.
+       This cannot be combined with the above inputSchema / outputSchema --&gt;
+  &lt;schemata&gt;
+    &lt;schema&gt;
+      &lt;inputSchema&gt;...&lt;/inputSchema&gt;
+      &lt;outputSchema&gt;...&lt;/outputSchema&gt;
+    &lt;/schema&gt;
+    [ &lt;schema&gt;...&lt;/schema&gt; ... ]
+  &lt;/schemata&gt;
+
+  &lt;!-- A configuration element to configure master data table enum classes --&gt;
+  &lt;masterDataTables&gt;...&lt;/masterDataTables&gt;
+
+  &lt;!-- A configuration element to configure synthetic enum types
+       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
+  &lt;enumTypes&gt;...&lt;/enumTypes&gt;
+
+  &lt;!-- A configuration element to configure type overrides for generated
+       artefacts (e.g. in combination with enumTypes)
+       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
+  &lt;forcedTypes&gt;...&lt;/forcedTypes&gt;
+&lt;/database&gt;</pre>
+
+                            <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
+
+<pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
+&lt;generate&gt;
+  &lt;!-- Primary key / foreign key relations should be generated and used.
+       This is a prerequisite for various advanced features.
+       Defaults to false --&gt;
+  &lt;relations&gt;false&lt;/relations&gt;
+
+  &lt;!-- Generate navigation methods to navigate foreign key relationships
+       directly from Record classes. This is only relevant if relations
+       is set to true, too.
+       Defaults to true --&gt;
+  &lt;navigationMethods&gt;true&lt;/navigationMethods&gt;
+
+  &lt;!-- Generate deprecated code for backwards compatibility
+       Defaults to true --&gt;
+  &lt;deprecated&gt;true&lt;/deprecated&gt;
+
+  &lt;!-- Generate instance fields in your tables, as opposed to static
+       fields. This simplifies aliasing.
+       Defaults to true --&gt;
+  &lt;instanceFields&gt;true&lt;/instanceFields&gt;
+
+  &lt;!-- Generate the javax.annotation.Generated annotation to indicate
+       jOOQ version used for source code.
+       Defaults to true --&gt;
+  &lt;generatedAnnotation&gt;true&lt;/generatedAnnotation&gt;
+
+  &lt;!-- Generate POJOs in addition to Record classes for usage of the
+       ResultQuery.fetchInto(Class) API
+       Defaults to false --&gt;
+  &lt;pojos&gt;false&lt;/pojos&gt;
+
+  &lt;!-- Annotate POJOs and Records with JPA annotations for increased
+       compatibility and better integration with JPA/Hibernate, etc
+       Defaults to false --&gt;
+  &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
+&lt;/generate&gt;</pre>
+
+							<p>
+								Check out the manual's section about
+								<a href="#MasterData" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
+								to find out more
+								about those advanced configuration parameters.
+							</p>
 						<h1 id="SCHEMA">
-<a name="SCHEMA"></a>2.2. The schema, top-level generated artefact</h1><p>The schema is the top-level generated object in jOOQ. In many
+<a name="SCHEMA"></a>2.3. The schema, top-level generated artefact</h1><p>The schema is the top-level generated object in jOOQ. In many
 							RDBMS, the schema coincides with the owner of tables and other objects
 						</p>
 							<h2>The Schema</h2>
@@ -1994,7 +2134,7 @@ public void bind(BindContext context) throws DataAccessException;</pre>
 <pre class="prettyprint lang-java">public final java.util.List&lt;org.jooq.Sequence&lt;?&gt;&gt; getSequences();
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
 						<h1 id="TABLE">
-<a name="TABLE"></a>2.3. Tables, views and their corresponding records</h1><p>
+<a name="TABLE"></a>2.4. Tables, views and their corresponding records</h1><p>
 							The most important generated artefacts are Tables and TableRecords.
 							Every Table has a Record type associated with it that models a single tuple
 							of that entity: Table&lt;R extends Record&gt;.
@@ -2065,7 +2205,7 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
     public List&lt;TBookRecord&gt; fetchTBooks() { // [...]
 }</pre>
 						<h1 id="PROCEDURE">
-<a name="PROCEDURE"></a>2.4. Procedures and packages</h1><p>
+<a name="PROCEDURE"></a>2.5. Procedures and packages</h1><p>
 							Procedure support is one of the most important reasons why you should consider
 							jOOQ. jOOQ heavily facilitates the use of stored procedures and
 							functions via its source code generation.
@@ -2264,7 +2404,7 @@ assertNotNull(author.getLastName());</pre>
 </p>
 
 						<h1 id="UDT">
-<a name="UDT"></a>2.5. UDT's including ARRAY and ENUM types</h1><p>
+<a name="UDT"></a>2.6. UDT's including ARRAY and ENUM types</h1><p>
 							Databases become more powerful when you can structure your data in user
 							defined types. It's time for Java developers to give some credit to
 							that.
@@ -2564,7 +2704,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 								<a href="#MasterData" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a> for more
 								details. </p>
 						<h1 id="SEQUENCE">
-<a name="SEQUENCE"></a>2.6. Sequences</h1><p>
+<a name="SEQUENCE"></a>2.7. Sequences</h1><p>
 							jOOQ also generates convenience artefacts for sequences, where this is
 							supported: DB2, Derby, H2, HSQLDB, Oracle, Postgres, and more.
 						</p>
@@ -3020,6 +3160,8 @@ TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
     Condition notIn(Select&lt;?&gt; query);
     Condition in(Collection&lt;T&gt; values);
     Condition between(T minValue, T maxValue);
+    Condition contains(T value);
+    Condition contains(Field&lt;T&gt; value);
     Condition equal(T value);
     Condition equal(Field&lt;T&gt; field);
     Condition equal(Select&lt;?&gt; query);
@@ -3029,6 +3171,8 @@ TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
     Condition equalAll(Select&lt;?&gt; query);
     Condition equalAll(T... array);
     Condition equalAll(Field&lt;T[]&gt; array);
+    Condition equalIgnoreCase(String value);
+    Condition equalIgnoreCase(Field&lt;String&gt; value);
     Condition notEqual(T value);
     Condition notEqual(Field&lt;T&gt; field);
     Condition notEqual(Select&lt;?&gt; query);
@@ -4152,15 +4296,18 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							<p>When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a>
-								class, that you can equip your Factory
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/RenderMapping.java" title="Internal API reference: org.jooq.conf.RenderMapping">org.jooq.conf.RenderMapping</a>
+								class, that you can equip your Factory's settings
 								with. Take the following example: </p>
 
-<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
+<pre class="prettyprint lang-java">Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")));
 
-// Add the mapping to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries with the "mapped" factory
 create.selectFrom(T_AUTHOR).fetch();</pre>
@@ -4174,12 +4321,27 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 							<p>Your development database may not be restricted to hold only one DEV
 								schema. You may also have a LOG schema and a MASTER schema. Let's say
 								the MASTER schema is shared among all customers, but each customer has
-								their own LOG schema instance. Then you can enhance your SchemaMapping
-								like this: </p>
+								their own LOG schema instance. Then you can enhance your RenderMapping
+								like this (e.g. using an XML configuration file): </p>
 
-<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
-mapping.add(LOG, "MY_BOOK_WORLD_LOG");</pre>
+<pre class="prettyprint lang-xml">&lt;settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd"&gt;
+  &lt;renderMapping&gt;
+    &lt;schemata&gt;
+      &lt;schema&gt;
+        &lt;input&gt;DEV&lt;/input&gt;
+        &lt;output&gt;MY_BOOK_WORLD&lt;/output&gt;
+      &lt;/schema&gt;
+      &lt;schema&gt;
+        &lt;input&gt;LOG&lt;/input&gt;
+        &lt;output&gt;MY_BOOK_WORLD_LOG&lt;/output&gt;
+      &lt;/schema&gt;
+    &lt;/schemata&gt;
+  &lt;/renderMapping&gt;
+&lt;/settings&gt;</pre>
+
+                            <p>Note, you can load the above XML file like this:</p>
+
+<pre class="prettyprint lang-java">Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</pre>
 
 							<p>This will map generated classes from DEV to MY_BOOK_WORLD, from LOG
 								to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you
@@ -4213,12 +4375,17 @@ SELECT * FROM T_AUTHOR</pre>
 								applied to all of your tables. This can be achieved by creating the
 								following mapping: </p>
 
-<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
-mapping.add(T_AUTHOR, "MY_APP__T_AUTHOR");
+<pre class="prettyprint lang-java">Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")
+                          .withTables(
+         new MappedTable().withInput("T_AUTHOR")
+                          .withOutput("MY_APP__T_AUTHOR"))));
 
-// Add the mapping to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries with the "mapped" factory
 create.selectFrom(T_AUTHOR).fetch();</pre>
@@ -4247,8 +4414,68 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								<a href="#META" title="jOOQ Manual reference: Meta model code generation">jooq-codegen configuration</a>
 								for more details
 							</p>
+						<h1 id="ExecuteListener">
+<a name="ExecuteListener"></a>4.3. Execute listeners and SQL tracing</h1><p>
+							Feel the heart beat of your SQL statements at a very low level using listeners
+						</p>
+							<h2>ExecuteListener</h2>
+							<p>
+								The <a href="#Factory" title="jOOQ Manual reference: The Factory class">jOOQ Factory Settings</a>
+								let you specify a list of <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ExecuteListener.java" title="Internal API reference: org.jooq.ExecuteListener">org.jooq.ExecuteListener</a> classes.
+								The ExecuteListener is essentially an event listener for
+								Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a
+								base type for loggers, debuggers, profilers, data collectors. Advanced ExecuteListeners
+								can also provide custom implementations of Connection, PreparedStatement and ResultSet
+								to jOOQ in apropriate methods. For convenience, consider extending
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/DefaultExecuteListener.java" title="Internal API reference: org.jooq.impl.DefaultExecuteListener">org.jooq.impl.DefaultExecuteListener</a>
+								instead of implementing this interface. Please read the
+								<a href="www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html" title="ExecuteListener Javadoc">ExecuteListener Javadoc</a>
+								for more details
+							</p>
+
+							<h2>jOOQ Console</h2>
+							<p>
+							    The ExecuteListener API was driven by a feature request by Christopher Deckers, who has
+							    had the courtesy to contribute the jOOQ Console, a sample application interfacing
+							    with jOOQ's ExecuteListeners. Please note that the jOOQ Console is still experimental.
+							    Any feedback is very welcome on
+							    <a href="http://groups.google.com/group/jooq-user" title="the jooq-user group">the jooq-user group</a>
+							
+</p>
+							<p>
+								Here are the steps you need to do to run the console
+							</p>
+<pre class="prettyprint lang-java">// Create a new RemoteDebuggerServer in your application that listens to
+// incoming connections on a given port
+SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</pre>
+
+							<p>
+								And configure the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a> in the
+								Factory's settings:
+							</p>
+
+<pre class="prettyprint lang-xml">&lt;settings&gt;
+  &lt;executeListeners&gt;
+    &lt;executeListener&gt;org.jooq.debug.DebugListener&lt;/executeListener&gt;
+  &lt;/executeListeners&gt;
+&lt;/settings&gt;</pre>
+
+							<p>
+								Now start your application and the
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/console/Console.java" title="Internal API reference: org.jooq.debug.console.Console">org.jooq.debug.console.Console</a>, and start profiling!
+							</p>
+
+							<div class="screenshot">
+							
+<img alt="jOOQ Console example" class="screenshot" src="<?=$root?>/img/jooq-console-01.png">
+							</div>
+
+							<p>
+								The jOOQ Console also has other modes of execution, which will be documented here
+								soon.
+							</p>
 						<h1 id="OracleHints">
-<a name="OracleHints"></a>4.3. Adding Oracle hints to queries</h1><p>
+<a name="OracleHints"></a>4.4. Adding Oracle hints to queries</h1><p>
 							Oracle has a powerful syntax to add hints as comments directly in your SQL
 						</p>
 							<h2>How to embed Oracle hints in SELECT</h2>
@@ -4267,7 +4494,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								that clause, the passed string will always be put in between the
 								SELECT [DISTINCT] keywords and the actual projection list </p>
 						<h1 id="CONNECTBY">
-<a name="CONNECTBY"></a>4.4. The Oracle CONNECT BY clause</h1><p>
+<a name="CONNECTBY"></a>4.5. The Oracle CONNECT BY clause</h1><p>
 							Hierarchical queries are supported by many RDBMS using the WITH clause.
 							Oracle has a very neat and much less verbose syntax for hierarchical
 							queries: CONNECT BY .. STARTS WITH
@@ -4318,7 +4545,7 @@ create.select(create.rownum())
 |...21 record(s) truncated...
 </pre>
 						<h1 id="PIVOT">
-<a name="PIVOT"></a>4.5. The Oracle 11g PIVOT clause</h1><p>
+<a name="PIVOT"></a>4.6. The Oracle 11g PIVOT clause</h1><p>
 				    	    Oracle 11g has formally introduced the very powerful PIVOT clause, which
 				    	    allows to specify a pivot column, expected grouping values for pivoting,
 				    	    as well as a set of aggregate functions
@@ -4341,7 +4568,7 @@ create.select(create.rownum())
 								dialects in the future.
 							</p>
 						<h1 id="Export">
-<a name="Export"></a>4.6. Exporting to XML, CSV, JSON, HTML, Text</h1><p>
+<a name="Export"></a>4.7. Exporting to XML, CSV, JSON, HTML, Text</h1><p>
 							Get your data out of the Java world. Stream your data using any of the supported, wide-spread formats
 						</p>
 							<h2>Exporting with jOOQ</h2>
@@ -4437,7 +4664,7 @@ String text = create.selectFrom(T_BOOK).fetch().format();</pre>
 |  2|        1|Animal Farm|
 +---+---------+-----------+</pre>
 						<h1 id="Import">
-<a name="Import"></a>4.7. Importing data from XML, CSV</h1><p>
+<a name="Import"></a>4.8. Importing data from XML, CSV</h1><p>
 							Use jOOQ to easily merge imported data into your database.
 						</p>
 							<h2>Importing with jOOQ</h2>
@@ -4544,7 +4771,7 @@ Query query = error.query();</pre>
 							<h3>XML </h3>
 							<p>This will be implemented soon... </p>
 						<h1 id="Batch">
-<a name="Batch"></a>4.8. Using JDBC batch operations</h1><p>
+<a name="Batch"></a>4.9. Using JDBC batch operations</h1><p>
 							Some JDBC drivers have highly optimised means of executing batch
 							operations. The JDBC interface for those operations is a bit verbose.
 							jOOQ abstracts that by re-using the existing query API's

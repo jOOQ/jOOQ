@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">previous</a> : <a title="Next section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">next</a></td>
 </tr>
 </table>
 							<h2>The Schema</h2>
@@ -55,7 +55,7 @@ function printContent() {
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">previous</a> : <a title="Next section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">next</a></td>
 </tr>
 </table>
 <?php 

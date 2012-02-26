@@ -71,6 +71,8 @@ function printContent() {
     Condition notIn(Select&lt;?&gt; query);
     Condition in(Collection&lt;T&gt; values);
     Condition between(T minValue, T maxValue);
+    Condition contains(T value);
+    Condition contains(Field&lt;T&gt; value);
     Condition equal(T value);
     Condition equal(Field&lt;T&gt; field);
     Condition equal(Select&lt;?&gt; query);
@@ -80,6 +82,8 @@ function printContent() {
     Condition equalAll(Select&lt;?&gt; query);
     Condition equalAll(T... array);
     Condition equalAll(Field&lt;T[]&gt; array);
+    Condition equalIgnoreCase(String value);
+    Condition equalIgnoreCase(Field&lt;String&gt; value);
     Condition notEqual(T value);
     Condition notEqual(Field&lt;T&gt; field);
     Condition notEqual(Select&lt;?&gt; query);

@@ -58,15 +58,42 @@ function printContent() {
     							lifecycle of your Factory</li>
     							
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a> :
-    							An optional mapping of schemata. Check out the
-    							<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">SchemaMapping</a>
-    							page for details</li>
+<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">org.jooq.conf.Settings</a> :
+    							An optional runtime configuration.</li>
 							
 </ul>
 							<p>If you are planning on using several RDBMS (= SQLDialects) or
 								several distinct JDBC Connections in your software, this will mean
 								that you have to create a new Factory every time. </p>
+
+							<h3>Factory settings</h3>
+							<p>
+								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
+								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
+								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								Subsequent sections of the manual contain some more in-depth explanations about these settings:
+							</p>
+							<ul>
+								
+<li>
+     								
+<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">Runtime schema and table mapping</a>
+   								
+</li>
+     							
+<li>
+     								
+<a href="<?=$root?>/manual/ADVANCED/ExecuteListener/" title="jOOQ Manual reference: Execute listeners and SQL tracing">Execute listeners and SQL tracing</a>
+     							
+</li>
+   							
+</ul>
+							<p>
+								Please refer to the jOOQ runtime configuration XSD for more details:<br>
+								
+<a href="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+							
+</p>
 
 							<h3>Factory subclasses</h3>
 							<p>

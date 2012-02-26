@@ -21,7 +21,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and SQL tracing" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 							<h2>Mapping your DEV schema to a productive environment</h2>
@@ -50,15 +50,18 @@ function printContent() {
 							<p>When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SchemaMapping.java" title="Internal API reference: org.jooq.SchemaMapping">org.jooq.SchemaMapping</a>
-								class, that you can equip your Factory
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/RenderMapping.java" title="Internal API reference: org.jooq.conf.RenderMapping">org.jooq.conf.RenderMapping</a>
+								class, that you can equip your Factory's settings
 								with. Take the following example: </p>
 
-<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
+<pre class="prettyprint lang-java">Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")));
 
-// Add the mapping to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries with the "mapped" factory
 create.selectFrom(T_AUTHOR).fetch();</pre>
@@ -72,12 +75,27 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 							<p>Your development database may not be restricted to hold only one DEV
 								schema. You may also have a LOG schema and a MASTER schema. Let's say
 								the MASTER schema is shared among all customers, but each customer has
-								their own LOG schema instance. Then you can enhance your SchemaMapping
-								like this: </p>
+								their own LOG schema instance. Then you can enhance your RenderMapping
+								like this (e.g. using an XML configuration file): </p>
 
-<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
-mapping.add(LOG, "MY_BOOK_WORLD_LOG");</pre>
+<pre class="prettyprint lang-xml">&lt;settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd"&gt;
+  &lt;renderMapping&gt;
+    &lt;schemata&gt;
+      &lt;schema&gt;
+        &lt;input&gt;DEV&lt;/input&gt;
+        &lt;output&gt;MY_BOOK_WORLD&lt;/output&gt;
+      &lt;/schema&gt;
+      &lt;schema&gt;
+        &lt;input&gt;LOG&lt;/input&gt;
+        &lt;output&gt;MY_BOOK_WORLD_LOG&lt;/output&gt;
+      &lt;/schema&gt;
+    &lt;/schemata&gt;
+  &lt;/renderMapping&gt;
+&lt;/settings&gt;</pre>
+
+                            <p>Note, you can load the above XML file like this:</p>
+
+<pre class="prettyprint lang-java">Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</pre>
 
 							<p>This will map generated classes from DEV to MY_BOOK_WORLD, from LOG
 								to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you
@@ -111,12 +129,17 @@ SELECT * FROM T_AUTHOR</pre>
 								applied to all of your tables. This can be achieved by creating the
 								following mapping: </p>
 
-<pre class="prettyprint lang-java">SchemaMapping mapping = new SchemaMapping();
-mapping.add(DEV, "MY_BOOK_WORLD");
-mapping.add(T_AUTHOR, "MY_APP__T_AUTHOR");
+<pre class="prettyprint lang-java">Settings settings = new Settings()
+    .withRenderMapping(new RenderMapping()
+    .withSchemata(
+        new MappedSchema().withInput("DEV")
+                          .withOutput("MY_BOOK_WORLD")
+                          .withTables(
+         new MappedTable().withInput("T_AUTHOR")
+                          .withOutput("MY_APP__T_AUTHOR"))));
 
-// Add the mapping to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, mapping);
+// Add the settings to the factory
+Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
 
 // Run queries with the "mapped" factory
 create.selectFrom(T_AUTHOR).fetch();</pre>
@@ -147,7 +170,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and SQL tracing" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 <?php 

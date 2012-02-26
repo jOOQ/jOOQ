@@ -145,6 +145,42 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
             else if (query instanceof Truncate) {
                 return ExecuteType.DDL;
             }
+
+            // Analyse SQL in plain SQL queries:
+            else {
+                String s = query.getSQL().toLowerCase();
+
+                // TODO: Use a simple lexer to parse SQL here. Potentially, the
+                // SQL Console's SQL formatter could be used...?
+                if (s.matches("^(with\\b.*?\\bselect|select|explain)\\b.*?")) {
+                    return ExecuteType.READ;
+                }
+
+                // These are sample DML statements. There may be many more
+                else if (s.matches("^(insert|update|delete|merge|replace|upsert|lock)\\b.*?")) {
+                    return ExecuteType.WRITE;
+                }
+
+                // These are only sample DDL statements. There may be many more
+                else if (s.matches("^(create|alter|drop|truncate|grant|revoke|analyze|comment|flashback|enable|disable)\\b.*?")) {
+                    return ExecuteType.DDL;
+                }
+
+                // JDBC escape syntax for routines
+                else if (s.matches("^\\s*\\{\\s*(\\?\\s*=\\s*)call.*?")) {
+                    return ExecuteType.ROUTINE;
+                }
+
+                // Vendor-specific calling of routines / procedural blocks
+                else if (s.matches("^(call|begin|declare)\\b.*?")) {
+                    return ExecuteType.ROUTINE;
+                }
+            }
+        }
+
+        // Fetching JDBC result sets, e.g. with Factory.fetch(ResultSet)
+        else if (resultSet != null) {
+            return ExecuteType.READ;
         }
 
         // No query available

@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1570806775;
+	private static final long serialVersionUID = -1829091458;
 
 	/**
-	 * The singleton instance of t_triggers
+	 * The singleton instance of dba.t_triggers
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.sybase.generatedclasses.tables.TTriggers();
 

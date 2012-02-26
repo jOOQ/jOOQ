@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Invoke F_AUTHOR_EXISTS
+	 * Call dba.f_author_exists
 	 *
 	 * @param authorName
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -25,7 +25,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get dba.f_author_exists as a field
 	 *
 	 * @param authorName
 	 */
@@ -37,7 +37,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_AUTHOR_EXISTS as a field
+	 * Get dba.f_author_exists as a field
 	 *
 	 * @param authorName
 	 */
@@ -49,7 +49,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_NUMBER
+	 * Call dba.f_number
 	 *
 	 * @param n
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
@@ -63,7 +63,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get dba.f_number as a field
 	 *
 	 * @param n
 	 */
@@ -75,7 +75,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_NUMBER as a field
+	 * Get dba.f_number as a field
 	 *
 	 * @param n
 	 */
@@ -87,7 +87,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F_ONE
+	 * Call dba.f_one
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -99,7 +99,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F_ONE as a field
+	 * Get dba.f_one as a field
 	 *
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
@@ -109,7 +109,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke F317
+	 * Call dba.f317
 	 *
 	 * @param p1
 	 * @param p2
@@ -129,7 +129,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get dba.f317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -147,7 +147,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get F317 as a field
+	 * Get dba.f317 as a field
 	 *
 	 * @param p1
 	 * @param p2
@@ -165,7 +165,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_AUTHOR_EXISTS
+	 * Call dba.p_author_exists
 	 *
 	 * @param authorName IN parameter
 	 * @param result OUT parameter
@@ -180,7 +180,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR
+	 * Call dba.p_create_author
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
@@ -191,7 +191,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_CREATE_AUTHOR_BY_NAME
+	 * Call dba.p_create_author_by_name
 	 *
 	 * @param pFirstName IN parameter
 	 * @param pLastName IN parameter
@@ -206,7 +206,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P_UNUSED
+	 * Call dba.p_unused
 	 *
 	 * @param in1 IN parameter
 	 * @param out1 OUT parameter
@@ -223,7 +223,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Invoke P391
+	 * Call dba.p391
 	 *
 	 * @param i1 IN parameter
 	 * @param io1 IN OUT parameter

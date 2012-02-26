@@ -58,11 +58,11 @@ CREATE TABLE t_identity (
 
 CREATE TABLE t_dates (
   id int,
-  d date,
-  t time,
-  ts timestamp,
-  d_int int,
-  ts_bigint bigint,
+  d date null,
+  t time null,
+  ts datetime null,
+  d_int int null,
+  ts_bigint bigint null,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )

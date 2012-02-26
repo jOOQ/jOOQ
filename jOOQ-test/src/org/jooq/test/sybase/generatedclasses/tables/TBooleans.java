@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 76909220;
+	private static final long serialVersionUID = -2062944753;
 
 	/**
-	 * The singleton instance of t_booleans
+	 * The singleton instance of dba.t_booleans
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TBooleans T_BOOLEANS = new org.jooq.test.sybase.generatedclasses.tables.TBooleans();
 

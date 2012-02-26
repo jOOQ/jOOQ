@@ -103,7 +103,7 @@ public interface Query extends QueryPart {
      * <code>Query</code> using {@link #getBindValues()}</td>
      * </tr>
      * <tr>
-     * <td> {@link StatementType#STATEMENT}</td>
+     * <td> {@link StatementType#STATIC_STATEMENT}</td>
      * <td><code>true</code></td>
      * <td>This will inline all bind variables in a statement to be used with a
      * JDBC {@link Statement}</td>

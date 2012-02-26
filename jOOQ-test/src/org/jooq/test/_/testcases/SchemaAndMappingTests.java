@@ -124,7 +124,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         Settings settings = new Settings()
             .withRenderMapping(new RenderMapping()
             .withSchemata(new MappedSchema()
-            .withInput(TAuthor().getSchema().getName())
+            .withInput(TAuthor().getSchema() == null ? "" : TAuthor().getSchema().getName())
             .withTables(
                 new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
                 new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName()))));

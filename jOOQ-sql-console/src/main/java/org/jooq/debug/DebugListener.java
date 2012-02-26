@@ -51,7 +51,7 @@ public class DebugListener extends DefaultExecuteListener {
 
 	@Override
 	public void renderStart(ExecuteContext ctx) {
-		isLogging = !DebuggerRegister.getSqlQueryDebuggerList().isEmpty();
+		isLogging = !DebuggerRegistry.getDebuggerList().isEmpty();
 		startPreparationTime = 0;
 		aggregatedPreparationDuration = 0;
 		startBindTime = 0;
@@ -121,7 +121,7 @@ public class DebugListener extends DefaultExecuteListener {
 			return;
 		}
 		endExecutionTime = System.currentTimeMillis();
-		List<Debugger> sqlQueryDebuggerList = DebuggerRegister.getSqlQueryDebuggerList();
+		List<Debugger> sqlQueryDebuggerList = DebuggerRegistry.getDebuggerList();
 		if(sqlQueryDebuggerList.isEmpty()) {
 			return;
 		}
@@ -147,7 +147,7 @@ public class DebugListener extends DefaultExecuteListener {
 			ResultSet newResultSet = new UsageTrackingResultSet(resultSet) {
 				@Override
 				protected void notifyData(long lifeTime, int readRows, int readCount, int writeCount) {
-					List<Debugger> sqlQueryDebuggerList = DebuggerRegister.getSqlQueryDebuggerList();
+					List<Debugger> sqlQueryDebuggerList = DebuggerRegistry.getDebuggerList();
 					if(sqlQueryDebuggerList.isEmpty()) {
 						return;
 					}

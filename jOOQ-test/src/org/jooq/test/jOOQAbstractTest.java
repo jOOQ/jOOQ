@@ -70,8 +70,8 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
-import org.jooq.debugger.SqlQueryDebuggerExecuteListener;
-import org.jooq.debugger.console.remote.SqlRemoteQueryDebuggerServer;
+import org.jooq.debug.DebugListener;
+import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
@@ -178,30 +178,30 @@ public abstract class jOOQAbstractTest<
     protected static final List<String>    AUTHOR_FIRST_NAMES = Arrays.asList("George", "Paulo");
     protected static final List<String>    AUTHOR_LAST_NAMES  = Arrays.asList("Orwell", "Coelho");
 
-    private static final String                 JDBC_SCHEMA        = "jdbc.Schema";
-    private static final String                 JDBC_PASSWORD      = "jdbc.Password";
-    private static final String                 JDBC_USER          = "jdbc.User";
-    private static final String                 JDBC_URL           = "jdbc.URL";
-    private static final String                 JDBC_DRIVER        = "jdbc.Driver";
-    private static final int                    DEBUGGER_PORT      = 5533;
+    private static final String           JDBC_SCHEMA        = "jdbc.Schema";
+    private static final String           JDBC_PASSWORD      = "jdbc.Password";
+    private static final String           JDBC_USER          = "jdbc.User";
+    private static final String           JDBC_URL           = "jdbc.URL";
+    private static final String           JDBC_DRIVER        = "jdbc.Driver";
+    private static final int              DEBUGGER_PORT      = 5533;
 
-    public static final JooqLogger              log                = JooqLogger.getLogger(jOOQAbstractTest.class);
-    public static final StopWatch               testSQLWatch       = new StopWatch();
-    public static boolean                       initialised;
-    public static boolean                       reset;
-    public static Connection                    connection;
-    public static boolean                       connectionInitialised;
-    public static Connection                    connectionMultiSchema;
-    public static boolean                       connectionMultiSchemaInitialised;
-    public static Connection                    connectionMultiSchemaUnused;
-    public static boolean                       connectionMultiSchemaUnusedInitialised;
-    public static boolean                       autocommit;
-    public static String                        jdbcURL;
-    public static String                        jdbcSchema;
-    public static Map<String, String>           scripts            = new HashMap<String, String>();
+    public static final JooqLogger        log                = JooqLogger.getLogger(jOOQAbstractTest.class);
+    public static final StopWatch         testSQLWatch       = new StopWatch();
+    public static boolean                 initialised;
+    public static boolean                 reset;
+    public static Connection              connection;
+    public static boolean                 connectionInitialised;
+    public static Connection              connectionMultiSchema;
+    public static boolean                 connectionMultiSchemaInitialised;
+    public static Connection              connectionMultiSchemaUnused;
+    public static boolean                 connectionMultiSchemaUnusedInitialised;
+    public static boolean                 autocommit;
+    public static String                  jdbcURL;
+    public static String                  jdbcSchema;
+    public static Map<String, String>     scripts            = new HashMap<String, String>();
 
-    private static SqlRemoteQueryDebuggerServer SERVER;
-    private static TestStatisticsListener       STATISTICS;
+    private static RemoteDebuggerServer   SERVER;
+    private static TestStatisticsListener STATISTICS;
 
     protected void execute(String script) throws Exception {
         Statement stmt = null;
@@ -338,7 +338,7 @@ public abstract class jOOQAbstractTest<
 
     @BeforeClass
     public static void sqlConsole() throws Exception {
-        SERVER = new SqlRemoteQueryDebuggerServer(DEBUGGER_PORT);
+        SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);
     }
 
     @Before
@@ -636,7 +636,7 @@ public abstract class jOOQAbstractTest<
     protected final Factory create() {
         Settings settings = new Settings().withExecuteListeners(
             TestStatisticsListener.class.getName(),
-            SqlQueryDebuggerExecuteListener.class.getName());
+            DebugListener.class.getName());
 
         return create(settings);
     }

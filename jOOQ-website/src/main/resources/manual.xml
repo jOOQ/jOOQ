@@ -4246,7 +4246,7 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 								Use this command to start the console:
 							</p>
 
-<config>java -jar jooq-console-2.0.5.jar [host] [port]</config>
+<config>java -cp jooq-console-2.0.5.jar;rsyntaxtextarea-1.5.0.jar org.jooq.debug.console.Console [host] [port]</config>
 
 							<div class="screenshot">
 							<img class="screenshot" src="&lt;?=$root?&gt;/img/jooq-console-01.png" alt="jOOQ Console example"/>

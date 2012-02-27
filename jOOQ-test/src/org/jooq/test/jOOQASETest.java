@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without

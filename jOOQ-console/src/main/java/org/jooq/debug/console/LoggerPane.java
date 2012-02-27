@@ -86,6 +86,7 @@ import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -524,8 +525,19 @@ public class LoggerPane extends JPanel {
                     for(int i=0; i<selectedRows.length; i++) {
                         selectedQueryDebuggingInfos[i] = displayedQueryDebuggingInfoList.get(table.convertRowIndexToModel(selectedRows[i]));
                     }
+                    if(table.getSelectedRow() >= 0 && table.getSelectedColumn() >= 0) {
+                        JMenuItem copyCellsToClipboardMenuItem = new JMenuItem("Copy Selected Cells to Clipboard");
+//                        copyCellsToClipboardMenuItem.setAccelerator(keyStroke);
+                        copyCellsToClipboardMenuItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                table.getTransferHandler().exportToClipboard(table, Toolkit.getDefaultToolkit().getSystemClipboard(), TransferHandler.COPY);
+                            }
+                        });
+                        popupMenu.add(copyCellsToClipboardMenuItem);
+                    }
                     if(selectedQueryDebuggingInfos.length > 0) {
-                        JMenuItem copyToClipboardMenuItem = new JMenuItem("Copy " + (selectedQueryDebuggingInfos.length > 1? selectedQueryDebuggingInfos.length + " ": "") + "Statement" + (selectedQueryDebuggingInfos.length == 1? "": "s") + " to Clipboard");
+                        JMenuItem copyToClipboardMenuItem = new JMenuItem("Copy " + (selectedQueryDebuggingInfos.length > 1? selectedQueryDebuggingInfos.length + " ": "") + "Statement Data to Clipboard");
                         copyToClipboardMenuItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -535,7 +547,7 @@ public class LoggerPane extends JPanel {
                         popupMenu.add(copyToClipboardMenuItem);
                     }
                     if(displayedQueryDebuggingInfoList.size() > 0) {
-                        JMenuItem copyAllToClipboardMenuItem = new JMenuItem("Copy All Statements (" + displayedQueryDebuggingInfoList.size() + ") to Clipboard");
+                        JMenuItem copyAllToClipboardMenuItem = new JMenuItem("Copy All Statements Data (" + displayedQueryDebuggingInfoList.size() + ") to Clipboard");
                         copyAllToClipboardMenuItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -545,15 +557,10 @@ public class LoggerPane extends JPanel {
                         popupMenu.add(copyAllToClipboardMenuItem);
                     }
                     if(selectedQueryDebuggingInfos.length == 1) {
-                        JMenuItem dumpStackMenuItem = new JMenuItem("Dump Statement Call Stack");
-                        dumpStackMenuItem.addActionListener(new ActionListener() {
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                selectedQueryDebuggingInfos[0].getThrowable().printStackTrace();
-                            }
-                        });
-                        popupMenu.add(dumpStackMenuItem);
-                        JMenuItem copyStackToClipboardMenuItem = new JMenuItem("Copy Statement Call Stack to Clipboard");
+                        if(popupMenu.getComponentCount() > 0) {
+                            popupMenu.addSeparator();
+                        }
+                        JMenuItem copyStackToClipboardMenuItem = new JMenuItem("Copy Call Stack to Clipboard");
                         copyStackToClipboardMenuItem.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -564,6 +571,14 @@ public class LoggerPane extends JPanel {
                             }
                         });
                         popupMenu.add(copyStackToClipboardMenuItem);
+                        JMenuItem dumpStackMenuItem = new JMenuItem("Dump Call Stack");
+                        dumpStackMenuItem.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                selectedQueryDebuggingInfos[0].getThrowable().printStackTrace();
+                            }
+                        });
+                        popupMenu.add(dumpStackMenuItem);
                     }
                     if(popupMenu.getComponentCount() > 0) {
                         popupMenu.show(table, e.getX(), e.getY());
@@ -875,6 +890,7 @@ public class LoggerPane extends JPanel {
         StringBuilder htmlSB = new StringBuilder();
         htmlSB.append("<html>\n<body>\n<table>\n");
         htmlSB.append("<tr>" +
+                "<th>Type</th>" +
                 "<th>Thread name</th>" +
                 "<th>Thread ID</th>" +
                 "<th>Timestamp</th>" +
@@ -889,6 +905,9 @@ public class LoggerPane extends JPanel {
         for(QueryDebuggingInfo queryDebuggingInfo: queryDebuggingInfos) {
             DebuggerResultSetData resultSetData = queryDebuggingInfo.getSqlQueryDebuggerResultSetData();
             htmlSB.append("<tr>\n");
+            htmlSB.append("<td>");
+            htmlSB.append(queryDebuggingInfo.getQueryType());
+            htmlSB.append("</td>\n");
             htmlSB.append("<td>");
             htmlSB.append(queryDebuggingInfo.getThreadName());
             htmlSB.append("</td>\n");

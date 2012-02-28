@@ -161,6 +161,7 @@ abstract class UsageTrackingResultSet implements ResultSet {
     }
 
     @Override
+    @Deprecated
     public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
         readCount++;
         return resultSet.getBigDecimal(columnIndex, scale);
@@ -197,6 +198,7 @@ abstract class UsageTrackingResultSet implements ResultSet {
     }
 
     @Override
+    @Deprecated
     public InputStream getUnicodeStream(int columnIndex) throws SQLException {
         readCount++;
         return resultSet.getUnicodeStream(columnIndex);
@@ -257,6 +259,7 @@ abstract class UsageTrackingResultSet implements ResultSet {
     }
 
     @Override
+    @Deprecated
     public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
         readCount++;
         return resultSet.getBigDecimal(columnLabel, scale);
@@ -293,6 +296,7 @@ abstract class UsageTrackingResultSet implements ResultSet {
     }
 
     @Override
+    @Deprecated
     public InputStream getUnicodeStream(String columnLabel) throws SQLException {
         readCount++;
         return resultSet.getUnicodeStream(columnLabel);

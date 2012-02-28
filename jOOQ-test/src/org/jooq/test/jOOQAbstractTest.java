@@ -1360,6 +1360,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRenderQuoted() throws Exception {
+        new RenderAndBindTests(this).testRenderQuoted();
+    }
+
+    @Test
     public void testLoader() throws Exception {
         new LoaderTests(this).testLoader();
     }

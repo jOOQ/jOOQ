@@ -119,36 +119,41 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext literal(String literal) {
-        switch (configuration.getDialect()) {
-            case MYSQL:
-                sql("`").sql(literal).sql("`");
-                break;
+        if (Boolean.TRUE.equals(configuration.getSettings().isRenderQuoted())) {
+            switch (configuration.getDialect()) {
+                case MYSQL:
+                    sql("`").sql(literal).sql("`");
+                    break;
 
-            case DB2:
-            case DERBY:
-            case H2:
-            case HSQLDB:
-            case INGRES:
-            case ORACLE:
-            case POSTGRES:
-                sql('"').sql(literal).sql('"');
-                break;
+                case DB2:
+                case DERBY:
+                case H2:
+                case HSQLDB:
+                case INGRES:
+                case ORACLE:
+                case POSTGRES:
+                    sql('"').sql(literal).sql('"');
+                    break;
 
-            // SQLite is supposed to support all sorts of delimiters, but it
-            // seems too buggy
-            case SQLITE:
-                sql(literal);
-                break;
+                // SQLite is supposed to support all sorts of delimiters, but it
+                // seems too buggy
+                case SQLITE:
+                    sql(literal);
+                    break;
 
-            case ASE:
-            case SQLSERVER:
-            case SYBASE:
-                sql("[").sql(literal).sql("]");
-                break;
+                case ASE:
+                case SQLSERVER:
+                case SYBASE:
+                    sql("[").sql(literal).sql("]");
+                    break;
 
-            default:
-                sql(literal);
-                break;
+                default:
+                    sql(literal);
+                    break;
+            }
+        }
+        else {
+            sql(literal);
         }
 
         return this;

@@ -123,6 +123,7 @@ public class UsageTrackingCallableStatement extends UsageTrackingPreparedStateme
     }
 
     @Override
+    @Deprecated
     public BigDecimal getBigDecimal(int parameterIndex, int scale) throws SQLException {
         return stmt.getBigDecimal(parameterIndex, scale);
     }

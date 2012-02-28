@@ -37,7 +37,9 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
@@ -372,5 +374,32 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(asList(1, 2), dates.getValues(TDates_ID()));
         assertEquals(asList(1, null, null, null), asList(dates.get(0).intoArray()));
         assertEquals(asList((Object) 2, d1, null, ts1), asList(dates.get(1).intoArray()));
+    }
+
+    @Test
+    public void testRenderQuoted() throws Exception {
+        Select<?> s =
+        create(new Settings().withRenderQuoted(false))
+            .select(TBook_ID(), TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+            .from(TBook())
+            .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+            .orderBy(TBook_ID());
+
+        Result<?> result = s.fetch();
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+        assertEquals(BOOK_TITLES, result.getValues(TBook_TITLE()));
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(BOOK_LAST_NAMES, result.getValues(TAuthor_LAST_NAME()));
+
+        // [#521] Ensure that no quote characters are rendered
+        assertFalse(s.getSQL().contains("\""));
+        assertFalse(s.getSQL().contains("["));
+        assertFalse(s.getSQL().contains("]"));
+        assertFalse(s.getSQL().contains("`"));
+
+        assertTrue(s.getSQL().toUpperCase().contains("T_BOOK.ID"));
+        assertTrue(s.getSQL().toUpperCase().contains("T_BOOK.TITLE"));
+        assertTrue(s.getSQL().toUpperCase().contains("T_AUTHOR.FIRST_NAME"));
+        assertTrue(s.getSQL().toUpperCase().contains("T_AUTHOR.LAST_NAME"));
     }
 }

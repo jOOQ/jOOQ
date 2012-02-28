@@ -2181,4 +2181,29 @@ public class jOOQTest {
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :p2", r_refP().render(q4));
         assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref().render(q4));
     }
+
+    @Test
+    public void testRenderQuoted() {
+        Query q = create.select(val(1)).from(TABLE1).where(FIELD_ID1.equal(2));
+
+        RenderContext r_refI = r_refI();
+        RenderContext r_refP = r_refP();
+        RenderContext r_ref = r_ref();
+
+        r_refI.getSettings().setRenderQuoted(false);
+        r_refP.getSettings().setRenderQuoted(false);
+        r_ref.getSettings().setRenderQuoted(false);
+
+        assertEquals("select 3 from TABLE1 where TABLE1.ID1 = 4", r_refI.render(q));
+        assertEquals("select :1 from TABLE1 where TABLE1.ID1 = :2", r_refP.render(q));
+        assertEquals("select ? from TABLE1 where TABLE1.ID1 = ?", r_ref.render(q));
+
+        r_refI.getSettings().setRenderQuoted(true);
+        r_refP.getSettings().setRenderQuoted(true);
+        r_ref.getSettings().setRenderQuoted(true);
+
+        assertEquals("select 3 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 4", r_refI.render(q));
+        assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
+        assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
+    }
 }

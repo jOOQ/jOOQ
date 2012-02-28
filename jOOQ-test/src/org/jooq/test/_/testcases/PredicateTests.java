@@ -40,7 +40,6 @@ import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.concat;
@@ -370,7 +369,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
                 .fetch(TBook_ID()));
 
         // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
-        if (asList(ASE, HSQLDB, MYSQL).contains(getDialect())) {
+        if (asList(ASE, MYSQL).contains(getDialect())) {
             assertEquals(
             asList(2, 3, 4),
             create().select(TBook_ID())

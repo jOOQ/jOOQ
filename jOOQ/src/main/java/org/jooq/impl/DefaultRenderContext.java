@@ -42,6 +42,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.conf.RenderNameStyle;
 
 /**
  * @author Lukas Eder
@@ -119,7 +120,18 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext literal(String literal) {
-        if (Boolean.TRUE.equals(configuration.getSettings().isRenderQuoted())) {
+        RenderNameStyle style = configuration.getSettings().getRenderNameStyle();
+
+        if (RenderNameStyle.LOWER.equals(style)) {
+            sql(literal.toLowerCase());
+        }
+        else if (RenderNameStyle.UPPER.equals(style)) {
+            sql(literal.toUpperCase());
+        }
+        else if (RenderNameStyle.AS_IS.equals(style)) {
+            sql(literal);
+        }
+        else {
             switch (configuration.getDialect()) {
                 case MYSQL:
                     sql("`").sql(literal).sql("`");
@@ -151,9 +163,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql(literal);
                     break;
             }
-        }
-        else {
-            sql(literal);
         }
 
         return this;

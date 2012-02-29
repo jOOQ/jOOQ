@@ -96,6 +96,7 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.Truncate;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
@@ -2190,19 +2191,35 @@ public class jOOQTest {
         RenderContext r_refP = r_refP();
         RenderContext r_ref = r_ref();
 
-        r_refI.getSettings().setRenderQuoted(false);
-        r_refP.getSettings().setRenderQuoted(false);
-        r_ref.getSettings().setRenderQuoted(false);
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        r_refP.getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        r_ref.getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
 
-        assertEquals("select 3 from TABLE1 where TABLE1.ID1 = 4", r_refI.render(q));
+        assertEquals("select 1 from TABLE1 where TABLE1.ID1 = 2", r_refI.render(q));
         assertEquals("select :1 from TABLE1 where TABLE1.ID1 = :2", r_refP.render(q));
         assertEquals("select ? from TABLE1 where TABLE1.ID1 = ?", r_ref.render(q));
 
-        r_refI.getSettings().setRenderQuoted(true);
-        r_refP.getSettings().setRenderQuoted(true);
-        r_ref.getSettings().setRenderQuoted(true);
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
+        r_refP.getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
+        r_ref.getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
 
-        assertEquals("select 3 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 4", r_refI.render(q));
+        assertEquals("select 1 from table1 where table1.id1 = 2", r_refI.render(q));
+        assertEquals("select :1 from table1 where table1.id1 = :2", r_refP.render(q));
+        assertEquals("select ? from table1 where table1.id1 = ?", r_ref.render(q));
+
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
+        r_refP.getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
+        r_ref.getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
+
+        assertEquals("select 1 from TABLE1 where TABLE1.ID1 = 2", r_refI.render(q));
+        assertEquals("select :1 from TABLE1 where TABLE1.ID1 = :2", r_refP.render(q));
+        assertEquals("select ? from TABLE1 where TABLE1.ID1 = ?", r_ref.render(q));
+
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        r_refP.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        r_ref.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+
+        assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
         assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
     }

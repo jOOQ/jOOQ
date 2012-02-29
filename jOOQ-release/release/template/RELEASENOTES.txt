@@ -30,8 +30,7 @@ http://www.jooq.org/manual/JOOQ/Factory/
 
 The listener and tracing support has been requested by
 Christopher Deckers, a new jOOQ user who has had the courtesy to
-contribute the new experimental jOOQ Console, which is
-documented here:
+contribute the new jOOQ Console, which is documented here:
 
 http://www.jooq.org/manual/ADVANCED/ExecuteListener/
 

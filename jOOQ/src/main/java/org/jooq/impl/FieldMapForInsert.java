@@ -61,7 +61,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     @Override
     public final void toSQL(RenderContext context) {
         toSQLReferenceKeys(context);
-        context.sql(" values ");
+        context.keyword(" values ");
         toSQLReferenceValues(context);
     }
 

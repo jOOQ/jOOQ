@@ -1360,8 +1360,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testRenderQuoted() throws Exception {
-        new RenderAndBindTests(this).testRenderQuoted();
+    public void testRenderNameStyle() throws Exception {
+        new RenderAndBindTests(this).testRenderNameStyle();
+    }
+
+    @Test
+    public void testRenderKeywordStyle() throws Exception {
+        new RenderAndBindTests(this).testRenderKeywordStyle();
     }
 
     @Test

@@ -77,11 +77,11 @@ class TruncateImpl<R extends TableRecord<R>> extends AbstractQuery implements Tr
 
             // All other dialects do
             default: {
-                context.sql("truncate table ");
+                context.keyword("truncate table ");
                 context.sql(table);
 
                 if (context.getDialect() == SQLDialect.DB2) {
-                    context.sql(" immediate");
+                    context.keyword(" immediate");
                 }
 
                 break;

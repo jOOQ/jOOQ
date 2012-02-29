@@ -88,7 +88,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
         for (int i = 0; i < queries.size(); i++) {
             if (i != 0) {
                 context.sql(" ");
-                context.sql(operator.toSQL(context.getDialect()));
+                context.keyword(operator.toSQL(context.getDialect()));
                 context.sql(" ");
             }
 

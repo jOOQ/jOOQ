@@ -124,7 +124,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     public final void toSQL(RenderContext context) {
         context.sql(lhs)
                .sql(" ")
-               .sql(translateType(context).toSQL())
+               .keyword(translateType(context).toSQL())
                .sql(" ")
 
                // [#671] Some databases formally require nested JOINS to be
@@ -187,7 +187,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
             if (asList(ASE, DB2, H2, SQLSERVER, SYBASE).contains(context.getDialect())) {
                 String glue = " on ";
                 for (Field<?> field : using) {
-                    context.sql(glue)
+                    context.keyword(glue)
                            .sql(lhs.getField(field))
                            .sql(" = ")
                            .sql(rhs.getField(field));
@@ -198,13 +198,13 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
             // Native supporters of JOIN .. USING
             else {
-                context.sql(" using (");
+                context.keyword(" using (");
                 Util.toSQLNames(context, using);
                 context.sql(")");
             }
         }
 
-        // [#577] If any NATURAL JOIN syntax needs to be simulated, find out 
+        // [#577] If any NATURAL JOIN syntax needs to be simulated, find out
         // common fields in lhs and rhs of the JOIN clause
         else if (simulateNaturalJoin(context) ||
                  simulateNaturalLeftOuterJoin(context) ||
@@ -215,7 +215,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
                 Field<?> other = rhs.getField(field);
 
                 if (other != null) {
-                    context.sql(glue)
+                    context.keyword(glue)
                            .sql(field)
                            .sql(" = ")
                            .sql(other);
@@ -227,7 +227,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
         // Regular JOIN condition
         else {
-            context.sql(" on ").sql(condition);
+            context.keyword(" on ").sql(condition);
         }
     }
 

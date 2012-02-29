@@ -314,10 +314,10 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("merge into ")
+        context.keyword("merge into ")
                .declareTables(true)
                .sql(table)
-               .sql(" using ")
+               .keyword(" using ")
                .sql(Util.wrapInParentheses(context.render(using)))
                .declareTables(false);
 
@@ -327,7 +327,7 @@ implements
                 if (using instanceof Select) {
                     int hash = Util.hash(using);
 
-                    context.sql(" as ")
+                    context.keyword(" as ")
                            .sql("dummy_")
                            .sql(hash)
                            .sql("(");
@@ -352,24 +352,24 @@ implements
             }
         }
 
-        context.sql(" on ")
+        context.keyword(" on ")
                .sql(Util.wrapInParentheses(context.render(on)));
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
-            context.sql(" when matched then update set ")
+            context.keyword(" when matched then update set ")
                    .sql(matchedUpdate);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
-            context.sql(" where ")
+            context.keyword(" where ")
                    .sql(matchedWhere);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
-            context.sql(" delete where ")
+            context.keyword(" delete where ")
                    .sql(matchedDeleteWhere);
         }
 
@@ -381,7 +381,7 @@ implements
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
-            context.sql(" where ")
+            context.keyword(" where ")
                    .sql(notMatchedWhere);
         }
 

@@ -21,5 +21,15 @@
 			<arg value="-Xdefault-value"/>
 		    <arg value="-instantiate lazy" />
 		</xjc>
+
+		<!-- Remove unnecessary artefacts again -->
+		<delete>
+			<fileset dir="${dir.target}">
+				<include name="ExecuteListeners.java"/>
+				<include name="MappedSchemata.java"/>
+				<include name="MappedTables.java"/>
+				<include name="ObjectFactory.java"/>
+			</fileset>
+		</delete>
 	</target>
 </project>

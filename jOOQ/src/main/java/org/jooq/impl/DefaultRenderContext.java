@@ -42,6 +42,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 
 /**
@@ -101,6 +102,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    public final RenderContext keyword(String keyword) {
+        if (RenderKeywordStyle.UPPER == getSettings().getRenderKeywordStyle()) {
+            return sql(keyword.toUpperCase());
+        }
+        else {
+            return sql(keyword.toLowerCase());
+        }
+    }
+
+    @Override
     public final RenderContext sql(String s) {
         sql.append(s);
         return this;
@@ -122,13 +133,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     public final RenderContext literal(String literal) {
         RenderNameStyle style = configuration.getSettings().getRenderNameStyle();
 
-        if (RenderNameStyle.LOWER.equals(style)) {
+        if (RenderNameStyle.LOWER == style) {
             sql(literal.toLowerCase());
         }
-        else if (RenderNameStyle.UPPER.equals(style)) {
+        else if (RenderNameStyle.UPPER == style) {
             sql(literal.toUpperCase());
         }
-        else if (RenderNameStyle.AS_IS.equals(style)) {
+        else if (RenderNameStyle.AS_IS == style) {
             sql(literal);
         }
         else {

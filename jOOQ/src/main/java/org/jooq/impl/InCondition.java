@@ -93,7 +93,7 @@ class InCondition<T> extends AbstractCondition {
 
                     for (int i = 0; i < list.size(); i += IN_LIMIT) {
                         if (i > 0) {
-                            context.sql(" or ");
+                            context.keyword(" or ");
                         }
 
                         toSQLSubValues(context, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
@@ -121,7 +121,7 @@ class InCondition<T> extends AbstractCondition {
     private void toSQLSubValues(RenderContext context, List<Field<?>> subValues) {
         context.sql(field)
                .sql(" ")
-               .sql(operator.toSQL())
+               .keyword(operator.toSQL())
                .sql(" (");
 
         String separator = "";

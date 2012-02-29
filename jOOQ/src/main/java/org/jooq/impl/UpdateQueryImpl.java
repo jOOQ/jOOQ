@@ -123,15 +123,15 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("update ")
+        context.keyword("update ")
                .declareTables(true)
                .sql(getInto())
                .declareTables(false)
-               .sql(" set ")
+               .keyword(" set ")
                .sql(updateMap);
 
         if (!(getWhere() instanceof TrueCondition)) {
-            context.sql(" where ").sql(getWhere());
+            context.keyword(" where ").sql(getWhere());
         }
     }
 

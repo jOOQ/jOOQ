@@ -180,9 +180,9 @@ class Extract extends AbstractFunction<Integer> {
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql("extract(")
+            context.keyword("extract(")
                    .sql(datePart.toSQL())
-                   .sql(" from ")
+                   .keyword(" from ")
                    .sql(field)
                    .sql(")");
         }

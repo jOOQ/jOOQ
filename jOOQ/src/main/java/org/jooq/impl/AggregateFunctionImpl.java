@@ -83,7 +83,7 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
     @Override
     protected final void toSQLField(RenderContext context, QueryPart field) {
         if (distinct) {
-            context.sql("distinct ");
+            context.keyword("distinct ");
         }
 
         super.toSQLField(context, field);

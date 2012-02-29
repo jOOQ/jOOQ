@@ -109,9 +109,9 @@ class Position extends AbstractFunction<Integer> {
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql("position(")
+            context.keyword("position(")
                    .sql(search)
-                   .sql(" in ")
+                   .keyword(" in ")
                    .sql(in)
                    .sql(")");
         }

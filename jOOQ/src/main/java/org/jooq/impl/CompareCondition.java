@@ -114,11 +114,11 @@ class CompareCondition extends AbstractCondition {
         if (field2.isNullLiteral()) {
             switch (comparator) {
                 case EQUALS:
-                    context.sql("is null");
+                    context.keyword("is null");
                     return;
 
                 case NOT_EQUALS:
-                    context.sql("is not null");
+                    context.keyword("is not null");
                     return;
             }
         }
@@ -128,14 +128,14 @@ class CompareCondition extends AbstractCondition {
         // characters long
         boolean castRhs = (dialect == DB2 && field2 instanceof Concat);
 
-        context.sql(comparator.toSQL())
+        context.keyword(comparator.toSQL())
                .sql(" ")
-               .sql(castRhs ? "cast(" : "")
+               .keyword(castRhs ? "cast(" : "")
                .sql(field2)
-               .sql(castRhs ? " as varchar(4000))" : "");
+               .keyword(castRhs ? " as varchar(4000))" : "");
 
         if (escape != null) {
-            context.sql(" escape '")
+            context.keyword(" escape '")
                    .sql(escape)
                    .sql("'");
         }

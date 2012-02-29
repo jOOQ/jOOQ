@@ -196,7 +196,7 @@ public class OracleFactory extends Factory {
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql("prior ").sql(field);
+            context.keyword("prior ").sql(field);
         }
 
         @Override

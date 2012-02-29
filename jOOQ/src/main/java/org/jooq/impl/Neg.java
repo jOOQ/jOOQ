@@ -86,7 +86,7 @@ class Neg<T> extends AbstractField<T> {
                    .sql(" - 1)");
         }
         else if (operator == BIT_NOT && dialect == DB2) {
-            context.sql("bitnot(")
+            context.keyword("bitnot(")
                    .sql(field)
                    .sql(")");
         }

@@ -87,7 +87,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
                 context.sql(separator);
                 context.sql(queryPart);
 
-                separator = getListSeparator() + " ";
+                separator = ", ";
             }
         }
     }
@@ -104,49 +104,44 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     protected void toSQLEmptyList(RenderContext context) {
     }
 
-    /**
-     * Subclasses may override this method
-     */
-    protected String getListSeparator() {
-        return ",";
-    }
+
 
     // -------------------------------------------------------------------------
     // Implementations from the List API
     // -------------------------------------------------------------------------
 
     @Override
-    public int size() {
+    public final int size() {
         return wrappedList.size();
     }
 
     @Override
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return wrappedList.isEmpty();
     }
 
     @Override
-    public boolean contains(Object o) {
+    public final boolean contains(Object o) {
         return wrappedList.contains(o);
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public final Iterator<T> iterator() {
         return wrappedList.iterator();
     }
 
     @Override
-    public Object[] toArray() {
+    public final Object[] toArray() {
         return wrappedList.toArray();
     }
 
     @Override
-    public <E> E[] toArray(E[] a) {
+    public final <E> E[] toArray(E[] a) {
         return wrappedList.toArray(a);
     }
 
     @Override
-    public boolean add(T e) {
+    public final boolean add(T e) {
         if (e != null) {
             return wrappedList.add(e);
         }
@@ -155,22 +150,22 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public boolean remove(Object o) {
+    public final boolean remove(Object o) {
         return wrappedList.remove(o);
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
+    public final boolean containsAll(Collection<?> c) {
         return wrappedList.containsAll(c);
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
+    public final boolean addAll(Collection<? extends T> c) {
         return wrappedList.addAll(removeNulls(c));
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends T> c) {
+    public final boolean addAll(int index, Collection<? extends T> c) {
         return wrappedList.addAll(index, removeNulls(c));
     }
 
@@ -188,27 +183,27 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public boolean removeAll(Collection<?> c) {
+    public final boolean removeAll(Collection<?> c) {
         return wrappedList.removeAll(c);
     }
 
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public final boolean retainAll(Collection<?> c) {
         return wrappedList.retainAll(c);
     }
 
     @Override
-    public void clear() {
+    public final void clear() {
         wrappedList.clear();
     }
 
     @Override
-    public T get(int index) {
+    public final T get(int index) {
         return wrappedList.get(index);
     }
 
     @Override
-    public T set(int index, T element) {
+    public final T set(int index, T element) {
         if (element != null) {
             return wrappedList.set(index, element);
         }
@@ -217,39 +212,39 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public void add(int index, T element) {
+    public final void add(int index, T element) {
         if (element != null) {
             wrappedList.add(index, element);
         }
     }
 
     @Override
-    public T remove(int index) {
+    public final T remove(int index) {
         return wrappedList.remove(index);
     }
 
     @Override
-    public int indexOf(Object o) {
+    public final int indexOf(Object o) {
         return wrappedList.indexOf(o);
     }
 
     @Override
-    public int lastIndexOf(Object o) {
+    public final int lastIndexOf(Object o) {
         return wrappedList.lastIndexOf(o);
     }
 
     @Override
-    public ListIterator<T> listIterator() {
+    public final ListIterator<T> listIterator() {
         return wrappedList.listIterator();
     }
 
     @Override
-    public ListIterator<T> listIterator(int index) {
+    public final ListIterator<T> listIterator(int index) {
         return wrappedList.listIterator(index);
     }
 
     @Override
-    public List<T> subList(int fromIndex, int toIndex) {
+    public final List<T> subList(int fromIndex, int toIndex) {
         return wrappedList.subList(fromIndex, toIndex);
     }
 }

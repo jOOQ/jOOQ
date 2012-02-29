@@ -134,10 +134,10 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
                     toSQLReference1(context, inAnalyticClause);
 
                     if (nullsFirst) {
-                        context.sql(" nulls first");
+                        context.keyword(" nulls first");
                     }
                     else {
-                        context.sql(" nulls last");
+                        context.keyword(" nulls last");
                     }
 
                     break;
@@ -168,7 +168,7 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
         }
 
         context.sql(" ");
-        context.sql(order.toSQL());
+        context.keyword(order.toSQL());
     }
 
     @Override

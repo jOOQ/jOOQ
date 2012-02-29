@@ -119,7 +119,7 @@ class CombinedCondition extends AbstractCondition {
             String separator = "";
 
             for (Condition condition : conditions) {
-                context.sql(separator);
+                context.keyword(separator);
                 context.sql(condition);
 
                 separator = operatorName;

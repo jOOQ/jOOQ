@@ -32,7 +32,7 @@ The listener and tracing support has been requested by
 Christopher Deckers, a new jOOQ user who has had the courtesy to
 contribute the new jOOQ Console, which is documented here:
 
-http://www.jooq.org/manual/ADVANCED/Console/
+http://www.jooq.org/manual/ADVANCED/ExecuteListener/
 
 Apart from that, another long-requested feature is now fully
 implemented: The GeneratorStrategy, allowing for custom naming

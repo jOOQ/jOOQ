@@ -84,9 +84,9 @@ class Limit extends AbstractQueryPart {
             case POSTGRES: // No break
             case SQLITE: {
                 context.castMode(NEVER)
-                       .sql("limit ")
+                       .keyword("limit ")
                        .sql(numberOfRows)
-                       .sql(" offset ")
+                       .keyword(" offset ")
                        .sql(offsetOrZero)
                        .castMode(castMode);
 
@@ -97,11 +97,11 @@ class Limit extends AbstractQueryPart {
 
                 // Casts are not supported here...
                 context.castMode(NEVER)
-                       .sql("offset ")
+                       .keyword("offset ")
                        .sql(offsetOrZero)
-                       .sql(" rows fetch next ")
+                       .keyword(" rows fetch next ")
                        .sql(numberOfRows)
-                       .sql(" rows only")
+                       .keyword(" rows only")
                        .castMode(castMode);
 
                 break;
@@ -112,11 +112,11 @@ class Limit extends AbstractQueryPart {
                 // INGRES doesn't allow bind variables in the
                 // OFFSET m FETCH FIRST n ROWS ONLY clause
                 context.inline(true)
-                       .sql("offset ")
+                       .keyword("offset ")
                        .sql(offsetOrZero)
-                       .sql(" fetch first ")
+                       .keyword(" fetch first ")
                        .sql(numberOfRows)
-                       .sql(" rows only")
+                       .keyword(" rows only")
                        .inline(inline);
 
                 break;
@@ -126,9 +126,9 @@ class Limit extends AbstractQueryPart {
             // ----------------------------
             case SYBASE: {
                 context.inline(true)
-                       .sql("top ")
+                       .keyword("top ")
                        .sql(numberOfRows)
-                       .sql(" start at ")
+                       .keyword(" start at ")
                        .sql(offsetPlusOne)
                        .inline(inline);
 
@@ -145,9 +145,9 @@ class Limit extends AbstractQueryPart {
 
                 // DB2 doesn't allow bind variables here. Casting is not needed.
                 context.inline(true)
-                       .sql("fetch first ")
+                       .keyword("fetch first ")
                        .sql(numberOfRows)
-                       .sql(" rows only")
+                       .keyword(" rows only")
                        .inline(inline);
 
                 break;
@@ -161,7 +161,7 @@ class Limit extends AbstractQueryPart {
 
                 // SQL Server and Sybase don't allow bind variables in the TOP n clause
                 context.inline(true)
-                       .sql("top ")
+                       .keyword("top ")
                        .sql(numberOfRows)
                        .inline(inline);
 
@@ -171,9 +171,9 @@ class Limit extends AbstractQueryPart {
             // A default implementation is necessary for hashCode() and toString()
             default: {
                 context.castMode(NEVER)
-                       .sql("limit ")
+                       .keyword("limit ")
                        .sql(numberOfRows)
-                       .sql(" offset ")
+                       .keyword(" offset ")
                        .sql(offsetOrZero)
                        .castMode(castMode);
 

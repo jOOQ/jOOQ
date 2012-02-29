@@ -62,6 +62,7 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -378,7 +379,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
     }
 
     @Test
-    public void testRenderQuoted() throws Exception {
+    public void testRenderNameStyle() throws Exception {
         Select<?> s =
         create(new Settings().withRenderNameStyle(RenderNameStyle.AS_IS))
             .select(TBook_ID(), TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
@@ -402,5 +403,28 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertTrue(s.getSQL().toUpperCase().contains("T_BOOK.TITLE"));
         assertTrue(s.getSQL().toUpperCase().contains("T_AUTHOR.FIRST_NAME"));
         assertTrue(s.getSQL().toUpperCase().contains("T_AUTHOR.LAST_NAME"));
+    }
+
+    @Test
+    public void testRenderKeywordStyle() throws Exception {
+        Select<?> s =
+        create(new Settings().withRenderKeywordStyle(RenderKeywordStyle.UPPER))
+            .select(TBook_ID(), TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
+            .from(TBook())
+            .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
+            .orderBy(TBook_ID());
+
+        Result<?> result = s.fetch();
+        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
+        assertEquals(BOOK_TITLES, result.getValues(TBook_TITLE()));
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(TAuthor_FIRST_NAME()));
+        assertEquals(BOOK_LAST_NAMES, result.getValues(TAuthor_LAST_NAME()));
+
+        // [#521] Ensure that no quote characters are rendered
+        assertTrue(s.getSQL().contains("SELECT"));
+        assertTrue(s.getSQL().contains("FROM"));
+        assertTrue(s.getSQL().contains("JOIN"));
+        assertTrue(s.getSQL().contains("ON"));
+        assertTrue(s.getSQL().contains("ORDER BY"));
     }
 }

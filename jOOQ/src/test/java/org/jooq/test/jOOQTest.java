@@ -96,6 +96,7 @@ import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.Truncate;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
@@ -2184,7 +2185,7 @@ public class jOOQTest {
     }
 
     @Test
-    public void testRenderQuoted() {
+    public void testRenderNameStyle() {
         Query q = create.select(val(1)).from(TABLE1).where(FIELD_ID1.equal(2));
 
         RenderContext r_refI = r_refI();
@@ -2218,6 +2219,31 @@ public class jOOQTest {
         r_refI.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
         r_refP.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
         r_ref.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+
+        assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
+        assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
+        assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
+    }
+
+    @Test
+    public void testRenderKeywordStyle() {
+        Query q = create.select(val(1)).from(TABLE1).where(FIELD_ID1.equal(2));
+
+        RenderContext r_refI = r_refI();
+        RenderContext r_refP = r_refP();
+        RenderContext r_ref = r_ref();
+
+        r_refI.getSettings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
+        r_refP.getSettings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
+        r_ref.getSettings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
+
+        assertEquals("SELECT 1 FROM \"TABLE1\" WHERE \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
+        assertEquals("SELECT :1 FROM \"TABLE1\" WHERE \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
+        assertEquals("SELECT ? FROM \"TABLE1\" WHERE \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
+
+        r_refI.getSettings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
+        r_refP.getSettings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
+        r_ref.getSettings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
 
         assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));

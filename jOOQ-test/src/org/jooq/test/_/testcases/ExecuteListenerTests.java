@@ -157,8 +157,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         private void checkBase(ExecuteContext ctx) {
             assertNotNull(ctx.query());
             assertNotNull(ctx.batchQueries());
-            assertTrue(ctx.query().toString().contains("select"));
-            assertTrue(ctx.batchQueries()[0].toString().contains("select"));
+            assertTrue(ctx.query().toString().toLowerCase().contains("select"));
+            assertTrue(ctx.batchQueries()[0].toString().toLowerCase().contains("select"));
             assertEquals(ctx.query(), ctx.batchQueries()[0]);
             assertEquals(1, ctx.batchSQL().length);
 
@@ -174,12 +174,12 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         }
 
         private void checkSQL(ExecuteContext ctx, boolean patched) {
-            assertTrue(ctx.batchSQL()[0].contains("select"));
-            assertTrue(ctx.sql().contains("select"));
+            assertTrue(ctx.batchSQL()[0].toLowerCase().contains("select"));
+            assertTrue(ctx.sql().toLowerCase().contains("select"));
             assertEquals(ctx.sql(), ctx.batchSQL()[0]);
 
             if (patched) {
-                assertTrue(ctx.sql().contains("as my_field"));
+                assertTrue(ctx.sql().toLowerCase().contains("as my_field"));
             }
         }
 
@@ -230,7 +230,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             assertNull(ctx.record());
             assertNull(ctx.result());
 
-            ctx.sql(ctx.sql().replaceFirst("from", "as my_field from"));
+            ctx.sql(ctx.sql().replaceFirst("(?i:from)", "as my_field from"));
             checkSQL(ctx, true);
         }
 
@@ -470,7 +470,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         private void checkBase(ExecuteContext ctx) {
             assertNull(ctx.query());
             assertNotNull(ctx.batchQueries());
-            assertTrue(ctx.batchQueries()[0].toString().contains("insert"));
+            assertTrue(ctx.batchQueries()[0].toString().toLowerCase().contains("insert"));
             assertEquals(1, ctx.batchSQL().length);
 
             assertEquals("Bar", ctx.getData("Foo"));
@@ -489,10 +489,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         }
 
         private void checkSQL(ExecuteContext ctx, boolean patched) {
-            assertTrue(ctx.batchSQL()[0].contains("insert"));
+            assertTrue(ctx.batchSQL()[0].toLowerCase().contains("insert"));
 
             if (patched) {
-                assertTrue(ctx.batchSQL()[0].contains("values    ("));
+                assertTrue(ctx.batchSQL()[0].toLowerCase().contains("values    ("));
             }
         }
 
@@ -529,7 +529,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             assertNull(ctx.statement());
 
-            ctx.sql(ctx.sql().replaceFirst("values\\s+", "values    "));
+            ctx.sql(ctx.sql().replaceFirst("(?i:values\\s+)", "values    "));
             checkSQL(ctx, true);
         }
 
@@ -694,10 +694,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         private void checkBase(ExecuteContext ctx) {
             assertNull(ctx.query());
             assertNotNull(ctx.batchQueries());
-            assertTrue(ctx.batchQueries()[0].toString().contains("insert"));
-            assertTrue(ctx.batchQueries()[1].toString().contains("insert"));
-            assertTrue(ctx.batchQueries()[2].toString().contains("insert"));
-            assertTrue(ctx.batchQueries()[3].toString().contains("insert"));
+            assertTrue(ctx.batchQueries()[0].toString().toLowerCase().contains("insert"));
+            assertTrue(ctx.batchQueries()[1].toString().toLowerCase().contains("insert"));
+            assertTrue(ctx.batchQueries()[2].toString().toLowerCase().contains("insert"));
+            assertTrue(ctx.batchQueries()[3].toString().toLowerCase().contains("insert"));
             assertEquals(4, ctx.batchSQL().length);
 
             assertEquals("Bar", ctx.getData("Foo"));
@@ -717,10 +717,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         private void checkSQL(ExecuteContext ctx, boolean patched) {
             for (int i = 0; i < rendered; i++) {
-                assertTrue(ctx.batchQueries()[i].toString().contains("insert"));
+                assertTrue(ctx.batchQueries()[i].toString().toLowerCase().contains("insert"));
 
                 if (patched) {
-                    assertTrue(ctx.batchSQL()[i].contains("values    ("));
+                    assertTrue(ctx.batchSQL()[i].toLowerCase().contains("values    ("));
                 }
             }
         }
@@ -761,7 +761,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
             checkStatement(ctx, false);
             checkSQL(ctx, false);
 
-            ctx.batchSQL()[rendered - 1] = ctx.batchSQL()[rendered - 1].replaceFirst("values\\s+", "values    ");
+            ctx.batchSQL()[rendered - 1] = ctx.batchSQL()[rendered - 1].replaceFirst("(?i:values\\s+)", "values    ");
             checkSQL(ctx, true);
         }
 

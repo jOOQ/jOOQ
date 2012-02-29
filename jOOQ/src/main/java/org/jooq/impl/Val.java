@@ -259,7 +259,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
         if (context.inline()) {
             if (val == null) {
-                context.sql("null");
+                context.keyword("null");
             }
             else if (type == Boolean.class) {
 
@@ -269,7 +269,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
                 else {
-                    context.sql(val.toString());
+                    context.keyword(val.toString());
                 }
             }
 
@@ -282,7 +282,8 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                            .sql(Util.convertBytesToHex(binary));
                 }
                 else if (dialect == DB2) {
-                    context.sql("blob(X'")
+                    context.keyword("blob")
+                           .sql("(X'")
                            .sql(Util.convertBytesToHex(binary))
                            .sql("')");
                 }
@@ -292,14 +293,14 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                            .sql("'");
                 }
                 else if (asList(ORACLE).contains(dialect)) {
-                    context.sql("hextoraw('")
+                    context.keyword("hextoraw('")
                            .sql(Util.convertBytesToHex(binary))
                            .sql("')");
                 }
                 else if (dialect == POSTGRES) {
                     context.sql("E'")
                            .sql(Util.convertBytesToPostgresOctal(binary))
-                           .sql("'::bytea");
+                           .keyword("'::bytea");
                 }
 
                 // This default behaviour is used in debug logging for dialects
@@ -371,7 +372,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
                 // By default, render HSQLDB / POSTGRES syntax
                 else {
-                    context.sql("ARRAY")
+                    context.keyword("ARRAY")
                            .sql(Arrays.toString((Object[]) val));
                 }
             }
@@ -406,7 +407,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             if (type.isArray() && byte[].class != type) {
                 context.sql(getBindVariable(context));
                 context.sql("::");
-                context.sql(FieldTypeHelper.getDataType(dialect, type).getCastTypeName(context));
+                context.keyword(FieldTypeHelper.getDataType(dialect, type).getCastTypeName(context));
             }
 
             // ... and also for enum types

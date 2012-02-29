@@ -75,7 +75,7 @@ class ArrayAsSubqueryCondition<T> extends AbstractCondition {
     public final void toSQL(RenderContext context) {
         context.sql(field)
                .sql(" ")
-               .sql(operator.toSQL())
+               .keyword(operator.toSQL())
                .sql(" (")
                .sql(array(context))
                .sql(")");

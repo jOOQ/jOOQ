@@ -73,7 +73,7 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
         if (context.subquery()) {
             context.sql(field)
                    .sql(" ")
-                   .sql(operator.toSQL())
+                   .keyword(operator.toSQL())
                    .sql(" (")
                    .sql(query)
                    .sql(")");
@@ -81,7 +81,7 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
         else {
             context.sql(field)
                    .sql(" ")
-                   .sql(operator.toSQL())
+                   .keyword(operator.toSQL())
                    .sql(" (")
                    .subquery(true)
                    .sql(query)

@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.conf.RenderKeywordStyle;
+
 /**
  * The render context is used for rendering {@link QueryPart}'s to SQL. A new
  * render context is instanciated every time a {@link Query} is rendered.
@@ -69,6 +71,14 @@ public interface RenderContext extends Context<RenderContext> {
      * SQL will not be appended to this context.
      */
     String render(QueryPart part);
+
+    /**
+     * Append a SQL keyword to the context's contained {@link StringBuilder}
+     * <p>
+     * Use this to have your SQL keyword rendered in {@link RenderKeywordStyle}
+     * (upper or lower case)
+     */
+    RenderContext keyword(String keyword);
 
     /**
      * Append some SQL to the context's contained {@link StringBuilder}

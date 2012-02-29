@@ -132,6 +132,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
     }
 
     private String getInlineConstructor(RenderContext context) {
+        // TODO [#884] Fix this with a local render context (using ctx.literal)
         switch (context.getDialect()) {
             case POSTGRES:
                 return "ROW";

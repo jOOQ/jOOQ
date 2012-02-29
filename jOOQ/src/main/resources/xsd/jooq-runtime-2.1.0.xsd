@@ -28,6 +28,8 @@
            This is set to "QUOTED" by default for backwards-compatibility -->
       <element name="renderNameStyle" type="jooq-runtime:RenderNameStyle" minOccurs="0" maxOccurs="1" default="QUOTED"/>
 
+      <element name="renderKeywordStyle" type="jooq-runtime:RenderKeywordStyle" minOccurs="0" maxOccurs="1" default="LOWER"/>
+
       <!-- The type of statement that is to be executed -->
       <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
 
@@ -127,6 +129,19 @@
            Oracle    : SYS.ALL_TAB_COLS
            MySQL     : INFORMATION_SCHEMA.TABLES
            SQL Server: INFORMATION_SCHEMA.TABLES -->
+      <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderKeywordStyle">
+    <restriction base="string">
+
+      <!-- Keywords are rendered in lower case. For instance:
+           select .. from .. where .. -->
+      <enumeration value="LOWER"/>
+
+      <!-- Keywords are rendered in upper case. For instance:
+           SELECT .. FROM .. WHERE .. -->
       <enumeration value="UPPER"/>
     </restriction>
   </simpleType>

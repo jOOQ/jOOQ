@@ -161,7 +161,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // MySQL has a nice syntax for this
                 case MYSQL: {
                     toSQLInsert(context);
-                    context.sql(" on duplicate key update ");
+                    context.keyword(" on duplicate key update ");
                     context.sql(updateMap);
 
                     break;
@@ -230,7 +230,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     private final void toSQLInsert(RenderContext context) {
-        context.sql("insert into ")
+        context.keyword("insert into ")
                .sql(getInto())
                .sql(" ")
                .sql(insertMaps);
@@ -238,7 +238,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         if (!returning.isEmpty()) {
             switch (context.getDialect()) {
                 case POSTGRES:
-                    context.sql(" returning ").sql(returning);
+                    context.keyword(" returning ").sql(returning);
                     break;
 
                 default:

@@ -85,12 +85,12 @@ class Cast<T> extends AbstractField<T> {
             if (field.getDataType().isNumeric() &&
                 VARCHAR.equals(getSQLDataType())) {
 
-                context.sql("trim(cast(")
-                       .sql("cast(")
+                context.keyword("trim(cast(")
+                       .keyword("cast(")
                        .sql(field)
-                       .sql(" as char(38))")
-                       .sql(" as ")
-                       .sql(getDataType(context).getCastTypeName(context))
+                       .keyword(" as char(38))")
+                       .keyword(" as ")
+                       .keyword(getDataType(context).getCastTypeName(context))
                        .sql("))");
 
                 return;
@@ -100,12 +100,12 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isString() &&
                      asList(FLOAT, DOUBLE, REAL).contains(getSQLDataType())) {
 
-                context.sql("cast(")
-                       .sql("cast(")
+                context.keyword("cast(")
+                       .keyword("cast(")
                        .sql(field)
-                       .sql(" as decimal)")
-                       .sql(" as ")
-                       .sql(getDataType(context).getCastTypeName(context))
+                       .keyword(" as decimal)")
+                       .keyword(" as ")
+                       .keyword(getDataType(context).getCastTypeName(context))
                        .sql(")");
 
                 return;
@@ -129,10 +129,10 @@ class Cast<T> extends AbstractField<T> {
         }
 
         // Default rendering, if no special case has applied yet
-        context.sql("cast(")
+        context.keyword("cast(")
                .sql(field)
-               .sql(" as ")
-               .sql(getDataType(context).getCastTypeName(context))
+               .keyword(" as ")
+               .keyword(getDataType(context).getCastTypeName(context))
                .sql(")");
     }
 

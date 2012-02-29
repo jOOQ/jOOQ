@@ -115,7 +115,7 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(getFNName(context.getDialect()));
+        context.keyword(getFNName(context.getDialect()));
         context.sql("(");
 
         if (!arguments.isEmpty()) {
@@ -127,7 +127,7 @@ implements
                 context.sql(", 'IGNORE NULLS'");
             }
             else {
-                context.sql(" ignore nulls");
+                context.keyword(" ignore nulls");
             }
         }
         else if (respectNulls) {
@@ -135,11 +135,11 @@ implements
                 context.sql(", 'RESPECT NULLS'");
             }
             else {
-                context.sql(" respect nulls");
+                context.keyword(" respect nulls");
             }
         }
 
-        context.sql(") over (");
+        context.keyword(") over (");
         String glue = "";
 
         if (!partitionBy.isEmpty()) {
@@ -148,7 +148,7 @@ implements
             }
             else {
                 context.sql(glue)
-                       .sql("partition by ")
+                       .keyword("partition by ")
                        .sql(partitionBy);
 
                 glue = " ";
@@ -157,7 +157,7 @@ implements
 
         if (!orderBy.isEmpty()) {
             context.sql(glue)
-                   .sql("order by ");
+                   .keyword("order by ");
 
             switch (context.getDialect()) {
 
@@ -184,12 +184,12 @@ implements
 
         if (rowsStart != null) {
             context.sql(glue);
-            context.sql("rows ");
+            context.keyword("rows ");
 
             if (rowsEnd != null) {
-                context.sql("between ");
+                context.keyword("between ");
                 toSQLRows(context, rowsStart);
-                context.sql(" and ");
+                context.keyword(" and ");
                 toSQLRows(context, rowsEnd);
             }
             else {
@@ -213,21 +213,21 @@ implements
 
     private final void toSQLRows(RenderContext context, Integer rows) {
         if (rows == Integer.MIN_VALUE) {
-            context.sql("unbounded preceding");
+            context.keyword("unbounded preceding");
         }
         else if (rows == Integer.MAX_VALUE) {
-            context.sql("unbounded following");
+            context.keyword("unbounded following");
         }
         else if (rows < 0) {
             context.sql(-rows);
-            context.sql(" preceding");
+            context.keyword(" preceding");
         }
         else if (rows > 0) {
             context.sql(rows);
-            context.sql(" following");
+            context.keyword(" following");
         }
         else {
-            context.sql("current row");
+            context.keyword("current row");
         }
     }
 

@@ -77,27 +77,35 @@ class Dual extends AbstractTable<Record> {
                 break;
 
             case HSQLDB:
-                context.sql("INFORMATION_SCHEMA.SYSTEM_USERS");
+                context.literal("INFORMATION_SCHEMA")
+                       .sql(".")
+                       .literal("SYSTEM_USERS");
                 break;
 
             case INGRES:
-                context.sql("(select 1 as dual) as dual");
+                context.keyword("(select 1 as dual) as dual");
                 break;
 
             case DB2:
-                context.sql("SYSIBM.DUAL");
+                context.literal("SYSIBM")
+                       .sql(".")
+                       .literal("DUAL");
                 break;
 
             case DERBY:
-                context.sql("SYSIBM.SYSDUMMY1");
+                context.literal("SYSIBM")
+                       .sql(".")
+                       .literal("SYSDUMMY1");
                 break;
 
             case SYBASE:
-                context.sql("SYS.DUMMY");
+                context.literal("SYS")
+                       .sql(".")
+                       .literal("DUMMY");
                 break;
 
             default:
-                context.sql("dual");
+                context.keyword("dual");
                 break;
         }
     }

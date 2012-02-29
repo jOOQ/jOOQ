@@ -75,10 +75,10 @@ class BetweenCondition<T> extends AbstractCondition {
     @Override
     public final void toSQL(RenderContext context) {
         context.sql(field)
-               .sql(not ? " not" : "")
-               .sql(" between ")
+               .keyword(not ? " not" : "")
+               .keyword(" between ")
                .sql(minValue)
-               .sql(" and ")
+               .keyword(" and ")
                .sql(maxValue);
     }
 }

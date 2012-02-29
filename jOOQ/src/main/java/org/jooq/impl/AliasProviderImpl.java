@@ -95,7 +95,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
 
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
             if (Arrays.asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.getDialect())) {
-                context.sql(" as");
+                context.keyword(" as");
             }
 
             context.sql(" ");

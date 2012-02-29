@@ -149,16 +149,16 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("case");
+        context.keyword("case");
 
         switch (context.getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
                 for (int i = 0; i < compareValues.size(); i++) {
-                    context.sql(" when ");
+                    context.keyword(" when ");
                     context.sql(value.equal(compareValues.get(i)));
-                    context.sql(" then ");
+                    context.keyword(" then ");
                     context.sql(results.get(i));
                 }
 
@@ -169,9 +169,9 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
                 context.sql(" ").sql(value);
 
                 for (int i = 0; i < compareValues.size(); i++) {
-                    context.sql(" when ");
+                    context.keyword(" when ");
                     context.sql(compareValues.get(i));
-                    context.sql(" then ");
+                    context.keyword(" then ");
                     context.sql(results.get(i));
                 }
 
@@ -180,10 +180,10 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            context.sql(" else ").sql(otherwise);
+            context.keyword(" else ").sql(otherwise);
         }
 
-        context.sql(" end");
+        context.keyword(" end");
     }
 
     @Override

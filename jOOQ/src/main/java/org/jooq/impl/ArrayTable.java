@@ -118,7 +118,7 @@ class ArrayTable extends AbstractTable<Record> {
                 throw new DataTypeException("Bad UDT Type : " + arrayType, e);
             }
         }
-        
+
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else {
             this.field.add(new Qualifier(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
@@ -196,9 +196,9 @@ class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public void toSQL(RenderContext context) {
-            context.sql("(select * from unnest(")
+            context.keyword("(select * from unnest(")
                    .sql(array)
-                   .sql(") as ")
+                   .keyword(") as ")
                    .literal(alias)
                    .sql("(")
                    .literal("COLUMN_VALUE")
@@ -215,16 +215,16 @@ class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public void toSQL(RenderContext context) {
-            context.sql("table(COLUMN_VALUE ");
+            context.keyword("table(").sql("COLUMN_VALUE ");
 
             // If the array type is unknown (e.g. because it's returned from
             // a stored function
             // Then the best choice for arbitrary types is varchar
             if (array.getDataType().getType() == Object[].class) {
-                context.sql(H2DataType.VARCHAR.getTypeName());
+                context.keyword(H2DataType.VARCHAR.getTypeName());
             }
             else {
-                context.sql(array.getDataType().getTypeName());
+                context.keyword(array.getDataType().getTypeName());
             }
 
             context.sql(" = ").sql(array).sql(")");
@@ -240,7 +240,7 @@ class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public void toSQL(RenderContext context) {
-            context.sql("table (").sql(array).sql(")");
+            context.keyword("table (").sql(array).sql(")");
         }
     }
 

@@ -106,11 +106,11 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("delete from ");
+        context.keyword("delete from ");
         context.sql(getFrom());
 
         if (!(getWhere() instanceof TrueCondition)) {
-            context.sql(" where ");
+            context.keyword(" where ");
             context.sql(getWhere());
         }
     }

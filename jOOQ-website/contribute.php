@@ -1,4 +1,4 @@
-<?php 
+<?php
 require 'frame.php';
 function getH1() {
 	return 'Be a part of jOOQ! Become a jOOQer';
@@ -21,7 +21,8 @@ function printContent() {
     <li>Sander Plas: jOOQ-codegen-maven, jOOQ-wicket contribution</li>
     <li>Christopher Klewes: Maven integration, good ideas to enhance the code generator</li>
     <li>Vladislav "FractalizeR" Rastrusny: Lots of constructive feedback, especially from the MySQL user perspective.</li>
-    <li>You: ...</li> 
+    <li>Christopher Deckers: jOOQ-Console contribution</li>
+    <li>You: ...</li>
 </ul>
 <p>Thanks to all of the above people!</p>
 
@@ -51,7 +52,7 @@ function printContent() {
 <ul>
     <li>Extend Eclipse .classpath files and .launch targets such that all developers are able to use your newly added database / JDBC drivers</li>
     <li>Implement code generation for the new RDBMS. For that, you'll need to provide an implementation for AbstractDatabase in jOOQ-meta</li>
-    <li>Make the integration tests for the new RDBMS run.</li> 
+    <li>Make the integration tests for the new RDBMS run.</li>
 </ul>
 
 <h3>Or in more detail:</h3>
@@ -67,13 +68,13 @@ function printContent() {
     <li>Let jOOQ generate the integration test schema</li>
     <li>Extend the org.jooq.test.jOOQAbstractTest for your RDBMS</li>
     <li>Run the integration tests for your RDBMS</li>
-    <li>Fix all issues. You should get syntax errors, SQLDialectNotSupportedExceptions, etc</li> 
+    <li>Fix all issues. You should get syntax errors, SQLDialectNotSupportedExceptions, etc</li>
 </ul>
 <p>If you provide me with instructions how to set up your RDBMS instance and any partial implementation of the above, I'm going to take that into the jOOQ code base (giving you credit, of course) and guaranteeing implementation integrity in the future.</p>
 
 <p>So let's get to work, then! :-)</p>
 
-<p>Cheers, Lukas</p> 
-<?php 
+<p>Cheers, Lukas</p>
+<?php
 }
 ?>

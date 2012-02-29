@@ -12,31 +12,35 @@ import javax.xml.bind.annotation.XmlEnum;
 
 
 /**
- * <p>Java class for StatementType.
+ * <p>Java class for RenderNameStyle.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="StatementType">
+ * &lt;simpleType name="RenderNameStyle">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="STATIC_STATEMENT"/>
- *     &lt;enumeration value="PREPARED_STATEMENT"/>
+ *     &lt;enumeration value="QUOTED"/>
+ *     &lt;enumeration value="AS_IS"/>
+ *     &lt;enumeration value="LOWER"/>
+ *     &lt;enumeration value="UPPER"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
 @XmlEnum
-public enum StatementType {
+public enum RenderNameStyle {
 
-    STATIC_STATEMENT,
-    PREPARED_STATEMENT;
+    QUOTED,
+    AS_IS,
+    LOWER,
+    UPPER;
 
     public String value() {
         return name();
     }
 
-    public static StatementType fromValue(String v) {
+    public static RenderNameStyle fromValue(String v) {
         return valueOf(v);
     }
 

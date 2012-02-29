@@ -62,6 +62,7 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.Factory;
@@ -379,7 +380,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
     @Test
     public void testRenderQuoted() throws Exception {
         Select<?> s =
-        create(new Settings().withRenderQuoted(false))
+        create(new Settings().withRenderNameStyle(RenderNameStyle.AS_IS))
             .select(TBook_ID(), TBook_TITLE(), TAuthor_FIRST_NAME(), TAuthor_LAST_NAME())
             .from(TBook())
             .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))

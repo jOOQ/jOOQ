@@ -14,7 +14,7 @@
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="xjc-generator" description="Generate JAXB artefacts from XSD">
 		<mkdir dir="${dir.target}" />
-		<xjc schema="${dir.resources}/xsd/jooq-runtime-2.0.5.xsd" destdir="${dir.java}" package="org.jooq.conf">
+		<xjc schema="${dir.resources}/xsd/jooq-runtime-2.1.0.xsd" destdir="${dir.java}" package="org.jooq.conf">
 			<arg value="-extension"/>
 			<arg value="-Xxew" />
 			<arg value="-Xfluent-api" />

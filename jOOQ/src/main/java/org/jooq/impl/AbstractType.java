@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.AliasProvider;
@@ -61,7 +60,8 @@ abstract class AbstractType<R extends Record> extends AbstractSchemaProviderQuer
 
     @Override
     public final List<Field<?>> getFields() {
-        return Collections.unmodifiableList(getFieldList());
+        // TODO [#1199] Make this an unmodifiable list
+        return getFieldList();
     }
 
     @Override

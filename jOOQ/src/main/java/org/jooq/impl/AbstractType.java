@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import java.util.List;
+
 import org.jooq.AliasProvider;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -57,28 +59,28 @@ abstract class AbstractType<R extends Record> extends AbstractSchemaProviderQuer
     }
 
     @Override
-    public final FieldList getFields() {
+    public final List<Field<?>> getFields() {
         return getFieldList();
     }
 
     @Override
     public final <T> Field<T> getField(Field<T> field) {
-        return getFields().getField(field);
+        return getFieldList().getField(field);
     }
 
     @Override
     public final Field<?> getField(String name) {
-        return getFields().getField(name);
+        return getFieldList().getField(name);
     }
 
     @Override
     public final Field<?> getField(int index) {
-        return getFields().getField(index);
+        return getFieldList().getField(index);
     }
 
     @Override
     public final int getIndex(Field<?> field) throws IllegalArgumentException {
-        return getFields().getIndex(field);
+        return getFieldList().getIndex(field);
     }
 
     /**

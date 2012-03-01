@@ -38,8 +38,14 @@ package org.jooq.conf;
 import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+
+import javax.xml.bind.JAXB;
 
 /**
  * Convenience methods for jOOQ runtime settings
@@ -47,6 +53,39 @@ import java.sql.Statement;
  * @author Lukas Eder
  */
 public final class SettingsTools {
+
+    private static final Settings DEFAULT_SETTINGS;
+
+    static {
+        Settings settings = null;
+        String property = System.getProperty("org.jooq.settings");
+
+        if (property != null) {
+
+            // Check classpath first
+            InputStream in = SettingsTools.class.getResourceAsStream(property);
+            if (in != null) {
+                settings = JAXB.unmarshal(in, Settings.class);
+            }
+            else {
+                settings = JAXB.unmarshal(new File(property), Settings.class);
+            }
+        }
+
+        if (settings == null) {
+            InputStream in = SettingsTools.class.getResourceAsStream("/jooq-settings.xml");
+
+            if (in != null) {
+                settings = JAXB.unmarshal(in, Settings.class);
+            }
+        }
+
+        if (settings == null) {
+            settings = new Settings();
+        }
+
+        DEFAULT_SETTINGS = settings;
+    }
 
     /**
      * Get the statement type from the settings
@@ -80,11 +119,33 @@ public final class SettingsTools {
     /**
      * Lazy access to {@link RenderMapping}
      */
-    public static RenderMapping getRenderMapping(Settings settings) {
+    public static final RenderMapping getRenderMapping(Settings settings) {
         if (settings.getRenderMapping() == null) {
             settings.setRenderMapping(new RenderMapping());
         }
 
         return settings.getRenderMapping();
+    }
+
+    /**
+     * Retrieve the configured default settings
+     * <p>
+     * <ul>
+     * <li>If the JVM flag <code>-Dorg.jooq.settings</code> points to a valid
+     * settings file on the classpath, this will be loaded</li>
+     * <li>If the JVM flag <code>-Dorg.jooq.settings</code> points to a valid
+     * settings file on the file system, this will be loaded</li>
+     * <li>If a valid settings file is found on the classpath at
+     * <code>/jooq-settings.xml</code>, this will be loaded</li>
+     * <li>Otherwise, a new <code>Settings</code> object is created with its
+     * defaults</li>
+     * </ul>
+     */
+    public static final Settings defaultSettings() {
+
+        // Clone the DEFAULT_SETTINGS to prevent modification
+        StringWriter xml = new StringWriter();
+        JAXB.marshal(DEFAULT_SETTINGS, xml);
+        return JAXB.unmarshal(new StringReader(xml.toString()), Settings.class);
     }
 }

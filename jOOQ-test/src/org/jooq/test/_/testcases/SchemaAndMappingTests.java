@@ -116,7 +116,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(Arrays.asList(2, 2), result.getValues(count()));
 
         String sql = factory.select(TBook_AUTHOR_ID()).from(TAuthor()).getSQL();
-        assertFalse(sql.toLowerCase().contains(schema().getName().toLowerCase()));
+        assertFalse(sql.toLowerCase().contains(TAuthor().getSchema().getName().toLowerCase()));
     }
 
     @Test

@@ -70,6 +70,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.debug.DebugListener;
 import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
@@ -634,7 +635,7 @@ public abstract class jOOQAbstractTest<
     }
 
     protected final Factory create() {
-        Settings settings = new Settings().withExecuteListeners(
+        Settings settings = SettingsTools.defaultSettings().withExecuteListeners(
             TestStatisticsListener.class.getName(),
             DebugListener.class.getName());
 

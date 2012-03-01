@@ -125,6 +125,7 @@ import org.jooq.UpdateSetStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -186,7 +187,7 @@ public class Factory implements FactoryOperations {
      * @param dialect The dialect to use with objects created from this factory
      */
     public Factory(Connection connection, SQLDialect dialect) {
-        this(connection, dialect, new Settings(), null, null);
+        this(connection, dialect, null, null, null);
     }
 
     /**
@@ -228,8 +229,8 @@ public class Factory implements FactoryOperations {
     private Factory(Connection connection, SQLDialect dialect, Settings settings, org.jooq.SchemaMapping mapping, Map<String, Object> data) {
         this.connection = connection;
         this.dialect = dialect;
-        this.settings = settings != null ? settings : new Settings();
-        this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(settings);
+        this.settings = settings != null ? settings : SettingsTools.defaultSettings();
+        this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this.settings);
         this.data = data != null ? data : new HashMap<String, Object>();
     }
 

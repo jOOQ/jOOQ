@@ -444,7 +444,7 @@ implements
         }
 
         context.declareFields(true);
-        context.sql(getSelect());
+        context.sql(getSelect1());
         context.declareFields(false);
 
         // FROM and JOIN clauses
@@ -603,12 +603,16 @@ implements
         this.forUpdateWait = 0;
     }
 
+    @Override
+    public final List<Field<?>> getSelect() {
+        return getSelect1();
+    }
+
     final FieldList getSelect0() {
         return select;
     }
 
-    @Override
-    public final FieldList getSelect() {
+    final FieldList getSelect1() {
         if (getSelect0().isEmpty()) {
             FieldList result = new SelectFieldList();
 

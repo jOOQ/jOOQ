@@ -97,7 +97,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public FieldList getFieldList() {
+    protected FieldList getFieldList() {
         if (aliasedFields == null) {
             aliasedFields = new FieldList();
 

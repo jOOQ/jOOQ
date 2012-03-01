@@ -131,6 +131,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext literal(String literal) {
+        // Literal usually originates from NamedQueryPart.getName(). This could
+        // be null for CustomTable et al.
+        if (literal == null) {
+            return this;
+        }
+
         RenderNameStyle style = configuration.getSettings().getRenderNameStyle();
 
         if (RenderNameStyle.LOWER == style) {

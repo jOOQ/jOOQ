@@ -39,6 +39,7 @@ package org.jooq.impl;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.Field;
@@ -96,7 +97,7 @@ class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
     }
 
     @Override
-    public final FieldList getFields() {
+    public final List<Field<?>> getFields() {
         return this;
     }
 

@@ -110,13 +110,14 @@ public class DefaultGenerator implements Generator {
     private boolean                  generateInstanceFields      = true;
     private boolean                  generateGeneratedAnnotation = true;
     private boolean                  generatePojos               = false;
+    private boolean                  generateRecords             = true;
     private boolean                  generateJPAAnnotations      = false;
 
     private GeneratorStrategyWrapper strategy;
 
     @Override
     public void setStrategy(GeneratorStrategy strategy) {
-        this.strategy = new GeneratorStrategyWrapper(strategy);
+        this.strategy = new GeneratorStrategyWrapper(this, strategy);
     }
 
     @Override
@@ -182,6 +183,16 @@ public class DefaultGenerator implements Generator {
     @Override
     public void setGeneratePojos(boolean generatePojos) {
         this.generatePojos = generatePojos;
+    }
+
+    @Override
+    public boolean generateRecords() {
+        return generateRecords;
+    }
+
+    @Override
+    public void setGenerateRecords(boolean generateRecords) {
+        this.generateRecords = generateRecords;
     }
 
     @Override
@@ -578,7 +589,7 @@ public class DefaultGenerator implements Generator {
         			out.print(" extends ");
         			out.print(baseClass);
         			out.print("<");
-        			out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
+    			    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
         			out.println("> {");
         			out.printSerial();
         			printSingletonInstance(table, out);
@@ -1042,7 +1053,7 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating table records
         // ----------------------------------------------------------------------
-		if  (database.getTables(schema).size() > 0) {
+		if  (generateRecords() && database.getTables(schema).size() > 0) {
 		    log.info("Generating records");
 
     		for (TableDefinition table : database.getTables(schema)) {

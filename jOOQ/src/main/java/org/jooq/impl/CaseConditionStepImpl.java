@@ -117,9 +117,16 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("case");
+        context.formatIndentLockStart()
+               .keyword("case")
+               .formatIndentLockStart();
 
-        for (int i = 0; i < conditions.size(); i++) {
+        int size = conditions.size();
+        for (int i = 0; i < size; i++) {
+            if (i > 0) {
+                context.formatSeparator();
+            }
+
             context.keyword(" when ")
                    .sql(conditions.get(i))
                    .keyword(" then ")
@@ -127,11 +134,22 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         }
 
         if (otherwise != null) {
-            context.keyword(" else ")
+            context.formatSeparator()
+                   .keyword(" else ")
                    .sql(otherwise);
         }
 
-        context.keyword(" end");
+        context.formatIndentLockEnd();
+
+        if (size > 1 || otherwise != null) {
+            context.formatSeparator();
+        }
+        else {
+            context.sql(" ");
+        }
+
+        context.keyword("end")
+               .formatIndentLockEnd();
     }
 
     @Override

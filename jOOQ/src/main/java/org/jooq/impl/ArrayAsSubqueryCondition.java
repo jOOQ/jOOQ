@@ -77,7 +77,9 @@ class ArrayAsSubqueryCondition<T> extends AbstractCondition {
                .sql(" ")
                .keyword(operator.toSQL())
                .sql(" (")
+               .formatIndentLockStart()
                .sql(array(context))
+               .formatIndentLockEnd()
                .sql(")");
     }
 

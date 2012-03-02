@@ -82,13 +82,23 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         else {
             String separator = "";
+            boolean indent = (size() > 1);
+
+            if (indent)
+                context.formatIndentStart();
 
             for (T queryPart : this) {
                 context.sql(separator);
-                context.sql(queryPart);
 
+                if (indent)
+                    context.formatNewLine();
+
+                context.sql(queryPart);
                 separator = ", ";
             }
+
+            if (indent)
+                context.formatIndentEnd();
         }
     }
 

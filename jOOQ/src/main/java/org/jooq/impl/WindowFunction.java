@@ -139,26 +139,29 @@ implements
             }
         }
 
-        context.keyword(") over (");
-        String glue = "";
+        context.keyword(") over (")
+               .formatIndentLockStart();
+
+        boolean newLine = false;
 
         if (!partitionBy.isEmpty()) {
             if (partitionByOne && context.getDialect() == SQLDialect.SYBASE) {
                 // Ignore partition clause. Sybase does not support this construct
             }
             else {
-                context.sql(glue)
-                       .keyword("partition by ")
+                context.keyword("partition by ")
                        .sql(partitionBy);
 
-                glue = " ";
+                newLine = true;
             }
         }
 
         if (!orderBy.isEmpty()) {
-            context.sql(glue)
-                   .keyword("order by ");
+            if (newLine) {
+                context.formatSeparator();
+            }
 
+            context.keyword("order by ");
             switch (context.getDialect()) {
 
                 // SQL Server and Sybase don't allow for fully qualified fields
@@ -179,27 +182,32 @@ implements
                 }
             }
 
-            glue = " ";
+            newLine = true;
         }
 
         if (rowsStart != null) {
-            context.sql(glue);
+            if (newLine) {
+                context.formatSeparator();
+            }
+
             context.keyword("rows ");
 
             if (rowsEnd != null) {
                 context.keyword("between ");
                 toSQLRows(context, rowsStart);
-                context.keyword(" and ");
+
+                context.formatSeparator()
+                       .keyword("and ");
+
                 toSQLRows(context, rowsEnd);
             }
             else {
                 toSQLRows(context, rowsStart);
             }
-
-            glue = " ";
         }
 
-        context.sql(")");
+        context.sql(")")
+               .formatIndentLockEnd();
     }
 
     private final String getFNName(SQLDialect dialect) {

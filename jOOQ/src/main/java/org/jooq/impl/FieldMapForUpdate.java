@@ -62,8 +62,13 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             String separator = "";
 
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
-                context.sql(separator)
-                       .literal(entry.getKey().getName())
+                context.sql(separator);
+
+                if (!"".equals(separator)) {
+                    context.formatNewLine();
+                }
+
+                context.literal(entry.getKey().getName())
                        .sql(" = ")
                        .sql(entry.getValue());
 

@@ -317,8 +317,11 @@ implements
         context.keyword("merge into ")
                .declareTables(true)
                .sql(table)
-               .keyword(" using ")
+               .formatSeparator()
+               .keyword("using ")
+               .formatIndentLockStart()
                .sql(Util.wrapInParentheses(context.render(using)))
+               .formatIndentLockEnd()
                .declareTables(false);
 
         switch (context.getDialect()) {
@@ -352,36 +355,44 @@ implements
             }
         }
 
-        context.keyword(" on ")
-               .sql(Util.wrapInParentheses(context.render(on)));
+        context.formatSeparator()
+               .keyword("on ")
+               .formatIndentLockStart()
+               .sql(Util.wrapInParentheses(context.render(on)))
+               .formatIndentLockEnd();
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
-            context.keyword(" when matched then update set ")
+            context.formatSeparator()
+                   .keyword("when matched then update set ")
                    .sql(matchedUpdate);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
-            context.keyword(" where ")
+            context.formatSeparator()
+                   .keyword("where ")
                    .sql(matchedWhere);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
-            context.keyword(" delete where ")
+            context.formatSeparator()
+                   .keyword("delete where ")
                    .sql(matchedDeleteWhere);
         }
 
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
-            context.sql(" when not matched then insert ")
+            context.formatSeparator()
+                   .sql("when not matched then insert ")
                    .sql(notMatchedInsert);
         }
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
-            context.keyword(" where ")
+            context.formatSeparator()
+                   .keyword("where ")
                    .sql(notMatchedWhere);
         }
 

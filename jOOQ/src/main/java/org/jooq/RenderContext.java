@@ -36,6 +36,7 @@
 package org.jooq;
 
 import org.jooq.conf.RenderKeywordStyle;
+import org.jooq.conf.Settings;
 
 /**
  * The render context is used for rendering {@link QueryPart}'s to SQL. A new
@@ -99,6 +100,61 @@ public interface RenderContext extends Context<RenderContext> {
      * Recurse rendering
      */
     RenderContext sql(QueryPart part);
+
+    /**
+     * Render a new line character (only if {@link Settings#isRenderFormatted()}
+     * is set to <code>true</code>)
+     */
+    RenderContext formatNewLine();
+
+    /**
+     * Render a new line character (only if {@link Settings#isRenderFormatted()}
+     * is set to <code>true</code>), or a whitespace separator character
+     * otherwise
+     */
+    RenderContext formatSeparator();
+
+    /**
+     * Start indenting subsequent SQL by one level (two characters), if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     * <p>
+     * This is the same as calling {@link #formatIndentStart(int)} with a
+     * parameter of <code>2</code>
+     */
+    RenderContext formatIndentStart();
+
+    /**
+     * Start indenting subsequent SQL by a number of characters, if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     */
+    RenderContext formatIndentStart(int indent);
+
+    /**
+     * Start indenting subsequent SQL at the same level as the current line, if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     */
+    RenderContext formatIndentLockStart();
+
+    /**
+     * Stop indenting subsequent SQL by one level (two characters), if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     * <p>
+     * This is the same as calling {@link #formatIndentEnd(int)} with a
+     * parameter of <code>2</code>
+     */
+    RenderContext formatIndentEnd();
+
+    /**
+     * Stop indenting subsequent SQL by a number of characters, if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     */
+    RenderContext formatIndentEnd(int indent);
+
+    /**
+     * Stop indenting subsequent SQL at the same level as the current line, if
+     * {@link Settings#isRenderFormatted()} is set to <code>true</code>
+     */
+    RenderContext formatIndentLockEnd();
 
     /**
      * Append some (quoted) literal to the context's contained

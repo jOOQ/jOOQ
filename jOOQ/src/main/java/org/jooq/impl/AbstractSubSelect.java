@@ -245,7 +245,8 @@ implements
         }
 
         if (forUpdate) {
-            context.keyword(" for update");
+            context.formatSeparator()
+                   .keyword("for update");
 
             if (!forUpdateOf.isEmpty()) {
                 context.keyword(" of ");
@@ -288,12 +289,14 @@ implements
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
                 case MYSQL:
-                    context.keyword(" lock in share mode");
+                    context.formatSeparator()
+                           .keyword("lock in share mode");
                     break;
 
                 // Postgres is known to implement the "FOR SHARE" clause like this
                 default:
-                    context.keyword(" for share");
+                    context.formatSeparator()
+                           .keyword("for share");
                     break;
             }
         }
@@ -304,8 +307,6 @@ implements
      */
     private void toSQLReferenceLimitDefault(RenderContext context) {
         toSQLReference0(context);
-
-        context.sql(" ");
         context.sql(getLimit());
     }
 
@@ -321,9 +322,12 @@ implements
         String subqueryName = "limit_" + Util.hash(enclosed);
         String rownumName = "rownum_" + Util.hash(enclosed);
 
-        context.keyword("select * from (select ")
+        context.keyword("select * from (")
+               .formatIndentStart()
+               .formatNewLine()
+               .keyword("select ")
                .sql(subqueryName)
-               .sql(".*, row_number()")
+               .sql(".*, row_number() ")
                .keyword("over (order by ");
 
         if (getOrderBy().isEmpty()) {
@@ -344,18 +348,27 @@ implements
 
         context.keyword(") as ")
                .sql(rownumName)
-               .keyword(" from (")
+               .formatSeparator()
+               .keyword("from (")
+               .formatIndentStart()
+               .formatNewLine()
                .sql(enclosed)
+               .formatIndentEnd()
+               .formatNewLine()
                .keyword(") as ")
                .sql(subqueryName)
+               .formatIndentEnd()
+               .formatNewLine()
                .keyword(") as ")
                .sql("outer_")
                .sql(subqueryName)
-               .keyword(" where ")
+               .formatSeparator()
+               .keyword("where ")
                .sql(rownumName)
                .sql(" > ")
                .sql(getLimit().getLowerRownum())
-               .keyword(" and ")
+               .formatSeparator()
+               .keyword("and ")
                .sql(rownumName)
                .sql(" <= ")
                .sql(getLimit().getUpperRownum());
@@ -373,19 +386,32 @@ implements
         String subqueryName = "limit_" + Util.hash(enclosed);
         String rownumName = "rownum_" + Util.hash(enclosed);
 
-        context.keyword("select * from (select ")
+        context.keyword("select * from (")
+               .formatIndentStart()
+               .formatNewLine()
+               .keyword("select ")
                .sql(subqueryName)
                .keyword(".*, rownum as ")
                .sql(rownumName)
-               .keyword(" from (")
+               .formatSeparator()
+               .keyword("from (")
+               .formatIndentStart()
+               .formatNewLine()
                .sql(enclosed)
+               .formatIndentEnd()
+               .formatNewLine()
                .sql(") ")
                .sql(subqueryName)
-               .keyword(") where ")
+               .formatIndentEnd()
+               .formatNewLine()
+               .keyword(")")
+               .formatSeparator()
+               .keyword("where ")
                .sql(rownumName)
                .sql(" > ")
                .sql(getLimit().getLowerRownum())
-               .keyword(" and ")
+               .formatSeparator()
+               .keyword("and ")
                .sql(rownumName)
                .sql(" <= ")
                .sql(getLimit().getUpperRownum());
@@ -452,7 +478,9 @@ implements
         context.declareTables(true);
 
         if (!context.render(getFrom()).isEmpty()) {
-            context.keyword(" from ").sql(getFrom());
+            context.formatSeparator()
+                   .keyword("from ")
+                   .sql(getFrom());
         }
 
         context.declareTables(false);
@@ -460,13 +488,16 @@ implements
         // WHERE clause
         // ------------
         if (!(getWhere().getWhere() instanceof TrueCondition)) {
-            context.keyword(" where ").sql(getWhere());
+            context.formatSeparator()
+                   .keyword("where ")
+                   .sql(getWhere());
         }
 
         // CONNECT BY clause
         // -----------------
         if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
-            context.keyword(" connect by");
+            context.formatSeparator()
+                   .keyword("connect by");
 
             if (connectByNoCycle) {
                 context.keyword(" nocycle");
@@ -475,24 +506,32 @@ implements
             context.sql(" ").sql(getConnectBy());
 
             if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
-                context.keyword(" start with ").sql(getConnectByStartWith());
+                context.formatSeparator()
+                       .keyword("start with ")
+                       .sql(getConnectByStartWith());
             }
         }
 
         // GROUP BY and HAVING clause
         // --------------------------
         if (!getGroupBy().isEmpty()) {
-            context.keyword(" group by ").sql(getGroupBy());
+            context.formatSeparator()
+                   .keyword("group by ")
+                   .sql(getGroupBy());
         }
 
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
-            context.keyword(" having ").sql(getHaving());
+            context.formatSeparator()
+                   .keyword("having ")
+                   .sql(getHaving());
         }
 
         // ORDER BY clause
         // ---------------
         if (!getOrderBy().isEmpty()) {
-            context.keyword(" order by ").sql(getOrderBy());
+            context.formatSeparator()
+                   .keyword("order by ")
+                   .sql(getOrderBy());
         }
     }
 

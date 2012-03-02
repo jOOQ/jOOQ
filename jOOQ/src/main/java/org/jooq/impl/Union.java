@@ -87,9 +87,9 @@ class Union<R extends Record> extends AbstractSelect<R> {
     public final void toSQL(RenderContext context) {
         for (int i = 0; i < queries.size(); i++) {
             if (i != 0) {
-                context.sql(" ");
-                context.keyword(operator.toSQL(context.getDialect()));
-                context.sql(" ");
+                context.formatSeparator()
+                       .keyword(operator.toSQL(context.getDialect()))
+                       .formatSeparator();
             }
 
             wrappingParenthesis(context, "(");
@@ -112,7 +112,17 @@ class Union<R extends Record> extends AbstractSelect<R> {
                 return;
         }
 
+        if (")".equals(parenthesis)) {
+            context.formatIndentEnd()
+                   .formatNewLine();
+        }
+
         context.sql(parenthesis);
+
+        if ("(".equals(parenthesis)) {
+            context.formatIndentStart()
+                   .formatNewLine();
+        }
     }
 
     @Override

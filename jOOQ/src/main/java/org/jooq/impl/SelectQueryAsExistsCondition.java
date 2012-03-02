@@ -68,13 +68,20 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.keyword(operator.toSQL()).sql(" (").sql(query).sql(")");
+            context.keyword(operator.toSQL())
+                   .sql(" (")
+                   .formatIndentLockStart()
+                   .sql(query)
+                   .formatIndentLockEnd()
+                   .sql(")");
         }
         else {
             context.keyword(operator.toSQL())
                    .sql(" (")
                    .subquery(true)
+                   .formatIndentLockStart()
                    .sql(query)
+                   .formatIndentLockEnd()
                    .subquery(false)
                    .sql(")");
         }

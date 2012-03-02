@@ -90,7 +90,8 @@ class Rollup extends AbstractFunction<Object> {
         @Override
         public final void toSQL(RenderContext context) {
             context.sql(new FieldList(Arrays.asList(getArguments())))
-                   .keyword(" with rollup");
+                   .formatSeparator()
+                   .keyword("with rollup");
         }
 
         @Override

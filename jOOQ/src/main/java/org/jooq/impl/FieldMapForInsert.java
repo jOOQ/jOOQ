@@ -61,33 +61,64 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     @Override
     public final void toSQL(RenderContext context) {
         toSQLReferenceKeys(context);
-        context.keyword(" values ");
+        context.formatSeparator()
+               .keyword("values ");
         toSQLReferenceValues(context);
     }
 
     final void toSQLReferenceKeys(RenderContext context) {
+        boolean indent = (size() > 1);
+
         context.sql("(");
+
+        if (indent) {
+            context.formatIndentStart();
+        }
 
         String separator = "";
         for (Field<?> field : keySet()) {
             context.sql(separator);
-            context.literal(field.getName());
 
+            if (indent) {
+                context.formatNewLine();
+            }
+
+            context.literal(field.getName());
             separator = ", ";
+        }
+
+        if (indent) {
+            context.formatIndentEnd()
+                   .formatNewLine();
         }
 
         context.sql(")");
     }
 
     final void toSQLReferenceValues(RenderContext context) {
+        boolean indent = (size() > 1);
+
         context.sql("(");
+
+        if (indent) {
+            context.formatIndentStart();
+        }
 
         String separator = "";
         for (Field<?> field : values()) {
             context.sql(separator);
-            context.sql(field);
 
+            if (indent) {
+                context.formatNewLine();
+            }
+
+            context.sql(field);
             separator = ", ";
+        }
+
+        if (indent) {
+            context.formatIndentEnd()
+                   .formatNewLine();
         }
 
         context.sql(")");

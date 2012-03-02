@@ -50,6 +50,7 @@ public class jOOQOracleTestInline extends jOOQOracleTest {
     protected TestFactory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
+        settings.withRenderFormatted(true);
         return new TestFactory(getConnection(), settings);
     }
 }

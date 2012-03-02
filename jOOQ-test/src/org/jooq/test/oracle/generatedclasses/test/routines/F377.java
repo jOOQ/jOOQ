@@ -8,13 +8,13 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class F377 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -798076273;
+	private static final long serialVersionUID = -1748141628;
 
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public F377() {
-		super(org.jooq.SQLDialect.ORACLE, "F377", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("F377", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 }

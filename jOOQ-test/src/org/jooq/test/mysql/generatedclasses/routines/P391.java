@@ -10,7 +10,7 @@ package org.jooq.test.mysql.generatedclasses.routines;
  */
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1103404718;
+	private static final long serialVersionUID = 1719688547;
 
 
 	/**
@@ -47,7 +47,7 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public P391() {
-		super(org.jooq.SQLDialect.MYSQL, "p391", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		super("p391", org.jooq.test.mysql.generatedclasses.Test.TEST);
 
 		addInParameter(I1);
 		addInOutParameter(IO1);

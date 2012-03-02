@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1426295247;
+	private static final long serialVersionUID = -1548384649;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void
 	 * Create a new routine call instance
 	 */
 	public PGetTwoCursors() {
-		super(org.jooq.SQLDialect.POSTGRES, "p_get_two_cursors", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		super("p_get_two_cursors", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 
 		addOutParameter(BOOKS);
 		addOutParameter(AUTHORS);

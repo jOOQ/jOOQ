@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord> {
 
-	private static final long serialVersionUID = -192482912;
+	private static final long serialVersionUID = 1072405333;
 
 
 	/**
@@ -25,7 +25,7 @@ public class FArrays2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle
 	 * Create a new routine call instance
 	 */
 	public FArrays2() {
-		super(org.jooq.SQLDialect.ORACLE, "F_ARRAYS2", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord.class));
+		super("F_ARRAYS2", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(IN_ARRAY);

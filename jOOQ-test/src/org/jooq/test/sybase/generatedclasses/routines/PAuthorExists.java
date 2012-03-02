@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 136701218;
+	private static final long serialVersionUID = 27987174;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Create a new routine call instance
 	 */
 	public PAuthorExists() {
-		super(org.jooq.SQLDialect.SYBASE, "p_author_exists", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		super("p_author_exists", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 
 		addInParameter(AUTHOR_NAME);
 		addOutParameter(RESULT);

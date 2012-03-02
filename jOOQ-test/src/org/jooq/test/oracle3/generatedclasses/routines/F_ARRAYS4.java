@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_ARRAYS4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> {
 
-	private static final long serialVersionUID = -50663123;
+	private static final long serialVersionUID = 1521952482;
 
 
 	/**
@@ -25,7 +25,7 @@ public class F_ARRAYS4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracl
 	 * Create a new routine call instance
 	 */
 	public F_ARRAYS4() {
-		super(org.jooq.SQLDialect.ORACLE, "F_ARRAYS4", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY.class));
+		super("F_ARRAYS4", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(IN_ARRAY);

@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 810500864;
+	private static final long serialVersionUID = 1710816467;
 
 
 	/**
@@ -27,7 +27,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Create a new routine call instance
 	 */
 	public FNumber() {
-		super(org.jooq.SQLDialect.MYSQL, "f_number", org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.impl.SQLDataType.INTEGER);
+		super("f_number", org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(N);

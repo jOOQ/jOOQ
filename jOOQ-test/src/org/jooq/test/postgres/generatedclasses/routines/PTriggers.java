@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PTriggers extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1080306299;
+	private static final long serialVersionUID = -1095013055;
 
 
 	/**
@@ -23,7 +23,7 @@ public class PTriggers extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 	 * Create a new routine call instance
 	 */
 	public PTriggers() {
-		super(org.jooq.SQLDialect.POSTGRES, "p_triggers", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.util.postgres.PostgresDataType.getDefaultDataType("trigger"));
+		super("p_triggers", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.util.postgres.PostgresDataType.getDefaultDataType("trigger"));
 
 		setReturnParameter(RETURN_VALUE);
 	}

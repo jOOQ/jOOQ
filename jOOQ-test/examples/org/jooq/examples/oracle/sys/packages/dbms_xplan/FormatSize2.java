@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class FormatSize2 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -1290109430;
+	private static final long serialVersionUID = -977301825;
 
 
 	/**
@@ -25,7 +25,7 @@ public class FormatSize2 extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Create a new routine call instance
 	 */
 	public FormatSize2() {
-		super(org.jooq.SQLDialect.ORACLE, "FORMAT_SIZE2", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
+		super("FORMAT_SIZE2", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(NUM);

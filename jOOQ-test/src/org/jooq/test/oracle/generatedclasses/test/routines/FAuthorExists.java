@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1794471557;
+	private static final long serialVersionUID = 1125303782;
 
 
 	/**
@@ -25,7 +25,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.math.BigDe
 	 * Create a new routine call instance
 	 */
 	public FAuthorExists() {
-		super(org.jooq.SQLDialect.ORACLE, "F_AUTHOR_EXISTS", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.NUMERIC);
+		super("F_AUTHOR_EXISTS", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(AUTHOR_NAME);

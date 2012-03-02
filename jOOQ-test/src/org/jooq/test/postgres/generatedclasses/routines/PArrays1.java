@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 388632146;
+	private static final long serialVersionUID = -755653044;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PArrays1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PArrays1() {
-		super(org.jooq.SQLDialect.POSTGRES, "p_arrays", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		super("p_arrays", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 
 		addInParameter(IN_ARRAY);
 		addOutParameter(OUT_ARRAY);

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 823678383;
+	private static final long serialVersionUID = -1289793495;
 
 
 	/**
@@ -45,7 +45,7 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public P391() {
-		super(org.jooq.SQLDialect.POSTGRES, "p391", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		super("p391", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 
 		addInParameter(I1);
 		addInOutParameter(IO1);

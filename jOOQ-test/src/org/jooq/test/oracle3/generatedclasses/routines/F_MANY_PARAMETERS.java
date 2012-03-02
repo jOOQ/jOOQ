@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1237579750;
+	private static final long serialVersionUID = 938486993;
 
 
 	/**
@@ -2020,7 +2020,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	 * Create a new routine call instance
 	 */
 	public F_MANY_PARAMETERS() {
-		super(org.jooq.SQLDialect.ORACLE, "F_MANY_PARAMETERS", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
+		super("F_MANY_PARAMETERS", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(F000);

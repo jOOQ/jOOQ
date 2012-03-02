@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -850892877;
+	private static final long serialVersionUID = -305042904;
 
 
 	/**
@@ -45,7 +45,7 @@ public class DisplayPlan extends org.jooq.impl.AbstractRoutine<java.lang.String>
 	 * Create a new routine call instance
 	 */
 	public DisplayPlan() {
-		super(org.jooq.SQLDialect.ORACLE, "DISPLAY_PLAN", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.CLOB);
+		super("DISPLAY_PLAN", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.CLOB);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(TABLE_NAME);

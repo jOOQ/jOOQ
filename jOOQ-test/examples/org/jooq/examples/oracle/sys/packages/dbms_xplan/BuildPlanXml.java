@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 841625147;
+	private static final long serialVersionUID = -924109584;
 
 
 	/**
@@ -58,7 +58,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Create a new routine call instance
 	 */
 	public BuildPlanXml() {
-		super(org.jooq.SQLDialect.ORACLE, "BUILD_PLAN_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
+		super("BUILD_PLAN_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(TABLE_NAME);

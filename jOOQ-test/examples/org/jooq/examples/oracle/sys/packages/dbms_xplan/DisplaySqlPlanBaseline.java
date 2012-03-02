@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1736754896;
+	private static final long serialVersionUID = -973826501;
 
 
 	/**
@@ -35,7 +35,7 @@ public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jo
 	 * Create a new routine call instance
 	 */
 	public DisplaySqlPlanBaseline() {
-		super(org.jooq.SQLDialect.ORACLE, "DISPLAY_SQL_PLAN_BASELINE", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
+		super("DISPLAY_SQL_PLAN_BASELINE", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(SQL_HANDLE);

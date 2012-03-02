@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F_TABLES2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE> {
 
-	private static final long serialVersionUID = 456807174;
+	private static final long serialVersionUID = 142497905;
 
 
 	/**
@@ -25,7 +25,7 @@ public class F_TABLES2 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracl
 	 * Create a new routine call instance
 	 */
 	public F_TABLES2() {
-		super(org.jooq.SQLDialect.ORACLE, "F_TABLES2", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE.class));
+		super("F_TABLES2", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(IN_TABLE);

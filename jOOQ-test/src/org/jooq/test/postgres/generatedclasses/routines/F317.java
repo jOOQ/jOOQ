@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1868257073;
+	private static final long serialVersionUID = 58533431;
 
 
 	/**
@@ -40,7 +40,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Create a new routine call instance
 	 */
 	public F317() {
-		super(org.jooq.SQLDialect.POSTGRES, "f317", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
+		super("f317", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P1);

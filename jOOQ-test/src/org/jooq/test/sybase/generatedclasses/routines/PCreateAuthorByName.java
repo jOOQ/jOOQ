@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 706955466;
+	private static final long serialVersionUID = -372932978;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthorByName() {
-		super(org.jooq.SQLDialect.SYBASE, "p_create_author_by_name", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		super("p_create_author_by_name", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 
 		addInParameter(P_FIRST_NAME);
 		addInParameter(P_LAST_NAME);

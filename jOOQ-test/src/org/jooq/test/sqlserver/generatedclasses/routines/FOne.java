@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 2000333369;
+	private static final long serialVersionUID = -53440767;
 
 
 	/**
@@ -20,7 +20,7 @@ public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Create a new routine call instance
 	 */
 	public FOne() {
-		super(org.jooq.SQLDialect.SQLSERVER, "f_one", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.impl.SQLDataType.INTEGER);
+		super("f_one", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 	}

@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -1047665620;
+	private static final long serialVersionUID = 1376721367;
 
 
 	/**
@@ -41,7 +41,7 @@ public class ValidateFormat extends org.jooq.impl.AbstractRoutine<java.lang.Obje
 	 * Create a new routine call instance
 	 */
 	public ValidateFormat() {
-		super(org.jooq.SQLDialect.ORACLE, "VALIDATE_FORMAT", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("PL/SQL BOOLEAN"));
+		super("VALIDATE_FORMAT", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("PL/SQL BOOLEAN"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(HASPLANSTATS);

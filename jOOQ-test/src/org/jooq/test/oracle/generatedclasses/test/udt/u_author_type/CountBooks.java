@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
  */
 public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1673886985;
+	private static final long serialVersionUID = -1510403668;
 
 
 	/**
@@ -25,7 +25,7 @@ public class CountBooks extends org.jooq.impl.AbstractRoutine<java.math.BigDecim
 	 * Create a new routine call instance
 	 */
 	public CountBooks() {
-		super(org.jooq.SQLDialect.ORACLE, "COUNT_BOOKS", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE, org.jooq.impl.SQLDataType.NUMERIC);
+		super("COUNT_BOOKS", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(SELF);

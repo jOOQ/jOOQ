@@ -10,13 +10,13 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1364493557;
+	private static final long serialVersionUID = 1909035850;
 
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthor() {
-		super(org.jooq.SQLDialect.MYSQL, "p_create_author", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
+		super("p_create_author", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 }

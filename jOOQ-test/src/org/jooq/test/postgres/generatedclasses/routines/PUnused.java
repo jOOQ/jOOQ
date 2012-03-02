@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 863383961;
+	private static final long serialVersionUID = -83646817;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PUnused() {
-		super(org.jooq.SQLDialect.POSTGRES, "p_unused", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		super("p_unused", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 
 		addInParameter(IN1);
 		addOutParameter(OUT1);

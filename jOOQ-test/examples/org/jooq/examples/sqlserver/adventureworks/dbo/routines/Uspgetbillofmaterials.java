@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Uspgetbillofmaterials extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1518305889;
+	private static final long serialVersionUID = 2120177495;
 
 
 	/**
@@ -25,7 +25,7 @@ public class Uspgetbillofmaterials extends org.jooq.impl.AbstractRoutine<java.la
 	 * Create a new routine call instance
 	 */
 	public Uspgetbillofmaterials() {
-		super(org.jooq.SQLDialect.SQLSERVER, "uspGetBillOfMaterials", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
+		super("uspGetBillOfMaterials", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
 
 		addInParameter(STARTPRODUCTID);
 		addInParameter(CHECKDATE);

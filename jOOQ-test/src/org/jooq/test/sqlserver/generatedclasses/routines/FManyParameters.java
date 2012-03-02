@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1981094233;
+	private static final long serialVersionUID = 1865526793;
 
 
 	/**
@@ -2020,7 +2020,7 @@ public class FManyParameters extends org.jooq.impl.AbstractRoutine<java.lang.Int
 	 * Create a new routine call instance
 	 */
 	public FManyParameters() {
-		super(org.jooq.SQLDialect.SQLSERVER, "f_many_parameters", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.impl.SQLDataType.INTEGER);
+		super("f_many_parameters", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(F000);

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 1281451429;
+	private static final long serialVersionUID = 72583979;
 
 
 	/**
@@ -25,7 +25,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	 * Create a new routine call instance
 	 */
 	public FGetOneCursor() {
-		super(org.jooq.SQLDialect.POSTGRES, "f_get_one_cursor", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.RESULT);
+		super("f_get_one_cursor", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.RESULT);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(BOOK_IDS);

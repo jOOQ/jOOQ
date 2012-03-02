@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1238363717;
+	private static final long serialVersionUID = 1079769348;
 
 
 	/**
@@ -30,7 +30,7 @@ public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.
 	 * Create a new routine call instance
 	 */
 	public GetCustomerBalance() {
-		super(org.jooq.SQLDialect.MYSQL, "get_customer_balance", org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.impl.SQLDataType.DECIMAL);
+		super("get_customer_balance", org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.impl.SQLDataType.DECIMAL);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P_CUSTOMER_ID);

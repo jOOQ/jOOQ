@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PManyParameters extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 165107887;
+	private static final long serialVersionUID = 172532772;
 
 
 	/**
@@ -2015,7 +2015,7 @@ public class PManyParameters extends org.jooq.impl.AbstractRoutine<java.lang.Voi
 	 * Create a new routine call instance
 	 */
 	public PManyParameters() {
-		super(org.jooq.SQLDialect.ORACLE, "P_MANY_PARAMETERS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_MANY_PARAMETERS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addInParameter(F000);
 		addInParameter(F001);

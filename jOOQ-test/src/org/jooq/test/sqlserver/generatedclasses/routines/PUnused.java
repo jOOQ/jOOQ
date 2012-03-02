@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 736619290;
+	private static final long serialVersionUID = -252045178;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PUnused() {
-		super(org.jooq.SQLDialect.SQLSERVER, "p_unused", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		super("p_unused", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 
 		addInParameter(IN1);
 		addInOutParameter(OUT1);

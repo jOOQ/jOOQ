@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Ufngetsalesorderstatustext extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1435616749;
+	private static final long serialVersionUID = 1866693781;
 
 
 	/**
@@ -25,7 +25,7 @@ public class Ufngetsalesorderstatustext extends org.jooq.impl.AbstractRoutine<ja
 	 * Create a new routine call instance
 	 */
 	public Ufngetsalesorderstatustext() {
-		super(org.jooq.SQLDialect.SQLSERVER, "ufnGetSalesOrderStatusText", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.NVARCHAR);
+		super("ufnGetSalesOrderStatusText", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.NVARCHAR);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(STATUS);

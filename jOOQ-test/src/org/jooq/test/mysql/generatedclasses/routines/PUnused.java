@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 97058320;
+	private static final long serialVersionUID = 769434861;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PUnused() {
-		super(org.jooq.SQLDialect.MYSQL, "p_unused", org.jooq.test.mysql.generatedclasses.Test.TEST);
+		super("p_unused", org.jooq.test.mysql.generatedclasses.Test.TEST);
 
 		addInParameter(IN1);
 		addOutParameter(OUT1);

@@ -8,13 +8,13 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1664117318;
+	private static final long serialVersionUID = 1936806658;
 
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthor() {
-		super(org.jooq.SQLDialect.SYBASE, "p_create_author", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		super("p_create_author", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 }

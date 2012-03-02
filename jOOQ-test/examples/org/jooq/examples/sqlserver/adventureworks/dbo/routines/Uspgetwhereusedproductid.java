@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Uspgetwhereusedproductid extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 2006420459;
+	private static final long serialVersionUID = -1346701541;
 
 
 	/**
@@ -25,7 +25,7 @@ public class Uspgetwhereusedproductid extends org.jooq.impl.AbstractRoutine<java
 	 * Create a new routine call instance
 	 */
 	public Uspgetwhereusedproductid() {
-		super(org.jooq.SQLDialect.SQLSERVER, "uspGetWhereUsedProductID", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
+		super("uspGetWhereUsedProductID", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
 
 		addInParameter(STARTPRODUCTID);
 		addInParameter(CHECKDATE);

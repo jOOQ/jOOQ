@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1188041584;
+	private static final long serialVersionUID = 1327322139;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PrepareRecords extends org.jooq.impl.AbstractRoutine<org.jooq.examp
 	 * Create a new routine call instance
 	 */
 	public PrepareRecords() {
-		super(org.jooq.SQLDialect.ORACLE, "PREPARE_RECORDS", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
+		super("PREPARE_RECORDS", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(PLAN_CUR);

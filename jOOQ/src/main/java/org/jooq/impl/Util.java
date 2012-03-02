@@ -154,7 +154,7 @@ final class Util {
             R result;
 
             // An ad-hoc type resulting from a JOIN or arbitrary SELECT
-            if (type == RecordImpl.class) {
+            if (type == RecordImpl.class || type == Record.class) {
                 result = (R) new RecordImpl(provider);
             }
 

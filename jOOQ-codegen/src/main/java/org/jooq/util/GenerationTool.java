@@ -113,9 +113,15 @@ public class GenerationTool {
     		    ByteArrayOutputStream out = new ByteArrayOutputStream();
     		    copyLarge(in, out);
     		    String xml = out.toString();
+
+    		    // TODO [#1201] Add better error handling here
+    		    xml = xml.replaceAll(
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd\">");
+
     		    xml = xml.replace(
     		        "<configuration>",
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd\">");
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd\">");
 
     		    main(JAXB.unmarshal(new StringReader(xml), Configuration.class));
     		}
@@ -212,6 +218,7 @@ public class GenerationTool {
 	    generate.setInstanceFields(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.instance-fields")));
 	    generate.setGeneratedAnnotation(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.generated-annotation")));
 	    generate.setPojos("true".equalsIgnoreCase(properties.getProperty("generator.generate.pojos")));
+	    generate.setRecords(!"false".equalsIgnoreCase(properties.getProperty("generator.generate.records")));
 	    generate.setJpaAnnotations("true".equalsIgnoreCase(properties.getProperty("generator.generate.jpa-annotations")));
 
 	    org.jooq.util.jaxb.Generator generator = new org.jooq.util.jaxb.Generator();
@@ -340,6 +347,8 @@ public class GenerationTool {
                 generator.setGenerateGeneratedAnnotation(g.getGenerate().isGeneratedAnnotation());
             if (g.getGenerate().isPojos() != null)
                 generator.setGeneratePojos(g.getGenerate().isPojos());
+            if (g.getGenerate().isRecords() != null)
+                generator.setGenerateRecords(g.getGenerate().isRecords());
             if (g.getGenerate().isJpaAnnotations() != null)
                 generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
 

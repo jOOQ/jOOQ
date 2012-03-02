@@ -124,6 +124,16 @@ public interface Generator {
     void setGeneratePojos(boolean generatePojos);
 
     /**
+     * Whether TableRecords should be generated in addition to tables
+     */
+    boolean generateRecords();
+
+    /**
+     * Whether TableRecords should be generated in addition to tables
+     */
+    void setGenerateRecords(boolean generateRecords);
+
+    /**
      * Whether POJO's and records should be annotated with JPA annotations
      */
     boolean generateJPAAnnotations();

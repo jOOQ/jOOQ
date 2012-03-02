@@ -14,9 +14,22 @@
 	<!-- Run a full mvn clean package install deploy first before this -->
 	<target name="xjc-generator" description="Generate JAXB artefacts from XSD">
 		<mkdir dir="${dir.java}/org/jooq/util/jaxb" />
-		<xjc schema="${dir.resources}/xsd/jooq-codegen-2.0.4.xsd" destdir="${dir.java}" package="org.jooq.util.jaxb">
+		<xjc schema="${dir.resources}/xsd/jooq-codegen-2.1.0.xsd" destdir="${dir.java}" package="org.jooq.util.jaxb">
 			<arg value="-Xxew" />
+			<arg value="-Xfluent-api" />
+			<arg value="-Xdefault-value"/>
 		    <arg value="-instantiate lazy" />
 		</xjc>
+
+		<!-- Remove unnecessary artefacts again -->
+		<delete>
+			<fileset dir="${dir.target}">
+				<include name="EnumTypes.java"/>
+				<include name="ForcedTypes.java"/>
+				<include name="MasterDataTables.java"/>
+				<include name="ObjectFactory.java"/>
+				<include name="Schemata.java"/>
+			</fileset>
+		</delete>
 	</target>
 </project>

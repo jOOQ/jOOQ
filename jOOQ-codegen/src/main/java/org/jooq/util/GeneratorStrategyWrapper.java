@@ -37,6 +37,7 @@ package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
+import org.jooq.Record;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -50,9 +51,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     private static final JooqLogger log = JooqLogger.getLogger(GeneratorStrategyWrapper.class);
 
+    final Generator                 generator;
     final GeneratorStrategy         delegate;
 
-    GeneratorStrategyWrapper(GeneratorStrategy delegate) {
+    GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate) {
+        this.generator = generator;
         this.delegate = delegate;
     }
 
@@ -108,6 +111,12 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
+
+        // [#1150] Intercept Mode.RECORD calls for tables
+        if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition) {
+            return Record.class.getSimpleName();
+        }
+
         String className = convertToJavaIdentifier(delegate.getJavaClassName(definition, mode));
 
         if (mode == Mode.FACTORY) {
@@ -124,6 +133,12 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaPackageName(Definition definition, Mode mode) {
+
+        // [#1150] Intercept Mode.RECORD calls for tables
+        if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition) {
+            return Record.class.getPackage().getName();
+        }
+
         String[] split = delegate.getJavaPackageName(definition, mode).split("\\.");
 
         for (int i = 0; i < split.length; i++) {

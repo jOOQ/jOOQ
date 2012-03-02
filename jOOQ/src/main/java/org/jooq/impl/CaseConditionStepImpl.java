@@ -124,7 +124,7 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         int size = conditions.size();
         for (int i = 0; i < size; i++) {
             if (i > 0) {
-                context.formatSeparator();
+                context.formatNewLine();
             }
 
             context.keyword(" when ")
@@ -134,7 +134,7 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
         }
 
         if (otherwise != null) {
-            context.formatSeparator()
+            context.formatNewLine()
                    .keyword(" else ")
                    .sql(otherwise);
         }

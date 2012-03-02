@@ -161,7 +161,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
                 for (int i = 0; i < size; i++) {
                     if (i > 0) {
-                        context.formatSeparator();
+                        context.formatNewLine();
                     }
 
                     context.keyword(" when ");
@@ -180,7 +180,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
                 for (int i = 0; i < size; i++) {
                     if (i > 0) {
-                        context.formatSeparator();
+                        context.formatNewLine();
                     }
 
                     context.keyword(" when ");
@@ -194,7 +194,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            context.formatSeparator()
+            context.formatNewLine()
                    .keyword(" else ")
                    .sql(otherwise);
         }

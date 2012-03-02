@@ -84,6 +84,7 @@ class Limit extends AbstractQueryPart {
             case POSTGRES: // No break
             case SQLITE: {
                 context.castMode(NEVER)
+                       .formatSeparator()
                        .keyword("limit ")
                        .sql(numberOfRows)
                        .keyword(" offset ")
@@ -97,6 +98,7 @@ class Limit extends AbstractQueryPart {
 
                 // Casts are not supported here...
                 context.castMode(NEVER)
+                       .formatSeparator()
                        .keyword("offset ")
                        .sql(offsetOrZero)
                        .keyword(" rows fetch next ")
@@ -112,6 +114,7 @@ class Limit extends AbstractQueryPart {
                 // INGRES doesn't allow bind variables in the
                 // OFFSET m FETCH FIRST n ROWS ONLY clause
                 context.inline(true)
+                       .formatSeparator()
                        .keyword("offset ")
                        .sql(offsetOrZero)
                        .keyword(" fetch first ")
@@ -145,6 +148,7 @@ class Limit extends AbstractQueryPart {
 
                 // DB2 doesn't allow bind variables here. Casting is not needed.
                 context.inline(true)
+                       .formatSeparator()
                        .keyword("fetch first ")
                        .sql(numberOfRows)
                        .keyword(" rows only")
@@ -171,6 +175,7 @@ class Limit extends AbstractQueryPart {
             // A default implementation is necessary for hashCode() and toString()
             default: {
                 context.castMode(NEVER)
+                       .formatSeparator()
                        .keyword("limit ")
                        .sql(numberOfRows)
                        .keyword(" offset ")

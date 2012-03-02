@@ -28,7 +28,11 @@
            This is set to "QUOTED" by default for backwards-compatibility -->
       <element name="renderNameStyle" type="jooq-runtime:RenderNameStyle" minOccurs="0" maxOccurs="1" default="QUOTED"/>
 
+      <!-- Whether SQL keywords should be rendered with upper or lower case -->
       <element name="renderKeywordStyle" type="jooq-runtime:RenderKeywordStyle" minOccurs="0" maxOccurs="1" default="LOWER"/>
+
+      <!-- Whether rendered SQL should be pretty-printed -->
+      <element name="renderFormatted" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
 
       <!-- The type of statement that is to be executed -->
       <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>

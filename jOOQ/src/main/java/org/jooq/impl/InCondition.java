@@ -89,17 +89,20 @@ class InCondition<T> extends AbstractCondition {
                 case ORACLE:
                 case INGRES:
                 case SQLSERVER: {
-                    context.sql("(");
+                    context.sql("(")
+                           .formatIndentLockStart();
 
                     for (int i = 0; i < list.size(); i += IN_LIMIT) {
                         if (i > 0) {
-                            context.keyword(" or ");
+                            context.keyword(" or ")
+                                   .formatSeparator();
                         }
 
                         toSQLSubValues(context, list.subList(i, Math.min(i + IN_LIMIT, list.size())));
                     }
 
-                    context.sql(")");
+                    context.sql(")")
+                           .formatIndentLockEnd();
                     break;
                 }
 

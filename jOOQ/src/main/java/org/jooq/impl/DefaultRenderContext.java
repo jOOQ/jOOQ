@@ -37,6 +37,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 
+import java.util.Stack;
+
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
@@ -44,6 +46,7 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -61,6 +64,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private int                 alias;
     private CastMode            castMode         = CastMode.DEFAULT;
     private SQLDialect[]        castDialects;
+    private int                 indent;
+    private Stack<Integer>      indentLock       = new Stack<Integer>();
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -113,7 +118,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sql(String s) {
-        sql.append(s);
+        if (s != null && Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            sql.append(s.replaceAll("[\\n\\r]", "$0" + indentation()));
+        }
+        else {
+            sql.append(s);
+        }
+
         return this;
     }
 
@@ -126,6 +137,80 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(int i) {
         sql.append(i);
+        return this;
+    }
+
+    @Override
+    public final RenderContext formatNewLine() {
+        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            sql.append("\n");
+            sql.append(indentation());
+        }
+
+        return this;
+    }
+
+    private final String indentation() {
+        return StringUtils.leftPad("", indent, " ");
+    }
+
+    @Override
+    public final RenderContext formatSeparator() {
+        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            formatNewLine();
+        }
+        else {
+            sql.append(" ");
+        }
+
+        return this;
+    }
+
+    @Override
+    public final RenderContext formatIndentStart() {
+        return formatIndentStart(2);
+    }
+
+    @Override
+    public final RenderContext formatIndentEnd() {
+        return formatIndentEnd(2);
+    }
+
+    @Override
+    public final RenderContext formatIndentStart(int i) {
+        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            indent += i;
+        }
+
+        return this;
+    }
+
+    @Override
+    public final RenderContext formatIndentEnd(int i) {
+        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            indent -= i;
+        }
+
+        return this;
+    }
+
+    @Override
+    public final RenderContext formatIndentLockStart() {
+        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            indentLock.push(indent);
+            String[] lines = sql.toString().split("[\\n\\r]");
+            indent = lines[lines.length - 1].length();
+        }
+
+        return this;
+    }
+
+    @Override
+    public final RenderContext formatIndentLockEnd() {
+        if (Boolean.TRUE.equals(getSettings().isRenderFormatted())) {
+            indent = indentLock.pop();
+        }
+
         return this;
     }
 

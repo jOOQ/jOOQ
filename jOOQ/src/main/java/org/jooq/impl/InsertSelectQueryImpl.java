@@ -76,15 +76,21 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("insert into ").sql(into).sql(" (");
+        context.keyword("insert into ")
+               .sql(into)
+               .sql(" (");
 
         String separator = "";
         for (Field<?> field : fields) {
-            context.sql(separator).literal(field.getName());
+            context.sql(separator)
+                   .literal(field.getName());
+
             separator = ", ";
         }
 
-        context.sql(") ").sql(select);
+        context.sql(")")
+               .formatSeparator()
+               .sql(select);
     }
 
     @Override

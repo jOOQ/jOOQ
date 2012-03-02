@@ -127,11 +127,16 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .declareTables(true)
                .sql(getInto())
                .declareTables(false)
-               .keyword(" set ")
-               .sql(updateMap);
+               .formatSeparator()
+               .keyword("set ")
+               .formatIndentLockStart()
+               .sql(updateMap)
+               .formatIndentLockEnd();
 
         if (!(getWhere() instanceof TrueCondition)) {
-            context.keyword(" where ").sql(getWhere());
+            context.formatSeparator()
+                   .keyword("where ")
+                   .sql(getWhere());
         }
     }
 

@@ -123,7 +123,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     @Override
     public final void toSQL(RenderContext context) {
         context.sql(lhs)
-               .sql(" ")
+               .formatSeparator()
                .keyword(translateType(context).toSQL())
                .sql(" ")
 

@@ -89,12 +89,18 @@ class SelectQueryAsField<T> extends AbstractField<T> {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.sql("(").sql(query).sql(")");
+            context.sql("(")
+                   .formatIndentLockStart()
+                   .sql(query)
+                   .formatIndentLockEnd()
+                   .sql(")");
         }
         else {
             context.sql("(")
                    .subquery(true)
+                   .formatIndentLockStart()
                    .sql(query)
+                   .formatIndentLockEnd()
                    .subquery(false)
                    .sql(")");
         }

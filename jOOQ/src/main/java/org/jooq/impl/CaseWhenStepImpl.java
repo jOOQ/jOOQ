@@ -149,13 +149,21 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("case");
+        context.formatIndentLockStart()
+               .keyword("case");
 
+        int size = compareValues.size();
         switch (context.getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
-                for (int i = 0; i < compareValues.size(); i++) {
+                context.formatIndentLockStart();
+
+                for (int i = 0; i < size; i++) {
+                    if (i > 0) {
+                        context.formatSeparator();
+                    }
+
                     context.keyword(" when ");
                     context.sql(value.equal(compareValues.get(i)));
                     context.keyword(" then ");
@@ -166,9 +174,15 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
             }
 
             default: {
-                context.sql(" ").sql(value);
+                context.sql(" ")
+                       .sql(value)
+                       .formatIndentLockStart();
 
-                for (int i = 0; i < compareValues.size(); i++) {
+                for (int i = 0; i < size; i++) {
+                    if (i > 0) {
+                        context.formatSeparator();
+                    }
+
                     context.keyword(" when ");
                     context.sql(compareValues.get(i));
                     context.keyword(" then ");
@@ -180,10 +194,22 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            context.keyword(" else ").sql(otherwise);
+            context.formatSeparator()
+                   .keyword(" else ")
+                   .sql(otherwise);
         }
 
-        context.keyword(" end");
+        context.formatIndentLockEnd();
+
+        if (size > 1 || otherwise != null) {
+            context.formatSeparator();
+        }
+        else {
+            context.sql(" ");
+        }
+
+        context.keyword("end")
+               .formatIndentLockEnd();
     }
 
     @Override

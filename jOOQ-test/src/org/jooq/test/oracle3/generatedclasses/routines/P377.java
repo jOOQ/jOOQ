@@ -8,13 +8,13 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class P377 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1451426393;
+	private static final long serialVersionUID = -1018322034;
 
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public P377() {
-		super(org.jooq.SQLDialect.ORACLE, "P377", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P377", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 }

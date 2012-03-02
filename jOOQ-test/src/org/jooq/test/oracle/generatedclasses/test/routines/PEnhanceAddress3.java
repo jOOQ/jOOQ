@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PEnhanceAddress3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1425545467;
+	private static final long serialVersionUID = 1611614310;
 
 
 	/**
@@ -20,7 +20,7 @@ public class PEnhanceAddress3 extends org.jooq.impl.AbstractRoutine<java.lang.Vo
 	 * Create a new routine call instance
 	 */
 	public PEnhanceAddress3() {
-		super(org.jooq.SQLDialect.ORACLE, "P_ENHANCE_ADDRESS3", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_ENHANCE_ADDRESS3", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addInOutParameter(ADDRESS);
 	}

@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.routines;
  */
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1447388815;
+	private static final long serialVersionUID = 1228369056;
 
 
 	/**
@@ -25,7 +25,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	 * Create a new routine call instance
 	 */
 	public FAuthorExists() {
-		super(org.jooq.SQLDialect.DB2, "F_AUTHOR_EXISTS", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
+		super("F_AUTHOR_EXISTS", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(AUTHOR_NAME);

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -937888071;
+	private static final long serialVersionUID = 174216430;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthorByName() {
-		super(org.jooq.SQLDialect.ORACLE, "P_CREATE_AUTHOR_BY_NAME", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_CREATE_AUTHOR_BY_NAME", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addInParameter(FIRST_NAME);
 		addInParameter(LAST_NAME);

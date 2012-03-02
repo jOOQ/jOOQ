@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 215734183;
+	private static final long serialVersionUID = 1792413373;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Create a new routine call instance
 	 */
 	public PAuthorExists() {
-		super(org.jooq.SQLDialect.SQLSERVER, "p_author_exists", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
+		super("p_author_exists", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 
 		addInParameter(AUTHOR_NAME);
 		addInOutParameter(RESULT);

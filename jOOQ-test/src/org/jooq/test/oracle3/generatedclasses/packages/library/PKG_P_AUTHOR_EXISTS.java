@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
  */
 public class PKG_P_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -471224108;
+	private static final long serialVersionUID = 607265343;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PKG_P_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Create a new routine call instance
 	 */
 	public PKG_P_AUTHOR_EXISTS() {
-		super(org.jooq.SQLDialect.ORACLE, "PKG_P_AUTHOR_EXISTS", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.packages.LIBRARY.LIBRARY);
+		super("PKG_P_AUTHOR_EXISTS", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.packages.LIBRARY.LIBRARY);
 
 		addInParameter(AUTHOR_NAME);
 		addOutParameter(RESULT);

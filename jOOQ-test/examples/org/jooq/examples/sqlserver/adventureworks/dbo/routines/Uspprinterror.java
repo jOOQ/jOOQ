@@ -8,13 +8,13 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Uspprinterror extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1015896184;
+	private static final long serialVersionUID = -1542888904;
 
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public Uspprinterror() {
-		super(org.jooq.SQLDialect.SQLSERVER, "uspPrintError", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
+		super("uspPrintError", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
 	}
 }

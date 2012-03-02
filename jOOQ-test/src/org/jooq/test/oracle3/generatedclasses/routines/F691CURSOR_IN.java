@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 572247539;
+	private static final long serialVersionUID = 1875336478;
 
 
 	/**
@@ -25,7 +25,7 @@ public class F691CURSOR_IN extends org.jooq.impl.AbstractRoutine<java.math.BigDe
 	 * Create a new routine call instance
 	 */
 	public F691CURSOR_IN() {
-		super(org.jooq.SQLDialect.ORACLE, "F691CURSOR_IN", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
+		super("F691CURSOR_IN", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(C);

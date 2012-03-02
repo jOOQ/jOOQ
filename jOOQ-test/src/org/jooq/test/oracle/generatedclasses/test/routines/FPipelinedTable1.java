@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FPipelinedTable1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord> {
 
-	private static final long serialVersionUID = 1054884058;
+	private static final long serialVersionUID = 1725977221;
 
 
 	/**
@@ -20,7 +20,7 @@ public class FPipelinedTable1 extends org.jooq.impl.AbstractRoutine<org.jooq.tes
 	 * Create a new routine call instance
 	 */
 	public FPipelinedTable1() {
-		super(org.jooq.SQLDialect.ORACLE, "F_PIPELINED_TABLE1", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord.class));
+		super("F_PIPELINED_TABLE1", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 	}

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1539210254;
+	private static final long serialVersionUID = 1182445140;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Create a new routine call instance
 	 */
 	public PAuthorExists() {
-		super(org.jooq.SQLDialect.POSTGRES, "p_author_exists", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
+		super("p_author_exists", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 
 		addInParameter(AUTHOR_NAME);
 		addOutParameter(RESULT);

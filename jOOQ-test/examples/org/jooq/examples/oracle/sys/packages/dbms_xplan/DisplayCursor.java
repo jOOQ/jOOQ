@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -520700923;
+	private static final long serialVersionUID = 725735674;
 
 
 	/**
@@ -35,7 +35,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	 * Create a new routine call instance
 	 */
 	public DisplayCursor() {
-		super(org.jooq.SQLDialect.ORACLE, "DISPLAY_CURSOR", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
+		super("DISPLAY_CURSOR", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE.getDataType().asArrayDataType(org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(SQL_ID);

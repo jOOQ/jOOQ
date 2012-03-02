@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 890945793;
+	private static final long serialVersionUID = -1815405672;
 
 
 	/**
@@ -28,7 +28,7 @@ public class FGetOneCursor extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	 * Create a new routine call instance
 	 */
 	public FGetOneCursor() {
-		super(org.jooq.SQLDialect.H2, "F_GET_ONE_CURSOR", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.RESULT);
+		super("F_GET_ONE_CURSOR", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.RESULT);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P2);

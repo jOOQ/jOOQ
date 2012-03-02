@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class FPipelinedArray1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord> {
 
-	private static final long serialVersionUID = -1155295483;
+	private static final long serialVersionUID = 1719195440;
 
 
 	/**
@@ -20,7 +20,7 @@ public class FPipelinedArray1 extends org.jooq.impl.AbstractRoutine<org.jooq.tes
 	 * Create a new routine call instance
 	 */
 	public FPipelinedArray1() {
-		super(org.jooq.SQLDialect.ORACLE, "F_PIPELINED_ARRAY1", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
+		super("F_PIPELINED_ARRAY1", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord.class));
 
 		setReturnParameter(RETURN_VALUE);
 	}

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.routines;
  */
 public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> {
 
-	private static final long serialVersionUID = 595114756;
+	private static final long serialVersionUID = 1575400205;
 
 
 	/**
@@ -31,7 +31,7 @@ public class FArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Object[]> 
 	 * Create a new routine call instance
 	 */
 	public FArrays2() {
-		super(org.jooq.SQLDialect.H2, "F_ARRAYS2", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.OTHER.getArrayDataType());
+		super("F_ARRAYS2", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.OTHER.getArrayDataType());
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P1);

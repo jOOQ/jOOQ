@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Ufngetstock extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -1565491317;
+	private static final long serialVersionUID = 292621223;
 
 
 	/**
@@ -25,7 +25,7 @@ public class Ufngetstock extends org.jooq.impl.AbstractRoutine<java.lang.Integer
 	 * Create a new routine call instance
 	 */
 	public Ufngetstock() {
-		super(org.jooq.SQLDialect.SQLSERVER, "ufnGetStock", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.INTEGER);
+		super("ufnGetStock", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(PRODUCTID);

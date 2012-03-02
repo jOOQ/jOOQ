@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.packages.library_767_package_
  */
 public class Library_767PackageTest extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1696157756;
+	private static final long serialVersionUID = 1715232815;
 
 
 	/**
@@ -20,7 +20,7 @@ public class Library_767PackageTest extends org.jooq.impl.AbstractRoutine<java.m
 	 * Create a new routine call instance
 	 */
 	public Library_767PackageTest() {
-		super(org.jooq.SQLDialect.ORACLE, "LIBRARY_767_PACKAGE_TEST", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest.LIBRARY_767_PACKAGE_TEST, org.jooq.impl.SQLDataType.NUMERIC);
+		super("LIBRARY_767_PACKAGE_TEST", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.packages.Library_767PackageTest.LIBRARY_767_PACKAGE_TEST, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 	}

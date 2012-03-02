@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Ufngetcontactinformation extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 1768070995;
+	private static final long serialVersionUID = 1636143209;
 
 
 	/**
@@ -28,7 +28,7 @@ public class Ufngetcontactinformation extends org.jooq.impl.AbstractRoutine<java
 	 * Create a new routine call instance
 	 */
 	public Ufngetcontactinformation() {
-		super(org.jooq.SQLDialect.SQLSERVER, "ufnGetContactInformation", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("TABLE"));
+		super("ufnGetContactInformation", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("TABLE"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(CONTACTID);

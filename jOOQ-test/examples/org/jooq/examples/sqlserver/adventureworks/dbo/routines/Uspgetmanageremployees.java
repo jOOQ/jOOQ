@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Uspgetmanageremployees extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -895001312;
+	private static final long serialVersionUID = -590724594;
 
 
 	/**
@@ -20,7 +20,7 @@ public class Uspgetmanageremployees extends org.jooq.impl.AbstractRoutine<java.l
 	 * Create a new routine call instance
 	 */
 	public Uspgetmanageremployees() {
-		super(org.jooq.SQLDialect.SQLSERVER, "uspGetManagerEmployees", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
+		super("uspGetManagerEmployees", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO);
 
 		addInParameter(MANAGERID);
 	}

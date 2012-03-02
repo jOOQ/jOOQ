@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1975262316;
+	private static final long serialVersionUID = -958304863;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PGetTwoCursors extends org.jooq.impl.AbstractRoutine<java.lang.Void
 	 * Create a new routine call instance
 	 */
 	public PGetTwoCursors() {
-		super(org.jooq.SQLDialect.ORACLE, "P_GET_TWO_CURSORS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_GET_TWO_CURSORS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addOutParameter(BOOKS);
 		addOutParameter(AUTHORS);

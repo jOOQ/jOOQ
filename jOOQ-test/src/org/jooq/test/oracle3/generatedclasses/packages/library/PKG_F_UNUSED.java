@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
  */
 public class PKG_F_UNUSED extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 577686164;
+	private static final long serialVersionUID = 1567194495;
 
 
 	/**
@@ -20,7 +20,7 @@ public class PKG_F_UNUSED extends org.jooq.impl.AbstractRoutine<java.math.BigDec
 	 * Create a new routine call instance
 	 */
 	public PKG_F_UNUSED() {
-		super(org.jooq.SQLDialect.ORACLE, "PKG_F_UNUSED", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.packages.LIBRARY.LIBRARY, org.jooq.impl.SQLDataType.NUMERIC);
+		super("PKG_F_UNUSED", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.packages.LIBRARY.LIBRARY, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 	}

@@ -101,22 +101,58 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     // Constructors
     // ------------------------------------------------------------------------
 
+    /**
+     * @deprecated - 2.1.0 [#625] - Regenerate your schema
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
     protected AbstractRoutine(SQLDialect dialect, String name, Schema schema) {
-        this(dialect, name, schema, null, null);
+        this(name, schema, null, null);
     }
 
+    /**
+     * @deprecated - 2.1.0 [#625] - Regenerate your schema
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
     protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, Package pkg) {
-        this(dialect, name, schema, pkg, null);
+        this(name, schema, pkg, null);
     }
 
+    /**
+     * @deprecated - 2.1.0 [#625] - Regenerate your schema
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
     protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, DataType<T> type) {
-        this(dialect, name, schema, null, type);
+        this(name, schema, null, type);
     }
 
+    /**
+     * @deprecated - 2.1.0 [#625] - Regenerate your schema
+     */
+    @SuppressWarnings("unused")
+    @Deprecated
     protected AbstractRoutine(SQLDialect dialect, String name, Schema schema, Package pkg, DataType<T> type) {
+        this(name, schema, pkg, type);
+    }
+
+    protected AbstractRoutine(String name, Schema schema) {
+        this(name, schema, null, null);
+    }
+
+    protected AbstractRoutine(String name, Schema schema, Package pkg) {
+        this(name, schema, pkg, null);
+    }
+
+    protected AbstractRoutine(String name, Schema schema, DataType<T> type) {
+        this(name, schema, null, type);
+    }
+
+    protected AbstractRoutine(String name, Schema schema, Package pkg, DataType<T> type) {
         super(name, schema);
 
-        this.attachable = new AttachableImpl(this, Factory.getNewFactory(dialect));
+        this.attachable = new AttachableImpl(this);
         this.parameterIndexes = new HashMap<Parameter<?>, Integer>();
 
         this.pkg = pkg;
@@ -510,25 +546,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     public final Field<T> asField() {
         if (function == null) {
-            Field<?>[] array = new Field<?>[getInParameters().size()];
-
-            int i = 0;
-            for (Parameter<?> p : getInParameters()) {
-
-                // Disambiguate overloaded function signatures
-                // TODO [#625] This won't work any longer, when generated
-                // routine artefacts are dialect-independent
-                if (SQLDialect.POSTGRES == attachable.getDialect() && isOverloaded()) {
-                    array[i] = getInValues().get(p).cast(p.getType());
-                }
-                else {
-                    array[i] = getInValues().get(p);
-                }
-
-                i++;
-            }
-
-            function = new RoutineField<T>(getName(), type, array);
+            function = new RoutineField();
         }
 
         return function;
@@ -551,25 +569,41 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     /**
      * The {@link Field} representation of this {@link Routine}
-     *
-     * @author Lukas Eder
      */
-    private class RoutineField<Z> extends AbstractFunction<Z> {
+    private class RoutineField extends AbstractFunction<T> {
 
         /**
          * Generated UID
          */
         private static final long serialVersionUID = -5730297947647252624L;
 
-        RoutineField(String name, DataType<Z> type, Field<?>[] arguments) {
-            super(name, type, arguments);
+        RoutineField() {
+            super(AbstractRoutine.this.getName(),
+                  AbstractRoutine.this.type);
         }
 
         @Override
-        final Field<Z> getFunction0(Configuration configuration) {
+        final Field<T> getFunction0(Configuration configuration) {
             RenderContext local = create(configuration).renderContext();
             toSQLQualifiedName(local);
-            return function(local.render(), getDataType(), getArguments());
+
+            Field<?>[] array = new Field<?>[getInParameters().size()];
+
+            int i = 0;
+            for (Parameter<?> p : getInParameters()) {
+
+                // Disambiguate overloaded function signatures
+                if (SQLDialect.POSTGRES == configuration.getDialect() && isOverloaded()) {
+                    array[i] = getInValues().get(p).cast(p.getType());
+                }
+                else {
+                    array[i] = getInValues().get(p);
+                }
+
+                i++;
+            }
+
+            return function(local.render(), getDataType(), array);
         }
     }
 }

@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.routines;
  */
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -971186860;
+	private static final long serialVersionUID = -167633897;
 
 
 	/**
@@ -45,7 +45,7 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public P391() {
-		super(org.jooq.SQLDialect.DB2, "P391", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
+		super("P391", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 
 		addInParameter(I1);
 		addInOutParameter(IO1);

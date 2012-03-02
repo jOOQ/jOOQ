@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1611448376;
+	private static final long serialVersionUID = 668255667;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PArrays2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PArrays2() {
-		super(org.jooq.SQLDialect.ORACLE, "P_ARRAYS2", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_ARRAYS2", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addInParameter(IN_ARRAY);
 		addOutParameter(OUT_ARRAY);

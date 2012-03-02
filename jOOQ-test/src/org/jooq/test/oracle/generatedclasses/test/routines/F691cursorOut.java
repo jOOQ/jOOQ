@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class F691cursorOut extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> {
 
-	private static final long serialVersionUID = 1067620380;
+	private static final long serialVersionUID = -589977465;
 
 
 	/**
@@ -20,7 +20,7 @@ public class F691cursorOut extends org.jooq.impl.AbstractRoutine<org.jooq.Result
 	 * Create a new routine call instance
 	 */
 	public F691cursorOut() {
-		super(org.jooq.SQLDialect.ORACLE, "F691CURSOR_OUT", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.RESULT);
+		super("F691CURSOR_OUT", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.RESULT);
 
 		setReturnParameter(RETURN_VALUE);
 	}

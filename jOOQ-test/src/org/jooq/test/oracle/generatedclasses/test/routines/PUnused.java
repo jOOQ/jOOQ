@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1132270403;
+	private static final long serialVersionUID = -1131112328;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PUnused() {
-		super(org.jooq.SQLDialect.ORACLE, "P_UNUSED", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_UNUSED", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addInParameter(IN1);
 		addOutParameter(OUT1);

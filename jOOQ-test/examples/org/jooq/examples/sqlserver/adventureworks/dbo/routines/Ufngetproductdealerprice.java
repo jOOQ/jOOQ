@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Ufngetproductdealerprice extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1367886330;
+	private static final long serialVersionUID = -745857806;
 
 
 	/**
@@ -30,7 +30,7 @@ public class Ufngetproductdealerprice extends org.jooq.impl.AbstractRoutine<java
 	 * Create a new routine call instance
 	 */
 	public Ufngetproductdealerprice() {
-		super(org.jooq.SQLDialect.SQLSERVER, "ufnGetProductDealerPrice", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.NUMERIC);
+		super("ufnGetProductDealerPrice", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(PRODUCTID);

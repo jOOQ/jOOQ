@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PTables2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 274419602;
+	private static final long serialVersionUID = -1126016899;
 
 
 	/**
@@ -25,7 +25,7 @@ public class PTables2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PTables2() {
-		super(org.jooq.SQLDialect.ORACLE, "P_TABLES2", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_TABLES2", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addInParameter(IN_TABLE);
 		addOutParameter(OUT_TABLE);

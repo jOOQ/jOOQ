@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
  */
 public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1834158788;
+	private static final long serialVersionUID = -1892100879;
 
 
 	/**
@@ -40,7 +40,7 @@ public class F317 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 	 * Create a new routine call instance
 	 */
 	public F317() {
-		super(org.jooq.SQLDialect.ORACLE, "F317", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
+		super("F317", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P1);

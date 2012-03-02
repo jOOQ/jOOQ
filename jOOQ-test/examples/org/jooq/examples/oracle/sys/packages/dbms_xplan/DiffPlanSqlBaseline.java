@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1313887923;
+	private static final long serialVersionUID = -454362456;
 
 
 	/**
@@ -30,7 +30,7 @@ public class DiffPlanSqlBaseline extends org.jooq.impl.AbstractRoutine<java.lang
 	 * Create a new routine call instance
 	 */
 	public DiffPlanSqlBaseline() {
-		super(org.jooq.SQLDialect.ORACLE, "DIFF_PLAN_SQL_BASELINE", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
+		super("DIFF_PLAN_SQL_BASELINE", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(BASELINE_PLAN_NAME1);

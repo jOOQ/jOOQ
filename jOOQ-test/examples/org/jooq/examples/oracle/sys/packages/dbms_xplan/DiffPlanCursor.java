@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = 1324457595;
+	private static final long serialVersionUID = 1728883494;
 
 
 	/**
@@ -35,7 +35,7 @@ public class DiffPlanCursor extends org.jooq.impl.AbstractRoutine<java.lang.Stri
 	 * Create a new routine call instance
 	 */
 	public DiffPlanCursor() {
-		super(org.jooq.SQLDialect.ORACLE, "DIFF_PLAN_CURSOR", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
+		super("DIFF_PLAN_CURSOR", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(SQL_ID);

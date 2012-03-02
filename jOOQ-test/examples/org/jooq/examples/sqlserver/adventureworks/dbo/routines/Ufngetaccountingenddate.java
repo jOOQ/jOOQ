@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.routines;
  */
 public class Ufngetaccountingenddate extends org.jooq.impl.AbstractRoutine<java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1822719901;
+	private static final long serialVersionUID = -1298575809;
 
 
 	/**
@@ -20,7 +20,7 @@ public class Ufngetaccountingenddate extends org.jooq.impl.AbstractRoutine<java.
 	 * Create a new routine call instance
 	 */
 	public Ufngetaccountingenddate() {
-		super(org.jooq.SQLDialect.SQLSERVER, "ufnGetAccountingEndDate", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.TIMESTAMP);
+		super("ufnGetAccountingEndDate", org.jooq.examples.sqlserver.adventureworks.dbo.Dbo.DBO, org.jooq.impl.SQLDataType.TIMESTAMP);
 
 		setReturnParameter(RETURN_VALUE);
 	}

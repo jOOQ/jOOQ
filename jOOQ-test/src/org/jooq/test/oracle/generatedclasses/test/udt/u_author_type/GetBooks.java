@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.u_author_type;
  */
 public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1545914589;
+	private static final long serialVersionUID = -1634527224;
 
 
 	/**
@@ -35,7 +35,7 @@ public class GetBooks extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public GetBooks() {
-		super(org.jooq.SQLDialect.ORACLE, "GET_BOOKS", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE);
+		super("GET_BOOKS", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.U_AUTHOR_TYPE);
 
 		addInOutParameter(SELF);
 		addOutParameter(BOOK1);

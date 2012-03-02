@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -664101623;
+	private static final long serialVersionUID = 169611380;
 
 
 	/**
@@ -38,7 +38,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	 * Create a new routine call instance
 	 */
 	public GetPlandiffReportXml() {
-		super(org.jooq.SQLDialect.ORACLE, "GET_PLANDIFF_REPORT_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
+		super("GET_PLANDIFF_REPORT_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(REPORT_REF);

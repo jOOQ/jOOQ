@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class FormatNumber2 extends org.jooq.impl.AbstractRoutine<java.lang.String> {
 
-	private static final long serialVersionUID = -859904286;
+	private static final long serialVersionUID = 860763735;
 
 
 	/**
@@ -25,7 +25,7 @@ public class FormatNumber2 extends org.jooq.impl.AbstractRoutine<java.lang.Strin
 	 * Create a new routine call instance
 	 */
 	public FormatNumber2() {
-		super(org.jooq.SQLDialect.ORACLE, "FORMAT_NUMBER2", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
+		super("FORMAT_NUMBER2", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.SQLDataType.VARCHAR);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(NUM);

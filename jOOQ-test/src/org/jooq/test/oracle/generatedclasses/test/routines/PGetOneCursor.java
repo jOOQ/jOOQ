@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
  */
 public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 922157832;
+	private static final long serialVersionUID = -709779459;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PGetOneCursor extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Create a new routine call instance
 	 */
 	public PGetOneCursor() {
-		super(org.jooq.SQLDialect.ORACLE, "P_GET_ONE_CURSOR", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
+		super("P_GET_ONE_CURSOR", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 
 		addOutParameter(TOTAL);
 		addOutParameter(BOOKS);

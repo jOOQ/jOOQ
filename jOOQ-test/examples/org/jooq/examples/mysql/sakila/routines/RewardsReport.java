@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.routines;
  */
 public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -104106522;
+	private static final long serialVersionUID = 1300386401;
 
 
 	/**
@@ -32,7 +32,7 @@ public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Create a new routine call instance
 	 */
 	public RewardsReport() {
-		super(org.jooq.SQLDialect.MYSQL, "rewards_report", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
+		super("rewards_report", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 
 		addInParameter(MIN_MONTHLY_PURCHASES);
 		addInParameter(MIN_DOLLAR_AMOUNT_PURCHASED);

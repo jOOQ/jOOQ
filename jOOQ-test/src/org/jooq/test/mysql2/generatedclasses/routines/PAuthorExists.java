@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  */
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -217856480;
+	private static final long serialVersionUID = -1270401917;
 
 
 	/**
@@ -27,7 +27,7 @@ public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	 * Create a new routine call instance
 	 */
 	public PAuthorExists() {
-		super(org.jooq.SQLDialect.MYSQL, "p_author_exists", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
+		super("p_author_exists", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 
 		addInParameter(AUTHOR_NAME);
 		addOutParameter(RESULT);

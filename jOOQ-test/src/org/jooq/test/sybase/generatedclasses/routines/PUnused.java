@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.routines;
  */
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 539639049;
+	private static final long serialVersionUID = 2000983117;
 
 
 	/**
@@ -30,7 +30,7 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	 * Create a new routine call instance
 	 */
 	public PUnused() {
-		super(org.jooq.SQLDialect.SYBASE, "p_unused", org.jooq.test.sybase.generatedclasses.Dba.DBA);
+		super("p_unused", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 
 		addInParameter(IN1);
 		addOutParameter(OUT1);

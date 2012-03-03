@@ -84,6 +84,10 @@ public interface OrderProvider {
      * Adds ordering fields
      * <p>
      * Indexes start at <code>1</code> in SQL!
+     * <p>
+     * Note, you can use <code>addOrderBy(Factory.val(1).desc())</code> or
+     * <code>addOrderBy(Factory.literal(1).desc())</code> to apply descending
+     * ordering
      *
      * @param fieldIndexes The ordering fields
      */
@@ -108,8 +112,9 @@ public interface OrderProvider {
      * <p>
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
-     * support bind values, this may be simulated with a <code>ROW_NUMBER()</code>
-     * window function and nested <code>SELECT</code> statements.
+     * support bind values, this may be simulated with a
+     * <code>ROW_NUMBER()</code> window function and nested <code>SELECT</code>
+     * statements.
      * <p>
      * This is the same as calling {@link #addLimit(int, int)} with offset = 0
      *
@@ -144,8 +149,8 @@ public interface OrderProvider {
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function and
-     * nested <code>SELECT</code> statements.
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
@@ -162,8 +167,8 @@ public interface OrderProvider {
      * If there is no <code>LIMIT</code> or <code>TOP</code> clause in your
      * RDBMS, or the <code>LIMIT</code> or <code>TOP</code> clause does not
      * support bind values, or if your RDBMS does not natively support offsets,
-     * this may be simulated with a <code>ROW_NUMBER()</code> window function and
-     * nested <code>SELECT</code> statements.
+     * this may be simulated with a <code>ROW_NUMBER()</code> window function
+     * and nested <code>SELECT</code> statements.
      *
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return

@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DataType;
+import org.jooq.DivideByOnStep;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -71,7 +72,7 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     }
 
     // ------------------------------------------------------------------------
-    // TableLike API
+    // XXX: TableLike API
     // ------------------------------------------------------------------------
 
     @Override
@@ -85,7 +86,7 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     }
 
     // ------------------------------------------------------------------------
-    // Table API
+    // XXX: Table API
     // ------------------------------------------------------------------------
 
     /**
@@ -137,7 +138,7 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     }
 
     // ------------------------------------------------------------------------
-    // PIVOT API
+    // XXX: PIVOT API
     // ------------------------------------------------------------------------
 
     @Override
@@ -151,7 +152,16 @@ abstract class AbstractTable<R extends Record> extends AbstractType<R> implement
     }
 
     // ------------------------------------------------------------------------
-    // JOIN API
+    // XXX: DIVISION API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final DivideByOnStep divideBy(Table<?> divisor) {
+        return new DivideBy(this, divisor);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: JOIN API
     // ------------------------------------------------------------------------
 
     @Override

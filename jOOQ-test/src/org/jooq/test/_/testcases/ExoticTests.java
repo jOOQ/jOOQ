@@ -40,6 +40,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.sum;
@@ -49,6 +50,7 @@ import static org.jooq.impl.Factory.val;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
@@ -207,5 +209,41 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(
             asList(1, 2, 0, 0, 0),
             asList(result3.get(0).into(Integer[].class)));
+    }
+
+    @Test
+    public void testRelationalDivision() {
+
+        // Books and bookstores. There's only one book that is contained in
+        // every bookstore:
+        // ----------------------------------------------------------------
+        int id =
+        create().select()
+                .from(TBookToBookStore()
+                .divideBy(TBookStore())
+                .on(TBookToBookStore_BOOK_STORE_NAME().equal(TBookStore_NAME()))
+                .returning(TBookToBookStore_BOOK_ID()))
+                .fetchOne(0, Integer.class);
+
+        assertEquals(3, id);
+
+        // Test removing some bookstores in nested selects
+        Table<?> notAllBookStores =
+        create().select()
+                .from(TBookStore())
+                .where(TBookStore_NAME().notEqual("Buchhandlung im Volkshaus"))
+                .asTable("not_all_bookstores");
+
+        Result<?> result =
+        create().select()
+                .from(TBookToBookStore()
+                .divideBy(notAllBookStores)
+                .on(TBookToBookStore_BOOK_STORE_NAME().equal(notAllBookStores.getField(TBookStore_NAME())))
+                .returning(TBookToBookStore_BOOK_ID(), field("'abc'").as("abc")))
+                .orderBy(1)
+                .fetch();
+
+        assertEquals(asList((Object) 1, "abc"), asList(result.get(0).intoArray()));
+        assertEquals(asList((Object) 3, "abc"), asList(result.get(1).intoArray()));
     }
 }

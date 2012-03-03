@@ -133,6 +133,55 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
     PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
 
     /**
+     * Create a new <code>TABLE</code> reference from this table, applying
+     * relational division.
+     * <p>
+     * Relational division is the inverse of a cross join operation. The
+     * following is an approximate definition of a relational division:
+     * <code><pre>
+     * Assume the following cross join / cartesian product
+     * C = A × B
+     *
+     * Then it can be said that
+     * A = C ÷ B
+     * B = C ÷ A
+     * </pre></code>
+     * <p>
+     * With jOOQ, you can simplify using relational divisions by using the
+     * following syntax: <code><pre>
+     * C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)
+     * </pre></code>
+     * <p>
+     * The above roughly translates to <code><pre>
+     * SELECT DISTINCT C.TEXT FROM C "c1"
+     * WHERE NOT EXISTS (
+     *   SELECT 1 FROM B
+     *   WHERE NOT EXISTS (
+     *     SELECT 1 FROM C "c2"
+     *     WHERE "c2".TEXT = "c1".TEXT
+     *     AND "c2".ID = B.C_ID
+     *   )
+     * )
+     * </pre></code>
+     * <p>
+     * Or in plain text: Find those TEXT values in C whose ID's correspond to
+     * all ID's in B.
+     * <p>
+     * For more information about relational division and some nice, real-life
+     * examples, see
+     * <ul>
+     * <li><a
+     * href="http://en.wikipedia.org/wiki/Relational_algebra#Division">http://en.wikipedia.org/wiki/Relational_algebra#Division</a></li>
+     * <li><a href=
+     * "http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/"
+     * >http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/</a></li>
+     * </ul>
+     * <p>
+     * This has been observed to work with all dialects
+     */
+    DivideByOnStep divideBy(Table<?> divisor);
+
+    /**
      * <code>INNER JOIN</code> a table to this table.
      */
     @Support

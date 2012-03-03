@@ -1346,6 +1346,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRelationalDivision() throws Exception {
+        new ExoticTests(this).testRelationalDivision();
+    }
+
+    @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerOnResultQuery();
     }

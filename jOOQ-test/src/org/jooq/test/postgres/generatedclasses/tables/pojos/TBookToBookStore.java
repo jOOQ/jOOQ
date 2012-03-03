@@ -12,13 +12,13 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 })
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1845671552;
+	private static final long serialVersionUID = 1837139498;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;
 	private java.lang.Integer stock;
 
-	@javax.persistence.Column(name = "book_store_name")
+	@javax.persistence.Column(name = "book_store_name", nullable = false)
 	public java.lang.String getBookStoreName() {
 		return this.bookStoreName;
 	}
@@ -27,7 +27,7 @@ public class TBookToBookStore implements java.io.Serializable {
 		this.bookStoreName = bookStoreName;
 	}
 
-	@javax.persistence.Column(name = "book_id")
+	@javax.persistence.Column(name = "book_id", nullable = false)
 	public java.lang.Integer getBookId() {
 		return this.bookId;
 	}

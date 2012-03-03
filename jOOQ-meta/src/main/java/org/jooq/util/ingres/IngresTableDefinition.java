@@ -72,6 +72,7 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                     trim(Iicolumns.COLUMN_DATATYPE),
                     Iicolumns.COLUMN_LENGTH,
                     Iicolumns.COLUMN_SCALE,
+                    Iicolumns.COLUMN_NULLS,
                     Iicolumns.COLUMN_ALWAYS_IDENT,
                     Iicolumns.COLUMN_BYDEFAULT_IDENT,
                     trim(IidbSubcomments.LONG_REMARK))
@@ -129,6 +130,7 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                 record.getValue(trim(Iicolumns.COLUMN_NAME)),
                 record.getValue(Iicolumns.COLUMN_SEQUENCE),
                 type,
+                record.getValue(Iicolumns.COLUMN_NULLS, boolean.class),
                 record.getValueAsBoolean(Iicolumns.COLUMN_ALWAYS_IDENT, false) ||
                 record.getValueAsBoolean(Iicolumns.COLUMN_BYDEFAULT_IDENT, false),
                 record.getValue(trim(IidbSubcomments.LONG_REMARK)));

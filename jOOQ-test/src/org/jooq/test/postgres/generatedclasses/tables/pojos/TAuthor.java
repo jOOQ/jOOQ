@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1536816455;
+	private static final long serialVersionUID = 483510055;
 
 	private java.lang.Integer                                                      id;
 	private java.lang.String                                                       firstName;
@@ -20,7 +20,7 @@ public class TAuthor implements java.io.Serializable {
 	private org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -38,7 +38,7 @@ public class TAuthor implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@javax.persistence.Column(name = "last_name")
+	@javax.persistence.Column(name = "last_name", nullable = false)
 	public java.lang.String getLastName() {
 		return this.lastName;
 	}

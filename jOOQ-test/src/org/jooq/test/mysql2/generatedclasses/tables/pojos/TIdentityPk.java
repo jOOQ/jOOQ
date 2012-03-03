@@ -10,13 +10,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_identity_pk", schema = "test2")
 public class TIdentityPk implements java.io.Serializable {
 
-	private static final long serialVersionUID = -6452580;
+	private static final long serialVersionUID = -259870767;
 
 	private java.lang.Integer id;
 	private java.lang.Integer val;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

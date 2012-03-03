@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 519881188;
+	private static final long serialVersionUID = 2024180474;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
 	}
@@ -81,7 +81,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "last_name")
+	@javax.persistence.Column(name = "last_name", nullable = false)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME);
 	}

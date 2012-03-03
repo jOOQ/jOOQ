@@ -70,6 +70,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 COLUMNS.ORDINAL_POSITION,
                 nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, COLUMNS.DATA_TYPE).as("datatype"),
                 COLUMNS.IDENTITY_GENERATION,
+                COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
@@ -97,6 +98,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,
+			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    null != record.getValue(COLUMNS.IDENTITY_GENERATION),
 			    null);
 			result.add(column);

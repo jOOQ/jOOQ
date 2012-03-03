@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> {
 
-	private static final long serialVersionUID = 1381213716;
+	private static final long serialVersionUID = -443375681;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ID")
+	@javax.persistence.Column(name = "ID", nullable = false)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.ID);
 	}
@@ -37,7 +37,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID")
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
 	public java.lang.Integer getAUTHOR_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.AUTHOR_ID);
 	}
@@ -82,7 +82,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TITLE")
+	@javax.persistence.Column(name = "TITLE", nullable = false)
 	public java.lang.String getTITLE() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.TITLE);
 	}
@@ -97,7 +97,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN")
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
 	public java.lang.Integer getPUBLISHED_IN() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.PUBLISHED_IN);
 	}
@@ -112,7 +112,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID")
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
 	public java.lang.Integer getLANGUAGE_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.LANGUAGE_ID);
 	}

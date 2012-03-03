@@ -70,6 +70,7 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
                 COLUMNS.DATA_TYPE,
+                COLUMNS.IS_NULLABLE,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 identity)
@@ -98,6 +99,7 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,
+			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    1 == record.getValue(identity),
 			    null);
 			result.add(column);

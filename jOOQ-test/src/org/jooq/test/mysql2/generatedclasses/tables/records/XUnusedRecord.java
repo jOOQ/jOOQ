@@ -14,7 +14,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 166741158;
+	private static final long serialVersionUID = -785403460;
 
 	/**
 	 * An uncommented item
@@ -30,7 +30,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.ID);
 	}
@@ -75,7 +75,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "NAME")
+	@javax.persistence.Column(name = "NAME", nullable = false)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED.NAME);
 	}

@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = 787667274;
+	private static final long serialVersionUID = -1807902987;
 
 	private java.lang.Integer                                       id;
 	private java.lang.Integer                                       authorId;
@@ -25,7 +25,7 @@ public class VBook implements java.io.Serializable {
 	private byte[]                                                  contentPdf;
 	private org.jooq.test.mysql2.generatedclasses.enums.VBookStatus status;
 
-	@javax.persistence.Column(name = "ID")
+	@javax.persistence.Column(name = "ID", nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -34,7 +34,7 @@ public class VBook implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "AUTHOR_ID")
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -61,7 +61,7 @@ public class VBook implements java.io.Serializable {
 		this.detailsId = detailsId;
 	}
 
-	@javax.persistence.Column(name = "TITLE")
+	@javax.persistence.Column(name = "TITLE", nullable = false)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -70,7 +70,7 @@ public class VBook implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@javax.persistence.Column(name = "PUBLISHED_IN")
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -79,7 +79,7 @@ public class VBook implements java.io.Serializable {
 		this.publishedIn = publishedIn;
 	}
 
-	@javax.persistence.Column(name = "LANGUAGE_ID")
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
 	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}

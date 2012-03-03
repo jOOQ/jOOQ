@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class T_ARRAYS implements java.io.Serializable {
 
-	private static final long serialVersionUID = 43114684;
+	private static final long serialVersionUID = -1238081369;
 
 	private java.lang.Integer                                                      ID;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY      STRING_ARRAY;
@@ -19,7 +19,7 @@ public class T_ARRAYS implements java.io.Serializable {
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY        DATE_ARRAY;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}

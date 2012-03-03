@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
 public class V_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_LIBRARY> {
 
-	private static final long serialVersionUID = -2030789769;
+	private static final long serialVersionUID = -103527198;
 
 	/**
 	 * An uncommented item
@@ -37,7 +37,7 @@ public class V_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TITLE")
+	@javax.persistence.Column(name = "TITLE", nullable = false)
 	public java.lang.String getTITLE() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_LIBRARY.V_LIBRARY.TITLE);
 	}

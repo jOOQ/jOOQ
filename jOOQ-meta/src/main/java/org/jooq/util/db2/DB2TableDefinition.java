@@ -71,7 +71,8 @@ public class DB2TableDefinition extends AbstractTableDefinition {
                     Columns.TYPENAME,
                     Columns.LENGTH,
                     Columns.SCALE,
-                    Columns.IDENTITY)
+                    Columns.IDENTITY,
+                    Columns.NULLS)
                 .from(COLUMNS)
                 .where(Columns.TABSCHEMA.equal(getSchema().getName()))
                 .and(Columns.TABNAME.equal(getName()))
@@ -90,7 +91,8 @@ public class DB2TableDefinition extends AbstractTableDefinition {
                 record.getValue(Columns.COLNAME),
                 record.getValue(Columns.COLNO),
                 type,
-                "Y".equalsIgnoreCase(record.getValue(Columns.IDENTITY)),
+                record.getValue(Columns.NULLS, boolean.class),
+                record.getValue(Columns.IDENTITY, boolean.class),
                 null);
 
             result.add(column);

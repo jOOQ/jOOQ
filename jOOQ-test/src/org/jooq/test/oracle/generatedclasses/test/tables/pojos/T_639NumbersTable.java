@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -980355535;
+	private static final long serialVersionUID = -469167962;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -25,7 +25,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 	private java.math.BigDecimal bigDecimal;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

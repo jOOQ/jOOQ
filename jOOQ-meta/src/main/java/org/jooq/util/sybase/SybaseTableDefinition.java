@@ -64,6 +64,7 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
                 SYSTABCOL.COLUMN_NAME,
                 SYSTABCOL.COLUMN_ID,
                 SYSDOMAIN.DOMAIN_NAME,
+                SYSTABCOL.NULLS,
                 SYSTABCOL.WIDTH,
                 SYSTABCOL.SCALE,
                 SYSTABCOL.DEFAULT)
@@ -88,6 +89,7 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
                 record.getValue(SYSTABCOL.COLUMN_NAME),
                 record.getValue(SYSTABCOL.COLUMN_ID),
                 type,
+                record.getValue(SYSTABCOL.NULLS, boolean.class),
                 "autoincrement".equalsIgnoreCase(record.getValue(SYSTABCOL.DEFAULT)),
                 null);
 

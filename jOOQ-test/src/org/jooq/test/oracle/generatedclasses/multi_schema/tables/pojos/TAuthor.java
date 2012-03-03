@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2090072774;
+	private static final long serialVersionUID = 1123778854;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -20,7 +20,7 @@ public class TAuthor implements java.io.Serializable {
 	private java.lang.Object  address;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -38,7 +38,7 @@ public class TAuthor implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@javax.persistence.Column(name = "LAST_NAME")
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
 	public java.lang.String getLastName() {
 		return this.lastName;
 	}

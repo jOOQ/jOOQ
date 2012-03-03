@@ -92,6 +92,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
 			    record.getValue(Syscolumns.COLUMNNAME),
 			    record.getValue(Syscolumns.COLUMNNUMBER),
 			    type,
+			    !parseNotNull(typeName),
                 null != record.getValue(Syscolumns.AUTOINCREMENTINC),
                 null);
 

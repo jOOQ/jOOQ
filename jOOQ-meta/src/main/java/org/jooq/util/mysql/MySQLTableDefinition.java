@@ -74,6 +74,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		        Columns.COLUMN_COMMENT,
     		        Columns.COLUMN_TYPE,
     		        Columns.DATA_TYPE,
+    		        Columns.IS_NULLABLE,
     		        Columns.NUMERIC_PRECISION,
     		        Columns.NUMERIC_SCALE,
     		        Columns.EXTRA)
@@ -107,6 +108,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
 			    record.getValue(Columns.COLUMN_NAME),
 			    record.getValueAsInteger(Columns.ORDINAL_POSITION),
 			    type,
+			    record.getValue(Columns.IS_NULLABLE, boolean.class),
 			    "auto_increment".equalsIgnoreCase(record.getValue(Columns.EXTRA)),
 			    record.getValue(Columns.COLUMN_COMMENT));
 

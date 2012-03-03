@@ -14,7 +14,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -977159274;
+	private static final long serialVersionUID = 1609955136;
 
 	/**
 	 * The book store name
@@ -42,7 +42,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES test2.t_book_store (name)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "book_store_name")
+	@javax.persistence.Column(name = "book_store_name", nullable = false)
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
@@ -91,7 +91,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES test2.t_book (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "book_id")
+	@javax.persistence.Column(name = "book_id", nullable = false)
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	}

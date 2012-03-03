@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSale implements java.io.Serializable {
 
-	private static final long serialVersionUID = -972600460;
+	private static final long serialVersionUID = 1340611541;
 
 	private java.lang.Integer    id;
 	private java.lang.Integer    bookId;
@@ -19,7 +19,7 @@ public class TBookSale implements java.io.Serializable {
 	private java.math.BigDecimal soldFor;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -28,7 +28,7 @@ public class TBookSale implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "BOOK_ID")
+	@javax.persistence.Column(name = "BOOK_ID", nullable = false)
 	public java.lang.Integer getBookId() {
 		return this.bookId;
 	}
@@ -37,7 +37,7 @@ public class TBookSale implements java.io.Serializable {
 		this.bookId = bookId;
 	}
 
-	@javax.persistence.Column(name = "BOOK_STORE_NAME")
+	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false)
 	public java.lang.String getBookStoreName() {
 		return this.bookStoreName;
 	}
@@ -46,7 +46,7 @@ public class TBookSale implements java.io.Serializable {
 		this.bookStoreName = bookStoreName;
 	}
 
-	@javax.persistence.Column(name = "SOLD_AT")
+	@javax.persistence.Column(name = "SOLD_AT", nullable = false)
 	public java.sql.Date getSoldAt() {
 		return this.soldAt;
 	}
@@ -55,7 +55,7 @@ public class TBookSale implements java.io.Serializable {
 		this.soldAt = soldAt;
 	}
 
-	@javax.persistence.Column(name = "SOLD_FOR")
+	@javax.persistence.Column(name = "SOLD_FOR", nullable = false)
 	public java.math.BigDecimal getSoldFor() {
 		return this.soldFor;
 	}

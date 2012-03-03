@@ -10,12 +10,12 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_identity", schema = "public")
 public class TIdentity implements java.io.Serializable {
 
-	private static final long serialVersionUID = 484320256;
+	private static final long serialVersionUID = 1757231157;
 
 	private java.lang.Integer id;
 	private java.lang.Integer val;
 
-	@javax.persistence.Column(name = "id")
+	@javax.persistence.Column(name = "id", nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

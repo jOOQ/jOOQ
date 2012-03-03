@@ -10,14 +10,14 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_triggers", schema = "public")
 public class TTriggers implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1800900033;
+	private static final long serialVersionUID = 2016724012;
 
 	private java.lang.Integer idGenerated;
 	private java.lang.Integer id;
 	private java.lang.Integer counter;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id_generated", unique = true)
+	@javax.persistence.Column(name = "id_generated", unique = true, nullable = false)
 	public java.lang.Integer getIdGenerated() {
 		return this.idGenerated;
 	}

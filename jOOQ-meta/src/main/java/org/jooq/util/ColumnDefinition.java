@@ -71,4 +71,9 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
      * Whether this column is the table's <code>IDENTITY</code> column.
      */
     boolean isIdentity();
+
+    /**
+     * Whether the column is nullable
+     */
+    boolean isNullable();
 }

@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1831637425;
+	private static final long serialVersionUID = 2028476764;
 
 	private java.lang.Integer  id;
 	private java.sql.Date      d;
@@ -20,7 +20,7 @@ public class TDates implements java.io.Serializable {
 	private java.lang.Long     tsBigint;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

@@ -170,6 +170,10 @@ implements
     @Override
     public final void toSQL(RenderContext context) {
 
+        // If this is a nested select, be sure that indentation will stay on
+        // the same level for the whole nested select
+        context.formatIndentLockStart();
+
         // If a limit applies
         if (getLimit().isApplicable()) {
             switch (context.getDialect()) {
@@ -300,6 +304,9 @@ implements
                     break;
             }
         }
+
+        // See start of method: Indent locking for nested selects
+        context.formatIndentLockEnd();
     }
 
     /**

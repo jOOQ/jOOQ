@@ -10,67 +10,67 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "Customer", schema = "Sales")
 public class Customer implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1877030252;
+	private static final long serialVersionUID = -662515447;
 
-	private java.lang.Integer  customerid;
-	private java.lang.Integer  territoryid;
-	private java.lang.String   accountnumber;
-	private java.lang.String   customertype;
+	private java.lang.Integer  CustomerID;
+	private java.lang.Integer  TerritoryID;
+	private java.lang.String   AccountNumber;
+	private java.lang.String   CustomerType;
 	private java.lang.String   rowguid;
-	private java.sql.Timestamp modifieddate;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CustomerID", unique = true)
-	public java.lang.Integer getCustomerid() {
-		return this.customerid;
+	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false)
+	public java.lang.Integer getCustomerID() {
+		return this.CustomerID;
 	}
 
-	public void setCustomerid(java.lang.Integer customerid) {
-		this.customerid = customerid;
+	public void setCustomerID(java.lang.Integer CustomerID) {
+		this.CustomerID = CustomerID;
 	}
 
 	@javax.persistence.Column(name = "TerritoryID")
-	public java.lang.Integer getTerritoryid() {
-		return this.territoryid;
+	public java.lang.Integer getTerritoryID() {
+		return this.TerritoryID;
 	}
 
-	public void setTerritoryid(java.lang.Integer territoryid) {
-		this.territoryid = territoryid;
+	public void setTerritoryID(java.lang.Integer TerritoryID) {
+		this.TerritoryID = TerritoryID;
 	}
 
-	@javax.persistence.Column(name = "AccountNumber")
-	public java.lang.String getAccountnumber() {
-		return this.accountnumber;
+	@javax.persistence.Column(name = "AccountNumber", nullable = false)
+	public java.lang.String getAccountNumber() {
+		return this.AccountNumber;
 	}
 
-	public void setAccountnumber(java.lang.String accountnumber) {
-		this.accountnumber = accountnumber;
+	public void setAccountNumber(java.lang.String AccountNumber) {
+		this.AccountNumber = AccountNumber;
 	}
 
-	@javax.persistence.Column(name = "CustomerType")
-	public java.lang.String getCustomertype() {
-		return this.customertype;
+	@javax.persistence.Column(name = "CustomerType", nullable = false)
+	public java.lang.String getCustomerType() {
+		return this.CustomerType;
 	}
 
-	public void setCustomertype(java.lang.String customertype) {
-		this.customertype = customertype;
+	public void setCustomerType(java.lang.String CustomerType) {
+		this.CustomerType = CustomerType;
 	}
 
-	@javax.persistence.Column(name = "rowguid")
-	public java.lang.String getRowguid() {
+	@javax.persistence.Column(name = "rowguid", nullable = false)
+	public java.lang.String getrowguid() {
 		return this.rowguid;
 	}
 
-	public void setRowguid(java.lang.String rowguid) {
+	public void setrowguid(java.lang.String rowguid) {
 		this.rowguid = rowguid;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

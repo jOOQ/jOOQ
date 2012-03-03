@@ -13,137 +13,137 @@ public final class Tables {
 	/**
 	 * The table Sales.ContactCreditCard
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard CONTACTCREDITCARD = org.jooq.examples.sqlserver.adventureworks.sales.tables.Contactcreditcard.CONTACTCREDITCARD;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard ContactCreditCard = org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard;
 
 	/**
 	 * The table Sales.CountryRegionCurrency
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Countryregioncurrency COUNTRYREGIONCURRENCY = org.jooq.examples.sqlserver.adventureworks.sales.tables.Countryregioncurrency.COUNTRYREGIONCURRENCY;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency CountryRegionCurrency = org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency;
 
 	/**
 	 * The table Sales.CreditCard
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard CREDITCARD = org.jooq.examples.sqlserver.adventureworks.sales.tables.Creditcard.CREDITCARD;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard CreditCard = org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard;
 
 	/**
 	 * The table Sales.Currency
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency CURRENCY = org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.CURRENCY;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency Currency = org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency;
 
 	/**
 	 * The table Sales.CurrencyRate
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate CURRENCYRATE = org.jooq.examples.sqlserver.adventureworks.sales.tables.Currencyrate.CURRENCYRATE;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate CurrencyRate = org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate;
 
 	/**
 	 * The table Sales.Customer
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer CUSTOMER = org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.CUSTOMER;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer Customer = org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer;
 
 	/**
 	 * The table Sales.CustomerAddress
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress CUSTOMERADDRESS = org.jooq.examples.sqlserver.adventureworks.sales.tables.Customeraddress.CUSTOMERADDRESS;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress CustomerAddress = org.jooq.examples.sqlserver.adventureworks.sales.tables.CustomerAddress.CustomerAddress;
 
 	/**
 	 * The table Sales.Individual
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual INDIVIDUAL = org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.INDIVIDUAL;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual Individual = org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual;
 
 	/**
 	 * The table Sales.SalesOrderDetail
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail SALESORDERDETAIL = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderdetail.SALESORDERDETAIL;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail SalesOrderDetail = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail;
 
 	/**
 	 * The table Sales.SalesOrderHeader
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader SALESORDERHEADER = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheader.SALESORDERHEADER;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader SalesOrderHeader = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader;
 
 	/**
 	 * The table Sales.SalesOrderHeaderSalesReason
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason SALESORDERHEADERSALESREASON = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesorderheadersalesreason.SALESORDERHEADERSALESREASON;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason SalesOrderHeaderSalesReason = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason;
 
 	/**
 	 * The table Sales.SalesPerson
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson SALESPERSON = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesperson.SALESPERSON;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson SalesPerson = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson;
 
 	/**
 	 * The table Sales.SalesPersonQuotaHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salespersonquotahistory SALESPERSONQUOTAHISTORY = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salespersonquotahistory.SALESPERSONQUOTAHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory SalesPersonQuotaHistory = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory;
 
 	/**
 	 * The table Sales.SalesReason
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesreason SALESREASON = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesreason.SALESREASON;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason SalesReason = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason;
 
 	/**
 	 * The table Sales.SalesTaxRate
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salestaxrate SALESTAXRATE = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salestaxrate.SALESTAXRATE;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate SalesTaxRate = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate;
 
 	/**
 	 * The table Sales.SalesTerritory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory SALESTERRITORY = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritory.SALESTERRITORY;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory SalesTerritory = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory;
 
 	/**
 	 * The table Sales.SalesTerritoryHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritoryhistory SALESTERRITORYHISTORY = org.jooq.examples.sqlserver.adventureworks.sales.tables.Salesterritoryhistory.SALESTERRITORYHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory SalesTerritoryHistory = org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory;
 
 	/**
 	 * The table Sales.ShoppingCartItem
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Shoppingcartitem SHOPPINGCARTITEM = org.jooq.examples.sqlserver.adventureworks.sales.tables.Shoppingcartitem.SHOPPINGCARTITEM;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem ShoppingCartItem = org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem;
 
 	/**
 	 * The table Sales.SpecialOffer
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialoffer SPECIALOFFER = org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialoffer.SPECIALOFFER;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer SpecialOffer = org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOffer.SpecialOffer;
 
 	/**
 	 * The table Sales.SpecialOfferProduct
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct SPECIALOFFERPRODUCT = org.jooq.examples.sqlserver.adventureworks.sales.tables.Specialofferproduct.SPECIALOFFERPRODUCT;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct SpecialOfferProduct = org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct;
 
 	/**
 	 * The table Sales.Store
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Store STORE = org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.STORE;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Store Store = org.jooq.examples.sqlserver.adventureworks.sales.tables.Store.Store;
 
 	/**
 	 * The table Sales.StoreContact
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact STORECONTACT = org.jooq.examples.sqlserver.adventureworks.sales.tables.Storecontact.STORECONTACT;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact StoreContact = org.jooq.examples.sqlserver.adventureworks.sales.tables.StoreContact.StoreContact;
 
 	/**
 	 * The table Sales.vIndividualCustomer
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Vindividualcustomer VINDIVIDUALCUSTOMER = org.jooq.examples.sqlserver.adventureworks.sales.tables.Vindividualcustomer.VINDIVIDUALCUSTOMER;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer vIndividualCustomer = org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualCustomer.vIndividualCustomer;
 
 	/**
 	 * The table Sales.vIndividualDemographics
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Vindividualdemographics VINDIVIDUALDEMOGRAPHICS = org.jooq.examples.sqlserver.adventureworks.sales.tables.Vindividualdemographics.VINDIVIDUALDEMOGRAPHICS;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics vIndividualDemographics = org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics;
 
 	/**
 	 * The table Sales.vSalesPerson
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Vsalesperson VSALESPERSON = org.jooq.examples.sqlserver.adventureworks.sales.tables.Vsalesperson.VSALESPERSON;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPerson vSalesPerson = org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPerson.vSalesPerson;
 
 	/**
 	 * The table Sales.vSalesPersonSalesByFiscalYears
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Vsalespersonsalesbyfiscalyears VSALESPERSONSALESBYFISCALYEARS = org.jooq.examples.sqlserver.adventureworks.sales.tables.Vsalespersonsalesbyfiscalyears.VSALESPERSONSALESBYFISCALYEARS;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears vSalesPersonSalesByFiscalYears = org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears;
 
 	/**
 	 * The table Sales.vStoreWithDemographics
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.Vstorewithdemographics VSTOREWITHDEMOGRAPHICS = org.jooq.examples.sqlserver.adventureworks.sales.tables.Vstorewithdemographics.VSTOREWITHDEMOGRAPHICS;
+	public static org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics vStoreWithDemographics = org.jooq.examples.sqlserver.adventureworks.sales.tables.vStoreWithDemographics.vStoreWithDemographics;
 
 	/**
 	 * No instances

@@ -10,107 +10,107 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Document", schema = "Production")
 public class Document implements java.io.Serializable {
 
-	private static final long serialVersionUID = -404571030;
+	private static final long serialVersionUID = -1942614060;
 
-	private java.lang.Integer  documentid;
-	private java.lang.String   title;
-	private java.lang.String   filename;
-	private java.lang.String   fileextension;
-	private java.lang.String   revision;
-	private java.lang.Integer  changenumber;
-	private java.lang.Byte     status;
-	private java.lang.String   documentsummary;
-	private byte[]             document;
-	private java.sql.Timestamp modifieddate;
+	private java.lang.Integer  DocumentID;
+	private java.lang.String   Title;
+	private java.lang.String   FileName;
+	private java.lang.String   FileExtension;
+	private java.lang.String   Revision;
+	private java.lang.Integer  ChangeNumber;
+	private java.lang.Byte     Status;
+	private java.lang.String   DocumentSummary;
+	private byte[]             Document;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "DocumentID", unique = true)
-	public java.lang.Integer getDocumentid() {
-		return this.documentid;
+	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false)
+	public java.lang.Integer getDocumentID() {
+		return this.DocumentID;
 	}
 
-	public void setDocumentid(java.lang.Integer documentid) {
-		this.documentid = documentid;
+	public void setDocumentID(java.lang.Integer DocumentID) {
+		this.DocumentID = DocumentID;
 	}
 
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", nullable = false)
 	public java.lang.String getTitle() {
-		return this.title;
+		return this.Title;
 	}
 
-	public void setTitle(java.lang.String title) {
-		this.title = title;
+	public void setTitle(java.lang.String Title) {
+		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "FileName")
-	public java.lang.String getFilename() {
-		return this.filename;
+	@javax.persistence.Column(name = "FileName", nullable = false)
+	public java.lang.String getFileName() {
+		return this.FileName;
 	}
 
-	public void setFilename(java.lang.String filename) {
-		this.filename = filename;
+	public void setFileName(java.lang.String FileName) {
+		this.FileName = FileName;
 	}
 
-	@javax.persistence.Column(name = "FileExtension")
-	public java.lang.String getFileextension() {
-		return this.fileextension;
+	@javax.persistence.Column(name = "FileExtension", nullable = false)
+	public java.lang.String getFileExtension() {
+		return this.FileExtension;
 	}
 
-	public void setFileextension(java.lang.String fileextension) {
-		this.fileextension = fileextension;
+	public void setFileExtension(java.lang.String FileExtension) {
+		this.FileExtension = FileExtension;
 	}
 
-	@javax.persistence.Column(name = "Revision")
+	@javax.persistence.Column(name = "Revision", nullable = false)
 	public java.lang.String getRevision() {
-		return this.revision;
+		return this.Revision;
 	}
 
-	public void setRevision(java.lang.String revision) {
-		this.revision = revision;
+	public void setRevision(java.lang.String Revision) {
+		this.Revision = Revision;
 	}
 
-	@javax.persistence.Column(name = "ChangeNumber")
-	public java.lang.Integer getChangenumber() {
-		return this.changenumber;
+	@javax.persistence.Column(name = "ChangeNumber", nullable = false)
+	public java.lang.Integer getChangeNumber() {
+		return this.ChangeNumber;
 	}
 
-	public void setChangenumber(java.lang.Integer changenumber) {
-		this.changenumber = changenumber;
+	public void setChangeNumber(java.lang.Integer ChangeNumber) {
+		this.ChangeNumber = ChangeNumber;
 	}
 
-	@javax.persistence.Column(name = "Status")
+	@javax.persistence.Column(name = "Status", nullable = false)
 	public java.lang.Byte getStatus() {
-		return this.status;
+		return this.Status;
 	}
 
-	public void setStatus(java.lang.Byte status) {
-		this.status = status;
+	public void setStatus(java.lang.Byte Status) {
+		this.Status = Status;
 	}
 
 	@javax.persistence.Column(name = "DocumentSummary")
-	public java.lang.String getDocumentsummary() {
-		return this.documentsummary;
+	public java.lang.String getDocumentSummary() {
+		return this.DocumentSummary;
 	}
 
-	public void setDocumentsummary(java.lang.String documentsummary) {
-		this.documentsummary = documentsummary;
+	public void setDocumentSummary(java.lang.String DocumentSummary) {
+		this.DocumentSummary = DocumentSummary;
 	}
 
 	@javax.persistence.Column(name = "Document")
 	public byte[] getDocument() {
-		return this.document;
+		return this.Document;
 	}
 
-	public void setDocument(byte[] document) {
-		this.document = document;
+	public void setDocument(byte[] Document) {
+		this.Document = Document;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

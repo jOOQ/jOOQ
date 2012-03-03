@@ -13,17 +13,17 @@ public final class Tables {
 	/**
 	 * The table dbo.AWBuildVersion
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.dbo.tables.Awbuildversion AWBUILDVERSION = org.jooq.examples.sqlserver.adventureworks.dbo.tables.Awbuildversion.AWBUILDVERSION;
+	public static org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion AWBuildVersion = org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion;
 
 	/**
 	 * The table dbo.DatabaseLog
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.dbo.tables.Databaselog DATABASELOG = org.jooq.examples.sqlserver.adventureworks.dbo.tables.Databaselog.DATABASELOG;
+	public static org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog DatabaseLog = org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog;
 
 	/**
 	 * The table dbo.ErrorLog
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.dbo.tables.Errorlog ERRORLOG = org.jooq.examples.sqlserver.adventureworks.dbo.tables.Errorlog.ERRORLOG;
+	public static org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog ErrorLog = org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog;
 
 	/**
 	 * No instances

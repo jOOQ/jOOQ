@@ -13,42 +13,42 @@ public final class Tables {
 	/**
 	 * The table Person.Address
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Address ADDRESS = org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Address Address = org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address;
 
 	/**
 	 * The table Person.AddressType
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype ADDRESSTYPE = org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType AddressType = org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType;
 
 	/**
 	 * The table Person.Contact
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Contact CONTACT = org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Contact Contact = org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact;
 
 	/**
 	 * The table Person.ContactType
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype CONTACTTYPE = org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType ContactType = org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType;
 
 	/**
 	 * The table Person.CountryRegion
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion COUNTRYREGION = org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion CountryRegion = org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion;
 
 	/**
 	 * The table Person.StateProvince
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince STATEPROVINCE = org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince StateProvince = org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince;
 
 	/**
 	 * The table Person.vAdditionalContactInfo
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Vadditionalcontactinfo VADDITIONALCONTACTINFO = org.jooq.examples.sqlserver.adventureworks.person.tables.Vadditionalcontactinfo.VADDITIONALCONTACTINFO;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo vAdditionalContactInfo = org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo;
 
 	/**
 	 * The table Person.vStateProvinceCountryRegion
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.person.tables.Vstateprovincecountryregion VSTATEPROVINCECOUNTRYREGION = org.jooq.examples.sqlserver.adventureworks.person.tables.Vstateprovincecountryregion.VSTATEPROVINCECOUNTRYREGION;
+	public static org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion vStateProvinceCountryRegion = org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion;
 
 	/**
 	 * No instances

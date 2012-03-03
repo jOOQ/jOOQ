@@ -10,37 +10,37 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Illustration", schema = "Production")
 public class Illustration implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1070824597;
+	private static final long serialVersionUID = -1401569077;
 
-	private java.lang.Integer  illustrationid;
-	private java.lang.Object   diagram;
-	private java.sql.Timestamp modifieddate;
+	private java.lang.Integer  IllustrationID;
+	private java.lang.Object   Diagram;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "IllustrationID", unique = true)
-	public java.lang.Integer getIllustrationid() {
-		return this.illustrationid;
+	@javax.persistence.Column(name = "IllustrationID", unique = true, nullable = false)
+	public java.lang.Integer getIllustrationID() {
+		return this.IllustrationID;
 	}
 
-	public void setIllustrationid(java.lang.Integer illustrationid) {
-		this.illustrationid = illustrationid;
+	public void setIllustrationID(java.lang.Integer IllustrationID) {
+		this.IllustrationID = IllustrationID;
 	}
 
 	@javax.persistence.Column(name = "Diagram")
 	public java.lang.Object getDiagram() {
-		return this.diagram;
+		return this.Diagram;
 	}
 
-	public void setDiagram(java.lang.Object diagram) {
-		this.diagram = diagram;
+	public void setDiagram(java.lang.Object Diagram) {
+		this.Diagram = Diagram;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

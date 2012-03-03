@@ -10,167 +10,167 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "Employee", schema = "HumanResources")
 public class Employee implements java.io.Serializable {
 
-	private static final long serialVersionUID = -449518581;
+	private static final long serialVersionUID = -1151900574;
 
-	private java.lang.Integer  employeeid;
-	private java.lang.String   nationalidnumber;
-	private java.lang.Integer  contactid;
-	private java.lang.String   loginid;
-	private java.lang.Integer  managerid;
-	private java.lang.String   title;
-	private java.sql.Timestamp birthdate;
-	private java.lang.String   maritalstatus;
-	private java.lang.String   gender;
-	private java.sql.Timestamp hiredate;
-	private java.lang.Boolean  salariedflag;
-	private java.lang.Short    vacationhours;
-	private java.lang.Short    sickleavehours;
-	private java.lang.Boolean  currentflag;
+	private java.lang.Integer  EmployeeID;
+	private java.lang.String   NationalIDNumber;
+	private java.lang.Integer  ContactID;
+	private java.lang.String   LoginID;
+	private java.lang.Integer  ManagerID;
+	private java.lang.String   Title;
+	private java.sql.Timestamp BirthDate;
+	private java.lang.String   MaritalStatus;
+	private java.lang.String   Gender;
+	private java.sql.Timestamp HireDate;
+	private java.lang.Boolean  SalariedFlag;
+	private java.lang.Short    VacationHours;
+	private java.lang.Short    SickLeaveHours;
+	private java.lang.Boolean  CurrentFlag;
 	private java.lang.String   rowguid;
-	private java.sql.Timestamp modifieddate;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "EmployeeID", unique = true)
-	public java.lang.Integer getEmployeeid() {
-		return this.employeeid;
+	@javax.persistence.Column(name = "EmployeeID", unique = true, nullable = false)
+	public java.lang.Integer getEmployeeID() {
+		return this.EmployeeID;
 	}
 
-	public void setEmployeeid(java.lang.Integer employeeid) {
-		this.employeeid = employeeid;
+	public void setEmployeeID(java.lang.Integer EmployeeID) {
+		this.EmployeeID = EmployeeID;
 	}
 
-	@javax.persistence.Column(name = "NationalIDNumber")
-	public java.lang.String getNationalidnumber() {
-		return this.nationalidnumber;
+	@javax.persistence.Column(name = "NationalIDNumber", nullable = false)
+	public java.lang.String getNationalIDNumber() {
+		return this.NationalIDNumber;
 	}
 
-	public void setNationalidnumber(java.lang.String nationalidnumber) {
-		this.nationalidnumber = nationalidnumber;
+	public void setNationalIDNumber(java.lang.String NationalIDNumber) {
+		this.NationalIDNumber = NationalIDNumber;
 	}
 
-	@javax.persistence.Column(name = "ContactID")
-	public java.lang.Integer getContactid() {
-		return this.contactid;
+	@javax.persistence.Column(name = "ContactID", nullable = false)
+	public java.lang.Integer getContactID() {
+		return this.ContactID;
 	}
 
-	public void setContactid(java.lang.Integer contactid) {
-		this.contactid = contactid;
+	public void setContactID(java.lang.Integer ContactID) {
+		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "LoginID")
-	public java.lang.String getLoginid() {
-		return this.loginid;
+	@javax.persistence.Column(name = "LoginID", nullable = false)
+	public java.lang.String getLoginID() {
+		return this.LoginID;
 	}
 
-	public void setLoginid(java.lang.String loginid) {
-		this.loginid = loginid;
+	public void setLoginID(java.lang.String LoginID) {
+		this.LoginID = LoginID;
 	}
 
 	@javax.persistence.Column(name = "ManagerID")
-	public java.lang.Integer getManagerid() {
-		return this.managerid;
+	public java.lang.Integer getManagerID() {
+		return this.ManagerID;
 	}
 
-	public void setManagerid(java.lang.Integer managerid) {
-		this.managerid = managerid;
+	public void setManagerID(java.lang.Integer ManagerID) {
+		this.ManagerID = ManagerID;
 	}
 
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", nullable = false)
 	public java.lang.String getTitle() {
-		return this.title;
+		return this.Title;
 	}
 
-	public void setTitle(java.lang.String title) {
-		this.title = title;
+	public void setTitle(java.lang.String Title) {
+		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "BirthDate")
-	public java.sql.Timestamp getBirthdate() {
-		return this.birthdate;
+	@javax.persistence.Column(name = "BirthDate", nullable = false)
+	public java.sql.Timestamp getBirthDate() {
+		return this.BirthDate;
 	}
 
-	public void setBirthdate(java.sql.Timestamp birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthDate(java.sql.Timestamp BirthDate) {
+		this.BirthDate = BirthDate;
 	}
 
-	@javax.persistence.Column(name = "MaritalStatus")
-	public java.lang.String getMaritalstatus() {
-		return this.maritalstatus;
+	@javax.persistence.Column(name = "MaritalStatus", nullable = false)
+	public java.lang.String getMaritalStatus() {
+		return this.MaritalStatus;
 	}
 
-	public void setMaritalstatus(java.lang.String maritalstatus) {
-		this.maritalstatus = maritalstatus;
+	public void setMaritalStatus(java.lang.String MaritalStatus) {
+		this.MaritalStatus = MaritalStatus;
 	}
 
-	@javax.persistence.Column(name = "Gender")
+	@javax.persistence.Column(name = "Gender", nullable = false)
 	public java.lang.String getGender() {
-		return this.gender;
+		return this.Gender;
 	}
 
-	public void setGender(java.lang.String gender) {
-		this.gender = gender;
+	public void setGender(java.lang.String Gender) {
+		this.Gender = Gender;
 	}
 
-	@javax.persistence.Column(name = "HireDate")
-	public java.sql.Timestamp getHiredate() {
-		return this.hiredate;
+	@javax.persistence.Column(name = "HireDate", nullable = false)
+	public java.sql.Timestamp getHireDate() {
+		return this.HireDate;
 	}
 
-	public void setHiredate(java.sql.Timestamp hiredate) {
-		this.hiredate = hiredate;
+	public void setHireDate(java.sql.Timestamp HireDate) {
+		this.HireDate = HireDate;
 	}
 
-	@javax.persistence.Column(name = "SalariedFlag")
-	public java.lang.Boolean getSalariedflag() {
-		return this.salariedflag;
+	@javax.persistence.Column(name = "SalariedFlag", nullable = false)
+	public java.lang.Boolean getSalariedFlag() {
+		return this.SalariedFlag;
 	}
 
-	public void setSalariedflag(java.lang.Boolean salariedflag) {
-		this.salariedflag = salariedflag;
+	public void setSalariedFlag(java.lang.Boolean SalariedFlag) {
+		this.SalariedFlag = SalariedFlag;
 	}
 
-	@javax.persistence.Column(name = "VacationHours")
-	public java.lang.Short getVacationhours() {
-		return this.vacationhours;
+	@javax.persistence.Column(name = "VacationHours", nullable = false)
+	public java.lang.Short getVacationHours() {
+		return this.VacationHours;
 	}
 
-	public void setVacationhours(java.lang.Short vacationhours) {
-		this.vacationhours = vacationhours;
+	public void setVacationHours(java.lang.Short VacationHours) {
+		this.VacationHours = VacationHours;
 	}
 
-	@javax.persistence.Column(name = "SickLeaveHours")
-	public java.lang.Short getSickleavehours() {
-		return this.sickleavehours;
+	@javax.persistence.Column(name = "SickLeaveHours", nullable = false)
+	public java.lang.Short getSickLeaveHours() {
+		return this.SickLeaveHours;
 	}
 
-	public void setSickleavehours(java.lang.Short sickleavehours) {
-		this.sickleavehours = sickleavehours;
+	public void setSickLeaveHours(java.lang.Short SickLeaveHours) {
+		this.SickLeaveHours = SickLeaveHours;
 	}
 
-	@javax.persistence.Column(name = "CurrentFlag")
-	public java.lang.Boolean getCurrentflag() {
-		return this.currentflag;
+	@javax.persistence.Column(name = "CurrentFlag", nullable = false)
+	public java.lang.Boolean getCurrentFlag() {
+		return this.CurrentFlag;
 	}
 
-	public void setCurrentflag(java.lang.Boolean currentflag) {
-		this.currentflag = currentflag;
+	public void setCurrentFlag(java.lang.Boolean CurrentFlag) {
+		this.CurrentFlag = CurrentFlag;
 	}
 
-	@javax.persistence.Column(name = "rowguid")
-	public java.lang.String getRowguid() {
+	@javax.persistence.Column(name = "rowguid", nullable = false)
+	public java.lang.String getrowguid() {
 		return this.rowguid;
 	}
 
-	public void setRowguid(java.lang.String rowguid) {
+	public void setrowguid(java.lang.String rowguid) {
 		this.rowguid = rowguid;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

@@ -8,6 +8,9 @@
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>
+        <strategy>
+        	<name>org.jooq.configuration.lukas.sqlserver.AdventureWorksStrategy</name>
+        </strategy>
         <database>
             <name>org.jooq.util.sqlserver.SQLServerDatabase</name>
             <includes>.*</includes>

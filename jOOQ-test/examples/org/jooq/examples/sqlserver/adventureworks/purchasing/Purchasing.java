@@ -8,12 +8,12 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing;
  */
 public class Purchasing extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -502982123;
+	private static final long serialVersionUID = 543231605;
 
 	/**
 	 * The singleton instance of Purchasing
 	 */
-	public static final Purchasing PURCHASING = new Purchasing();
+	public static final Purchasing Purchasing = new Purchasing();
 
 	/**
 	 * No further instances allowed
@@ -25,13 +25,13 @@ public class Purchasing extends org.jooq.impl.SchemaImpl {
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Productvendor.PRODUCTVENDOR,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderdetail.PURCHASEORDERDETAIL,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Purchaseorderheader.PURCHASEORDERHEADER,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Shipmethod.SHIPMETHOD,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.VENDOR,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendoraddress.VENDORADDRESS,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendorcontact.VENDORCONTACT,
-			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vvendor.VVENDOR);
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorAddress.VendorAddress,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact,
+			org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor);
 	}
 }

@@ -13,24 +13,24 @@ public final class Routines {
 	/**
 	 * Call HumanResources.uspUpdateEmployeeHireInfo
 	 *
-	 * @param employeeid IN parameter
-	 * @param title IN parameter
-	 * @param hiredate IN parameter
-	 * @param ratechangedate IN parameter
-	 * @param rate IN parameter
-	 * @param payfrequency IN parameter
-	 * @param currentflag IN parameter
+	 * @param EmployeeID IN parameter
+	 * @param Title IN parameter
+	 * @param HireDate IN parameter
+	 * @param RateChangeDate IN parameter
+	 * @param Rate IN parameter
+	 * @param PayFrequency IN parameter
+	 * @param CurrentFlag IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspupdateemployeehireinfo(org.jooq.Configuration configuration, java.lang.Integer employeeid, java.lang.String title, java.sql.Timestamp hiredate, java.sql.Timestamp ratechangedate, java.math.BigDecimal rate, java.lang.Byte payfrequency, java.lang.Boolean currentflag) {
-		org.jooq.examples.sqlserver.adventureworks.humanresources.routines.Uspupdateemployeehireinfo p = new org.jooq.examples.sqlserver.adventureworks.humanresources.routines.Uspupdateemployeehireinfo();
-		p.setEmployeeid(employeeid);
-		p.setTitle(title);
-		p.setHiredate(hiredate);
-		p.setRatechangedate(ratechangedate);
-		p.setRate(rate);
-		p.setPayfrequency(payfrequency);
-		p.setCurrentflag(currentflag);
+	public static void uspUpdateEmployeeHireInfo(org.jooq.Configuration configuration, java.lang.Integer EmployeeID, java.lang.String Title, java.sql.Timestamp HireDate, java.sql.Timestamp RateChangeDate, java.math.BigDecimal Rate, java.lang.Byte PayFrequency, java.lang.Boolean CurrentFlag) {
+		org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo p = new org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeHireInfo();
+		p.setEmployeeID(EmployeeID);
+		p.setTitle(Title);
+		p.setHireDate(HireDate);
+		p.setRateChangeDate(RateChangeDate);
+		p.setRate(Rate);
+		p.setPayFrequency(PayFrequency);
+		p.setCurrentFlag(CurrentFlag);
 
 		p.execute(configuration);
 	}
@@ -38,22 +38,22 @@ public final class Routines {
 	/**
 	 * Call HumanResources.uspUpdateEmployeeLogin
 	 *
-	 * @param employeeid IN parameter
-	 * @param managerid IN parameter
-	 * @param loginid IN parameter
-	 * @param title IN parameter
-	 * @param hiredate IN parameter
-	 * @param currentflag IN parameter
+	 * @param EmployeeID IN parameter
+	 * @param ManagerID IN parameter
+	 * @param LoginID IN parameter
+	 * @param Title IN parameter
+	 * @param HireDate IN parameter
+	 * @param CurrentFlag IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspupdateemployeelogin(org.jooq.Configuration configuration, java.lang.Integer employeeid, java.lang.Integer managerid, java.lang.String loginid, java.lang.String title, java.sql.Timestamp hiredate, java.lang.Boolean currentflag) {
-		org.jooq.examples.sqlserver.adventureworks.humanresources.routines.Uspupdateemployeelogin p = new org.jooq.examples.sqlserver.adventureworks.humanresources.routines.Uspupdateemployeelogin();
-		p.setEmployeeid(employeeid);
-		p.setManagerid(managerid);
-		p.setLoginid(loginid);
-		p.setTitle(title);
-		p.setHiredate(hiredate);
-		p.setCurrentflag(currentflag);
+	public static void uspUpdateEmployeeLogin(org.jooq.Configuration configuration, java.lang.Integer EmployeeID, java.lang.Integer ManagerID, java.lang.String LoginID, java.lang.String Title, java.sql.Timestamp HireDate, java.lang.Boolean CurrentFlag) {
+		org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin p = new org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeeLogin();
+		p.setEmployeeID(EmployeeID);
+		p.setManagerID(ManagerID);
+		p.setLoginID(LoginID);
+		p.setTitle(Title);
+		p.setHireDate(HireDate);
+		p.setCurrentFlag(CurrentFlag);
 
 		p.execute(configuration);
 	}
@@ -61,20 +61,20 @@ public final class Routines {
 	/**
 	 * Call HumanResources.uspUpdateEmployeePersonalInfo
 	 *
-	 * @param employeeid IN parameter
-	 * @param nationalidnumber IN parameter
-	 * @param birthdate IN parameter
-	 * @param maritalstatus IN parameter
-	 * @param gender IN parameter
+	 * @param EmployeeID IN parameter
+	 * @param NationalIDNumber IN parameter
+	 * @param BirthDate IN parameter
+	 * @param MaritalStatus IN parameter
+	 * @param Gender IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspupdateemployeepersonalinfo(org.jooq.Configuration configuration, java.lang.Integer employeeid, java.lang.String nationalidnumber, java.sql.Timestamp birthdate, java.lang.String maritalstatus, java.lang.String gender) {
-		org.jooq.examples.sqlserver.adventureworks.humanresources.routines.Uspupdateemployeepersonalinfo p = new org.jooq.examples.sqlserver.adventureworks.humanresources.routines.Uspupdateemployeepersonalinfo();
-		p.setEmployeeid(employeeid);
-		p.setNationalidnumber(nationalidnumber);
-		p.setBirthdate(birthdate);
-		p.setMaritalstatus(maritalstatus);
-		p.setGender(gender);
+	public static void uspUpdateEmployeePersonalInfo(org.jooq.Configuration configuration, java.lang.Integer EmployeeID, java.lang.String NationalIDNumber, java.sql.Timestamp BirthDate, java.lang.String MaritalStatus, java.lang.String Gender) {
+		org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo p = new org.jooq.examples.sqlserver.adventureworks.humanresources.routines.uspUpdateEmployeePersonalInfo();
+		p.setEmployeeID(EmployeeID);
+		p.setNationalIDNumber(NationalIDNumber);
+		p.setBirthDate(BirthDate);
+		p.setMaritalStatus(MaritalStatus);
+		p.setGender(Gender);
 
 		p.execute(configuration);
 	}

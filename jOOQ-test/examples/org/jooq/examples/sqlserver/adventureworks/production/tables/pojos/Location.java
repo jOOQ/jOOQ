@@ -10,57 +10,57 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class Location implements java.io.Serializable {
 
-	private static final long serialVersionUID = 949964559;
+	private static final long serialVersionUID = 90465316;
 
-	private java.lang.Short      locationid;
-	private java.lang.String     name;
-	private java.math.BigDecimal costrate;
-	private java.math.BigDecimal availability;
-	private java.sql.Timestamp   modifieddate;
+	private java.lang.Short      LocationID;
+	private java.lang.String     Name;
+	private java.math.BigDecimal CostRate;
+	private java.math.BigDecimal Availability;
+	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "LocationID", unique = true)
-	public java.lang.Short getLocationid() {
-		return this.locationid;
+	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false)
+	public java.lang.Short getLocationID() {
+		return this.LocationID;
 	}
 
-	public void setLocationid(java.lang.Short locationid) {
-		this.locationid = locationid;
+	public void setLocationID(java.lang.Short LocationID) {
+		this.LocationID = LocationID;
 	}
 
-	@javax.persistence.Column(name = "Name")
+	@javax.persistence.Column(name = "Name", nullable = false)
 	public java.lang.String getName() {
-		return this.name;
+		return this.Name;
 	}
 
-	public void setName(java.lang.String name) {
-		this.name = name;
+	public void setName(java.lang.String Name) {
+		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "CostRate")
-	public java.math.BigDecimal getCostrate() {
-		return this.costrate;
+	@javax.persistence.Column(name = "CostRate", nullable = false)
+	public java.math.BigDecimal getCostRate() {
+		return this.CostRate;
 	}
 
-	public void setCostrate(java.math.BigDecimal costrate) {
-		this.costrate = costrate;
+	public void setCostRate(java.math.BigDecimal CostRate) {
+		this.CostRate = CostRate;
 	}
 
-	@javax.persistence.Column(name = "Availability")
+	@javax.persistence.Column(name = "Availability", nullable = false)
 	public java.math.BigDecimal getAvailability() {
-		return this.availability;
+		return this.Availability;
 	}
 
-	public void setAvailability(java.math.BigDecimal availability) {
-		this.availability = availability;
+	public void setAvailability(java.math.BigDecimal Availability) {
+		this.Availability = Availability;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

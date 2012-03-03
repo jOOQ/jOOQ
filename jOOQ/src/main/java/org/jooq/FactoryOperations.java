@@ -566,6 +566,24 @@ public interface FactoryOperations extends Configuration {
     Batch batch(Query... queries);
 
     /**
+     * Execute a set of queries in batch mode (without bind values).
+     * <p>
+     * This essentially runs the following logic: <code><pre>
+     * Statement s = connection.createStatement();
+     *
+     * for (Query query : queries) {
+     *     s.addBatch(query.getSQL(true));
+     * }
+     *
+     * s.execute();
+     * </pre></code>
+     *
+     * @see Statement#executeBatch()
+     */
+    @Support
+    Batch batch(Collection<? extends Query> queries);
+
+    /**
      * Execute a set of queries in batch mode (with bind values).
      * <p>
      * When running <code><pre>

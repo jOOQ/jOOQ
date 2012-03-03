@@ -353,6 +353,11 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
+    public final Batch batch(Collection<? extends Query> queries) {
+        return getDelegate().batch(queries);
+    }
+
+    @Override
     public final BatchBindStep batch(Query query) {
         return getDelegate().batch(query);
     }

@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.SettingsTools.executeStaticStatements;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -68,6 +70,18 @@ class BatchSingle implements BatchBindStep {
 
     @Override
     public final int[] execute() {
+
+        // [#1180] Run batch queries with BatchMultiple, if no bind variables
+        // should be used...
+        if (executeStaticStatements(create.getSettings())) {
+            return executeStatic();
+        }
+        else {
+            return executePrepared();
+        }
+    }
+
+    private final int[] executePrepared() {
         Connection connection = create.getConnection();
 
         ExecuteContext ctx = new DefaultExecuteContext(create, new Query[] { query });
@@ -102,5 +116,19 @@ class BatchSingle implements BatchBindStep {
         finally {
             Util.safeClose(listener, ctx);
         }
+    }
+
+    private final int[] executeStatic() {
+        List<Query> queries = new ArrayList<Query>();
+
+        for (Object[] bindValues : allBindValues) {
+            for (int i = 0; i < bindValues.length; i++) {
+                query.bind(i + 1, bindValues[i]);
+            }
+
+            queries.add(create.query(query.getSQL(true)));
+        }
+
+        return create.batch(queries).execute();
     }
 }

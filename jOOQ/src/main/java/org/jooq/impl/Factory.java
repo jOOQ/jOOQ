@@ -1199,6 +1199,14 @@ public class Factory implements FactoryOperations {
      * {@inheritDoc}
      */
     @Override
+    public final Batch batch(Collection<? extends Query> queries) {
+        return batch(queries.toArray(new Query[queries.size()]));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final BatchBindStep batch(Query query) {
         return new BatchSingle(this, query);
     }

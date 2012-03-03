@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_arrays", schema = "public")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1300486039;
+	private static final long serialVersionUID = 60798540;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TArrays.T_ARRAYS.ID);
 	}

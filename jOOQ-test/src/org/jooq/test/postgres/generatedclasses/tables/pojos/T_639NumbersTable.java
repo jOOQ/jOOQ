@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_639_numbers_table", schema = "public")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = -750209490;
+	private static final long serialVersionUID = 1087754019;
 
 	private java.lang.Integer    id;
 	private java.lang.Short      short_;
@@ -26,7 +26,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 	private java.lang.Double     double_;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> {
 
-	private static final long serialVersionUID = 938052514;
+	private static final long serialVersionUID = 1452064589;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.ID);
 	}

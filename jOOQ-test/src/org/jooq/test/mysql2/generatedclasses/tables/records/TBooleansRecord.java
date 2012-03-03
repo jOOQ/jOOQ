@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_booleans", schema = "test2")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1327811980;
+	private static final long serialVersionUID = -358407231;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS.ID);
 	}

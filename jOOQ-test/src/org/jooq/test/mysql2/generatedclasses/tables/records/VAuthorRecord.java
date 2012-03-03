@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 603350977;
+	private static final long serialVersionUID = 1605910753;
 
 	/**
 	 * The author ID
@@ -24,7 +24,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	/**
 	 * The author ID
 	 */
-	@javax.persistence.Column(name = "ID")
+	@javax.persistence.Column(name = "ID", nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.ID);
 	}
@@ -54,7 +54,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	/**
 	 * The author's last name
 	 */
-	@javax.persistence.Column(name = "LAST_NAME")
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME);
 	}

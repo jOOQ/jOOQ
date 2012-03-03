@@ -72,6 +72,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.TYPE_NAME,
                 Columns.NUMERIC_PRECISION,
                 Columns.NUMERIC_SCALE,
+                Columns.IS_NULLABLE,
                 Columns.REMARKS,
                 Columns.SEQUENCE_NAME)
             .from(COLUMNS)
@@ -92,6 +93,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.getValue(Columns.COLUMN_NAME),
                 record.getValue(Columns.ORDINAL_POSITION),
                 type,
+                record.getValue(Columns.IS_NULLABLE, boolean.class),
                 null != record.getValue(Columns.SEQUENCE_NAME),
                 record.getValue(Columns.REMARKS));
 

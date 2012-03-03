@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_dates", schema = "public")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 775905516;
+	private static final long serialVersionUID = -1369968223;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES.ID);
 	}

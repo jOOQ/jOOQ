@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "public")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1923294770;
+	private static final long serialVersionUID = -136562941;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID);
 	}

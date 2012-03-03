@@ -68,6 +68,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		        ALL_TAB_COLS.DATA_TYPE,
 		        ALL_TAB_COLS.DATA_PRECISION,
 		        ALL_TAB_COLS.DATA_SCALE,
+		        ALL_TAB_COLS.NULLABLE,
 		        ALL_TAB_COLS.COLUMN_NAME,
 		        ALL_TAB_COLS.COLUMN_ID,
 		        ALL_COL_COMMENTS.COMMENTS)
@@ -93,6 +94,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 			    record.getValue(ALL_TAB_COLS.COLUMN_NAME),
 			    record.getValueAsInteger(ALL_TAB_COLS.COLUMN_ID),
 			    type,
+			    record.getValue(ALL_TAB_COLS.NULLABLE, boolean.class),
                 false,
 			    record.getValue(ALL_COL_COMMENTS.COMMENTS));
 

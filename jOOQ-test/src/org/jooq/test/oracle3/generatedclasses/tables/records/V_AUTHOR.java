@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR> {
 
-	private static final long serialVersionUID = -1765583740;
+	private static final long serialVersionUID = 954906926;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ID")
+	@javax.persistence.Column(name = "ID", nullable = false)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ID);
 	}
@@ -52,7 +52,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LAST_NAME")
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
 	public java.lang.String getLAST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.LAST_NAME);
 	}

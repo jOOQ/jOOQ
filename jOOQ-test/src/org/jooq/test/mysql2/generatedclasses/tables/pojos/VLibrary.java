@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_library", schema = "test2")
 public class VLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1814921471;
+	private static final long serialVersionUID = 86999604;
 
 	private java.lang.String author;
 	private java.lang.String title;
@@ -26,7 +26,7 @@ public class VLibrary implements java.io.Serializable {
 		this.author = author;
 	}
 
-	@javax.persistence.Column(name = "TITLE")
+	@javax.persistence.Column(name = "TITLE", nullable = false)
 	public java.lang.String getTitle() {
 		return this.title;
 	}

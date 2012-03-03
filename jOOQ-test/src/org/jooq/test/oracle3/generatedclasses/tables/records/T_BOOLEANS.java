@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> {
 
-	private static final long serialVersionUID = -1541166662;
+	private static final long serialVersionUID = -1185504017;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ID);
 	}

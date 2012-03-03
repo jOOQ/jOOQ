@@ -10,14 +10,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class X_TEST_CASE_85 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1687476245;
+	private static final long serialVersionUID = -1987676896;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer X_UNUSED_ID;
 	private java.lang.String  X_UNUSED_NAME;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}

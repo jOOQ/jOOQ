@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_triggers", schema = "public")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1712065764;
+	private static final long serialVersionUID = 1867961625;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id_generated", unique = true)
+	@javax.persistence.Column(name = "id_generated", unique = true, nullable = false)
 	public java.lang.Integer getIdGenerated() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	}

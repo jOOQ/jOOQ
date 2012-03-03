@@ -50,6 +50,7 @@ public class DefaultColumnDefinition
     private final int                 position;
     private final DataTypeDefinition  underlying;
     private final boolean             isIdentity;
+    private final boolean             nullable;
 
     private DataTypeDefinition        type;
     private boolean                   primaryKeyLoaded;
@@ -58,15 +59,24 @@ public class DefaultColumnDefinition
     private boolean                   foreignKeyLoaded;
     private ForeignKeyDefinition      foreignKey;
 
-
+    /**
+     * @deprecated - 2.1.0 - Use the other constructor instead
+     */
+    @Deprecated
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
         boolean isIdentity, String comment) {
+        this(table, name, position, type, true, isIdentity, comment);
+    }
+
+    public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
+        boolean nullable, boolean isIdentity, String comment) {
 
         super(table, name, position, type, comment);
 
         this.position = position;
         this.underlying = type;
         this.isIdentity = isIdentity;
+        this.nullable = nullable;
     }
 
     @Override
@@ -131,5 +141,10 @@ public class DefaultColumnDefinition
     @Override
     public final boolean isIdentity() {
         return isIdentity;
+    }
+
+    @Override
+    public final boolean isNullable() {
+        return nullable;
     }
 }

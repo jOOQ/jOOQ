@@ -10,14 +10,14 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "x_test_case_85", schema = "public")
 public class XTestCase_85 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2077202204;
+	private static final long serialVersionUID = 1954739985;
 
 	private java.lang.Integer id;
 	private java.lang.Integer xUnusedId;
 	private java.lang.String  xUnusedName;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

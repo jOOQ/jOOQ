@@ -85,6 +85,7 @@ public class ASETableDefinition extends AbstractTableDefinition {
                 record.getValueAsString("Column_name"),
                 position++,
                 type,
+                record.getValue("Nulls", boolean.class),
                 record.getValueAsBoolean("Identity", false),
                 null));
         }

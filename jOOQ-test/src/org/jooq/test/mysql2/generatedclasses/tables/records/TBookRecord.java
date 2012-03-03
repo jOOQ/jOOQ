@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -757434142;
+	private static final long serialVersionUID = -610647347;
 
 	/**
 	 * The book ID
@@ -29,7 +29,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID);
 	}
@@ -68,7 +68,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES test2.t_author (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID")
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 	}
@@ -157,7 +157,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The book's title
 	 */
-	@javax.persistence.Column(name = "TITLE")
+	@javax.persistence.Column(name = "TITLE", nullable = false)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.TITLE);
 	}
@@ -172,7 +172,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * The year the book was published in
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN")
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN);
 	}
@@ -199,7 +199,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES test2.t_language (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID")
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
 	public org.jooq.test.mysql2.generatedclasses.enums.TLanguage getLanguageId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
 	}

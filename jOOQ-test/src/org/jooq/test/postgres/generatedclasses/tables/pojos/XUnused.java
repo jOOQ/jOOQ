@@ -12,7 +12,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = -604509233;
+	private static final long serialVersionUID = -1922682257;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -30,7 +30,7 @@ public class XUnused implements java.io.Serializable {
 	private java.lang.String     nameRef;
 	private java.math.BigDecimal field_737;
 
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -39,7 +39,7 @@ public class XUnused implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "name")
+	@javax.persistence.Column(name = "name", nullable = false)
 	public java.lang.String getName() {
 		return this.name;
 	}

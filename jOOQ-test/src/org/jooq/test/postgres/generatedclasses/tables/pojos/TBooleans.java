@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_booleans", schema = "public")
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1651790274;
+	private static final long serialVersionUID = 944679027;
 
 	private java.lang.Integer                                                id;
 	private org.jooq.test.postgres.generatedclasses.enums.Boolean_10         oneZero;
@@ -25,7 +25,7 @@ public class TBooleans implements java.io.Serializable {
 	private java.lang.Boolean                                                nBoolean;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

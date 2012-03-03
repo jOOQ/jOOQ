@@ -69,6 +69,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.DATA_TYPE,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
+                COLUMNS.IS_NULLABLE,
                 COLUMNS.IDENTITY_GENERATION,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.UDT_NAME)
@@ -91,6 +92,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValueAsInteger(COLUMNS.ORDINAL_POSITION),
 			    type,
+			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    record.getValue(COLUMNS.COLUMN_DEFAULT, "").startsWith("nextval"),
 			    null);
 			result.add(column);

@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_arrays", schema = "public")
 public class TArrays implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1812973950;
+	private static final long serialVersionUID = -1963016969;
 
 	private java.lang.Integer                                                       id;
 	private java.lang.String[]                                                      stringArray;
@@ -21,7 +21,7 @@ public class TArrays implements java.io.Serializable {
 	private java.lang.Integer[]                                                     arrayArray;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}

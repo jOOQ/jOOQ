@@ -12,7 +12,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 2070823663;
+	private static final long serialVersionUID = -637326193;
 
 	/**
 	 * An uncommented item
@@ -28,7 +28,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "id", unique = true)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID);
 	}
@@ -85,7 +85,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "name")
+	@javax.persistence.Column(name = "name", nullable = false)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME);
 	}

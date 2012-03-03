@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1817499674;
+	private static final long serialVersionUID = -995002597;
 
 	private java.lang.Integer                                          id;
 	private java.lang.Integer                                          authorId;
@@ -23,7 +23,7 @@ public class TBook implements java.io.Serializable {
 	private byte[]                                                     contentPdf;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -32,7 +32,7 @@ public class TBook implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "AUTHOR_ID")
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -59,7 +59,7 @@ public class TBook implements java.io.Serializable {
 		this.detailsId = detailsId;
 	}
 
-	@javax.persistence.Column(name = "TITLE")
+	@javax.persistence.Column(name = "TITLE", nullable = false)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -68,7 +68,7 @@ public class TBook implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@javax.persistence.Column(name = "PUBLISHED_IN")
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -77,7 +77,7 @@ public class TBook implements java.io.Serializable {
 		this.publishedIn = publishedIn;
 	}
 
-	@javax.persistence.Column(name = "LANGUAGE_ID")
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
 	public org.jooq.test.oracle.generatedclasses.test.enums.TLanguage getLanguageId() {
 		return this.languageId;
 	}

@@ -14,7 +14,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> {
 
-	private static final long serialVersionUID = 2122017209;
+	private static final long serialVersionUID = 2089874201;
 
 	/**
 	 * An uncommented item
@@ -30,7 +30,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "ID", unique = true)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID);
 	}
@@ -87,7 +87,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "NAME")
+	@javax.persistence.Column(name = "NAME", nullable = false)
 	public java.lang.String getNAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME);
 	}

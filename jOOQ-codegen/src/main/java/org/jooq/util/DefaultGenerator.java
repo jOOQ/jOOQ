@@ -1652,10 +1652,16 @@ public class DefaultGenerator implements Generator {
                 }
             }
 
+            String nullable = "";
+            if (!column.isNullable()) {
+                nullable = ", nullable = false";
+            }
+
             out.print("\t@javax.persistence.Column(name = \"");
             out.print(column.getName().replace("\"", "\\\""));
             out.print("\"");
             out.print(unique);
+            out.print(nullable);
             out.println(")");
         }
     }

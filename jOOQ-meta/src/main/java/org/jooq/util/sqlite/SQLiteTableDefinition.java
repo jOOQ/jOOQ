@@ -90,6 +90,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 name,
                 position,
                 type,
+                !record.getValue("notnull", boolean.class),
                 identity,
                 null);
 

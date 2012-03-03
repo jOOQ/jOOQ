@@ -10,157 +10,157 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "Contact", schema = "Person")
 public class Contact implements java.io.Serializable {
 
-	private static final long serialVersionUID = -492631533;
+	private static final long serialVersionUID = 1198970930;
 
-	private java.lang.Integer  contactid;
-	private java.lang.Boolean  namestyle;
-	private java.lang.String   title;
-	private java.lang.String   firstname;
-	private java.lang.String   middlename;
-	private java.lang.String   lastname;
-	private java.lang.String   suffix;
-	private java.lang.String   emailaddress;
-	private java.lang.Integer  emailpromotion;
-	private java.lang.String   phone;
-	private java.lang.String   passwordhash;
-	private java.lang.String   passwordsalt;
-	private java.lang.Object   additionalcontactinfo;
+	private java.lang.Integer  ContactID;
+	private java.lang.Boolean  NameStyle;
+	private java.lang.String   Title;
+	private java.lang.String   FirstName;
+	private java.lang.String   MiddleName;
+	private java.lang.String   LastName;
+	private java.lang.String   Suffix;
+	private java.lang.String   EmailAddress;
+	private java.lang.Integer  EmailPromotion;
+	private java.lang.String   Phone;
+	private java.lang.String   PasswordHash;
+	private java.lang.String   PasswordSalt;
+	private java.lang.Object   AdditionalContactInfo;
 	private java.lang.String   rowguid;
-	private java.sql.Timestamp modifieddate;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ContactID", unique = true)
-	public java.lang.Integer getContactid() {
-		return this.contactid;
+	@javax.persistence.Column(name = "ContactID", unique = true, nullable = false)
+	public java.lang.Integer getContactID() {
+		return this.ContactID;
 	}
 
-	public void setContactid(java.lang.Integer contactid) {
-		this.contactid = contactid;
+	public void setContactID(java.lang.Integer ContactID) {
+		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "NameStyle")
-	public java.lang.Boolean getNamestyle() {
-		return this.namestyle;
+	@javax.persistence.Column(name = "NameStyle", nullable = false)
+	public java.lang.Boolean getNameStyle() {
+		return this.NameStyle;
 	}
 
-	public void setNamestyle(java.lang.Boolean namestyle) {
-		this.namestyle = namestyle;
+	public void setNameStyle(java.lang.Boolean NameStyle) {
+		this.NameStyle = NameStyle;
 	}
 
 	@javax.persistence.Column(name = "Title")
 	public java.lang.String getTitle() {
-		return this.title;
+		return this.Title;
 	}
 
-	public void setTitle(java.lang.String title) {
-		this.title = title;
+	public void setTitle(java.lang.String Title) {
+		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "FirstName")
-	public java.lang.String getFirstname() {
-		return this.firstname;
+	@javax.persistence.Column(name = "FirstName", nullable = false)
+	public java.lang.String getFirstName() {
+		return this.FirstName;
 	}
 
-	public void setFirstname(java.lang.String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(java.lang.String FirstName) {
+		this.FirstName = FirstName;
 	}
 
 	@javax.persistence.Column(name = "MiddleName")
-	public java.lang.String getMiddlename() {
-		return this.middlename;
+	public java.lang.String getMiddleName() {
+		return this.MiddleName;
 	}
 
-	public void setMiddlename(java.lang.String middlename) {
-		this.middlename = middlename;
+	public void setMiddleName(java.lang.String MiddleName) {
+		this.MiddleName = MiddleName;
 	}
 
-	@javax.persistence.Column(name = "LastName")
-	public java.lang.String getLastname() {
-		return this.lastname;
+	@javax.persistence.Column(name = "LastName", nullable = false)
+	public java.lang.String getLastName() {
+		return this.LastName;
 	}
 
-	public void setLastname(java.lang.String lastname) {
-		this.lastname = lastname;
+	public void setLastName(java.lang.String LastName) {
+		this.LastName = LastName;
 	}
 
 	@javax.persistence.Column(name = "Suffix")
 	public java.lang.String getSuffix() {
-		return this.suffix;
+		return this.Suffix;
 	}
 
-	public void setSuffix(java.lang.String suffix) {
-		this.suffix = suffix;
+	public void setSuffix(java.lang.String Suffix) {
+		this.Suffix = Suffix;
 	}
 
 	@javax.persistence.Column(name = "EmailAddress")
-	public java.lang.String getEmailaddress() {
-		return this.emailaddress;
+	public java.lang.String getEmailAddress() {
+		return this.EmailAddress;
 	}
 
-	public void setEmailaddress(java.lang.String emailaddress) {
-		this.emailaddress = emailaddress;
+	public void setEmailAddress(java.lang.String EmailAddress) {
+		this.EmailAddress = EmailAddress;
 	}
 
-	@javax.persistence.Column(name = "EmailPromotion")
-	public java.lang.Integer getEmailpromotion() {
-		return this.emailpromotion;
+	@javax.persistence.Column(name = "EmailPromotion", nullable = false)
+	public java.lang.Integer getEmailPromotion() {
+		return this.EmailPromotion;
 	}
 
-	public void setEmailpromotion(java.lang.Integer emailpromotion) {
-		this.emailpromotion = emailpromotion;
+	public void setEmailPromotion(java.lang.Integer EmailPromotion) {
+		this.EmailPromotion = EmailPromotion;
 	}
 
 	@javax.persistence.Column(name = "Phone")
 	public java.lang.String getPhone() {
-		return this.phone;
+		return this.Phone;
 	}
 
-	public void setPhone(java.lang.String phone) {
-		this.phone = phone;
+	public void setPhone(java.lang.String Phone) {
+		this.Phone = Phone;
 	}
 
-	@javax.persistence.Column(name = "PasswordHash")
-	public java.lang.String getPasswordhash() {
-		return this.passwordhash;
+	@javax.persistence.Column(name = "PasswordHash", nullable = false)
+	public java.lang.String getPasswordHash() {
+		return this.PasswordHash;
 	}
 
-	public void setPasswordhash(java.lang.String passwordhash) {
-		this.passwordhash = passwordhash;
+	public void setPasswordHash(java.lang.String PasswordHash) {
+		this.PasswordHash = PasswordHash;
 	}
 
-	@javax.persistence.Column(name = "PasswordSalt")
-	public java.lang.String getPasswordsalt() {
-		return this.passwordsalt;
+	@javax.persistence.Column(name = "PasswordSalt", nullable = false)
+	public java.lang.String getPasswordSalt() {
+		return this.PasswordSalt;
 	}
 
-	public void setPasswordsalt(java.lang.String passwordsalt) {
-		this.passwordsalt = passwordsalt;
+	public void setPasswordSalt(java.lang.String PasswordSalt) {
+		this.PasswordSalt = PasswordSalt;
 	}
 
 	@javax.persistence.Column(name = "AdditionalContactInfo")
-	public java.lang.Object getAdditionalcontactinfo() {
-		return this.additionalcontactinfo;
+	public java.lang.Object getAdditionalContactInfo() {
+		return this.AdditionalContactInfo;
 	}
 
-	public void setAdditionalcontactinfo(java.lang.Object additionalcontactinfo) {
-		this.additionalcontactinfo = additionalcontactinfo;
+	public void setAdditionalContactInfo(java.lang.Object AdditionalContactInfo) {
+		this.AdditionalContactInfo = AdditionalContactInfo;
 	}
 
-	@javax.persistence.Column(name = "rowguid")
-	public java.lang.String getRowguid() {
+	@javax.persistence.Column(name = "rowguid", nullable = false)
+	public java.lang.String getrowguid() {
 		return this.rowguid;
 	}
 
-	public void setRowguid(java.lang.String rowguid) {
+	public void setrowguid(java.lang.String rowguid) {
 		this.rowguid = rowguid;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

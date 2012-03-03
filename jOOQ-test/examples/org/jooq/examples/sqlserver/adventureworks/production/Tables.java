@@ -13,142 +13,142 @@ public final class Tables {
 	/**
 	 * The table Production.BillOfMaterials
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials BILLOFMATERIALS = org.jooq.examples.sqlserver.adventureworks.production.tables.Billofmaterials.BILLOFMATERIALS;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials BillOfMaterials = org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials;
 
 	/**
 	 * The table Production.Culture
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Culture CULTURE = org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.CULTURE;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Culture Culture = org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture;
 
 	/**
 	 * The table Production.Document
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Document DOCUMENT = org.jooq.examples.sqlserver.adventureworks.production.tables.Document.DOCUMENT;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Document Document = org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document;
 
 	/**
 	 * The table Production.Illustration
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration ILLUSTRATION = org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.ILLUSTRATION;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration Illustration = org.jooq.examples.sqlserver.adventureworks.production.tables.Illustration.Illustration;
 
 	/**
 	 * The table Production.Location
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Location LOCATION = org.jooq.examples.sqlserver.adventureworks.production.tables.Location.LOCATION;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Location Location = org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location;
 
 	/**
 	 * The table Production.Product
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Product PRODUCT = org.jooq.examples.sqlserver.adventureworks.production.tables.Product.PRODUCT;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Product Product = org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product;
 
 	/**
 	 * The table Production.ProductCategory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productcategory PRODUCTCATEGORY = org.jooq.examples.sqlserver.adventureworks.production.tables.Productcategory.PRODUCTCATEGORY;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory ProductCategory = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory;
 
 	/**
 	 * The table Production.ProductCostHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productcosthistory PRODUCTCOSTHISTORY = org.jooq.examples.sqlserver.adventureworks.production.tables.Productcosthistory.PRODUCTCOSTHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory ProductCostHistory = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCostHistory.ProductCostHistory;
 
 	/**
 	 * The table Production.ProductDescription
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productdescription PRODUCTDESCRIPTION = org.jooq.examples.sqlserver.adventureworks.production.tables.Productdescription.PRODUCTDESCRIPTION;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription ProductDescription = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription;
 
 	/**
 	 * The table Production.ProductDocument
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument PRODUCTDOCUMENT = org.jooq.examples.sqlserver.adventureworks.production.tables.Productdocument.PRODUCTDOCUMENT;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument ProductDocument = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDocument.ProductDocument;
 
 	/**
 	 * The table Production.ProductInventory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory PRODUCTINVENTORY = org.jooq.examples.sqlserver.adventureworks.production.tables.Productinventory.PRODUCTINVENTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory ProductInventory = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory;
 
 	/**
 	 * The table Production.ProductListPriceHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productlistpricehistory PRODUCTLISTPRICEHISTORY = org.jooq.examples.sqlserver.adventureworks.production.tables.Productlistpricehistory.PRODUCTLISTPRICEHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory ProductListPriceHistory = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory;
 
 	/**
 	 * The table Production.ProductModel
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel PRODUCTMODEL = org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodel.PRODUCTMODEL;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel ProductModel = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModel.ProductModel;
 
 	/**
 	 * The table Production.ProductModelIllustration
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration PRODUCTMODELILLUSTRATION = org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelillustration.PRODUCTMODELILLUSTRATION;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration ProductModelIllustration = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration;
 
 	/**
 	 * The table Production.ProductModelProductDescriptionCulture
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture PRODUCTMODELPRODUCTDESCRIPTIONCULTURE = org.jooq.examples.sqlserver.adventureworks.production.tables.Productmodelproductdescriptionculture.PRODUCTMODELPRODUCTDESCRIPTIONCULTURE;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture ProductModelProductDescriptionCulture = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture.ProductModelProductDescriptionCulture;
 
 	/**
 	 * The table Production.ProductPhoto
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productphoto PRODUCTPHOTO = org.jooq.examples.sqlserver.adventureworks.production.tables.Productphoto.PRODUCTPHOTO;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto ProductPhoto = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto;
 
 	/**
 	 * The table Production.ProductProductPhoto
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto PRODUCTPRODUCTPHOTO = org.jooq.examples.sqlserver.adventureworks.production.tables.Productproductphoto.PRODUCTPRODUCTPHOTO;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductProductPhoto ProductProductPhoto = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductProductPhoto.ProductProductPhoto;
 
 	/**
 	 * The table Production.ProductReview
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productreview PRODUCTREVIEW = org.jooq.examples.sqlserver.adventureworks.production.tables.Productreview.PRODUCTREVIEW;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview ProductReview = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview;
 
 	/**
 	 * The table Production.ProductSubcategory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory PRODUCTSUBCATEGORY = org.jooq.examples.sqlserver.adventureworks.production.tables.Productsubcategory.PRODUCTSUBCATEGORY;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory ProductSubcategory = org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory;
 
 	/**
 	 * The table Production.ScrapReason
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason SCRAPREASON = org.jooq.examples.sqlserver.adventureworks.production.tables.Scrapreason.SCRAPREASON;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason ScrapReason = org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason;
 
 	/**
 	 * The table Production.TransactionHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistory TRANSACTIONHISTORY = org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistory.TRANSACTIONHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory TransactionHistory = org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory;
 
 	/**
 	 * The table Production.TransactionHistoryArchive
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistoryarchive TRANSACTIONHISTORYARCHIVE = org.jooq.examples.sqlserver.adventureworks.production.tables.Transactionhistoryarchive.TRANSACTIONHISTORYARCHIVE;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive TransactionHistoryArchive = org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistoryArchive.TransactionHistoryArchive;
 
 	/**
 	 * The table Production.UnitMeasure
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure UNITMEASURE = org.jooq.examples.sqlserver.adventureworks.production.tables.Unitmeasure.UNITMEASURE;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure UnitMeasure = org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure;
 
 	/**
 	 * The table Production.vProductAndDescription
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductanddescription VPRODUCTANDDESCRIPTION = org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductanddescription.VPRODUCTANDDESCRIPTION;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription vProductAndDescription = org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription;
 
 	/**
 	 * The table Production.vProductModelCatalogDescription
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductmodelcatalogdescription VPRODUCTMODELCATALOGDESCRIPTION = org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductmodelcatalogdescription.VPRODUCTMODELCATALOGDESCRIPTION;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription vProductModelCatalogDescription = org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription;
 
 	/**
 	 * The table Production.vProductModelInstructions
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductmodelinstructions VPRODUCTMODELINSTRUCTIONS = org.jooq.examples.sqlserver.adventureworks.production.tables.Vproductmodelinstructions.VPRODUCTMODELINSTRUCTIONS;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions vProductModelInstructions = org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions;
 
 	/**
 	 * The table Production.WorkOrder
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder WORKORDER = org.jooq.examples.sqlserver.adventureworks.production.tables.Workorder.WORKORDER;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder WorkOrder = org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder;
 
 	/**
 	 * The table Production.WorkOrderRouting
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting WORKORDERROUTING = org.jooq.examples.sqlserver.adventureworks.production.tables.Workorderrouting.WORKORDERROUTING;
+	public static org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting WorkOrderRouting = org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting;
 
 	/**
 	 * No instances

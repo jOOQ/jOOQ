@@ -13,67 +13,67 @@ public final class Tables {
 	/**
 	 * The table HumanResources.Department
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department DEPARTMENT = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.DEPARTMENT;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department Department = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department;
 
 	/**
 	 * The table HumanResources.Employee
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee EMPLOYEE = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.EMPLOYEE;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee Employee = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee;
 
 	/**
 	 * The table HumanResources.EmployeeAddress
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress EMPLOYEEADDRESS = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeeaddress.EMPLOYEEADDRESS;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress EmployeeAddress = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeAddress.EmployeeAddress;
 
 	/**
 	 * The table HumanResources.EmployeeDepartmentHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory EMPLOYEEDEPARTMENTHISTORY = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeedepartmenthistory.EMPLOYEEDEPARTMENTHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory EmployeeDepartmentHistory = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory;
 
 	/**
 	 * The table HumanResources.EmployeePayHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeepayhistory EMPLOYEEPAYHISTORY = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employeepayhistory.EMPLOYEEPAYHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory EmployeePayHistory = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory;
 
 	/**
 	 * The table HumanResources.JobCandidate
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Jobcandidate JOBCANDIDATE = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Jobcandidate.JOBCANDIDATE;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate JobCandidate = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.JobCandidate.JobCandidate;
 
 	/**
 	 * The table HumanResources.Shift
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift SHIFT = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.SHIFT;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift Shift = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift;
 
 	/**
 	 * The table HumanResources.vEmployee
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployee VEMPLOYEE = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployee.VEMPLOYEE;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee vEmployee = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee;
 
 	/**
 	 * The table HumanResources.vEmployeeDepartment
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployeedepartment VEMPLOYEEDEPARTMENT = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployeedepartment.VEMPLOYEEDEPARTMENT;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment vEmployeeDepartment = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartment.vEmployeeDepartment;
 
 	/**
 	 * The table HumanResources.vEmployeeDepartmentHistory
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployeedepartmenthistory VEMPLOYEEDEPARTMENTHISTORY = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vemployeedepartmenthistory.VEMPLOYEEDEPARTMENTHISTORY;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory vEmployeeDepartmentHistory = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory;
 
 	/**
 	 * The table HumanResources.vJobCandidate
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vjobcandidate VJOBCANDIDATE = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vjobcandidate.VJOBCANDIDATE;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate vJobCandidate = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate;
 
 	/**
 	 * The table HumanResources.vJobCandidateEducation
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vjobcandidateeducation VJOBCANDIDATEEDUCATION = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vjobcandidateeducation.VJOBCANDIDATEEDUCATION;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation vJobCandidateEducation = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation;
 
 	/**
 	 * The table HumanResources.vJobCandidateEmployment
 	 */
-	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vjobcandidateemployment VJOBCANDIDATEEMPLOYMENT = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Vjobcandidateemployment.VJOBCANDIDATEEMPLOYMENT;
+	public static org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment vJobCandidateEmployment = org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment;
 
 	/**
 	 * No instances

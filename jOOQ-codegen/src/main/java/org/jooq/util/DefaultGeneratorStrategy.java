@@ -37,16 +37,6 @@ package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.jooq.impl.TableRecordImpl;
-import org.jooq.impl.UDTRecordImpl;
-import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -55,8 +45,6 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
-
-    private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
 
     private String                           targetDirectory;
     private String                           targetPackage;
@@ -102,95 +90,22 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        String identifier = GenerationUtil.convertToJavaIdentifier(definition.getOutputName().toUpperCase());
-
-        // Columns, Attributes, Parameters
-        if (definition instanceof ColumnDefinition ||
-            definition instanceof AttributeDefinition) {
-
-            TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
-
-            if (identifier.equals(getJavaIdentifier(e.getContainer()))) {
-                return identifier + "_";
-            }
-        }
-
-        return identifier;
+        return GenerationUtil.convertToJavaIdentifier(definition.getOutputName().toUpperCase());
     }
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        return "set" + disambiguateMethod(definition, getJavaClassName0(definition, Mode.DEFAULT));
+        return "set" + getJavaClassName0(definition, Mode.DEFAULT);
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        return "get" + disambiguateMethod(definition, getJavaClassName0(definition, Mode.DEFAULT));
+        return "get" + getJavaClassName0(definition, Mode.DEFAULT);
     }
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        return disambiguateMethod(definition, getJavaClassName0LC(definition, Mode.DEFAULT));
-    }
-
-    /**
-     * [#182] Method name disambiguation is important to avoid name clashes due
-     * to pre-existing getters / setters in super classes
-     */
-    private String disambiguateMethod(Definition definition, String javaClassName) {
-        Set<String> reserved = null;
-
-        if (definition instanceof AttributeDefinition) {
-            reserved = reservedColumns(UDTRecordImpl.class);
-        }
-        else if (definition instanceof ColumnDefinition) {
-            if (((ColumnDefinition) definition).getContainer().getMainUniqueKey() != null) {
-                reserved = reservedColumns(UpdatableRecordImpl.class);
-            }
-            else {
-                reserved = reservedColumns(TableRecordImpl.class);
-            }
-        }
-
-        if (reserved != null && reserved.contains(javaClassName)) {
-            return javaClassName + "_";
-        }
-
-        return javaClassName;
-    }
-
-
-    /**
-     * [#182] Find all column names that are reserved because of the extended
-     * class hierarchy of a generated class
-     */
-    private Set<String> reservedColumns(Class<?> clazz) {
-        if (clazz == null) {
-            return Collections.emptySet();
-        }
-
-        Set<String> result = reservedColumns.get(clazz);
-
-        if (result == null) {
-            result = new HashSet<String>();
-            reservedColumns.put(clazz, result);
-
-            // Recurse up in class hierarchy
-            result.addAll(reservedColumns(clazz.getSuperclass()));
-            for (Class<?> c : clazz.getInterfaces()) {
-                result.addAll(reservedColumns(c));
-            }
-
-            for (Method m : clazz.getDeclaredMethods()) {
-                String name = m.getName();
-
-                if (name.startsWith("get") && m.getParameterTypes().length == 0) {
-                    result.add(name.substring(3));
-                }
-            }
-        }
-
-        return result;
+        return getJavaClassName0LC(definition, Mode.DEFAULT);
     }
 
     @Override

@@ -10,257 +10,257 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Product", schema = "Production")
 public class Product implements java.io.Serializable {
 
-	private static final long serialVersionUID = -876559310;
+	private static final long serialVersionUID = -50073230;
 
-	private java.lang.Integer    productid;
-	private java.lang.String     name;
-	private java.lang.String     productnumber;
-	private java.lang.Boolean    makeflag;
-	private java.lang.Boolean    finishedgoodsflag;
-	private java.lang.String     color;
-	private java.lang.Short      safetystocklevel;
-	private java.lang.Short      reorderpoint;
-	private java.math.BigDecimal standardcost;
-	private java.math.BigDecimal listprice;
-	private java.lang.String     size;
-	private java.lang.String     sizeunitmeasurecode;
-	private java.lang.String     weightunitmeasurecode;
-	private java.math.BigDecimal weight;
-	private java.lang.Integer    daystomanufacture;
-	private java.lang.String     productline;
-	private java.lang.String     class_;
-	private java.lang.String     style;
-	private java.lang.Integer    productsubcategoryid;
-	private java.lang.Integer    productmodelid;
-	private java.sql.Timestamp   sellstartdate;
-	private java.sql.Timestamp   sellenddate;
-	private java.sql.Timestamp   discontinueddate;
+	private java.lang.Integer    ProductID;
+	private java.lang.String     Name;
+	private java.lang.String     ProductNumber;
+	private java.lang.Boolean    MakeFlag;
+	private java.lang.Boolean    FinishedGoodsFlag;
+	private java.lang.String     Color;
+	private java.lang.Short      SafetyStockLevel;
+	private java.lang.Short      ReorderPoint;
+	private java.math.BigDecimal StandardCost;
+	private java.math.BigDecimal ListPrice;
+	private java.lang.String     Size;
+	private java.lang.String     SizeUnitMeasureCode;
+	private java.lang.String     WeightUnitMeasureCode;
+	private java.math.BigDecimal Weight;
+	private java.lang.Integer    DaysToManufacture;
+	private java.lang.String     ProductLine;
+	private java.lang.String     Class;
+	private java.lang.String     Style;
+	private java.lang.Integer    ProductSubcategoryID;
+	private java.lang.Integer    ProductModelID;
+	private java.sql.Timestamp   SellStartDate;
+	private java.sql.Timestamp   SellEndDate;
+	private java.sql.Timestamp   DiscontinuedDate;
 	private java.lang.String     rowguid;
-	private java.sql.Timestamp   modifieddate;
+	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductID", unique = true)
-	public java.lang.Integer getProductid() {
-		return this.productid;
+	@javax.persistence.Column(name = "ProductID", unique = true, nullable = false)
+	public java.lang.Integer getProductID() {
+		return this.ProductID;
 	}
 
-	public void setProductid(java.lang.Integer productid) {
-		this.productid = productid;
+	public void setProductID(java.lang.Integer ProductID) {
+		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "Name")
+	@javax.persistence.Column(name = "Name", nullable = false)
 	public java.lang.String getName() {
-		return this.name;
+		return this.Name;
 	}
 
-	public void setName(java.lang.String name) {
-		this.name = name;
+	public void setName(java.lang.String Name) {
+		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "ProductNumber")
-	public java.lang.String getProductnumber() {
-		return this.productnumber;
+	@javax.persistence.Column(name = "ProductNumber", nullable = false)
+	public java.lang.String getProductNumber() {
+		return this.ProductNumber;
 	}
 
-	public void setProductnumber(java.lang.String productnumber) {
-		this.productnumber = productnumber;
+	public void setProductNumber(java.lang.String ProductNumber) {
+		this.ProductNumber = ProductNumber;
 	}
 
-	@javax.persistence.Column(name = "MakeFlag")
-	public java.lang.Boolean getMakeflag() {
-		return this.makeflag;
+	@javax.persistence.Column(name = "MakeFlag", nullable = false)
+	public java.lang.Boolean getMakeFlag() {
+		return this.MakeFlag;
 	}
 
-	public void setMakeflag(java.lang.Boolean makeflag) {
-		this.makeflag = makeflag;
+	public void setMakeFlag(java.lang.Boolean MakeFlag) {
+		this.MakeFlag = MakeFlag;
 	}
 
-	@javax.persistence.Column(name = "FinishedGoodsFlag")
-	public java.lang.Boolean getFinishedgoodsflag() {
-		return this.finishedgoodsflag;
+	@javax.persistence.Column(name = "FinishedGoodsFlag", nullable = false)
+	public java.lang.Boolean getFinishedGoodsFlag() {
+		return this.FinishedGoodsFlag;
 	}
 
-	public void setFinishedgoodsflag(java.lang.Boolean finishedgoodsflag) {
-		this.finishedgoodsflag = finishedgoodsflag;
+	public void setFinishedGoodsFlag(java.lang.Boolean FinishedGoodsFlag) {
+		this.FinishedGoodsFlag = FinishedGoodsFlag;
 	}
 
 	@javax.persistence.Column(name = "Color")
 	public java.lang.String getColor() {
-		return this.color;
+		return this.Color;
 	}
 
-	public void setColor(java.lang.String color) {
-		this.color = color;
+	public void setColor(java.lang.String Color) {
+		this.Color = Color;
 	}
 
-	@javax.persistence.Column(name = "SafetyStockLevel")
-	public java.lang.Short getSafetystocklevel() {
-		return this.safetystocklevel;
+	@javax.persistence.Column(name = "SafetyStockLevel", nullable = false)
+	public java.lang.Short getSafetyStockLevel() {
+		return this.SafetyStockLevel;
 	}
 
-	public void setSafetystocklevel(java.lang.Short safetystocklevel) {
-		this.safetystocklevel = safetystocklevel;
+	public void setSafetyStockLevel(java.lang.Short SafetyStockLevel) {
+		this.SafetyStockLevel = SafetyStockLevel;
 	}
 
-	@javax.persistence.Column(name = "ReorderPoint")
-	public java.lang.Short getReorderpoint() {
-		return this.reorderpoint;
+	@javax.persistence.Column(name = "ReorderPoint", nullable = false)
+	public java.lang.Short getReorderPoint() {
+		return this.ReorderPoint;
 	}
 
-	public void setReorderpoint(java.lang.Short reorderpoint) {
-		this.reorderpoint = reorderpoint;
+	public void setReorderPoint(java.lang.Short ReorderPoint) {
+		this.ReorderPoint = ReorderPoint;
 	}
 
-	@javax.persistence.Column(name = "StandardCost")
-	public java.math.BigDecimal getStandardcost() {
-		return this.standardcost;
+	@javax.persistence.Column(name = "StandardCost", nullable = false)
+	public java.math.BigDecimal getStandardCost() {
+		return this.StandardCost;
 	}
 
-	public void setStandardcost(java.math.BigDecimal standardcost) {
-		this.standardcost = standardcost;
+	public void setStandardCost(java.math.BigDecimal StandardCost) {
+		this.StandardCost = StandardCost;
 	}
 
-	@javax.persistence.Column(name = "ListPrice")
-	public java.math.BigDecimal getListprice() {
-		return this.listprice;
+	@javax.persistence.Column(name = "ListPrice", nullable = false)
+	public java.math.BigDecimal getListPrice() {
+		return this.ListPrice;
 	}
 
-	public void setListprice(java.math.BigDecimal listprice) {
-		this.listprice = listprice;
+	public void setListPrice(java.math.BigDecimal ListPrice) {
+		this.ListPrice = ListPrice;
 	}
 
 	@javax.persistence.Column(name = "Size")
 	public java.lang.String getSize() {
-		return this.size;
+		return this.Size;
 	}
 
-	public void setSize(java.lang.String size) {
-		this.size = size;
+	public void setSize(java.lang.String Size) {
+		this.Size = Size;
 	}
 
 	@javax.persistence.Column(name = "SizeUnitMeasureCode")
-	public java.lang.String getSizeunitmeasurecode() {
-		return this.sizeunitmeasurecode;
+	public java.lang.String getSizeUnitMeasureCode() {
+		return this.SizeUnitMeasureCode;
 	}
 
-	public void setSizeunitmeasurecode(java.lang.String sizeunitmeasurecode) {
-		this.sizeunitmeasurecode = sizeunitmeasurecode;
+	public void setSizeUnitMeasureCode(java.lang.String SizeUnitMeasureCode) {
+		this.SizeUnitMeasureCode = SizeUnitMeasureCode;
 	}
 
 	@javax.persistence.Column(name = "WeightUnitMeasureCode")
-	public java.lang.String getWeightunitmeasurecode() {
-		return this.weightunitmeasurecode;
+	public java.lang.String getWeightUnitMeasureCode() {
+		return this.WeightUnitMeasureCode;
 	}
 
-	public void setWeightunitmeasurecode(java.lang.String weightunitmeasurecode) {
-		this.weightunitmeasurecode = weightunitmeasurecode;
+	public void setWeightUnitMeasureCode(java.lang.String WeightUnitMeasureCode) {
+		this.WeightUnitMeasureCode = WeightUnitMeasureCode;
 	}
 
 	@javax.persistence.Column(name = "Weight")
 	public java.math.BigDecimal getWeight() {
-		return this.weight;
+		return this.Weight;
 	}
 
-	public void setWeight(java.math.BigDecimal weight) {
-		this.weight = weight;
+	public void setWeight(java.math.BigDecimal Weight) {
+		this.Weight = Weight;
 	}
 
-	@javax.persistence.Column(name = "DaysToManufacture")
-	public java.lang.Integer getDaystomanufacture() {
-		return this.daystomanufacture;
+	@javax.persistence.Column(name = "DaysToManufacture", nullable = false)
+	public java.lang.Integer getDaysToManufacture() {
+		return this.DaysToManufacture;
 	}
 
-	public void setDaystomanufacture(java.lang.Integer daystomanufacture) {
-		this.daystomanufacture = daystomanufacture;
+	public void setDaysToManufacture(java.lang.Integer DaysToManufacture) {
+		this.DaysToManufacture = DaysToManufacture;
 	}
 
 	@javax.persistence.Column(name = "ProductLine")
-	public java.lang.String getProductline() {
-		return this.productline;
+	public java.lang.String getProductLine() {
+		return this.ProductLine;
 	}
 
-	public void setProductline(java.lang.String productline) {
-		this.productline = productline;
+	public void setProductLine(java.lang.String ProductLine) {
+		this.ProductLine = ProductLine;
 	}
 
 	@javax.persistence.Column(name = "Class")
 	public java.lang.String getClass_() {
-		return this.class_;
+		return this.Class;
 	}
 
-	public void setClass_(java.lang.String class_) {
-		this.class_ = class_;
+	public void setClass_(java.lang.String Class) {
+		this.Class = Class;
 	}
 
 	@javax.persistence.Column(name = "Style")
 	public java.lang.String getStyle() {
-		return this.style;
+		return this.Style;
 	}
 
-	public void setStyle(java.lang.String style) {
-		this.style = style;
+	public void setStyle(java.lang.String Style) {
+		this.Style = Style;
 	}
 
 	@javax.persistence.Column(name = "ProductSubcategoryID")
-	public java.lang.Integer getProductsubcategoryid() {
-		return this.productsubcategoryid;
+	public java.lang.Integer getProductSubcategoryID() {
+		return this.ProductSubcategoryID;
 	}
 
-	public void setProductsubcategoryid(java.lang.Integer productsubcategoryid) {
-		this.productsubcategoryid = productsubcategoryid;
+	public void setProductSubcategoryID(java.lang.Integer ProductSubcategoryID) {
+		this.ProductSubcategoryID = ProductSubcategoryID;
 	}
 
 	@javax.persistence.Column(name = "ProductModelID")
-	public java.lang.Integer getProductmodelid() {
-		return this.productmodelid;
+	public java.lang.Integer getProductModelID() {
+		return this.ProductModelID;
 	}
 
-	public void setProductmodelid(java.lang.Integer productmodelid) {
-		this.productmodelid = productmodelid;
+	public void setProductModelID(java.lang.Integer ProductModelID) {
+		this.ProductModelID = ProductModelID;
 	}
 
-	@javax.persistence.Column(name = "SellStartDate")
-	public java.sql.Timestamp getSellstartdate() {
-		return this.sellstartdate;
+	@javax.persistence.Column(name = "SellStartDate", nullable = false)
+	public java.sql.Timestamp getSellStartDate() {
+		return this.SellStartDate;
 	}
 
-	public void setSellstartdate(java.sql.Timestamp sellstartdate) {
-		this.sellstartdate = sellstartdate;
+	public void setSellStartDate(java.sql.Timestamp SellStartDate) {
+		this.SellStartDate = SellStartDate;
 	}
 
 	@javax.persistence.Column(name = "SellEndDate")
-	public java.sql.Timestamp getSellenddate() {
-		return this.sellenddate;
+	public java.sql.Timestamp getSellEndDate() {
+		return this.SellEndDate;
 	}
 
-	public void setSellenddate(java.sql.Timestamp sellenddate) {
-		this.sellenddate = sellenddate;
+	public void setSellEndDate(java.sql.Timestamp SellEndDate) {
+		this.SellEndDate = SellEndDate;
 	}
 
 	@javax.persistence.Column(name = "DiscontinuedDate")
-	public java.sql.Timestamp getDiscontinueddate() {
-		return this.discontinueddate;
+	public java.sql.Timestamp getDiscontinuedDate() {
+		return this.DiscontinuedDate;
 	}
 
-	public void setDiscontinueddate(java.sql.Timestamp discontinueddate) {
-		this.discontinueddate = discontinueddate;
+	public void setDiscontinuedDate(java.sql.Timestamp DiscontinuedDate) {
+		this.DiscontinuedDate = DiscontinuedDate;
 	}
 
-	@javax.persistence.Column(name = "rowguid")
-	public java.lang.String getRowguid() {
+	@javax.persistence.Column(name = "rowguid", nullable = false)
+	public java.lang.String getrowguid() {
 		return this.rowguid;
 	}
 
-	public void setRowguid(java.lang.String rowguid) {
+	public void setrowguid(java.lang.String rowguid) {
 		this.rowguid = rowguid;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

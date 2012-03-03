@@ -8,12 +8,12 @@ package org.jooq.examples.sqlserver.adventureworks.person;
  */
 public class Person extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 569470127;
+	private static final long serialVersionUID = -198705809;
 
 	/**
 	 * The singleton instance of Person
 	 */
-	public static final Person PERSON = new Person();
+	public static final Person Person = new Person();
 
 	/**
 	 * No further instances allowed
@@ -25,13 +25,13 @@ public class Person extends org.jooq.impl.SchemaImpl {
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Address.ADDRESS,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Addresstype.ADDRESSTYPE,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.CONTACT,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Contacttype.CONTACTTYPE,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Countryregion.COUNTRYREGION,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Stateprovince.STATEPROVINCE,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Vadditionalcontactinfo.VADDITIONALCONTACTINFO,
-			org.jooq.examples.sqlserver.adventureworks.person.tables.Vstateprovincecountryregion.VSTATEPROVINCECOUNTRYREGION);
+			org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.ContactType.ContactType,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo,
+			org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion);
 	}
 }

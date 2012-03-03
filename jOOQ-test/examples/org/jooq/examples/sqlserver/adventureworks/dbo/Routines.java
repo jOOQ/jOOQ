@@ -15,8 +15,8 @@ public final class Routines {
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.sql.Timestamp ufngetaccountingenddate(org.jooq.Configuration configuration) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingenddate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingenddate();
+	public static java.sql.Timestamp ufnGetAccountingEndDate(org.jooq.Configuration configuration) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingEndDate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingEndDate();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -26,8 +26,8 @@ public final class Routines {
 	 * Get dbo.ufnGetAccountingEndDate as a field
 	 *
 	 */
-	public static org.jooq.Field<java.sql.Timestamp> ufngetaccountingenddate() {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingenddate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingenddate();
+	public static org.jooq.Field<java.sql.Timestamp> ufnGetAccountingEndDate() {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingEndDate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingEndDate();
 
 		return f.asField();
 	}
@@ -37,8 +37,8 @@ public final class Routines {
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.sql.Timestamp ufngetaccountingstartdate(org.jooq.Configuration configuration) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingstartdate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingstartdate();
+	public static java.sql.Timestamp ufnGetAccountingStartDate(org.jooq.Configuration configuration) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingStartDate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingStartDate();
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -48,8 +48,8 @@ public final class Routines {
 	 * Get dbo.ufnGetAccountingStartDate as a field
 	 *
 	 */
-	public static org.jooq.Field<java.sql.Timestamp> ufngetaccountingstartdate() {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingstartdate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetaccountingstartdate();
+	public static org.jooq.Field<java.sql.Timestamp> ufnGetAccountingStartDate() {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingStartDate f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetAccountingStartDate();
 
 		return f.asField();
 	}
@@ -57,12 +57,12 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetContactInformation
 	 *
-	 * @param contactid
+	 * @param ContactID
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Object ufngetcontactinformation(org.jooq.Configuration configuration, java.lang.Integer contactid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetcontactinformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetcontactinformation();
-		f.setContactid(contactid);
+	public static java.lang.Object ufnGetContactInformation(org.jooq.Configuration configuration, java.lang.Integer ContactID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation();
+		f.setContactID(ContactID);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -71,11 +71,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetContactInformation as a field
 	 *
-	 * @param contactid
+	 * @param ContactID
 	 */
-	public static org.jooq.Field<java.lang.Object> ufngetcontactinformation(java.lang.Integer contactid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetcontactinformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetcontactinformation();
-		f.setContactid(contactid);
+	public static org.jooq.Field<java.lang.Object> ufnGetContactInformation(java.lang.Integer ContactID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation();
+		f.setContactID(ContactID);
 
 		return f.asField();
 	}
@@ -83,11 +83,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetContactInformation as a field
 	 *
-	 * @param contactid
+	 * @param ContactID
 	 */
-	public static org.jooq.Field<java.lang.Object> ufngetcontactinformation(org.jooq.Field<java.lang.Integer> contactid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetcontactinformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetcontactinformation();
-		f.setContactid(contactid);
+	public static org.jooq.Field<java.lang.Object> ufnGetContactInformation(org.jooq.Field<java.lang.Integer> ContactID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetContactInformation();
+		f.setContactID(ContactID);
 
 		return f.asField();
 	}
@@ -95,12 +95,12 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetDocumentStatusText
 	 *
-	 * @param status
+	 * @param Status
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.String ufngetdocumentstatustext(org.jooq.Configuration configuration, java.lang.Byte status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetdocumentstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetdocumentstatustext();
-		f.setStatus(status);
+	public static java.lang.String ufnGetDocumentStatusText(org.jooq.Configuration configuration, java.lang.Byte Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText();
+		f.setStatus(Status);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -109,11 +109,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetDocumentStatusText as a field
 	 *
-	 * @param status
+	 * @param Status
 	 */
-	public static org.jooq.Field<java.lang.String> ufngetdocumentstatustext(java.lang.Byte status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetdocumentstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetdocumentstatustext();
-		f.setStatus(status);
+	public static org.jooq.Field<java.lang.String> ufnGetDocumentStatusText(java.lang.Byte Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText();
+		f.setStatus(Status);
 
 		return f.asField();
 	}
@@ -121,11 +121,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetDocumentStatusText as a field
 	 *
-	 * @param status
+	 * @param Status
 	 */
-	public static org.jooq.Field<java.lang.String> ufngetdocumentstatustext(org.jooq.Field<java.lang.Byte> status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetdocumentstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetdocumentstatustext();
-		f.setStatus(status);
+	public static org.jooq.Field<java.lang.String> ufnGetDocumentStatusText(org.jooq.Field<java.lang.Byte> Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetDocumentStatusText();
+		f.setStatus(Status);
 
 		return f.asField();
 	}
@@ -133,14 +133,14 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetProductDealerPrice
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal ufngetproductdealerprice(org.jooq.Configuration configuration, java.lang.Integer productid, java.sql.Timestamp orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductdealerprice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductdealerprice();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static java.math.BigDecimal ufnGetProductDealerPrice(org.jooq.Configuration configuration, java.lang.Integer ProductID, java.sql.Timestamp OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductDealerPrice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductDealerPrice();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -149,13 +149,13 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetProductDealerPrice as a field
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> ufngetproductdealerprice(java.lang.Integer productid, java.sql.Timestamp orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductdealerprice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductdealerprice();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static org.jooq.Field<java.math.BigDecimal> ufnGetProductDealerPrice(java.lang.Integer ProductID, java.sql.Timestamp OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductDealerPrice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductDealerPrice();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		return f.asField();
 	}
@@ -163,13 +163,13 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetProductDealerPrice as a field
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> ufngetproductdealerprice(org.jooq.Field<java.lang.Integer> productid, org.jooq.Field<java.sql.Timestamp> orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductdealerprice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductdealerprice();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static org.jooq.Field<java.math.BigDecimal> ufnGetProductDealerPrice(org.jooq.Field<java.lang.Integer> ProductID, org.jooq.Field<java.sql.Timestamp> OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductDealerPrice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductDealerPrice();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		return f.asField();
 	}
@@ -177,14 +177,14 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetProductListPrice
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal ufngetproductlistprice(org.jooq.Configuration configuration, java.lang.Integer productid, java.sql.Timestamp orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductlistprice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductlistprice();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static java.math.BigDecimal ufnGetProductListPrice(org.jooq.Configuration configuration, java.lang.Integer ProductID, java.sql.Timestamp OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductListPrice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductListPrice();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -193,13 +193,13 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetProductListPrice as a field
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> ufngetproductlistprice(java.lang.Integer productid, java.sql.Timestamp orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductlistprice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductlistprice();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static org.jooq.Field<java.math.BigDecimal> ufnGetProductListPrice(java.lang.Integer ProductID, java.sql.Timestamp OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductListPrice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductListPrice();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		return f.asField();
 	}
@@ -207,13 +207,13 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetProductListPrice as a field
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> ufngetproductlistprice(org.jooq.Field<java.lang.Integer> productid, org.jooq.Field<java.sql.Timestamp> orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductlistprice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductlistprice();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static org.jooq.Field<java.math.BigDecimal> ufnGetProductListPrice(org.jooq.Field<java.lang.Integer> ProductID, org.jooq.Field<java.sql.Timestamp> OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductListPrice f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductListPrice();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		return f.asField();
 	}
@@ -221,14 +221,14 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetProductStandardCost
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.math.BigDecimal ufngetproductstandardcost(org.jooq.Configuration configuration, java.lang.Integer productid, java.sql.Timestamp orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductstandardcost f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductstandardcost();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static java.math.BigDecimal ufnGetProductStandardCost(org.jooq.Configuration configuration, java.lang.Integer ProductID, java.sql.Timestamp OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -237,13 +237,13 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetProductStandardCost as a field
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> ufngetproductstandardcost(java.lang.Integer productid, java.sql.Timestamp orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductstandardcost f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductstandardcost();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static org.jooq.Field<java.math.BigDecimal> ufnGetProductStandardCost(java.lang.Integer ProductID, java.sql.Timestamp OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		return f.asField();
 	}
@@ -251,13 +251,13 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetProductStandardCost as a field
 	 *
-	 * @param productid
-	 * @param orderdate
+	 * @param ProductID
+	 * @param OrderDate
 	 */
-	public static org.jooq.Field<java.math.BigDecimal> ufngetproductstandardcost(org.jooq.Field<java.lang.Integer> productid, org.jooq.Field<java.sql.Timestamp> orderdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductstandardcost f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetproductstandardcost();
-		f.setProductid(productid);
-		f.setOrderdate(orderdate);
+	public static org.jooq.Field<java.math.BigDecimal> ufnGetProductStandardCost(org.jooq.Field<java.lang.Integer> ProductID, org.jooq.Field<java.sql.Timestamp> OrderDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetProductStandardCost();
+		f.setProductID(ProductID);
+		f.setOrderDate(OrderDate);
 
 		return f.asField();
 	}
@@ -265,12 +265,12 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetPurchaseOrderStatusText
 	 *
-	 * @param status
+	 * @param Status
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.String ufngetpurchaseorderstatustext(org.jooq.Configuration configuration, java.lang.Byte status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetpurchaseorderstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetpurchaseorderstatustext();
-		f.setStatus(status);
+	public static java.lang.String ufnGetPurchaseOrderStatusText(org.jooq.Configuration configuration, java.lang.Byte Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText();
+		f.setStatus(Status);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -279,11 +279,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetPurchaseOrderStatusText as a field
 	 *
-	 * @param status
+	 * @param Status
 	 */
-	public static org.jooq.Field<java.lang.String> ufngetpurchaseorderstatustext(java.lang.Byte status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetpurchaseorderstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetpurchaseorderstatustext();
-		f.setStatus(status);
+	public static org.jooq.Field<java.lang.String> ufnGetPurchaseOrderStatusText(java.lang.Byte Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText();
+		f.setStatus(Status);
 
 		return f.asField();
 	}
@@ -291,11 +291,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetPurchaseOrderStatusText as a field
 	 *
-	 * @param status
+	 * @param Status
 	 */
-	public static org.jooq.Field<java.lang.String> ufngetpurchaseorderstatustext(org.jooq.Field<java.lang.Byte> status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetpurchaseorderstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetpurchaseorderstatustext();
-		f.setStatus(status);
+	public static org.jooq.Field<java.lang.String> ufnGetPurchaseOrderStatusText(org.jooq.Field<java.lang.Byte> Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetPurchaseOrderStatusText();
+		f.setStatus(Status);
 
 		return f.asField();
 	}
@@ -303,12 +303,12 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetSalesOrderStatusText
 	 *
-	 * @param status
+	 * @param Status
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.String ufngetsalesorderstatustext(org.jooq.Configuration configuration, java.lang.Byte status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetsalesorderstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetsalesorderstatustext();
-		f.setStatus(status);
+	public static java.lang.String ufnGetSalesOrderStatusText(org.jooq.Configuration configuration, java.lang.Byte Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText();
+		f.setStatus(Status);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -317,11 +317,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetSalesOrderStatusText as a field
 	 *
-	 * @param status
+	 * @param Status
 	 */
-	public static org.jooq.Field<java.lang.String> ufngetsalesorderstatustext(java.lang.Byte status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetsalesorderstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetsalesorderstatustext();
-		f.setStatus(status);
+	public static org.jooq.Field<java.lang.String> ufnGetSalesOrderStatusText(java.lang.Byte Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText();
+		f.setStatus(Status);
 
 		return f.asField();
 	}
@@ -329,11 +329,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetSalesOrderStatusText as a field
 	 *
-	 * @param status
+	 * @param Status
 	 */
-	public static org.jooq.Field<java.lang.String> ufngetsalesorderstatustext(org.jooq.Field<java.lang.Byte> status) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetsalesorderstatustext f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetsalesorderstatustext();
-		f.setStatus(status);
+	public static org.jooq.Field<java.lang.String> ufnGetSalesOrderStatusText(org.jooq.Field<java.lang.Byte> Status) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetSalesOrderStatusText();
+		f.setStatus(Status);
 
 		return f.asField();
 	}
@@ -341,12 +341,12 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnGetStock
 	 *
-	 * @param productid
+	 * @param ProductID
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Integer ufngetstock(org.jooq.Configuration configuration, java.lang.Integer productid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetstock f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetstock();
-		f.setProductid(productid);
+	public static java.lang.Integer ufnGetStock(org.jooq.Configuration configuration, java.lang.Integer ProductID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock();
+		f.setProductID(ProductID);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -355,11 +355,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetStock as a field
 	 *
-	 * @param productid
+	 * @param ProductID
 	 */
-	public static org.jooq.Field<java.lang.Integer> ufngetstock(java.lang.Integer productid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetstock f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetstock();
-		f.setProductid(productid);
+	public static org.jooq.Field<java.lang.Integer> ufnGetStock(java.lang.Integer ProductID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock();
+		f.setProductID(ProductID);
 
 		return f.asField();
 	}
@@ -367,11 +367,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnGetStock as a field
 	 *
-	 * @param productid
+	 * @param ProductID
 	 */
-	public static org.jooq.Field<java.lang.Integer> ufngetstock(org.jooq.Field<java.lang.Integer> productid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetstock f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufngetstock();
-		f.setProductid(productid);
+	public static org.jooq.Field<java.lang.Integer> ufnGetStock(org.jooq.Field<java.lang.Integer> ProductID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnGetStock();
+		f.setProductID(ProductID);
 
 		return f.asField();
 	}
@@ -379,12 +379,12 @@ public final class Routines {
 	/**
 	 * Call dbo.ufnLeadingZeros
 	 *
-	 * @param value
+	 * @param Value
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.String ufnleadingzeros(org.jooq.Configuration configuration, java.lang.Integer value) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufnleadingzeros f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufnleadingzeros();
-		f.setValue(value);
+	public static java.lang.String ufnLeadingZeros(org.jooq.Configuration configuration, java.lang.Integer Value) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros();
+		f.setValue(Value);
 
 		f.execute(configuration);
 		return f.getReturnValue();
@@ -393,11 +393,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnLeadingZeros as a field
 	 *
-	 * @param value
+	 * @param Value
 	 */
-	public static org.jooq.Field<java.lang.String> ufnleadingzeros(java.lang.Integer value) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufnleadingzeros f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufnleadingzeros();
-		f.setValue(value);
+	public static org.jooq.Field<java.lang.String> ufnLeadingZeros(java.lang.Integer Value) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros();
+		f.setValue(Value);
 
 		return f.asField();
 	}
@@ -405,11 +405,11 @@ public final class Routines {
 	/**
 	 * Get dbo.ufnLeadingZeros as a field
 	 *
-	 * @param value
+	 * @param Value
 	 */
-	public static org.jooq.Field<java.lang.String> ufnleadingzeros(org.jooq.Field<java.lang.Integer> value) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufnleadingzeros f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Ufnleadingzeros();
-		f.setValue(value);
+	public static org.jooq.Field<java.lang.String> ufnLeadingZeros(org.jooq.Field<java.lang.Integer> Value) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros f = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.ufnLeadingZeros();
+		f.setValue(Value);
 
 		return f.asField();
 	}
@@ -417,14 +417,14 @@ public final class Routines {
 	/**
 	 * Call dbo.uspGetBillOfMaterials
 	 *
-	 * @param startproductid IN parameter
-	 * @param checkdate IN parameter
+	 * @param StartProductID IN parameter
+	 * @param CheckDate IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspgetbillofmaterials(org.jooq.Configuration configuration, java.lang.Integer startproductid, java.sql.Timestamp checkdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetbillofmaterials p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetbillofmaterials();
-		p.setStartproductid(startproductid);
-		p.setCheckdate(checkdate);
+	public static void uspGetBillOfMaterials(org.jooq.Configuration configuration, java.lang.Integer StartProductID, java.sql.Timestamp CheckDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetBillOfMaterials p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetBillOfMaterials();
+		p.setStartProductID(StartProductID);
+		p.setCheckDate(CheckDate);
 
 		p.execute(configuration);
 	}
@@ -432,12 +432,12 @@ public final class Routines {
 	/**
 	 * Call dbo.uspGetEmployeeManagers
 	 *
-	 * @param employeeid IN parameter
+	 * @param EmployeeID IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspgetemployeemanagers(org.jooq.Configuration configuration, java.lang.Integer employeeid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetemployeemanagers p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetemployeemanagers();
-		p.setEmployeeid(employeeid);
+	public static void uspGetEmployeeManagers(org.jooq.Configuration configuration, java.lang.Integer EmployeeID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetEmployeeManagers p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetEmployeeManagers();
+		p.setEmployeeID(EmployeeID);
 
 		p.execute(configuration);
 	}
@@ -445,12 +445,12 @@ public final class Routines {
 	/**
 	 * Call dbo.uspGetManagerEmployees
 	 *
-	 * @param managerid IN parameter
+	 * @param ManagerID IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspgetmanageremployees(org.jooq.Configuration configuration, java.lang.Integer managerid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetmanageremployees p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetmanageremployees();
-		p.setManagerid(managerid);
+	public static void uspGetManagerEmployees(org.jooq.Configuration configuration, java.lang.Integer ManagerID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetManagerEmployees p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetManagerEmployees();
+		p.setManagerID(ManagerID);
 
 		p.execute(configuration);
 	}
@@ -458,14 +458,14 @@ public final class Routines {
 	/**
 	 * Call dbo.uspGetWhereUsedProductID
 	 *
-	 * @param startproductid IN parameter
-	 * @param checkdate IN parameter
+	 * @param StartProductID IN parameter
+	 * @param CheckDate IN parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspgetwhereusedproductid(org.jooq.Configuration configuration, java.lang.Integer startproductid, java.sql.Timestamp checkdate) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetwhereusedproductid p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspgetwhereusedproductid();
-		p.setStartproductid(startproductid);
-		p.setCheckdate(checkdate);
+	public static void uspGetWhereUsedProductID(org.jooq.Configuration configuration, java.lang.Integer StartProductID, java.sql.Timestamp CheckDate) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetWhereUsedProductID p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspGetWhereUsedProductID();
+		p.setStartProductID(StartProductID);
+		p.setCheckDate(CheckDate);
 
 		p.execute(configuration);
 	}
@@ -473,15 +473,15 @@ public final class Routines {
 	/**
 	 * Call dbo.uspLogError
 	 *
-	 * @param errorlogid IN OUT parameter
+	 * @param ErrorLogID IN OUT parameter
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static java.lang.Integer usplogerror(org.jooq.Configuration configuration, java.lang.Integer errorlogid) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Usplogerror p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Usplogerror();
-		p.setErrorlogid(errorlogid);
+	public static java.lang.Integer uspLogError(org.jooq.Configuration configuration, java.lang.Integer ErrorLogID) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspLogError p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspLogError();
+		p.setErrorLogID(ErrorLogID);
 
 		p.execute(configuration);
-		return p.getErrorlogid();
+		return p.getErrorLogID();
 	}
 
 	/**
@@ -489,8 +489,8 @@ public final class Routines {
 	 *
 	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
 	 */
-	public static void uspprinterror(org.jooq.Configuration configuration) {
-		org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspprinterror p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.Uspprinterror();
+	public static void uspPrintError(org.jooq.Configuration configuration) {
+		org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspPrintError p = new org.jooq.examples.sqlserver.adventureworks.dbo.routines.uspPrintError();
 
 		p.execute(configuration);
 	}

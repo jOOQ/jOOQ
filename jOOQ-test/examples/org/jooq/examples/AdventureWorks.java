@@ -36,11 +36,11 @@
 package org.jooq.examples;
 
 
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.DEPARTMENT;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EMPLOYEE;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EMPLOYEEADDRESS;
-import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EMPLOYEEDEPARTMENTHISTORY;
-import static org.jooq.examples.sqlserver.adventureworks.person.Tables.CONTACT;
+import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Department;
+import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.Employee;
+import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeAddress;
+import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeDepartmentHistory;
+import static org.jooq.examples.sqlserver.adventureworks.person.Tables.Contact;
 import static org.jooq.impl.Factory.val;
 
 import java.sql.Connection;
@@ -58,16 +58,16 @@ public class AdventureWorks {
         Factory create = new SQLServerFactory(connection);
 
         System.out.println(create
-              .select(EMPLOYEE.getFields())
+              .select(Employee.getFields())
               .select(val("###"))
-              .select(DEPARTMENT.getFields())
+              .select(Department.getFields())
               .select(val("###"))
-              .select(CONTACT.getFields())
-              .from(EMPLOYEE)
-              .join(EMPLOYEEADDRESS).using(EMPLOYEE.EMPLOYEEID)
-              .join(EMPLOYEEDEPARTMENTHISTORY).using(EMPLOYEE.EMPLOYEEID)
-              .join(DEPARTMENT).using(DEPARTMENT.DEPARTMENTID)
-              .join(CONTACT).using(CONTACT.CONTACTID)
+              .select(Contact.getFields())
+              .from(Employee)
+              .join(EmployeeAddress).using(Employee.EmployeeID)
+              .join(EmployeeDepartmentHistory).using(Employee.EmployeeID)
+              .join(Department).using(Department.DepartmentID)
+              .join(Contact).using(Contact.ContactID)
               .fetch());
     }
 }

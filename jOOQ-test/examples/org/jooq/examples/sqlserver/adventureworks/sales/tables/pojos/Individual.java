@@ -10,47 +10,47 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "Individual", schema = "Sales")
 public class Individual implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1784257208;
+	private static final long serialVersionUID = 850797623;
 
-	private java.lang.Integer  customerid;
-	private java.lang.Integer  contactid;
-	private java.lang.Object   demographics;
-	private java.sql.Timestamp modifieddate;
+	private java.lang.Integer  CustomerID;
+	private java.lang.Integer  ContactID;
+	private java.lang.Object   Demographics;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CustomerID", unique = true)
-	public java.lang.Integer getCustomerid() {
-		return this.customerid;
+	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false)
+	public java.lang.Integer getCustomerID() {
+		return this.CustomerID;
 	}
 
-	public void setCustomerid(java.lang.Integer customerid) {
-		this.customerid = customerid;
+	public void setCustomerID(java.lang.Integer CustomerID) {
+		this.CustomerID = CustomerID;
 	}
 
-	@javax.persistence.Column(name = "ContactID")
-	public java.lang.Integer getContactid() {
-		return this.contactid;
+	@javax.persistence.Column(name = "ContactID", nullable = false)
+	public java.lang.Integer getContactID() {
+		return this.ContactID;
 	}
 
-	public void setContactid(java.lang.Integer contactid) {
-		this.contactid = contactid;
+	public void setContactID(java.lang.Integer ContactID) {
+		this.ContactID = ContactID;
 	}
 
 	@javax.persistence.Column(name = "Demographics")
 	public java.lang.Object getDemographics() {
-		return this.demographics;
+		return this.Demographics;
 	}
 
-	public void setDemographics(java.lang.Object demographics) {
-		this.demographics = demographics;
+	public void setDemographics(java.lang.Object Demographics) {
+		this.Demographics = Demographics;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

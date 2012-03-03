@@ -10,67 +10,67 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "Store", schema = "Sales")
 public class Store implements java.io.Serializable {
 
-	private static final long serialVersionUID = 463226820;
+	private static final long serialVersionUID = -1144766236;
 
-	private java.lang.Integer  customerid;
-	private java.lang.String   name;
-	private java.lang.Integer  salespersonid;
-	private java.lang.Object   demographics;
+	private java.lang.Integer  CustomerID;
+	private java.lang.String   Name;
+	private java.lang.Integer  SalesPersonID;
+	private java.lang.Object   Demographics;
 	private java.lang.String   rowguid;
-	private java.sql.Timestamp modifieddate;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CustomerID", unique = true)
-	public java.lang.Integer getCustomerid() {
-		return this.customerid;
+	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false)
+	public java.lang.Integer getCustomerID() {
+		return this.CustomerID;
 	}
 
-	public void setCustomerid(java.lang.Integer customerid) {
-		this.customerid = customerid;
+	public void setCustomerID(java.lang.Integer CustomerID) {
+		this.CustomerID = CustomerID;
 	}
 
-	@javax.persistence.Column(name = "Name")
+	@javax.persistence.Column(name = "Name", nullable = false)
 	public java.lang.String getName() {
-		return this.name;
+		return this.Name;
 	}
 
-	public void setName(java.lang.String name) {
-		this.name = name;
+	public void setName(java.lang.String Name) {
+		this.Name = Name;
 	}
 
 	@javax.persistence.Column(name = "SalesPersonID")
-	public java.lang.Integer getSalespersonid() {
-		return this.salespersonid;
+	public java.lang.Integer getSalesPersonID() {
+		return this.SalesPersonID;
 	}
 
-	public void setSalespersonid(java.lang.Integer salespersonid) {
-		this.salespersonid = salespersonid;
+	public void setSalesPersonID(java.lang.Integer SalesPersonID) {
+		this.SalesPersonID = SalesPersonID;
 	}
 
 	@javax.persistence.Column(name = "Demographics")
 	public java.lang.Object getDemographics() {
-		return this.demographics;
+		return this.Demographics;
 	}
 
-	public void setDemographics(java.lang.Object demographics) {
-		this.demographics = demographics;
+	public void setDemographics(java.lang.Object Demographics) {
+		this.Demographics = Demographics;
 	}
 
-	@javax.persistence.Column(name = "rowguid")
-	public java.lang.String getRowguid() {
+	@javax.persistence.Column(name = "rowguid", nullable = false)
+	public java.lang.String getrowguid() {
 		return this.rowguid;
 	}
 
-	public void setRowguid(java.lang.String rowguid) {
+	public void setrowguid(java.lang.String rowguid) {
 		this.rowguid = rowguid;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

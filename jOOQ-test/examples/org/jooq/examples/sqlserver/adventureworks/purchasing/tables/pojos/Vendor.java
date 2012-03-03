@@ -10,87 +10,87 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 @javax.persistence.Table(name = "Vendor", schema = "Purchasing")
 public class Vendor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1339378768;
+	private static final long serialVersionUID = 1317547663;
 
-	private java.lang.Integer  vendorid;
-	private java.lang.String   accountnumber;
-	private java.lang.String   name;
-	private java.lang.Byte     creditrating;
-	private java.lang.Boolean  preferredvendorstatus;
-	private java.lang.Boolean  activeflag;
-	private java.lang.String   purchasingwebserviceurl;
-	private java.sql.Timestamp modifieddate;
+	private java.lang.Integer  VendorID;
+	private java.lang.String   AccountNumber;
+	private java.lang.String   Name;
+	private java.lang.Byte     CreditRating;
+	private java.lang.Boolean  PreferredVendorStatus;
+	private java.lang.Boolean  ActiveFlag;
+	private java.lang.String   PurchasingWebServiceURL;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "VendorID", unique = true)
-	public java.lang.Integer getVendorid() {
-		return this.vendorid;
+	@javax.persistence.Column(name = "VendorID", unique = true, nullable = false)
+	public java.lang.Integer getVendorID() {
+		return this.VendorID;
 	}
 
-	public void setVendorid(java.lang.Integer vendorid) {
-		this.vendorid = vendorid;
+	public void setVendorID(java.lang.Integer VendorID) {
+		this.VendorID = VendorID;
 	}
 
-	@javax.persistence.Column(name = "AccountNumber")
-	public java.lang.String getAccountnumber() {
-		return this.accountnumber;
+	@javax.persistence.Column(name = "AccountNumber", nullable = false)
+	public java.lang.String getAccountNumber() {
+		return this.AccountNumber;
 	}
 
-	public void setAccountnumber(java.lang.String accountnumber) {
-		this.accountnumber = accountnumber;
+	public void setAccountNumber(java.lang.String AccountNumber) {
+		this.AccountNumber = AccountNumber;
 	}
 
-	@javax.persistence.Column(name = "Name")
+	@javax.persistence.Column(name = "Name", nullable = false)
 	public java.lang.String getName() {
-		return this.name;
+		return this.Name;
 	}
 
-	public void setName(java.lang.String name) {
-		this.name = name;
+	public void setName(java.lang.String Name) {
+		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "CreditRating")
-	public java.lang.Byte getCreditrating() {
-		return this.creditrating;
+	@javax.persistence.Column(name = "CreditRating", nullable = false)
+	public java.lang.Byte getCreditRating() {
+		return this.CreditRating;
 	}
 
-	public void setCreditrating(java.lang.Byte creditrating) {
-		this.creditrating = creditrating;
+	public void setCreditRating(java.lang.Byte CreditRating) {
+		this.CreditRating = CreditRating;
 	}
 
-	@javax.persistence.Column(name = "PreferredVendorStatus")
-	public java.lang.Boolean getPreferredvendorstatus() {
-		return this.preferredvendorstatus;
+	@javax.persistence.Column(name = "PreferredVendorStatus", nullable = false)
+	public java.lang.Boolean getPreferredVendorStatus() {
+		return this.PreferredVendorStatus;
 	}
 
-	public void setPreferredvendorstatus(java.lang.Boolean preferredvendorstatus) {
-		this.preferredvendorstatus = preferredvendorstatus;
+	public void setPreferredVendorStatus(java.lang.Boolean PreferredVendorStatus) {
+		this.PreferredVendorStatus = PreferredVendorStatus;
 	}
 
-	@javax.persistence.Column(name = "ActiveFlag")
-	public java.lang.Boolean getActiveflag() {
-		return this.activeflag;
+	@javax.persistence.Column(name = "ActiveFlag", nullable = false)
+	public java.lang.Boolean getActiveFlag() {
+		return this.ActiveFlag;
 	}
 
-	public void setActiveflag(java.lang.Boolean activeflag) {
-		this.activeflag = activeflag;
+	public void setActiveFlag(java.lang.Boolean ActiveFlag) {
+		this.ActiveFlag = ActiveFlag;
 	}
 
 	@javax.persistence.Column(name = "PurchasingWebServiceURL")
-	public java.lang.String getPurchasingwebserviceurl() {
-		return this.purchasingwebserviceurl;
+	public java.lang.String getPurchasingWebServiceURL() {
+		return this.PurchasingWebServiceURL;
 	}
 
-	public void setPurchasingwebserviceurl(java.lang.String purchasingwebserviceurl) {
-		this.purchasingwebserviceurl = purchasingwebserviceurl;
+	public void setPurchasingWebServiceURL(java.lang.String PurchasingWebServiceURL) {
+		this.PurchasingWebServiceURL = PurchasingWebServiceURL;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

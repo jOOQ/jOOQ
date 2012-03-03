@@ -37,7 +37,17 @@ package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import org.jooq.Record;
+import org.jooq.impl.TableRecordImpl;
+import org.jooq.impl.UDTRecordImpl;
+import org.jooq.impl.UpdatableRecordImpl;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -49,10 +59,12 @@ import org.jooq.tools.StringUtils;
  */
 class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
-    private static final JooqLogger log = JooqLogger.getLogger(GeneratorStrategyWrapper.class);
+    private static final JooqLogger          log             = JooqLogger.getLogger(GeneratorStrategyWrapper.class);
 
-    final Generator                 generator;
-    final GeneratorStrategy         delegate;
+    private final Map<Class<?>, Set<String>> reservedColumns = new HashMap<Class<?>, Set<String>>();
+
+    final Generator                          generator;
+    final GeneratorStrategy                  delegate;
 
     GeneratorStrategyWrapper(Generator generator, GeneratorStrategy delegate) {
         this.generator = generator;
@@ -91,22 +103,109 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
 
     @Override
     public String getJavaIdentifier(Definition definition) {
-        return convertToJavaIdentifier(delegate.getJavaIdentifier(definition));
+        String identifier = convertToJavaIdentifier(delegate.getJavaIdentifier(definition));
+
+        // [#1212] Don't trust custom strategies and disambiguate identifiers here
+        if (definition instanceof ColumnDefinition ||
+            definition instanceof AttributeDefinition) {
+
+            TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
+
+            if (identifier.equals(getJavaIdentifier(e.getContainer()))) {
+                return identifier + "_";
+            }
+        }
+
+        return identifier;
     }
 
     @Override
     public String getJavaSetterName(Definition definition, Mode mode) {
-        return convertToJavaIdentifier(delegate.getJavaSetterName(definition, mode));
+        return disambiguateMethod(definition,
+            convertToJavaIdentifier(delegate.getJavaSetterName(definition, mode)));
     }
 
     @Override
     public String getJavaGetterName(Definition definition, Mode mode) {
-        return convertToJavaIdentifier(delegate.getJavaGetterName(definition, mode));
+        return disambiguateMethod(definition,
+            convertToJavaIdentifier(delegate.getJavaGetterName(definition, mode)));
     }
 
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
-        return convertToJavaIdentifier(delegate.getJavaMethodName(definition, mode));
+        return disambiguateMethod(definition,
+            convertToJavaIdentifier(delegate.getJavaMethodName(definition, mode)));
+    }
+
+    /**
+     * [#182] Method name disambiguation is important to avoid name clashes due
+     * to pre-existing getters / setters in super classes
+     */
+    private String disambiguateMethod(Definition definition, String method) {
+        Set<String> reserved = null;
+
+        if (definition instanceof AttributeDefinition) {
+            reserved = reservedColumns(UDTRecordImpl.class);
+        }
+        else if (definition instanceof ColumnDefinition) {
+            if (((ColumnDefinition) definition).getContainer().getMainUniqueKey() != null) {
+                reserved = reservedColumns(UpdatableRecordImpl.class);
+            }
+            else {
+                reserved = reservedColumns(TableRecordImpl.class);
+            }
+        }
+
+        if (reserved != null) {
+            if (reserved.contains(method)) {
+                return method + "_";
+            }
+
+            // If this is the setter, check if the getter needed disambiguation
+            // This ensures that getters and setters have the same name
+            if (method.startsWith("set")) {
+                String base = method.substring(3);
+
+                if (reserved.contains("get" + base) || reserved.contains("is" + base)) {
+                    return method + "_";
+                }
+            }
+        }
+
+        return method;
+    }
+
+    /**
+     * [#182] Find all column names that are reserved because of the extended
+     * class hierarchy of a generated class
+     */
+    private Set<String> reservedColumns(Class<?> clazz) {
+        if (clazz == null) {
+            return Collections.emptySet();
+        }
+
+        Set<String> result = reservedColumns.get(clazz);
+
+        if (result == null) {
+            result = new HashSet<String>();
+            reservedColumns.put(clazz, result);
+
+            // Recurse up in class hierarchy
+            result.addAll(reservedColumns(clazz.getSuperclass()));
+            for (Class<?> c : clazz.getInterfaces()) {
+                result.addAll(reservedColumns(c));
+            }
+
+            for (Method m : clazz.getDeclaredMethods()) {
+                String name = m.getName();
+
+                if (name.startsWith("get") && m.getParameterTypes().length == 0) {
+                    result.add(name);
+                }
+            }
+        }
+
+        return result;
     }
 
     @Override

@@ -10,57 +10,57 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "Shift", schema = "HumanResources")
 public class Shift implements java.io.Serializable {
 
-	private static final long serialVersionUID = 192262191;
+	private static final long serialVersionUID = -1603873766;
 
-	private java.lang.Byte     shiftid;
-	private java.lang.String   name;
-	private java.sql.Timestamp starttime;
-	private java.sql.Timestamp endtime;
-	private java.sql.Timestamp modifieddate;
+	private java.lang.Byte     ShiftID;
+	private java.lang.String   Name;
+	private java.sql.Timestamp StartTime;
+	private java.sql.Timestamp EndTime;
+	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ShiftID", unique = true)
-	public java.lang.Byte getShiftid() {
-		return this.shiftid;
+	@javax.persistence.Column(name = "ShiftID", unique = true, nullable = false)
+	public java.lang.Byte getShiftID() {
+		return this.ShiftID;
 	}
 
-	public void setShiftid(java.lang.Byte shiftid) {
-		this.shiftid = shiftid;
+	public void setShiftID(java.lang.Byte ShiftID) {
+		this.ShiftID = ShiftID;
 	}
 
-	@javax.persistence.Column(name = "Name")
+	@javax.persistence.Column(name = "Name", nullable = false)
 	public java.lang.String getName() {
-		return this.name;
+		return this.Name;
 	}
 
-	public void setName(java.lang.String name) {
-		this.name = name;
+	public void setName(java.lang.String Name) {
+		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "StartTime")
-	public java.sql.Timestamp getStarttime() {
-		return this.starttime;
+	@javax.persistence.Column(name = "StartTime", nullable = false)
+	public java.sql.Timestamp getStartTime() {
+		return this.StartTime;
 	}
 
-	public void setStarttime(java.sql.Timestamp starttime) {
-		this.starttime = starttime;
+	public void setStartTime(java.sql.Timestamp StartTime) {
+		this.StartTime = StartTime;
 	}
 
-	@javax.persistence.Column(name = "EndTime")
-	public java.sql.Timestamp getEndtime() {
-		return this.endtime;
+	@javax.persistence.Column(name = "EndTime", nullable = false)
+	public java.sql.Timestamp getEndTime() {
+		return this.EndTime;
 	}
 
-	public void setEndtime(java.sql.Timestamp endtime) {
-		this.endtime = endtime;
+	public void setEndTime(java.sql.Timestamp EndTime) {
+		this.EndTime = EndTime;
 	}
 
-	@javax.persistence.Column(name = "ModifiedDate")
-	public java.sql.Timestamp getModifieddate() {
-		return this.modifieddate;
+	@javax.persistence.Column(name = "ModifiedDate", nullable = false)
+	public java.sql.Timestamp getModifiedDate() {
+		return this.ModifiedDate;
 	}
 
-	public void setModifieddate(java.sql.Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
+	public void setModifiedDate(java.sql.Timestamp ModifiedDate) {
+		this.ModifiedDate = ModifiedDate;
 	}
 }

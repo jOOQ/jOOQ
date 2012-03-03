@@ -80,6 +80,10 @@ public interface SimpleSelectOrderByStep<R extends Record> extends SimpleSelectL
      * Add an <code>ORDER BY</code> clause to the query
      * <p>
      * Indexes start at <code>1</code> in SQL!
+     * <p>
+     * Note, you can use <code>orderBy(Factory.val(1).desc())</code> or
+     * <code>orderBy(Factory.literal(1).desc())</code> to apply descending
+     * ordering
      */
     @Support
     SimpleSelectLimitStep<R> orderBy(int... fieldIndexes);

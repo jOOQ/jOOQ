@@ -37,19 +37,19 @@ package org.jooq.test._;
 
 import org.jooq.Converter;
 
-public class MyEnumStringMapper implements Converter<String, MyEnum> {
+public class StringEnumMapper implements Converter<String, StringEnum> {
 
     /**
      * Generated UID
      */
-    private static final long              serialVersionUID = -4252074829213730476L;
+    private static final long            serialVersionUID = -4252074829213730476L;
 
-    public static final MyEnumStringMapper INSTANCE         = new MyEnumStringMapper();
+    public static final StringEnumMapper INSTANCE         = new StringEnumMapper();
 
     @Override
-    public MyEnum from(String t) {
+    public StringEnum from(String t) {
         try {
-            return MyEnum.valueOf(t);
+            return StringEnum.valueOf(t);
         }
         catch (Exception e) {
             return null;
@@ -57,7 +57,7 @@ public class MyEnumStringMapper implements Converter<String, MyEnum> {
     }
 
     @Override
-    public String to(MyEnum u) {
+    public String to(StringEnum u) {
         return u == null ? null : u.name();
     }
 
@@ -67,7 +67,7 @@ public class MyEnumStringMapper implements Converter<String, MyEnum> {
     }
 
     @Override
-    public Class<MyEnum> toType() {
-        return MyEnum.class;
+    public Class<StringEnum> toType() {
+        return StringEnum.class;
     }
 }

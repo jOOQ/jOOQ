@@ -70,9 +70,8 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
-import org.jooq.test._.MyEnum;
-import org.jooq.test._.MyEnumNumericMapper;
-import org.jooq.test._.MyEnumStringMapper;
+import org.jooq.test._.OrdinalEnum;
+import org.jooq.test._.StringEnum;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
 import org.jooq.test.hsqldb.generatedclasses.Routines;
 import org.jooq.test.hsqldb.generatedclasses.Sequences;
@@ -686,8 +685,8 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
         // Storing a record using fields from a mapper
         record = create().newRecord(T_MAPPED_TYPES);
         record.setId(1);
-        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME, MyEnum.A, MyEnumStringMapper.INSTANCE);
-        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL, MyEnum.B, MyEnumNumericMapper.INSTANCE);
+        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME, StringEnum.A);
+        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL, OrdinalEnum.B);
 
         assertEquals(1, record.store());
 
@@ -695,7 +694,7 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
         record = create().newRecord(T_MAPPED_TYPES);
         record.setId(1);
         record.refresh();
-        assertEquals(MyEnum.A, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME, MyEnumStringMapper.INSTANCE));
-        assertEquals(MyEnum.B, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL, MyEnumNumericMapper.INSTANCE));
+        assertEquals(StringEnum.A, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME));
+        assertEquals(OrdinalEnum.B, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL));
     }
 }

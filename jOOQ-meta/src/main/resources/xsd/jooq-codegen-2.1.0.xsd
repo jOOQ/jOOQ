@@ -162,6 +162,13 @@
       <element name="masterDataTables" type="tns:MasterDataTables" minOccurs="0" maxOccurs="1"/>
 
       <!--
+        A configuration element to configure custom types introduced to jOOQ
+        using converters
+        This is EXPERIMENTAL functionality. Use at your own risk
+        -->
+      <element name="customTypes" type="tns:CustomTypes" minOccurs="0" maxOccurs="1"/>
+
+      <!--
         A configuration element to configure synthetic enum types
         This is EXPERIMENTAL functionality. Use at your own risk
         -->
@@ -203,6 +210,13 @@
     </sequence>
   </complexType>
 
+  <complexType name="CustomTypes">
+    <sequence>
+      <!-- A configuration element for a custom type -->
+      <element name="customType" type="tns:CustomType" minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
+
   <complexType name="EnumTypes">
     <sequence>
       <!-- A configuration element for a synthetic enum type -->
@@ -227,6 +241,16 @@
 
       <!-- The column used for documentation -->
       <element name="description" type="string" minOccurs="0" maxOccurs="1" />
+    </all>
+  </complexType>
+
+  <complexType name="CustomType">
+    <all>
+      <!-- The name of the custom type -->
+      <element name="name" type="string" minOccurs="1" maxOccurs="1" />
+
+      <!-- A converter implementation for the custom type -->
+      <element name="converter" type="string" minOccurs="1" maxOccurs="1" />
     </all>
   </complexType>
 

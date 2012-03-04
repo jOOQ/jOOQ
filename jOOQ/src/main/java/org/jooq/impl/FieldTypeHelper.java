@@ -60,6 +60,7 @@ import java.util.Map;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
@@ -284,7 +285,20 @@ public final class FieldTypeHelper {
         throws SQLException {
 
         Class<? extends T> type = field.getType();
-        return getFromResultSet(ctx, type, index);
+        Class<?> actual = type;
+
+        Converter<?, ? extends T> converter = DataTypes.converter(type);
+        if (converter != null) {
+            actual = converter.fromType();
+        }
+
+        Object result = getFromResultSet(ctx, actual, index);
+
+        if (converter != null) {
+            result = ((Converter) converter).from(result);
+        }
+
+        return (T) result;
     }
 
     @SuppressWarnings("unchecked")

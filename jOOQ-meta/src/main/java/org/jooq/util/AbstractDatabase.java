@@ -46,6 +46,7 @@ import java.util.List;
 import org.jooq.SQLDialect;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
+import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
@@ -71,6 +72,7 @@ public abstract class AbstractDatabase implements Database {
     private boolean                         dateAsTimestamp;
     private List<Schema>                    configuredSchemata;
     private List<MasterDataTable>           configuredMasterDataTables;
+    private List<CustomType>                configuredCustomTypes;
     private List<EnumType>                  configuredEnumTypes;
     private List<ForcedType>                configuredForcedTypes;
 
@@ -196,6 +198,27 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final List<EnumType> getConfiguredEnumTypes() {
         return configuredEnumTypes;
+    }
+
+    @Override
+    public final void setConfiguredCustomTypes(List<CustomType> configuredCustomTypes) {
+        this.configuredCustomTypes = configuredCustomTypes;
+    }
+
+    @Override
+    public final List<CustomType> getConfiguredCustomTypes() {
+        return configuredCustomTypes;
+    }
+
+    @Override
+    public final CustomType getConfiguredCustomType(String name) {
+        for (CustomType type : configuredCustomTypes) {
+            if (type.getName().equals(name)) {
+                return type;
+            }
+        }
+
+        return null;
     }
 
     @Override

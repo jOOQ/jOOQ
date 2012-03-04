@@ -49,6 +49,7 @@ import java.util.Map;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
@@ -192,7 +193,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final int getSQLType() {
+    public /* final */ int getSQLType() {
         if (type == Blob.class) {
             return Types.BLOB;
         }
@@ -310,7 +311,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final String getCastTypeName(Configuration configuration, int precision, int scale) {
+    public /* final */ String getCastTypeName(Configuration configuration, int precision, int scale) {
         String result = getCastTypeName(configuration);
 
         if (precision != 0) {
@@ -355,12 +356,17 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter) {
+        return new ConvertedDataType<T, U>(this, converter);
+    }
+
+    @Override
     public final SQLDialect getDialect() {
         return dialect;
     }
 
     @Override
-    public final T convert(Object object) {
+    public /* final */ T convert(Object object) {
         return Convert.convert(object, type);
     }
 

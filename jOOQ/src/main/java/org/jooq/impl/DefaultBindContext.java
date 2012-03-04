@@ -54,6 +54,7 @@ import java.util.Arrays;
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
 import org.jooq.SQLDialect;
@@ -96,6 +97,13 @@ class DefaultBindContext extends AbstractBindContext {
     @SuppressWarnings("unchecked")
     protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.getDialect();
+
+        // [#650] Check first, if we have a converter for the supplied type
+        Converter<?, ?> converter = DataTypes.converter(type);
+        if (converter != null) {
+            value = ((Converter) converter).to(value);
+            type = converter.fromType();
+        }
 
         if (log.isTraceEnabled()) {
             if (value != null && value.getClass().isArray() && value.getClass() != byte[].class) {

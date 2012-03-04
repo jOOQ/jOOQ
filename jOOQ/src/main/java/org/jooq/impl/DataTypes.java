@@ -40,9 +40,6 @@ import java.util.Map;
 
 import org.jooq.Converter;
 import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.exception.DataTypeException;
 
 /**
@@ -52,7 +49,6 @@ import org.jooq.exception.DataTypeException;
  */
 public final class DataTypes {
 
-    private static final Object                         INIT_LOCK  = new Object();
     private static final Map<Class<?>, Converter<?, ?>> CONVERTERS = new HashMap<Class<?>, Converter<?, ?>>();
 
     // ------------------------------------------------------------------------
@@ -103,17 +99,6 @@ public final class DataTypes {
         if (!CONVERTERS.containsKey(customType)) {
             CONVERTERS.put(customType, converter);
         }
-    }
-
-    /**
-     * Register a <code>Converter</code> for a field
-     * <p>
-     * This registers a converter for a specific field in your generated schema.
-     * This converter will be used by jOOQ to convert database types to your own
-     * custom types and deliver those types in {@link Record} and {@link Result}
-     */
-    public static final synchronized <T> void registerConverter(Field<T> field, Converter<T, ?> converter) {
-
     }
 
     // ------------------------------------------------------------------------

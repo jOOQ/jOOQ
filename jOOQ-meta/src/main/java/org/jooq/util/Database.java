@@ -41,6 +41,7 @@ import java.util.List;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
+import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.MasterDataTable;
@@ -185,6 +186,23 @@ public interface Database {
      * master data tables.
      */
     List<MasterDataTable> getConfiguredMasterDataTables();
+
+    /**
+     * Database objects matching any of these field names will be generated as
+     * custom types
+     */
+    void setConfiguredCustomTypes(List<CustomType> types);
+
+    /**
+     * Database objects matching any of these field names will be generated as
+     * custom types
+     */
+    List<CustomType> getConfiguredCustomTypes();
+
+    /**
+     * Get a specific configured custom type by its name
+     */
+    CustomType getConfiguredCustomType(String name);
 
     /**
      * Database objects matching any of these field names will be generated as

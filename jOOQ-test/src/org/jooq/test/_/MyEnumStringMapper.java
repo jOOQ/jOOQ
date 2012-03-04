@@ -39,7 +39,12 @@ import org.jooq.Converter;
 
 public class MyEnumStringMapper implements Converter<String, MyEnum> {
 
-    public static final MyEnumStringMapper INSTANCE = new MyEnumStringMapper();
+    /**
+     * Generated UID
+     */
+    private static final long              serialVersionUID = -4252074829213730476L;
+
+    public static final MyEnumStringMapper INSTANCE         = new MyEnumStringMapper();
 
     @Override
     public MyEnum from(String t) {

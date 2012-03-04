@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
+
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -49,17 +51,17 @@ import org.jooq.impl.SQLDataType;
  * <li>to store user types converting them to database types "TO" the database.
  * Hence, {@link #toType()} is the user-defined type</li>
  * </ul>
- * 
+ *
  * @author Lukas Eder
  * @param <T> The database type - i.e. any type available from
  *            {@link SQLDataType}
  * @param <U> The user type
  */
-public interface Converter<T, U> {
+public interface Converter<T, U> extends Serializable {
 
     /**
      * Convert a database object to a user object
-     * 
+     *
      * @param databaseObject The database object
      * @return The user object
      */
@@ -67,7 +69,7 @@ public interface Converter<T, U> {
 
     /**
      * Convert a user object to a database object
-     * 
+     *
      * @param userObject The user object
      * @return The database object
      */

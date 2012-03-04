@@ -23,6 +23,11 @@ public final class Tables {
 	public static org.jooq.test.hsqldb.generatedclasses.tables.Class CLASS = org.jooq.test.hsqldb.generatedclasses.tables.Class.CLASS;
 
 	/**
+	 * The table PUBLIC.CONNECTION
+	 */
+	public static org.jooq.test.hsqldb.generatedclasses.tables.Connection CONNECTION = org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION;
+
+	/**
 	 * The table PUBLIC.INTEGER
 	 */
 	public static org.jooq.test.hsqldb.generatedclasses.tables.Integer INTEGER = org.jooq.test.hsqldb.generatedclasses.tables.Integer.INTEGER;
@@ -36,6 +41,11 @@ public final class Tables {
 	 * The table PUBLIC.OBJECT
 	 */
 	public static org.jooq.test.hsqldb.generatedclasses.tables.Object OBJECT = org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT;
+
+	/**
+	 * The table PUBLIC.PREPARED_STATEMENT
+	 */
+	public static org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement PREPARED_STATEMENT = org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT;
 
 	/**
 	 * The table PUBLIC.STRING

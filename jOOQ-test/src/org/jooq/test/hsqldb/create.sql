@@ -58,6 +58,8 @@ DROP TABLE IF EXISTS long/
 DROP TABLE IF EXISTS object/
 DROP TABLE IF EXISTS string/
 DROP TABLE IF EXISTS big_decimal/
+DROP TABLE IF EXISTS connection/
+DROP TABLE IF EXISTS prepared_statement/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
@@ -311,6 +313,8 @@ CREATE TABLE x_unused (
   PRIMARYKEY INT,
   NAME_REF VARCHAR(10),
   "FIELD 737" DECIMAL(25, 2),
+  CONNECTION INT,
+  PREPARED_STATEMENT INT,
 
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
@@ -372,6 +376,8 @@ CREATE TABLE long (id int, other bigint);/
 CREATE TABLE object (id int, other object);/
 CREATE TABLE string (id int, other varchar(3));/
 CREATE TABLE big_decimal (id int, other decimal);/
+CREATE TABLE connection (id int);/
+CREATE TABLE prepared_statement (id int);/
 
 CREATE VIEW V_LIBRARY (AUTHOR, TITLE) AS
 SELECT T_AUTHOR.FIRST_NAME + ' ' + T_AUTHOR.LAST_NAME, T_BOOK.TITLE

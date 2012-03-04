@@ -773,6 +773,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCustomConversion() throws Exception {
+        new DataTypeTests(this).testCustomConversion();
+    }
+
+    @Test
     public void testForUpdateClauses() throws Exception {
         new SelectTests(this).testForUpdateClauses();
     }

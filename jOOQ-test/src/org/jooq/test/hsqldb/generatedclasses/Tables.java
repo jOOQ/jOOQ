@@ -128,6 +128,11 @@ public final class Tables {
 	public static org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
 
 	/**
+	 * The table PUBLIC.T_MAPPED_TYPES
+	 */
+	public static org.jooq.test.hsqldb.generatedclasses.tables.TMappedTypes T_MAPPED_TYPES = org.jooq.test.hsqldb.generatedclasses.tables.TMappedTypes.T_MAPPED_TYPES;
+
+	/**
 	 * The table PUBLIC.T_TRIGGERS
 	 */
 	public static org.jooq.test.hsqldb.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS;

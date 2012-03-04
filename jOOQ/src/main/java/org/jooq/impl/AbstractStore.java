@@ -72,7 +72,7 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <I> I internalAPI(Class<I> internalType) throws ClassCastException {
+    public final <I> I internalAPI(Class<I> internalType) {
         return internalType.cast(this);
     }
 
@@ -98,161 +98,161 @@ abstract class AbstractStore<T> implements Store<T>, AttachableInternal {
     // -------------------------------------------------------------------------
 
     @Override
-    public final T getValue(int index, T defaultValue) throws IllegalArgumentException {
+    public final T getValue(int index, T defaultValue) {
         final T result = getValue(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final BigDecimal getValueAsBigDecimal(int index) throws IllegalArgumentException {
+    public final BigDecimal getValueAsBigDecimal(int index) {
         return Convert.convert(getValue(index), BigDecimal.class);
     }
 
     @Override
-    public final BigDecimal getValueAsBigDecimal(int index, BigDecimal defaultValue) throws IllegalArgumentException {
+    public final BigDecimal getValueAsBigDecimal(int index, BigDecimal defaultValue) {
         final BigDecimal result = getValueAsBigDecimal(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Boolean getValueAsBoolean(int index) throws IllegalArgumentException {
+    public final Boolean getValueAsBoolean(int index) {
         return Convert.convert(getValue(index), Boolean.class);
     }
 
     @Override
-    public final Boolean getValueAsBoolean(int index, Boolean defaultValue) throws IllegalArgumentException {
+    public final Boolean getValueAsBoolean(int index, Boolean defaultValue) {
         final Boolean result = getValueAsBoolean(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final BigInteger getValueAsBigInteger(int index) throws IllegalArgumentException {
+    public final BigInteger getValueAsBigInteger(int index) {
         return Convert.convert(getValue(index), BigInteger.class);
     }
 
     @Override
-    public final BigInteger getValueAsBigInteger(int index, BigInteger defaultValue) throws IllegalArgumentException {
+    public final BigInteger getValueAsBigInteger(int index, BigInteger defaultValue) {
         final BigInteger result = getValueAsBigInteger(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Byte getValueAsByte(int index) throws IllegalArgumentException {
+    public final Byte getValueAsByte(int index) {
         return Convert.convert(getValue(index), Byte.class);
     }
 
     @Override
-    public final Byte getValueAsByte(int index, Byte defaultValue) throws IllegalArgumentException {
+    public final Byte getValueAsByte(int index, Byte defaultValue) {
         final Byte result = getValueAsByte(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Date getValueAsDate(int index) throws IllegalArgumentException {
+    public final Date getValueAsDate(int index) {
         return Convert.convert(getValue(index), Date.class);
     }
 
     @Override
-    public final Date getValueAsDate(int index, Date defaultValue) throws IllegalArgumentException {
+    public final Date getValueAsDate(int index, Date defaultValue) {
         final Date result = getValueAsDate(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Double getValueAsDouble(int index) throws IllegalArgumentException {
+    public final Double getValueAsDouble(int index) {
         return Convert.convert(getValue(index), Double.class);
     }
 
     @Override
-    public final Double getValueAsDouble(int index, Double defaultValue) throws IllegalArgumentException {
+    public final Double getValueAsDouble(int index, Double defaultValue) {
         final Double result = getValueAsDouble(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Float getValueAsFloat(int index) throws IllegalArgumentException {
+    public final Float getValueAsFloat(int index) {
         return Convert.convert(getValue(index), Float.class);
     }
 
     @Override
-    public final Float getValueAsFloat(int index, Float defaultValue) throws IllegalArgumentException {
+    public final Float getValueAsFloat(int index, Float defaultValue) {
         final Float result = getValueAsFloat(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Integer getValueAsInteger(int index) throws IllegalArgumentException {
+    public final Integer getValueAsInteger(int index) {
         return Convert.convert(getValue(index), Integer.class);
     }
 
     @Override
-    public final Integer getValueAsInteger(int index, Integer defaultValue) throws IllegalArgumentException {
+    public final Integer getValueAsInteger(int index, Integer defaultValue) {
         final Integer result = getValueAsInteger(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Long getValueAsLong(int index) throws IllegalArgumentException {
+    public final Long getValueAsLong(int index) {
         return Convert.convert(getValue(index), Long.class);
     }
 
     @Override
-    public final Long getValueAsLong(int index, Long defaultValue) throws IllegalArgumentException {
+    public final Long getValueAsLong(int index, Long defaultValue) {
         final Long result = getValueAsLong(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Short getValueAsShort(int index) throws IllegalArgumentException {
+    public final Short getValueAsShort(int index) {
         return Convert.convert(getValue(index), Short.class);
     }
 
     @Override
-    public final Short getValueAsShort(int index, Short defaultValue) throws IllegalArgumentException {
+    public final Short getValueAsShort(int index, Short defaultValue) {
         final Short result = getValueAsShort(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final String getValueAsString(int index) throws IllegalArgumentException {
+    public final String getValueAsString(int index) {
         return Convert.convert(getValue(index), String.class);
     }
 
     @Override
-    public final String getValueAsString(int index, String defaultValue) throws IllegalArgumentException {
+    public final String getValueAsString(int index, String defaultValue) {
         final String result = getValueAsString(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Time getValueAsTime(int index) throws IllegalArgumentException {
+    public final Time getValueAsTime(int index) {
         return Convert.convert(getValue(index), Time.class);
     }
 
     @Override
-    public final Time getValueAsTime(int index, Time defaultValue) throws IllegalArgumentException {
+    public final Time getValueAsTime(int index, Time defaultValue) {
         final Time result = getValueAsTime(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final Timestamp getValueAsTimestamp(int index) throws IllegalArgumentException {
+    public final Timestamp getValueAsTimestamp(int index) {
         return Convert.convert(getValue(index), Timestamp.class);
     }
 
     @Override
-    public final Timestamp getValueAsTimestamp(int index, Timestamp defaultValue) throws IllegalArgumentException {
+    public final Timestamp getValueAsTimestamp(int index, Timestamp defaultValue) {
         final Timestamp result = getValueAsTimestamp(index);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final <Z> Z getValue(int index, Class<? extends Z> type) throws IllegalArgumentException {
+    public final <Z> Z getValue(int index, Class<? extends Z> type) {
         return Convert.convert(getValue(index), type);
     }
 
     @Override
-    public final <Z> Z getValue(int index, Class<? extends Z> type, Z defaultValue) throws IllegalArgumentException {
+    public final <Z> Z getValue(int index, Class<? extends Z> type, Z defaultValue) {
         final Z result = getValue(index, type);
         return result == null ? defaultValue : result;
     }

@@ -52,6 +52,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -64,7 +65,6 @@ import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -207,7 +207,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final ResultSet fetchResultSet() throws DataAccessException {
+    public final ResultSet fetchResultSet() {
         return fetchLazy().resultSet();
     }
 
@@ -217,7 +217,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final Cursor<R> fetchLazy(int fetchSize) throws DataAccessException {
+    public final Cursor<R> fetchLazy(int fetchSize) {
         lazy = true;
         size = fetchSize;
 
@@ -247,8 +247,13 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) throws DataAccessException {
+    public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) {
         return fetch().getValues(field, type);
+    }
+
+    @Override
+    public final <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) {
+        return fetch().getValues(field, converter);
     }
 
     @Override
@@ -262,6 +267,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) {
+        return fetch().getValues(fieldIndex, converter);
+    }
+
+    @Override
     public final List<?> fetch(String fieldName) {
         return fetch().getValues(fieldName);
     }
@@ -272,9 +282,24 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <U> List<U> fetch(String fieldName, Converter<?, U> converter) {
+        return fetch().getValues(fieldName, converter);
+    }
+
+    @Override
     public final <T> T fetchOne(Field<T> field) {
         R record = fetchOne();
         return record == null ? null : record.getValue(field);
+    }
+
+    @Override
+    public final <T> T fetchOne(Field<?> field, Class<? extends T> type) {
+        return Convert.convert(fetchOne(field), type);
+    }
+
+    @Override
+    public final <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) {
+        return Convert.convert(fetchOne(field), converter);
     }
 
     @Override
@@ -289,6 +314,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final <U> U fetchOne(int fieldIndex, Converter<?, U> converter) {
+        return Convert.convert(fetchOne(fieldIndex), converter);
+    }
+
+    @Override
     public final Object fetchOne(String fieldName) {
         R record = fetchOne();
         return record == null ? null : record.getValue(fieldName);
@@ -297,6 +327,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
         return Convert.convert(fetchOne(fieldName), type);
+    }
+
+    @Override
+    public final <U> U fetchOne(String fieldName, Converter<?, U> converter) {
+        return Convert.convert(fetchOne(fieldName), converter);
     }
 
     @Override
@@ -393,6 +428,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return (T[]) Convert.convertArray(fetchArray(fieldIndex), type);
     }
 
+    @SuppressWarnings("cast")
+    @Override
+    public final <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) {
+        return (U[]) Convert.convertArray(fetchArray(fieldIndex), converter);
+    }
+
     @Override
     public final Object[] fetchArray(String fieldName) {
         return fetch(fieldName).toArray();
@@ -404,10 +445,38 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         return (T[]) Convert.convertArray(fetchArray(fieldName), type);
     }
 
+    @SuppressWarnings("cast")
+    @Override
+    public final <U> U[] fetchArray(String fieldName, Converter<?, U> converter) {
+        return (U[]) Convert.convertArray(fetchArray(fieldName), converter);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public final <T> T[] fetchArray(Field<T> field) {
         return fetch(field).toArray((T[]) Array.newInstance(field.getType(), 0));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <T> T[] fetchArray(Field<?> field, Class<? extends T> type) {
+        return (T[]) Convert.convertArray(fetchArray(field), type);
+    }
+
+    @SuppressWarnings("cast")
+    @Override
+    public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
+        return (U[]) Convert.convertArray(fetchArray(field), converter);
+    }
+
+    /**
+     * Subclasses may override this method
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<? extends R> getRecordType() {
+        return null;
     }
 
     @Override
@@ -421,7 +490,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException {
+    public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
         return fetch().into(table);
     }
 

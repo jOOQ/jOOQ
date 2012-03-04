@@ -947,6 +947,41 @@ public interface Record extends FieldProvider, Store<Object> {
         DataTypeException;
 
     /**
+     * Get a converted value from this Record, providing a field.
+     *
+     * @param <T> The database type parameter
+     * @param <U> The conversion type parameter
+     * @param field The field
+     * @param converter The data type converter
+     * @return The value of a field contained in this record
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field.
+     *
+     * @param <T> The database type parameter
+     * @param <U> The conversion type parameter
+     * @param field The field
+     * @param converter The data type converter
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field contained in this record, or defaultValue,
+     *         if <code>null</code>
+     * @throws IllegalArgumentException If the argument field is not contained
+     *             in {@link #getFields()}
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
      * Get a converted value from this Record, providing a field name.
      *
      * @param <T> The conversion type parameter
@@ -980,6 +1015,72 @@ public interface Record extends FieldProvider, Store<Object> {
         DataTypeException;
 
     /**
+     * Get a converted value from this Store, providing a field index.
+     *
+     * @param <U> The conversion type parameter
+     * @param index The field's index
+     * @param converter The data type converter
+     * @return The value of a field's index contained in this Store
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> U getValue(int index, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this Store, providing a field index.
+     *
+     * @param <U> The conversion type parameter
+     * @param index The field's index
+     * @param converter The data type converter
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's index contained in this Store, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument index is not contained
+     *             in the Store
+     * @throws DataTypeException wrapping data type conversion exception that
+     *             might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> U getValue(int index, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
+     * Get a converted value from this Record, providing a field name.
+     *
+     * @param <U> The conversion type parameter
+     * @param fieldName The field's name
+     * @param converter The data type converter
+     * @return The value of a field's name contained in this record
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> U getValue(String fieldName, Converter<?, U> converter) throws IllegalArgumentException, DataTypeException;
+
+    /**
+     * Get a converted value from this record, providing a field name.
+     *
+     * @param <U> The conversion type parameter
+     * @param fieldName The field's name
+     * @param converter The data type converter
+     * @param defaultValue The default value instead of <code>null</code>
+     * @return The value of a field's name contained in this record, or
+     *         defaultValue, if <code>null</code>
+     * @throws IllegalArgumentException If the argument fieldName is not
+     *             contained in the record
+     * @throws DataTypeException wrapping any data type conversion exception
+     *             that might have occurred
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) throws IllegalArgumentException,
+        DataTypeException;
+
+    /**
      * Set a value into this record.
      *
      * @param <T> The generic field parameter
@@ -987,6 +1088,18 @@ public interface Record extends FieldProvider, Store<Object> {
      * @param value The value
      */
     <T> void setValue(Field<T> field, T value);
+
+    /**
+     * Set a value into this record.
+     *
+     * @param <T> The generic field parameter
+     * @param <U> The conversion type parameter
+     * @param field The field
+     * @param value The value
+     * @param converter The converter used to convert <code>value</code> into an
+     *            appropriate type
+     */
+    <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter);
 
     /**
      * Convert this record into an array.

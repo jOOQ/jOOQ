@@ -58,6 +58,7 @@ import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
+import org.jooq.Converter;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
 import org.jooq.Record;
@@ -154,12 +155,12 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
-    public final <T> T getValue(Field<T> field) throws IllegalArgumentException {
+    public final <T> T getValue(Field<T> field) {
         return getValue0(field).getValue();
     }
 
     @Override
-    public final <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException {
+    public final <T> T getValue(Field<T> field, T defaultValue) {
         return getValue0(field).getValue(defaultValue);
     }
 
@@ -192,6 +193,11 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
         }
     }
 
+    @Override
+    public final <T, U> void setValue(Field<T> field, U value, Converter<T, ? super U> converter) {
+        setValue(field, converter.to(value));
+    }
+
     final <T> void setValue(Field<T> field, Value<T> value) {
         getValues()[getIndex(field)] = value;
     }
@@ -209,318 +215,351 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     }
 
     @Override
-    public final String getValueAsString(Field<?> field) throws IllegalArgumentException {
+    public final String getValueAsString(Field<?> field) {
         return getValueAsString(getIndex(field));
     }
 
     @Override
-    public final String getValueAsString(Field<?> field, String defaultValue) throws IllegalArgumentException {
+    public final String getValueAsString(Field<?> field, String defaultValue) {
         return getValueAsString(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Byte getValueAsByte(Field<?> field) throws IllegalArgumentException {
+    public final Byte getValueAsByte(Field<?> field) {
         return getValueAsByte(getIndex(field));
     }
 
     @Override
-    public final Byte getValueAsByte(Field<?> field, Byte defaultValue) throws IllegalArgumentException {
+    public final Byte getValueAsByte(Field<?> field, Byte defaultValue) {
         return getValueAsByte(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Short getValueAsShort(Field<?> field) throws IllegalArgumentException {
+    public final Short getValueAsShort(Field<?> field) {
         return getValueAsShort(getIndex(field));
     }
 
     @Override
-    public final Short getValueAsShort(Field<?> field, Short defaultValue) throws IllegalArgumentException {
+    public final Short getValueAsShort(Field<?> field, Short defaultValue) {
         return getValueAsShort(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Integer getValueAsInteger(Field<?> field) throws IllegalArgumentException {
+    public final Integer getValueAsInteger(Field<?> field) {
         return getValueAsInteger(getIndex(field));
     }
 
     @Override
-    public final Integer getValueAsInteger(Field<?> field, Integer defaultValue) throws IllegalArgumentException {
+    public final Integer getValueAsInteger(Field<?> field, Integer defaultValue) {
         return getValueAsInteger(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Long getValueAsLong(Field<?> field) throws IllegalArgumentException {
+    public final Long getValueAsLong(Field<?> field) {
         return getValueAsLong(getIndex(field));
     }
 
     @Override
-    public final Long getValueAsLong(Field<?> field, Long defaultValue) throws IllegalArgumentException {
+    public final Long getValueAsLong(Field<?> field, Long defaultValue) {
         return getValueAsLong(getIndex(field), defaultValue);
     }
 
     @Override
-    public final BigInteger getValueAsBigInteger(Field<?> field) throws IllegalArgumentException {
+    public final BigInteger getValueAsBigInteger(Field<?> field) {
         return getValueAsBigInteger(getIndex(field));
     }
 
     @Override
     public final BigInteger getValueAsBigInteger(Field<?> field, BigInteger defaultValue)
-        throws IllegalArgumentException {
+        {
         return getValueAsBigInteger(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Float getValueAsFloat(Field<?> field) throws IllegalArgumentException {
+    public final Float getValueAsFloat(Field<?> field) {
         return getValueAsFloat(getIndex(field));
     }
 
     @Override
-    public final Float getValueAsFloat(Field<?> field, Float defaultValue) throws IllegalArgumentException {
+    public final Float getValueAsFloat(Field<?> field, Float defaultValue) {
         return getValueAsFloat(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Double getValueAsDouble(Field<?> field) throws IllegalArgumentException {
+    public final Double getValueAsDouble(Field<?> field) {
         return getValueAsDouble(getIndex(field));
     }
 
     @Override
-    public final Double getValueAsDouble(Field<?> field, Double defaultValue) throws IllegalArgumentException {
+    public final Double getValueAsDouble(Field<?> field, Double defaultValue) {
         return getValueAsDouble(getIndex(field), defaultValue);
     }
 
     @Override
-    public final BigDecimal getValueAsBigDecimal(Field<?> field) throws IllegalArgumentException {
+    public final BigDecimal getValueAsBigDecimal(Field<?> field) {
         return getValueAsBigDecimal(getIndex(field));
     }
 
     @Override
     public final BigDecimal getValueAsBigDecimal(Field<?> field, BigDecimal defaultValue)
-        throws IllegalArgumentException {
+        {
         return getValueAsBigDecimal(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Boolean getValueAsBoolean(Field<?> field) throws IllegalArgumentException {
+    public final Boolean getValueAsBoolean(Field<?> field) {
         return getValueAsBoolean(getIndex(field));
     }
 
     @Override
-    public final Boolean getValueAsBoolean(Field<?> field, Boolean defaultValue) throws IllegalArgumentException {
+    public final Boolean getValueAsBoolean(Field<?> field, Boolean defaultValue) {
         return getValueAsBoolean(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Timestamp getValueAsTimestamp(Field<?> field) throws IllegalArgumentException {
+    public final Timestamp getValueAsTimestamp(Field<?> field) {
         return getValueAsTimestamp(getIndex(field));
     }
 
     @Override
-    public final Timestamp getValueAsTimestamp(Field<?> field, Timestamp defaultValue) throws IllegalArgumentException {
+    public final Timestamp getValueAsTimestamp(Field<?> field, Timestamp defaultValue) {
         return getValueAsTimestamp(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Date getValueAsDate(Field<?> field) throws IllegalArgumentException {
+    public final Date getValueAsDate(Field<?> field) {
         return getValueAsDate(getIndex(field));
     }
 
     @Override
-    public final Date getValueAsDate(Field<?> field, Date defaultValue) throws IllegalArgumentException {
+    public final Date getValueAsDate(Field<?> field, Date defaultValue) {
         return getValueAsDate(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Time getValueAsTime(Field<?> field) throws IllegalArgumentException {
+    public final Time getValueAsTime(Field<?> field) {
         return getValueAsTime(getIndex(field));
     }
 
     @Override
-    public final Time getValueAsTime(Field<?> field, Time defaultValue) throws IllegalArgumentException {
+    public final Time getValueAsTime(Field<?> field, Time defaultValue) {
         return getValueAsTime(getIndex(field), defaultValue);
     }
 
     @Override
-    public final Object getValue(int index) throws IllegalArgumentException {
+    public final Object getValue(int index) {
         return getValue(getField(index));
     }
 
     @Override
-    public final Object getValue(String fieldName) throws IllegalArgumentException {
+    public final Object getValue(String fieldName) {
         return getValue(getField(fieldName));
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public final Object getValue(String fieldName, Object defaultValue) throws IllegalArgumentException {
+    public final Object getValue(String fieldName, Object defaultValue) {
         return getValue((Field<Object>) getField(fieldName), defaultValue);
     }
 
     @Override
-    public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(Field<A> field) throws IllegalArgumentException {
+    public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(Field<A> field) {
         A result = getValue(field);
         return result == null ? null : result.get();
     }
 
     @Override
     public final <A extends ArrayRecord<T>, T> T[] getValueAsArray(Field<A> field, T[] defaultValue)
-        throws IllegalArgumentException {
+        {
         final T[] result = getValueAsArray(field);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final String getValueAsString(String fieldName) throws IllegalArgumentException {
+    public final String getValueAsString(String fieldName) {
         return getValueAsString(getField(fieldName));
     }
 
     @Override
-    public final String getValueAsString(String fieldName, String defaultValue) throws IllegalArgumentException {
+    public final String getValueAsString(String fieldName, String defaultValue) {
         return getValueAsString(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Byte getValueAsByte(String fieldName) throws IllegalArgumentException {
+    public final Byte getValueAsByte(String fieldName) {
         return getValueAsByte(getField(fieldName));
     }
 
     @Override
-    public final Byte getValueAsByte(String fieldName, Byte defaultValue) throws IllegalArgumentException {
+    public final Byte getValueAsByte(String fieldName, Byte defaultValue) {
         return getValueAsByte(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Short getValueAsShort(String fieldName) throws IllegalArgumentException {
+    public final Short getValueAsShort(String fieldName) {
         return getValueAsShort(getField(fieldName));
     }
 
     @Override
-    public final Short getValueAsShort(String fieldName, Short defaultValue) throws IllegalArgumentException {
+    public final Short getValueAsShort(String fieldName, Short defaultValue) {
         return getValueAsShort(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Integer getValueAsInteger(String fieldName) throws IllegalArgumentException {
+    public final Integer getValueAsInteger(String fieldName) {
         return getValueAsInteger(getField(fieldName));
     }
 
     @Override
-    public final Integer getValueAsInteger(String fieldName, Integer defaultValue) throws IllegalArgumentException {
+    public final Integer getValueAsInteger(String fieldName, Integer defaultValue) {
         return getValueAsInteger(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Long getValueAsLong(String fieldName) throws IllegalArgumentException {
+    public final Long getValueAsLong(String fieldName) {
         return getValueAsLong(getField(fieldName));
     }
 
     @Override
-    public final Long getValueAsLong(String fieldName, Long defaultValue) throws IllegalArgumentException {
+    public final Long getValueAsLong(String fieldName, Long defaultValue) {
         return getValueAsLong(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final BigInteger getValueAsBigInteger(String fieldName) throws IllegalArgumentException {
+    public final BigInteger getValueAsBigInteger(String fieldName) {
         return getValueAsBigInteger(getField(fieldName));
     }
 
     @Override
     public final BigInteger getValueAsBigInteger(String fieldName, BigInteger defaultValue)
-        throws IllegalArgumentException {
+        {
         return getValueAsBigInteger(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Float getValueAsFloat(String fieldName) throws IllegalArgumentException {
+    public final Float getValueAsFloat(String fieldName) {
         return getValueAsFloat(getField(fieldName));
     }
 
     @Override
-    public final Float getValueAsFloat(String fieldName, Float defaultValue) throws IllegalArgumentException {
+    public final Float getValueAsFloat(String fieldName, Float defaultValue) {
         return getValueAsFloat(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Double getValueAsDouble(String fieldName) throws IllegalArgumentException {
+    public final Double getValueAsDouble(String fieldName) {
         return getValueAsDouble(getField(fieldName));
     }
 
     @Override
-    public final Double getValueAsDouble(String fieldName, Double defaultValue) throws IllegalArgumentException {
+    public final Double getValueAsDouble(String fieldName, Double defaultValue) {
         return getValueAsDouble(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final BigDecimal getValueAsBigDecimal(String fieldName) throws IllegalArgumentException {
+    public final BigDecimal getValueAsBigDecimal(String fieldName) {
         return getValueAsBigDecimal(getField(fieldName));
     }
 
     @Override
     public final BigDecimal getValueAsBigDecimal(String fieldName, BigDecimal defaultValue)
-        throws IllegalArgumentException {
+        {
         return getValueAsBigDecimal(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Boolean getValueAsBoolean(String fieldName) throws IllegalArgumentException {
+    public final Boolean getValueAsBoolean(String fieldName) {
         return getValueAsBoolean(getField(fieldName));
     }
 
     @Override
-    public final Boolean getValueAsBoolean(String fieldName, Boolean defaultValue) throws IllegalArgumentException {
+    public final Boolean getValueAsBoolean(String fieldName, Boolean defaultValue) {
         return getValueAsBoolean(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Timestamp getValueAsTimestamp(String fieldName) throws IllegalArgumentException {
+    public final Timestamp getValueAsTimestamp(String fieldName) {
         return getValueAsTimestamp(getField(fieldName));
     }
 
     @Override
     public final Timestamp getValueAsTimestamp(String fieldName, Timestamp defaultValue)
-        throws IllegalArgumentException {
+        {
         return getValueAsTimestamp(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Date getValueAsDate(String fieldName) throws IllegalArgumentException {
+    public final Date getValueAsDate(String fieldName) {
         return getValueAsDate(getField(fieldName));
     }
 
     @Override
-    public final Date getValueAsDate(String fieldName, Date defaultValue) throws IllegalArgumentException {
+    public final Date getValueAsDate(String fieldName, Date defaultValue) {
         return getValueAsDate(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final Time getValueAsTime(String fieldName) throws IllegalArgumentException {
+    public final Time getValueAsTime(String fieldName) {
         return getValueAsTime(getField(fieldName));
     }
 
     @Override
-    public final Time getValueAsTime(String fieldName, Time defaultValue) throws IllegalArgumentException {
+    public final Time getValueAsTime(String fieldName, Time defaultValue) {
         return getValueAsTime(getField(fieldName), defaultValue);
     }
 
     @Override
-    public final <T> T getValue(Field<?> field, Class<? extends T> type) throws IllegalArgumentException {
+    public final <T> T getValue(Field<?> field, Class<? extends T> type) {
         return Convert.convert(getValue(field), type);
     }
 
     @Override
-    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) throws IllegalArgumentException {
+    public final <T> T getValue(Field<?> field, Class<? extends T> type, T defaultValue) {
         final T result = getValue(field, type);
         return result == null ? defaultValue : result;
     }
 
     @Override
-    public final <T> T getValue(String fieldName, Class<? extends T> type) throws IllegalArgumentException {
+    public final <T> T getValue(String fieldName, Class<? extends T> type) {
         return Convert.convert(getValue(fieldName), type);
     }
 
     @Override
-    public final <Z> Z getValue(String fieldName, Class<? extends Z> type, Z defaultValue) throws IllegalArgumentException {
+    public final <Z> Z getValue(String fieldName, Class<? extends Z> type, Z defaultValue) {
         final Z result = getValue(fieldName, type);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter) {
+        return converter.from(getValue(field));
+    }
+
+    @Override
+    public final <T, U> U getValue(Field<T> field, Converter<? super T, U> converter, U defaultValue) {
+        final U result = getValue(field, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <U> U getValue(int index, Converter<?, U> converter) {
+        return Convert.convert(getValue(index), converter);
+    }
+
+    @Override
+    public final <U> U getValue(int index, Converter<?, U> converter, U defaultValue) {
+        final U result = getValue(index, converter);
+        return result == null ? defaultValue : result;
+    }
+
+    @Override
+    public final <U> U getValue(String fieldName, Converter<?, U> converter) {
+        return Convert.convert(getValue(fieldName), converter);
+    }
+
+    @Override
+    public final <U> U getValue(String fieldName, Converter<?, U> converter, U defaultValue) {
+        final U result = getValue(fieldName, converter);
         return result == null ? defaultValue : result;
     }
 

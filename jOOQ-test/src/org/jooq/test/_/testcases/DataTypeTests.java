@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
@@ -54,9 +55,12 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
@@ -268,6 +272,98 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(dateOfBirth, record.getValueAsDate(TAuthor_DATE_OF_BIRTH()).getTime());
         assertEquals(dateOfBirth, record.getValueAsTimestamp(TAuthor_DATE_OF_BIRTH()).getTime());
         assertEquals(dateOfBirth, record.getValueAsTime(TAuthor_DATE_OF_BIRTH()).getTime());
+    }
+
+    @Test
+    public void testCustomConversion() {
+        Converter<String, StringBuilder> converter = new Converter<String, StringBuilder>() {
+            @Override
+            public StringBuilder from(String databaseObject) {
+                return new StringBuilder("prefix_" + databaseObject);
+            }
+            @Override
+            public String to(StringBuilder userObject) {
+                return userObject.toString().replace("prefix_", "");
+            }
+            @Override
+            public Class<String> fromType() {
+                return String.class;
+            }
+            @Override
+            public Class<StringBuilder> toType() {
+                return StringBuilder.class;
+            }
+        };
+
+        List<StringBuilder> prefixed = asList(
+            new StringBuilder("prefix_1984"),
+            new StringBuilder("prefix_Animal Farm"),
+            new StringBuilder("prefix_O Alquimista"),
+            new StringBuilder("prefix_Brida"));
+
+        // Check various Result, Record methods
+        Result<Record> result =
+        create().select(TBook_TITLE())
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetch();
+
+        assertEquals(strings(prefixed), strings(result.getValues(TBook_TITLE(), converter)));
+        assertEquals(strings(prefixed), strings(result.getValues(TBook_TITLE().getName(), converter)));
+        assertEquals(strings(prefixed), strings(result.getValues(0, converter)));
+
+        for (int i = 0; i < 4; i++) {
+            assertEquals(strings(prefixed.subList(i, i + 1)), strings(asList(result.get(i).getValue(TBook_TITLE(), converter))));
+            assertEquals(strings(prefixed.subList(i, i + 1)), strings(asList(result.get(i).getValue(TBook_TITLE().getName(), converter))));
+            assertEquals(strings(prefixed.subList(i, i + 1)), strings(asList(result.get(i).getValue(0, converter))));
+        }
+
+        // Check various fetch methods
+        assertEquals(strings(prefixed),
+                     strings(create().select(TBook_TITLE())
+                                     .from(TBook())
+                                     .orderBy(TBook_ID())
+                                     .fetch(TBook_TITLE(), converter)));
+
+        assertEquals(strings(prefixed),
+                     strings(create().select(TBook_TITLE())
+                                     .from(TBook())
+                                     .orderBy(TBook_ID())
+                                     .fetch(TBook_TITLE().getName(), converter)));
+
+        assertEquals(strings(prefixed),
+                     strings(create().select(TBook_TITLE())
+                                     .from(TBook())
+                                     .orderBy(TBook_ID())
+                                     .fetch(0, converter)));
+
+         // Check various fetchOne methods
+        for (int i = 0; i < 4; i++) {
+            assertEquals(strings(prefixed.subList(i, i + 1)),
+                         strings(asList(create().select(TBook_TITLE())
+                                                .from(TBook())
+                                                .where(TBook_ID().equal(i + 1))
+                                                .fetchOne(TBook_TITLE(), converter))));
+        }
+
+        // Check various fetchArray methods
+        StringBuilder[] array =
+        create().select(TBook_TITLE())
+                .from(TBook())
+                .orderBy(TBook_ID())
+                .fetchArray(TBook_TITLE(), converter);
+
+        assertEquals(strings(prefixed), strings(asList(array)));
+    }
+
+    private List<String> strings(List<StringBuilder> prefixed) {
+        List<String> result = new ArrayList<String>();
+
+        for (StringBuilder sb : prefixed) {
+            result.add(sb.toString());
+        }
+
+        return result;
     }
 
     @Test

@@ -171,13 +171,26 @@ public interface ResultQuery<R extends Record> extends Query {
      * result.
      * <p>
      * This is the same as calling {@link #fetch()} and then
-     * {@link Result#getValues(Field)}
+     * {@link Result#getValues(Field, Class)}
      *
      * @return The resulting values.
      * @throws DataAccessException if something went wrong executing the query
      * @see Record#getValue(Field, Class)
      */
     <T> List<T> fetch(Field<?> field, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field from the generated
+     * result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(Field, Converter)}
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Record#getValue(Field, Converter)
+     */
+    <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field index from the
@@ -205,6 +218,19 @@ public interface ResultQuery<R extends Record> extends Query {
     <T> List<T> fetch(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
     /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(int, Converter)}
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Record#getValue(int, Converter)
+     */
+    <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+
+    /**
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
@@ -230,6 +256,19 @@ public interface ResultQuery<R extends Record> extends Query {
     <T> List<T> fetch(String fieldName, Class<? extends T> type) throws DataAccessException;
 
     /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * This is the same as calling {@link #fetch()} and then
+     * {@link Result#getValues(String, Converter)}
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Record#getValue(String, Converter)
+     */
+    <U> List<U> fetch(String fieldName, Converter<?, U> converter) throws DataAccessException;
+
+    /**
      * Execute the query and return return at most one resulting value for a
      * field from the generated result.
      * <p>
@@ -245,6 +284,40 @@ public interface ResultQuery<R extends Record> extends Query {
      *             </ul>
      */
     <T> T fetchOne(Field<T> field) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Field, Class)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one value</li>
+     *             </ul>
+     */
+    <T> T fetchOne(Field<?> field, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(Field, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one value</li>
+     *             </ul>
+     */
+    <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return return at most one resulting value for a
@@ -282,6 +355,23 @@ public interface ResultQuery<R extends Record> extends Query {
 
     /**
      * Execute the query and return return at most one resulting value for a
+     * field index from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(int, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one value</li>
+     *             </ul>
+     */
+    <U> U fetchOne(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
      * field name from the generated result.
      * <p>
      * This is the same as calling {@link #fetchOne()} and then
@@ -313,6 +403,23 @@ public interface ResultQuery<R extends Record> extends Query {
      *             </ul>
      */
     <T> T fetchOne(String fieldName, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return return at most one resulting value for a
+     * field name from the generated result.
+     * <p>
+     * This is the same as calling {@link #fetchOne()} and then
+     * {@link Record#getValue(String, Converter)}
+     *
+     * @return The resulting value or <code>null</code> if the query returned no
+     *         records.
+     * @throws DataAccessException This exception is thrown
+     *             <ul>
+     *             <li>if something went wrong executing the query</li> <li>if
+     *             the query returned more than one value</li>
+     *             </ul>
+     */
+    <U> U fetchOne(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record.
@@ -441,6 +548,17 @@ public interface ResultQuery<R extends Record> extends Query {
     <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) throws DataAccessException;
 
     /**
+     * Execute the query and return all values for a field index from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldIndex)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     */
+    <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) throws DataAccessException;
+
+    /**
      * Execute the query and return all values for a field name from the
      * generated result.
      * <p>
@@ -451,6 +569,18 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      */
     Object[] fetchArray(String fieldName) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field name from the
+     * generated result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(fieldName)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <U> U[] fetchArray(String fieldName, Converter<?, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return all values for a field name from the
@@ -475,6 +605,30 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      */
     <T> T[] fetchArray(Field<T> field) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field from the generated
+     * result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T> T[] fetchArray(Field<?> field, Class<? extends T> type) throws DataAccessException;
+
+    /**
+     * Execute the query and return all values for a field from the generated
+     * result.
+     * <p>
+     * You can access data like this
+     * <code><pre>query.fetchArray(field)[recordIndex]</pre></code>
+     *
+     * @return The resulting values.
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) throws DataAccessException;
 
     /**
      * Execute the query and return at most one resulting record as an array

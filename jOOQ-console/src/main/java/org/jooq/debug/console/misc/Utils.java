@@ -128,31 +128,32 @@ public class Utils {
         String textIndent = "  ";
         StringBuilder sb = new StringBuilder();
         int charCount = text.length();
-        boolean isInQuotes = false;
+        char quoteStart = 0;
         boolean isLineStart = false;
         String currentIndent = "";
         Stack<Boolean> isParenthesisNewLineStack = new Stack<Boolean>();
         for(int i = 0; i<charCount; i++) {
             char c = text.charAt(i);
-            if(isInQuotes) {
-                if(c == '\'') {
-                    isInQuotes = false;
+            if(quoteStart != 0) {
+                if(c == quoteStart) {
+                    quoteStart = 0;
                 }
                 sb.append(c);
             } else {
                 switch(c) {
+                    case '"':
                     case '\'': {
                         if(isLineStart) {
                             isLineStart = false;
                             sb.append(currentIndent);
                         }
-                        isInQuotes = true;
+                        quoteStart = c;
                         sb.append(c);
                         break;
                     }
                     case '(': {
                         boolean isNewLine = false;
-                        if(text.length() <= i + 1 || !text.substring(i + 1).matches("\\s*\\w+\\s*\\).*")) {
+                        if(text.length() <= i + 1 || !text.substring(i + 1).matches("\\s*(\\w+|.)\\s*\\).*")) {
 //                        if(text.length() > i + 1 && isKeywordStart(text.substring(i + 1).trim())) {
                             while(text.length() > i + 1 && text.charAt(i + 1) == ' ') {
                                 i++;
@@ -200,7 +201,9 @@ public class Utils {
                             sb.append('\n');
                             isLineStart = true;
                         } else {
-                            sb.append(c);
+                            if(text.length() > i + 1 && text.charAt(i + 1) != ' ') {
+                                sb.append(c);
+                            }
                         }
                         break;
                     }

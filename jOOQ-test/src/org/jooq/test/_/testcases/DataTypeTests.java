@@ -274,6 +274,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(dateOfBirth, record.getValueAsTime(TAuthor_DATE_OF_BIRTH()).getTime());
     }
 
+    @SuppressWarnings("serial")
     @Test
     public void testCustomConversion() {
         Converter<String, StringBuilder> converter = new Converter<String, StringBuilder>() {

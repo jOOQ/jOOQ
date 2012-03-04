@@ -33,42 +33,89 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test._;
+package org.jooq.impl;
+
+import static org.jooq.tools.Convert.convert;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.jooq.Converter;
 
-
-public class MyEnumNumericMapper implements Converter<Integer, MyEnum> {
+/**
+ * A base class for enum conversion.
+ *
+ * @author Lukas Eder
+ */
+public class EnumConverter<T, U extends Enum<U>> implements Converter<T, U> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -4252074829213730476L;
+    private static final long serialVersionUID = -6094337837408829491L;
 
-    public static final MyEnumNumericMapper INSTANCE = new MyEnumNumericMapper();
+    private final Class<T>    fromType;
+    private final Class<U>    toType;
+    private final Map<T, U>   lookup;
+    private final EnumType    enumType;
 
-    @Override
-    public MyEnum from(Integer t) {
-        try {
-            return MyEnum.values()[t];
+    public EnumConverter(Class<T> fromType, Class<U> toType) {
+        this.fromType = fromType;
+        this.toType = toType;
+        this.enumType = Number.class.isAssignableFrom(fromType) ? EnumType.ORDINAL : EnumType.STRING;
+
+        this.lookup = new LinkedHashMap<T, U>();
+        for (U u : toType.getEnumConstants()) {
+            this.lookup.put(to(u), u);
         }
-        catch (Exception e) {
-            return null;
+    }
+
+    @Override
+    public final U from(T databaseObject) {
+        return lookup.get(databaseObject);
+    }
+
+    /**
+     * Subclasses may override this method to provide a custom reverse mapping
+     * implementation
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public T to(U userObject) {
+        if (enumType == EnumType.ORDINAL) {
+            return convert(userObject.ordinal(), fromType);
+        }
+        else {
+            return convert(userObject.name(), fromType);
         }
     }
 
     @Override
-    public Integer to(MyEnum u) {
-        return u == null ? null : u.ordinal();
+    public final Class<T> fromType() {
+        return fromType;
     }
 
     @Override
-    public Class<Integer> fromType() {
-        return Integer.class;
+    public final Class<U> toType() {
+        return toType;
     }
 
-    @Override
-    public Class<MyEnum> toType() {
-        return MyEnum.class;
+    /**
+     * The type of the converted <code>Enum</code>.
+     * <p>
+     * This corresponds to JPA's <code>EnumType</code>
+     */
+    enum EnumType {
+
+        /**
+         * Ordinal enum type
+         */
+        ORDINAL,
+
+        /**
+         * String enum type
+         */
+        STRING
     }
 }

@@ -35,40 +35,7 @@
  */
 package org.jooq.test._;
 
-import org.jooq.Converter;
+public enum StringEnum {
 
-
-public class MyEnumNumericMapper implements Converter<Integer, MyEnum> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4252074829213730476L;
-
-    public static final MyEnumNumericMapper INSTANCE = new MyEnumNumericMapper();
-
-    @Override
-    public MyEnum from(Integer t) {
-        try {
-            return MyEnum.values()[t];
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public Integer to(MyEnum u) {
-        return u == null ? null : u.ordinal();
-    }
-
-    @Override
-    public Class<Integer> fromType() {
-        return Integer.class;
-    }
-
-    @Override
-    public Class<MyEnum> toType() {
-        return MyEnum.class;
-    }
+    A, B, C
 }

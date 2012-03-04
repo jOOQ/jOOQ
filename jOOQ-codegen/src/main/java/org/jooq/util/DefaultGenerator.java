@@ -2742,6 +2742,11 @@ public class DefaultGenerator implements Generator {
             type = strategy.getFullJavaClassName(db.getUDT(schema, u), Mode.RECORD);
         }
 
+        // Check for custom types
+        else if (db.getConfiguredCustomType(u) != null) {
+            type = u;
+        }
+
         // Try finding a basic standard SQL type according to the current dialect
         else {
             try {
@@ -2818,6 +2823,12 @@ public class DefaultGenerator implements Generator {
                 sb.append(SQLDataType.class.getCanonicalName());
                 sb.append(".");
                 sb.append(FieldTypeHelper.normalise(sqlDataType.getTypeName()));
+
+                if (db.getConfiguredCustomType(u) != null) {
+                    sb.append(".asConvertedDataType(new ");
+                    sb.append(db.getConfiguredCustomType(u).getConverter());
+                    sb.append("())");
+                }
             }
 
             // Otherwise, reference the dialect-specific DataType itself.

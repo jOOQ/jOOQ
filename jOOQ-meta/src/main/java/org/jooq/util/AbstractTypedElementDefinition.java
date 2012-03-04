@@ -37,6 +37,7 @@ package org.jooq.util;
 
 import static org.jooq.impl.FieldTypeHelper.getDialectDataType;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,7 +131,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 } catch (SQLDialectNotSupportedException ignore) {}
 
                 if (dataType != null) {
-                    if (dataType.getSQLDataType() == SQLDataType.DATE) {
+                    if (dataType.getSQLType() == Types.DATE) {
                         DataType<?> forcedDataType = getDialectDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
                         type = new DefaultDataTypeDefinition(db, getSchema(), forcedDataType.getTypeName(), 0, 0);
                     }

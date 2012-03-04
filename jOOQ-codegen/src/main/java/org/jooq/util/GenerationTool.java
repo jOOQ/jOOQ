@@ -243,6 +243,11 @@ public class GenerationTool {
             log.info("Use GenerationTool to migrate your .properties file to XML (printed on System.out) :");
             log.info("Usage  : GenerationTool <configuration-file> migrate");
             log.info("");
+            log.info("XML output:");
+            log.info("");
+            JAXB.marshal(configuration, System.out);
+            log.info("");
+            log.info("");
 
             main(configuration);
         }
@@ -319,6 +324,7 @@ public class GenerationTool {
             database.setIncludes(defaultString(g.getDatabase().getIncludes()).split(","));
             database.setExcludes(defaultString(g.getDatabase().getExcludes()).split(","));
             database.setConfiguredMasterDataTables(g.getDatabase().getMasterDataTables());
+            database.setConfiguredCustomTypes(g.getDatabase().getCustomTypes());
             database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes());
             database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes());
 

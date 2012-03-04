@@ -1256,6 +1256,18 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
      *
+     * @param field The values' field
+     * @param converter The data type converter used for type conversion
+     * @return The values
+     * @see Record#getValue(Field, Converter)
+     * @see Convert#convert(Object, Converter)
+     */
+    <T, U> List<U> getValues(Field<T> field, Converter<? super T, U> converter);
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
      * @param fieldIndex The values' field index
      * @return The values
      */
@@ -1277,6 +1289,18 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * Convenience method to fetch all values for a given field. This is
      * especially useful, when selecting only a single field.
      *
+     * @param fieldIndex The values' field index
+     * @param converter The data type converter used for type conversion
+     * @return The values
+     * @see Record#getValue(int, Converter)
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> List<U> getValues(int fieldIndex, Converter<?, U> converter);
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
      * @param fieldName The values' field name
      * @return The values
      */
@@ -1293,6 +1317,18 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Convert#convert(Object, Class)
      */
     <T> List<T> getValues(String fieldName, Class<? extends T> type);
+
+    /**
+     * Convenience method to fetch all values for a given field. This is
+     * especially useful, when selecting only a single field.
+     *
+     * @param fieldName The values' field name
+     * @param converter The data type converter used for type conversion
+     * @return The values
+     * @see Record#getValue(String, Converter)
+     * @see Convert#convert(Object, Converter)
+     */
+    <U> List<U> getValues(String fieldName, Converter<?, U> converter);
 
     /**
      * Convenience method to fetch all values for a given field. This is

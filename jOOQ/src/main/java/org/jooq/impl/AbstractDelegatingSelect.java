@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
+import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FutureResult;
@@ -127,6 +128,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetch(field, converter);
+    }
+
+    @Override
     public final List<?> fetch(int fieldIndex) {
         return getDelegate().fetch(fieldIndex);
     }
@@ -134,6 +140,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     @Override
     public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) {
         return getDelegate().fetch(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetch(fieldIndex, converter);
     }
 
     @Override
@@ -147,8 +158,23 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <U> List<U> fetch(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetch(fieldName, converter);
+    }
+
+    @Override
     public final <T> T fetchOne(Field<T> field) {
         return getDelegate().fetchOne(field);
+    }
+
+    @Override
+    public final <T> T fetchOne(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchOne(field, type);
+    }
+
+    @Override
+    public final <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchOne(field, converter);
     }
 
     @Override
@@ -162,6 +188,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <U> U fetchOne(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchOne(fieldIndex, converter);
+    }
+
+    @Override
     public final Object fetchOne(String fieldName) {
         return getDelegate().fetchOne(fieldName);
     }
@@ -169,6 +200,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     @Override
     public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
         return getDelegate().fetchOne(fieldName, type);
+    }
+
+    @Override
+    public final <U> U fetchOne(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchOne(fieldName, converter);
     }
 
     @Override
@@ -217,6 +253,11 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchArray(fieldIndex, converter);
+    }
+
+    @Override
     public final Object[] fetchArray(String fieldName) {
         return getDelegate().fetchArray(fieldName);
     }
@@ -227,8 +268,23 @@ abstract class AbstractDelegatingSelect<R extends Record>
     }
 
     @Override
+    public final <U> U[] fetchArray(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchArray(fieldName, converter);
+    }
+
+    @Override
     public final <T> T[] fetchArray(Field<T> field) {
         return getDelegate().fetchArray(field);
+    }
+
+    @Override
+    public final <T> T[] fetchArray(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchArray(field, type);
+    }
+
+    @Override
+    public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchArray(field, converter);
     }
 
     @Override

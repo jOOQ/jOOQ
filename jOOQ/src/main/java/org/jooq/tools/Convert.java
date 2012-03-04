@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.unsigned.UByte;
@@ -63,6 +64,12 @@ import org.jooq.tools.unsigned.UShort;
 
 /**
  * Utility methods for type conversions
+ * <p>
+ * This class provides less type-safety than the general jOOQ API methods. For
+ * instance, it accepts arbitrary {@link Converter} objects in methods like
+ * {@link #convert(List, Converter)} and {@link #convert(Object, Class)}, trying
+ * to retrofit the <code>Object</code> argument to the type provided in
+ * {@link Converter#fromType()} before performing the actual conversion.
  *
  * @author Lukas Eder
  */
@@ -101,6 +108,35 @@ public final class Convert {
 
         TRUE_VALUES = Collections.unmodifiableSet(trueValues);
         FALSE_VALUES = Collections.unmodifiableSet(falseValues);
+    }
+
+    /**
+     * Convert an array into another one using a converter
+     * <p>
+     * This uses {@link #convertArray(Object[], Class)} to convert the array to
+     * an array of {@link Converter#fromType()} first, before converting that
+     * array again to {@link Converter#toType()}
+     *
+     * @param from The array to convert
+     * @param converter The data type converter
+     * @return A converted array
+     * @throws DataTypeException - When the conversion is not possible
+     */
+    @SuppressWarnings("unchecked")
+    public static <U> U[] convertArray(Object[] from, Converter<?, U> converter) throws DataTypeException {
+        if (from == null) {
+            return null;
+        }
+        else {
+            Object[] arrayOfT = convertArray(from, converter.fromType());
+            Object[] arrayOfU = (Object[]) Array.newInstance(converter.toType(), from.length);
+
+            for (int i = 0; i < arrayOfT.length; i++) {
+                arrayOfU[i] = convert(arrayOfT[i], converter);
+            }
+
+            return (U[]) arrayOfU;
+        }
     }
 
     /**
@@ -152,6 +188,26 @@ public final class Convert {
     }
 
     /**
+     * Convert an object to a type.
+     *
+     * @param from The source object
+     * @param converter The data type converter
+     * @return The target type object
+     * @throws DataTypeException - When the conversion is not possible
+     */
+    public static <U> U convert(Object from, Converter<?, U> converter) throws DataTypeException {
+        return convert0(from, converter);
+    }
+
+    /**
+     * Conversion type-safety
+     */
+    private static <T, U> U convert0(Object from, Converter<T, U> converter) throws DataTypeException {
+        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
+        return converter.from(all.from(from));
+    }
+
+    /**
      * Convert an object to a type. These are the conversion rules:
      * <ul>
      * <li><code>null</code> is always converted to <code>null</code>,
@@ -198,172 +254,8 @@ public final class Convert {
      * @return The converted object
      * @throws DataTypeException - When the conversion is not possible
      */
-    @SuppressWarnings("unchecked")
     public static <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
-        if (from == null) {
-
-            // [#936] If types are converted to primitives, the result must not
-            // be null. Return the default value instead
-            if (toClass.isPrimitive()) {
-
-                // Characters default to the "zero" character
-                if (toClass == char.class) {
-                    return (T) Character.valueOf((char) 0);
-                }
-
-                // All others can be converted from (int) 0
-                else {
-                    return convert(0, toClass);
-                }
-            }
-            else {
-                return null;
-            }
-        }
-        else {
-            final Class<?> fromClass = from.getClass();
-
-            // No conversion
-            if (toClass == fromClass) {
-                return (T) from;
-            }
-
-            // [#1155] Do this early: identity-conversion into Object
-            else if (toClass == Object.class) {
-                return (T) from;
-            }
-            else if (fromClass == byte[].class) {
-            	
-                // This may not make much sense. Any other options?
-                return convert(Arrays.toString((byte[]) from), toClass);
-            }
-            else if (fromClass.isArray()) {
-                return (T) convertArray((Object[]) from, toClass);
-            }
-
-            // All types can be converted into String
-            else if (toClass == String.class) {
-                if (from instanceof EnumType) {
-                    return (T) ((EnumType) from).getLiteral();
-                }
-
-                return (T) from.toString();
-            }
-
-            // Various number types are converted between each other via String
-            else if (toClass == Byte.class || toClass == byte.class) {
-                return (T) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
-            }
-            else if (toClass == Short.class || toClass == short.class) {
-                return (T) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
-            }
-            else if (toClass == Integer.class || toClass == int.class) {
-                return (T) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
-            }
-            else if (toClass == Long.class || toClass == long.class) {
-                if (java.util.Date.class.isAssignableFrom(fromClass)) {
-                    return (T) Long.valueOf(((java.util.Date) from).getTime());
-                }
-                else {
-                    return (T) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
-                }
-            }
-
-            // ... this also includes unsigned number types
-            else if (toClass == UByte.class) {
-                return (T) ubyte(new BigDecimal(from.toString().trim()).shortValue());
-            }
-            else if (toClass == UShort.class) {
-                return (T) ushort(new BigDecimal(from.toString().trim()).intValue());
-            }
-            else if (toClass == UInteger.class) {
-                return (T) uint(new BigDecimal(from.toString().trim()).longValue());
-            }
-            else if (toClass == ULong.class) {
-                if (java.util.Date.class.isAssignableFrom(fromClass)) {
-                    return (T) ulong(((java.util.Date) from).getTime());
-                }
-                else {
-                    return (T) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
-                }
-            }
-
-            // ... and floating point / fixed point types
-            else if (toClass == Float.class || toClass == float.class) {
-                return (T) Float.valueOf(from.toString().trim());
-            }
-            else if (toClass == Double.class || toClass == double.class) {
-                return (T) Double.valueOf(from.toString().trim());
-            }
-            else if (toClass == BigDecimal.class) {
-                return (T) new BigDecimal(from.toString().trim());
-            }
-            else if (toClass == BigInteger.class) {
-                return (T) new BigDecimal(from.toString().trim()).toBigInteger();
-            }
-            else if (toClass == Boolean.class || toClass == boolean.class) {
-                String s = from.toString().toLowerCase().trim();
-
-                if (TRUE_VALUES.contains(s)) {
-                    return (T) Boolean.TRUE;
-                }
-                else if (FALSE_VALUES.contains(s)) {
-                    return (T) Boolean.FALSE;
-                }
-                else {
-                    return null;
-                }
-            }
-            else if (toClass == Character.class || toClass == char.class) {
-                if (from.toString().length() != 1) {
-                    throw fail(from, toClass);
-                }
-
-                return (T) Character.valueOf(from.toString().charAt(0));
-            }
-
-            // Date types can be converted among each other
-            else if (java.util.Date.class.isAssignableFrom(fromClass)) {
-                return toDate(((java.util.Date) from).getTime(), toClass);
-            }
-
-            // Long may also be converted into a date type
-            else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
-                return toDate((Long) from, toClass);
-            }
-        }
-
-        throw fail(from, toClass);
-    }
-
-    /**
-     * Convert a long timestamp to any date type
-     */
-    @SuppressWarnings("unchecked")
-    private static <T> T toDate(long time, Class<T> toClass) {
-        if (toClass == Date.class) {
-            return (T) new Date(time);
-        }
-        else if (toClass == Time.class) {
-            return (T) new Time(time);
-        }
-        else if (toClass == Timestamp.class) {
-            return (T) new Timestamp(time);
-        }
-        else if (toClass == java.util.Date.class) {
-            return (T) new java.util.Date(time);
-        }
-        else if (toClass == Calendar.class) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(time);
-            return (T) calendar;
-        }
-
-        throw fail(time, toClass);
-    }
-
-    private static DataTypeException fail(Object from, Class<?> toClass) {
-        return new DataTypeException("Cannot convert from " + from + " (" + from.getClass() + ") to " + toClass);
+        return convert(from, new ConvertAll<T>(toClass));
     }
 
     /**
@@ -377,14 +269,235 @@ public final class Convert {
      * @see #convert(Object, Class)
      */
     public static <T> List<T> convert(List<?> list, Class<? extends T> type) throws DataTypeException {
-        List<T> result = new ArrayList<T>();
+        return convert(list, new ConvertAll<T>(type));
+    }
+
+    /**
+     * Convert a list of objects to a list of <code>T</code>, using
+     * {@link #convert(Object, Converter)}
+     *
+     * @param list The list of objects
+     * @param converter The data type converter
+     * @return The list of converted objects
+     * @throws DataTypeException - When the conversion is not possible
+     * @see #convert(Object, Converter)
+     */
+    public static <U> List<U> convert(List<?> list, Converter<?, U> converter) throws DataTypeException {
+        return convert0(list, converter);
+    }
+
+    /**
+     * Type safe conversion
+     */
+    private static <T, U> List<U> convert0(List<?> list, Converter<T, U> converter) throws DataTypeException {
+        ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
+        List<U> result = new ArrayList<U>();
 
         for (Object o : list) {
-            result.add(convert(o, type));
+            result.add(convert(all.from(o), converter));
         }
 
         return result;
     }
 
+    /**
+     * No instances
+     */
     private Convert() {}
+
+    /**
+     * The converter to convert them all.
+     */
+    private static class ConvertAll<U> implements Converter<Object, U> {
+
+        private final Class<? extends U> toClass;
+
+        ConvertAll(Class<? extends U> toClass) {
+            this.toClass = toClass;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public U from(Object from) {
+            if (from == null) {
+
+                // [#936] If types are converted to primitives, the result must not
+                // be null. Return the default value instead
+                if (toClass.isPrimitive()) {
+
+                    // Characters default to the "zero" character
+                    if (toClass == char.class) {
+                        return (U) Character.valueOf((char) 0);
+                    }
+
+                    // All others can be converted from (int) 0
+                    else {
+                        return convert(0, toClass);
+                    }
+                }
+                else {
+                    return null;
+                }
+            }
+            else {
+                final Class<?> fromClass = from.getClass();
+
+                // No conversion
+                if (toClass == fromClass) {
+                    return (U) from;
+                }
+
+                // [#1155] Do this early: identity-conversion into Object
+                else if (toClass == Object.class) {
+                    return (U) from;
+                }
+                else if (fromClass == byte[].class) {
+
+                    // This may not make much sense. Any other options?
+                    return convert(Arrays.toString((byte[]) from), toClass);
+                }
+                else if (fromClass.isArray()) {
+                    return (U) convertArray((Object[]) from, toClass);
+                }
+
+                // All types can be converted into String
+                else if (toClass == String.class) {
+                    if (from instanceof EnumType) {
+                        return (U) ((EnumType) from).getLiteral();
+                    }
+
+                    return (U) from.toString();
+                }
+
+                // Various number types are converted between each other via String
+                else if (toClass == Byte.class || toClass == byte.class) {
+                    return (U) Byte.valueOf(new BigDecimal(from.toString().trim()).byteValue());
+                }
+                else if (toClass == Short.class || toClass == short.class) {
+                    return (U) Short.valueOf(new BigDecimal(from.toString().trim()).shortValue());
+                }
+                else if (toClass == Integer.class || toClass == int.class) {
+                    return (U) Integer.valueOf(new BigDecimal(from.toString().trim()).intValue());
+                }
+                else if (toClass == Long.class || toClass == long.class) {
+                    if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                        return (U) Long.valueOf(((java.util.Date) from).getTime());
+                    }
+                    else {
+                        return (U) Long.valueOf(new BigDecimal(from.toString().trim()).longValue());
+                    }
+                }
+
+                // ... this also includes unsigned number types
+                else if (toClass == UByte.class) {
+                    return (U) ubyte(new BigDecimal(from.toString().trim()).shortValue());
+                }
+                else if (toClass == UShort.class) {
+                    return (U) ushort(new BigDecimal(from.toString().trim()).intValue());
+                }
+                else if (toClass == UInteger.class) {
+                    return (U) uint(new BigDecimal(from.toString().trim()).longValue());
+                }
+                else if (toClass == ULong.class) {
+                    if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                        return (U) ulong(((java.util.Date) from).getTime());
+                    }
+                    else {
+                        return (U) ulong(new BigDecimal(from.toString().trim()).toBigInteger().toString());
+                    }
+                }
+
+                // ... and floating point / fixed point types
+                else if (toClass == Float.class || toClass == float.class) {
+                    return (U) Float.valueOf(from.toString().trim());
+                }
+                else if (toClass == Double.class || toClass == double.class) {
+                    return (U) Double.valueOf(from.toString().trim());
+                }
+                else if (toClass == BigDecimal.class) {
+                    return (U) new BigDecimal(from.toString().trim());
+                }
+                else if (toClass == BigInteger.class) {
+                    return (U) new BigDecimal(from.toString().trim()).toBigInteger();
+                }
+                else if (toClass == Boolean.class || toClass == boolean.class) {
+                    String s = from.toString().toLowerCase().trim();
+
+                    if (TRUE_VALUES.contains(s)) {
+                        return (U) Boolean.TRUE;
+                    }
+                    else if (FALSE_VALUES.contains(s)) {
+                        return (U) Boolean.FALSE;
+                    }
+                    else {
+                        return null;
+                    }
+                }
+                else if (toClass == Character.class || toClass == char.class) {
+                    if (from.toString().length() != 1) {
+                        throw fail(from, toClass);
+                    }
+
+                    return (U) Character.valueOf(from.toString().charAt(0));
+                }
+
+                // Date types can be converted among each other
+                else if (java.util.Date.class.isAssignableFrom(fromClass)) {
+                    return toDate(((java.util.Date) from).getTime(), toClass);
+                }
+
+                // Long may also be converted into a date type
+                else if ((fromClass == Long.class || fromClass == long.class) && java.util.Date.class.isAssignableFrom(toClass)) {
+                    return toDate((Long) from, toClass);
+                }
+            }
+
+            throw fail(from, toClass);
+        }
+
+        @Override
+        public Object to(U to) {
+            return to;
+        }
+
+        @Override
+        public Class<Object> fromType() {
+            return Object.class;
+        }
+
+        @Override
+        public Class<U> toType() {
+            return (Class<U>) toClass;
+        }
+
+        /**
+         * Convert a long timestamp to any date type
+         */
+        @SuppressWarnings("unchecked")
+        private static <X> X toDate(long time, Class<X> toClass) {
+            if (toClass == Date.class) {
+                return (X) new Date(time);
+            }
+            else if (toClass == Time.class) {
+                return (X) new Time(time);
+            }
+            else if (toClass == Timestamp.class) {
+                return (X) new Timestamp(time);
+            }
+            else if (toClass == java.util.Date.class) {
+                return (X) new java.util.Date(time);
+            }
+            else if (toClass == Calendar.class) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(time);
+                return (X) calendar;
+            }
+
+            throw fail(time, toClass);
+        }
+
+        private static DataTypeException fail(Object from, Class<?> toClass) {
+            return new DataTypeException("Cannot convert from " + from + " (" + from.getClass() + ") to " + toClass);
+        }
+    }
 }

@@ -65,6 +65,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
@@ -629,6 +630,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <T, U> List<U> getValues(Field<T> field, Converter<? super T, U> converter) {
+        return Convert.convert(getValues(field), converter);
+    }
+
+    @Override
     public final List<?> getValues(int fieldIndex) {
         return getValues(getField(fieldIndex));
     }
@@ -639,6 +645,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
+    public final <U> List<U> getValues(int fieldIndex, Converter<?, U> converter) {
+        return Convert.convert(getValues(fieldIndex), converter);
+    }
+
+    @Override
     public final List<?> getValues(String fieldName) {
         return getValues(getField(fieldName));
     }
@@ -646,6 +657,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final <T> List<T> getValues(String fieldName, Class<? extends T> type) {
         return Convert.convert(getValues(fieldName), type);
+    }
+
+    @Override
+    public final <U> List<U> getValues(String fieldName, Converter<?, U> converter) {
+        return Convert.convert(getValues(fieldName), converter);
     }
 
     @Override

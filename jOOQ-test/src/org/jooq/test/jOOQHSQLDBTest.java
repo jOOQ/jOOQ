@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_725_LOB_TEST;
@@ -52,6 +53,7 @@ import static org.jooq.test.hsqldb.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_LIBRARY;
+import static org.jooq.test.hsqldb.generatedclasses.tables.TMappedTypes.T_MAPPED_TYPES;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -68,6 +70,9 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
+import org.jooq.test._.MyEnum;
+import org.jooq.test._.MyEnumNumericMapper;
+import org.jooq.test._.MyEnumStringMapper;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
 import org.jooq.test.hsqldb.generatedclasses.Routines;
 import org.jooq.test.hsqldb.generatedclasses.Sequences;
@@ -79,6 +84,7 @@ import org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreReco
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord;
+import org.jooq.test.hsqldb.generatedclasses.tables.records.TMappedTypesRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_658RefRecord;
@@ -91,6 +97,8 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.hsqldb.HSQLDBDataType;
+
+import org.junit.Test;
 
 /**
  * @author Lukas Eder
@@ -667,5 +675,27 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
             HSQLDBDataType.VARCHAR,
             HSQLDBDataType.VARCHARIGNORECASE,
         };
+    }
+
+    @Test
+    public void testMapper() {
+        jOOQAbstractTest.reset = false;
+
+        TMappedTypesRecord record;
+
+        // Storing a record using fields from a mapper
+        record = create().newRecord(T_MAPPED_TYPES);
+        record.setId(1);
+        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME, MyEnum.A, MyEnumStringMapper.INSTANCE);
+        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL, MyEnum.B, MyEnumNumericMapper.INSTANCE);
+
+        assertEquals(1, record.store());
+
+        // Retrieving that record again using fields from a mapper
+        record = create().newRecord(T_MAPPED_TYPES);
+        record.setId(1);
+        record.refresh();
+        assertEquals(MyEnum.A, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME, MyEnumStringMapper.INSTANCE));
+        assertEquals(MyEnum.B, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL, MyEnumNumericMapper.INSTANCE));
     }
 }

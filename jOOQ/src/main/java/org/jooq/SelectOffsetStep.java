@@ -57,7 +57,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * -- more than five books in German in the last three years
  * -- (from 2011), and sort those authors by last names
  * -- limiting results to the second and third row
- *
+ * 
  *   SELECT T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, COUNT(*)
  *     FROM T_AUTHOR
  *     JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
@@ -86,10 +86,10 @@ import static org.jooq.SQLDialect.SYBASE;
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
  * </pre></code> Refer to the manual for more details
- *
+ * 
  * @author Lukas Eder
  */
-public interface SelectOffsetStep extends SelectFinalStep {
+public interface SelectOffsetStep extends SelectForUpdateStep {
 
     /**
      * Add an <code>OFFSET</code> clause to the query
@@ -99,8 +99,8 @@ public interface SelectOffsetStep extends SelectFinalStep {
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
-    SelectFinalStep offset(int offset);
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SelectForUpdateStep offset(int offset);
 
     /**
      * Add an <code>OFFSET</code> clause to the query using a named parameter
@@ -110,6 +110,6 @@ public interface SelectOffsetStep extends SelectFinalStep {
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
-    SelectFinalStep offset(Param<Integer> offset);
+    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    SelectForUpdateStep offset(Param<Integer> offset);
 }

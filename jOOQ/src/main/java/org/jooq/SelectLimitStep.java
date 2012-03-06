@@ -57,7 +57,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * -- more than five books in German in the last three years
  * -- (from 2011), and sort those authors by last names
  * -- limiting results to the second and third row
- *
+ * 
  *   SELECT T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, COUNT(*)
  *     FROM T_AUTHOR
  *     JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
@@ -86,7 +86,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
  * </pre></code> Refer to the manual for more details
- *
+ * 
  * @author Lukas Eder
  */
 public interface SelectLimitStep extends SelectForUpdateStep {
@@ -134,7 +134,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectFinalStep limit(int offset, int numberOfRows);
+    SelectForUpdateStep limit(int offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -149,7 +149,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * and nested <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectFinalStep limit(int offset, Param<Integer> numberOfRows);
+    SelectForUpdateStep limit(int offset, Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -164,7 +164,7 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * and nested <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectFinalStep limit(Param<Integer> offset, int numberOfRows);
+    SelectForUpdateStep limit(Param<Integer> offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -179,5 +179,5 @@ public interface SelectLimitStep extends SelectForUpdateStep {
      * and nested <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SelectFinalStep limit(Param<Integer> offset, Param<Integer> numberOfRows);
+    SelectForUpdateStep limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

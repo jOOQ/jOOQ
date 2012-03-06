@@ -66,7 +66,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * @param <R> The record type being returned by this query
  * @author Lukas Eder
  */
-public interface SimpleSelectOffsetStep<R extends Record> extends SimpleSelectFinalStep<R> {
+public interface SimpleSelectOffsetStep<R extends Record> extends SimpleSelectForUpdateStep<R> {
 
     /**
      * Add an <code>OFFSET</code> clause to the query
@@ -77,7 +77,7 @@ public interface SimpleSelectOffsetStep<R extends Record> extends SimpleSelectFi
      * <code>SELECT</code> statements.
      */
     @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
-    SimpleSelectFinalStep<R> offset(int offset);
+    SimpleSelectForUpdateStep<R> offset(int offset);
 
     /**
      * Add an <code>OFFSET</code> clause to the query using a named parameter
@@ -88,5 +88,5 @@ public interface SimpleSelectOffsetStep<R extends Record> extends SimpleSelectFi
      * <code>SELECT</code> statements.
      */
     @Support({DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE})
-    SimpleSelectFinalStep<R> offset(Param<Integer> offset);
+    SimpleSelectForUpdateStep<R> offset(Param<Integer> offset);
 }

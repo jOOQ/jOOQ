@@ -110,7 +110,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SimpleSelectFinalStep<R> limit(int offset, int numberOfRows);
+    SimpleSelectForUpdateStep<R> limit(int offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -125,7 +125,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * nested <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SimpleSelectFinalStep<R> limit(int offset, Param<Integer> numberOfRows);
+    SimpleSelectForUpdateStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -140,7 +140,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * nested <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SimpleSelectFinalStep<R> limit(Param<Integer> offset, int numberOfRows);
+    SimpleSelectForUpdateStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
      * Add a <code>LIMIT</code> clause to the query using named parameters
@@ -155,5 +155,5 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * and nested <code>SELECT</code> statements.
      */
     @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
-    SimpleSelectFinalStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
+    SimpleSelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

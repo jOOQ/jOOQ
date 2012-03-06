@@ -345,9 +345,33 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
                                         .fetch();
         assertEquals(2, result.size());
         Result<A> result2 = create().selectFrom(TAuthor())
-                .forUpdate()
-                .fetch();
+                                    .forUpdate()
+                                    .fetch();
         assertEquals(2, result2.size());
+
+        // Check again with limit / offset clauses
+        switch (getDialect()) {
+            case INGRES:
+            case ORACLE:
+                log.info("SKIPPING", "LIMIT .. OFFSET .. FOR UPDATE");
+                break;
+
+            default: {
+                Result<Record> result3 = create().select(TAuthor_ID())
+                                                 .from(TAuthor())
+                                                 .limit(5)
+                                                 .offset(0)
+                                                 .forUpdate()
+                                                 .fetch();
+                assertEquals(2, result3.size());
+                Result<A> result4 = create().selectFrom(TAuthor())
+                                            .limit(5)
+                                            .offset(0)
+                                            .forUpdate()
+                                            .fetch();
+                assertEquals(2, result4.size());
+            }
+        }
 
         switch (getDialect()) {
             case ASE:

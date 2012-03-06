@@ -165,7 +165,10 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      * </pre></code>
      * <p>
      * Or in plain text: Find those TEXT values in C whose ID's correspond to
-     * all ID's in B.
+     * all ID's in B. Note that from the above SQL statement, it is immediately
+     * clear that proper indexing is of the essence. Be sure to have indexes on
+     * all columns referenced from the <code>on(...)</code> and
+     * <code>returning(...)</code> clauses.
      * <p>
      * For more information about relational division and some nice, real-life
      * examples, see

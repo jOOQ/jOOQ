@@ -92,10 +92,16 @@ public interface SelectForUpdateStep extends SelectFinalStep {
 
     /**
      * Add a <code>FOR UPDATE</code> clause to the end of the query.
+     * <p>
+     * Note: not all SQL dialects allow for combining a <code>FOR UPDATE</code>
+     * clause with <code>LIMIT .. OFFSET</code>, or with <code>GROUP BY</code>.
+     * This essentially includes {@link SQLDialect#INGRES} and
+     * {@link SQLDialect#ORACLE}. These incompatibilities are not reflected by
+     * the jOOQ API.
      *
      * @see LockProvider#setForUpdate(boolean) see LockProvider for more details
      */
-    @Support({ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE})
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
     SelectForUpdateOfStep forUpdate();
 
     /**

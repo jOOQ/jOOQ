@@ -489,7 +489,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
                 assertEquals(sequence, schema.getSequence(sequence.getName()));
             }
 
-            int tables = 18;
+            int tables = 17;
 
             // The additional T_DIRECTORY table for recursive queries
             if (supportsRecursiveQueries()) {
@@ -545,7 +545,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
             // [#610] Collision-prone entities are only available in HSQLDB
             else if (getDialect() == HSQLDB) {
-                assertEquals(tables + 11, schema.getTables().size());
+                assertEquals(tables + 12, schema.getTables().size());
             }
 
             else {

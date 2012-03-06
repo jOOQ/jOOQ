@@ -37,8 +37,11 @@
 package org.jooq.debug.console.misc;
 
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -131,6 +134,7 @@ public class Utils {
         char quoteStart = 0;
         boolean isLineStart = false;
         String currentIndent = "";
+        boolean isWritingKeyword = isSqlKeywordStart(text.trim());
         Stack<Boolean> isParenthesisNewLineStack = new Stack<Boolean>();
         for(int i = 0; i<charCount; i++) {
             char c = text.charAt(i);
@@ -143,6 +147,7 @@ public class Utils {
                 switch(c) {
                     case '"':
                     case '\'': {
+                        isWritingKeyword = false;
                         if(isLineStart) {
                             isLineStart = false;
                             sb.append(currentIndent);
@@ -152,8 +157,9 @@ public class Utils {
                         break;
                     }
                     case '(': {
+                        isWritingKeyword = false;
                         boolean isNewLine = false;
-                        if(text.length() <= i + 1 || !text.substring(i + 1).matches("\\s*(\\w+|.)\\s*\\).*")) {
+                        if(text.length() <= i + 1 || !text.substring(i + 1).matches("\\s*(\\w+|[^\\w\\s])\\s*\\).*")) {
 //                        if(text.length() > i + 1 && isKeywordStart(text.substring(i + 1).trim())) {
                             while(text.length() > i + 1 && text.charAt(i + 1) == ' ') {
                                 i++;
@@ -174,6 +180,7 @@ public class Utils {
                         break;
                     }
                     case ')': {
+                        isWritingKeyword = false;
                         if(!isParenthesisNewLineStack.isEmpty()) {
                             boolean isNewLine = isParenthesisNewLineStack.pop();
                             if(isNewLine) {
@@ -194,7 +201,9 @@ public class Utils {
                         break;
                     }
                     case ' ': {
-                        if(!isLineStart && text.length() > i + 1 && isSqlKeywordStart(text.substring(i + 1).trim())) {
+                        boolean isFirstKeyWord = !isWritingKeyword;
+                        isWritingKeyword = text.length() > i + 1 && isSqlKeywordStart(text.substring(i + 1).trim());
+                        if(!isLineStart && isWritingKeyword && isFirstKeyWord) {
                             while(text.length() > i + 1 && text.charAt(i + 1) == ' ') {
                                 i++;
                             }
@@ -207,6 +216,22 @@ public class Utils {
                         }
                         break;
                     }
+                    case ',': {
+                        isWritingKeyword = false;
+                        if(isLineStart) {
+                            isLineStart = false;
+                            sb.append(currentIndent);
+                        }
+                        sb.append(c);
+                        if(text.length() > i + 1 && text.charAt(i + 1) != ' ') {
+                            sb.append(' ');
+                        }
+                        break;
+                    }
+                    case '[':
+                    case ']':
+                        isWritingKeyword = false;
+                        // Fall through
                     default: {
                         if(isLineStart) {
                             isLineStart = false;
@@ -223,25 +248,39 @@ public class Utils {
         return newText;
     }
 
+    private static final Set<String> keywordSet;
+
+    static {
+        keywordSet = new HashSet<String>();
+        keywordSet.addAll(Arrays.<String>asList(
+            "UNION",
+            "CROSS",
+            "INNER",
+            "JOIN",
+            "ORDER",
+            "GROUP",
+            "BY",
+            "HAVING",
+            "ON",
+            "WITH",
+            "SELECT",
+            "LEFT",
+            "OUTER",
+            "FROM",
+            "WHERE",
+            "AND",
+            "OR",
+            "SET"
+        ));
+    }
+
     private static boolean isSqlKeywordStart(String s) {
         s = s.toUpperCase(Locale.ENGLISH);
-        return
-                s.startsWith("UNION ") ||
-                s.startsWith("CROSS JOIN ") ||
-                s.startsWith("INNER JOIN ") ||
-                s.startsWith("ORDER BY ") ||
-                s.startsWith("GROUP BY ") ||
-                s.startsWith("HAVING ") ||
-                s.startsWith("ON ") ||
-                s.startsWith("WITH ") ||
-                s.startsWith("SELECT ") ||
-                s.startsWith("LEFT ") ||
-                s.startsWith("FROM ") ||
-                s.startsWith("WHERE ") ||
-                s.startsWith("AND ") ||
-                s.startsWith("OR ") ||
-                s.startsWith("SET ")
-                ;
+        int index = s.indexOf(' ');
+        if(index < 1) {
+            return false;
+        }
+        return keywordSet.contains(s.substring(0, index));
     }
 
 }

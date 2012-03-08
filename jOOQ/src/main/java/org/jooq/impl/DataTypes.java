@@ -107,6 +107,8 @@ public final class DataTypes {
 
     @SuppressWarnings("unchecked")
     static final <U> Converter<?, U> converter(Class<U> customType) {
+
+        // TODO: Is synchronisation needed? How to implement it most efficiently?
         return (Converter<?, U>) CONVERTERS.get(customType);
     }
 

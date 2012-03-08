@@ -33,42 +33,20 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test._;
+package org.jooq.test._.converters;
 
-import org.jooq.Converter;
+public enum OrdinalEnum1 {
+    A(2),
+    B(4),
+    C(6);
 
+    private final Integer value;
 
-public class OrdinalEnumMapper implements Converter<Integer, OrdinalEnum> {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4252074829213730476L;
-
-    public static final OrdinalEnumMapper INSTANCE = new OrdinalEnumMapper();
-
-    @Override
-    public OrdinalEnum from(Integer t) {
-        try {
-            return OrdinalEnum.values()[t];
-        }
-        catch (Exception e) {
-            return null;
-        }
+    private OrdinalEnum1(Integer value) {
+        this.value = value;
     }
 
-    @Override
-    public Integer to(OrdinalEnum u) {
-        return u == null ? null : u.ordinal();
-    }
-
-    @Override
-    public Class<Integer> fromType() {
-        return Integer.class;
-    }
-
-    @Override
-    public Class<OrdinalEnum> toType() {
-        return OrdinalEnum.class;
+    public Integer getValue() {
+        return value;
     }
 }

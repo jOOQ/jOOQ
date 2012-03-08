@@ -94,7 +94,7 @@ class DefaultBindContext extends AbstractBindContext {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
         SQLDialect dialect = configuration.getDialect();
 

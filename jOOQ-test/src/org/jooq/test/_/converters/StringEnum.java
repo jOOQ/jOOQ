@@ -33,41 +33,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test._;
+package org.jooq.test._.converters;
 
-import org.jooq.Converter;
-
-public class StringEnumMapper implements Converter<String, StringEnum> {
-
-    /**
-     * Generated UID
-     */
-    private static final long            serialVersionUID = -4252074829213730476L;
-
-    public static final StringEnumMapper INSTANCE         = new StringEnumMapper();
-
-    @Override
-    public StringEnum from(String t) {
-        try {
-            return StringEnum.valueOf(t);
-        }
-        catch (Exception e) {
-            return null;
-        }
-    }
-
-    @Override
-    public String to(StringEnum u) {
-        return u == null ? null : u.name();
-    }
-
-    @Override
-    public Class<String> fromType() {
-        return String.class;
-    }
-
-    @Override
-    public Class<StringEnum> toType() {
-        return StringEnum.class;
-    }
+public enum StringEnum {
+    A, B, C
 }

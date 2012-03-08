@@ -33,9 +33,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test._;
+package org.jooq.test._.converters;
 
-public enum OrdinalEnum {
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-    A, B, C
+import org.jooq.Converter;
+
+public class CalendarConverter implements Converter<Timestamp, GregorianCalendar> {
+
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = -5060861060926377086L;
+
+    @Override
+    public GregorianCalendar from(Timestamp databaseObject) {
+        GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+        calendar.setTimeInMillis(databaseObject.getTime());
+        return calendar;
+    }
+
+    @Override
+    public Timestamp to(GregorianCalendar userObject) {
+        return new Timestamp(userObject.getTime().getTime());
+    }
+
+    @Override
+    public Class<Timestamp> fromType() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public Class<GregorianCalendar> toType() {
+        return GregorianCalendar.class;
+    }
 }

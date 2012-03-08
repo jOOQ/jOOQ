@@ -51,6 +51,24 @@ import org.jooq.impl.SQLDataType;
  * <li>to store user types converting them to database types "TO" the database.
  * Hence, {@link #toType()} is the user-defined type</li>
  * </ul>
+ * <p>
+ * Note: In order to avoid unwanted side-effects, it is highly recommended (yet
+ * not required) for {@link #from(Object)} and {@link #to(Object)} to be
+ * <strong>reciprocal</strong>. The two methods are reciprocal, if for all
+ * <code>X and Y</code>, it can be said that
+ * <ul>
+ * <li>if <code>Y.equals(converter.from(X))</code>, then
+ * <code>X.equals(converter.to(Y))</code>.</li>
+ * <li>
+ * <code>X.equals(converter.from(converter.to(X)))</code></li>
+ * <li><code>X.equals(converter.to(converter.from(X)))</code></li>
+ * </ul>
+ * <p>
+ * Furthermore, it is recommended (yet not required) that
+ * <ul>
+ * <li><code>converter.from(null) == null</code></li>
+ * <li><code>converter.to(null) == null</code></li>
+ * </ul>
  *
  * @author Lukas Eder
  * @param <T> The database type - i.e. any type available from

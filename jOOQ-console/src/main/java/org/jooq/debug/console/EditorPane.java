@@ -215,7 +215,7 @@ public class EditorPane extends JPanel {
                         }
                         break;
                     case KeyEvent.VK_F5:
-                        if(startButton.isEnabled()) {
+                        if(startButton.isVisible()) {
                             evaluateInternal();
                         }
                         break;
@@ -564,6 +564,7 @@ public class EditorPane extends JPanel {
                 public void run() {
                     startButton.setVisible(true);
                     stopButton.setVisible(false);
+                    stopButton.setToolTipText(null);
                 }
             });
             if(!isDBEditable) {

@@ -38,6 +38,7 @@ package org.jooq.debug.console;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -403,7 +404,8 @@ public class Console extends JFrame {
         final JPanel tabComponent = new JPanel(new BorderLayout());
         tabComponent.setOpaque(false);
         tabComponent.add(new JLabel(title), BorderLayout.CENTER);
-        final JLabel closeLabel = new JLabel(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/CloseGray16.png")));
+        final JLabel closeLabel = new JLabel(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseInactive14.png")));
+        closeLabel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
         closeLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -428,12 +430,20 @@ public class Console extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if(editorTabbedPane.getTabCount() > 2) {
-                    closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/Close16.png")));
+                    closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseActive14.png")));
                 }
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/CloseGray16.png")));
+                closeLabel.setIcon(new ImageIcon(getClass().getResource("/org/jooq/debug/console/resources/TabCloseInactive14.png")));
+            }
+        });
+        editorTabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int selectedIndex = editorTabbedPane.getSelectedIndex();
+                Component tabComponent2 = editorTabbedPane.getTabComponentAt(selectedIndex);
+                closeLabel.setVisible(tabComponent2 == tabComponent && editorTabbedPane.getTabCount() > 2);
             }
         });
         tabComponent.add(closeLabel, BorderLayout.EAST);

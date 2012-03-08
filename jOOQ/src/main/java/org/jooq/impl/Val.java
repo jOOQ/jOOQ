@@ -61,6 +61,7 @@ import java.util.List;
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
@@ -254,8 +255,16 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
     /**
      * Inlining abstraction
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private void toSQL(RenderContext context, Object val, Class<?> type) {
         SQLDialect dialect = context.getDialect();
+
+        // [#650] Check first, if we have a converter for the supplied type
+        Converter<?, ?> converter = DataTypes.converter(type);
+        if (converter != null) {
+            val = ((Converter) converter).to(val);
+            type = converter.fromType();
+        }
 
         if (context.inline()) {
             if (val == null) {

@@ -376,7 +376,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
+                    listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    listener.executeEnd(ctx);
 
                     SQLiteFactory create = new SQLiteFactory(ctx.getConnection());
                     returned =
@@ -393,7 +395,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
                 case SYBASE: {
+                    listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    listener.executeEnd(ctx);
+
                     selectReturning(ctx.configuration(), create(ctx).lastID());
                     return result;
                 }
@@ -406,7 +411,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case INGRES:
                 case MYSQL:
                 case SQLSERVER: {
+                    listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
+                    listener.executeEnd(ctx);
+
                     rs = ctx.statement().getGeneratedKeys();
 
                     try {
@@ -426,7 +434,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Postgres can execute the INSERT .. RETURNING clause like
                 // a select clause. JDBC support is not implemented
                 case POSTGRES: {
+                    listener.executeStart(ctx);
                     rs = ctx.statement().executeQuery();
+                    listener.executeEnd(ctx);
 
                     break;
                 }
@@ -436,9 +446,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case HSQLDB:
                 case ORACLE:
                 default: {
+                    listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
-                    rs = ctx.statement().getGeneratedKeys();
+                    listener.executeEnd(ctx);
 
+                    rs = ctx.statement().getGeneratedKeys();
                     break;
                 }
             }

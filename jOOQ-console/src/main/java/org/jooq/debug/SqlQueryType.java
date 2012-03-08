@@ -76,7 +76,7 @@ public enum SqlQueryType {
                 if(index == -1) {
                     break;
                 }
-                queryLC = queryLC.trim();
+                queryLC = queryLC.substring(index + " as ".length()).trim();
                 if(!queryLC.startsWith("(")) {
                     break;
                 }

@@ -287,6 +287,8 @@ public final class FieldTypeHelper {
         Class<? extends T> type = field.getType();
         Class<?> actual = type;
 
+        // TODO [#650] This conversion code is still somewhat experimental...
+        // conversion and fetching should be made more object-oriented
         Converter<?, ? extends T> converter = DataTypes.converter(type);
         if (converter != null) {
             actual = converter.fromType();

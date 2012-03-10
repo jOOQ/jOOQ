@@ -506,6 +506,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(  ID, (int) returned.getValue(TTriggers_ID()));
         assertEquals(2*ID, (int) returned.getValue(TTriggers_COUNTER()));
 
+        // Alternative syntax
+        // ------------------
+        returned = create().insertInto(TTriggers())
+                           .set(TTriggers_COUNTER(), 0)
+                           .returning(TTriggers_ID_GENERATED())
+                           .fetchOne();
+        assertNotNull(returned);
+        assertEquals(++ID, (int) returned.getValue(TTriggers_ID_GENERATED()));
+        assertNull(returned.getValue(TTriggers_ID()));
+        assertNull(returned.getValue(TTriggers_COUNTER()));
+
         switch (getDialect()) {
             case ASE:
             case DERBY:

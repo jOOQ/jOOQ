@@ -993,6 +993,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInsertReturning() throws Exception {
+        new InsertUpdateTests(this).testInsertReturning();
+    }
+
+    @Test
     public void testMerge() throws Exception {
         new InsertUpdateTests(this).testMerge();
     }
@@ -1035,11 +1040,6 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testNonUpdatables() throws Exception {
         new CRUDTests(this).testNonUpdatables();
-    }
-
-    @Test
-    public void testInsertReturning() throws Exception {
-        new InsertUpdateTests(this).testInsertReturning();
     }
 
     @Test

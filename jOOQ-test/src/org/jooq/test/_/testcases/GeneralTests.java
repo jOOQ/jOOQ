@@ -546,7 +546,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
             // [#610] Collision-prone entities are only available in HSQLDB
             else if (getDialect() == HSQLDB) {
-                assertEquals(tables + 12, schema.getTables().size());
+                assertEquals(tables + 11, schema.getTables().size());
             }
 
             else {

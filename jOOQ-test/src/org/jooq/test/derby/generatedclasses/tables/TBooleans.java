@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1609040401;
+	private static final long serialVersionUID = 944678732;
 
 	/**
 	 * The singleton instance of TEST.T_BOOLEANS
@@ -73,17 +73,17 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.de
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord, java.lang.String> VC_BOOLEAN = createField("VC_BOOLEAN", org.jooq.impl.SQLDataType.VARCHAR, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> VC_BOOLEAN = createField("VC_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord, java.lang.String> C_BOOLEAN = createField("C_BOOLEAN", org.jooq.impl.SQLDataType.CHAR, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> C_BOOLEAN = createField("C_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
 
 	/**
 	 * No further instances allowed

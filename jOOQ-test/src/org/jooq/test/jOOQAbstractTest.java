@@ -606,6 +606,9 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<BOOL, Boolean_YN_UC> TBooleans_Boolean_YN_UC();
     protected abstract TableField<BOOL, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC();
     protected abstract TableField<BOOL, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC();
+    protected abstract TableField<BOOL, Boolean> TBooleans_VC();
+    protected abstract TableField<BOOL, Boolean> TBooleans_C();
+    protected abstract TableField<BOOL, Boolean> TBooleans_N();
 
     protected abstract UpdatableTable<D> TDirectory();
     protected abstract TableField<D, Integer> TDirectory_ID();

@@ -121,16 +121,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#677] [#1013] This doesn't work correctly yet for
         // Ingres, HSQLDB, H2, Derby, Sybase ASE
         // Double-check again for Postgres
-
-//        @SuppressWarnings("unchecked")
-//        Field<Boolean> b1 = (Field<Boolean>) getField(booleans, "C_BOOLEAN");
-//
-//        @SuppressWarnings("unchecked")
-//        Field<Boolean> b2 = (Field<Boolean>) getField(booleans, "VC_BOOLEAN");
-//
-//        @SuppressWarnings("unchecked")
-//        Field<Boolean> b3 = (Field<Boolean>) getField(booleans, "N_BOOLEAN");
-
         assertEquals(1,
         create().insertInto(TBooleans())
                 .set(TBooleans_ID(), 1)
@@ -141,9 +131,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .set(TBooleans_Boolean_YES_NO_UC(), Boolean_YES_NO_UC.NO)
                 .set(TBooleans_Boolean_YN_LC(), Boolean_YN_LC.n)
                 .set(TBooleans_Boolean_YN_UC(), Boolean_YN_UC.N)
-//                .set(b1, false)
-//                .set(b2, false)
-//                .set(b3, false)
+//                .set(TBooleans_C(), false)
+//                .set(TBooleans_VC(), false)
+//                .set(TBooleans_N(), false)
                 .execute());
 
         assertEquals(1,
@@ -156,9 +146,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .set(TBooleans_Boolean_YES_NO_UC(), Boolean_YES_NO_UC.YES)
                 .set(TBooleans_Boolean_YN_LC(), Boolean_YN_LC.y)
                 .set(TBooleans_Boolean_YN_UC(), Boolean_YN_UC.Y)
-//                .set(b1, true)
-//                .set(b2, true)
-//                .set(b3, true)
+//                .set(TBooleans_C(), true)
+//                .set(TBooleans_VC(), true)
+//                .set(TBooleans_N(), true)
                 .execute());
 
         Result<?> result =
@@ -188,14 +178,14 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(Boolean_YN_UC.N, result.getValue(0, TBooleans_Boolean_YN_UC()));
         assertEquals(Boolean_YN_UC.Y, result.getValue(1, TBooleans_Boolean_YN_UC()));
 
-//        assertFalse(result.getValue(0, b1));
-//        assertTrue(result.getValue(1, b1));
+//        assertFalse(result.getValue(0, TBooleans_C()));
+//        assertTrue(result.getValue(1, TBooleans_C()));
 //
-//        assertFalse(result.getValue(0, b2));
-//        assertTrue(result.getValue(1, b2));
+//        assertFalse(result.getValue(0, TBooleans_VC()));
+//        assertTrue(result.getValue(1, TBooleans_VC()));
 //
-//        assertFalse(result.getValue(0, b3));
-//        assertTrue(result.getValue(1, b3));
+//        assertFalse(result.getValue(0, TBooleans_N()));
+//        assertTrue(result.getValue(1, TBooleans_N()));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

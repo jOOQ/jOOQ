@@ -36,7 +36,6 @@
 
 package org.jooq.test;
 
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_658_REF;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.T_725_LOB_TEST;
@@ -54,13 +53,10 @@ import static org.jooq.test.hsqldb.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.hsqldb.generatedclasses.Tables.V_LIBRARY;
-import static org.jooq.test.hsqldb.generatedclasses.tables.TMappedTypes.T_MAPPED_TYPES;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -80,10 +76,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test._.converters.OrdinalEnum;
-import org.jooq.test._.converters.OrdinalEnum1;
-import org.jooq.test._.converters.StringEnum;
-import org.jooq.test._.converters.StringEnum1;
 import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
 import org.jooq.test.hsqldb.generatedclasses.Routines;
 import org.jooq.test.hsqldb.generatedclasses.Sequences;
@@ -96,7 +88,6 @@ import org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord;
-import org.jooq.test.hsqldb.generatedclasses.tables.records.TMappedTypesRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.T_658RefRecord;
@@ -109,8 +100,6 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.hsqldb.HSQLDBDataType;
-
-import org.junit.Test;
 
 /**
  * @author Lukas Eder
@@ -413,6 +402,21 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
     @Override
     protected TableField<TBooleansRecord, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC() {
         return T_BOOLEANS.YES_NO_UC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
+        return T_BOOLEANS.VC_BOOLEAN;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
+        return T_BOOLEANS.C_BOOLEAN;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
+        return T_BOOLEANS.N_BOOLEAN;
     }
 
     @Override
@@ -733,48 +737,5 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
             HSQLDBDataType.VARCHAR,
             HSQLDBDataType.VARCHARIGNORECASE,
         };
-    }
-
-    @Test
-    public void testMapper() {
-        jOOQAbstractTest.reset = false;
-
-        // TODO: Run this test twice, once with stmt, once with pstmt
-        TMappedTypesRecord record;
-        GregorianCalendar now = (GregorianCalendar) Calendar.getInstance();
-
-        // Storing a record using fields from a mapper
-        record = create().newRecord(T_MAPPED_TYPES);
-        record.setId(1);
-        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME, StringEnum.A);
-        record.setValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL, OrdinalEnum.B);
-        record.setValue(T_MAPPED_TYPES.CUSTOM_ENUM_TEXT, StringEnum1.C);
-        record.setValue(T_MAPPED_TYPES.CUSTOM_ENUM_NUMERIC, OrdinalEnum1.C);
-        record.setValue(T_MAPPED_TYPES.JAVA_UTIL_DATE, now.getTime());
-        record.setValue(T_MAPPED_TYPES.JAVA_UTIL_CALENDAR, now);
-
-        assertEquals(1, record.store());
-
-        // Retrieving that record again using fields from a mapper
-        record = create().newRecord(T_MAPPED_TYPES);
-        record.setId(1);
-        record.refresh();
-        assertEquals(StringEnum.A, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_NAME));
-        assertEquals(OrdinalEnum.B, record.getValue(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL));
-        assertEquals(StringEnum1.C, record.getValue(T_MAPPED_TYPES.CUSTOM_ENUM_TEXT));
-        assertEquals(OrdinalEnum1.C, record.getValue(T_MAPPED_TYPES.CUSTOM_ENUM_NUMERIC));
-        assertEquals(now.getTime(), record.getValue(T_MAPPED_TYPES.JAVA_UTIL_DATE));
-        assertEquals(now, record.getValue(T_MAPPED_TYPES.JAVA_UTIL_CALENDAR));
-
-        // Check if using custom types in filters works
-        assertEquals(1, create().selectCount()
-                                .from(T_MAPPED_TYPES)
-                                .where(T_MAPPED_TYPES.DEFAULT_ENUM_NAME.equal(StringEnum.A))
-                                .and(T_MAPPED_TYPES.DEFAULT_ENUM_ORDINAL.equal(OrdinalEnum.B))
-                                .and(T_MAPPED_TYPES.CUSTOM_ENUM_TEXT.equal(StringEnum1.C))
-                                .and(T_MAPPED_TYPES.CUSTOM_ENUM_NUMERIC.equal(OrdinalEnum1.C))
-                                .and(T_MAPPED_TYPES.JAVA_UTIL_DATE.equal(now.getTime()))
-                                .and(T_MAPPED_TYPES.JAVA_UTIL_CALENDAR.equal(now))
-                                .fetchOne(0));
     }
 }

@@ -333,6 +333,21 @@ public class jOOQASETest extends jOOQAbstractTest<
     }
 
     @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
+        return TBooleans.VC_BOOLEAN;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
+        return TBooleans.C_BOOLEAN;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
+        return TBooleans.N_BOOLEAN;
+    }
+
+    @Override
     protected Table<T_639NumbersTableRecord> T639() {
         return T_639NumbersTable.T_639_NUMBERS_TABLE;
     }

@@ -30,7 +30,7 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db
 
 	/**
 	 * An uncommented item
-	 * 
+	 *
 	 * PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS);
@@ -73,17 +73,17 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.String> VC_BOOLEAN = createField("VC_BOOLEAN", org.jooq.impl.SQLDataType.VARCHAR, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> VC_BOOLEAN = createField("VC_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.String> C_BOOLEAN = createField("C_BOOLEAN", org.jooq.impl.SQLDataType.CHAR, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> C_BOOLEAN = createField("C_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, T_BOOLEANS);
 
 	/**
 	 * No further instances allowed

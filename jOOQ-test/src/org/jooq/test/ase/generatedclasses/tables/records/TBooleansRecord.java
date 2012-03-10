@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables.records;
  */
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1880706209;
+	private static final long serialVersionUID = 188549929;
 
 	/**
 	 * An uncommented item
@@ -129,42 +129,42 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	public void setVcBoolean(java.lang.String value) {
+	public void setVcBoolean(java.lang.Boolean value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.VC_BOOLEAN, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.lang.String getVcBoolean() {
+	public java.lang.Boolean getVcBoolean() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.VC_BOOLEAN);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setCBoolean(java.lang.String value) {
+	public void setCBoolean(java.lang.Boolean value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.C_BOOLEAN, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.lang.String getCBoolean() {
+	public java.lang.Boolean getCBoolean() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.C_BOOLEAN);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setNBoolean(java.lang.Integer value) {
+	public void setNBoolean(java.lang.Boolean value) {
 		setValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.N_BOOLEAN, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.lang.Integer getNBoolean() {
+	public java.lang.Boolean getNBoolean() {
 		return getValue(org.jooq.test.ase.generatedclasses.tables.TBooleans.N_BOOLEAN);
 	}
 

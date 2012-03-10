@@ -339,6 +339,21 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_VC() {
+        return T_BOOLEANS.VC_BOOLEAN;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_C() {
+        return T_BOOLEANS.C_BOOLEAN;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
+        return T_BOOLEANS.N_BOOLEAN;
+    }
+
+    @Override
     protected Table<T_658RefRecord> T658() {
         return T_658_REF;
     }

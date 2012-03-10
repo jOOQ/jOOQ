@@ -315,6 +315,18 @@ public abstract class BaseTest<
         return delegate.TBooleans_Boolean_YES_NO_UC();
     }
 
+    public TableField<BOOL, Boolean> TBooleans_VC() {
+        return delegate.TBooleans_VC();
+    }
+
+    public TableField<BOOL, Boolean> TBooleans_C() {
+        return delegate.TBooleans_C();
+    }
+
+    public TableField<BOOL, Boolean> TBooleans_N() {
+        return delegate.TBooleans_N();
+    }
+
     protected Table<X> TArrays() {
         return delegate.TArrays();
     }

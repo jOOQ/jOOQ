@@ -8,7 +8,7 @@ package org.jooq.test.ase.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1590319896;
+	private static final long serialVersionUID = -241244478;
 
 	/**
 	 * The singleton instance of dbo.t_booleans
@@ -73,17 +73,17 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.as
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord, java.lang.String> VC_BOOLEAN = createField("vc_boolean", org.jooq.impl.SQLDataType.VARCHAR, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> VC_BOOLEAN = createField("vc_boolean", org.jooq.impl.SQLDataType.BIT, T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord, java.lang.String> C_BOOLEAN = createField("c_boolean", org.jooq.impl.SQLDataType.CHAR, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> C_BOOLEAN = createField("c_boolean", org.jooq.impl.SQLDataType.BIT, T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> N_BOOLEAN = createField("n_boolean", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.ase.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("n_boolean", org.jooq.impl.SQLDataType.BIT, T_BOOLEANS);
 
 	/**
 	 * No further instances allowed

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -594234733;
+	private static final long serialVersionUID = 1511930099;
 
 	/**
 	 * The singleton instance of TEST.T_BOOLEANS
@@ -38,37 +38,37 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.Boolean_10> ONE_ZERO = createField("ONE_ZERO", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.Boolean_10.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_10> ONE_ZERO = createField("ONE_ZERO", org.jooq.impl.SQLDataType.INTEGER.asConvertedDataType(new org.jooq.test._.converters.Boolean_10_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseLc> TRUE_FALSE_LC = createField("TRUE_FALSE_LC", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseLc.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("TRUE_FALSE_LC", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_LC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseUc> TRUE_FALSE_UC = createField("TRUE_FALSE_UC", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseUc.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("TRUE_FALSE_UC", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_UC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoLc> YES_NO_LC = createField("YES_NO_LC", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoLc.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_LC> YES_NO_LC = createField("YES_NO_LC", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_LC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoUc> YES_NO_UC = createField("YES_NO_UC", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoUc.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_UC> YES_NO_UC = createField("YES_NO_UC", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_UC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnLc> Y_N_LC = createField("Y_N_LC", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnLc.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_LC> Y_N_LC = createField("Y_N_LC", org.jooq.impl.SQLDataType.CHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_LC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnUc> Y_N_UC = createField("Y_N_UC", org.jooq.util.oracle.OracleDataType.VARCHAR2.asEnumDataType(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnUc.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_UC> Y_N_UC = createField("Y_N_UC", org.jooq.impl.SQLDataType.CHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_UC_Converter()), this);
 
 	/**
 	 * An uncommented item

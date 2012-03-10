@@ -8,19 +8,19 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  */
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = 593413647;
+	private static final long serialVersionUID = -199911526;
 
-	private java.lang.Integer                                             id;
-	private org.jooq.test.mysql.generatedclasses.enums.Boolean_10         oneZero;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseLc trueFalseLc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseUc trueFalseUc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc     yesNoLc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc     yesNoUc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc        yNLc;
-	private org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc        yNUc;
-	private java.lang.Boolean                                             vcBoolean;
-	private java.lang.Boolean                                             cBoolean;
-	private java.lang.Boolean                                             nBoolean;
+	private java.lang.Integer                            id;
+	private org.jooq.test._.converters.Boolean_10        oneZero;
+	private org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc;
+	private org.jooq.test._.converters.Boolean_TF_UC     trueFalseUc;
+	private org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc;
+	private org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc;
+	private org.jooq.test._.converters.Boolean_YN_LC     yNLc;
+	private org.jooq.test._.converters.Boolean_YN_UC     yNUc;
+	private java.lang.Boolean                            vcBoolean;
+	private java.lang.Boolean                            cBoolean;
+	private java.lang.Boolean                            nBoolean;
 
 	public java.lang.Integer getId() {
 		return this.id;
@@ -30,59 +30,59 @@ public class TBooleans implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.Boolean_10 getOneZero() {
+	public org.jooq.test._.converters.Boolean_10 getOneZero() {
 		return this.oneZero;
 	}
 
-	public void setOneZero(org.jooq.test.mysql.generatedclasses.enums.Boolean_10 oneZero) {
+	public void setOneZero(org.jooq.test._.converters.Boolean_10 oneZero) {
 		this.oneZero = oneZero;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseLc getTrueFalseLc() {
+	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
 		return this.trueFalseLc;
 	}
 
-	public void setTrueFalseLc(org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseLc trueFalseLc) {
+	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC trueFalseLc) {
 		this.trueFalseLc = trueFalseLc;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseUc getTrueFalseUc() {
+	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
 		return this.trueFalseUc;
 	}
 
-	public void setTrueFalseUc(org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseUc trueFalseUc) {
+	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC trueFalseUc) {
 		this.trueFalseUc = trueFalseUc;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc getYesNoLc() {
+	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return this.yesNoLc;
 	}
 
-	public void setYesNoLc(org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc yesNoLc) {
+	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc) {
 		this.yesNoLc = yesNoLc;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc getYesNoUc() {
+	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return this.yesNoUc;
 	}
 
-	public void setYesNoUc(org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc yesNoUc) {
+	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc) {
 		this.yesNoUc = yesNoUc;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc getYNLc() {
+	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
 		return this.yNLc;
 	}
 
-	public void setYNLc(org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc yNLc) {
+	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC yNLc) {
 		this.yNLc = yNLc;
 	}
 
-	public org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc getYNUc() {
+	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
 		return this.yNUc;
 	}
 
-	public void setYNUc(org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc yNUc) {
+	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC yNUc) {
 		this.yNUc = yNUc;
 	}
 

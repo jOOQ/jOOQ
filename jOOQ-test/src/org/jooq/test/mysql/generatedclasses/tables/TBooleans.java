@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1470362434;
+	private static final long serialVersionUID = 430692360;
 
 	/**
 	 * The singleton instance of test.t_booleans
@@ -38,37 +38,37 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.my
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.Boolean_10.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.impl.SQLDataType.INTEGER.asConvertedDataType(new org.jooq.test._.converters.Boolean_10_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseLc> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseLc.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_LC_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseUc> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.BooleanTrueFalseUc.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_UC_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc> YES_NO_LC = createField("yes_no_lc", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoLc.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_LC> YES_NO_LC = createField("yes_no_lc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_LC_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc> YES_NO_UC = createField("yes_no_uc", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.BooleanYesNoUc.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_UC> YES_NO_UC = createField("yes_no_uc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_UC_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc> Y_N_LC = createField("y_n_lc", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.BooleanYnLc.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_LC> Y_N_LC = createField("y_n_lc", org.jooq.impl.SQLDataType.CHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_LC_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc> Y_N_UC = createField("y_n_uc", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.BooleanYnUc.class), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_UC> Y_N_UC = createField("y_n_uc", org.jooq.impl.SQLDataType.CHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_UC_Converter()), T_BOOLEANS);
 
 	/**
 	 * An uncommented item

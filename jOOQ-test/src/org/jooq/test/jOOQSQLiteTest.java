@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.sqlite.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.sqlite.generatedclasses.Tables.V_BOOK;
@@ -56,10 +57,18 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
+import org.jooq.test._.converters.Boolean_10;
+import org.jooq.test._.converters.Boolean_TF_LC;
+import org.jooq.test._.converters.Boolean_TF_UC;
+import org.jooq.test._.converters.Boolean_YES_NO_LC;
+import org.jooq.test._.converters.Boolean_YES_NO_UC;
+import org.jooq.test._.converters.Boolean_YN_LC;
+import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.sqlite.generatedclasses.tables.TAuthor;
 import org.jooq.test.sqlite.generatedclasses.tables.TBook;
 import org.jooq.test.sqlite.generatedclasses.tables.TBookStore;
 import org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore;
+import org.jooq.test.sqlite.generatedclasses.tables.TBooleans;
 import org.jooq.test.sqlite.generatedclasses.tables.TTriggers;
 import org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.sqlite.generatedclasses.tables.T_658Ref;
@@ -70,6 +79,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord;
@@ -99,6 +109,7 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
         VLibraryRecord,
         XUnusedRecord,
         TDatesRecord,
+        TBooleansRecord,
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
@@ -342,6 +353,51 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
     @Override
     protected Table<TDatesRecord> TDates() {
         return T_DATES;
+    }
+
+    @Override
+    protected UpdatableTable<TBooleansRecord> TBooleans() {
+        return T_BOOLEANS;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Integer> TBooleans_ID() {
+        return TBooleans.ID;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_10> TBooleans_BOOLEAN_10() {
+        return TBooleans.ONE_ZERO;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_TF_LC> TBooleans_Boolean_TF_LC() {
+        return TBooleans.TRUE_FALSE_LC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_TF_UC> TBooleans_Boolean_TF_UC() {
+        return TBooleans.TRUE_FALSE_UC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YN_LC> TBooleans_Boolean_YN_LC() {
+        return TBooleans.Y_N_LC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YN_UC> TBooleans_Boolean_YN_UC() {
+        return TBooleans.Y_N_UC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC() {
+        return TBooleans.YES_NO_LC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC() {
+        return TBooleans.YES_NO_UC;
     }
 
     @Override

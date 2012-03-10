@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -2062944753;
+	private static final long serialVersionUID = 972070689;
 
 	/**
 	 * The singleton instance of dba.t_booleans
@@ -38,37 +38,37 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.Boolean_10.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_10> ONE_ZERO = createField("one_zero", org.jooq.impl.SQLDataType.INTEGER.asConvertedDataType(new org.jooq.test._.converters.Boolean_10_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.BooleanTrueFalseLc> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.BooleanTrueFalseLc.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_LC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.BooleanTrueFalseUc> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.BooleanTrueFalseUc.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_UC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.BooleanYesNoLc> YES_NO_LC = createField("yes_no_lc", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.BooleanYesNoLc.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_LC> YES_NO_LC = createField("yes_no_lc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_LC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.BooleanYesNoUc> YES_NO_UC = createField("yes_no_uc", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.BooleanYesNoUc.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YES_NO_UC> YES_NO_UC = createField("yes_no_uc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YES_NO_UC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.BooleanYnLc> Y_N_LC = createField("y_n_lc", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.BooleanYnLc.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_LC> Y_N_LC = createField("y_n_lc", org.jooq.impl.SQLDataType.CHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_LC_Converter()), this);
 
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test.sybase.generatedclasses.enums.BooleanYnUc> Y_N_UC = createField("y_n_uc", org.jooq.util.sybase.SybaseDataType.VARCHAR.asEnumDataType(org.jooq.test.sybase.generatedclasses.enums.BooleanYnUc.class), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_YN_UC> Y_N_UC = createField("y_n_uc", org.jooq.impl.SQLDataType.CHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_YN_UC_Converter()), this);
 
 	/**
 	 * An uncommented item

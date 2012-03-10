@@ -170,7 +170,7 @@
 
       <!--
         A configuration element to configure synthetic enum types
-        This is EXPERIMENTAL functionality. Use at your own risk
+        This is EXPERIMENTAL / DEPRECATED functionality. Do not re-use
         -->
       <element name="enumTypes" type="tns:EnumTypes" minOccurs="0" maxOccurs="1"/>
 

@@ -75,6 +75,13 @@ import org.jooq.debug.DebugListener;
 import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
+import org.jooq.test._.converters.Boolean_10;
+import org.jooq.test._.converters.Boolean_TF_LC;
+import org.jooq.test._.converters.Boolean_TF_UC;
+import org.jooq.test._.converters.Boolean_YES_NO_LC;
+import org.jooq.test._.converters.Boolean_YES_NO_UC;
+import org.jooq.test._.converters.Boolean_YN_LC;
+import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
 import org.jooq.test._.testcases.CRUDTests;
 import org.jooq.test._.testcases.DataTypeTests;
@@ -147,6 +154,9 @@ public abstract class jOOQAbstractTest<
 
         // T_DATES table
         DATE extends UpdatableRecord<DATE>,
+
+        // T_BOOLEANS table
+        BOOL extends UpdatableRecord<BOOL>,
 
         // T_DIRECTORY table
         D extends UpdatableRecord<D>,
@@ -424,16 +434,16 @@ public abstract class jOOQAbstractTest<
 
     private final Connection getConnection0(String jdbcUser, String jdbcPassword) {
         try {
-            String property = System.getProperty("jdbc.properties");
-            if (property == null) {
+            String configuration = System.getProperty("jdbc.properties");
+            if (configuration == null) {
                 log.error("No system property 'jdbc.properties' found");
                 log.error("-----------");
                 log.error("Please be sure property is set; example: -Djdbc.properties=/org/jooq/configuration/${env_var:USERNAME}/db2/library.properties");
                 throw new Error();
             }
-            InputStream in = GenerationTool.class.getResourceAsStream(property);
+            InputStream in = GenerationTool.class.getResourceAsStream(configuration);
             if (in == null) {
-                log.error("Cannot find " + property);
+                log.error("Cannot find " + configuration);
                 log.error("-----------");
                 log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
                 log.error("If it is located at the current working directory, try adding a '/' to the path");
@@ -586,6 +596,16 @@ public abstract class jOOQAbstractTest<
     protected final TableField<BS, BigDecimal> TBookSale_SOLD_FOR() {
         return (TableField<BS, BigDecimal>) TBookSale().getField("SOLD_FOR");
     }
+
+    protected abstract UpdatableTable<BOOL> TBooleans();
+    protected abstract TableField<BOOL, Integer> TBooleans_ID();
+    protected abstract TableField<BOOL, Boolean_10> TBooleans_BOOLEAN_10();
+    protected abstract TableField<BOOL, Boolean_TF_LC> TBooleans_Boolean_TF_LC();
+    protected abstract TableField<BOOL, Boolean_TF_UC> TBooleans_Boolean_TF_UC();
+    protected abstract TableField<BOOL, Boolean_YN_LC> TBooleans_Boolean_YN_LC();
+    protected abstract TableField<BOOL, Boolean_YN_UC> TBooleans_Boolean_YN_UC();
+    protected abstract TableField<BOOL, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC();
+    protected abstract TableField<BOOL, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC();
 
     protected abstract UpdatableTable<D> TDirectory();
     protected abstract TableField<D, Integer> TDirectory_ID();
@@ -1211,6 +1231,7 @@ public abstract class jOOQAbstractTest<
         new EnumTests(this).testEnums();
     }
 
+    @Test
     public <R extends TableRecord<R>> void testCustomEnums() throws Exception {
         new EnumTests(this).testCustomEnums();
     }

@@ -66,6 +66,13 @@ import org.jooq.conf.Settings;
 import org.jooq.debug.DebugListener;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
+import org.jooq.test._.converters.Boolean_10;
+import org.jooq.test._.converters.Boolean_TF_LC;
+import org.jooq.test._.converters.Boolean_TF_UC;
+import org.jooq.test._.converters.Boolean_YES_NO_LC;
+import org.jooq.test._.converters.Boolean_YES_NO_UC;
+import org.jooq.test._.converters.Boolean_YN_LC;
+import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
@@ -97,6 +104,9 @@ public abstract class BaseTest<
 
     // T_DATES table
     DATE extends UpdatableRecord<DATE>,
+
+    // T_BOOLEANS table
+    BOOL extends UpdatableRecord<BOOL>,
 
     // T_DIRECTORY table
     D extends UpdatableRecord<D>,
@@ -131,9 +141,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         this.delegate = delegate;
     }
 
@@ -267,6 +277,42 @@ public abstract class BaseTest<
     @SuppressWarnings("unchecked")
     protected final TableField<DATE, Timestamp> TDates_TS() {
         return (TableField<DATE, Timestamp>) getField(TDates(), "TS");
+    }
+
+    public UpdatableTable<BOOL> TBooleans() {
+        return delegate.TBooleans();
+    }
+
+    public TableField<BOOL, Integer> TBooleans_ID() {
+        return delegate.TBooleans_ID();
+    }
+
+    public TableField<BOOL, Boolean_10> TBooleans_BOOLEAN_10() {
+        return delegate.TBooleans_BOOLEAN_10();
+    }
+
+    public TableField<BOOL, Boolean_TF_LC> TBooleans_Boolean_TF_LC() {
+        return delegate.TBooleans_Boolean_TF_LC();
+    }
+
+    public TableField<BOOL, Boolean_TF_UC> TBooleans_Boolean_TF_UC() {
+        return delegate.TBooleans_Boolean_TF_UC();
+    }
+
+    public TableField<BOOL, Boolean_YN_LC> TBooleans_Boolean_YN_LC() {
+        return delegate.TBooleans_Boolean_YN_LC();
+    }
+
+    public TableField<BOOL, Boolean_YN_UC> TBooleans_Boolean_YN_UC() {
+        return delegate.TBooleans_Boolean_YN_UC();
+    }
+
+    public TableField<BOOL, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC() {
+        return delegate.TBooleans_Boolean_YES_NO_LC();
+    }
+
+    public TableField<BOOL, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC() {
+        return delegate.TBooleans_Boolean_YES_NO_UC();
     }
 
     protected Table<X> TArrays() {

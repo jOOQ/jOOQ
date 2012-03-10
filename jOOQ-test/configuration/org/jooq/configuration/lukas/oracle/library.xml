@@ -50,67 +50,70 @@
                     <literal>CD</literal>
                 </masterDataTable>
             </masterDataTables>
-            <enumTypes>
-                <enumType>
-                    <name>BOOLEAN_YN_LC</name>
-                    <literals>y,&quot;n&quot;</literals>
-                </enumType>
-                <enumType>
-                    <name>BOOLEAN_YN_UC</name>
-                    <literals>&quot;Y&quot;,N</literals>
-                </enumType>
-                <enumType>
-                    <name>BOOLEAN_TRUE_FALSE_LC</name>
-                    <literals>true,false</literals>
-                </enumType>
-                <enumType>
-                    <name>BOOLEAN_TRUE_FALSE_UC</name>
-                    <literals>TRUE,FALSE</literals>
-                </enumType>
-                <enumType>
-                    <name>BOOLEAN_10</name>
-                    <literals>1,0</literals>
-                </enumType>
-                <enumType>
-                    <name>BOOLEAN_YES_NO_LC</name>
-                    <literals>yes,no</literals>
-                </enumType>
-                <enumType>
-                    <name>BOOLEAN_YES_NO_UC</name>
-                    <literals>&quot;YES&quot;,&quot;NO&quot;</literals>
-                </enumType>
-            </enumTypes>
+
+            <customTypes>
+                <customType>
+            		<name>org.jooq.test._.converters.Boolean_10</name>
+            		<converter>org.jooq.test._.converters.Boolean_10_Converter</converter>
+            	</customType>
+            	<customType>
+            		<name>org.jooq.test._.converters.Boolean_TF_LC</name>
+            		<converter>org.jooq.test._.converters.Boolean_TF_LC_Converter</converter>
+            	</customType>
+            	<customType>
+            		<name>org.jooq.test._.converters.Boolean_TF_UC</name>
+            		<converter>org.jooq.test._.converters.Boolean_TF_UC_Converter</converter>
+            	</customType>
+            	<customType>
+            		<name>org.jooq.test._.converters.Boolean_YN_LC</name>
+            		<converter>org.jooq.test._.converters.Boolean_YN_LC_Converter</converter>
+            	</customType>
+            	<customType>
+            		<name>org.jooq.test._.converters.Boolean_YN_UC</name>
+            		<converter>org.jooq.test._.converters.Boolean_YN_UC_Converter</converter>
+            	</customType>
+            	<customType>
+            		<name>org.jooq.test._.converters.Boolean_YES_NO_LC</name>
+            		<converter>org.jooq.test._.converters.Boolean_YES_NO_LC_Converter</converter>
+            	</customType>
+            	<customType>
+            		<name>org.jooq.test._.converters.Boolean_YES_NO_UC</name>
+            		<converter>org.jooq.test._.converters.Boolean_YES_NO_UC_Converter</converter>
+            	</customType>
+            </customTypes>
+
             <forcedTypes>
-                <forcedType>
-                    <name>BOOLEAN_YES_NO_LC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expressions>
-                </forcedType>
-                <forcedType>
-                    <name>BOOLEAN_YES_NO_UC</name>
-                    <expressions>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expressions>
-                </forcedType>
                 <forcedType>
                     <name>BOOLEAN</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
                 </forcedType>
+
                 <forcedType>
-                    <name>BOOLEAN_YN_LC</name>
+                    <name>org.jooq.test._.converters.Boolean_YES_NO_LC</name>
+                    <expressions>(?i:(.*?.)?T_BOOLEANS.YES_NO_LC)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>org.jooq.test._.converters.Boolean_YES_NO_UC</name>
+                    <expressions>(?i:(.*?.)?T_BOOLEANS.YES_NO_UC)</expressions>
+                </forcedType>
+                <forcedType>
+                    <name>org.jooq.test._.converters.Boolean_YN_LC</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.Y_N_LC)</expressions>
                 </forcedType>
                 <forcedType>
-                    <name>BOOLEAN_YN_UC</name>
+                    <name>org.jooq.test._.converters.Boolean_YN_UC</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.Y_N_UC)</expressions>
                 </forcedType>
                 <forcedType>
-                    <name>BOOLEAN_TRUE_FALSE_LC</name>
+                    <name>org.jooq.test._.converters.Boolean_TF_LC</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_LC)</expressions>
                 </forcedType>
                 <forcedType>
-                    <name>BOOLEAN_TRUE_FALSE_UC</name>
+                    <name>org.jooq.test._.converters.Boolean_TF_UC</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.TRUE_FALSE_UC)</expressions>
                 </forcedType>
                 <forcedType>
-                    <name>BOOLEAN_10</name>
+                    <name>org.jooq.test._.converters.Boolean_10</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.ONE_ZERO)</expressions>
                 </forcedType>
             </forcedTypes>

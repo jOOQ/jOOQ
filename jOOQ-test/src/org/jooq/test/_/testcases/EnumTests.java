@@ -152,7 +152,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .execute());
 
         Result<?> result =
-        create().selectFrom(TBooleans()).orderBy(TBooleans_ID().asc()).fetch();
+        create().selectFrom(TBooleans())
+                .where(TBooleans_ID().in(1, 2))
+                .and(TBooleans_BOOLEAN_10().in(Boolean_10.ONE, Boolean_10.ZERO))
+                .and(TBooleans_Boolean_TF_LC().in(Boolean_TF_LC.TRUE, Boolean_TF_LC.FALSE))
+                .and(TBooleans_Boolean_TF_UC().in(Boolean_TF_UC.TRUE, Boolean_TF_UC.FALSE))
+                .and(TBooleans_Boolean_YES_NO_LC().in(Boolean_YES_NO_LC.yes, Boolean_YES_NO_LC.no))
+                .and(TBooleans_Boolean_YES_NO_UC().in(Boolean_YES_NO_UC.YES, Boolean_YES_NO_UC.NO))
+                .and(TBooleans_Boolean_YN_LC().in(Boolean_YN_LC.y, Boolean_YN_LC.n))
+                .and(TBooleans_Boolean_YN_UC().in(Boolean_YN_UC.Y, Boolean_YN_UC.N))
+                .orderBy(TBooleans_ID().asc())
+                .fetch();
 
         assertEquals(1, (int) result.getValue(0, TBooleans_ID()));
         assertEquals(2, (int) result.getValue(1, TBooleans_ID()));

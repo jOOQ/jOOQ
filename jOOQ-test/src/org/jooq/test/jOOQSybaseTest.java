@@ -39,6 +39,7 @@ import static org.jooq.test.sybase.generatedclasses.Tables.T_AUTHOR;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_IDENTITY_PK;
@@ -62,6 +63,13 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Factory;
+import org.jooq.test._.converters.Boolean_10;
+import org.jooq.test._.converters.Boolean_TF_LC;
+import org.jooq.test._.converters.Boolean_TF_UC;
+import org.jooq.test._.converters.Boolean_YES_NO_LC;
+import org.jooq.test._.converters.Boolean_YES_NO_UC;
+import org.jooq.test._.converters.Boolean_YN_LC;
+import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.sybase.generatedclasses.DbaFactory;
 import org.jooq.test.sybase.generatedclasses.Routines;
 import org.jooq.test.sybase.generatedclasses.Sequences;
@@ -69,6 +77,7 @@ import org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord;
+import org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord;
@@ -100,6 +109,7 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
         VLibraryRecord,
         XUnusedRecord,
         TDatesRecord,
+        TBooleansRecord,
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
@@ -274,6 +284,51 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
     @Override
     protected Table<TDatesRecord> TDates() {
         return T_DATES;
+    }
+
+    @Override
+    protected UpdatableTable<TBooleansRecord> TBooleans() {
+        return T_BOOLEANS;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Integer> TBooleans_ID() {
+        return T_BOOLEANS.ID;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_10> TBooleans_BOOLEAN_10() {
+        return T_BOOLEANS.ONE_ZERO;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_TF_LC> TBooleans_Boolean_TF_LC() {
+        return T_BOOLEANS.TRUE_FALSE_LC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_TF_UC> TBooleans_Boolean_TF_UC() {
+        return T_BOOLEANS.TRUE_FALSE_UC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YN_LC> TBooleans_Boolean_YN_LC() {
+        return T_BOOLEANS.Y_N_LC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YN_UC> TBooleans_Boolean_YN_UC() {
+        return T_BOOLEANS.Y_N_UC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YES_NO_LC> TBooleans_Boolean_YES_NO_LC() {
+        return T_BOOLEANS.YES_NO_LC;
+    }
+
+    @Override
+    protected TableField<TBooleansRecord, Boolean_YES_NO_UC> TBooleans_Boolean_YES_NO_UC() {
+        return T_BOOLEANS.YES_NO_UC;
     }
 
     @Override

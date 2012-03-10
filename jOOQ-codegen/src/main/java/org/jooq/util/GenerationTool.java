@@ -328,6 +328,10 @@ public class GenerationTool {
             database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes());
             database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes());
 
+            if (g.getDatabase().getEnumTypes().size() > 0) {
+                log.warn("WARNING: The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
+            }
+
             if (g.getDatabase().isDateAsTimestamp() != null)
                 database.setDateAsTimestamp(g.getDatabase().isDateAsTimestamp());
             if (g.getDatabase().isUnsignedTypes() != null)

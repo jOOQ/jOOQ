@@ -10,19 +10,19 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1594262932;
+	private static final long serialVersionUID = 2074010501;
 
-	private java.lang.Integer                                                   id;
-	private org.jooq.test.oracle.generatedclasses.test.enums.Boolean_10         oneZero;
-	private org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseLc trueFalseLc;
-	private org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseUc trueFalseUc;
-	private org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoLc     yesNoLc;
-	private org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoUc     yesNoUc;
-	private org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnLc        yNLc;
-	private org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnUc        yNUc;
-	private java.lang.Boolean                                                   vcBoolean;
-	private java.lang.Boolean                                                   cBoolean;
-	private java.lang.Boolean                                                   nBoolean;
+	private java.lang.Integer                            id;
+	private org.jooq.test._.converters.Boolean_10        oneZero;
+	private org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc;
+	private org.jooq.test._.converters.Boolean_TF_UC     trueFalseUc;
+	private org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc;
+	private org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc;
+	private org.jooq.test._.converters.Boolean_YN_LC     yNLc;
+	private org.jooq.test._.converters.Boolean_YN_UC     yNUc;
+	private java.lang.Boolean                            vcBoolean;
+	private java.lang.Boolean                            cBoolean;
+	private java.lang.Boolean                            nBoolean;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
@@ -35,65 +35,65 @@ public class TBooleans implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "ONE_ZERO")
-	public org.jooq.test.oracle.generatedclasses.test.enums.Boolean_10 getOneZero() {
+	public org.jooq.test._.converters.Boolean_10 getOneZero() {
 		return this.oneZero;
 	}
 
-	public void setOneZero(org.jooq.test.oracle.generatedclasses.test.enums.Boolean_10 oneZero) {
+	public void setOneZero(org.jooq.test._.converters.Boolean_10 oneZero) {
 		this.oneZero = oneZero;
 	}
 
 	@javax.persistence.Column(name = "TRUE_FALSE_LC")
-	public org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseLc getTrueFalseLc() {
+	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
 		return this.trueFalseLc;
 	}
 
-	public void setTrueFalseLc(org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseLc trueFalseLc) {
+	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC trueFalseLc) {
 		this.trueFalseLc = trueFalseLc;
 	}
 
 	@javax.persistence.Column(name = "TRUE_FALSE_UC")
-	public org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseUc getTrueFalseUc() {
+	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
 		return this.trueFalseUc;
 	}
 
-	public void setTrueFalseUc(org.jooq.test.oracle.generatedclasses.test.enums.BooleanTrueFalseUc trueFalseUc) {
+	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC trueFalseUc) {
 		this.trueFalseUc = trueFalseUc;
 	}
 
 	@javax.persistence.Column(name = "YES_NO_LC")
-	public org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoLc getYesNoLc() {
+	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return this.yesNoLc;
 	}
 
-	public void setYesNoLc(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoLc yesNoLc) {
+	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC yesNoLc) {
 		this.yesNoLc = yesNoLc;
 	}
 
 	@javax.persistence.Column(name = "YES_NO_UC")
-	public org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoUc getYesNoUc() {
+	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return this.yesNoUc;
 	}
 
-	public void setYesNoUc(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYesNoUc yesNoUc) {
+	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC yesNoUc) {
 		this.yesNoUc = yesNoUc;
 	}
 
 	@javax.persistence.Column(name = "Y_N_LC")
-	public org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnLc getYNLc() {
+	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
 		return this.yNLc;
 	}
 
-	public void setYNLc(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnLc yNLc) {
+	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC yNLc) {
 		this.yNLc = yNLc;
 	}
 
 	@javax.persistence.Column(name = "Y_N_UC")
-	public org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnUc getYNUc() {
+	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
 		return this.yNUc;
 	}
 
-	public void setYNUc(org.jooq.test.oracle.generatedclasses.test.enums.BooleanYnUc yNUc) {
+	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC yNUc) {
 		this.yNUc = yNUc;
 	}
 

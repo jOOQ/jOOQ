@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1615818700;
+	private static final long serialVersionUID = -1484188684;
 
 	/**
 	 * An uncommented item
@@ -31,98 +31,98 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	public void setOneZero(org.jooq.test.sqlite.generatedclasses.enums.Boolean_10 value) {
+	public void setOneZero(org.jooq.test._.converters.Boolean_10 value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.ONE_ZERO, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.Boolean_10 getOneZero() {
+	public org.jooq.test._.converters.Boolean_10 getOneZero() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.ONE_ZERO);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setTrueFalseLc(org.jooq.test.sqlite.generatedclasses.enums.BooleanTrueFalseLc value) {
+	public void setTrueFalseLc(org.jooq.test._.converters.Boolean_TF_LC value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.TRUE_FALSE_LC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.BooleanTrueFalseLc getTrueFalseLc() {
+	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.TRUE_FALSE_LC);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setTrueFalseUc(org.jooq.test.sqlite.generatedclasses.enums.BooleanTrueFalseUc value) {
+	public void setTrueFalseUc(org.jooq.test._.converters.Boolean_TF_UC value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.TRUE_FALSE_UC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.BooleanTrueFalseUc getTrueFalseUc() {
+	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.TRUE_FALSE_UC);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setYesNoLc(org.jooq.test.sqlite.generatedclasses.enums.BooleanYesNoLc value) {
+	public void setYesNoLc(org.jooq.test._.converters.Boolean_YES_NO_LC value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.YES_NO_LC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.BooleanYesNoLc getYesNoLc() {
+	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.YES_NO_LC);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setYesNoUc(org.jooq.test.sqlite.generatedclasses.enums.BooleanYesNoUc value) {
+	public void setYesNoUc(org.jooq.test._.converters.Boolean_YES_NO_UC value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.YES_NO_UC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.BooleanYesNoUc getYesNoUc() {
+	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.YES_NO_UC);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setYNLc(org.jooq.test.sqlite.generatedclasses.enums.BooleanYnLc value) {
+	public void setYNLc(org.jooq.test._.converters.Boolean_YN_LC value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.Y_N_LC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.BooleanYnLc getYNLc() {
+	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.Y_N_LC);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public void setYNUc(org.jooq.test.sqlite.generatedclasses.enums.BooleanYnUc value) {
+	public void setYNUc(org.jooq.test._.converters.Boolean_YN_UC value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.Y_N_UC, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public org.jooq.test.sqlite.generatedclasses.enums.BooleanYnUc getYNUc() {
+	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBooleans.Y_N_UC);
 	}
 

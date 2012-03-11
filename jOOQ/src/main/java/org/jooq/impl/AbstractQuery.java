@@ -112,6 +112,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 configuration = getConfiguration();
             }
 
+            ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
+            ExecuteListener listener = new ExecuteListeners(ctx);
+
             Connection connection = configuration.getConnection();
             if (connection == null) {
                 throw new DetachedException("Cannot execute query. No Connection configured");
@@ -119,9 +122,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
 
             // Ensure that all depending Attachables are attached
             attach(configuration);
-
-            ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
-            ExecuteListener listener = new ExecuteListeners(ctx);
 
             int result = 0;
             try {

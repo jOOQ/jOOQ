@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -124,6 +125,21 @@ public interface ExecuteContext extends Configuration {
      * @return The generated SQL statement(s). This is never <code>null</code>
      */
     String[] batchSQL();
+
+    /**
+     * The {@link Connection} that is being used for execution.
+     */
+    @Override
+    Connection getConnection();
+
+    /**
+     * Override the {@link Connection} that is being used for execution. This
+     * may have no effect, if called at the wrong moment.
+     *
+     * @see ExecuteListener#start(ExecuteContext)
+     */
+    @Override
+    void setConnection(Connection connection);
 
     /**
      * The {@link PreparedStatement} that is being executed or <code>null</code>

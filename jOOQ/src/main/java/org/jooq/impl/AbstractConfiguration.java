@@ -72,6 +72,11 @@ abstract class AbstractConfiguration implements Configuration {
     }
 
     @Override
+    public final void setConnection(Connection connection) {
+        configuration.setConnection(connection);
+    }
+
+    @Override
     @Deprecated
     public final org.jooq.SchemaMapping getSchemaMapping() {
         return configuration.getSchemaMapping();

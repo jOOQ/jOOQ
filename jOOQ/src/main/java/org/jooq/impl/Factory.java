@@ -262,6 +262,11 @@ public class Factory implements FactoryOperations {
         }
     }
 
+    @Override
+    public final void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
     /**
      * {@inheritDoc}
      */

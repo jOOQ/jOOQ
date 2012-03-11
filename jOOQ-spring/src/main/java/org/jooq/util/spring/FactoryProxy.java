@@ -188,6 +188,11 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     }
 
     @Override
+    public final void setConnection(Connection connection) {
+        getDelegate().setConnection(connection);
+    }
+
+    @Override
     public final Map<String, Object> getData() {
         return getDelegate().getData();
     }

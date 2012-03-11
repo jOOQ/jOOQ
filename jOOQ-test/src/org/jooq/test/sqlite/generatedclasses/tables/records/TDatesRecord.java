@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 444581428;
+	private static final long serialVersionUID = 670012198;
 
 	/**
 	 * An uncommented item
@@ -64,21 +64,15 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 
 	/**
 	 * An uncommented item
-	 * 
-	 * The SQL type of this item (timestamp) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public void setTs(java.lang.Object value) {
+	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TDates.TS, value);
 	}
 
 	/**
 	 * An uncommented item
-	 * 
-	 * The SQL type of this item (timestamp) could not be mapped.<br/>
-	 * Deserialising this field might not work!
 	 */
-	public java.lang.Object getTs() {
+	public java.sql.Timestamp getTs() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TDates.TS);
 	}
 

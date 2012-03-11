@@ -247,11 +247,19 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
      * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
      * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * </ul>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#setConnection(Connection)}: The connection used
+     * for execution. This may be particularly interesting if a {@link Query}
+     * was de-serialised and is thus lacking the underlying connection</li>
      * </ul>
      */
     void start(ExecuteContext ctx);
@@ -261,6 +269,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -275,6 +285,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -299,6 +311,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -323,6 +337,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -365,6 +381,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -406,6 +424,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -439,6 +459,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -472,6 +494,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -516,6 +540,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -566,6 +592,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -607,6 +635,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -647,6 +677,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -687,6 +719,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -730,6 +764,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>
@@ -776,6 +812,8 @@ public interface ExecuteListener {
      * <p>
      * Available attributes from <code>ExecuteContext</code>:
      * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
      * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
      * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
      * jOOQ query is being executed or <code>null</code> otherwise</li>

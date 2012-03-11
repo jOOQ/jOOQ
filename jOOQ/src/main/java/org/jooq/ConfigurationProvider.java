@@ -37,13 +37,16 @@ package org.jooq;
 
 import java.sql.Connection;
 
-
 /**
  * Implement this interface and supply it to the {@link ConfigurationRegistry}.
  * jOOQ will call back on your implementation upon deserialisation.
  *
  * @author Lukas Eder
+ * @deprecated - 2.1.0 [#1191] - Use
+ *             {@link ExecuteListener#start(ExecuteContext)} instead to provide
+ *             jOOQ with valid connections
  */
+@Deprecated
 public interface ConfigurationProvider {
 
     /**

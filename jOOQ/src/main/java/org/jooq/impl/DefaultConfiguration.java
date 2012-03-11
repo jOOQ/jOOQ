@@ -41,7 +41,6 @@ import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.SQLDialect;
-import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
 
 /**
@@ -60,38 +59,41 @@ final class DefaultConfiguration implements Configuration {
 
     @SuppressWarnings("deprecation")
     @Override
-    public SQLDialect getDialect() {
+    public final SQLDialect getDialect() {
         return SQLDialect.SQL99;
     }
 
     @Override
-    public Connection getConnection() {
+    public final Connection getConnection() {
         return null;
     }
 
     @Override
+    public final void setConnection(Connection connection) {}
+
+    @Override
     @Deprecated
-    public org.jooq.SchemaMapping getSchemaMapping() {
-        return SchemaMapping.NO_MAPPING;
+    public final org.jooq.SchemaMapping getSchemaMapping() {
+        return org.jooq.SchemaMapping.NO_MAPPING;
     }
 
     @Override
-    public Settings getSettings() {
+    public final Settings getSettings() {
         return new Settings();
     }
 
     @Override
-    public Map<String, Object> getData() {
+    public final Map<String, Object> getData() {
         return new HashMap<String, Object>();
     }
 
     @Override
-    public Object getData(String key) {
+    public final Object getData(String key) {
         return null;
     }
 
     @Override
-    public Object setData(String key, Object value) {
+    public final Object setData(String key, Object value) {
         return null;
     }
 

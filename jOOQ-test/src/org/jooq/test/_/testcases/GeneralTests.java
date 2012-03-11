@@ -69,12 +69,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Connection;
 import java.util.Arrays;
 
 import org.jooq.Configuration;
 import org.jooq.ConfigurationProvider;
 import org.jooq.ConfigurationRegistry;
 import org.jooq.Cursor;
+import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -88,7 +90,9 @@ import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Factory;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
@@ -301,6 +305,27 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             register(null);
         }
 
+        // [#1191] Check execution capabilities with new features in ExecuteListener
+        ConnectionProviderListener.c = create().getConnection();
+        try {
+            q = create(new Settings().withExecuteListeners(ConnectionProviderListener.class.getName()))
+                    .selectFrom(TAuthor())
+                    .orderBy(TAuthor_LAST_NAME());
+            q = runSerialisation(q);
+            q.execute();
+
+            result = q.getResult();
+            result = runSerialisation(result);
+            assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
+            assertEquals("Orwell", result.getValue(1, TAuthor_LAST_NAME()));
+
+            result.get(1).setValue(TAuthor_FIRST_NAME(), "Gee-Gee");
+            result.get(1).store();
+        }
+        finally {
+            ConnectionProviderListener.c = null;
+        }
+
         // [#1071] Check sequences
         if (cSequences() == null) {
             log.info("SKIPPING", "sequences test");
@@ -313,6 +338,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         }
     }
 
+    public static class ConnectionProviderListener extends DefaultExecuteListener {
+
+        static Connection c;
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            ctx.setConnection(c);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
     protected final void register(final Configuration configuration) {
         ConfigurationRegistry.setProvider(new ConfigurationProvider() {
 

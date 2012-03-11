@@ -59,6 +59,11 @@ public interface Configuration extends Serializable {
     Connection getConnection();
 
     /**
+     * Set the configured connection
+     */
+    void setConnection(Connection connection);
+
+    /**
      * Retrieve the configured schema mapping
      *
      * @deprecated - 2.0.5 - Use {@link #getSettings()} instead

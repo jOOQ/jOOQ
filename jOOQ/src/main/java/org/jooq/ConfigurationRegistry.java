@@ -50,8 +50,9 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  * @see <a
  *      href="http://groups.google.com/group/jooq-user/browse_thread/thread/d33e9a902707d111">http://groups.google.com/group/jooq-user/browse_thread/thread/d33e9a902707d111</a>
- * @deprecated - 2.0.5 [#1191] - Use {@link ExecuteListener#start(ExecuteContext)}
- *             instead (not yet implemented)
+ * @deprecated - 2.1.0 [#1191] - Use
+ *             {@link ExecuteListener#start(ExecuteContext)} instead to provide
+ *             jOOQ with valid connections
  */
 @Deprecated
 public final class ConfigurationRegistry {

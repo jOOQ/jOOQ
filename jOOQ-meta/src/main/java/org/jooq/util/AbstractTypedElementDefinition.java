@@ -103,6 +103,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                     DataType<?> forcedDataType = null;
 
                     String t = definedType.getType();
+                    int l = definedType.getLength();
                     int p = definedType.getPrecision();
                     int s = definedType.getScale();
 
@@ -112,12 +113,12 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
 
                     // [#677] SQLDataType matches are actual type-rewrites
                     if (forcedDataType != null) {
-                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedType.getName(), p, s);
+                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedType.getName(), l, p, s);
                     }
 
                     // Other forced types are UDT's, enums, etc.
                     else {
-                        type = new DefaultDataTypeDefinition(db, getSchema(), t, p, s, forcedType.getName());
+                        type = new DefaultDataTypeDefinition(db, getSchema(), t, l, p, s, forcedType.getName());
                     }
                 }
             }
@@ -133,7 +134,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 if (dataType != null) {
                     if (dataType.getSQLType() == Types.DATE) {
                         DataType<?> forcedDataType = getDialectDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedDataType.getTypeName(), 0, 0);
+                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedDataType.getTypeName(), 0, 0, 0);
                     }
                 }
             }

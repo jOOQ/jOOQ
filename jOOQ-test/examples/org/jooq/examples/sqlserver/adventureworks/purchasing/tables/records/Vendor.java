@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "Vendor", schema = "Purchasing")
 public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.Vendor> {
 
-	private static final long serialVersionUID = -69277684;
+	private static final long serialVersionUID = 132009665;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "VendorID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "VendorID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.VendorID);
 	}
@@ -42,7 +42,7 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AccountNumber", nullable = false)
+	@javax.persistence.Column(name = "AccountNumber", nullable = false, length = 15)
 	public java.lang.String getAccountNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.AccountNumber);
 	}
@@ -57,7 +57,7 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.Name);
 	}
@@ -72,7 +72,7 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CreditRating", nullable = false)
+	@javax.persistence.Column(name = "CreditRating", nullable = false, precision = 3)
 	public java.lang.Byte getCreditRating() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.CreditRating);
 	}
@@ -117,7 +117,7 @@ public class Vendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PurchasingWebServiceURL")
+	@javax.persistence.Column(name = "PurchasingWebServiceURL", length = 1024)
 	public java.lang.String getPurchasingWebServiceURL() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.Vendor.Vendor.PurchasingWebServiceURL);
 	}

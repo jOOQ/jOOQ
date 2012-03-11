@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 508955229;
+	private static final long serialVersionUID = 1646329168;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.ID);
 	}
@@ -37,7 +37,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.AUTHOR_ID);
 	}
@@ -52,7 +52,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID")
+	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.CO_AUTHOR_ID);
 	}
@@ -67,7 +67,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "DETAILS_ID")
+	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.DETAILS_ID);
 	}
@@ -82,7 +82,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TITLE", nullable = false)
+	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.TITLE);
 	}
@@ -97,7 +97,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.PUBLISHED_IN);
 	}
@@ -112,7 +112,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.LANGUAGE_ID);
 	}
@@ -127,7 +127,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT")
+	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.CONTENT_TEXT);
 	}
@@ -142,7 +142,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF")
+	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK.CONTENT_PDF);
 	}

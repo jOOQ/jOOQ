@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "vAdditionalContactInfo", schema = "Person")
 public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> {
 
-	private static final long serialVersionUID = -711351946;
+	private static final long serialVersionUID = -1853043052;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.ContactID);
 	}
@@ -37,7 +37,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.FirstName);
 	}
@@ -52,7 +52,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.MiddleName);
 	}
@@ -67,7 +67,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.LastName);
 	}
@@ -82,7 +82,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TelephoneNumber")
+	@javax.persistence.Column(name = "TelephoneNumber", length = 50)
 	public java.lang.String getTelephoneNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.TelephoneNumber);
 	}
@@ -112,7 +112,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Street")
+	@javax.persistence.Column(name = "Street", length = 50)
 	public java.lang.String getStreet() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.Street);
 	}
@@ -127,7 +127,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "City")
+	@javax.persistence.Column(name = "City", length = 50)
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.City);
 	}
@@ -142,7 +142,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StateProvince")
+	@javax.persistence.Column(name = "StateProvince", length = 50)
 	public java.lang.String getStateProvince() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.StateProvince);
 	}
@@ -157,7 +157,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PostalCode")
+	@javax.persistence.Column(name = "PostalCode", length = 50)
 	public java.lang.String getPostalCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.PostalCode);
 	}
@@ -172,7 +172,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CountryRegion")
+	@javax.persistence.Column(name = "CountryRegion", length = 50)
 	public java.lang.String getCountryRegion() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.CountryRegion);
 	}
@@ -202,7 +202,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EMailAddress")
+	@javax.persistence.Column(name = "EMailAddress", length = 128)
 	public java.lang.String getEMailAddress() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.EMailAddress);
 	}
@@ -232,7 +232,7 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EMailTelephoneNumber")
+	@javax.persistence.Column(name = "EMailTelephoneNumber", length = 50)
 	public java.lang.String getEMailTelephoneNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo.EMailTelephoneNumber);
 	}

@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -44753930;
+	private static final long serialVersionUID = -591228010;
 
 	private java.lang.Integer                                       id;
 	private java.lang.Integer                                       authorId;
@@ -26,7 +26,7 @@ public class TBook implements java.io.Serializable {
 	private org.jooq.test.mysql2.generatedclasses.enums.TBookStatus status;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -35,7 +35,7 @@ public class TBook implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 10)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -44,7 +44,7 @@ public class TBook implements java.io.Serializable {
 		this.authorId = authorId;
 	}
 
-	@javax.persistence.Column(name = "co_author_id")
+	@javax.persistence.Column(name = "co_author_id", precision = 10)
 	public java.lang.Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
@@ -53,7 +53,7 @@ public class TBook implements java.io.Serializable {
 		this.coAuthorId = coAuthorId;
 	}
 
-	@javax.persistence.Column(name = "DETAILS_ID")
+	@javax.persistence.Column(name = "DETAILS_ID", precision = 10)
 	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
 	}
@@ -62,7 +62,7 @@ public class TBook implements java.io.Serializable {
 		this.detailsId = detailsId;
 	}
 
-	@javax.persistence.Column(name = "TITLE", nullable = false)
+	@javax.persistence.Column(name = "TITLE", nullable = false, length = 65535)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -71,7 +71,7 @@ public class TBook implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 10)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -80,7 +80,7 @@ public class TBook implements java.io.Serializable {
 		this.publishedIn = publishedIn;
 	}
 
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
 	public org.jooq.test.mysql2.generatedclasses.enums.TLanguage getLanguageId() {
 		return this.languageId;
 	}
@@ -107,7 +107,7 @@ public class TBook implements java.io.Serializable {
 		this.contentPdf = contentPdf;
 	}
 
-	@javax.persistence.Column(name = "STATUS")
+	@javax.persistence.Column(name = "STATUS", length = 8)
 	public org.jooq.test.mysql2.generatedclasses.enums.TBookStatus getStatus() {
 		return this.status;
 	}

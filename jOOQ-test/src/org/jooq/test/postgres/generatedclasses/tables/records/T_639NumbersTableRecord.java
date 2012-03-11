@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_639_numbers_table", schema = "public")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1572715679;
+	private static final long serialVersionUID = 200037366;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
 	}
@@ -42,7 +42,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "short")
+	@javax.persistence.Column(name = "short", precision = 16)
 	public java.lang.Short getShort() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT);
 	}
@@ -57,7 +57,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "integer")
+	@javax.persistence.Column(name = "integer", precision = 32)
 	public java.lang.Integer getInteger() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER);
 	}
@@ -72,7 +72,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "long")
+	@javax.persistence.Column(name = "long", precision = 64)
 	public java.lang.Long getLong() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG);
 	}
@@ -87,7 +87,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "byte_decimal")
+	@javax.persistence.Column(name = "byte_decimal", precision = 2)
 	public java.lang.Byte getByteDecimal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL);
 	}
@@ -102,7 +102,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "short_decimal")
+	@javax.persistence.Column(name = "short_decimal", precision = 4)
 	public java.lang.Short getShortDecimal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL);
 	}
@@ -117,7 +117,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "integer_decimal")
+	@javax.persistence.Column(name = "integer_decimal", precision = 9)
 	public java.lang.Integer getIntegerDecimal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL);
 	}
@@ -132,7 +132,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "long_decimal")
+	@javax.persistence.Column(name = "long_decimal", precision = 18)
 	public java.lang.Long getLongDecimal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL);
 	}
@@ -147,7 +147,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "big_integer")
+	@javax.persistence.Column(name = "big_integer", precision = 22)
 	public java.math.BigInteger getBigInteger() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER);
 	}
@@ -162,7 +162,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "big_decimal")
+	@javax.persistence.Column(name = "big_decimal", precision = 22, scale = 5)
 	public java.math.BigDecimal getBigDecimal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL);
 	}
@@ -177,7 +177,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "float")
+	@javax.persistence.Column(name = "float", precision = 24)
 	public java.lang.Float getFloat() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT);
 	}
@@ -192,7 +192,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "double")
+	@javax.persistence.Column(name = "double", precision = 53)
 	public java.lang.Double getDouble() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE);
 	}

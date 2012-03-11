@@ -65,6 +65,7 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                     ATTRIBUTES.ATTRIBUTE_NAME,
                     ATTRIBUTES.ORDINAL_POSITION,
                     ATTRIBUTES.DATA_TYPE,
+                    ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH,
                     ATTRIBUTES.NUMERIC_PRECISION,
                     ATTRIBUTES.NUMERIC_SCALE,
                     ATTRIBUTES.ATTRIBUTE_UDT_NAME)
@@ -78,6 +79,7 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ATTRIBUTES.DATA_TYPE),
+                record.getValue(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(ATTRIBUTES.NUMERIC_PRECISION),
                 record.getValue(ATTRIBUTES.NUMERIC_SCALE),
                 record.getValue(ATTRIBUTES.ATTRIBUTE_UDT_NAME));

@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_639_numbers_table", schema = "test2")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1934762612;
+	private static final long serialVersionUID = -100384666;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -27,7 +27,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 	private java.lang.Double     double_;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -36,7 +36,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "BYTE")
+	@javax.persistence.Column(name = "BYTE", precision = 3)
 	public java.lang.Byte getByte() {
 		return this.byte_;
 	}
@@ -45,7 +45,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.byte_ = byte_;
 	}
 
-	@javax.persistence.Column(name = "SHORT")
+	@javax.persistence.Column(name = "SHORT", precision = 5)
 	public java.lang.Short getShort() {
 		return this.short_;
 	}
@@ -54,7 +54,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.short_ = short_;
 	}
 
-	@javax.persistence.Column(name = "INTEGER")
+	@javax.persistence.Column(name = "INTEGER", precision = 10)
 	public java.lang.Integer getInteger() {
 		return this.integer;
 	}
@@ -63,7 +63,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.integer = integer;
 	}
 
-	@javax.persistence.Column(name = "LONG")
+	@javax.persistence.Column(name = "LONG", precision = 19)
 	public java.lang.Long getLong() {
 		return this.long_;
 	}
@@ -72,7 +72,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.long_ = long_;
 	}
 
-	@javax.persistence.Column(name = "BYTE_DECIMAL")
+	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	public java.lang.Byte getByteDecimal() {
 		return this.byteDecimal;
 	}
@@ -81,7 +81,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.byteDecimal = byteDecimal;
 	}
 
-	@javax.persistence.Column(name = "SHORT_DECIMAL")
+	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	public java.lang.Short getShortDecimal() {
 		return this.shortDecimal;
 	}
@@ -90,7 +90,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.shortDecimal = shortDecimal;
 	}
 
-	@javax.persistence.Column(name = "INTEGER_DECIMAL")
+	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	public java.lang.Integer getIntegerDecimal() {
 		return this.integerDecimal;
 	}
@@ -99,7 +99,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.integerDecimal = integerDecimal;
 	}
 
-	@javax.persistence.Column(name = "LONG_DECIMAL")
+	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	public java.lang.Long getLongDecimal() {
 		return this.longDecimal;
 	}
@@ -108,7 +108,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.longDecimal = longDecimal;
 	}
 
-	@javax.persistence.Column(name = "BIG_INTEGER")
+	@javax.persistence.Column(name = "BIG_INTEGER", precision = 22)
 	public java.math.BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
@@ -117,7 +117,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.bigInteger = bigInteger;
 	}
 
-	@javax.persistence.Column(name = "BIG_DECIMAL")
+	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 22, scale = 5)
 	public java.math.BigDecimal getBigDecimal() {
 		return this.bigDecimal;
 	}
@@ -126,7 +126,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.bigDecimal = bigDecimal;
 	}
 
-	@javax.persistence.Column(name = "FLOAT")
+	@javax.persistence.Column(name = "FLOAT", precision = 12)
 	public java.lang.Double getFloat() {
 		return this.float_;
 	}
@@ -135,7 +135,7 @@ public class T_639NumbersTable implements java.io.Serializable {
 		this.float_ = float_;
 	}
 
-	@javax.persistence.Column(name = "DOUBLE")
+	@javax.persistence.Column(name = "DOUBLE", precision = 22)
 	public java.lang.Double getDouble() {
 		return this.double_;
 	}

@@ -203,7 +203,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                record.getValue(SEQUENCES.DATA_TYPE), 0, 0);
+                record.getValue(SEQUENCES.DATA_TYPE), 0, 0, 0);
 
             result.add(new DefaultSequenceDefinition(
                 schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ScrapReason", schema = "Production")
 public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> {
 
-	private static final long serialVersionUID = 416744562;
+	private static final long serialVersionUID = 326815798;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ScrapReasonID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ScrapReasonID", unique = true, nullable = false, precision = 5)
 	public java.lang.Short getScrapReasonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.ScrapReasonID);
 	}
@@ -42,7 +42,7 @@ public class ScrapReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason.Name);
 	}

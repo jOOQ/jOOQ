@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class T_BOOLEANS implements java.io.Serializable {
 
-	private static final long serialVersionUID = -654567095;
+	private static final long serialVersionUID = 204184301;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer ONE_ZERO;
@@ -25,7 +25,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 	private java.lang.Integer N_BOOLEAN;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
@@ -34,7 +34,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "ONE_ZERO")
+	@javax.persistence.Column(name = "ONE_ZERO", precision = 7)
 	public java.lang.Integer getONE_ZERO() {
 		return this.ONE_ZERO;
 	}
@@ -43,7 +43,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.ONE_ZERO = ONE_ZERO;
 	}
 
-	@javax.persistence.Column(name = "TRUE_FALSE_LC")
+	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
 	public java.lang.String getTRUE_FALSE_LC() {
 		return this.TRUE_FALSE_LC;
 	}
@@ -52,7 +52,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.TRUE_FALSE_LC = TRUE_FALSE_LC;
 	}
 
-	@javax.persistence.Column(name = "TRUE_FALSE_UC")
+	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
 	public java.lang.String getTRUE_FALSE_UC() {
 		return this.TRUE_FALSE_UC;
 	}
@@ -61,7 +61,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.TRUE_FALSE_UC = TRUE_FALSE_UC;
 	}
 
-	@javax.persistence.Column(name = "YES_NO_LC")
+	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
 	public java.lang.String getYES_NO_LC() {
 		return this.YES_NO_LC;
 	}
@@ -70,7 +70,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.YES_NO_LC = YES_NO_LC;
 	}
 
-	@javax.persistence.Column(name = "YES_NO_UC")
+	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
 	public java.lang.String getYES_NO_UC() {
 		return this.YES_NO_UC;
 	}
@@ -79,7 +79,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.YES_NO_UC = YES_NO_UC;
 	}
 
-	@javax.persistence.Column(name = "Y_N_LC")
+	@javax.persistence.Column(name = "Y_N_LC", length = 1)
 	public java.lang.String getY_N_LC() {
 		return this.Y_N_LC;
 	}
@@ -88,7 +88,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.Y_N_LC = Y_N_LC;
 	}
 
-	@javax.persistence.Column(name = "Y_N_UC")
+	@javax.persistence.Column(name = "Y_N_UC", length = 1)
 	public java.lang.String getY_N_UC() {
 		return this.Y_N_UC;
 	}
@@ -97,7 +97,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.Y_N_UC = Y_N_UC;
 	}
 
-	@javax.persistence.Column(name = "VC_BOOLEAN")
+	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
 	public java.lang.String getVC_BOOLEAN() {
 		return this.VC_BOOLEAN;
 	}
@@ -106,7 +106,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.VC_BOOLEAN = VC_BOOLEAN;
 	}
 
-	@javax.persistence.Column(name = "C_BOOLEAN")
+	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
 	public java.lang.String getC_BOOLEAN() {
 		return this.C_BOOLEAN;
 	}
@@ -115,7 +115,7 @@ public class T_BOOLEANS implements java.io.Serializable {
 		this.C_BOOLEAN = C_BOOLEAN;
 	}
 
-	@javax.persistence.Column(name = "N_BOOLEAN")
+	@javax.persistence.Column(name = "N_BOOLEAN", precision = 7)
 	public java.lang.Integer getN_BOOLEAN() {
 		return this.N_BOOLEAN;
 	}

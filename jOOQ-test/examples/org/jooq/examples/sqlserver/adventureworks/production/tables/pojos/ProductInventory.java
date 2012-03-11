@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class ProductInventory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1750598806;
+	private static final long serialVersionUID = 1132131414;
 
 	private java.lang.Integer  ProductID;
 	private java.lang.Short    LocationID;
@@ -22,7 +22,7 @@ public class ProductInventory implements java.io.Serializable {
 	private java.lang.String   rowguid;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -31,7 +31,7 @@ public class ProductInventory implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "LocationID", nullable = false)
+	@javax.persistence.Column(name = "LocationID", nullable = false, precision = 5)
 	public java.lang.Short getLocationID() {
 		return this.LocationID;
 	}
@@ -40,7 +40,7 @@ public class ProductInventory implements java.io.Serializable {
 		this.LocationID = LocationID;
 	}
 
-	@javax.persistence.Column(name = "Shelf", nullable = false)
+	@javax.persistence.Column(name = "Shelf", nullable = false, length = 10)
 	public java.lang.String getShelf() {
 		return this.Shelf;
 	}
@@ -49,7 +49,7 @@ public class ProductInventory implements java.io.Serializable {
 		this.Shelf = Shelf;
 	}
 
-	@javax.persistence.Column(name = "Bin", nullable = false)
+	@javax.persistence.Column(name = "Bin", nullable = false, precision = 3)
 	public java.lang.Byte getBin() {
 		return this.Bin;
 	}
@@ -58,7 +58,7 @@ public class ProductInventory implements java.io.Serializable {
 		this.Bin = Bin;
 	}
 
-	@javax.persistence.Column(name = "Quantity", nullable = false)
+	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 5)
 	public java.lang.Short getQuantity() {
 		return this.Quantity;
 	}

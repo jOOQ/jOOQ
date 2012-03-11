@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Currency", schema = "Sales")
 public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> {
 
-	private static final long serialVersionUID = 755726080;
+	private static final long serialVersionUID = -1836908586;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CurrencyCode", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CurrencyCode", unique = true, nullable = false, length = 3)
 	public java.lang.String getCurrencyCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.CurrencyCode);
 	}
@@ -42,7 +42,7 @@ public class Currency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Currency.Currency.Name);
 	}

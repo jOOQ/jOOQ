@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class SalesTerritoryHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 671952349;
+	private static final long serialVersionUID = -932464019;
 
 	private java.lang.Integer  SalesPersonID;
 	private java.lang.Integer  TerritoryID;
@@ -21,7 +21,7 @@ public class SalesTerritoryHistory implements java.io.Serializable {
 	private java.lang.String   rowguid;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "SalesPersonID", nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return this.SalesPersonID;
 	}
@@ -30,7 +30,7 @@ public class SalesTerritoryHistory implements java.io.Serializable {
 		this.SalesPersonID = SalesPersonID;
 	}
 
-	@javax.persistence.Column(name = "TerritoryID", nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return this.TerritoryID;
 	}

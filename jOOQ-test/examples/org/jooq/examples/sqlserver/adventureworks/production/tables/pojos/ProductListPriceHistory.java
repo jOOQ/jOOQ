@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class ProductListPriceHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1336866064;
+	private static final long serialVersionUID = -1785389324;
 
 	private java.lang.Integer    ProductID;
 	private java.sql.Timestamp   StartDate;
@@ -20,7 +20,7 @@ public class ProductListPriceHistory implements java.io.Serializable {
 	private java.math.BigDecimal ListPrice;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -47,7 +47,7 @@ public class ProductListPriceHistory implements java.io.Serializable {
 		this.EndDate = EndDate;
 	}
 
-	@javax.persistence.Column(name = "ListPrice", nullable = false)
+	@javax.persistence.Column(name = "ListPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getListPrice() {
 		return this.ListPrice;
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "ShipMethod", schema = "Purchasing")
 public class ShipMethod extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> {
 
-	private static final long serialVersionUID = -1407216984;
+	private static final long serialVersionUID = 1461186656;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ShipMethod extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ShipMethodID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ShipMethodID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getShipMethodID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod.ShipMethodID);
 	}
@@ -42,7 +42,7 @@ public class ShipMethod extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod.Name);
 	}
@@ -57,7 +57,7 @@ public class ShipMethod extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ShipBase", nullable = false)
+	@javax.persistence.Column(name = "ShipBase", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getShipBase() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod.ShipBase);
 	}
@@ -72,7 +72,7 @@ public class ShipMethod extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ShipRate", nullable = false)
+	@javax.persistence.Column(name = "ShipRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getShipRate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod.ShipRate);
 	}

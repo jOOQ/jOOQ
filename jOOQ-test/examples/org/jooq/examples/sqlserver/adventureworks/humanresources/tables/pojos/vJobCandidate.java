@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vJobCandidate", schema = "HumanResources")
 public class vJobCandidate implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2007044112;
+	private static final long serialVersionUID = 1307250023;
 
 	private java.lang.Integer  JobCandidateID;
 	private java.lang.Integer  EmployeeID;
@@ -29,7 +29,7 @@ public class vJobCandidate implements java.io.Serializable {
 	private java.lang.String   WebSite;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "JobCandidateID", nullable = false)
+	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
 		return this.JobCandidateID;
 	}
@@ -38,7 +38,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.JobCandidateID = JobCandidateID;
 	}
 
-	@javax.persistence.Column(name = "EmployeeID")
+	@javax.persistence.Column(name = "EmployeeID", precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return this.EmployeeID;
 	}
@@ -47,7 +47,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.EmployeeID = EmployeeID;
 	}
 
-	@javax.persistence.Column(name = "Name.Prefix")
+	@javax.persistence.Column(name = "Name.Prefix", length = 30)
 	public java.lang.String getName_Prefix() {
 		return this.Name_Prefix;
 	}
@@ -56,7 +56,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Name_Prefix = Name_Prefix;
 	}
 
-	@javax.persistence.Column(name = "Name.First")
+	@javax.persistence.Column(name = "Name.First", length = 30)
 	public java.lang.String getName_First() {
 		return this.Name_First;
 	}
@@ -65,7 +65,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Name_First = Name_First;
 	}
 
-	@javax.persistence.Column(name = "Name.Middle")
+	@javax.persistence.Column(name = "Name.Middle", length = 30)
 	public java.lang.String getName_Middle() {
 		return this.Name_Middle;
 	}
@@ -74,7 +74,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Name_Middle = Name_Middle;
 	}
 
-	@javax.persistence.Column(name = "Name.Last")
+	@javax.persistence.Column(name = "Name.Last", length = 30)
 	public java.lang.String getName_Last() {
 		return this.Name_Last;
 	}
@@ -83,7 +83,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Name_Last = Name_Last;
 	}
 
-	@javax.persistence.Column(name = "Name.Suffix")
+	@javax.persistence.Column(name = "Name.Suffix", length = 30)
 	public java.lang.String getName_Suffix() {
 		return this.Name_Suffix;
 	}
@@ -101,7 +101,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Skills = Skills;
 	}
 
-	@javax.persistence.Column(name = "Addr.Type")
+	@javax.persistence.Column(name = "Addr.Type", length = 30)
 	public java.lang.String getAddr_Type() {
 		return this.Addr_Type;
 	}
@@ -110,7 +110,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Addr_Type = Addr_Type;
 	}
 
-	@javax.persistence.Column(name = "Addr.Loc.CountryRegion")
+	@javax.persistence.Column(name = "Addr.Loc.CountryRegion", length = 100)
 	public java.lang.String getAddr_Loc_CountryRegion() {
 		return this.Addr_Loc_CountryRegion;
 	}
@@ -119,7 +119,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Addr_Loc_CountryRegion = Addr_Loc_CountryRegion;
 	}
 
-	@javax.persistence.Column(name = "Addr.Loc.State")
+	@javax.persistence.Column(name = "Addr.Loc.State", length = 100)
 	public java.lang.String getAddr_Loc_State() {
 		return this.Addr_Loc_State;
 	}
@@ -128,7 +128,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Addr_Loc_State = Addr_Loc_State;
 	}
 
-	@javax.persistence.Column(name = "Addr.Loc.City")
+	@javax.persistence.Column(name = "Addr.Loc.City", length = 100)
 	public java.lang.String getAddr_Loc_City() {
 		return this.Addr_Loc_City;
 	}
@@ -137,7 +137,7 @@ public class vJobCandidate implements java.io.Serializable {
 		this.Addr_Loc_City = Addr_Loc_City;
 	}
 
-	@javax.persistence.Column(name = "Addr.PostalCode")
+	@javax.persistence.Column(name = "Addr.PostalCode", length = 20)
 	public java.lang.String getAddr_PostalCode() {
 		return this.Addr_PostalCode;
 	}

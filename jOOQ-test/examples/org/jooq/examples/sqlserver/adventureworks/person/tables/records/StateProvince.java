@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "StateProvince", schema = "Person")
 public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> {
 
-	private static final long serialVersionUID = -489752546;
+	private static final long serialVersionUID = 927409794;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "StateProvinceID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.StateProvinceID);
 	}
@@ -42,7 +42,7 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StateProvinceCode", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceCode", nullable = false, length = 3)
 	public java.lang.String getStateProvinceCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.StateProvinceCode);
 	}
@@ -69,7 +69,7 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.CountryRegionCode);
 	}
@@ -99,7 +99,7 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.Name);
 	}
@@ -126,7 +126,7 @@ public class StateProvince extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "TerritoryID", nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince.TerritoryID);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> {
 
-	private static final long serialVersionUID = 795661531;
+	private static final long serialVersionUID = -1811363962;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesTaxRateID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesTaxRateID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesTaxRateID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.SalesTaxRateID);
 	}
@@ -54,7 +54,7 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "StateProvinceID", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.StateProvinceID);
 	}
@@ -69,7 +69,7 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TaxType", nullable = false)
+	@javax.persistence.Column(name = "TaxType", nullable = false, precision = 3)
 	public java.lang.Byte getTaxType() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.TaxType);
 	}
@@ -84,7 +84,7 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TaxRate", nullable = false)
+	@javax.persistence.Column(name = "TaxRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getTaxRate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.TaxRate);
 	}
@@ -99,7 +99,7 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTaxRate.SalesTaxRate.Name);
 	}

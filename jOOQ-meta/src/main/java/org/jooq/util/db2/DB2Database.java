@@ -211,6 +211,7 @@ public class DB2Database extends AbstractDatabase {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, schema,
                 record.getValue(Datatypes.TYPENAME),
+                0,
                 record.getValue(Sequences.PRECISION),
                 0);
 

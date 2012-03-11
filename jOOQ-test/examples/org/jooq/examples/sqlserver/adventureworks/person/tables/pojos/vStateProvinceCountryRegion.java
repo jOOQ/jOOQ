@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "vStateProvinceCountryRegion", schema = "Person")
 public class vStateProvinceCountryRegion implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1854848768;
+	private static final long serialVersionUID = 1320861080;
 
 	private java.lang.Integer StateProvinceID;
 	private java.lang.String  StateProvinceCode;
@@ -20,7 +20,7 @@ public class vStateProvinceCountryRegion implements java.io.Serializable {
 	private java.lang.String  CountryRegionCode;
 	private java.lang.String  CountryRegionName;
 
-	@javax.persistence.Column(name = "StateProvinceID", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return this.StateProvinceID;
 	}
@@ -29,7 +29,7 @@ public class vStateProvinceCountryRegion implements java.io.Serializable {
 		this.StateProvinceID = StateProvinceID;
 	}
 
-	@javax.persistence.Column(name = "StateProvinceCode", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceCode", nullable = false, length = 3)
 	public java.lang.String getStateProvinceCode() {
 		return this.StateProvinceCode;
 	}
@@ -47,7 +47,7 @@ public class vStateProvinceCountryRegion implements java.io.Serializable {
 		this.IsOnlyStateProvinceFlag = IsOnlyStateProvinceFlag;
 	}
 
-	@javax.persistence.Column(name = "StateProvinceName", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceName", nullable = false, length = 50)
 	public java.lang.String getStateProvinceName() {
 		return this.StateProvinceName;
 	}
@@ -56,7 +56,7 @@ public class vStateProvinceCountryRegion implements java.io.Serializable {
 		this.StateProvinceName = StateProvinceName;
 	}
 
-	@javax.persistence.Column(name = "TerritoryID", nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return this.TerritoryID;
 	}
@@ -65,7 +65,7 @@ public class vStateProvinceCountryRegion implements java.io.Serializable {
 		this.TerritoryID = TerritoryID;
 	}
 
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return this.CountryRegionCode;
 	}
@@ -74,7 +74,7 @@ public class vStateProvinceCountryRegion implements java.io.Serializable {
 		this.CountryRegionCode = CountryRegionCode;
 	}
 
-	@javax.persistence.Column(name = "CountryRegionName", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionName", nullable = false, length = 50)
 	public java.lang.String getCountryRegionName() {
 		return this.CountryRegionName;
 	}

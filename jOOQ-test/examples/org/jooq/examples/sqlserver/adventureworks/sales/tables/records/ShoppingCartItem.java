@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "ShoppingCartItem", schema = "Sales")
 public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem> {
 
-	private static final long serialVersionUID = -632286363;
+	private static final long serialVersionUID = -1908312939;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ShoppingCartItemID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ShoppingCartItemID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getShoppingCartItemID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ShoppingCartItemID);
 	}
@@ -42,7 +42,7 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ShoppingCartID", nullable = false)
+	@javax.persistence.Column(name = "ShoppingCartID", nullable = false, length = 50)
 	public java.lang.String getShoppingCartID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ShoppingCartID);
 	}
@@ -57,7 +57,7 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Quantity", nullable = false)
+	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.Quantity);
 	}
@@ -84,7 +84,7 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem.ProductID);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Document", schema = "Production")
 public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Document> {
 
-	private static final long serialVersionUID = -148025317;
+	private static final long serialVersionUID = 423074071;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getDocumentID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.DocumentID);
 	}
@@ -42,7 +42,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Title", nullable = false)
+	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Title);
 	}
@@ -57,7 +57,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FileName", nullable = false)
+	@javax.persistence.Column(name = "FileName", nullable = false, length = 400)
 	public java.lang.String getFileName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileName);
 	}
@@ -72,7 +72,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FileExtension", nullable = false)
+	@javax.persistence.Column(name = "FileExtension", nullable = false, length = 8)
 	public java.lang.String getFileExtension() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.FileExtension);
 	}
@@ -87,7 +87,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Revision", nullable = false)
+	@javax.persistence.Column(name = "Revision", nullable = false, length = 5)
 	public java.lang.String getRevision() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Revision);
 	}
@@ -102,7 +102,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ChangeNumber", nullable = false)
+	@javax.persistence.Column(name = "ChangeNumber", nullable = false, precision = 10)
 	public java.lang.Integer getChangeNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.ChangeNumber);
 	}
@@ -117,7 +117,7 @@ public class Document extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Status", nullable = false)
+	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Document.Document.Status);
 	}

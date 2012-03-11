@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "AddressType", schema = "Person")
 public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.AddressType> {
 
-	private static final long serialVersionUID = 472261989;
+	private static final long serialVersionUID = 1497064081;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "AddressTypeID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "AddressTypeID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getAddressTypeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.AddressTypeID);
 	}
@@ -42,7 +42,7 @@ public class AddressType extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.AddressType.AddressType.Name);
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 47723774;
+	private static final long serialVersionUID = 1064587566;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.ID);
 	}
@@ -54,7 +54,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false)
+	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID);
 	}
@@ -98,7 +98,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * REFERENCES TEST.T_BOOK_TO_BOOK_STORE (BOOK_STORE_NAME, BOOK_ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false)
+	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME);
 	}
@@ -113,7 +113,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SOLD_AT", nullable = false)
+	@javax.persistence.Column(name = "SOLD_AT", nullable = false, length = 7)
 	public java.sql.Date getSoldAt() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_AT);
 	}
@@ -128,7 +128,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SOLD_FOR", nullable = false)
+	@javax.persistence.Column(name = "SOLD_FOR", nullable = false, precision = 10, scale = 2)
 	public java.math.BigDecimal getSoldFor() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_FOR);
 	}

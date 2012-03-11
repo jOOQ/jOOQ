@@ -75,6 +75,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		        Columns.COLUMN_TYPE,
     		        Columns.DATA_TYPE,
     		        Columns.IS_NULLABLE,
+    		        Columns.CHARACTER_MAXIMUM_LENGTH,
     		        Columns.NUMERIC_PRECISION,
     		        Columns.NUMERIC_SCALE,
     		        Columns.EXTRA)
@@ -99,6 +100,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 dataType,
+                record.getValue(Columns.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(Columns.NUMERIC_PRECISION),
                 record.getValue(Columns.NUMERIC_SCALE),
                 getName() + "_" + record.getValue(Columns.COLUMN_NAME));

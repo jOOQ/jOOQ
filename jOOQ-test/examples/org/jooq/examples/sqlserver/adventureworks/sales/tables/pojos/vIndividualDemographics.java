@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "vIndividualDemographics", schema = "Sales")
 public class vIndividualDemographics implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1135546026;
+	private static final long serialVersionUID = 1487037718;
 
 	private java.lang.Integer    CustomerID;
 	private java.math.BigDecimal TotalPurchaseYTD;
@@ -26,7 +26,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 	private java.lang.Boolean    HomeOwnerFlag;
 	private java.lang.Integer    NumberCarsOwned;
 
-	@javax.persistence.Column(name = "CustomerID", nullable = false)
+	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
 		return this.CustomerID;
 	}
@@ -35,7 +35,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.CustomerID = CustomerID;
 	}
 
-	@javax.persistence.Column(name = "TotalPurchaseYTD")
+	@javax.persistence.Column(name = "TotalPurchaseYTD", precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalPurchaseYTD() {
 		return this.TotalPurchaseYTD;
 	}
@@ -62,7 +62,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.BirthDate = BirthDate;
 	}
 
-	@javax.persistence.Column(name = "MaritalStatus")
+	@javax.persistence.Column(name = "MaritalStatus", length = 1)
 	public java.lang.String getMaritalStatus() {
 		return this.MaritalStatus;
 	}
@@ -71,7 +71,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.MaritalStatus = MaritalStatus;
 	}
 
-	@javax.persistence.Column(name = "YearlyIncome")
+	@javax.persistence.Column(name = "YearlyIncome", length = 30)
 	public java.lang.String getYearlyIncome() {
 		return this.YearlyIncome;
 	}
@@ -80,7 +80,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.YearlyIncome = YearlyIncome;
 	}
 
-	@javax.persistence.Column(name = "Gender")
+	@javax.persistence.Column(name = "Gender", length = 1)
 	public java.lang.String getGender() {
 		return this.Gender;
 	}
@@ -89,7 +89,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.Gender = Gender;
 	}
 
-	@javax.persistence.Column(name = "TotalChildren")
+	@javax.persistence.Column(name = "TotalChildren", precision = 10)
 	public java.lang.Integer getTotalChildren() {
 		return this.TotalChildren;
 	}
@@ -98,7 +98,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.TotalChildren = TotalChildren;
 	}
 
-	@javax.persistence.Column(name = "NumberChildrenAtHome")
+	@javax.persistence.Column(name = "NumberChildrenAtHome", precision = 10)
 	public java.lang.Integer getNumberChildrenAtHome() {
 		return this.NumberChildrenAtHome;
 	}
@@ -107,7 +107,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.NumberChildrenAtHome = NumberChildrenAtHome;
 	}
 
-	@javax.persistence.Column(name = "Education")
+	@javax.persistence.Column(name = "Education", length = 30)
 	public java.lang.String getEducation() {
 		return this.Education;
 	}
@@ -116,7 +116,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.Education = Education;
 	}
 
-	@javax.persistence.Column(name = "Occupation")
+	@javax.persistence.Column(name = "Occupation", length = 30)
 	public java.lang.String getOccupation() {
 		return this.Occupation;
 	}
@@ -134,7 +134,7 @@ public class vIndividualDemographics implements java.io.Serializable {
 		this.HomeOwnerFlag = HomeOwnerFlag;
 	}
 
-	@javax.persistence.Column(name = "NumberCarsOwned")
+	@javax.persistence.Column(name = "NumberCarsOwned", precision = 10)
 	public java.lang.Integer getNumberCarsOwned() {
 		return this.NumberCarsOwned;
 	}

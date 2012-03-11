@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CreditCard", schema = "Sales")
 public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> {
 
-	private static final long serialVersionUID = 285908767;
+	private static final long serialVersionUID = -1021260457;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CreditCardID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CreditCardID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getCreditCardID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CreditCardID);
 	}
@@ -42,7 +42,7 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CardType", nullable = false)
+	@javax.persistence.Column(name = "CardType", nullable = false, length = 50)
 	public java.lang.String getCardType() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CardType);
 	}
@@ -57,7 +57,7 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CardNumber", nullable = false)
+	@javax.persistence.Column(name = "CardNumber", nullable = false, length = 25)
 	public java.lang.String getCardNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.CardNumber);
 	}
@@ -72,7 +72,7 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ExpMonth", nullable = false)
+	@javax.persistence.Column(name = "ExpMonth", nullable = false, precision = 3)
 	public java.lang.Byte getExpMonth() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.ExpMonth);
 	}
@@ -87,7 +87,7 @@ public class CreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ExpYear", nullable = false)
+	@javax.persistence.Column(name = "ExpYear", nullable = false, precision = 5)
 	public java.lang.Short getExpYear() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard.ExpYear);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Individual", schema = "Sales")
 public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> {
 
-	private static final long serialVersionUID = -313633926;
+	private static final long serialVersionUID = 2146286714;
 
 	/**
 	 * An uncommented item
@@ -39,7 +39,7 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * </pre></code>
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.CustomerID);
 	}
@@ -66,7 +66,7 @@ public class Individual extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Individual.Individual.ContactID);
 	}

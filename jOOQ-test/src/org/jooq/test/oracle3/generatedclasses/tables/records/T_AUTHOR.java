@@ -12,7 +12,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR> {
 
-	private static final long serialVersionUID = 218710393;
+	private static final long serialVersionUID = 871835339;
 
 	/**
 	 * The author ID
@@ -29,7 +29,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID);
 	}
@@ -68,7 +68,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * The author's first name
 	 */
-	@javax.persistence.Column(name = "FIRST_NAME")
+	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFIRST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.FIRST_NAME);
 	}
@@ -83,7 +83,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * The author's last name
 	 */
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLAST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.LAST_NAME);
 	}
@@ -98,7 +98,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * The author's date of birth
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH")
+	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDATE_OF_BIRTH() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.DATE_OF_BIRTH);
 	}
@@ -113,7 +113,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * The author's year of birth
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYEAR_OF_BIRTH() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.YEAR_OF_BIRTH);
 	}
@@ -128,7 +128,7 @@ public class T_AUTHOR extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * The author's address
 	 */
-	@javax.persistence.Column(name = "ADDRESS")
+	@javax.persistence.Column(name = "ADDRESS", length = 1)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ADDRESS);
 	}

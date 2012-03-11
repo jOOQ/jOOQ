@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderDetail> {
 
-	private static final long serialVersionUID = -1461397076;
+	private static final long serialVersionUID = 1939784655;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES Purchasing.PurchaseOrderHeader (PurchaseOrderID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "PurchaseOrderID", nullable = false)
+	@javax.persistence.Column(name = "PurchaseOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getPurchaseOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.PurchaseOrderID);
 	}
@@ -59,7 +59,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "PurchaseOrderDetailID", nullable = false)
+	@javax.persistence.Column(name = "PurchaseOrderDetailID", nullable = false, precision = 10)
 	public java.lang.Integer getPurchaseOrderDetailID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.PurchaseOrderDetailID);
 	}
@@ -89,7 +89,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "OrderQty", nullable = false)
+	@javax.persistence.Column(name = "OrderQty", nullable = false, precision = 5)
 	public java.lang.Short getOrderQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.OrderQty);
 	}
@@ -116,7 +116,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.ProductID);
 	}
@@ -131,7 +131,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "UnitPrice", nullable = false)
+	@javax.persistence.Column(name = "UnitPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getUnitPrice() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.UnitPrice);
 	}
@@ -146,7 +146,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LineTotal", nullable = false)
+	@javax.persistence.Column(name = "LineTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getLineTotal() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.LineTotal);
 	}
@@ -161,7 +161,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ReceivedQty", nullable = false)
+	@javax.persistence.Column(name = "ReceivedQty", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getReceivedQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.ReceivedQty);
 	}
@@ -176,7 +176,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "RejectedQty", nullable = false)
+	@javax.persistence.Column(name = "RejectedQty", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getRejectedQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.RejectedQty);
 	}
@@ -191,7 +191,7 @@ public class PurchaseOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StockedQty", nullable = false)
+	@javax.persistence.Column(name = "StockedQty", nullable = false, precision = 9, scale = 2)
 	public java.math.BigDecimal getStockedQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderDetail.PurchaseOrderDetail.StockedQty);
 	}

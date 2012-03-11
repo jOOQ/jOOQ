@@ -10,13 +10,13 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1087981877;
+	private static final long serialVersionUID = 502301645;
 
 	private java.lang.Integer ID;
 	private java.lang.String  NAME;
 	private java.lang.String  VALUE;
 
-	@javax.persistence.Column(name = "ID")
+	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
@@ -25,7 +25,7 @@ public class T_785 implements java.io.Serializable {
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "NAME")
+	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getNAME() {
 		return this.NAME;
 	}
@@ -34,7 +34,7 @@ public class T_785 implements java.io.Serializable {
 		this.NAME = NAME;
 	}
 
-	@javax.persistence.Column(name = "VALUE")
+	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getVALUE() {
 		return this.VALUE;
 	}

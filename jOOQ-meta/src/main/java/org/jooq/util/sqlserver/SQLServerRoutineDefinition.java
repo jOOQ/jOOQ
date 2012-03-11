@@ -61,11 +61,11 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
      */
     private final String specificName;
 
-    public SQLServerRoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number precision, Number scale) {
+    public SQLServerRoutineDefinition(SchemaDefinition schema, String name, String specificName, String dataType, Number length, Number precision, Number scale) {
         super(schema, null, name, null, null);
 
         if (!StringUtils.isBlank(dataType)) {
-            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), schema, dataType, precision, scale);
+            DataTypeDefinition type = new DefaultDataTypeDefinition(getDatabase(), schema, dataType, length, precision, scale);
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
 
@@ -78,6 +78,7 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.PARAMETER_MODE,
                 PARAMETERS.PARAMETER_NAME,
                 PARAMETERS.DATA_TYPE,
+                PARAMETERS.CHARACTER_MAXIMUM_LENGTH,
                 PARAMETERS.NUMERIC_PRECISION,
                 PARAMETERS.NUMERIC_SCALE,
                 PARAMETERS.ORDINAL_POSITION,
@@ -98,6 +99,7 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(PARAMETERS.DATA_TYPE),
+                record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE));
 

@@ -72,6 +72,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 COLUMNS.IDENTITY_GENERATION,
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
+                COLUMNS.CHARACTER_MAXIMUM_LENGTH,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.UDT_NAME)
@@ -89,6 +90,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValueAsString("datatype"),
+                record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
                 record.getValue(COLUMNS.UDT_NAME));

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "WorkOrder", schema = "Production")
 public class WorkOrder implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1718725967;
+	private static final long serialVersionUID = -881616029;
 
 	private java.lang.Integer  WorkOrderID;
 	private java.lang.Integer  ProductID;
@@ -24,7 +24,7 @@ public class WorkOrder implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "WorkOrderID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "WorkOrderID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getWorkOrderID() {
 		return this.WorkOrderID;
 	}
@@ -33,7 +33,7 @@ public class WorkOrder implements java.io.Serializable {
 		this.WorkOrderID = WorkOrderID;
 	}
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -42,7 +42,7 @@ public class WorkOrder implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "OrderQty", nullable = false)
+	@javax.persistence.Column(name = "OrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getOrderQty() {
 		return this.OrderQty;
 	}
@@ -51,7 +51,7 @@ public class WorkOrder implements java.io.Serializable {
 		this.OrderQty = OrderQty;
 	}
 
-	@javax.persistence.Column(name = "StockedQty", nullable = false)
+	@javax.persistence.Column(name = "StockedQty", nullable = false, precision = 10)
 	public java.lang.Integer getStockedQty() {
 		return this.StockedQty;
 	}
@@ -60,7 +60,7 @@ public class WorkOrder implements java.io.Serializable {
 		this.StockedQty = StockedQty;
 	}
 
-	@javax.persistence.Column(name = "ScrappedQty", nullable = false)
+	@javax.persistence.Column(name = "ScrappedQty", nullable = false, precision = 5)
 	public java.lang.Short getScrappedQty() {
 		return this.ScrappedQty;
 	}
@@ -96,7 +96,7 @@ public class WorkOrder implements java.io.Serializable {
 		this.DueDate = DueDate;
 	}
 
-	@javax.persistence.Column(name = "ScrapReasonID")
+	@javax.persistence.Column(name = "ScrapReasonID", precision = 5)
 	public java.lang.Short getScrapReasonID() {
 		return this.ScrapReasonID;
 	}

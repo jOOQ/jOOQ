@@ -82,6 +82,7 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
                 getSchema(),
                 record.getValue(SYSDOMAIN.DOMAIN_NAME),
                 record.getValue(SYSTABCOL.WIDTH),
+                record.getValue(SYSTABCOL.WIDTH),
                 record.getValue(SYSTABCOL.SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(

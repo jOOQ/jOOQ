@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SalesOrderHeader", schema = "Sales")
 public class SalesOrderHeader implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2037523164;
+	private static final long serialVersionUID = -78270942;
 
 	private java.lang.Integer    SalesOrderID;
 	private java.lang.Byte       RevisionNumber;
@@ -41,7 +41,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesOrderID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesOrderID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderID() {
 		return this.SalesOrderID;
 	}
@@ -50,7 +50,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.SalesOrderID = SalesOrderID;
 	}
 
-	@javax.persistence.Column(name = "RevisionNumber", nullable = false)
+	@javax.persistence.Column(name = "RevisionNumber", nullable = false, precision = 3)
 	public java.lang.Byte getRevisionNumber() {
 		return this.RevisionNumber;
 	}
@@ -86,7 +86,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.ShipDate = ShipDate;
 	}
 
-	@javax.persistence.Column(name = "Status", nullable = false)
+	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
 		return this.Status;
 	}
@@ -104,7 +104,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.OnlineOrderFlag = OnlineOrderFlag;
 	}
 
-	@javax.persistence.Column(name = "SalesOrderNumber", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderNumber", nullable = false, length = 25)
 	public java.lang.String getSalesOrderNumber() {
 		return this.SalesOrderNumber;
 	}
@@ -113,7 +113,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.SalesOrderNumber = SalesOrderNumber;
 	}
 
-	@javax.persistence.Column(name = "PurchaseOrderNumber")
+	@javax.persistence.Column(name = "PurchaseOrderNumber", length = 25)
 	public java.lang.String getPurchaseOrderNumber() {
 		return this.PurchaseOrderNumber;
 	}
@@ -122,7 +122,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.PurchaseOrderNumber = PurchaseOrderNumber;
 	}
 
-	@javax.persistence.Column(name = "AccountNumber")
+	@javax.persistence.Column(name = "AccountNumber", length = 15)
 	public java.lang.String getAccountNumber() {
 		return this.AccountNumber;
 	}
@@ -131,7 +131,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.AccountNumber = AccountNumber;
 	}
 
-	@javax.persistence.Column(name = "CustomerID", nullable = false)
+	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
 		return this.CustomerID;
 	}
@@ -140,7 +140,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.CustomerID = CustomerID;
 	}
 
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return this.ContactID;
 	}
@@ -149,7 +149,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "SalesPersonID")
+	@javax.persistence.Column(name = "SalesPersonID", precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return this.SalesPersonID;
 	}
@@ -158,7 +158,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.SalesPersonID = SalesPersonID;
 	}
 
-	@javax.persistence.Column(name = "TerritoryID")
+	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return this.TerritoryID;
 	}
@@ -167,7 +167,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.TerritoryID = TerritoryID;
 	}
 
-	@javax.persistence.Column(name = "BillToAddressID", nullable = false)
+	@javax.persistence.Column(name = "BillToAddressID", nullable = false, precision = 10)
 	public java.lang.Integer getBillToAddressID() {
 		return this.BillToAddressID;
 	}
@@ -176,7 +176,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.BillToAddressID = BillToAddressID;
 	}
 
-	@javax.persistence.Column(name = "ShipToAddressID", nullable = false)
+	@javax.persistence.Column(name = "ShipToAddressID", nullable = false, precision = 10)
 	public java.lang.Integer getShipToAddressID() {
 		return this.ShipToAddressID;
 	}
@@ -185,7 +185,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.ShipToAddressID = ShipToAddressID;
 	}
 
-	@javax.persistence.Column(name = "ShipMethodID", nullable = false)
+	@javax.persistence.Column(name = "ShipMethodID", nullable = false, precision = 10)
 	public java.lang.Integer getShipMethodID() {
 		return this.ShipMethodID;
 	}
@@ -194,7 +194,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.ShipMethodID = ShipMethodID;
 	}
 
-	@javax.persistence.Column(name = "CreditCardID")
+	@javax.persistence.Column(name = "CreditCardID", precision = 10)
 	public java.lang.Integer getCreditCardID() {
 		return this.CreditCardID;
 	}
@@ -203,7 +203,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.CreditCardID = CreditCardID;
 	}
 
-	@javax.persistence.Column(name = "CreditCardApprovalCode")
+	@javax.persistence.Column(name = "CreditCardApprovalCode", length = 15)
 	public java.lang.String getCreditCardApprovalCode() {
 		return this.CreditCardApprovalCode;
 	}
@@ -212,7 +212,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.CreditCardApprovalCode = CreditCardApprovalCode;
 	}
 
-	@javax.persistence.Column(name = "CurrencyRateID")
+	@javax.persistence.Column(name = "CurrencyRateID", precision = 10)
 	public java.lang.Integer getCurrencyRateID() {
 		return this.CurrencyRateID;
 	}
@@ -221,7 +221,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.CurrencyRateID = CurrencyRateID;
 	}
 
-	@javax.persistence.Column(name = "SubTotal", nullable = false)
+	@javax.persistence.Column(name = "SubTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSubTotal() {
 		return this.SubTotal;
 	}
@@ -230,7 +230,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.SubTotal = SubTotal;
 	}
 
-	@javax.persistence.Column(name = "TaxAmt", nullable = false)
+	@javax.persistence.Column(name = "TaxAmt", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTaxAmt() {
 		return this.TaxAmt;
 	}
@@ -239,7 +239,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.TaxAmt = TaxAmt;
 	}
 
-	@javax.persistence.Column(name = "Freight", nullable = false)
+	@javax.persistence.Column(name = "Freight", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getFreight() {
 		return this.Freight;
 	}
@@ -248,7 +248,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.Freight = Freight;
 	}
 
-	@javax.persistence.Column(name = "TotalDue", nullable = false)
+	@javax.persistence.Column(name = "TotalDue", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalDue() {
 		return this.TotalDue;
 	}
@@ -257,7 +257,7 @@ public class SalesOrderHeader implements java.io.Serializable {
 		this.TotalDue = TotalDue;
 	}
 
-	@javax.persistence.Column(name = "Comment")
+	@javax.persistence.Column(name = "Comment", length = 128)
 	public java.lang.String getComment() {
 		return this.Comment;
 	}

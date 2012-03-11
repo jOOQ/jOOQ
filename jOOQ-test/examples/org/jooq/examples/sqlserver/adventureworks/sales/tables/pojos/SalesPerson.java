@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SalesPerson", schema = "Sales")
 public class SalesPerson implements java.io.Serializable {
 
-	private static final long serialVersionUID = 839231375;
+	private static final long serialVersionUID = 147609774;
 
 	private java.lang.Integer    SalesPersonID;
 	private java.lang.Integer    TerritoryID;
@@ -23,7 +23,7 @@ public class SalesPerson implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesPersonID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return this.SalesPersonID;
 	}
@@ -32,7 +32,7 @@ public class SalesPerson implements java.io.Serializable {
 		this.SalesPersonID = SalesPersonID;
 	}
 
-	@javax.persistence.Column(name = "TerritoryID")
+	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return this.TerritoryID;
 	}
@@ -41,7 +41,7 @@ public class SalesPerson implements java.io.Serializable {
 		this.TerritoryID = TerritoryID;
 	}
 
-	@javax.persistence.Column(name = "SalesQuota")
+	@javax.persistence.Column(name = "SalesQuota", precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
 		return this.SalesQuota;
 	}
@@ -50,7 +50,7 @@ public class SalesPerson implements java.io.Serializable {
 		this.SalesQuota = SalesQuota;
 	}
 
-	@javax.persistence.Column(name = "Bonus", nullable = false)
+	@javax.persistence.Column(name = "Bonus", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getBonus() {
 		return this.Bonus;
 	}
@@ -59,7 +59,7 @@ public class SalesPerson implements java.io.Serializable {
 		this.Bonus = Bonus;
 	}
 
-	@javax.persistence.Column(name = "CommissionPct", nullable = false)
+	@javax.persistence.Column(name = "CommissionPct", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCommissionPct() {
 		return this.CommissionPct;
 	}
@@ -68,7 +68,7 @@ public class SalesPerson implements java.io.Serializable {
 		this.CommissionPct = CommissionPct;
 	}
 
-	@javax.persistence.Column(name = "SalesYTD", nullable = false)
+	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
 		return this.SalesYTD;
 	}
@@ -77,7 +77,7 @@ public class SalesPerson implements java.io.Serializable {
 		this.SalesYTD = SalesYTD;
 	}
 
-	@javax.persistence.Column(name = "SalesLastYear", nullable = false)
+	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
 		return this.SalesLastYear;
 	}

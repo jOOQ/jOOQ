@@ -147,7 +147,7 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
             return getReturnValue().getType();
         }
         else {
-            return new DefaultDataTypeDefinition(getDatabase(), getSchema(), "unknown", 0, 0);
+            return new DefaultDataTypeDefinition(getDatabase(), getSchema(), "unknown", 0, 0, 0);
         }
     }
 

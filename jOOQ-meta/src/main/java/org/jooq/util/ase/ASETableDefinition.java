@@ -65,12 +65,15 @@ public class ASETableDefinition extends AbstractTableDefinition {
 
         int position = 1;
         for (Record record : create().fetchMany("sp_help '" + getName() + "'").get(1)) {
+            String l = record.getValueAsString("Length");
             String p = record.getValueAsString("Prec");
             String s = record.getValueAsString("Scale");
 
+            int length = 0;
             int precision = 0;
             int scale = 0;
 
+            if (l != null && !"null".equalsIgnoreCase(l.trim())) length = Integer.valueOf(l.trim());
             if (p != null && !"null".equalsIgnoreCase(p.trim())) precision = Integer.valueOf(p.trim());
             if (s != null && !"null".equalsIgnoreCase(s.trim())) scale = Integer.valueOf(s.trim());
 
@@ -78,7 +81,9 @@ public class ASETableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValueAsString("Type"),
-                precision, scale);
+                length,
+                precision,
+                scale);
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),

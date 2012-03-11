@@ -12,7 +12,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1648880654;
+	private static final long serialVersionUID = 1955084622;
 
 	/**
 	 * The author ID
@@ -29,7 +29,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID);
 	}
@@ -68,7 +68,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The author's first name
 	 */
-	@javax.persistence.Column(name = "FIRST_NAME")
+	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.FIRST_NAME);
 	}
@@ -83,7 +83,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The author's last name
 	 */
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.LAST_NAME);
 	}
@@ -98,7 +98,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The author's date of birth
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH")
+	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH);
 	}
@@ -113,7 +113,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The author's year of birth
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
 	}
@@ -128,7 +128,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * The author's address
 	 */
-	@javax.persistence.Column(name = "ADDRESS")
+	@javax.persistence.Column(name = "ADDRESS", length = 1)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ADDRESS);
 	}

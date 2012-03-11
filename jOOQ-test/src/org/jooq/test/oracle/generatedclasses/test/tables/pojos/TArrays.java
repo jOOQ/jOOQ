@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArrays implements java.io.Serializable {
 
-	private static final long serialVersionUID = -188147011;
+	private static final long serialVersionUID = -1739262558;
 
 	private java.lang.Integer                                                             id;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord     stringArray;
@@ -19,7 +19,7 @@ public class TArrays implements java.io.Serializable {
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord       dateArray;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -28,7 +28,7 @@ public class TArrays implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "STRING_ARRAY")
+	@javax.persistence.Column(name = "STRING_ARRAY", length = 101)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord getStringArray() {
 		return this.stringArray;
 	}
@@ -37,7 +37,7 @@ public class TArrays implements java.io.Serializable {
 		this.stringArray = stringArray;
 	}
 
-	@javax.persistence.Column(name = "NUMBER_ARRAY")
+	@javax.persistence.Column(name = "NUMBER_ARRAY", length = 109)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord getNumberArray() {
 		return this.numberArray;
 	}
@@ -46,7 +46,7 @@ public class TArrays implements java.io.Serializable {
 		this.numberArray = numberArray;
 	}
 
-	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY")
+	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY", length = 109)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberLongArrayRecord getNumberLongArray() {
 		return this.numberLongArray;
 	}
@@ -55,7 +55,7 @@ public class TArrays implements java.io.Serializable {
 		this.numberLongArray = numberLongArray;
 	}
 
-	@javax.persistence.Column(name = "DATE_ARRAY")
+	@javax.persistence.Column(name = "DATE_ARRAY", length = 49)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord getDateArray() {
 		return this.dateArray;
 	}

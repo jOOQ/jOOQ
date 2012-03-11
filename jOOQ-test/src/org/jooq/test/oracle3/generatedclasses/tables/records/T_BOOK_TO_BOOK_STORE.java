@@ -14,7 +14,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> {
 
-	private static final long serialVersionUID = 1353302551;
+	private static final long serialVersionUID = 1582940826;
 
 	/**
 	 * The book store name
@@ -42,7 +42,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	 * REFERENCES TEST.T_BOOK_STORE (NAME)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false)
+	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	public java.lang.String getBOOK_STORE_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
@@ -91,7 +91,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	 * REFERENCES TEST.T_BOOK (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false)
+	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBOOK_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	}
@@ -124,7 +124,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	/**
 	 * The number of books on stock
 	 */
-	@javax.persistence.Column(name = "STOCK")
+	@javax.persistence.Column(name = "STOCK", precision = 7)
 	public java.lang.Integer getSTOCK() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.STOCK);
 	}

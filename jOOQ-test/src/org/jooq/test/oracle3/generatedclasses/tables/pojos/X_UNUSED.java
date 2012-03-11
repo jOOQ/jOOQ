@@ -14,7 +14,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 })
 public class X_UNUSED implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1765433453;
+	private static final long serialVersionUID = -1973272972;
 
 	private java.lang.Integer    ID;
 	private java.lang.String     NAME;
@@ -33,7 +33,7 @@ public class X_UNUSED implements java.io.Serializable {
 	private java.lang.Integer    MS_UNUSED_ID_REF;
 	private java.lang.String     MS_UNUSED_NAME_REF;
 
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
@@ -42,7 +42,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "NAME", nullable = false)
+	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
 	public java.lang.String getNAME() {
 		return this.NAME;
 	}
@@ -51,7 +51,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.NAME = NAME;
 	}
 
-	@javax.persistence.Column(name = "BIG_INTEGER")
+	@javax.persistence.Column(name = "BIG_INTEGER", precision = 38)
 	public java.math.BigInteger getBIG_INTEGER() {
 		return this.BIG_INTEGER;
 	}
@@ -60,7 +60,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.BIG_INTEGER = BIG_INTEGER;
 	}
 
-	@javax.persistence.Column(name = "ID_REF")
+	@javax.persistence.Column(name = "ID_REF", precision = 7)
 	public java.lang.Integer getID_REF() {
 		return this.ID_REF;
 	}
@@ -69,7 +69,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.ID_REF = ID_REF;
 	}
 
-	@javax.persistence.Column(name = "CLASS")
+	@javax.persistence.Column(name = "CLASS", precision = 7)
 	public java.lang.Integer getCLASS() {
 		return this.CLASS;
 	}
@@ -78,7 +78,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.CLASS = CLASS;
 	}
 
-	@javax.persistence.Column(name = "FIELDS")
+	@javax.persistence.Column(name = "FIELDS", precision = 7)
 	public java.lang.Integer getFIELDS() {
 		return this.FIELDS;
 	}
@@ -87,7 +87,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.FIELDS = FIELDS;
 	}
 
-	@javax.persistence.Column(name = "CONFIGURATION")
+	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
 	public java.lang.Integer getCONFIGURATION() {
 		return this.CONFIGURATION;
 	}
@@ -96,7 +96,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.CONFIGURATION = CONFIGURATION;
 	}
 
-	@javax.persistence.Column(name = "U_D_T")
+	@javax.persistence.Column(name = "U_D_T", precision = 7)
 	public java.lang.Integer getU_D_T() {
 		return this.U_D_T;
 	}
@@ -105,7 +105,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.U_D_T = U_D_T;
 	}
 
-	@javax.persistence.Column(name = "META_DATA")
+	@javax.persistence.Column(name = "META_DATA", precision = 7)
 	public java.lang.Integer getMETA_DATA() {
 		return this.META_DATA;
 	}
@@ -114,7 +114,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.META_DATA = META_DATA;
 	}
 
-	@javax.persistence.Column(name = "TYPE0")
+	@javax.persistence.Column(name = "TYPE0", precision = 7)
 	public java.lang.Integer getTYPE0() {
 		return this.TYPE0;
 	}
@@ -123,7 +123,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.TYPE0 = TYPE0;
 	}
 
-	@javax.persistence.Column(name = "PRIMARY_KEY")
+	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
 	public java.lang.Integer getPRIMARY_KEY() {
 		return this.PRIMARY_KEY;
 	}
@@ -132,7 +132,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.PRIMARY_KEY = PRIMARY_KEY;
 	}
 
-	@javax.persistence.Column(name = "PRIMARYKEY")
+	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
 	public java.lang.Integer getPRIMARYKEY() {
 		return this.PRIMARYKEY;
 	}
@@ -141,7 +141,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.PRIMARYKEY = PRIMARYKEY;
 	}
 
-	@javax.persistence.Column(name = "NAME_REF")
+	@javax.persistence.Column(name = "NAME_REF", length = 10)
 	public java.lang.String getNAME_REF() {
 		return this.NAME_REF;
 	}
@@ -150,7 +150,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.NAME_REF = NAME_REF;
 	}
 
-	@javax.persistence.Column(name = "FIELD 737")
+	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getFIELD_737() {
 		return this.FIELD_737;
 	}
@@ -159,7 +159,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.FIELD_737 = FIELD_737;
 	}
 
-	@javax.persistence.Column(name = "MS_UNUSED_ID_REF")
+	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
 	public java.lang.Integer getMS_UNUSED_ID_REF() {
 		return this.MS_UNUSED_ID_REF;
 	}
@@ -168,7 +168,7 @@ public class X_UNUSED implements java.io.Serializable {
 		this.MS_UNUSED_ID_REF = MS_UNUSED_ID_REF;
 	}
 
-	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF")
+	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
 	public java.lang.String getMS_UNUSED_NAME_REF() {
 		return this.MS_UNUSED_NAME_REF;
 	}

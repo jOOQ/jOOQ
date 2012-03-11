@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "CreditCard", schema = "Sales")
 public class CreditCard implements java.io.Serializable {
 
-	private static final long serialVersionUID = 50191175;
+	private static final long serialVersionUID = 1337536643;
 
 	private java.lang.Integer  CreditCardID;
 	private java.lang.String   CardType;
@@ -20,7 +20,7 @@ public class CreditCard implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CreditCardID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CreditCardID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getCreditCardID() {
 		return this.CreditCardID;
 	}
@@ -29,7 +29,7 @@ public class CreditCard implements java.io.Serializable {
 		this.CreditCardID = CreditCardID;
 	}
 
-	@javax.persistence.Column(name = "CardType", nullable = false)
+	@javax.persistence.Column(name = "CardType", nullable = false, length = 50)
 	public java.lang.String getCardType() {
 		return this.CardType;
 	}
@@ -38,7 +38,7 @@ public class CreditCard implements java.io.Serializable {
 		this.CardType = CardType;
 	}
 
-	@javax.persistence.Column(name = "CardNumber", nullable = false)
+	@javax.persistence.Column(name = "CardNumber", nullable = false, length = 25)
 	public java.lang.String getCardNumber() {
 		return this.CardNumber;
 	}
@@ -47,7 +47,7 @@ public class CreditCard implements java.io.Serializable {
 		this.CardNumber = CardNumber;
 	}
 
-	@javax.persistence.Column(name = "ExpMonth", nullable = false)
+	@javax.persistence.Column(name = "ExpMonth", nullable = false, precision = 3)
 	public java.lang.Byte getExpMonth() {
 		return this.ExpMonth;
 	}
@@ -56,7 +56,7 @@ public class CreditCard implements java.io.Serializable {
 		this.ExpMonth = ExpMonth;
 	}
 
-	@javax.persistence.Column(name = "ExpYear", nullable = false)
+	@javax.persistence.Column(name = "ExpYear", nullable = false, precision = 5)
 	public java.lang.Short getExpYear() {
 		return this.ExpYear;
 	}

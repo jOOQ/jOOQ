@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "vSalesPersonSalesByFiscalYears", schema = "Sales")
 public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1864111700;
+	private static final long serialVersionUID = -664734633;
 
 	private java.lang.Integer    SalesPersonID;
 	private java.lang.String     FullName;
@@ -20,7 +20,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 	private java.math.BigDecimal _2003;
 	private java.math.BigDecimal _2004;
 
-	@javax.persistence.Column(name = "SalesPersonID")
+	@javax.persistence.Column(name = "SalesPersonID", precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return this.SalesPersonID;
 	}
@@ -29,7 +29,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 		this.SalesPersonID = SalesPersonID;
 	}
 
-	@javax.persistence.Column(name = "FullName")
+	@javax.persistence.Column(name = "FullName", length = 152)
 	public java.lang.String getFullName() {
 		return this.FullName;
 	}
@@ -38,7 +38,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 		this.FullName = FullName;
 	}
 
-	@javax.persistence.Column(name = "Title", nullable = false)
+	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
 		return this.Title;
 	}
@@ -47,7 +47,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "SalesTerritory", nullable = false)
+	@javax.persistence.Column(name = "SalesTerritory", nullable = false, length = 50)
 	public java.lang.String getSalesTerritory() {
 		return this.SalesTerritory;
 	}
@@ -56,7 +56,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 		this.SalesTerritory = SalesTerritory;
 	}
 
-	@javax.persistence.Column(name = "2002")
+	@javax.persistence.Column(name = "2002", precision = 19, scale = 4)
 	public java.math.BigDecimal get2002() {
 		return this._2002;
 	}
@@ -65,7 +65,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 		this._2002 = _2002;
 	}
 
-	@javax.persistence.Column(name = "2003")
+	@javax.persistence.Column(name = "2003", precision = 19, scale = 4)
 	public java.math.BigDecimal get2003() {
 		return this._2003;
 	}
@@ -74,7 +74,7 @@ public class vSalesPersonSalesByFiscalYears implements java.io.Serializable {
 		this._2003 = _2003;
 	}
 
-	@javax.persistence.Column(name = "2004")
+	@javax.persistence.Column(name = "2004", precision = 19, scale = 4)
 	public java.math.BigDecimal get2004() {
 		return this._2004;
 	}

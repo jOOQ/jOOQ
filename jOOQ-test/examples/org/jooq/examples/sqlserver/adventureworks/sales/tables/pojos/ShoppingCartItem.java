@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "ShoppingCartItem", schema = "Sales")
 public class ShoppingCartItem implements java.io.Serializable {
 
-	private static final long serialVersionUID = -771874178;
+	private static final long serialVersionUID = 966402692;
 
 	private java.lang.Integer  ShoppingCartItemID;
 	private java.lang.String   ShoppingCartID;
@@ -20,7 +20,7 @@ public class ShoppingCartItem implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ShoppingCartItemID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ShoppingCartItemID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getShoppingCartItemID() {
 		return this.ShoppingCartItemID;
 	}
@@ -29,7 +29,7 @@ public class ShoppingCartItem implements java.io.Serializable {
 		this.ShoppingCartItemID = ShoppingCartItemID;
 	}
 
-	@javax.persistence.Column(name = "ShoppingCartID", nullable = false)
+	@javax.persistence.Column(name = "ShoppingCartID", nullable = false, length = 50)
 	public java.lang.String getShoppingCartID() {
 		return this.ShoppingCartID;
 	}
@@ -38,7 +38,7 @@ public class ShoppingCartItem implements java.io.Serializable {
 		this.ShoppingCartID = ShoppingCartID;
 	}
 
-	@javax.persistence.Column(name = "Quantity", nullable = false)
+	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
 		return this.Quantity;
 	}
@@ -47,7 +47,7 @@ public class ShoppingCartItem implements java.io.Serializable {
 		this.Quantity = Quantity;
 	}
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}

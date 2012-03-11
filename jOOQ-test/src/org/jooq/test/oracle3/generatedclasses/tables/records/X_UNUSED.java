@@ -14,7 +14,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> {
 
-	private static final long serialVersionUID = 2089874201;
+	private static final long serialVersionUID = 2141485502;
 
 	/**
 	 * An uncommented item
@@ -30,7 +30,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID);
 	}
@@ -87,7 +87,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "NAME", nullable = false)
+	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
 	public java.lang.String getNAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME);
 	}
@@ -102,7 +102,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "BIG_INTEGER")
+	@javax.persistence.Column(name = "BIG_INTEGER", precision = 38)
 	public java.math.BigInteger getBIG_INTEGER() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.BIG_INTEGER);
 	}
@@ -129,7 +129,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ID_REF")
+	@javax.persistence.Column(name = "ID_REF", precision = 7)
 	public java.lang.Integer getID_REF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID_REF);
 	}
@@ -161,7 +161,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CLASS")
+	@javax.persistence.Column(name = "CLASS", precision = 7)
 	public java.lang.Integer getCLASS() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CLASS);
 	}
@@ -176,7 +176,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FIELDS")
+	@javax.persistence.Column(name = "FIELDS", precision = 7)
 	public java.lang.Integer getFIELDS() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELDS);
 	}
@@ -191,7 +191,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONFIGURATION")
+	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
 	public java.lang.Integer getCONFIGURATION() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CONFIGURATION);
 	}
@@ -206,7 +206,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "U_D_T")
+	@javax.persistence.Column(name = "U_D_T", precision = 7)
 	public java.lang.Integer getU_D_T() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.U_D_T);
 	}
@@ -221,7 +221,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "META_DATA")
+	@javax.persistence.Column(name = "META_DATA", precision = 7)
 	public java.lang.Integer getMETA_DATA() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.META_DATA);
 	}
@@ -236,7 +236,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TYPE0")
+	@javax.persistence.Column(name = "TYPE0", precision = 7)
 	public java.lang.Integer getTYPE0() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.TYPE0);
 	}
@@ -251,7 +251,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PRIMARY_KEY")
+	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
 	public java.lang.Integer getPRIMARY_KEY() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARY_KEY);
 	}
@@ -266,7 +266,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PRIMARYKEY")
+	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
 	public java.lang.Integer getPRIMARYKEY() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARYKEY);
 	}
@@ -293,7 +293,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * REFERENCES TEST.X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "NAME_REF")
+	@javax.persistence.Column(name = "NAME_REF", length = 10)
 	public java.lang.String getNAME_REF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF);
 	}
@@ -308,7 +308,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FIELD 737")
+	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getFIELD_737() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELD_737);
 	}
@@ -323,7 +323,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MS_UNUSED_ID_REF")
+	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
 	public java.lang.Integer getMS_UNUSED_ID_REF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_ID_REF);
 	}
@@ -338,7 +338,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF")
+	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
 	public java.lang.String getMS_UNUSED_NAME_REF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_NAME_REF);
 	}

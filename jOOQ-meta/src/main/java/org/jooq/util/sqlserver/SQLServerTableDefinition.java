@@ -71,6 +71,7 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
                 COLUMNS.ORDINAL_POSITION,
                 COLUMNS.DATA_TYPE,
                 COLUMNS.IS_NULLABLE,
+                COLUMNS.CHARACTER_MAXIMUM_LENGTH,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 identity)
@@ -90,6 +91,7 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(COLUMNS.DATA_TYPE),
+                record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
                 "");

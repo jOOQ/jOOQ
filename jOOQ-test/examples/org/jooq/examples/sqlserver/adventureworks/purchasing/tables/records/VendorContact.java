@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> {
 
-	private static final long serialVersionUID = -80423090;
+	private static final long serialVersionUID = -1986465786;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "VendorID", nullable = false)
+	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.VendorID);
 	}
@@ -71,7 +71,7 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ContactID);
 	}
@@ -98,7 +98,7 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Person.ContactType (ContactTypeID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ContactTypeID", nullable = false)
+	@javax.persistence.Column(name = "ContactTypeID", nullable = false, precision = 10)
 	public java.lang.Integer getContactTypeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact.ContactTypeID);
 	}

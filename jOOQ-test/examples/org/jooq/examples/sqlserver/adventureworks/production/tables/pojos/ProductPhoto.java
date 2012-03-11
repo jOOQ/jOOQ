@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "ProductPhoto", schema = "Production")
 public class ProductPhoto implements java.io.Serializable {
 
-	private static final long serialVersionUID = -90211879;
+	private static final long serialVersionUID = -1387322169;
 
 	private java.lang.Integer  ProductPhotoID;
 	private byte[]             ThumbNailPhoto;
@@ -20,7 +20,7 @@ public class ProductPhoto implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductPhotoID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductPhotoID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductPhotoID() {
 		return this.ProductPhotoID;
 	}
@@ -38,7 +38,7 @@ public class ProductPhoto implements java.io.Serializable {
 		this.ThumbNailPhoto = ThumbNailPhoto;
 	}
 
-	@javax.persistence.Column(name = "ThumbnailPhotoFileName")
+	@javax.persistence.Column(name = "ThumbnailPhotoFileName", length = 50)
 	public java.lang.String getThumbnailPhotoFileName() {
 		return this.ThumbnailPhotoFileName;
 	}
@@ -56,7 +56,7 @@ public class ProductPhoto implements java.io.Serializable {
 		this.LargePhoto = LargePhoto;
 	}
 
-	@javax.persistence.Column(name = "LargePhotoFileName")
+	@javax.persistence.Column(name = "LargePhotoFileName", length = 50)
 	public java.lang.String getLargePhotoFileName() {
 		return this.LargePhotoFileName;
 	}

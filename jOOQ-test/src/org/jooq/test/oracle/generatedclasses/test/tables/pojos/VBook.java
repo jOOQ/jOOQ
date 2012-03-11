@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1129283384;
+	private static final long serialVersionUID = 727181009;
 
 	private java.lang.Integer id;
 	private java.lang.Integer authorId;
@@ -22,7 +22,7 @@ public class VBook implements java.io.Serializable {
 	private java.lang.String  contentText;
 	private byte[]            contentPdf;
 
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -31,7 +31,7 @@ public class VBook implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -40,7 +40,7 @@ public class VBook implements java.io.Serializable {
 		this.authorId = authorId;
 	}
 
-	@javax.persistence.Column(name = "CO_AUTHOR_ID")
+	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
@@ -49,7 +49,7 @@ public class VBook implements java.io.Serializable {
 		this.coAuthorId = coAuthorId;
 	}
 
-	@javax.persistence.Column(name = "DETAILS_ID")
+	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
 	}
@@ -58,7 +58,7 @@ public class VBook implements java.io.Serializable {
 		this.detailsId = detailsId;
 	}
 
-	@javax.persistence.Column(name = "TITLE", nullable = false)
+	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -67,7 +67,7 @@ public class VBook implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -76,7 +76,7 @@ public class VBook implements java.io.Serializable {
 		this.publishedIn = publishedIn;
 	}
 
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
@@ -85,7 +85,7 @@ public class VBook implements java.io.Serializable {
 		this.languageId = languageId;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_TEXT")
+	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
 	public java.lang.String getContentText() {
 		return this.contentText;
 	}
@@ -94,7 +94,7 @@ public class VBook implements java.io.Serializable {
 		this.contentText = contentText;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_PDF")
+	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
 	public byte[] getContentPdf() {
 		return this.contentPdf;
 	}

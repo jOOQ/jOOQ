@@ -230,6 +230,7 @@ public class PostgresDatabase extends AbstractDatabase {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, schema,
                 record.getValue(SEQUENCES.DATA_TYPE),
+                0,
                 record.getValue(SEQUENCES.NUMERIC_PRECISION),
                 record.getValue(SEQUENCES.NUMERIC_SCALE));
 
@@ -326,6 +327,7 @@ public class PostgresDatabase extends AbstractDatabase {
                         .and(upper(PARAMETERS.PARAMETER_MODE).notEqual("IN"))),
                             val("void"))
                     .otherwise(r1.DATA_TYPE).as("data_type"),
+                r1.CHARACTER_MAXIMUM_LENGTH,
                 r1.NUMERIC_PRECISION,
                 r1.NUMERIC_SCALE,
                 r1.TYPE_UDT_NAME,

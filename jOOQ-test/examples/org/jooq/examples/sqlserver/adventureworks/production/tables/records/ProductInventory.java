@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> {
 
-	private static final long serialVersionUID = 988791277;
+	private static final long serialVersionUID = 1419459639;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.ProductID);
 	}
@@ -71,7 +71,7 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "LocationID", nullable = false)
+	@javax.persistence.Column(name = "LocationID", nullable = false, precision = 5)
 	public java.lang.Short getLocationID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.LocationID);
 	}
@@ -86,7 +86,7 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Shelf", nullable = false)
+	@javax.persistence.Column(name = "Shelf", nullable = false, length = 10)
 	public java.lang.String getShelf() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Shelf);
 	}
@@ -101,7 +101,7 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Bin", nullable = false)
+	@javax.persistence.Column(name = "Bin", nullable = false, precision = 3)
 	public java.lang.Byte getBin() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Bin);
 	}
@@ -116,7 +116,7 @@ public class ProductInventory extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Quantity", nullable = false)
+	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 5)
 	public java.lang.Short getQuantity() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductInventory.ProductInventory.Quantity);
 	}

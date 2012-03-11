@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = 765152860;
+	private static final long serialVersionUID = 254221809;
 
 	private java.lang.Integer                                         id;
 	private java.lang.Integer                                         authorId;
@@ -24,7 +24,7 @@ public class TBook implements java.io.Serializable {
 	private org.jooq.test.postgres.generatedclasses.enums.UBookStatus status;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -33,7 +33,7 @@ public class TBook implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "author_id", nullable = false)
+	@javax.persistence.Column(name = "author_id", nullable = false, precision = 32)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -42,7 +42,7 @@ public class TBook implements java.io.Serializable {
 		this.authorId = authorId;
 	}
 
-	@javax.persistence.Column(name = "co_author_id")
+	@javax.persistence.Column(name = "co_author_id", precision = 32)
 	public java.lang.Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
@@ -51,7 +51,7 @@ public class TBook implements java.io.Serializable {
 		this.coAuthorId = coAuthorId;
 	}
 
-	@javax.persistence.Column(name = "details_id")
+	@javax.persistence.Column(name = "details_id", precision = 32)
 	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
 	}
@@ -60,7 +60,7 @@ public class TBook implements java.io.Serializable {
 		this.detailsId = detailsId;
 	}
 
-	@javax.persistence.Column(name = "title", nullable = false)
+	@javax.persistence.Column(name = "title", nullable = false, length = 400)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -69,7 +69,7 @@ public class TBook implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@javax.persistence.Column(name = "published_in", nullable = false)
+	@javax.persistence.Column(name = "published_in", nullable = false, precision = 32)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -78,7 +78,7 @@ public class TBook implements java.io.Serializable {
 		this.publishedIn = publishedIn;
 	}
 
-	@javax.persistence.Column(name = "language_id", nullable = false)
+	@javax.persistence.Column(name = "language_id", nullable = false, precision = 32)
 	public org.jooq.test.postgres.generatedclasses.enums.TLanguage getLanguageId() {
 		return this.languageId;
 	}

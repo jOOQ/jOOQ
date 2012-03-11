@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class WorkOrderRouting implements java.io.Serializable {
 
-	private static final long serialVersionUID = 709046083;
+	private static final long serialVersionUID = 374057530;
 
 	private java.lang.Integer    WorkOrderID;
 	private java.lang.Integer    ProductID;
@@ -27,7 +27,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 	private java.math.BigDecimal ActualCost;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "WorkOrderID", nullable = false)
+	@javax.persistence.Column(name = "WorkOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getWorkOrderID() {
 		return this.WorkOrderID;
 	}
@@ -36,7 +36,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 		this.WorkOrderID = WorkOrderID;
 	}
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -45,7 +45,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "OperationSequence", nullable = false)
+	@javax.persistence.Column(name = "OperationSequence", nullable = false, precision = 5)
 	public java.lang.Short getOperationSequence() {
 		return this.OperationSequence;
 	}
@@ -54,7 +54,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 		this.OperationSequence = OperationSequence;
 	}
 
-	@javax.persistence.Column(name = "LocationID", nullable = false)
+	@javax.persistence.Column(name = "LocationID", nullable = false, precision = 5)
 	public java.lang.Short getLocationID() {
 		return this.LocationID;
 	}
@@ -99,7 +99,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 		this.ActualEndDate = ActualEndDate;
 	}
 
-	@javax.persistence.Column(name = "ActualResourceHrs")
+	@javax.persistence.Column(name = "ActualResourceHrs", precision = 9, scale = 4)
 	public java.math.BigDecimal getActualResourceHrs() {
 		return this.ActualResourceHrs;
 	}
@@ -108,7 +108,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 		this.ActualResourceHrs = ActualResourceHrs;
 	}
 
-	@javax.persistence.Column(name = "PlannedCost", nullable = false)
+	@javax.persistence.Column(name = "PlannedCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getPlannedCost() {
 		return this.PlannedCost;
 	}
@@ -117,7 +117,7 @@ public class WorkOrderRouting implements java.io.Serializable {
 		this.PlannedCost = PlannedCost;
 	}
 
-	@javax.persistence.Column(name = "ActualCost")
+	@javax.persistence.Column(name = "ActualCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getActualCost() {
 		return this.ActualCost;
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vJobCandidateEducation", schema = "HumanResources")
 public class vJobCandidateEducation implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1747829609;
+	private static final long serialVersionUID = 54483795;
 
 	private java.lang.Integer  JobCandidateID;
 	private java.lang.String   Edu_Level;
@@ -26,7 +26,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 	private java.lang.String   Edu_Loc_State;
 	private java.lang.String   Edu_Loc_City;
 
-	@javax.persistence.Column(name = "JobCandidateID", nullable = false)
+	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
 		return this.JobCandidateID;
 	}
@@ -62,7 +62,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_EndDate = Edu_EndDate;
 	}
 
-	@javax.persistence.Column(name = "Edu.Degree")
+	@javax.persistence.Column(name = "Edu.Degree", length = 50)
 	public java.lang.String getEdu_Degree() {
 		return this.Edu_Degree;
 	}
@@ -71,7 +71,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_Degree = Edu_Degree;
 	}
 
-	@javax.persistence.Column(name = "Edu.Major")
+	@javax.persistence.Column(name = "Edu.Major", length = 50)
 	public java.lang.String getEdu_Major() {
 		return this.Edu_Major;
 	}
@@ -80,7 +80,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_Major = Edu_Major;
 	}
 
-	@javax.persistence.Column(name = "Edu.Minor")
+	@javax.persistence.Column(name = "Edu.Minor", length = 50)
 	public java.lang.String getEdu_Minor() {
 		return this.Edu_Minor;
 	}
@@ -89,7 +89,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_Minor = Edu_Minor;
 	}
 
-	@javax.persistence.Column(name = "Edu.GPA")
+	@javax.persistence.Column(name = "Edu.GPA", length = 5)
 	public java.lang.String getEdu_GPA() {
 		return this.Edu_GPA;
 	}
@@ -98,7 +98,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_GPA = Edu_GPA;
 	}
 
-	@javax.persistence.Column(name = "Edu.GPAScale")
+	@javax.persistence.Column(name = "Edu.GPAScale", length = 5)
 	public java.lang.String getEdu_GPAScale() {
 		return this.Edu_GPAScale;
 	}
@@ -107,7 +107,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_GPAScale = Edu_GPAScale;
 	}
 
-	@javax.persistence.Column(name = "Edu.School")
+	@javax.persistence.Column(name = "Edu.School", length = 100)
 	public java.lang.String getEdu_School() {
 		return this.Edu_School;
 	}
@@ -116,7 +116,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_School = Edu_School;
 	}
 
-	@javax.persistence.Column(name = "Edu.Loc.CountryRegion")
+	@javax.persistence.Column(name = "Edu.Loc.CountryRegion", length = 100)
 	public java.lang.String getEdu_Loc_CountryRegion() {
 		return this.Edu_Loc_CountryRegion;
 	}
@@ -125,7 +125,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_Loc_CountryRegion = Edu_Loc_CountryRegion;
 	}
 
-	@javax.persistence.Column(name = "Edu.Loc.State")
+	@javax.persistence.Column(name = "Edu.Loc.State", length = 100)
 	public java.lang.String getEdu_Loc_State() {
 		return this.Edu_Loc_State;
 	}
@@ -134,7 +134,7 @@ public class vJobCandidateEducation implements java.io.Serializable {
 		this.Edu_Loc_State = Edu_Loc_State;
 	}
 
-	@javax.persistence.Column(name = "Edu.Loc.City")
+	@javax.persistence.Column(name = "Edu.Loc.City", length = 100)
 	public java.lang.String getEdu_Loc_City() {
 		return this.Edu_Loc_City;
 	}

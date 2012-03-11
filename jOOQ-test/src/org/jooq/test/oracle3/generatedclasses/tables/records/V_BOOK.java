@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_BOOK> {
 
-	private static final long serialVersionUID = -443375681;
+	private static final long serialVersionUID = -2037335054;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.ID);
 	}
@@ -37,7 +37,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false)
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAUTHOR_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.AUTHOR_ID);
 	}
@@ -52,7 +52,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID")
+	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCO_AUTHOR_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.CO_AUTHOR_ID);
 	}
@@ -67,7 +67,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "DETAILS_ID")
+	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDETAILS_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.DETAILS_ID);
 	}
@@ -82,7 +82,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TITLE", nullable = false)
+	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.TITLE);
 	}
@@ -97,7 +97,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false)
+	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPUBLISHED_IN() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.PUBLISHED_IN);
 	}
@@ -112,7 +112,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false)
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLANGUAGE_ID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.LANGUAGE_ID);
 	}
@@ -127,7 +127,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONTENT_TEXT")
+	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
 	public java.lang.String getCONTENT_TEXT() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.CONTENT_TEXT);
 	}
@@ -142,7 +142,7 @@ public class V_BOOK extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CONTENT_PDF")
+	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
 	public byte[] getCONTENT_PDF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK.CONTENT_PDF);
 	}

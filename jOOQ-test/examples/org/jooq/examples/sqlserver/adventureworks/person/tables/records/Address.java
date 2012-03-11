@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "Address", schema = "Person")
 public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address> {
 
-	private static final long serialVersionUID = -1129824911;
+	private static final long serialVersionUID = -739542774;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "AddressID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "AddressID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getAddressID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressID);
 	}
@@ -42,7 +42,7 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AddressLine1", nullable = false)
+	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressLine1);
 	}
@@ -57,7 +57,7 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AddressLine2")
+	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.AddressLine2);
 	}
@@ -72,7 +72,7 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "City", nullable = false)
+	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.City);
 	}
@@ -99,7 +99,7 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * REFERENCES Person.StateProvince (StateProvinceID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "StateProvinceID", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.StateProvinceID);
 	}
@@ -114,7 +114,7 @@ public class Address extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PostalCode", nullable = false)
+	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Address.Address.PostalCode);
 	}

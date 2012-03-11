@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesTerritory", schema = "Sales")
 public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritory> {
 
-	private static final long serialVersionUID = 2085992577;
+	private static final long serialVersionUID = 333568597;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "TerritoryID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.TerritoryID);
 	}
@@ -42,7 +42,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.Name);
 	}
@@ -57,7 +57,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.CountryRegionCode);
 	}
@@ -72,7 +72,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Group", nullable = false)
+	@javax.persistence.Column(name = "Group", nullable = false, length = 50)
 	public java.lang.String getGroup() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.Group);
 	}
@@ -87,7 +87,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesYTD", nullable = false)
+	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.SalesYTD);
 	}
@@ -102,7 +102,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesLastYear", nullable = false)
+	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.SalesLastYear);
 	}
@@ -117,7 +117,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CostYTD", nullable = false)
+	@javax.persistence.Column(name = "CostYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getCostYTD() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.CostYTD);
 	}
@@ -132,7 +132,7 @@ public class SalesTerritory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CostLastYear", nullable = false)
+	@javax.persistence.Column(name = "CostLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getCostLastYear() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritory.SalesTerritory.CostLastYear);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductReview", schema = "Production")
 public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview> {
 
-	private static final long serialVersionUID = -27967717;
+	private static final long serialVersionUID = 1525480884;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductReviewID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductReviewID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductReviewID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ProductReviewID);
 	}
@@ -54,7 +54,7 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ProductID);
 	}
@@ -69,7 +69,7 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ReviewerName", nullable = false)
+	@javax.persistence.Column(name = "ReviewerName", nullable = false, length = 50)
 	public java.lang.String getReviewerName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.ReviewerName);
 	}
@@ -99,7 +99,7 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EmailAddress", nullable = false)
+	@javax.persistence.Column(name = "EmailAddress", nullable = false, length = 50)
 	public java.lang.String getEmailAddress() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.EmailAddress);
 	}
@@ -114,7 +114,7 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Rating", nullable = false)
+	@javax.persistence.Column(name = "Rating", nullable = false, precision = 10)
 	public java.lang.Integer getRating() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.Rating);
 	}
@@ -129,7 +129,7 @@ public class ProductReview extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Comments")
+	@javax.persistence.Column(name = "Comments", length = 3850)
 	public java.lang.String getComments() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductReview.ProductReview.Comments);
 	}

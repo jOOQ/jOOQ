@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPersonQuotaHistory> {
 
-	private static final long serialVersionUID = -1834877871;
+	private static final long serialVersionUID = -1127631717;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SalesPersonID", nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.SalesPersonID);
 	}
@@ -74,7 +74,7 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesQuota", nullable = false)
+	@javax.persistence.Column(name = "SalesQuota", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory.SalesQuota);
 	}

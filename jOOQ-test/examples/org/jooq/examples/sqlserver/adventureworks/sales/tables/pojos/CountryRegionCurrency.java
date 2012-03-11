@@ -12,13 +12,13 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class CountryRegionCurrency implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1024554103;
+	private static final long serialVersionUID = 1163629495;
 
 	private java.lang.String   CountryRegionCode;
 	private java.lang.String   CurrencyCode;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return this.CountryRegionCode;
 	}
@@ -27,7 +27,7 @@ public class CountryRegionCurrency implements java.io.Serializable {
 		this.CountryRegionCode = CountryRegionCode;
 	}
 
-	@javax.persistence.Column(name = "CurrencyCode", nullable = false)
+	@javax.persistence.Column(name = "CurrencyCode", nullable = false, length = 3)
 	public java.lang.String getCurrencyCode() {
 		return this.CurrencyCode;
 	}

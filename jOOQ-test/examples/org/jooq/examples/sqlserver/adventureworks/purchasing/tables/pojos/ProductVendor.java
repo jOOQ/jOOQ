@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 })
 public class ProductVendor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 408168499;
+	private static final long serialVersionUID = 661921819;
 
 	private java.lang.Integer    ProductID;
 	private java.lang.Integer    VendorID;
@@ -26,7 +26,7 @@ public class ProductVendor implements java.io.Serializable {
 	private java.lang.String     UnitMeasureCode;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -35,7 +35,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "VendorID", nullable = false)
+	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
 		return this.VendorID;
 	}
@@ -44,7 +44,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.VendorID = VendorID;
 	}
 
-	@javax.persistence.Column(name = "AverageLeadTime", nullable = false)
+	@javax.persistence.Column(name = "AverageLeadTime", nullable = false, precision = 10)
 	public java.lang.Integer getAverageLeadTime() {
 		return this.AverageLeadTime;
 	}
@@ -53,7 +53,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.AverageLeadTime = AverageLeadTime;
 	}
 
-	@javax.persistence.Column(name = "StandardPrice", nullable = false)
+	@javax.persistence.Column(name = "StandardPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardPrice() {
 		return this.StandardPrice;
 	}
@@ -62,7 +62,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.StandardPrice = StandardPrice;
 	}
 
-	@javax.persistence.Column(name = "LastReceiptCost")
+	@javax.persistence.Column(name = "LastReceiptCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getLastReceiptCost() {
 		return this.LastReceiptCost;
 	}
@@ -80,7 +80,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.LastReceiptDate = LastReceiptDate;
 	}
 
-	@javax.persistence.Column(name = "MinOrderQty", nullable = false)
+	@javax.persistence.Column(name = "MinOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMinOrderQty() {
 		return this.MinOrderQty;
 	}
@@ -89,7 +89,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.MinOrderQty = MinOrderQty;
 	}
 
-	@javax.persistence.Column(name = "MaxOrderQty", nullable = false)
+	@javax.persistence.Column(name = "MaxOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMaxOrderQty() {
 		return this.MaxOrderQty;
 	}
@@ -98,7 +98,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.MaxOrderQty = MaxOrderQty;
 	}
 
-	@javax.persistence.Column(name = "OnOrderQty")
+	@javax.persistence.Column(name = "OnOrderQty", precision = 10)
 	public java.lang.Integer getOnOrderQty() {
 		return this.OnOrderQty;
 	}
@@ -107,7 +107,7 @@ public class ProductVendor implements java.io.Serializable {
 		this.OnOrderQty = OnOrderQty;
 	}
 
-	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false)
+	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
 		return this.UnitMeasureCode;
 	}

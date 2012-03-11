@@ -12,7 +12,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -637326193;
+	private static final long serialVersionUID = -1944548006;
 
 	/**
 	 * An uncommented item
@@ -28,7 +28,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID);
 	}
@@ -85,7 +85,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "name", nullable = false)
+	@javax.persistence.Column(name = "name", nullable = false, length = 10)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME);
 	}
@@ -100,7 +100,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "big_integer")
+	@javax.persistence.Column(name = "big_integer", precision = 25)
 	public java.math.BigInteger getBigInteger() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.BIG_INTEGER);
 	}
@@ -127,7 +127,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "id_ref")
+	@javax.persistence.Column(name = "id_ref", precision = 32)
 	public java.lang.Integer getIdRef() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID_REF);
 	}
@@ -159,7 +159,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "class")
+	@javax.persistence.Column(name = "class", precision = 32)
 	public java.lang.Integer getClass_() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.CLASS);
 	}
@@ -174,7 +174,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "fields")
+	@javax.persistence.Column(name = "fields", precision = 32)
 	public java.lang.Integer getFields_() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.FIELDS);
 	}
@@ -189,7 +189,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "configuration")
+	@javax.persistence.Column(name = "configuration", precision = 32)
 	public java.lang.Integer getConfiguration_() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.CONFIGURATION);
 	}
@@ -204,7 +204,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "u_d_t")
+	@javax.persistence.Column(name = "u_d_t", precision = 32)
 	public java.lang.Integer getUDT() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.U_D_T);
 	}
@@ -219,7 +219,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "meta_data")
+	@javax.persistence.Column(name = "meta_data", precision = 32)
 	public java.lang.Integer getMetaData_() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.META_DATA);
 	}
@@ -234,7 +234,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "values")
+	@javax.persistence.Column(name = "values", precision = 32)
 	public java.lang.Integer getValues_() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.VALUES);
 	}
@@ -249,7 +249,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "type0")
+	@javax.persistence.Column(name = "type0", precision = 32)
 	public java.lang.Integer getType0_() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.TYPE0);
 	}
@@ -264,7 +264,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "primary_key")
+	@javax.persistence.Column(name = "primary_key", precision = 32)
 	public java.lang.Integer getPrimaryKey() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.PRIMARY_KEY);
 	}
@@ -279,7 +279,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "primarykey")
+	@javax.persistence.Column(name = "primarykey", precision = 32)
 	public java.lang.Integer getPrimarykey() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.PRIMARYKEY);
 	}
@@ -306,7 +306,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * REFERENCES public.x_unused (id, name)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "name_ref")
+	@javax.persistence.Column(name = "name_ref", length = 10)
 	public java.lang.String getNameRef() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF);
 	}
@@ -321,7 +321,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FIELD 737")
+	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737);
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_book", schema = "public")
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1811610465;
+	private static final long serialVersionUID = 1164922740;
 
 	private java.lang.Integer                                         id;
 	private java.lang.Integer                                         authorId;
@@ -23,7 +23,7 @@ public class VBook implements java.io.Serializable {
 	private byte[]                                                    contentPdf;
 	private org.jooq.test.postgres.generatedclasses.enums.UBookStatus status;
 
-	@javax.persistence.Column(name = "id")
+	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -32,7 +32,7 @@ public class VBook implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "author_id")
+	@javax.persistence.Column(name = "author_id", precision = 32)
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -41,7 +41,7 @@ public class VBook implements java.io.Serializable {
 		this.authorId = authorId;
 	}
 
-	@javax.persistence.Column(name = "co_author_id")
+	@javax.persistence.Column(name = "co_author_id", precision = 32)
 	public java.lang.Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
@@ -50,7 +50,7 @@ public class VBook implements java.io.Serializable {
 		this.coAuthorId = coAuthorId;
 	}
 
-	@javax.persistence.Column(name = "details_id")
+	@javax.persistence.Column(name = "details_id", precision = 32)
 	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
 	}
@@ -59,7 +59,7 @@ public class VBook implements java.io.Serializable {
 		this.detailsId = detailsId;
 	}
 
-	@javax.persistence.Column(name = "title")
+	@javax.persistence.Column(name = "title", length = 400)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -68,7 +68,7 @@ public class VBook implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@javax.persistence.Column(name = "published_in")
+	@javax.persistence.Column(name = "published_in", precision = 32)
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -77,7 +77,7 @@ public class VBook implements java.io.Serializable {
 		this.publishedIn = publishedIn;
 	}
 
-	@javax.persistence.Column(name = "language_id")
+	@javax.persistence.Column(name = "language_id", precision = 32)
 	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}

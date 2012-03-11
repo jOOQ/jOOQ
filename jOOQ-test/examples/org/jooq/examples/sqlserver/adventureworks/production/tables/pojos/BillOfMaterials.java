@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "BillOfMaterials", schema = "Production")
 public class BillOfMaterials implements java.io.Serializable {
 
-	private static final long serialVersionUID = -285857891;
+	private static final long serialVersionUID = -473207663;
 
 	private java.lang.Integer    BillOfMaterialsID;
 	private java.lang.Integer    ProductAssemblyID;
@@ -23,7 +23,7 @@ public class BillOfMaterials implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "BillOfMaterialsID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "BillOfMaterialsID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getBillOfMaterialsID() {
 		return this.BillOfMaterialsID;
 	}
@@ -32,7 +32,7 @@ public class BillOfMaterials implements java.io.Serializable {
 		this.BillOfMaterialsID = BillOfMaterialsID;
 	}
 
-	@javax.persistence.Column(name = "ProductAssemblyID")
+	@javax.persistence.Column(name = "ProductAssemblyID", precision = 10)
 	public java.lang.Integer getProductAssemblyID() {
 		return this.ProductAssemblyID;
 	}
@@ -41,7 +41,7 @@ public class BillOfMaterials implements java.io.Serializable {
 		this.ProductAssemblyID = ProductAssemblyID;
 	}
 
-	@javax.persistence.Column(name = "ComponentID", nullable = false)
+	@javax.persistence.Column(name = "ComponentID", nullable = false, precision = 10)
 	public java.lang.Integer getComponentID() {
 		return this.ComponentID;
 	}
@@ -68,7 +68,7 @@ public class BillOfMaterials implements java.io.Serializable {
 		this.EndDate = EndDate;
 	}
 
-	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false)
+	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
 		return this.UnitMeasureCode;
 	}
@@ -77,7 +77,7 @@ public class BillOfMaterials implements java.io.Serializable {
 		this.UnitMeasureCode = UnitMeasureCode;
 	}
 
-	@javax.persistence.Column(name = "BOMLevel", nullable = false)
+	@javax.persistence.Column(name = "BOMLevel", nullable = false, precision = 5)
 	public java.lang.Short getBOMLevel() {
 		return this.BOMLevel;
 	}
@@ -86,7 +86,7 @@ public class BillOfMaterials implements java.io.Serializable {
 		this.BOMLevel = BOMLevel;
 	}
 
-	@javax.persistence.Column(name = "PerAssemblyQty", nullable = false)
+	@javax.persistence.Column(name = "PerAssemblyQty", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getPerAssemblyQty() {
 		return this.PerAssemblyQty;
 	}

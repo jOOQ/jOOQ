@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.pojos;
 @javax.persistence.Table(name = "DatabaseLog", schema = "dbo")
 public class DatabaseLog implements java.io.Serializable {
 
-	private static final long serialVersionUID = -846080757;
+	private static final long serialVersionUID = 1010482335;
 
 	private java.lang.Integer  DatabaseLogID;
 	private java.sql.Timestamp PostTime;
@@ -22,7 +22,7 @@ public class DatabaseLog implements java.io.Serializable {
 	private java.lang.Object   XmlEvent;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "DatabaseLogID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "DatabaseLogID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getDatabaseLogID() {
 		return this.DatabaseLogID;
 	}
@@ -40,7 +40,7 @@ public class DatabaseLog implements java.io.Serializable {
 		this.PostTime = PostTime;
 	}
 
-	@javax.persistence.Column(name = "DatabaseUser", nullable = false)
+	@javax.persistence.Column(name = "DatabaseUser", nullable = false, length = 128)
 	public java.lang.String getDatabaseUser() {
 		return this.DatabaseUser;
 	}
@@ -49,7 +49,7 @@ public class DatabaseLog implements java.io.Serializable {
 		this.DatabaseUser = DatabaseUser;
 	}
 
-	@javax.persistence.Column(name = "Event", nullable = false)
+	@javax.persistence.Column(name = "Event", nullable = false, length = 128)
 	public java.lang.String getEvent() {
 		return this.Event;
 	}
@@ -58,7 +58,7 @@ public class DatabaseLog implements java.io.Serializable {
 		this.Event = Event;
 	}
 
-	@javax.persistence.Column(name = "Schema")
+	@javax.persistence.Column(name = "Schema", length = 128)
 	public java.lang.String getSchema() {
 		return this.Schema;
 	}
@@ -67,7 +67,7 @@ public class DatabaseLog implements java.io.Serializable {
 		this.Schema = Schema;
 	}
 
-	@javax.persistence.Column(name = "Object")
+	@javax.persistence.Column(name = "Object", length = 128)
 	public java.lang.String getObject() {
 		return this.Object;
 	}

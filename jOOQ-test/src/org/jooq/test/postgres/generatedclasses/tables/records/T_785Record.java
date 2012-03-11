@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_785", schema = "public")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1771969866;
+	private static final long serialVersionUID = 1794402706;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "id")
+	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_785.T_785.ID);
 	}
@@ -37,7 +37,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "name")
+	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_785.T_785.NAME);
 	}
@@ -52,7 +52,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "value")
+	@javax.persistence.Column(name = "value", length = 50)
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_785.T_785.VALUE);
 	}

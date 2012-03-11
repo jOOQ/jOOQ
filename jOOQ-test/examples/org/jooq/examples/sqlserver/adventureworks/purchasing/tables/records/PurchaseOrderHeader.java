@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 @javax.persistence.Table(name = "PurchaseOrderHeader", schema = "Purchasing")
 public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> {
 
-	private static final long serialVersionUID = -1737439101;
+	private static final long serialVersionUID = -1529599739;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "PurchaseOrderID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "PurchaseOrderID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getPurchaseOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.PurchaseOrderID);
 	}
@@ -42,7 +42,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "RevisionNumber", nullable = false)
+	@javax.persistence.Column(name = "RevisionNumber", nullable = false, precision = 3)
 	public java.lang.Byte getRevisionNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.RevisionNumber);
 	}
@@ -57,7 +57,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Status", nullable = false)
+	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Status);
 	}
@@ -84,7 +84,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.EmployeeID);
 	}
@@ -111,7 +111,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "VendorID", nullable = false)
+	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.VendorID);
 	}
@@ -138,7 +138,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ShipMethodID", nullable = false)
+	@javax.persistence.Column(name = "ShipMethodID", nullable = false, precision = 10)
 	public java.lang.Integer getShipMethodID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.ShipMethodID);
 	}
@@ -183,7 +183,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SubTotal", nullable = false)
+	@javax.persistence.Column(name = "SubTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSubTotal() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.SubTotal);
 	}
@@ -198,7 +198,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TaxAmt", nullable = false)
+	@javax.persistence.Column(name = "TaxAmt", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTaxAmt() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TaxAmt);
 	}
@@ -213,7 +213,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Freight", nullable = false)
+	@javax.persistence.Column(name = "Freight", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getFreight() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.Freight);
 	}
@@ -228,7 +228,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TotalDue", nullable = false)
+	@javax.persistence.Column(name = "TotalDue", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalDue() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader.TotalDue);
 	}

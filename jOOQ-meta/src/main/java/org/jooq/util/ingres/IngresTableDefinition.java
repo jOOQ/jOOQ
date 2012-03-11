@@ -123,6 +123,7 @@ public class IngresTableDefinition extends AbstractTableDefinition {
                 getSchema(),
                 typeName,
                 record.getValue(Iicolumns.COLUMN_LENGTH),
+                record.getValue(Iicolumns.COLUMN_LENGTH),
                 record.getValue(Iicolumns.COLUMN_SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(

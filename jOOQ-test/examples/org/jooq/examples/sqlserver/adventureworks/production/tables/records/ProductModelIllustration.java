@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelIllustration> {
 
-	private static final long serialVersionUID = -1889758227;
+	private static final long serialVersionUID = 1222808413;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductModelID", nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.ProductModelID);
 	}
@@ -71,7 +71,7 @@ public class ProductModelIllustration extends org.jooq.impl.UpdatableRecordImpl<
 	 * REFERENCES Production.Illustration (IllustrationID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "IllustrationID", nullable = false)
+	@javax.persistence.Column(name = "IllustrationID", nullable = false, precision = 10)
 	public java.lang.Integer getIllustrationID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelIllustration.ProductModelIllustration.IllustrationID);
 	}

@@ -12,7 +12,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1138257565;
+	private static final long serialVersionUID = 1899814504;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES public.t_book_store (name)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "book_store_name", nullable = false)
+	@javax.persistence.Column(name = "book_store_name", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
@@ -89,7 +89,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * REFERENCES public.t_book (id)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "book_id", nullable = false)
+	@javax.persistence.Column(name = "book_id", nullable = false, precision = 32)
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	}
@@ -122,7 +122,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "stock")
+	@javax.persistence.Column(name = "stock", precision = 32)
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
 	}

@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -765473162;
+	private static final long serialVersionUID = 308165657;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;
@@ -21,7 +21,7 @@ public class VAuthor implements java.io.Serializable {
 	private java.lang.Integer yearOfBirth;
 	private java.lang.String  address;
 
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 10)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -30,7 +30,7 @@ public class VAuthor implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "FIRST_NAME")
+	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
 		return this.firstName;
 	}
@@ -39,7 +39,7 @@ public class VAuthor implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.lastName;
 	}
@@ -57,7 +57,7 @@ public class VAuthor implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 10)
 	public java.lang.Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
@@ -66,7 +66,7 @@ public class VAuthor implements java.io.Serializable {
 		this.yearOfBirth = yearOfBirth;
 	}
 
-	@javax.persistence.Column(name = "ADDRESS")
+	@javax.persistence.Column(name = "ADDRESS", length = 200)
 	public java.lang.String getAddress() {
 		return this.address;
 	}

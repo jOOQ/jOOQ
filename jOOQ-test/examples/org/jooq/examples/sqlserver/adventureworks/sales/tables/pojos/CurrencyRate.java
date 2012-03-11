@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
 public class CurrencyRate implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1121185677;
+	private static final long serialVersionUID = 2043091641;
 
 	private java.lang.Integer    CurrencyRateID;
 	private java.sql.Timestamp   CurrencyRateDate;
@@ -21,7 +21,7 @@ public class CurrencyRate implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CurrencyRateID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CurrencyRateID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getCurrencyRateID() {
 		return this.CurrencyRateID;
 	}
@@ -39,7 +39,7 @@ public class CurrencyRate implements java.io.Serializable {
 		this.CurrencyRateDate = CurrencyRateDate;
 	}
 
-	@javax.persistence.Column(name = "FromCurrencyCode", nullable = false)
+	@javax.persistence.Column(name = "FromCurrencyCode", nullable = false, length = 3)
 	public java.lang.String getFromCurrencyCode() {
 		return this.FromCurrencyCode;
 	}
@@ -48,7 +48,7 @@ public class CurrencyRate implements java.io.Serializable {
 		this.FromCurrencyCode = FromCurrencyCode;
 	}
 
-	@javax.persistence.Column(name = "ToCurrencyCode", nullable = false)
+	@javax.persistence.Column(name = "ToCurrencyCode", nullable = false, length = 3)
 	public java.lang.String getToCurrencyCode() {
 		return this.ToCurrencyCode;
 	}
@@ -57,7 +57,7 @@ public class CurrencyRate implements java.io.Serializable {
 		this.ToCurrencyCode = ToCurrencyCode;
 	}
 
-	@javax.persistence.Column(name = "AverageRate", nullable = false)
+	@javax.persistence.Column(name = "AverageRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getAverageRate() {
 		return this.AverageRate;
 	}
@@ -66,7 +66,7 @@ public class CurrencyRate implements java.io.Serializable {
 		this.AverageRate = AverageRate;
 	}
 
-	@javax.persistence.Column(name = "EndOfDayRate", nullable = false)
+	@javax.persistence.Column(name = "EndOfDayRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getEndOfDayRate() {
 		return this.EndOfDayRate;
 	}

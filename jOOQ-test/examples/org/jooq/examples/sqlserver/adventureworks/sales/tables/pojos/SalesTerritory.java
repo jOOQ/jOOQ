@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SalesTerritory", schema = "Sales")
 public class SalesTerritory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -441475241;
+	private static final long serialVersionUID = -1629221517;
 
 	private java.lang.Integer    TerritoryID;
 	private java.lang.String     Name;
@@ -24,7 +24,7 @@ public class SalesTerritory implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "TerritoryID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return this.TerritoryID;
 	}
@@ -33,7 +33,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.TerritoryID = TerritoryID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -42,7 +42,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return this.CountryRegionCode;
 	}
@@ -51,7 +51,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.CountryRegionCode = CountryRegionCode;
 	}
 
-	@javax.persistence.Column(name = "Group", nullable = false)
+	@javax.persistence.Column(name = "Group", nullable = false, length = 50)
 	public java.lang.String getGroup() {
 		return this.Group;
 	}
@@ -60,7 +60,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.Group = Group;
 	}
 
-	@javax.persistence.Column(name = "SalesYTD", nullable = false)
+	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
 		return this.SalesYTD;
 	}
@@ -69,7 +69,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.SalesYTD = SalesYTD;
 	}
 
-	@javax.persistence.Column(name = "SalesLastYear", nullable = false)
+	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
 		return this.SalesLastYear;
 	}
@@ -78,7 +78,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.SalesLastYear = SalesLastYear;
 	}
 
-	@javax.persistence.Column(name = "CostYTD", nullable = false)
+	@javax.persistence.Column(name = "CostYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getCostYTD() {
 		return this.CostYTD;
 	}
@@ -87,7 +87,7 @@ public class SalesTerritory implements java.io.Serializable {
 		this.CostYTD = CostYTD;
 	}
 
-	@javax.persistence.Column(name = "CostLastYear", nullable = false)
+	@javax.persistence.Column(name = "CostLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getCostLastYear() {
 		return this.CostLastYear;
 	}

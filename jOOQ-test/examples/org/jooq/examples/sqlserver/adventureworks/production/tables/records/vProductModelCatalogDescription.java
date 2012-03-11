@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "vProductModelCatalogDescription", schema = "Production")
 public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelCatalogDescription> {
 
-	private static final long serialVersionUID = -231106371;
+	private static final long serialVersionUID = -1891700005;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductModelID", nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.ProductModelID);
 	}
@@ -37,7 +37,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Name);
 	}
@@ -82,7 +82,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Copyright")
+	@javax.persistence.Column(name = "Copyright", length = 30)
 	public java.lang.String getCopyright() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Copyright);
 	}
@@ -97,7 +97,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductURL")
+	@javax.persistence.Column(name = "ProductURL", length = 256)
 	public java.lang.String getProductURL() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.ProductURL);
 	}
@@ -112,7 +112,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "WarrantyPeriod")
+	@javax.persistence.Column(name = "WarrantyPeriod", length = 256)
 	public java.lang.String getWarrantyPeriod() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.WarrantyPeriod);
 	}
@@ -127,7 +127,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "WarrantyDescription")
+	@javax.persistence.Column(name = "WarrantyDescription", length = 256)
 	public java.lang.String getWarrantyDescription() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.WarrantyDescription);
 	}
@@ -142,7 +142,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "NoOfYears")
+	@javax.persistence.Column(name = "NoOfYears", length = 256)
 	public java.lang.String getNoOfYears() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.NoOfYears);
 	}
@@ -157,7 +157,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MaintenanceDescription")
+	@javax.persistence.Column(name = "MaintenanceDescription", length = 256)
 	public java.lang.String getMaintenanceDescription() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.MaintenanceDescription);
 	}
@@ -172,7 +172,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Wheel")
+	@javax.persistence.Column(name = "Wheel", length = 256)
 	public java.lang.String getWheel() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Wheel);
 	}
@@ -187,7 +187,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Saddle")
+	@javax.persistence.Column(name = "Saddle", length = 256)
 	public java.lang.String getSaddle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Saddle);
 	}
@@ -202,7 +202,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Pedal")
+	@javax.persistence.Column(name = "Pedal", length = 256)
 	public java.lang.String getPedal() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Pedal);
 	}
@@ -232,7 +232,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Crankset")
+	@javax.persistence.Column(name = "Crankset", length = 256)
 	public java.lang.String getCrankset() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Crankset);
 	}
@@ -247,7 +247,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PictureAngle")
+	@javax.persistence.Column(name = "PictureAngle", length = 256)
 	public java.lang.String getPictureAngle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.PictureAngle);
 	}
@@ -262,7 +262,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PictureSize")
+	@javax.persistence.Column(name = "PictureSize", length = 256)
 	public java.lang.String getPictureSize() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.PictureSize);
 	}
@@ -277,7 +277,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductPhotoID")
+	@javax.persistence.Column(name = "ProductPhotoID", length = 256)
 	public java.lang.String getProductPhotoID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.ProductPhotoID);
 	}
@@ -292,7 +292,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Material")
+	@javax.persistence.Column(name = "Material", length = 256)
 	public java.lang.String getMaterial() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Material);
 	}
@@ -307,7 +307,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Color")
+	@javax.persistence.Column(name = "Color", length = 256)
 	public java.lang.String getColor() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Color);
 	}
@@ -322,7 +322,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductLine")
+	@javax.persistence.Column(name = "ProductLine", length = 256)
 	public java.lang.String getProductLine() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.ProductLine);
 	}
@@ -337,7 +337,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Style")
+	@javax.persistence.Column(name = "Style", length = 256)
 	public java.lang.String getStyle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.Style);
 	}
@@ -352,7 +352,7 @@ public class vProductModelCatalogDescription extends org.jooq.impl.TableRecordIm
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "RiderExperience")
+	@javax.persistence.Column(name = "RiderExperience", length = 1024)
 	public java.lang.String getRiderExperience() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelCatalogDescription.vProductModelCatalogDescription.RiderExperience);
 	}

@@ -83,6 +83,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 getSchema(),
                 dataType,
                 precision,
+                precision,
                 scale);
 
             ColumnDefinition column = new DefaultColumnDefinition(

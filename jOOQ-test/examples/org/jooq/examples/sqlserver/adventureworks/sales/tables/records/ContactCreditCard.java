@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> {
 
-	private static final long serialVersionUID = 501354330;
+	private static final long serialVersionUID = 69117642;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.ContactID);
 	}
@@ -71,7 +71,7 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CreditCardID", nullable = false)
+	@javax.persistence.Column(name = "CreditCardID", nullable = false, precision = 10)
 	public java.lang.Integer getCreditCardID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.ContactCreditCard.ContactCreditCard.CreditCardID);
 	}

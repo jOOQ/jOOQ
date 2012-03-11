@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "Contact", schema = "Person")
 public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> {
 
-	private static final long serialVersionUID = 1877645089;
+	private static final long serialVersionUID = -366491532;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ContactID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ContactID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.ContactID);
 	}
@@ -57,7 +57,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.Title);
 	}
@@ -72,7 +72,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.FirstName);
 	}
@@ -87,7 +87,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.MiddleName);
 	}
@@ -102,7 +102,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.LastName);
 	}
@@ -117,7 +117,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Suffix")
+	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.Suffix);
 	}
@@ -132,7 +132,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EmailAddress")
+	@javax.persistence.Column(name = "EmailAddress", length = 50)
 	public java.lang.String getEmailAddress() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.EmailAddress);
 	}
@@ -147,7 +147,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EmailPromotion", nullable = false)
+	@javax.persistence.Column(name = "EmailPromotion", nullable = false, precision = 10)
 	public java.lang.Integer getEmailPromotion() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.EmailPromotion);
 	}
@@ -162,7 +162,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Phone")
+	@javax.persistence.Column(name = "Phone", length = 25)
 	public java.lang.String getPhone() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.Phone);
 	}
@@ -177,7 +177,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PasswordHash", nullable = false)
+	@javax.persistence.Column(name = "PasswordHash", nullable = false, length = 128)
 	public java.lang.String getPasswordHash() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.PasswordHash);
 	}
@@ -192,7 +192,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PasswordSalt", nullable = false)
+	@javax.persistence.Column(name = "PasswordSalt", nullable = false, length = 10)
 	public java.lang.String getPasswordSalt() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.Contact.Contact.PasswordSalt);
 	}

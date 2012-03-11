@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "Contact", schema = "Person")
 public class Contact implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1198970930;
+	private static final long serialVersionUID = -1592993605;
 
 	private java.lang.Integer  ContactID;
 	private java.lang.Boolean  NameStyle;
@@ -29,7 +29,7 @@ public class Contact implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ContactID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ContactID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return this.ContactID;
 	}
@@ -47,7 +47,7 @@ public class Contact implements java.io.Serializable {
 		this.NameStyle = NameStyle;
 	}
 
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
 		return this.Title;
 	}
@@ -56,7 +56,7 @@ public class Contact implements java.io.Serializable {
 		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return this.FirstName;
 	}
@@ -65,7 +65,7 @@ public class Contact implements java.io.Serializable {
 		this.FirstName = FirstName;
 	}
 
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return this.MiddleName;
 	}
@@ -74,7 +74,7 @@ public class Contact implements java.io.Serializable {
 		this.MiddleName = MiddleName;
 	}
 
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.LastName;
 	}
@@ -83,7 +83,7 @@ public class Contact implements java.io.Serializable {
 		this.LastName = LastName;
 	}
 
-	@javax.persistence.Column(name = "Suffix")
+	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
 		return this.Suffix;
 	}
@@ -92,7 +92,7 @@ public class Contact implements java.io.Serializable {
 		this.Suffix = Suffix;
 	}
 
-	@javax.persistence.Column(name = "EmailAddress")
+	@javax.persistence.Column(name = "EmailAddress", length = 50)
 	public java.lang.String getEmailAddress() {
 		return this.EmailAddress;
 	}
@@ -101,7 +101,7 @@ public class Contact implements java.io.Serializable {
 		this.EmailAddress = EmailAddress;
 	}
 
-	@javax.persistence.Column(name = "EmailPromotion", nullable = false)
+	@javax.persistence.Column(name = "EmailPromotion", nullable = false, precision = 10)
 	public java.lang.Integer getEmailPromotion() {
 		return this.EmailPromotion;
 	}
@@ -110,7 +110,7 @@ public class Contact implements java.io.Serializable {
 		this.EmailPromotion = EmailPromotion;
 	}
 
-	@javax.persistence.Column(name = "Phone")
+	@javax.persistence.Column(name = "Phone", length = 25)
 	public java.lang.String getPhone() {
 		return this.Phone;
 	}
@@ -119,7 +119,7 @@ public class Contact implements java.io.Serializable {
 		this.Phone = Phone;
 	}
 
-	@javax.persistence.Column(name = "PasswordHash", nullable = false)
+	@javax.persistence.Column(name = "PasswordHash", nullable = false, length = 128)
 	public java.lang.String getPasswordHash() {
 		return this.PasswordHash;
 	}
@@ -128,7 +128,7 @@ public class Contact implements java.io.Serializable {
 		this.PasswordHash = PasswordHash;
 	}
 
-	@javax.persistence.Column(name = "PasswordSalt", nullable = false)
+	@javax.persistence.Column(name = "PasswordSalt", nullable = false, length = 10)
 	public java.lang.String getPasswordSalt() {
 		return this.PasswordSalt;
 	}

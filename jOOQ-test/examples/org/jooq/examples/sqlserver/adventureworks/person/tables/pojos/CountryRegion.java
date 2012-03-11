@@ -10,14 +10,14 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "CountryRegion", schema = "Person")
 public class CountryRegion implements java.io.Serializable {
 
-	private static final long serialVersionUID = 226974233;
+	private static final long serialVersionUID = -126439025;
 
 	private java.lang.String   CountryRegionCode;
 	private java.lang.String   Name;
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CountryRegionCode", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", unique = true, nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return this.CountryRegionCode;
 	}
@@ -26,7 +26,7 @@ public class CountryRegion implements java.io.Serializable {
 		this.CountryRegionCode = CountryRegionCode;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
 public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> {
 
-	private static final long serialVersionUID = -232295326;
+	private static final long serialVersionUID = 757914674;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CurrencyRateID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CurrencyRateID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getCurrencyRateID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.CurrencyRateID);
 	}
@@ -69,7 +69,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "FromCurrencyCode", nullable = false)
+	@javax.persistence.Column(name = "FromCurrencyCode", nullable = false, length = 3)
 	public java.lang.String getFromCurrencyCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.FromCurrencyCode);
 	}
@@ -96,7 +96,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ToCurrencyCode", nullable = false)
+	@javax.persistence.Column(name = "ToCurrencyCode", nullable = false, length = 3)
 	public java.lang.String getToCurrencyCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.ToCurrencyCode);
 	}
@@ -111,7 +111,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AverageRate", nullable = false)
+	@javax.persistence.Column(name = "AverageRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getAverageRate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.AverageRate);
 	}
@@ -126,7 +126,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EndOfDayRate", nullable = false)
+	@javax.persistence.Column(name = "EndOfDayRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getEndOfDayRate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate.EndOfDayRate);
 	}

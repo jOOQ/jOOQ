@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_identity", schema = "public")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = 783064416;
+	private static final long serialVersionUID = 1958032992;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "id", nullable = false)
+	@javax.persistence.Column(name = "id", nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 	}
@@ -37,7 +37,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "val")
+	@javax.persistence.Column(name = "val", precision = 32)
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY.VAL);
 	}

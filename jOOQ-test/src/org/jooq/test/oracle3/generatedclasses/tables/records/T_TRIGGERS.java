@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> {
 
-	private static final long serialVersionUID = 1749682333;
+	private static final long serialVersionUID = -1110304077;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID_GENERATED() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.ID_GENERATED);
 	}
@@ -42,7 +42,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.ID);
 	}
@@ -57,7 +57,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "COUNTER", nullable = false)
+	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	public java.lang.Integer getCOUNTER() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.COUNTER);
 	}

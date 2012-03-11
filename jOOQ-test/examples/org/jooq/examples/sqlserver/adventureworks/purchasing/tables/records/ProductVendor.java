@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records;
 })
 public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> {
 
-	private static final long serialVersionUID = -273947478;
+	private static final long serialVersionUID = -1055203280;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.ProductID);
 	}
@@ -71,7 +71,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Purchasing.Vendor (VendorID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "VendorID", nullable = false)
+	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.VendorID);
 	}
@@ -86,7 +86,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AverageLeadTime", nullable = false)
+	@javax.persistence.Column(name = "AverageLeadTime", nullable = false, precision = 10)
 	public java.lang.Integer getAverageLeadTime() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.AverageLeadTime);
 	}
@@ -101,7 +101,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StandardPrice", nullable = false)
+	@javax.persistence.Column(name = "StandardPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardPrice() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.StandardPrice);
 	}
@@ -116,7 +116,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LastReceiptCost")
+	@javax.persistence.Column(name = "LastReceiptCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getLastReceiptCost() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.LastReceiptCost);
 	}
@@ -146,7 +146,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MinOrderQty", nullable = false)
+	@javax.persistence.Column(name = "MinOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMinOrderQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MinOrderQty);
 	}
@@ -161,7 +161,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MaxOrderQty", nullable = false)
+	@javax.persistence.Column(name = "MaxOrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getMaxOrderQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.MaxOrderQty);
 	}
@@ -176,7 +176,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "OnOrderQty")
+	@javax.persistence.Column(name = "OnOrderQty", precision = 10)
 	public java.lang.Integer getOnOrderQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.OnOrderQty);
 	}
@@ -203,7 +203,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false)
+	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ProductVendor.ProductVendor.UnitMeasureCode);
 	}

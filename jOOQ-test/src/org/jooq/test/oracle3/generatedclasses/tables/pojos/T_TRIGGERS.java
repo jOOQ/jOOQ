@@ -10,14 +10,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class T_TRIGGERS implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1431085101;
+	private static final long serialVersionUID = -310671883;
 
 	private java.lang.Integer ID_GENERATED;
 	private java.lang.Integer ID;
 	private java.lang.Integer COUNTER;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID_GENERATED() {
 		return this.ID_GENERATED;
 	}
@@ -26,7 +26,7 @@ public class T_TRIGGERS implements java.io.Serializable {
 		this.ID_GENERATED = ID_GENERATED;
 	}
 
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
@@ -35,7 +35,7 @@ public class T_TRIGGERS implements java.io.Serializable {
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "COUNTER", nullable = false)
+	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	public java.lang.Integer getCOUNTER() {
 		return this.COUNTER;
 	}

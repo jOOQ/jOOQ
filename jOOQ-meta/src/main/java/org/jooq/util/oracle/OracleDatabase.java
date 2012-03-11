@@ -197,19 +197,19 @@ public class OracleDatabase extends AbstractDatabase {
             BigInteger value = record.getValue(ALL_SEQUENCES.MAX_VALUE, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
 
             if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 2, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 2, 0);
             }
             else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 4, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 4, 0);
             }
             else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 9, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 9, 0);
             }
             else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 18, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 18, 0);
             }
             else {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 38, 0);
+                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 38, 0);
             }
 
             result.add(new DefaultSequenceDefinition(
@@ -298,6 +298,7 @@ public class OracleDatabase extends AbstractDatabase {
                 ALL_COLL_TYPES.OWNER,
                 ALL_COLL_TYPES.TYPE_NAME,
                 ALL_COLL_TYPES.ELEM_TYPE_NAME,
+                ALL_COLL_TYPES.LENGTH,
                 ALL_COLL_TYPES.PRECISION,
                 ALL_COLL_TYPES.SCALE)
             .from(ALL_COLL_TYPES)
@@ -312,10 +313,12 @@ public class OracleDatabase extends AbstractDatabase {
 
             String name = record.getValue(ALL_COLL_TYPES.TYPE_NAME);
             String dataType = record.getValue(ALL_COLL_TYPES.ELEM_TYPE_NAME);
+
+            int length = record.getValue(ALL_COLL_TYPES.LENGTH, BigDecimal.ZERO).intValue();
             int precision = record.getValue(ALL_COLL_TYPES.PRECISION, BigDecimal.ZERO).intValue();
             int scale = record.getValue(ALL_COLL_TYPES.SCALE, BigDecimal.ZERO).intValue();
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, precision, scale);
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, length, precision, scale);
             DefaultArrayDefinition array = new DefaultArrayDefinition(schema, name, type);
 
             arrays.add(array);

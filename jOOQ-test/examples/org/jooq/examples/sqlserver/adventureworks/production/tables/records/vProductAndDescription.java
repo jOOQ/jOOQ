@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "vProductAndDescription", schema = "Production")
 public class vProductAndDescription extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription> {
 
-	private static final long serialVersionUID = 520634904;
+	private static final long serialVersionUID = -459579110;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vProductAndDescription extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription.ProductID);
 	}
@@ -37,7 +37,7 @@ public class vProductAndDescription extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription.Name);
 	}
@@ -52,7 +52,7 @@ public class vProductAndDescription extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductModel", nullable = false)
+	@javax.persistence.Column(name = "ProductModel", nullable = false, length = 50)
 	public java.lang.String getProductModel() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription.ProductModel);
 	}
@@ -67,7 +67,7 @@ public class vProductAndDescription extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CultureID", nullable = false)
+	@javax.persistence.Column(name = "CultureID", nullable = false, length = 6)
 	public java.lang.String getCultureID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription.CultureID);
 	}
@@ -82,7 +82,7 @@ public class vProductAndDescription extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Description", nullable = false)
+	@javax.persistence.Column(name = "Description", nullable = false, length = 400)
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription.Description);
 	}

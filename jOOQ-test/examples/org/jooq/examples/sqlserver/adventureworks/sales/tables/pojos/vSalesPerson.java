@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "vSalesPerson", schema = "Sales")
 public class vSalesPerson implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1523378188;
+	private static final long serialVersionUID = -614769792;
 
 	private java.lang.Integer    SalesPersonID;
 	private java.lang.String     Title;
@@ -34,7 +34,7 @@ public class vSalesPerson implements java.io.Serializable {
 	private java.math.BigDecimal SalesYTD;
 	private java.math.BigDecimal SalesLastYear;
 
-	@javax.persistence.Column(name = "SalesPersonID", nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return this.SalesPersonID;
 	}
@@ -43,7 +43,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.SalesPersonID = SalesPersonID;
 	}
 
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
 		return this.Title;
 	}
@@ -52,7 +52,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return this.FirstName;
 	}
@@ -61,7 +61,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.FirstName = FirstName;
 	}
 
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return this.MiddleName;
 	}
@@ -70,7 +70,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.MiddleName = MiddleName;
 	}
 
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.LastName;
 	}
@@ -79,7 +79,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.LastName = LastName;
 	}
 
-	@javax.persistence.Column(name = "Suffix")
+	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
 		return this.Suffix;
 	}
@@ -88,7 +88,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.Suffix = Suffix;
 	}
 
-	@javax.persistence.Column(name = "JobTitle", nullable = false)
+	@javax.persistence.Column(name = "JobTitle", nullable = false, length = 50)
 	public java.lang.String getJobTitle() {
 		return this.JobTitle;
 	}
@@ -97,7 +97,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.JobTitle = JobTitle;
 	}
 
-	@javax.persistence.Column(name = "Phone")
+	@javax.persistence.Column(name = "Phone", length = 25)
 	public java.lang.String getPhone() {
 		return this.Phone;
 	}
@@ -106,7 +106,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.Phone = Phone;
 	}
 
-	@javax.persistence.Column(name = "EmailAddress")
+	@javax.persistence.Column(name = "EmailAddress", length = 50)
 	public java.lang.String getEmailAddress() {
 		return this.EmailAddress;
 	}
@@ -115,7 +115,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.EmailAddress = EmailAddress;
 	}
 
-	@javax.persistence.Column(name = "EmailPromotion", nullable = false)
+	@javax.persistence.Column(name = "EmailPromotion", nullable = false, precision = 10)
 	public java.lang.Integer getEmailPromotion() {
 		return this.EmailPromotion;
 	}
@@ -124,7 +124,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.EmailPromotion = EmailPromotion;
 	}
 
-	@javax.persistence.Column(name = "AddressLine1", nullable = false)
+	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
 		return this.AddressLine1;
 	}
@@ -133,7 +133,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.AddressLine1 = AddressLine1;
 	}
 
-	@javax.persistence.Column(name = "AddressLine2")
+	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
 		return this.AddressLine2;
 	}
@@ -142,7 +142,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.AddressLine2 = AddressLine2;
 	}
 
-	@javax.persistence.Column(name = "City", nullable = false)
+	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
 		return this.City;
 	}
@@ -151,7 +151,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.City = City;
 	}
 
-	@javax.persistence.Column(name = "StateProvinceName", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceName", nullable = false, length = 50)
 	public java.lang.String getStateProvinceName() {
 		return this.StateProvinceName;
 	}
@@ -160,7 +160,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.StateProvinceName = StateProvinceName;
 	}
 
-	@javax.persistence.Column(name = "PostalCode", nullable = false)
+	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
 		return this.PostalCode;
 	}
@@ -169,7 +169,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.PostalCode = PostalCode;
 	}
 
-	@javax.persistence.Column(name = "CountryRegionName", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionName", nullable = false, length = 50)
 	public java.lang.String getCountryRegionName() {
 		return this.CountryRegionName;
 	}
@@ -178,7 +178,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.CountryRegionName = CountryRegionName;
 	}
 
-	@javax.persistence.Column(name = "TerritoryName")
+	@javax.persistence.Column(name = "TerritoryName", length = 50)
 	public java.lang.String getTerritoryName() {
 		return this.TerritoryName;
 	}
@@ -187,7 +187,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.TerritoryName = TerritoryName;
 	}
 
-	@javax.persistence.Column(name = "TerritoryGroup")
+	@javax.persistence.Column(name = "TerritoryGroup", length = 50)
 	public java.lang.String getTerritoryGroup() {
 		return this.TerritoryGroup;
 	}
@@ -196,7 +196,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.TerritoryGroup = TerritoryGroup;
 	}
 
-	@javax.persistence.Column(name = "SalesQuota")
+	@javax.persistence.Column(name = "SalesQuota", precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
 		return this.SalesQuota;
 	}
@@ -205,7 +205,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.SalesQuota = SalesQuota;
 	}
 
-	@javax.persistence.Column(name = "SalesYTD", nullable = false)
+	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
 		return this.SalesYTD;
 	}
@@ -214,7 +214,7 @@ public class vSalesPerson implements java.io.Serializable {
 		this.SalesYTD = SalesYTD;
 	}
 
-	@javax.persistence.Column(name = "SalesLastYear", nullable = false)
+	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
 		return this.SalesLastYear;
 	}

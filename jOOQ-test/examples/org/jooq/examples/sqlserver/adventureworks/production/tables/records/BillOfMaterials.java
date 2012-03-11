@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "BillOfMaterials", schema = "Production")
 public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> {
 
-	private static final long serialVersionUID = -1724438280;
+	private static final long serialVersionUID = 88704232;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "BillOfMaterialsID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "BillOfMaterialsID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getBillOfMaterialsID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BillOfMaterialsID);
 	}
@@ -54,7 +54,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductAssemblyID")
+	@javax.persistence.Column(name = "ProductAssemblyID", precision = 10)
 	public java.lang.Integer getProductAssemblyID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ProductAssemblyID);
 	}
@@ -81,7 +81,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ComponentID", nullable = false)
+	@javax.persistence.Column(name = "ComponentID", nullable = false, precision = 10)
 	public java.lang.Integer getComponentID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.ComponentID);
 	}
@@ -138,7 +138,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false)
+	@javax.persistence.Column(name = "UnitMeasureCode", nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.UnitMeasureCode);
 	}
@@ -153,7 +153,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "BOMLevel", nullable = false)
+	@javax.persistence.Column(name = "BOMLevel", nullable = false, precision = 5)
 	public java.lang.Short getBOMLevel() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.BOMLevel);
 	}
@@ -168,7 +168,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PerAssemblyQty", nullable = false)
+	@javax.persistence.Column(name = "PerAssemblyQty", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getPerAssemblyQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.BillOfMaterials.BillOfMaterials.PerAssemblyQty);
 	}

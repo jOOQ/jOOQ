@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = 790396359;
+	private static final long serialVersionUID = -620207493;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.EmployeeID);
 	}
@@ -71,7 +71,7 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	 * REFERENCES HumanResources.Department (DepartmentID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "DepartmentID", nullable = false)
+	@javax.persistence.Column(name = "DepartmentID", nullable = false, precision = 5)
 	public java.lang.Short getDepartmentID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.DepartmentID);
 	}
@@ -102,7 +102,7 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableRecordImpl
 	 * REFERENCES HumanResources.Shift (ShiftID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ShiftID", nullable = false)
+	@javax.persistence.Column(name = "ShiftID", nullable = false, precision = 3)
 	public java.lang.Byte getShiftID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory.ShiftID);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "vProductAndDescription", schema = "Production")
 public class vProductAndDescription implements java.io.Serializable {
 
-	private static final long serialVersionUID = 74328022;
+	private static final long serialVersionUID = -1939233424;
 
 	private java.lang.Integer ProductID;
 	private java.lang.String  Name;
@@ -18,7 +18,7 @@ public class vProductAndDescription implements java.io.Serializable {
 	private java.lang.String  CultureID;
 	private java.lang.String  Description;
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -27,7 +27,7 @@ public class vProductAndDescription implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -36,7 +36,7 @@ public class vProductAndDescription implements java.io.Serializable {
 		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "ProductModel", nullable = false)
+	@javax.persistence.Column(name = "ProductModel", nullable = false, length = 50)
 	public java.lang.String getProductModel() {
 		return this.ProductModel;
 	}
@@ -45,7 +45,7 @@ public class vProductAndDescription implements java.io.Serializable {
 		this.ProductModel = ProductModel;
 	}
 
-	@javax.persistence.Column(name = "CultureID", nullable = false)
+	@javax.persistence.Column(name = "CultureID", nullable = false, length = 6)
 	public java.lang.String getCultureID() {
 		return this.CultureID;
 	}
@@ -54,7 +54,7 @@ public class vProductAndDescription implements java.io.Serializable {
 		this.CultureID = CultureID;
 	}
 
-	@javax.persistence.Column(name = "Description", nullable = false)
+	@javax.persistence.Column(name = "Description", nullable = false, length = 400)
 	public java.lang.String getDescription() {
 		return this.Description;
 	}

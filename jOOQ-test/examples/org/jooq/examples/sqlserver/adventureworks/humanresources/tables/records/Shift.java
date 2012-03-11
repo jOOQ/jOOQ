@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Shift", schema = "HumanResources")
 public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> {
 
-	private static final long serialVersionUID = 579276867;
+	private static final long serialVersionUID = -603737055;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ShiftID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ShiftID", unique = true, nullable = false, precision = 3)
 	public java.lang.Byte getShiftID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.ShiftID);
 	}
@@ -42,7 +42,7 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift.Name);
 	}

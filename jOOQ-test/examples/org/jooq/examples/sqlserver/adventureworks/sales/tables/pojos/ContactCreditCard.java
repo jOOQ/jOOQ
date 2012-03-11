@@ -12,13 +12,13 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class ContactCreditCard implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2078835421;
+	private static final long serialVersionUID = 532311005;
 
 	private java.lang.Integer  ContactID;
 	private java.lang.Integer  CreditCardID;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return this.ContactID;
 	}
@@ -27,7 +27,7 @@ public class ContactCreditCard implements java.io.Serializable {
 		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "CreditCardID", nullable = false)
+	@javax.persistence.Column(name = "CreditCardID", nullable = false, precision = 10)
 	public java.lang.Integer getCreditCardID() {
 		return this.CreditCardID;
 	}

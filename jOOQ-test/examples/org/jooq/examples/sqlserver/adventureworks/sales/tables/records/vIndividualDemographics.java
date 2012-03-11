@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "vIndividualDemographics", schema = "Sales")
 public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualDemographics> {
 
-	private static final long serialVersionUID = 1454479067;
+	private static final long serialVersionUID = 796113073;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CustomerID", nullable = false)
+	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.CustomerID);
 	}
@@ -37,7 +37,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TotalPurchaseYTD")
+	@javax.persistence.Column(name = "TotalPurchaseYTD", precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalPurchaseYTD() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.TotalPurchaseYTD);
 	}
@@ -82,7 +82,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MaritalStatus")
+	@javax.persistence.Column(name = "MaritalStatus", length = 1)
 	public java.lang.String getMaritalStatus() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.MaritalStatus);
 	}
@@ -97,7 +97,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "YearlyIncome")
+	@javax.persistence.Column(name = "YearlyIncome", length = 30)
 	public java.lang.String getYearlyIncome() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.YearlyIncome);
 	}
@@ -112,7 +112,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Gender")
+	@javax.persistence.Column(name = "Gender", length = 1)
 	public java.lang.String getGender() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.Gender);
 	}
@@ -127,7 +127,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TotalChildren")
+	@javax.persistence.Column(name = "TotalChildren", precision = 10)
 	public java.lang.Integer getTotalChildren() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.TotalChildren);
 	}
@@ -142,7 +142,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "NumberChildrenAtHome")
+	@javax.persistence.Column(name = "NumberChildrenAtHome", precision = 10)
 	public java.lang.Integer getNumberChildrenAtHome() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.NumberChildrenAtHome);
 	}
@@ -157,7 +157,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Education")
+	@javax.persistence.Column(name = "Education", length = 30)
 	public java.lang.String getEducation() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.Education);
 	}
@@ -172,7 +172,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Occupation")
+	@javax.persistence.Column(name = "Occupation", length = 30)
 	public java.lang.String getOccupation() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.Occupation);
 	}
@@ -202,7 +202,7 @@ public class vIndividualDemographics extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "NumberCarsOwned")
+	@javax.persistence.Column(name = "NumberCarsOwned", precision = 10)
 	public java.lang.Integer getNumberCarsOwned() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.vIndividualDemographics.vIndividualDemographics.NumberCarsOwned);
 	}

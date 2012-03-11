@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -58,6 +59,7 @@ import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.MasterDataType;
 import org.jooq.SQLDialect;
+import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.unsigned.UNumber;
@@ -119,10 +121,21 @@ class DefaultBindContext extends AbstractBindContext {
         if (value == null) {
             int sqlType = FieldTypeHelper.getDataType(dialect, type).getSQLType();
 
-            // Treat Oracle-style ARRAY types specially
+            // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {
                 String typeName = Util.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
                 stmt.setNull(nextIndex(), sqlType, typeName);
+            }
+
+            // [#1126] Oracle's UDTs need to be bound with their type name
+            else if (UDTRecord.class.isAssignableFrom(type)) {
+                String typeName = Util.newRecord((Class<UDTRecord<?>>) type).getUDT().getName();
+                stmt.setNull(nextIndex(), sqlType, typeName);
+            }
+
+            // [#1225] Postgres has trouble binding binary data as BLOB
+            else if (configuration.getDialect() == POSTGRES && sqlType == Types.BLOB) {
+                stmt.setNull(nextIndex(), Types.BINARY);
             }
 
             // All other types can be set to null if the JDBC type is known

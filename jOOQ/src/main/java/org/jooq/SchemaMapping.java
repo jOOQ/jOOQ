@@ -344,15 +344,11 @@ public class SchemaMapping implements Serializable {
         if (table != null) {
             Schema schema = table.getSchema();
 
-            // Derived table or some other type
-            if (schema == null) {
-                return table;
-            }
-
+            // [#1189] Schema can be null in SQLite
             // [#1186] TODO: replace this by calling table.getQualifiedName()
-            String schemaName = schema.getName();
+            String schemaName = (schema == null) ? "" : schema.getName();
             String tableName = table.getName();
-            String key = schemaName + "." + tableName;
+            String key = (schema == null) ? tableName : (schemaName + "." + tableName);
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {

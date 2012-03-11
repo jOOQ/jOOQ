@@ -148,7 +148,10 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
     final void set(Map<? extends Field<?>, ?> map) {
         for (Entry<? extends Field<?>, ?> entry : map.entrySet()) {
-            put(entry.getKey(), val(entry.getValue()));
+            Field<?> field = entry.getKey();
+            Object value = entry.getValue();
+
+            put(entry.getKey(), val(value, field));
         }
     }
 }

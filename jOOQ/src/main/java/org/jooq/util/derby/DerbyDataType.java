@@ -114,12 +114,12 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DerbyDataType<byte[]>     CHARFORBITDATA             = new DerbyDataType<byte[]>(SQLDataType.BLOB, "char for bit data");
-    public static final DerbyDataType<byte[]>     CHARACTERFORBITDATA        = new DerbyDataType<byte[]>(SQLDataType.BLOB, "character for bit data");
-    public static final DerbyDataType<byte[]>     LONGVARCHARFORBITDATA      = new DerbyDataType<byte[]>(SQLDataType.BLOB, "long varchar for bit data");
-    public static final DerbyDataType<byte[]>     VARCHARFORBITDATA          = new DerbyDataType<byte[]>(SQLDataType.BLOB, "varchar for bit data", "varchar(32672) for bit data");
-    public static final DerbyDataType<byte[]>     CHARVARYINGFORBITDATA      = new DerbyDataType<byte[]>(SQLDataType.BLOB, "char varying for bit data", "char varying(32672) for bit data");
-    public static final DerbyDataType<byte[]>     CHARACTERVARYINGFORBITDATA = new DerbyDataType<byte[]>(SQLDataType.BLOB, "character varying for bit data", "character varying (32672) for bit data");
+    public static final DerbyDataType<byte[]>     CHARFORBITDATA             = new DerbyDataType<byte[]>(SQLDataType.BINARY, "char for bit data");
+    public static final DerbyDataType<byte[]>     CHARACTERFORBITDATA        = new DerbyDataType<byte[]>(SQLDataType.BINARY, "character for bit data");
+    public static final DerbyDataType<byte[]>     LONGVARCHARFORBITDATA      = new DerbyDataType<byte[]>(SQLDataType.BINARY, "long varchar for bit data");
+    public static final DerbyDataType<byte[]>     VARCHARFORBITDATA          = new DerbyDataType<byte[]>(SQLDataType.VARBINARY, "varchar for bit data", "varchar(32672) for bit data");
+    public static final DerbyDataType<byte[]>     CHARVARYINGFORBITDATA      = new DerbyDataType<byte[]>(SQLDataType.VARBINARY, "char varying for bit data", "char varying(32672) for bit data");
+    public static final DerbyDataType<byte[]>     CHARACTERVARYINGFORBITDATA = new DerbyDataType<byte[]>(SQLDataType.VARBINARY, "character varying for bit data", "character varying (32672) for bit data");
     public static final DerbyDataType<String>     ORGAPACHEDERBYCATALOGTYPEDESCRIPTOR
                                                                              = new DerbyDataType<String>(SQLDataType.CLOB, "org.apache.derby.catalog.TypeDescriptor");
     public static final DerbyDataType<String>     ORGAPACHEDERBYCATALOGINDEXDESCRIPTOR

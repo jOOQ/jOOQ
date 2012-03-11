@@ -194,6 +194,9 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public /* final */ int getSQLType() {
+        // TODO [#1227] There is some confusion with these types, especially
+        // when it comes to byte[] which can be mapped to BLOB, BINARY, VARBINARY
+
         if (type == Blob.class) {
             return Types.BLOB;
         }

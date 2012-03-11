@@ -133,7 +133,7 @@ class Contains<T> extends AbstractCondition {
         }
 
         private final Field<T> rhs() {
-            return (rhs == null) ? val(value) : rhs;
+            return (rhs == null) ? val(value, lhs) : rhs;
         }
 
         @Override

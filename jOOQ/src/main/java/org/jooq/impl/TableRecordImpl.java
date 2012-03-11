@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.val;
+
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
@@ -230,6 +232,6 @@ public class TableRecordImpl<R extends TableRecord<R>> extends TypeRecord<Table<
      * Extracted method to ensure generic type safety.
      */
     private final <T> void addValue(StoreQuery<?> store, Field<T> field) {
-        store.addValue(field, getValue(field));
+        store.addValue(field, val(getValue(field), field));
     }
 }

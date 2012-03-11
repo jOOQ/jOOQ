@@ -35,9 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.vals;
-import static org.jooq.impl.Util.convert;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -119,29 +116,39 @@ class InsertImpl<R extends Record>
 
     @Override
     public final InsertImpl<R> values(Object... values) {
-        return values0(vals(convert(getFields(), values)));
-    }
+        if (getFields().size() != values.length) {
+            throw new IllegalArgumentException("The number of values must match the number of fields");
+        }
 
-    @Override
-    public final InsertImpl<R> values(Field<?>... values) {
-        return values0(Arrays.asList(values));
+        getDelegate().newRecord();
+        for (int i = 0; i < getFields().size(); i++) {
+            addValue(getDelegate(), getFields().get(i), values[i]);
+        }
+
+        return this;
     }
 
     @Override
     public final InsertImpl<R> values(Collection<?> values) {
-        return values0(vals(convert(getFields(), values.toArray())));
+        return values(values.toArray());
+    }
+
+    private <T> void addValue(InsertQuery<R> delegate, Field<T> field, Object object) {
+        delegate.addValue(field, field.getDataType().convert(object));
     }
 
     @SuppressWarnings("unchecked")
-    private final InsertImpl<R> values0(List<Field<?>> values) {
-        if (getFields().size() != values.size()) {
+    @Override
+    public final InsertImpl<R> values(Field<?>... values) {
+        List<Field<?>> values1 = Arrays.asList(values);
+        if (getFields().size() != values1.size()) {
             throw new IllegalArgumentException("The number of values must match the number of fields");
         }
 
         getDelegate().newRecord();
         for (int i = 0; i < getFields().size(); i++) {
             // javac has trouble when inferring Object for T. Use Void instead
-            getDelegate().addValue((Field<Void>) getFields().get(i), (Field<Void>) values.get(i));
+            getDelegate().addValue((Field<Void>) getFields().get(i), (Field<Void>) values1.get(i));
         }
 
         return this;

@@ -1475,7 +1475,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> Field<T> cast(Object value, Field<T> as) {
-        return val(value).cast(as);
+        return val(value, as).cast(as);
     }
 
     /**
@@ -1500,7 +1500,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> Field<T> cast(Object value, Class<? extends T> type) {
-        return val(value).cast(type);
+        return val(value, type).cast(type);
     }
 
     /**
@@ -1525,7 +1525,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
-        return val(value).cast(type);
+        return val(value, type).cast(type);
     }
 
     /**
@@ -1773,7 +1773,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<String> lower(String value) {
-        return lower(val(value));
+        return lower(val(value, String.class));
     }
 
     /**
@@ -1794,7 +1794,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<String> trim(String value) {
-        return trim(val(value));
+        return trim(val(value, String.class));
     }
 
     /**
@@ -1837,7 +1837,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<String> ltrim(String value) {
-        return ltrim(val(value));
+        return ltrim(val(value, String.class));
     }
 
     /**
@@ -1892,7 +1892,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
-        return rpad(nullSafe(field), val(length), val(character));
+        return rpad(nullSafe(field), val(length), val(character, String.class));
     }
 
     /**
@@ -1950,7 +1950,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
-        return lpad(nullSafe(field), val(length), val(character));
+        return lpad(nullSafe(field), val(length), val(character, String.class));
     }
 
     /**
@@ -1974,7 +1974,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, int count) {
-        return repeat(val(field), val(count));
+        return repeat(val(field, String.class), val(count));
     }
 
     /**
@@ -1984,7 +1984,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
-        return repeat(val(field), nullSafe(count));
+        return repeat(val(field, String.class), nullSafe(count));
     }
 
     /**
@@ -2052,7 +2052,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
-        return replace(nullSafe(field), val(search));
+        return replace(nullSafe(field), val(search, String.class));
     }
 
     /**
@@ -2076,7 +2076,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
-        return replace(nullSafe(field), val(search), val(replace));
+        return replace(nullSafe(field), val(search, String.class), val(replace, String.class));
     }
 
     /**
@@ -2098,7 +2098,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, String search) {
-        return position(val(in), val(search));
+        return position(val(in, String.class), val(search, String.class));
     }
 
     /**
@@ -2108,7 +2108,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, Field<String> search) {
-        return position(val(in), nullSafe(search));
+        return position(val(in, String.class), nullSafe(search));
     }
 
     /**
@@ -2118,7 +2118,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(Field<String> in, String search) {
-        return position(nullSafe(in), val(search));
+        return position(nullSafe(in), val(search, String.class));
     }
 
     /**
@@ -2143,7 +2143,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(String field) {
-        return ascii(val(field));
+        return ascii(val(field, String.class));
     }
 
     /**
@@ -2234,7 +2234,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<Integer> length(String value) {
-        return length(val(value));
+        return length(val(value, String.class));
     }
 
     /**
@@ -2295,7 +2295,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<Integer> octetLength(String value) {
-        return octetLength(val(value));
+        return octetLength(val(value, String.class));
     }
 
     /**
@@ -4150,18 +4150,20 @@ public class Factory implements FactoryOperations {
     public static <T> Field<T> val(T value) {
 
         // null is intercepted immediately
-        if (value == null) {
-            return (Field<T>) NULL();
-        }
+        // TODO [#1128] Don't do this, create a NULL bind value instead!
+//        if (value == null) {
+//            return (Field<T>) NULL();
+//        }
 
         // Prevent errors due to type erasure and unchecked invocation
-        else if (value instanceof Field<?>) {
+        if (value instanceof Field<?>) {
             return (Field<T>) value;
         }
 
         // Default behaviour
         else {
-            return (Field<T>) val(value, getDataType(value.getClass()));
+            Class<?> type = (value == null) ? Object.class : value.getClass();
+            return (Field<T>) val(value, getDataType(type));
         }
     }
 

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -133,8 +134,9 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setNull(nextIndex(), sqlType, typeName);
             }
 
-            // [#1225] Postgres has trouble binding binary data as BLOB
-            else if (configuration.getDialect() == POSTGRES && sqlType == Types.BLOB) {
+            // [#1225] [#1227] TODO Put this logic into DataType
+            // Some dialects have trouble binding binary data as BLOB
+            else if (asList(POSTGRES, SYBASE).contains(configuration.getDialect()) && sqlType == Types.BLOB) {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 

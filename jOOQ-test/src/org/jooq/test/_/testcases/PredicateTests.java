@@ -49,6 +49,7 @@ import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -164,7 +165,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .set(TBook_ID(), 5)
                 .set(TBook_AUTHOR_ID(), 2)
                 .set(TBook_PUBLISHED_IN(), 2012)
-                .set((Field<Integer>) TBook_LANGUAGE_ID(), 1)
+                .set((Field<Object>) TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"))
                 .set(TBook_TITLE(), "About percentages (%) and underscores (_), a critical review")
                 .execute());
 

@@ -125,7 +125,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, T value) {
-        addValueForUpdate(field, val(value));
+        addValueForUpdate(field, val(value, field));
     }
 
     @Override

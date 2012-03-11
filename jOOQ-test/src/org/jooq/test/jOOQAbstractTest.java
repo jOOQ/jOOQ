@@ -735,7 +735,7 @@ public abstract class jOOQAbstractTest<
         new RenderAndBindTests(this).testSelectGetSQLAndGetBindValues();
     }
 
-    // @Test // TODO reactivate this with [#1128]
+    @Test
     public void testInsertUpdateGetSQLAndGetBindValues() throws Exception {
         new RenderAndBindTests(this).testInsertUpdateGetSQLAndGetBindValues();
     }

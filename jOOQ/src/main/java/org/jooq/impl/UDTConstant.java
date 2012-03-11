@@ -124,7 +124,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
         String separator = "";
         for (Field<?> field : record.getFields()) {
             context.sql(separator);
-            context.sql(val(record.getValue(field)));
+            context.sql(val(record.getValue(field), field));
             separator = ", ";
         }
 

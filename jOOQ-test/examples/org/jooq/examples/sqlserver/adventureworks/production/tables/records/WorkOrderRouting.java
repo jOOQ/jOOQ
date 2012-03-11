@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> {
 
-	private static final long serialVersionUID = 362690135;
+	private static final long serialVersionUID = 896010410;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Production.WorkOrder (WorkOrderID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "WorkOrderID", nullable = false)
+	@javax.persistence.Column(name = "WorkOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getWorkOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.WorkOrderID);
 	}
@@ -59,7 +59,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ProductID);
 	}
@@ -78,7 +78,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "OperationSequence", nullable = false)
+	@javax.persistence.Column(name = "OperationSequence", nullable = false, precision = 5)
 	public java.lang.Short getOperationSequence() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.OperationSequence);
 	}
@@ -105,7 +105,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Production.Location (LocationID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "LocationID", nullable = false)
+	@javax.persistence.Column(name = "LocationID", nullable = false, precision = 5)
 	public java.lang.Short getLocationID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.LocationID);
 	}
@@ -180,7 +180,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ActualResourceHrs")
+	@javax.persistence.Column(name = "ActualResourceHrs", precision = 9, scale = 4)
 	public java.math.BigDecimal getActualResourceHrs() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ActualResourceHrs);
 	}
@@ -195,7 +195,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PlannedCost", nullable = false)
+	@javax.persistence.Column(name = "PlannedCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getPlannedCost() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.PlannedCost);
 	}
@@ -210,7 +210,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ActualCost")
+	@javax.persistence.Column(name = "ActualCost", precision = 19, scale = 4)
 	public java.math.BigDecimal getActualCost() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting.ActualCost);
 	}

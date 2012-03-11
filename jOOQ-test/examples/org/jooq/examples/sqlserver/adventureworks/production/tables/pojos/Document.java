@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Document", schema = "Production")
 public class Document implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1942614060;
+	private static final long serialVersionUID = 24435218;
 
 	private java.lang.Integer  DocumentID;
 	private java.lang.String   Title;
@@ -24,7 +24,7 @@ public class Document implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "DocumentID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getDocumentID() {
 		return this.DocumentID;
 	}
@@ -33,7 +33,7 @@ public class Document implements java.io.Serializable {
 		this.DocumentID = DocumentID;
 	}
 
-	@javax.persistence.Column(name = "Title", nullable = false)
+	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
 		return this.Title;
 	}
@@ -42,7 +42,7 @@ public class Document implements java.io.Serializable {
 		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "FileName", nullable = false)
+	@javax.persistence.Column(name = "FileName", nullable = false, length = 400)
 	public java.lang.String getFileName() {
 		return this.FileName;
 	}
@@ -51,7 +51,7 @@ public class Document implements java.io.Serializable {
 		this.FileName = FileName;
 	}
 
-	@javax.persistence.Column(name = "FileExtension", nullable = false)
+	@javax.persistence.Column(name = "FileExtension", nullable = false, length = 8)
 	public java.lang.String getFileExtension() {
 		return this.FileExtension;
 	}
@@ -60,7 +60,7 @@ public class Document implements java.io.Serializable {
 		this.FileExtension = FileExtension;
 	}
 
-	@javax.persistence.Column(name = "Revision", nullable = false)
+	@javax.persistence.Column(name = "Revision", nullable = false, length = 5)
 	public java.lang.String getRevision() {
 		return this.Revision;
 	}
@@ -69,7 +69,7 @@ public class Document implements java.io.Serializable {
 		this.Revision = Revision;
 	}
 
-	@javax.persistence.Column(name = "ChangeNumber", nullable = false)
+	@javax.persistence.Column(name = "ChangeNumber", nullable = false, precision = 10)
 	public java.lang.Integer getChangeNumber() {
 		return this.ChangeNumber;
 	}
@@ -78,7 +78,7 @@ public class Document implements java.io.Serializable {
 		this.ChangeNumber = ChangeNumber;
 	}
 
-	@javax.persistence.Column(name = "Status", nullable = false)
+	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
 		return this.Status;
 	}

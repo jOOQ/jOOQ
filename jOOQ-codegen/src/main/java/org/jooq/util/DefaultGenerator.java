@@ -1657,11 +1657,29 @@ public class DefaultGenerator implements Generator {
                 nullable = ", nullable = false";
             }
 
+            String length = "";
+            String precision = "";
+            String scale = "";
+
+            if (column.getType().getLength() > 0) {
+                length = ", length = " + column.getType().getLength();
+            }
+            else if (column.getType().getPrecision() > 0) {
+                precision = ", precision = " + column.getType().getPrecision();
+
+                if (column.getType().getScale() > 0) {
+                    scale = ", scale = " + column.getType().getScale();
+                }
+            }
+
             out.print("\t@javax.persistence.Column(name = \"");
             out.print(column.getName().replace("\"", "\\\""));
             out.print("\"");
             out.print(unique);
             out.print(nullable);
+            out.print(length);
+            out.print(precision);
+            out.print(scale);
             out.println(")");
         }
     }

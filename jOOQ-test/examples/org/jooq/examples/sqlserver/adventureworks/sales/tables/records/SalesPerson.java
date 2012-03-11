@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesPerson", schema = "Sales")
 public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPerson> {
 
-	private static final long serialVersionUID = -1753312800;
+	private static final long serialVersionUID = 105088995;
 
 	/**
 	 * An uncommented item
@@ -39,7 +39,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * </pre></code>
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesPersonID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesPersonID);
 	}
@@ -66,7 +66,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "TerritoryID")
+	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.TerritoryID);
 	}
@@ -81,7 +81,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesQuota")
+	@javax.persistence.Column(name = "SalesQuota", precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesQuota);
 	}
@@ -96,7 +96,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Bonus", nullable = false)
+	@javax.persistence.Column(name = "Bonus", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getBonus() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.Bonus);
 	}
@@ -111,7 +111,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CommissionPct", nullable = false)
+	@javax.persistence.Column(name = "CommissionPct", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCommissionPct() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.CommissionPct);
 	}
@@ -126,7 +126,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesYTD", nullable = false)
+	@javax.persistence.Column(name = "SalesYTD", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesYTD() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesYTD);
 	}
@@ -141,7 +141,7 @@ public class SalesPerson extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesLastYear", nullable = false)
+	@javax.persistence.Column(name = "SalesLastYear", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesLastYear() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPerson.SalesPerson.SalesLastYear);
 	}

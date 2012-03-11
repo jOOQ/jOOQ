@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesOrderHeader", schema = "Sales")
 public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeader> {
 
-	private static final long serialVersionUID = 894935628;
+	private static final long serialVersionUID = -1644021636;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesOrderID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesOrderID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SalesOrderID);
 	}
@@ -42,7 +42,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "RevisionNumber", nullable = false)
+	@javax.persistence.Column(name = "RevisionNumber", nullable = false, precision = 3)
 	public java.lang.Byte getRevisionNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.RevisionNumber);
 	}
@@ -102,7 +102,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Status", nullable = false)
+	@javax.persistence.Column(name = "Status", nullable = false, precision = 3)
 	public java.lang.Byte getStatus() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.Status);
 	}
@@ -132,7 +132,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SalesOrderNumber", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderNumber", nullable = false, length = 25)
 	public java.lang.String getSalesOrderNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SalesOrderNumber);
 	}
@@ -147,7 +147,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PurchaseOrderNumber")
+	@javax.persistence.Column(name = "PurchaseOrderNumber", length = 25)
 	public java.lang.String getPurchaseOrderNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.PurchaseOrderNumber);
 	}
@@ -162,7 +162,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AccountNumber")
+	@javax.persistence.Column(name = "AccountNumber", length = 15)
 	public java.lang.String getAccountNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.AccountNumber);
 	}
@@ -189,7 +189,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.Customer (CustomerID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CustomerID", nullable = false)
+	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.CustomerID);
 	}
@@ -216,7 +216,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.ContactID);
 	}
@@ -243,7 +243,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SalesPersonID")
+	@javax.persistence.Column(name = "SalesPersonID", precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SalesPersonID);
 	}
@@ -270,7 +270,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "TerritoryID")
+	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.TerritoryID);
 	}
@@ -297,7 +297,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "BillToAddressID", nullable = false)
+	@javax.persistence.Column(name = "BillToAddressID", nullable = false, precision = 10)
 	public java.lang.Integer getBillToAddressID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.BillToAddressID);
 	}
@@ -324,7 +324,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Person.Address (AddressID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ShipToAddressID", nullable = false)
+	@javax.persistence.Column(name = "ShipToAddressID", nullable = false, precision = 10)
 	public java.lang.Integer getShipToAddressID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.ShipToAddressID);
 	}
@@ -351,7 +351,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Purchasing.ShipMethod (ShipMethodID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ShipMethodID", nullable = false)
+	@javax.persistence.Column(name = "ShipMethodID", nullable = false, precision = 10)
 	public java.lang.Integer getShipMethodID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.ShipMethodID);
 	}
@@ -378,7 +378,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.CreditCard (CreditCardID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CreditCardID")
+	@javax.persistence.Column(name = "CreditCardID", precision = 10)
 	public java.lang.Integer getCreditCardID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.CreditCardID);
 	}
@@ -393,7 +393,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CreditCardApprovalCode")
+	@javax.persistence.Column(name = "CreditCardApprovalCode", length = 15)
 	public java.lang.String getCreditCardApprovalCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.CreditCardApprovalCode);
 	}
@@ -420,7 +420,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.CurrencyRate (CurrencyRateID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CurrencyRateID")
+	@javax.persistence.Column(name = "CurrencyRateID", precision = 10)
 	public java.lang.Integer getCurrencyRateID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.CurrencyRateID);
 	}
@@ -435,7 +435,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SubTotal", nullable = false)
+	@javax.persistence.Column(name = "SubTotal", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSubTotal() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.SubTotal);
 	}
@@ -450,7 +450,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TaxAmt", nullable = false)
+	@javax.persistence.Column(name = "TaxAmt", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTaxAmt() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.TaxAmt);
 	}
@@ -465,7 +465,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Freight", nullable = false)
+	@javax.persistence.Column(name = "Freight", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getFreight() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.Freight);
 	}
@@ -480,7 +480,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TotalDue", nullable = false)
+	@javax.persistence.Column(name = "TotalDue", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getTotalDue() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.TotalDue);
 	}
@@ -495,7 +495,7 @@ public class SalesOrderHeader extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Comment")
+	@javax.persistence.Column(name = "Comment", length = 128)
 	public java.lang.String getComment() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeader.SalesOrderHeader.Comment);
 	}

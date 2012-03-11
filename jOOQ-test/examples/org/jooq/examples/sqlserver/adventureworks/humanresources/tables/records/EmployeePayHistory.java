@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 })
 public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> {
 
-	private static final long serialVersionUID = -609243637;
+	private static final long serialVersionUID = 1550485133;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.EmployeeID);
 	}
@@ -74,7 +74,7 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Rate", nullable = false)
+	@javax.persistence.Column(name = "Rate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getRate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.Rate);
 	}
@@ -89,7 +89,7 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "PayFrequency", nullable = false)
+	@javax.persistence.Column(name = "PayFrequency", nullable = false, precision = 3)
 	public java.lang.Byte getPayFrequency() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory.PayFrequency);
 	}

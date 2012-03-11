@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Product", schema = "Production")
 public class Product implements java.io.Serializable {
 
-	private static final long serialVersionUID = -50073230;
+	private static final long serialVersionUID = -313725846;
 
 	private java.lang.Integer    ProductID;
 	private java.lang.String     Name;
@@ -39,7 +39,7 @@ public class Product implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -48,7 +48,7 @@ public class Product implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -57,7 +57,7 @@ public class Product implements java.io.Serializable {
 		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "ProductNumber", nullable = false)
+	@javax.persistence.Column(name = "ProductNumber", nullable = false, length = 25)
 	public java.lang.String getProductNumber() {
 		return this.ProductNumber;
 	}
@@ -84,7 +84,7 @@ public class Product implements java.io.Serializable {
 		this.FinishedGoodsFlag = FinishedGoodsFlag;
 	}
 
-	@javax.persistence.Column(name = "Color")
+	@javax.persistence.Column(name = "Color", length = 15)
 	public java.lang.String getColor() {
 		return this.Color;
 	}
@@ -93,7 +93,7 @@ public class Product implements java.io.Serializable {
 		this.Color = Color;
 	}
 
-	@javax.persistence.Column(name = "SafetyStockLevel", nullable = false)
+	@javax.persistence.Column(name = "SafetyStockLevel", nullable = false, precision = 5)
 	public java.lang.Short getSafetyStockLevel() {
 		return this.SafetyStockLevel;
 	}
@@ -102,7 +102,7 @@ public class Product implements java.io.Serializable {
 		this.SafetyStockLevel = SafetyStockLevel;
 	}
 
-	@javax.persistence.Column(name = "ReorderPoint", nullable = false)
+	@javax.persistence.Column(name = "ReorderPoint", nullable = false, precision = 5)
 	public java.lang.Short getReorderPoint() {
 		return this.ReorderPoint;
 	}
@@ -111,7 +111,7 @@ public class Product implements java.io.Serializable {
 		this.ReorderPoint = ReorderPoint;
 	}
 
-	@javax.persistence.Column(name = "StandardCost", nullable = false)
+	@javax.persistence.Column(name = "StandardCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardCost() {
 		return this.StandardCost;
 	}
@@ -120,7 +120,7 @@ public class Product implements java.io.Serializable {
 		this.StandardCost = StandardCost;
 	}
 
-	@javax.persistence.Column(name = "ListPrice", nullable = false)
+	@javax.persistence.Column(name = "ListPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getListPrice() {
 		return this.ListPrice;
 	}
@@ -129,7 +129,7 @@ public class Product implements java.io.Serializable {
 		this.ListPrice = ListPrice;
 	}
 
-	@javax.persistence.Column(name = "Size")
+	@javax.persistence.Column(name = "Size", length = 5)
 	public java.lang.String getSize() {
 		return this.Size;
 	}
@@ -138,7 +138,7 @@ public class Product implements java.io.Serializable {
 		this.Size = Size;
 	}
 
-	@javax.persistence.Column(name = "SizeUnitMeasureCode")
+	@javax.persistence.Column(name = "SizeUnitMeasureCode", length = 3)
 	public java.lang.String getSizeUnitMeasureCode() {
 		return this.SizeUnitMeasureCode;
 	}
@@ -147,7 +147,7 @@ public class Product implements java.io.Serializable {
 		this.SizeUnitMeasureCode = SizeUnitMeasureCode;
 	}
 
-	@javax.persistence.Column(name = "WeightUnitMeasureCode")
+	@javax.persistence.Column(name = "WeightUnitMeasureCode", length = 3)
 	public java.lang.String getWeightUnitMeasureCode() {
 		return this.WeightUnitMeasureCode;
 	}
@@ -156,7 +156,7 @@ public class Product implements java.io.Serializable {
 		this.WeightUnitMeasureCode = WeightUnitMeasureCode;
 	}
 
-	@javax.persistence.Column(name = "Weight")
+	@javax.persistence.Column(name = "Weight", precision = 8, scale = 2)
 	public java.math.BigDecimal getWeight() {
 		return this.Weight;
 	}
@@ -165,7 +165,7 @@ public class Product implements java.io.Serializable {
 		this.Weight = Weight;
 	}
 
-	@javax.persistence.Column(name = "DaysToManufacture", nullable = false)
+	@javax.persistence.Column(name = "DaysToManufacture", nullable = false, precision = 10)
 	public java.lang.Integer getDaysToManufacture() {
 		return this.DaysToManufacture;
 	}
@@ -174,7 +174,7 @@ public class Product implements java.io.Serializable {
 		this.DaysToManufacture = DaysToManufacture;
 	}
 
-	@javax.persistence.Column(name = "ProductLine")
+	@javax.persistence.Column(name = "ProductLine", length = 2)
 	public java.lang.String getProductLine() {
 		return this.ProductLine;
 	}
@@ -183,7 +183,7 @@ public class Product implements java.io.Serializable {
 		this.ProductLine = ProductLine;
 	}
 
-	@javax.persistence.Column(name = "Class")
+	@javax.persistence.Column(name = "Class", length = 2)
 	public java.lang.String getClass_() {
 		return this.Class;
 	}
@@ -192,7 +192,7 @@ public class Product implements java.io.Serializable {
 		this.Class = Class;
 	}
 
-	@javax.persistence.Column(name = "Style")
+	@javax.persistence.Column(name = "Style", length = 2)
 	public java.lang.String getStyle() {
 		return this.Style;
 	}
@@ -201,7 +201,7 @@ public class Product implements java.io.Serializable {
 		this.Style = Style;
 	}
 
-	@javax.persistence.Column(name = "ProductSubcategoryID")
+	@javax.persistence.Column(name = "ProductSubcategoryID", precision = 10)
 	public java.lang.Integer getProductSubcategoryID() {
 		return this.ProductSubcategoryID;
 	}
@@ -210,7 +210,7 @@ public class Product implements java.io.Serializable {
 		this.ProductSubcategoryID = ProductSubcategoryID;
 	}
 
-	@javax.persistence.Column(name = "ProductModelID")
+	@javax.persistence.Column(name = "ProductModelID", precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return this.ProductModelID;
 	}

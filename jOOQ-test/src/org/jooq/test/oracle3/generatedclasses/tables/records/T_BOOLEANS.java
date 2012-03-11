@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> {
 
-	private static final long serialVersionUID = -1185504017;
+	private static final long serialVersionUID = -1083831117;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ID);
 	}
@@ -42,7 +42,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ONE_ZERO")
+	@javax.persistence.Column(name = "ONE_ZERO", precision = 7)
 	public java.lang.Integer getONE_ZERO() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ONE_ZERO);
 	}
@@ -57,7 +57,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TRUE_FALSE_LC")
+	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
 	public java.lang.String getTRUE_FALSE_LC() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.TRUE_FALSE_LC);
 	}
@@ -72,7 +72,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TRUE_FALSE_UC")
+	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
 	public java.lang.String getTRUE_FALSE_UC() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.TRUE_FALSE_UC);
 	}
@@ -87,7 +87,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "YES_NO_LC")
+	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
 	public java.lang.String getYES_NO_LC() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.YES_NO_LC);
 	}
@@ -102,7 +102,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "YES_NO_UC")
+	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
 	public java.lang.String getYES_NO_UC() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.YES_NO_UC);
 	}
@@ -117,7 +117,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Y_N_LC")
+	@javax.persistence.Column(name = "Y_N_LC", length = 1)
 	public java.lang.String getY_N_LC() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.Y_N_LC);
 	}
@@ -132,7 +132,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Y_N_UC")
+	@javax.persistence.Column(name = "Y_N_UC", length = 1)
 	public java.lang.String getY_N_UC() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.Y_N_UC);
 	}
@@ -147,7 +147,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "VC_BOOLEAN")
+	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
 	public java.lang.String getVC_BOOLEAN() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.VC_BOOLEAN);
 	}
@@ -162,7 +162,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "C_BOOLEAN")
+	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
 	public java.lang.String getC_BOOLEAN() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.C_BOOLEAN);
 	}
@@ -177,7 +177,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "N_BOOLEAN")
+	@javax.persistence.Column(name = "N_BOOLEAN", precision = 7)
 	public java.lang.Integer getN_BOOLEAN() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.N_BOOLEAN);
 	}

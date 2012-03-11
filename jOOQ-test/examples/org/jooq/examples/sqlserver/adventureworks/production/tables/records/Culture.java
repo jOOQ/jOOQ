@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Culture", schema = "Production")
 public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Culture> {
 
-	private static final long serialVersionUID = 995567046;
+	private static final long serialVersionUID = 1463175751;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CultureID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CultureID", unique = true, nullable = false, length = 6)
 	public java.lang.String getCultureID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.CultureID);
 	}
@@ -42,7 +42,7 @@ public class Culture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Culture.Culture.Name);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "vEmployeeDepartmentHistory", schema = "HumanResources")
 public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = 362944505;
+	private static final long serialVersionUID = -795625660;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.EmployeeID);
 	}
@@ -37,7 +37,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.Title);
 	}
@@ -52,7 +52,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.FirstName);
 	}
@@ -67,7 +67,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.MiddleName);
 	}
@@ -82,7 +82,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.LastName);
 	}
@@ -97,7 +97,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Suffix")
+	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.Suffix);
 	}
@@ -112,7 +112,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Shift", nullable = false)
+	@javax.persistence.Column(name = "Shift", nullable = false, length = 50)
 	public java.lang.String getShift() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.Shift);
 	}
@@ -127,7 +127,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Department", nullable = false)
+	@javax.persistence.Column(name = "Department", nullable = false, length = 50)
 	public java.lang.String getDepartment() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.Department);
 	}
@@ -142,7 +142,7 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableRecordImpl<or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "GroupName", nullable = false)
+	@javax.persistence.Column(name = "GroupName", nullable = false, length = 50)
 	public java.lang.String getGroupName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory.GroupName);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "CountryRegion", schema = "Person")
 public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> {
 
-	private static final long serialVersionUID = -275902232;
+	private static final long serialVersionUID = 1811459010;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CountryRegionCode", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", unique = true, nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.CountryRegionCode);
 	}
@@ -42,7 +42,7 @@ public class CountryRegion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion.Name);
 	}

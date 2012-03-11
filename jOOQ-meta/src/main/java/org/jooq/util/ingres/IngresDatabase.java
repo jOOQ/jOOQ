@@ -211,7 +211,7 @@ public class IngresDatabase extends AbstractDatabase {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, schema,
-                record.getValue(trim(Iisequences.DATA_TYPE)), 0, 0);
+                record.getValue(trim(Iisequences.DATA_TYPE)), 0, 0, 0);
 
             result.add(new DefaultSequenceDefinition(
                 schema, record.getValue(trim(Iisequences.SEQ_NAME)), type));

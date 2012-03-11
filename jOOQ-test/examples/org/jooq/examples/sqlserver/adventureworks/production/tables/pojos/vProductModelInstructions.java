@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "vProductModelInstructions", schema = "Production")
 public class vProductModelInstructions implements java.io.Serializable {
 
-	private static final long serialVersionUID = -347010756;
+	private static final long serialVersionUID = 2019298195;
 
 	private java.lang.Integer    ProductModelID;
 	private java.lang.String     Name;
@@ -24,7 +24,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 	private java.lang.String     rowguid;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "ProductModelID", nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return this.ProductModelID;
 	}
@@ -33,7 +33,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.ProductModelID = ProductModelID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -51,7 +51,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.Instructions = Instructions;
 	}
 
-	@javax.persistence.Column(name = "LocationID")
+	@javax.persistence.Column(name = "LocationID", precision = 10)
 	public java.lang.Integer getLocationID() {
 		return this.LocationID;
 	}
@@ -60,7 +60,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.LocationID = LocationID;
 	}
 
-	@javax.persistence.Column(name = "SetupHours")
+	@javax.persistence.Column(name = "SetupHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getSetupHours() {
 		return this.SetupHours;
 	}
@@ -69,7 +69,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.SetupHours = SetupHours;
 	}
 
-	@javax.persistence.Column(name = "MachineHours")
+	@javax.persistence.Column(name = "MachineHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getMachineHours() {
 		return this.MachineHours;
 	}
@@ -78,7 +78,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.MachineHours = MachineHours;
 	}
 
-	@javax.persistence.Column(name = "LaborHours")
+	@javax.persistence.Column(name = "LaborHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getLaborHours() {
 		return this.LaborHours;
 	}
@@ -87,7 +87,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.LaborHours = LaborHours;
 	}
 
-	@javax.persistence.Column(name = "LotSize")
+	@javax.persistence.Column(name = "LotSize", precision = 10)
 	public java.lang.Integer getLotSize() {
 		return this.LotSize;
 	}
@@ -96,7 +96,7 @@ public class vProductModelInstructions implements java.io.Serializable {
 		this.LotSize = LotSize;
 	}
 
-	@javax.persistence.Column(name = "Step")
+	@javax.persistence.Column(name = "Step", length = 1024)
 	public java.lang.String getStep() {
 		return this.Step;
 	}

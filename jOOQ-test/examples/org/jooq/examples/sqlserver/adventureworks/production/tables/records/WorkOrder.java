@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "WorkOrder", schema = "Production")
 public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> {
 
-	private static final long serialVersionUID = -1766186799;
+	private static final long serialVersionUID = -695950417;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "WorkOrderID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "WorkOrderID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getWorkOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.WorkOrderID);
 	}
@@ -54,7 +54,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.ProductID);
 	}
@@ -69,7 +69,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "OrderQty", nullable = false)
+	@javax.persistence.Column(name = "OrderQty", nullable = false, precision = 10)
 	public java.lang.Integer getOrderQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.OrderQty);
 	}
@@ -84,7 +84,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StockedQty", nullable = false)
+	@javax.persistence.Column(name = "StockedQty", nullable = false, precision = 10)
 	public java.lang.Integer getStockedQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.StockedQty);
 	}
@@ -99,7 +99,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ScrappedQty", nullable = false)
+	@javax.persistence.Column(name = "ScrappedQty", nullable = false, precision = 5)
 	public java.lang.Short getScrappedQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.ScrappedQty);
 	}
@@ -171,7 +171,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exampl
 	 * REFERENCES Production.ScrapReason (ScrapReasonID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ScrapReasonID")
+	@javax.persistence.Column(name = "ScrapReasonID", precision = 5)
 	public java.lang.Short getScrapReasonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder.ScrapReasonID);
 	}

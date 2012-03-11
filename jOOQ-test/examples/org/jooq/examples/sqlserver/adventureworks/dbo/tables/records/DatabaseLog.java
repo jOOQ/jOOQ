@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @javax.persistence.Table(name = "DatabaseLog", schema = "dbo")
 public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> {
 
-	private static final long serialVersionUID = 529730296;
+	private static final long serialVersionUID = -944503580;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "DatabaseLogID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "DatabaseLogID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getDatabaseLogID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseLogID);
 	}
@@ -57,7 +57,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "DatabaseUser", nullable = false)
+	@javax.persistence.Column(name = "DatabaseUser", nullable = false, length = 128)
 	public java.lang.String getDatabaseUser() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.DatabaseUser);
 	}
@@ -72,7 +72,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Event", nullable = false)
+	@javax.persistence.Column(name = "Event", nullable = false, length = 128)
 	public java.lang.String getEvent() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Event);
 	}
@@ -87,7 +87,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Schema")
+	@javax.persistence.Column(name = "Schema", length = 128)
 	public java.lang.String getSchema() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Schema);
 	}
@@ -102,7 +102,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Object")
+	@javax.persistence.Column(name = "Object", length = 128)
 	public java.lang.String getObject() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog.Object);
 	}

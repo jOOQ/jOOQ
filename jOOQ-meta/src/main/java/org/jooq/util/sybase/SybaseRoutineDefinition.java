@@ -104,6 +104,7 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                 getSchema(),
                 record.getValue(SYSDOMAIN.DOMAIN_NAME),
                 record.getValue(SYSPROCPARM.WIDTH),
+                record.getValue(SYSPROCPARM.WIDTH),
                 record.getValue(SYSPROCPARM.SCALE));
 
             ParameterDefinition parameter = new DefaultParameterDefinition(this,

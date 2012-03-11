@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "StateProvince", schema = "Person")
 public class StateProvince implements java.io.Serializable {
 
-	private static final long serialVersionUID = -456749505;
+	private static final long serialVersionUID = 1934281339;
 
 	private java.lang.Integer  StateProvinceID;
 	private java.lang.String   StateProvinceCode;
@@ -22,7 +22,7 @@ public class StateProvince implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "StateProvinceID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return this.StateProvinceID;
 	}
@@ -31,7 +31,7 @@ public class StateProvince implements java.io.Serializable {
 		this.StateProvinceID = StateProvinceID;
 	}
 
-	@javax.persistence.Column(name = "StateProvinceCode", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceCode", nullable = false, length = 3)
 	public java.lang.String getStateProvinceCode() {
 		return this.StateProvinceCode;
 	}
@@ -40,7 +40,7 @@ public class StateProvince implements java.io.Serializable {
 		this.StateProvinceCode = StateProvinceCode;
 	}
 
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return this.CountryRegionCode;
 	}
@@ -58,7 +58,7 @@ public class StateProvince implements java.io.Serializable {
 		this.IsOnlyStateProvinceFlag = IsOnlyStateProvinceFlag;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -67,7 +67,7 @@ public class StateProvince implements java.io.Serializable {
 		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "TerritoryID", nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return this.TerritoryID;
 	}

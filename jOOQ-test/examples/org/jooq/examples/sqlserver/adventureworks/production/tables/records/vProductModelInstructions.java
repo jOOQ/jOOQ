@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "vProductModelInstructions", schema = "Production")
 public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductModelInstructions> {
 
-	private static final long serialVersionUID = 1414938382;
+	private static final long serialVersionUID = 1812521227;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductModelID", nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.ProductModelID);
 	}
@@ -37,7 +37,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.Name);
 	}
@@ -67,7 +67,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LocationID")
+	@javax.persistence.Column(name = "LocationID", precision = 10)
 	public java.lang.Integer getLocationID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.LocationID);
 	}
@@ -82,7 +82,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SetupHours")
+	@javax.persistence.Column(name = "SetupHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getSetupHours() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.SetupHours);
 	}
@@ -97,7 +97,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MachineHours")
+	@javax.persistence.Column(name = "MachineHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getMachineHours() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.MachineHours);
 	}
@@ -112,7 +112,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LaborHours")
+	@javax.persistence.Column(name = "LaborHours", precision = 9, scale = 4)
 	public java.math.BigDecimal getLaborHours() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.LaborHours);
 	}
@@ -127,7 +127,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LotSize")
+	@javax.persistence.Column(name = "LotSize", precision = 10)
 	public java.lang.Integer getLotSize() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.LotSize);
 	}
@@ -142,7 +142,7 @@ public class vProductModelInstructions extends org.jooq.impl.TableRecordImpl<org
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Step")
+	@javax.persistence.Column(name = "Step", length = 1024)
 	public java.lang.String getStep() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.vProductModelInstructions.vProductModelInstructions.Step);
 	}

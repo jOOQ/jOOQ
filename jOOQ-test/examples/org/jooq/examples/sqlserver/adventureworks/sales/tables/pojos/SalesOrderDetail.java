@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class SalesOrderDetail implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1328529579;
+	private static final long serialVersionUID = -1359151138;
 
 	private java.lang.Integer    SalesOrderID;
 	private java.lang.Integer    SalesOrderDetailID;
@@ -26,7 +26,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 	private java.lang.String     rowguid;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "SalesOrderID", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderID() {
 		return this.SalesOrderID;
 	}
@@ -35,7 +35,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.SalesOrderID = SalesOrderID;
 	}
 
-	@javax.persistence.Column(name = "SalesOrderDetailID", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderDetailID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderDetailID() {
 		return this.SalesOrderDetailID;
 	}
@@ -44,7 +44,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.SalesOrderDetailID = SalesOrderDetailID;
 	}
 
-	@javax.persistence.Column(name = "CarrierTrackingNumber")
+	@javax.persistence.Column(name = "CarrierTrackingNumber", length = 25)
 	public java.lang.String getCarrierTrackingNumber() {
 		return this.CarrierTrackingNumber;
 	}
@@ -53,7 +53,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.CarrierTrackingNumber = CarrierTrackingNumber;
 	}
 
-	@javax.persistence.Column(name = "OrderQty", nullable = false)
+	@javax.persistence.Column(name = "OrderQty", nullable = false, precision = 5)
 	public java.lang.Short getOrderQty() {
 		return this.OrderQty;
 	}
@@ -62,7 +62,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.OrderQty = OrderQty;
 	}
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -71,7 +71,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "SpecialOfferID", nullable = false)
+	@javax.persistence.Column(name = "SpecialOfferID", nullable = false, precision = 10)
 	public java.lang.Integer getSpecialOfferID() {
 		return this.SpecialOfferID;
 	}
@@ -80,7 +80,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.SpecialOfferID = SpecialOfferID;
 	}
 
-	@javax.persistence.Column(name = "UnitPrice", nullable = false)
+	@javax.persistence.Column(name = "UnitPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getUnitPrice() {
 		return this.UnitPrice;
 	}
@@ -89,7 +89,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.UnitPrice = UnitPrice;
 	}
 
-	@javax.persistence.Column(name = "UnitPriceDiscount", nullable = false)
+	@javax.persistence.Column(name = "UnitPriceDiscount", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getUnitPriceDiscount() {
 		return this.UnitPriceDiscount;
 	}
@@ -98,7 +98,7 @@ public class SalesOrderDetail implements java.io.Serializable {
 		this.UnitPriceDiscount = UnitPriceDiscount;
 	}
 
-	@javax.persistence.Column(name = "LineTotal", nullable = false)
+	@javax.persistence.Column(name = "LineTotal", nullable = false, precision = 38, scale = 6)
 	public java.math.BigDecimal getLineTotal() {
 		return this.LineTotal;
 	}

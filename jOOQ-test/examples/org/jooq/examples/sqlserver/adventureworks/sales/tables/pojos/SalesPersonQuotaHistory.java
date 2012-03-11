@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class SalesPersonQuotaHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 778599442;
+	private static final long serialVersionUID = 1504379402;
 
 	private java.lang.Integer    SalesPersonID;
 	private java.sql.Timestamp   QuotaDate;
@@ -20,7 +20,7 @@ public class SalesPersonQuotaHistory implements java.io.Serializable {
 	private java.lang.String     rowguid;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "SalesPersonID", nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return this.SalesPersonID;
 	}
@@ -38,7 +38,7 @@ public class SalesPersonQuotaHistory implements java.io.Serializable {
 		this.QuotaDate = QuotaDate;
 	}
 
-	@javax.persistence.Column(name = "SalesQuota", nullable = false)
+	@javax.persistence.Column(name = "SalesQuota", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getSalesQuota() {
 		return this.SalesQuota;
 	}

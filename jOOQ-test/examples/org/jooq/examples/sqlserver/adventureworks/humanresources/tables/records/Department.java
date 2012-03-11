@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Department", schema = "HumanResources")
 public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> {
 
-	private static final long serialVersionUID = -1705568672;
+	private static final long serialVersionUID = 1653650932;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "DepartmentID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "DepartmentID", unique = true, nullable = false, precision = 5)
 	public java.lang.Short getDepartmentID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.DepartmentID);
 	}
@@ -42,7 +42,7 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.Name);
 	}
@@ -57,7 +57,7 @@ public class Department extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "GroupName", nullable = false)
+	@javax.persistence.Column(name = "GroupName", nullable = false, length = 50)
 	public java.lang.String getGroupName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Department.Department.GroupName);
 	}

@@ -110,6 +110,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             getSchema(),
             paramType,
             precision,
+            precision,
             scale);
 
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);

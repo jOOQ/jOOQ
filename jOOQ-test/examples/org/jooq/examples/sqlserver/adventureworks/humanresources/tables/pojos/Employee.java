@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "Employee", schema = "HumanResources")
 public class Employee implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1151900574;
+	private static final long serialVersionUID = -1424024593;
 
 	private java.lang.Integer  EmployeeID;
 	private java.lang.String   NationalIDNumber;
@@ -30,7 +30,7 @@ public class Employee implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "EmployeeID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return this.EmployeeID;
 	}
@@ -39,7 +39,7 @@ public class Employee implements java.io.Serializable {
 		this.EmployeeID = EmployeeID;
 	}
 
-	@javax.persistence.Column(name = "NationalIDNumber", nullable = false)
+	@javax.persistence.Column(name = "NationalIDNumber", nullable = false, length = 15)
 	public java.lang.String getNationalIDNumber() {
 		return this.NationalIDNumber;
 	}
@@ -48,7 +48,7 @@ public class Employee implements java.io.Serializable {
 		this.NationalIDNumber = NationalIDNumber;
 	}
 
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return this.ContactID;
 	}
@@ -57,7 +57,7 @@ public class Employee implements java.io.Serializable {
 		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "LoginID", nullable = false)
+	@javax.persistence.Column(name = "LoginID", nullable = false, length = 256)
 	public java.lang.String getLoginID() {
 		return this.LoginID;
 	}
@@ -66,7 +66,7 @@ public class Employee implements java.io.Serializable {
 		this.LoginID = LoginID;
 	}
 
-	@javax.persistence.Column(name = "ManagerID")
+	@javax.persistence.Column(name = "ManagerID", precision = 10)
 	public java.lang.Integer getManagerID() {
 		return this.ManagerID;
 	}
@@ -75,7 +75,7 @@ public class Employee implements java.io.Serializable {
 		this.ManagerID = ManagerID;
 	}
 
-	@javax.persistence.Column(name = "Title", nullable = false)
+	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
 		return this.Title;
 	}
@@ -93,7 +93,7 @@ public class Employee implements java.io.Serializable {
 		this.BirthDate = BirthDate;
 	}
 
-	@javax.persistence.Column(name = "MaritalStatus", nullable = false)
+	@javax.persistence.Column(name = "MaritalStatus", nullable = false, length = 1)
 	public java.lang.String getMaritalStatus() {
 		return this.MaritalStatus;
 	}
@@ -102,7 +102,7 @@ public class Employee implements java.io.Serializable {
 		this.MaritalStatus = MaritalStatus;
 	}
 
-	@javax.persistence.Column(name = "Gender", nullable = false)
+	@javax.persistence.Column(name = "Gender", nullable = false, length = 1)
 	public java.lang.String getGender() {
 		return this.Gender;
 	}
@@ -129,7 +129,7 @@ public class Employee implements java.io.Serializable {
 		this.SalariedFlag = SalariedFlag;
 	}
 
-	@javax.persistence.Column(name = "VacationHours", nullable = false)
+	@javax.persistence.Column(name = "VacationHours", nullable = false, precision = 5)
 	public java.lang.Short getVacationHours() {
 		return this.VacationHours;
 	}
@@ -138,7 +138,7 @@ public class Employee implements java.io.Serializable {
 		this.VacationHours = VacationHours;
 	}
 
-	@javax.persistence.Column(name = "SickLeaveHours", nullable = false)
+	@javax.persistence.Column(name = "SickLeaveHours", nullable = false, precision = 5)
 	public java.lang.Short getSickLeaveHours() {
 		return this.SickLeaveHours;
 	}

@@ -72,6 +72,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
                 getSchema(),
                 dataType,
                 precision,
+                precision,
                 scale);
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
@@ -86,6 +87,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.PARAMETER_MODE,
                 PARAMETERS.PARAMETER_NAME,
                 nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, PARAMETERS.DATA_TYPE).as("datatype"),
+                PARAMETERS.CHARACTER_MAXIMUM_LENGTH,
                 PARAMETERS.NUMERIC_PRECISION,
                 PARAMETERS.NUMERIC_SCALE,
                 PARAMETERS.ORDINAL_POSITION)
@@ -108,6 +110,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValueAsString("datatype"),
+                record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE));
 

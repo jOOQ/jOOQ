@@ -49,6 +49,11 @@ public interface DataTypeDefinition {
     String getType();
 
     /**
+     * The type's length
+     */
+    int getLength();
+
+    /**
      * The type's precision
      */
     int getPrecision();

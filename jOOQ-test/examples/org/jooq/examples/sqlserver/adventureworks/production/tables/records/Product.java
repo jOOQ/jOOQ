@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Product", schema = "Production")
 public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Product> {
 
-	private static final long serialVersionUID = 1368134112;
+	private static final long serialVersionUID = 1246925908;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ProductID);
 	}
@@ -42,7 +42,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.Name);
 	}
@@ -57,7 +57,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductNumber", nullable = false)
+	@javax.persistence.Column(name = "ProductNumber", nullable = false, length = 25)
 	public java.lang.String getProductNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ProductNumber);
 	}
@@ -102,7 +102,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Color")
+	@javax.persistence.Column(name = "Color", length = 15)
 	public java.lang.String getColor() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.Color);
 	}
@@ -117,7 +117,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SafetyStockLevel", nullable = false)
+	@javax.persistence.Column(name = "SafetyStockLevel", nullable = false, precision = 5)
 	public java.lang.Short getSafetyStockLevel() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.SafetyStockLevel);
 	}
@@ -132,7 +132,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ReorderPoint", nullable = false)
+	@javax.persistence.Column(name = "ReorderPoint", nullable = false, precision = 5)
 	public java.lang.Short getReorderPoint() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ReorderPoint);
 	}
@@ -147,7 +147,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StandardCost", nullable = false)
+	@javax.persistence.Column(name = "StandardCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getStandardCost() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.StandardCost);
 	}
@@ -162,7 +162,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ListPrice", nullable = false)
+	@javax.persistence.Column(name = "ListPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getListPrice() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ListPrice);
 	}
@@ -177,7 +177,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Size")
+	@javax.persistence.Column(name = "Size", length = 5)
 	public java.lang.String getSize() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.Size);
 	}
@@ -204,7 +204,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SizeUnitMeasureCode")
+	@javax.persistence.Column(name = "SizeUnitMeasureCode", length = 3)
 	public java.lang.String getSizeUnitMeasureCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.SizeUnitMeasureCode);
 	}
@@ -231,7 +231,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * REFERENCES Production.UnitMeasure (UnitMeasureCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "WeightUnitMeasureCode")
+	@javax.persistence.Column(name = "WeightUnitMeasureCode", length = 3)
 	public java.lang.String getWeightUnitMeasureCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.WeightUnitMeasureCode);
 	}
@@ -246,7 +246,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Weight")
+	@javax.persistence.Column(name = "Weight", precision = 8, scale = 2)
 	public java.math.BigDecimal getWeight() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.Weight);
 	}
@@ -261,7 +261,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "DaysToManufacture", nullable = false)
+	@javax.persistence.Column(name = "DaysToManufacture", nullable = false, precision = 10)
 	public java.lang.Integer getDaysToManufacture() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.DaysToManufacture);
 	}
@@ -276,7 +276,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ProductLine")
+	@javax.persistence.Column(name = "ProductLine", length = 2)
 	public java.lang.String getProductLine() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ProductLine);
 	}
@@ -291,7 +291,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Class")
+	@javax.persistence.Column(name = "Class", length = 2)
 	public java.lang.String getClass_() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.Class);
 	}
@@ -306,7 +306,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Style")
+	@javax.persistence.Column(name = "Style", length = 2)
 	public java.lang.String getStyle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.Style);
 	}
@@ -333,7 +333,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * REFERENCES Production.ProductSubcategory (ProductSubcategoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductSubcategoryID")
+	@javax.persistence.Column(name = "ProductSubcategoryID", precision = 10)
 	public java.lang.Integer getProductSubcategoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ProductSubcategoryID);
 	}
@@ -360,7 +360,7 @@ public class Product extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductModelID")
+	@javax.persistence.Column(name = "ProductModelID", precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Product.Product.ProductModelID);
 	}

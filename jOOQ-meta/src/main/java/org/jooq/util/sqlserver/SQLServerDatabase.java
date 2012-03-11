@@ -250,6 +250,7 @@ public class SQLServerDatabase extends AbstractDatabase {
                 ROUTINES.ROUTINE_NAME,
                 ROUTINES.SPECIFIC_NAME,
                 ROUTINES.DATA_TYPE,
+                ROUTINES.CHARACTER_MAXIMUM_LENGTH,
                 ROUTINES.NUMERIC_PRECISION,
                 ROUTINES.NUMERIC_SCALE)
             .from(ROUTINES)
@@ -264,6 +265,7 @@ public class SQLServerDatabase extends AbstractDatabase {
                 record.getValue(ROUTINES.ROUTINE_NAME),
                 record.getValue(ROUTINES.SPECIFIC_NAME),
                 record.getValue(ROUTINES.DATA_TYPE),
+                record.getValue(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
                 record.getValue(ROUTINES.NUMERIC_SCALE));
             result.add(routine);

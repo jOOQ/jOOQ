@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductDescription", schema = "Production")
 public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductDescription> {
 
-	private static final long serialVersionUID = -742164794;
+	private static final long serialVersionUID = 2052199881;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductDescriptionID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductDescriptionID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductDescriptionID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.ProductDescriptionID);
 	}
@@ -42,7 +42,7 @@ public class ProductDescription extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Description", nullable = false)
+	@javax.persistence.Column(name = "Description", nullable = false, length = 400)
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductDescription.ProductDescription.Description);
 	}

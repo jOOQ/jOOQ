@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "ProductSubcategory", schema = "Production")
 public class ProductSubcategory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 233201545;
+	private static final long serialVersionUID = 160779153;
 
 	private java.lang.Integer  ProductSubcategoryID;
 	private java.lang.Integer  ProductCategoryID;
@@ -19,7 +19,7 @@ public class ProductSubcategory implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductSubcategoryID() {
 		return this.ProductSubcategoryID;
 	}
@@ -28,7 +28,7 @@ public class ProductSubcategory implements java.io.Serializable {
 		this.ProductSubcategoryID = ProductSubcategoryID;
 	}
 
-	@javax.persistence.Column(name = "ProductCategoryID", nullable = false)
+	@javax.persistence.Column(name = "ProductCategoryID", nullable = false, precision = 10)
 	public java.lang.Integer getProductCategoryID() {
 		return this.ProductCategoryID;
 	}
@@ -37,7 +37,7 @@ public class ProductSubcategory implements java.io.Serializable {
 		this.ProductCategoryID = ProductCategoryID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_unsigned", schema = "test2")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -1663520223;
+	private static final long serialVersionUID = 1941431718;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "u_byte")
+	@javax.persistence.Column(name = "u_byte", precision = 3)
 	public org.jooq.tools.unsigned.UByte getUByte() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_BYTE);
 	}
@@ -37,7 +37,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "u_short")
+	@javax.persistence.Column(name = "u_short", precision = 5)
 	public org.jooq.tools.unsigned.UShort getUShort() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_SHORT);
 	}
@@ -52,7 +52,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "u_int")
+	@javax.persistence.Column(name = "u_int", precision = 10)
 	public org.jooq.tools.unsigned.UInteger getUInt() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_INT);
 	}
@@ -67,7 +67,7 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "u_long")
+	@javax.persistence.Column(name = "u_long", precision = 20)
 	public org.jooq.tools.unsigned.ULong getULong() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED.U_LONG);
 	}

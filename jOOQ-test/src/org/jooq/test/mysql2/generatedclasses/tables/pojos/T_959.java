@@ -10,11 +10,11 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_959", schema = "test2")
 public class T_959 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1347387041;
+	private static final long serialVersionUID = -819786227;
 
 	private org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords javaKeywords;
 
-	@javax.persistence.Column(name = "java_keywords")
+	@javax.persistence.Column(name = "java_keywords", length = 12)
 	public org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {
 		return this.javaKeywords;
 	}

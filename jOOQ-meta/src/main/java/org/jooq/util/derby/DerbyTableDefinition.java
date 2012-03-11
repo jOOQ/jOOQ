@@ -85,7 +85,10 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),
-                typeName, precision, scale);
+                typeName,
+                precision,
+                precision,
+                scale);
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),

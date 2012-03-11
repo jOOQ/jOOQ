@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class T_ARRAYS implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1238081369;
+	private static final long serialVersionUID = 242946044;
 
 	private java.lang.Integer                                                      ID;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY      STRING_ARRAY;
@@ -19,7 +19,7 @@ public class T_ARRAYS implements java.io.Serializable {
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY        DATE_ARRAY;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return this.ID;
 	}
@@ -28,7 +28,7 @@ public class T_ARRAYS implements java.io.Serializable {
 		this.ID = ID;
 	}
 
-	@javax.persistence.Column(name = "STRING_ARRAY")
+	@javax.persistence.Column(name = "STRING_ARRAY", length = 101)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY getSTRING_ARRAY() {
 		return this.STRING_ARRAY;
 	}
@@ -37,7 +37,7 @@ public class T_ARRAYS implements java.io.Serializable {
 		this.STRING_ARRAY = STRING_ARRAY;
 	}
 
-	@javax.persistence.Column(name = "NUMBER_ARRAY")
+	@javax.persistence.Column(name = "NUMBER_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getNUMBER_ARRAY() {
 		return this.NUMBER_ARRAY;
 	}
@@ -46,7 +46,7 @@ public class T_ARRAYS implements java.io.Serializable {
 		this.NUMBER_ARRAY = NUMBER_ARRAY;
 	}
 
-	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY")
+	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY getNUMBER_LONG_ARRAY() {
 		return this.NUMBER_LONG_ARRAY;
 	}
@@ -55,7 +55,7 @@ public class T_ARRAYS implements java.io.Serializable {
 		this.NUMBER_LONG_ARRAY = NUMBER_LONG_ARRAY;
 	}
 
-	@javax.persistence.Column(name = "DATE_ARRAY")
+	@javax.persistence.Column(name = "DATE_ARRAY", length = 49)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY getDATE_ARRAY() {
 		return this.DATE_ARRAY;
 	}

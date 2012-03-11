@@ -14,7 +14,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2033264105;
+	private static final long serialVersionUID = -1762959866;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -33,7 +33,7 @@ public class XUnused implements java.io.Serializable {
 	private java.lang.Integer    msUnusedIdRef;
 	private java.lang.String     msUnusedNameRef;
 
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -42,7 +42,7 @@ public class XUnused implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "NAME", nullable = false)
+	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
 	public java.lang.String getName() {
 		return this.name;
 	}
@@ -51,7 +51,7 @@ public class XUnused implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@javax.persistence.Column(name = "BIG_INTEGER")
+	@javax.persistence.Column(name = "BIG_INTEGER", precision = 38)
 	public java.math.BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
@@ -60,7 +60,7 @@ public class XUnused implements java.io.Serializable {
 		this.bigInteger = bigInteger;
 	}
 
-	@javax.persistence.Column(name = "ID_REF")
+	@javax.persistence.Column(name = "ID_REF", precision = 7)
 	public java.lang.Integer getIdRef() {
 		return this.idRef;
 	}
@@ -69,7 +69,7 @@ public class XUnused implements java.io.Serializable {
 		this.idRef = idRef;
 	}
 
-	@javax.persistence.Column(name = "CLASS")
+	@javax.persistence.Column(name = "CLASS", precision = 7)
 	public java.lang.Integer getClass_() {
 		return this.class_;
 	}
@@ -78,7 +78,7 @@ public class XUnused implements java.io.Serializable {
 		this.class_ = class_;
 	}
 
-	@javax.persistence.Column(name = "FIELDS")
+	@javax.persistence.Column(name = "FIELDS", precision = 7)
 	public java.lang.Integer getFields_() {
 		return this.fields;
 	}
@@ -87,7 +87,7 @@ public class XUnused implements java.io.Serializable {
 		this.fields = fields;
 	}
 
-	@javax.persistence.Column(name = "CONFIGURATION")
+	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
 	public java.lang.Integer getConfiguration_() {
 		return this.configuration;
 	}
@@ -96,7 +96,7 @@ public class XUnused implements java.io.Serializable {
 		this.configuration = configuration;
 	}
 
-	@javax.persistence.Column(name = "U_D_T")
+	@javax.persistence.Column(name = "U_D_T", precision = 7)
 	public java.lang.Integer getUDT() {
 		return this.uDT;
 	}
@@ -105,7 +105,7 @@ public class XUnused implements java.io.Serializable {
 		this.uDT = uDT;
 	}
 
-	@javax.persistence.Column(name = "META_DATA")
+	@javax.persistence.Column(name = "META_DATA", precision = 7)
 	public java.lang.Integer getMetaData_() {
 		return this.metaData;
 	}
@@ -114,7 +114,7 @@ public class XUnused implements java.io.Serializable {
 		this.metaData = metaData;
 	}
 
-	@javax.persistence.Column(name = "TYPE0")
+	@javax.persistence.Column(name = "TYPE0", precision = 7)
 	public java.lang.Integer getType0_() {
 		return this.type0;
 	}
@@ -123,7 +123,7 @@ public class XUnused implements java.io.Serializable {
 		this.type0 = type0;
 	}
 
-	@javax.persistence.Column(name = "PRIMARY_KEY")
+	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
 	public java.lang.Integer getPrimaryKey() {
 		return this.primaryKey;
 	}
@@ -132,7 +132,7 @@ public class XUnused implements java.io.Serializable {
 		this.primaryKey = primaryKey;
 	}
 
-	@javax.persistence.Column(name = "PRIMARYKEY")
+	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
 	public java.lang.Integer getPrimarykey() {
 		return this.primarykey;
 	}
@@ -141,7 +141,7 @@ public class XUnused implements java.io.Serializable {
 		this.primarykey = primarykey;
 	}
 
-	@javax.persistence.Column(name = "NAME_REF")
+	@javax.persistence.Column(name = "NAME_REF", length = 10)
 	public java.lang.String getNameRef() {
 		return this.nameRef;
 	}
@@ -150,7 +150,7 @@ public class XUnused implements java.io.Serializable {
 		this.nameRef = nameRef;
 	}
 
-	@javax.persistence.Column(name = "FIELD 737")
+	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getField_737() {
 		return this.field_737;
 	}
@@ -159,7 +159,7 @@ public class XUnused implements java.io.Serializable {
 		this.field_737 = field_737;
 	}
 
-	@javax.persistence.Column(name = "MS_UNUSED_ID_REF")
+	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
 	public java.lang.Integer getMsUnusedIdRef() {
 		return this.msUnusedIdRef;
 	}
@@ -168,7 +168,7 @@ public class XUnused implements java.io.Serializable {
 		this.msUnusedIdRef = msUnusedIdRef;
 	}
 
-	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF")
+	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
 	public java.lang.String getMsUnusedNameRef() {
 		return this.msUnusedNameRef;
 	}

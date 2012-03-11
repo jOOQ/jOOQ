@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SpecialOffer", schema = "Sales")
 public class SpecialOffer implements java.io.Serializable {
 
-	private static final long serialVersionUID = -896773843;
+	private static final long serialVersionUID = 542108653;
 
 	private java.lang.Integer    SpecialOfferID;
 	private java.lang.String     Description;
@@ -25,7 +25,7 @@ public class SpecialOffer implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SpecialOfferID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SpecialOfferID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSpecialOfferID() {
 		return this.SpecialOfferID;
 	}
@@ -34,7 +34,7 @@ public class SpecialOffer implements java.io.Serializable {
 		this.SpecialOfferID = SpecialOfferID;
 	}
 
-	@javax.persistence.Column(name = "Description", nullable = false)
+	@javax.persistence.Column(name = "Description", nullable = false, length = 255)
 	public java.lang.String getDescription() {
 		return this.Description;
 	}
@@ -43,7 +43,7 @@ public class SpecialOffer implements java.io.Serializable {
 		this.Description = Description;
 	}
 
-	@javax.persistence.Column(name = "DiscountPct", nullable = false)
+	@javax.persistence.Column(name = "DiscountPct", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getDiscountPct() {
 		return this.DiscountPct;
 	}
@@ -52,7 +52,7 @@ public class SpecialOffer implements java.io.Serializable {
 		this.DiscountPct = DiscountPct;
 	}
 
-	@javax.persistence.Column(name = "Type", nullable = false)
+	@javax.persistence.Column(name = "Type", nullable = false, length = 50)
 	public java.lang.String getType() {
 		return this.Type;
 	}
@@ -61,7 +61,7 @@ public class SpecialOffer implements java.io.Serializable {
 		this.Type = Type;
 	}
 
-	@javax.persistence.Column(name = "Category", nullable = false)
+	@javax.persistence.Column(name = "Category", nullable = false, length = 50)
 	public java.lang.String getCategory() {
 		return this.Category;
 	}
@@ -88,7 +88,7 @@ public class SpecialOffer implements java.io.Serializable {
 		this.EndDate = EndDate;
 	}
 
-	@javax.persistence.Column(name = "MinQty", nullable = false)
+	@javax.persistence.Column(name = "MinQty", nullable = false, precision = 10)
 	public java.lang.Integer getMinQty() {
 		return this.MinQty;
 	}
@@ -97,7 +97,7 @@ public class SpecialOffer implements java.io.Serializable {
 		this.MinQty = MinQty;
 	}
 
-	@javax.persistence.Column(name = "MaxQty")
+	@javax.persistence.Column(name = "MaxQty", precision = 10)
 	public java.lang.Integer getMaxQty() {
 		return this.MaxQty;
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Location> {
 
-	private static final long serialVersionUID = 1153461474;
+	private static final long serialVersionUID = 938148699;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false, precision = 5)
 	public java.lang.Short getLocationID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.LocationID);
 	}
@@ -42,7 +42,7 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.Name);
 	}
@@ -57,7 +57,7 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CostRate", nullable = false)
+	@javax.persistence.Column(name = "CostRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCostRate() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.CostRate);
 	}
@@ -72,7 +72,7 @@ public class Location extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Availability", nullable = false)
+	@javax.persistence.Column(name = "Availability", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getAvailability() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.Location.Location.Availability);
 	}

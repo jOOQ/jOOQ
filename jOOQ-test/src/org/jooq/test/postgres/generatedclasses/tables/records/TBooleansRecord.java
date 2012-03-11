@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_booleans", schema = "public")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -659841707;
+	private static final long serialVersionUID = -857995379;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.ID);
 	}
@@ -42,7 +42,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "one_zero")
+	@javax.persistence.Column(name = "one_zero", precision = 32)
 	public org.jooq.test._.converters.Boolean_10 getOneZero() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.ONE_ZERO);
 	}
@@ -57,7 +57,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "true_false_lc")
+	@javax.persistence.Column(name = "true_false_lc", length = 5)
 	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.TRUE_FALSE_LC);
 	}
@@ -72,7 +72,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "true_false_uc")
+	@javax.persistence.Column(name = "true_false_uc", length = 5)
 	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.TRUE_FALSE_UC);
 	}
@@ -87,7 +87,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "yes_no_lc")
+	@javax.persistence.Column(name = "yes_no_lc", length = 3)
 	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.YES_NO_LC);
 	}
@@ -102,7 +102,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "yes_no_uc")
+	@javax.persistence.Column(name = "yes_no_uc", length = 3)
 	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.YES_NO_UC);
 	}
@@ -117,7 +117,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "y_n_lc")
+	@javax.persistence.Column(name = "y_n_lc", length = 1)
 	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.Y_N_LC);
 	}
@@ -132,7 +132,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "y_n_uc")
+	@javax.persistence.Column(name = "y_n_uc", length = 1)
 	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.Y_N_UC);
 	}
@@ -147,7 +147,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "vc_boolean")
+	@javax.persistence.Column(name = "vc_boolean", length = 1)
 	public java.lang.Boolean getVcBoolean() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.VC_BOOLEAN);
 	}
@@ -162,7 +162,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "c_boolean")
+	@javax.persistence.Column(name = "c_boolean", length = 1)
 	public java.lang.Boolean getCBoolean() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.C_BOOLEAN);
 	}
@@ -177,7 +177,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "n_boolean")
+	@javax.persistence.Column(name = "n_boolean", precision = 32)
 	public java.lang.Boolean getNBoolean() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBooleans.T_BOOLEANS.N_BOOLEAN);
 	}

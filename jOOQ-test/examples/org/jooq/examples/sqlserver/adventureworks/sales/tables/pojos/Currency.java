@@ -10,14 +10,14 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "Currency", schema = "Sales")
 public class Currency implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1257865563;
+	private static final long serialVersionUID = -1428602621;
 
 	private java.lang.String   CurrencyCode;
 	private java.lang.String   Name;
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CurrencyCode", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CurrencyCode", unique = true, nullable = false, length = 3)
 	public java.lang.String getCurrencyCode() {
 		return this.CurrencyCode;
 	}
@@ -26,7 +26,7 @@ public class Currency implements java.io.Serializable {
 		this.CurrencyCode = CurrencyCode;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "TransactionHistory", schema = "Production")
 public class TransactionHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -591044495;
+	private static final long serialVersionUID = 148292007;
 
 	private java.lang.Integer    TransactionID;
 	private java.lang.Integer    ProductID;
@@ -23,7 +23,7 @@ public class TransactionHistory implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "TransactionID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "TransactionID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getTransactionID() {
 		return this.TransactionID;
 	}
@@ -32,7 +32,7 @@ public class TransactionHistory implements java.io.Serializable {
 		this.TransactionID = TransactionID;
 	}
 
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return this.ProductID;
 	}
@@ -41,7 +41,7 @@ public class TransactionHistory implements java.io.Serializable {
 		this.ProductID = ProductID;
 	}
 
-	@javax.persistence.Column(name = "ReferenceOrderID", nullable = false)
+	@javax.persistence.Column(name = "ReferenceOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getReferenceOrderID() {
 		return this.ReferenceOrderID;
 	}
@@ -50,7 +50,7 @@ public class TransactionHistory implements java.io.Serializable {
 		this.ReferenceOrderID = ReferenceOrderID;
 	}
 
-	@javax.persistence.Column(name = "ReferenceOrderLineID", nullable = false)
+	@javax.persistence.Column(name = "ReferenceOrderLineID", nullable = false, precision = 10)
 	public java.lang.Integer getReferenceOrderLineID() {
 		return this.ReferenceOrderLineID;
 	}
@@ -68,7 +68,7 @@ public class TransactionHistory implements java.io.Serializable {
 		this.TransactionDate = TransactionDate;
 	}
 
-	@javax.persistence.Column(name = "TransactionType", nullable = false)
+	@javax.persistence.Column(name = "TransactionType", nullable = false, length = 1)
 	public java.lang.String getTransactionType() {
 		return this.TransactionType;
 	}
@@ -77,7 +77,7 @@ public class TransactionHistory implements java.io.Serializable {
 		this.TransactionType = TransactionType;
 	}
 
-	@javax.persistence.Column(name = "Quantity", nullable = false)
+	@javax.persistence.Column(name = "Quantity", nullable = false, precision = 10)
 	public java.lang.Integer getQuantity() {
 		return this.Quantity;
 	}
@@ -86,7 +86,7 @@ public class TransactionHistory implements java.io.Serializable {
 		this.Quantity = Quantity;
 	}
 
-	@javax.persistence.Column(name = "ActualCost", nullable = false)
+	@javax.persistence.Column(name = "ActualCost", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getActualCost() {
 		return this.ActualCost;
 	}

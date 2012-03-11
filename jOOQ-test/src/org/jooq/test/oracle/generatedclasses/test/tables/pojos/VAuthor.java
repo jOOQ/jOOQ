@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1550768063;
+	private static final long serialVersionUID = 1980522144;
 
 	private java.lang.Integer                                                         id;
 	private java.lang.String                                                          firstName;
@@ -19,7 +19,7 @@ public class VAuthor implements java.io.Serializable {
 	private java.lang.Integer                                                         yearOfBirth;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address;
 
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -28,7 +28,7 @@ public class VAuthor implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "FIRST_NAME")
+	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
 		return this.firstName;
 	}
@@ -37,7 +37,7 @@ public class VAuthor implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.lastName;
 	}
@@ -46,7 +46,7 @@ public class VAuthor implements java.io.Serializable {
 		this.lastName = lastName;
 	}
 
-	@javax.persistence.Column(name = "DATE_OF_BIRTH")
+	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDateOfBirth() {
 		return this.dateOfBirth;
 	}
@@ -55,7 +55,7 @@ public class VAuthor implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
@@ -64,7 +64,7 @@ public class VAuthor implements java.io.Serializable {
 		this.yearOfBirth = yearOfBirth;
 	}
 
-	@javax.persistence.Column(name = "ADDRESS")
+	@javax.persistence.Column(name = "ADDRESS", length = 448)
 	public org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord getAddress() {
 		return this.address;
 	}

@@ -51,18 +51,35 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final SchemaDefinition schema;
     private final String           typeName;
     private final String           udtName;
+    private final int              length;
     private final int              precision;
     private final int              scale;
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number precision, Number scale) {
-        this(database, schema, typeName, precision, scale, typeName);
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale) {
+        this(database, schema, typeName, length, precision, scale, typeName);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number precision, Number scale, String udtName) {
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, String udtName) {
         this.database = database;
         this.schema = schema;
         this.typeName = typeName;
         this.udtName = udtName;
+
+        // Some dialects do not distinguish between length and precision...
+        if (length != null && precision != null && length.intValue() != 0 && precision.intValue() != 0) {
+
+            // [#650] TODO Use the central type registry to find the right
+            // data type instead of pattern matching
+            if (typeName.toLowerCase().matches(".*?(char|text|lob|xml|graphic).*?")) {
+                precision = null;
+                scale = null;
+            }
+            else {
+                length = null;
+            }
+        }
+
+        this.length = length == null ? 0 : length.intValue();
         this.precision = precision == null ? 0 : precision.intValue();
         this.scale = scale == null ? 0 : scale.intValue();
     }
@@ -89,6 +106,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final String getType() {
         return typeName;
+    }
+
+    @Override
+    public final int getLength() {
+        return length;
     }
 
     @Override

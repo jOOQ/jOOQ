@@ -68,6 +68,7 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 schema,
                 typeName,
                 precision,
+                precision,
                 scale);
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
@@ -104,6 +105,7 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(), typeName,
+                precision,
                 precision,
                 scale);
 

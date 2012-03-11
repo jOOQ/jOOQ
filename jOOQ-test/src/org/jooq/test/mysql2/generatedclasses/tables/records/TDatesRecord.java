@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_dates", schema = "test2")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1990515509;
+	private static final long serialVersionUID = 300592892;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.ID);
 	}
@@ -87,7 +87,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "d_int")
+	@javax.persistence.Column(name = "d_int", precision = 10)
 	public java.lang.Integer getDInt() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.D_INT);
 	}
@@ -102,7 +102,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ts_bigint")
+	@javax.persistence.Column(name = "ts_bigint", precision = 19)
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES.TS_BIGINT);
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalesTaxRate implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1429880642;
+	private static final long serialVersionUID = 14238155;
 
 	private java.lang.Integer    SalesTaxRateID;
 	private java.lang.Integer    StateProvinceID;
@@ -21,7 +21,7 @@ public class SalesTaxRate implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesTaxRateID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesTaxRateID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesTaxRateID() {
 		return this.SalesTaxRateID;
 	}
@@ -30,7 +30,7 @@ public class SalesTaxRate implements java.io.Serializable {
 		this.SalesTaxRateID = SalesTaxRateID;
 	}
 
-	@javax.persistence.Column(name = "StateProvinceID", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return this.StateProvinceID;
 	}
@@ -39,7 +39,7 @@ public class SalesTaxRate implements java.io.Serializable {
 		this.StateProvinceID = StateProvinceID;
 	}
 
-	@javax.persistence.Column(name = "TaxType", nullable = false)
+	@javax.persistence.Column(name = "TaxType", nullable = false, precision = 3)
 	public java.lang.Byte getTaxType() {
 		return this.TaxType;
 	}
@@ -48,7 +48,7 @@ public class SalesTaxRate implements java.io.Serializable {
 		this.TaxType = TaxType;
 	}
 
-	@javax.persistence.Column(name = "TaxRate", nullable = false)
+	@javax.persistence.Column(name = "TaxRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getTaxRate() {
 		return this.TaxRate;
 	}
@@ -57,7 +57,7 @@ public class SalesTaxRate implements java.io.Serializable {
 		this.TaxRate = TaxRate;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}

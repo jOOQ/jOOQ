@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 })
 public class EmployeePayHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -965404362;
+	private static final long serialVersionUID = -385008108;
 
 	private java.lang.Integer    EmployeeID;
 	private java.sql.Timestamp   RateChangeDate;
@@ -20,7 +20,7 @@ public class EmployeePayHistory implements java.io.Serializable {
 	private java.lang.Byte       PayFrequency;
 	private java.sql.Timestamp   ModifiedDate;
 
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return this.EmployeeID;
 	}
@@ -38,7 +38,7 @@ public class EmployeePayHistory implements java.io.Serializable {
 		this.RateChangeDate = RateChangeDate;
 	}
 
-	@javax.persistence.Column(name = "Rate", nullable = false)
+	@javax.persistence.Column(name = "Rate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getRate() {
 		return this.Rate;
 	}
@@ -47,7 +47,7 @@ public class EmployeePayHistory implements java.io.Serializable {
 		this.Rate = Rate;
 	}
 
-	@javax.persistence.Column(name = "PayFrequency", nullable = false)
+	@javax.persistence.Column(name = "PayFrequency", nullable = false, precision = 3)
 	public java.lang.Byte getPayFrequency() {
 		return this.PayFrequency;
 	}

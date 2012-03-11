@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductSubcategory", schema = "Production")
 public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> {
 
-	private static final long serialVersionUID = 113689607;
+	private static final long serialVersionUID = -1504349;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductSubcategoryID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductSubcategoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ProductSubcategoryID);
 	}
@@ -54,7 +54,7 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * REFERENCES Production.ProductCategory (ProductCategoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductCategoryID", nullable = false)
+	@javax.persistence.Column(name = "ProductCategoryID", nullable = false, precision = 10)
 	public java.lang.Integer getProductCategoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.ProductCategoryID);
 	}
@@ -69,7 +69,7 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductSubcategory.ProductSubcategory.Name);
 	}

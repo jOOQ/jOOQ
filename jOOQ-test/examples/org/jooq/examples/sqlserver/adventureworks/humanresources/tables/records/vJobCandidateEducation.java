@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "vJobCandidateEducation", schema = "HumanResources")
 public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEducation> {
 
-	private static final long serialVersionUID = 692722448;
+	private static final long serialVersionUID = -2068917810;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "JobCandidateID", nullable = false)
+	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.JobCandidateID);
 	}
@@ -82,7 +82,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.Degree")
+	@javax.persistence.Column(name = "Edu.Degree", length = 50)
 	public java.lang.String getEdu_Degree() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_Degree);
 	}
@@ -97,7 +97,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.Major")
+	@javax.persistence.Column(name = "Edu.Major", length = 50)
 	public java.lang.String getEdu_Major() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_Major);
 	}
@@ -112,7 +112,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.Minor")
+	@javax.persistence.Column(name = "Edu.Minor", length = 50)
 	public java.lang.String getEdu_Minor() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_Minor);
 	}
@@ -127,7 +127,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.GPA")
+	@javax.persistence.Column(name = "Edu.GPA", length = 5)
 	public java.lang.String getEdu_GPA() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_GPA);
 	}
@@ -142,7 +142,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.GPAScale")
+	@javax.persistence.Column(name = "Edu.GPAScale", length = 5)
 	public java.lang.String getEdu_GPAScale() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_GPAScale);
 	}
@@ -157,7 +157,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.School")
+	@javax.persistence.Column(name = "Edu.School", length = 100)
 	public java.lang.String getEdu_School() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_School);
 	}
@@ -172,7 +172,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.Loc.CountryRegion")
+	@javax.persistence.Column(name = "Edu.Loc.CountryRegion", length = 100)
 	public java.lang.String getEdu_Loc_CountryRegion() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_Loc_CountryRegion);
 	}
@@ -187,7 +187,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.Loc.State")
+	@javax.persistence.Column(name = "Edu.Loc.State", length = 100)
 	public java.lang.String getEdu_Loc_State() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_Loc_State);
 	}
@@ -202,7 +202,7 @@ public class vJobCandidateEducation extends org.jooq.impl.TableRecordImpl<org.jo
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Edu.Loc.City")
+	@javax.persistence.Column(name = "Edu.Loc.City", length = 100)
 	public java.lang.String getEdu_Loc_City() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEducation.vJobCandidateEducation.Edu_Loc_City);
 	}

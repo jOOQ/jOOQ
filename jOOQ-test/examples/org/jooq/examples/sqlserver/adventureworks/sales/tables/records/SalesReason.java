@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "SalesReason", schema = "Sales")
 public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesReason> {
 
-	private static final long serialVersionUID = 433498540;
+	private static final long serialVersionUID = -920405880;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SalesReasonID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SalesReasonID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getSalesReasonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.SalesReasonID);
 	}
@@ -42,7 +42,7 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.Name);
 	}
@@ -57,7 +57,7 @@ public class SalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ReasonType", nullable = false)
+	@javax.persistence.Column(name = "ReasonType", nullable = false, length = 50)
 	public java.lang.String getReasonType() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesReason.SalesReason.ReasonType);
 	}

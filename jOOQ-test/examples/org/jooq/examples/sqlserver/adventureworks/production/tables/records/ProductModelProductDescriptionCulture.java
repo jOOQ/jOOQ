@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductModelProductDescriptionCulture extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture> {
 
-	private static final long serialVersionUID = 83157910;
+	private static final long serialVersionUID = -299325767;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class ProductModelProductDescriptionCulture extends org.jooq.impl.Updatab
 	 * REFERENCES Production.ProductModel (ProductModelID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductModelID", nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture.ProductModelProductDescriptionCulture.ProductModelID);
 	}
@@ -71,7 +71,7 @@ public class ProductModelProductDescriptionCulture extends org.jooq.impl.Updatab
 	 * REFERENCES Production.ProductDescription (ProductDescriptionID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductDescriptionID", nullable = false)
+	@javax.persistence.Column(name = "ProductDescriptionID", nullable = false, precision = 10)
 	public java.lang.Integer getProductDescriptionID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture.ProductModelProductDescriptionCulture.ProductDescriptionID);
 	}
@@ -102,7 +102,7 @@ public class ProductModelProductDescriptionCulture extends org.jooq.impl.Updatab
 	 * REFERENCES Production.Culture (CultureID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CultureID", nullable = false)
+	@javax.persistence.Column(name = "CultureID", nullable = false, length = 6)
 	public java.lang.String getCultureID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture.ProductModelProductDescriptionCulture.CultureID);
 	}

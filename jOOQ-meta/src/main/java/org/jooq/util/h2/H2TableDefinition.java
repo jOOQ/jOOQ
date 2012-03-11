@@ -70,6 +70,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.COLUMN_NAME,
                 Columns.ORDINAL_POSITION,
                 Columns.TYPE_NAME,
+                Columns.CHARACTER_MAXIMUM_LENGTH,
                 Columns.NUMERIC_PRECISION,
                 Columns.NUMERIC_SCALE,
                 Columns.IS_NULLABLE,
@@ -85,6 +86,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(Columns.TYPE_NAME),
+                record.getValue(Columns.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(Columns.NUMERIC_PRECISION),
                 record.getValue(Columns.NUMERIC_SCALE));
 

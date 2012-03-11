@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @javax.persistence.Table(name = "AWBuildVersion", schema = "dbo")
 public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> {
 
-	private static final long serialVersionUID = -620081445;
+	private static final long serialVersionUID = -1626804339;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "SystemInformationID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "SystemInformationID", unique = true, nullable = false, precision = 3)
 	public java.lang.Byte getSystemInformationID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.SystemInformationID);
 	}
@@ -42,7 +42,7 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Database Version", nullable = false)
+	@javax.persistence.Column(name = "Database Version", nullable = false, length = 25)
 	public java.lang.String getDatabase_Version() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion.Database_Version);
 	}

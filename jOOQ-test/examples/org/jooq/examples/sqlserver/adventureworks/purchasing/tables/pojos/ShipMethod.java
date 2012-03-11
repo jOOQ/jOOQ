@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 @javax.persistence.Table(name = "ShipMethod", schema = "Purchasing")
 public class ShipMethod implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1720013689;
+	private static final long serialVersionUID = -2114878671;
 
 	private java.lang.Integer    ShipMethodID;
 	private java.lang.String     Name;
@@ -20,7 +20,7 @@ public class ShipMethod implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ShipMethodID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ShipMethodID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getShipMethodID() {
 		return this.ShipMethodID;
 	}
@@ -29,7 +29,7 @@ public class ShipMethod implements java.io.Serializable {
 		this.ShipMethodID = ShipMethodID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -38,7 +38,7 @@ public class ShipMethod implements java.io.Serializable {
 		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "ShipBase", nullable = false)
+	@javax.persistence.Column(name = "ShipBase", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getShipBase() {
 		return this.ShipBase;
 	}
@@ -47,7 +47,7 @@ public class ShipMethod implements java.io.Serializable {
 		this.ShipBase = ShipBase;
 	}
 
-	@javax.persistence.Column(name = "ShipRate", nullable = false)
+	@javax.persistence.Column(name = "ShipRate", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getShipRate() {
 		return this.ShipRate;
 	}

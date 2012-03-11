@@ -10,14 +10,14 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_unsigned", schema = "test2")
 public class TUnsigned implements java.io.Serializable {
 
-	private static final long serialVersionUID = -590601408;
+	private static final long serialVersionUID = 275266749;
 
 	private org.jooq.tools.unsigned.UByte    uByte;
 	private org.jooq.tools.unsigned.UShort   uShort;
 	private org.jooq.tools.unsigned.UInteger uInt;
 	private org.jooq.tools.unsigned.ULong    uLong;
 
-	@javax.persistence.Column(name = "u_byte")
+	@javax.persistence.Column(name = "u_byte", precision = 3)
 	public org.jooq.tools.unsigned.UByte getUByte() {
 		return this.uByte;
 	}
@@ -26,7 +26,7 @@ public class TUnsigned implements java.io.Serializable {
 		this.uByte = uByte;
 	}
 
-	@javax.persistence.Column(name = "u_short")
+	@javax.persistence.Column(name = "u_short", precision = 5)
 	public org.jooq.tools.unsigned.UShort getUShort() {
 		return this.uShort;
 	}
@@ -35,7 +35,7 @@ public class TUnsigned implements java.io.Serializable {
 		this.uShort = uShort;
 	}
 
-	@javax.persistence.Column(name = "u_int")
+	@javax.persistence.Column(name = "u_int", precision = 10)
 	public org.jooq.tools.unsigned.UInteger getUInt() {
 		return this.uInt;
 	}
@@ -44,7 +44,7 @@ public class TUnsigned implements java.io.Serializable {
 		this.uInt = uInt;
 	}
 
-	@javax.persistence.Column(name = "u_long")
+	@javax.persistence.Column(name = "u_long", precision = 20)
 	public org.jooq.tools.unsigned.ULong getULong() {
 		return this.uLong;
 	}

@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritoryHistory> {
 
-	private static final long serialVersionUID = -1541335216;
+	private static final long serialVersionUID = 349152336;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	 * REFERENCES Sales.SalesPerson (SalesPersonID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SalesPersonID", nullable = false)
+	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesPersonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.SalesPersonID);
 	}
@@ -71,7 +71,7 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableRecordImpl<org
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "TerritoryID", nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesTerritoryHistory.SalesTerritoryHistory.TerritoryID);
 	}

@@ -67,6 +67,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_NAME,
                 COLUMNS.ORDINAL_POSITION,
                 COLUMNS.DATA_TYPE,
+                COLUMNS.CHARACTER_MAXIMUM_LENGTH,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
                 COLUMNS.IS_NULLABLE,
@@ -83,6 +84,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(COLUMNS.DATA_TYPE),
+                record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
                 record.getValue(COLUMNS.UDT_NAME));

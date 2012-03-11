@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "vAdditionalContactInfo", schema = "Person")
 public class vAdditionalContactInfo implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1861307589;
+	private static final long serialVersionUID = -501133403;
 
 	private java.lang.Integer  ContactID;
 	private java.lang.String   FirstName;
@@ -30,7 +30,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 	private java.lang.String   rowguid;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return this.ContactID;
 	}
@@ -39,7 +39,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return this.FirstName;
 	}
@@ -48,7 +48,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.FirstName = FirstName;
 	}
 
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return this.MiddleName;
 	}
@@ -57,7 +57,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.MiddleName = MiddleName;
 	}
 
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.LastName;
 	}
@@ -66,7 +66,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.LastName = LastName;
 	}
 
-	@javax.persistence.Column(name = "TelephoneNumber")
+	@javax.persistence.Column(name = "TelephoneNumber", length = 50)
 	public java.lang.String getTelephoneNumber() {
 		return this.TelephoneNumber;
 	}
@@ -84,7 +84,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.TelephoneSpecialInstructions = TelephoneSpecialInstructions;
 	}
 
-	@javax.persistence.Column(name = "Street")
+	@javax.persistence.Column(name = "Street", length = 50)
 	public java.lang.String getStreet() {
 		return this.Street;
 	}
@@ -93,7 +93,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.Street = Street;
 	}
 
-	@javax.persistence.Column(name = "City")
+	@javax.persistence.Column(name = "City", length = 50)
 	public java.lang.String getCity() {
 		return this.City;
 	}
@@ -102,7 +102,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.City = City;
 	}
 
-	@javax.persistence.Column(name = "StateProvince")
+	@javax.persistence.Column(name = "StateProvince", length = 50)
 	public java.lang.String getStateProvince() {
 		return this.StateProvince;
 	}
@@ -111,7 +111,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.StateProvince = StateProvince;
 	}
 
-	@javax.persistence.Column(name = "PostalCode")
+	@javax.persistence.Column(name = "PostalCode", length = 50)
 	public java.lang.String getPostalCode() {
 		return this.PostalCode;
 	}
@@ -120,7 +120,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.PostalCode = PostalCode;
 	}
 
-	@javax.persistence.Column(name = "CountryRegion")
+	@javax.persistence.Column(name = "CountryRegion", length = 50)
 	public java.lang.String getCountryRegion() {
 		return this.CountryRegion;
 	}
@@ -138,7 +138,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.HomeAddressSpecialInstructions = HomeAddressSpecialInstructions;
 	}
 
-	@javax.persistence.Column(name = "EMailAddress")
+	@javax.persistence.Column(name = "EMailAddress", length = 128)
 	public java.lang.String getEMailAddress() {
 		return this.EMailAddress;
 	}
@@ -156,7 +156,7 @@ public class vAdditionalContactInfo implements java.io.Serializable {
 		this.EMailSpecialInstructions = EMailSpecialInstructions;
 	}
 
-	@javax.persistence.Column(name = "EMailTelephoneNumber")
+	@javax.persistence.Column(name = "EMailTelephoneNumber", length = 50)
 	public java.lang.String getEMailTelephoneNumber() {
 		return this.EMailTelephoneNumber;
 	}

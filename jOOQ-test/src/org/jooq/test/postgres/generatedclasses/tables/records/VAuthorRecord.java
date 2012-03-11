@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_author", schema = "public")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -982840574;
+	private static final long serialVersionUID = 2120350864;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "id")
+	@javax.persistence.Column(name = "id", precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.ID);
 	}
@@ -37,7 +37,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "first_name")
+	@javax.persistence.Column(name = "first_name", length = 50)
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME);
 	}
@@ -52,7 +52,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "last_name")
+	@javax.persistence.Column(name = "last_name", length = 50)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME);
 	}
@@ -82,7 +82,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "year_of_birth")
+	@javax.persistence.Column(name = "year_of_birth", precision = 32)
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH);
 	}

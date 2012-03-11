@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "vJobCandidateEmployment", schema = "HumanResources")
 public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment> {
 
-	private static final long serialVersionUID = 1090019108;
+	private static final long serialVersionUID = 455124956;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "JobCandidateID", nullable = false)
+	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.JobCandidateID);
 	}
@@ -67,7 +67,7 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Emp.OrgName")
+	@javax.persistence.Column(name = "Emp.OrgName", length = 100)
 	public java.lang.String getEmp_OrgName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_OrgName);
 	}
@@ -82,7 +82,7 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableRecordImpl<org.j
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Emp.JobTitle")
+	@javax.persistence.Column(name = "Emp.JobTitle", length = 100)
 	public java.lang.String getEmp_JobTitle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment.Emp_JobTitle);
 	}

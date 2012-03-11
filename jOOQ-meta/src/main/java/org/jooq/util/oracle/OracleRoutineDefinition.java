@@ -72,6 +72,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	            ALL_ARGUMENTS.IN_OUT,
 	            ALL_ARGUMENTS.ARGUMENT_NAME,
 	            ALL_ARGUMENTS.DATA_TYPE,
+	            ALL_ARGUMENTS.DATA_LENGTH,
 	            ALL_ARGUMENTS.DATA_PRECISION,
 	            ALL_ARGUMENTS.DATA_SCALE,
 	            ALL_ARGUMENTS.TYPE_NAME,
@@ -96,6 +97,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ALL_ARGUMENTS.DATA_TYPE),
+                record.getValue(ALL_ARGUMENTS.DATA_LENGTH),
                 record.getValue(ALL_ARGUMENTS.DATA_PRECISION),
                 record.getValue(ALL_ARGUMENTS.DATA_SCALE),
                 record.getValue(ALL_ARGUMENTS.TYPE_NAME));

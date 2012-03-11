@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR> {
 
-	private static final long serialVersionUID = 954906926;
+	private static final long serialVersionUID = 834167363;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ID", nullable = false)
+	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ID);
 	}
@@ -37,7 +37,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "FIRST_NAME")
+	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFIRST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.FIRST_NAME);
 	}
@@ -52,7 +52,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LAST_NAME", nullable = false)
+	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLAST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.LAST_NAME);
 	}
@@ -67,7 +67,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "DATE_OF_BIRTH")
+	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDATE_OF_BIRTH() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.DATE_OF_BIRTH);
 	}
@@ -82,7 +82,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "YEAR_OF_BIRTH")
+	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYEAR_OF_BIRTH() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.YEAR_OF_BIRTH);
 	}
@@ -97,7 +97,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ADDRESS")
+	@javax.persistence.Column(name = "ADDRESS", length = 448)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ADDRESS);
 	}

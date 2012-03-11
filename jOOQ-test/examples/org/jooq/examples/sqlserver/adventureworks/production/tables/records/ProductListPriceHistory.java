@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 })
 public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductListPriceHistory> {
 
-	private static final long serialVersionUID = -338778250;
+	private static final long serialVersionUID = -1589644688;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ProductID);
 	}
@@ -89,7 +89,7 @@ public class ProductListPriceHistory extends org.jooq.impl.UpdatableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ListPrice", nullable = false)
+	@javax.persistence.Column(name = "ListPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getListPrice() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductListPriceHistory.ProductListPriceHistory.ListPrice);
 	}

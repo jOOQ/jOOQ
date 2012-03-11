@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "ProductPhoto", schema = "Production")
 public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductPhoto> {
 
-	private static final long serialVersionUID = 772715505;
+	private static final long serialVersionUID = -1669748017;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductPhotoID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductPhotoID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductPhotoID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ProductPhotoID);
 	}
@@ -57,7 +57,7 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ThumbnailPhotoFileName")
+	@javax.persistence.Column(name = "ThumbnailPhotoFileName", length = 50)
 	public java.lang.String getThumbnailPhotoFileName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.ThumbnailPhotoFileName);
 	}
@@ -87,7 +87,7 @@ public class ProductPhoto extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LargePhotoFileName")
+	@javax.persistence.Column(name = "LargePhotoFileName", length = 50)
 	public java.lang.String getLargePhotoFileName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.ProductPhoto.ProductPhoto.LargePhotoFileName);
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 2024180474;
+	private static final long serialVersionUID = 1043869922;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
 	}
@@ -66,7 +66,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "first_name")
+	@javax.persistence.Column(name = "first_name", length = 50)
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME);
 	}
@@ -81,7 +81,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "last_name", nullable = false)
+	@javax.persistence.Column(name = "last_name", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME);
 	}
@@ -111,7 +111,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "year_of_birth")
+	@javax.persistence.Column(name = "year_of_birth", precision = 32)
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
 	}

@@ -14,13 +14,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 })
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1258577454;
+	private static final long serialVersionUID = 96239693;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;
 	private java.lang.Integer stock;
 
-	@javax.persistence.Column(name = "book_store_name", nullable = false)
+	@javax.persistence.Column(name = "book_store_name", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {
 		return this.bookStoreName;
 	}
@@ -29,7 +29,7 @@ public class TBookToBookStore implements java.io.Serializable {
 		this.bookStoreName = bookStoreName;
 	}
 
-	@javax.persistence.Column(name = "book_id", nullable = false)
+	@javax.persistence.Column(name = "book_id", nullable = false, precision = 10)
 	public java.lang.Integer getBookId() {
 		return this.bookId;
 	}
@@ -38,7 +38,7 @@ public class TBookToBookStore implements java.io.Serializable {
 		this.bookId = bookId;
 	}
 
-	@javax.persistence.Column(name = "stock")
+	@javax.persistence.Column(name = "stock", precision = 10)
 	public java.lang.Integer getStock() {
 		return this.stock;
 	}

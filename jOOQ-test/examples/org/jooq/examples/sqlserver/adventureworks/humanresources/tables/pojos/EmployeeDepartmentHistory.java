@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 })
 public class EmployeeDepartmentHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 968981254;
+	private static final long serialVersionUID = -577466492;
 
 	private java.lang.Integer  EmployeeID;
 	private java.lang.Short    DepartmentID;
@@ -21,7 +21,7 @@ public class EmployeeDepartmentHistory implements java.io.Serializable {
 	private java.sql.Timestamp EndDate;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return this.EmployeeID;
 	}
@@ -30,7 +30,7 @@ public class EmployeeDepartmentHistory implements java.io.Serializable {
 		this.EmployeeID = EmployeeID;
 	}
 
-	@javax.persistence.Column(name = "DepartmentID", nullable = false)
+	@javax.persistence.Column(name = "DepartmentID", nullable = false, precision = 5)
 	public java.lang.Short getDepartmentID() {
 		return this.DepartmentID;
 	}
@@ -39,7 +39,7 @@ public class EmployeeDepartmentHistory implements java.io.Serializable {
 		this.DepartmentID = DepartmentID;
 	}
 
-	@javax.persistence.Column(name = "ShiftID", nullable = false)
+	@javax.persistence.Column(name = "ShiftID", nullable = false, precision = 3)
 	public java.lang.Byte getShiftID() {
 		return this.ShiftID;
 	}

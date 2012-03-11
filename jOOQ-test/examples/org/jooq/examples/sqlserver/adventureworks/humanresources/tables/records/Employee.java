@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records
 @javax.persistence.Table(name = "Employee", schema = "HumanResources")
 public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> {
 
-	private static final long serialVersionUID = 404594032;
+	private static final long serialVersionUID = 1919166517;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "EmployeeID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.EmployeeID);
 	}
@@ -42,7 +42,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "NationalIDNumber", nullable = false)
+	@javax.persistence.Column(name = "NationalIDNumber", nullable = false, length = 15)
 	public java.lang.String getNationalIDNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.NationalIDNumber);
 	}
@@ -69,7 +69,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * REFERENCES Person.Contact (ContactID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.ContactID);
 	}
@@ -84,7 +84,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LoginID", nullable = false)
+	@javax.persistence.Column(name = "LoginID", nullable = false, length = 256)
 	public java.lang.String getLoginID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.LoginID);
 	}
@@ -111,7 +111,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * REFERENCES HumanResources.Employee (EmployeeID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ManagerID")
+	@javax.persistence.Column(name = "ManagerID", precision = 10)
 	public java.lang.Integer getManagerID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.ManagerID);
 	}
@@ -126,7 +126,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Title", nullable = false)
+	@javax.persistence.Column(name = "Title", nullable = false, length = 50)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.Title);
 	}
@@ -156,7 +156,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "MaritalStatus", nullable = false)
+	@javax.persistence.Column(name = "MaritalStatus", nullable = false, length = 1)
 	public java.lang.String getMaritalStatus() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.MaritalStatus);
 	}
@@ -171,7 +171,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Gender", nullable = false)
+	@javax.persistence.Column(name = "Gender", nullable = false, length = 1)
 	public java.lang.String getGender() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.Gender);
 	}
@@ -216,7 +216,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "VacationHours", nullable = false)
+	@javax.persistence.Column(name = "VacationHours", nullable = false, precision = 5)
 	public java.lang.Short getVacationHours() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.VacationHours);
 	}
@@ -231,7 +231,7 @@ public class Employee extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "SickLeaveHours", nullable = false)
+	@javax.persistence.Column(name = "SickLeaveHours", nullable = false, precision = 5)
 	public java.lang.Short getSickLeaveHours() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Employee.Employee.SickLeaveHours);
 	}

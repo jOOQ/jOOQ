@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.records;
 @javax.persistence.Table(name = "UnitMeasure", schema = "Production")
 public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> {
 
-	private static final long serialVersionUID = -933261600;
+	private static final long serialVersionUID = 397159338;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "UnitMeasureCode", unique = true, nullable = false)
+	@javax.persistence.Column(name = "UnitMeasureCode", unique = true, nullable = false, length = 3)
 	public java.lang.String getUnitMeasureCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.UnitMeasureCode);
 	}
@@ -42,7 +42,7 @@ public class UnitMeasure extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure.Name);
 	}

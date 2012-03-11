@@ -12,14 +12,14 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 })
 public class VendorContact implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1907381854;
+	private static final long serialVersionUID = 581214586;
 
 	private java.lang.Integer  VendorID;
 	private java.lang.Integer  ContactID;
 	private java.lang.Integer  ContactTypeID;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "VendorID", nullable = false)
+	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)
 	public java.lang.Integer getVendorID() {
 		return this.VendorID;
 	}
@@ -28,7 +28,7 @@ public class VendorContact implements java.io.Serializable {
 		this.VendorID = VendorID;
 	}
 
-	@javax.persistence.Column(name = "ContactID", nullable = false)
+	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)
 	public java.lang.Integer getContactID() {
 		return this.ContactID;
 	}
@@ -37,7 +37,7 @@ public class VendorContact implements java.io.Serializable {
 		this.ContactID = ContactID;
 	}
 
-	@javax.persistence.Column(name = "ContactTypeID", nullable = false)
+	@javax.persistence.Column(name = "ContactTypeID", nullable = false, precision = 10)
 	public java.lang.Integer getContactTypeID() {
 		return this.ContactTypeID;
 	}

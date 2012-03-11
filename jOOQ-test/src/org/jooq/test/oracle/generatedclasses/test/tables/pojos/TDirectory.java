@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1258234535;
+	private static final long serialVersionUID = -958687423;
 
 	private java.lang.Integer id;
 	private java.lang.Integer parentId;
@@ -18,7 +18,7 @@ public class TDirectory implements java.io.Serializable {
 	private java.lang.String  name;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -27,7 +27,7 @@ public class TDirectory implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "PARENT_ID")
+	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	public java.lang.Integer getParentId() {
 		return this.parentId;
 	}
@@ -36,7 +36,7 @@ public class TDirectory implements java.io.Serializable {
 		this.parentId = parentId;
 	}
 
-	@javax.persistence.Column(name = "IS_DIRECTORY")
+	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 1)
 	public java.lang.Byte getIsDirectory() {
 		return this.isDirectory;
 	}
@@ -45,7 +45,7 @@ public class TDirectory implements java.io.Serializable {
 		this.isDirectory = isDirectory;
 	}
 
-	@javax.persistence.Column(name = "name")
+	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getName() {
 		return this.name;
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2028476764;
+	private static final long serialVersionUID = -773110900;
 
 	private java.lang.Integer  id;
 	private java.sql.Date      d;
@@ -20,7 +20,7 @@ public class TDates implements java.io.Serializable {
 	private java.lang.Long     tsBigint;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -29,7 +29,7 @@ public class TDates implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "D")
+	@javax.persistence.Column(name = "D", length = 7)
 	public java.sql.Date getD() {
 		return this.d;
 	}
@@ -38,7 +38,7 @@ public class TDates implements java.io.Serializable {
 		this.d = d;
 	}
 
-	@javax.persistence.Column(name = "T")
+	@javax.persistence.Column(name = "T", length = 11)
 	public java.sql.Timestamp getT() {
 		return this.t;
 	}
@@ -47,7 +47,7 @@ public class TDates implements java.io.Serializable {
 		this.t = t;
 	}
 
-	@javax.persistence.Column(name = "TS")
+	@javax.persistence.Column(name = "TS", length = 11)
 	public java.sql.Timestamp getTs() {
 		return this.ts;
 	}
@@ -56,7 +56,7 @@ public class TDates implements java.io.Serializable {
 		this.ts = ts;
 	}
 
-	@javax.persistence.Column(name = "D_INT")
+	@javax.persistence.Column(name = "D_INT", precision = 7)
 	public java.lang.Integer getDInt() {
 		return this.dInt;
 	}
@@ -65,7 +65,7 @@ public class TDates implements java.io.Serializable {
 		this.dInt = dInt;
 	}
 
-	@javax.persistence.Column(name = "TS_BIGINT")
+	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTsBigint() {
 		return this.tsBigint;
 	}

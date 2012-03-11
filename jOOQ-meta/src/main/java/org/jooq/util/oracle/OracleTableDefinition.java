@@ -66,6 +66,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 
 		for (Record record : create().select(
 		        ALL_TAB_COLS.DATA_TYPE,
+		        ALL_TAB_COLS.DATA_LENGTH,
 		        ALL_TAB_COLS.DATA_PRECISION,
 		        ALL_TAB_COLS.DATA_SCALE,
 		        ALL_TAB_COLS.NULLABLE,
@@ -86,6 +87,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ALL_TAB_COLS.DATA_TYPE),
+                record.getValueAsInteger(ALL_TAB_COLS.DATA_LENGTH, 0),
                 record.getValueAsInteger(ALL_TAB_COLS.DATA_PRECISION, 0),
                 record.getValueAsInteger(ALL_TAB_COLS.DATA_SCALE, 0));
 

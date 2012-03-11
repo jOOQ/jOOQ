@@ -193,7 +193,7 @@ public class H2Database extends AbstractDatabase {
             DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                H2DataType.BIGINT.getTypeName(), 0, 0);
+                H2DataType.BIGINT.getTypeName(), 0, 0, 0);
 
             result.add(new DefaultSequenceDefinition(schema, name, type));
         }

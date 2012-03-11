@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "vProductModelCatalogDescription", schema = "Production")
 public class vProductModelCatalogDescription implements java.io.Serializable {
 
-	private static final long serialVersionUID = -707722308;
+	private static final long serialVersionUID = -143861014;
 
 	private java.lang.Integer  ProductModelID;
 	private java.lang.String   Name;
@@ -38,7 +38,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 	private java.lang.String   rowguid;
 	private java.sql.Timestamp ModifiedDate;
 
-	@javax.persistence.Column(name = "ProductModelID", nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return this.ProductModelID;
 	}
@@ -47,7 +47,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.ProductModelID = ProductModelID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -74,7 +74,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Manufacturer = Manufacturer;
 	}
 
-	@javax.persistence.Column(name = "Copyright")
+	@javax.persistence.Column(name = "Copyright", length = 30)
 	public java.lang.String getCopyright() {
 		return this.Copyright;
 	}
@@ -83,7 +83,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Copyright = Copyright;
 	}
 
-	@javax.persistence.Column(name = "ProductURL")
+	@javax.persistence.Column(name = "ProductURL", length = 256)
 	public java.lang.String getProductURL() {
 		return this.ProductURL;
 	}
@@ -92,7 +92,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.ProductURL = ProductURL;
 	}
 
-	@javax.persistence.Column(name = "WarrantyPeriod")
+	@javax.persistence.Column(name = "WarrantyPeriod", length = 256)
 	public java.lang.String getWarrantyPeriod() {
 		return this.WarrantyPeriod;
 	}
@@ -101,7 +101,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.WarrantyPeriod = WarrantyPeriod;
 	}
 
-	@javax.persistence.Column(name = "WarrantyDescription")
+	@javax.persistence.Column(name = "WarrantyDescription", length = 256)
 	public java.lang.String getWarrantyDescription() {
 		return this.WarrantyDescription;
 	}
@@ -110,7 +110,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.WarrantyDescription = WarrantyDescription;
 	}
 
-	@javax.persistence.Column(name = "NoOfYears")
+	@javax.persistence.Column(name = "NoOfYears", length = 256)
 	public java.lang.String getNoOfYears() {
 		return this.NoOfYears;
 	}
@@ -119,7 +119,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.NoOfYears = NoOfYears;
 	}
 
-	@javax.persistence.Column(name = "MaintenanceDescription")
+	@javax.persistence.Column(name = "MaintenanceDescription", length = 256)
 	public java.lang.String getMaintenanceDescription() {
 		return this.MaintenanceDescription;
 	}
@@ -128,7 +128,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.MaintenanceDescription = MaintenanceDescription;
 	}
 
-	@javax.persistence.Column(name = "Wheel")
+	@javax.persistence.Column(name = "Wheel", length = 256)
 	public java.lang.String getWheel() {
 		return this.Wheel;
 	}
@@ -137,7 +137,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Wheel = Wheel;
 	}
 
-	@javax.persistence.Column(name = "Saddle")
+	@javax.persistence.Column(name = "Saddle", length = 256)
 	public java.lang.String getSaddle() {
 		return this.Saddle;
 	}
@@ -146,7 +146,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Saddle = Saddle;
 	}
 
-	@javax.persistence.Column(name = "Pedal")
+	@javax.persistence.Column(name = "Pedal", length = 256)
 	public java.lang.String getPedal() {
 		return this.Pedal;
 	}
@@ -164,7 +164,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.BikeFrame = BikeFrame;
 	}
 
-	@javax.persistence.Column(name = "Crankset")
+	@javax.persistence.Column(name = "Crankset", length = 256)
 	public java.lang.String getCrankset() {
 		return this.Crankset;
 	}
@@ -173,7 +173,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Crankset = Crankset;
 	}
 
-	@javax.persistence.Column(name = "PictureAngle")
+	@javax.persistence.Column(name = "PictureAngle", length = 256)
 	public java.lang.String getPictureAngle() {
 		return this.PictureAngle;
 	}
@@ -182,7 +182,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.PictureAngle = PictureAngle;
 	}
 
-	@javax.persistence.Column(name = "PictureSize")
+	@javax.persistence.Column(name = "PictureSize", length = 256)
 	public java.lang.String getPictureSize() {
 		return this.PictureSize;
 	}
@@ -191,7 +191,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.PictureSize = PictureSize;
 	}
 
-	@javax.persistence.Column(name = "ProductPhotoID")
+	@javax.persistence.Column(name = "ProductPhotoID", length = 256)
 	public java.lang.String getProductPhotoID() {
 		return this.ProductPhotoID;
 	}
@@ -200,7 +200,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.ProductPhotoID = ProductPhotoID;
 	}
 
-	@javax.persistence.Column(name = "Material")
+	@javax.persistence.Column(name = "Material", length = 256)
 	public java.lang.String getMaterial() {
 		return this.Material;
 	}
@@ -209,7 +209,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Material = Material;
 	}
 
-	@javax.persistence.Column(name = "Color")
+	@javax.persistence.Column(name = "Color", length = 256)
 	public java.lang.String getColor() {
 		return this.Color;
 	}
@@ -218,7 +218,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Color = Color;
 	}
 
-	@javax.persistence.Column(name = "ProductLine")
+	@javax.persistence.Column(name = "ProductLine", length = 256)
 	public java.lang.String getProductLine() {
 		return this.ProductLine;
 	}
@@ -227,7 +227,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.ProductLine = ProductLine;
 	}
 
-	@javax.persistence.Column(name = "Style")
+	@javax.persistence.Column(name = "Style", length = 256)
 	public java.lang.String getStyle() {
 		return this.Style;
 	}
@@ -236,7 +236,7 @@ public class vProductModelCatalogDescription implements java.io.Serializable {
 		this.Style = Style;
 	}
 
-	@javax.persistence.Column(name = "RiderExperience")
+	@javax.persistence.Column(name = "RiderExperience", length = 1024)
 	public java.lang.String getRiderExperience() {
 		return this.RiderExperience;
 	}

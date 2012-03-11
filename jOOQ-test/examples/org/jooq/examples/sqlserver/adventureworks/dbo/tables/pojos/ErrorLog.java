@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.pojos;
 @javax.persistence.Table(name = "ErrorLog", schema = "dbo")
 public class ErrorLog implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1639385318;
+	private static final long serialVersionUID = 968553243;
 
 	private java.lang.Integer  ErrorLogID;
 	private java.sql.Timestamp ErrorTime;
@@ -23,7 +23,7 @@ public class ErrorLog implements java.io.Serializable {
 	private java.lang.String   ErrorMessage;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ErrorLogID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ErrorLogID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getErrorLogID() {
 		return this.ErrorLogID;
 	}
@@ -41,7 +41,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.ErrorTime = ErrorTime;
 	}
 
-	@javax.persistence.Column(name = "UserName", nullable = false)
+	@javax.persistence.Column(name = "UserName", nullable = false, length = 128)
 	public java.lang.String getUserName() {
 		return this.UserName;
 	}
@@ -50,7 +50,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.UserName = UserName;
 	}
 
-	@javax.persistence.Column(name = "ErrorNumber", nullable = false)
+	@javax.persistence.Column(name = "ErrorNumber", nullable = false, precision = 10)
 	public java.lang.Integer getErrorNumber() {
 		return this.ErrorNumber;
 	}
@@ -59,7 +59,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.ErrorNumber = ErrorNumber;
 	}
 
-	@javax.persistence.Column(name = "ErrorSeverity")
+	@javax.persistence.Column(name = "ErrorSeverity", precision = 10)
 	public java.lang.Integer getErrorSeverity() {
 		return this.ErrorSeverity;
 	}
@@ -68,7 +68,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.ErrorSeverity = ErrorSeverity;
 	}
 
-	@javax.persistence.Column(name = "ErrorState")
+	@javax.persistence.Column(name = "ErrorState", precision = 10)
 	public java.lang.Integer getErrorState() {
 		return this.ErrorState;
 	}
@@ -77,7 +77,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.ErrorState = ErrorState;
 	}
 
-	@javax.persistence.Column(name = "ErrorProcedure")
+	@javax.persistence.Column(name = "ErrorProcedure", length = 126)
 	public java.lang.String getErrorProcedure() {
 		return this.ErrorProcedure;
 	}
@@ -86,7 +86,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.ErrorProcedure = ErrorProcedure;
 	}
 
-	@javax.persistence.Column(name = "ErrorLine")
+	@javax.persistence.Column(name = "ErrorLine", precision = 10)
 	public java.lang.Integer getErrorLine() {
 		return this.ErrorLine;
 	}
@@ -95,7 +95,7 @@ public class ErrorLog implements java.io.Serializable {
 		this.ErrorLine = ErrorLine;
 	}
 
-	@javax.persistence.Column(name = "ErrorMessage", nullable = false)
+	@javax.persistence.Column(name = "ErrorMessage", nullable = false, length = 4000)
 	public java.lang.String getErrorMessage() {
 		return this.ErrorMessage;
 	}

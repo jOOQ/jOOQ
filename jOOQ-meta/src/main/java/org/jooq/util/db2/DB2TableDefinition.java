@@ -84,6 +84,7 @@ public class DB2TableDefinition extends AbstractTableDefinition {
                 getSchema(),
                 record.getValue(Columns.TYPENAME),
                 record.getValue(Columns.LENGTH),
+                record.getValue(Columns.LENGTH),
                 record.getValue(Columns.SCALE));
 
             ColumnDefinition column = new DefaultColumnDefinition(

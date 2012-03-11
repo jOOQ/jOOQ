@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason> {
 
-	private static final long serialVersionUID = 259529724;
+	private static final long serialVersionUID = -1223554308;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SalesOrderID", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.SalesOrderID);
 	}
@@ -71,7 +71,7 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableRecordIm
 	 * REFERENCES Sales.SalesReason (SalesReasonID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SalesReasonID", nullable = false)
+	@javax.persistence.Column(name = "SalesReasonID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesReasonID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderHeaderSalesReason.SalesOrderHeaderSalesReason.SalesReasonID);
 	}

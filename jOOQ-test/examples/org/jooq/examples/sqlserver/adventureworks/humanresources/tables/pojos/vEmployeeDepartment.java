@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vEmployeeDepartment", schema = "HumanResources")
 public class vEmployeeDepartment implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2049728459;
+	private static final long serialVersionUID = 659488298;
 
 	private java.lang.Integer  EmployeeID;
 	private java.lang.String   Title;
@@ -23,7 +23,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 	private java.lang.String   GroupName;
 	private java.sql.Timestamp StartDate;
 
-	@javax.persistence.Column(name = "EmployeeID", nullable = false)
+	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)
 	public java.lang.Integer getEmployeeID() {
 		return this.EmployeeID;
 	}
@@ -32,7 +32,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.EmployeeID = EmployeeID;
 	}
 
-	@javax.persistence.Column(name = "Title")
+	@javax.persistence.Column(name = "Title", length = 8)
 	public java.lang.String getTitle() {
 		return this.Title;
 	}
@@ -41,7 +41,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.Title = Title;
 	}
 
-	@javax.persistence.Column(name = "FirstName", nullable = false)
+	@javax.persistence.Column(name = "FirstName", nullable = false, length = 50)
 	public java.lang.String getFirstName() {
 		return this.FirstName;
 	}
@@ -50,7 +50,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.FirstName = FirstName;
 	}
 
-	@javax.persistence.Column(name = "MiddleName")
+	@javax.persistence.Column(name = "MiddleName", length = 50)
 	public java.lang.String getMiddleName() {
 		return this.MiddleName;
 	}
@@ -59,7 +59,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.MiddleName = MiddleName;
 	}
 
-	@javax.persistence.Column(name = "LastName", nullable = false)
+	@javax.persistence.Column(name = "LastName", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.LastName;
 	}
@@ -68,7 +68,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.LastName = LastName;
 	}
 
-	@javax.persistence.Column(name = "Suffix")
+	@javax.persistence.Column(name = "Suffix", length = 10)
 	public java.lang.String getSuffix() {
 		return this.Suffix;
 	}
@@ -77,7 +77,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.Suffix = Suffix;
 	}
 
-	@javax.persistence.Column(name = "JobTitle", nullable = false)
+	@javax.persistence.Column(name = "JobTitle", nullable = false, length = 50)
 	public java.lang.String getJobTitle() {
 		return this.JobTitle;
 	}
@@ -86,7 +86,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.JobTitle = JobTitle;
 	}
 
-	@javax.persistence.Column(name = "Department", nullable = false)
+	@javax.persistence.Column(name = "Department", nullable = false, length = 50)
 	public java.lang.String getDepartment() {
 		return this.Department;
 	}
@@ -95,7 +95,7 @@ public class vEmployeeDepartment implements java.io.Serializable {
 		this.Department = Department;
 	}
 
-	@javax.persistence.Column(name = "GroupName", nullable = false)
+	@javax.persistence.Column(name = "GroupName", nullable = false, length = 50)
 	public java.lang.String getGroupName() {
 		return this.GroupName;
 	}

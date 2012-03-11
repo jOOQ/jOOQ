@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_658_REF", schema = "TEST")
 public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = 884202937;
+	private static final long serialVersionUID = -2102709301;
 
 	/**
 	 * An uncommented item
@@ -34,7 +34,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * REFERENCES TEST.T_658_11 (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "REF_11")
+	@javax.persistence.Column(name = "REF_11", length = 3)
 	public org.jooq.test.oracle.generatedclasses.test.enums.T_658_11 getRef_11() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF.REF_11);
 	}
@@ -61,7 +61,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * REFERENCES TEST.T_658_21 (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "REF_21")
+	@javax.persistence.Column(name = "REF_21", precision = 7)
 	public org.jooq.test.oracle.generatedclasses.test.enums.T_658_21 getRef_21() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF.REF_21);
 	}
@@ -88,7 +88,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * REFERENCES TEST.T_658_31 (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "REF_31")
+	@javax.persistence.Column(name = "REF_31", precision = 15)
 	public org.jooq.test.oracle.generatedclasses.test.enums.T_658_31 getRef_31() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF.REF_31);
 	}
@@ -115,7 +115,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * REFERENCES TEST.T_658_12 (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "REF_12")
+	@javax.persistence.Column(name = "REF_12", length = 3)
 	public org.jooq.test.oracle.generatedclasses.test.enums.T_658_12 getRef_12() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF.REF_12);
 	}
@@ -142,7 +142,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * REFERENCES TEST.T_658_22 (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "REF_22")
+	@javax.persistence.Column(name = "REF_22", precision = 7)
 	public org.jooq.test.oracle.generatedclasses.test.enums.T_658_22 getRef_22() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF.REF_22);
 	}
@@ -169,7 +169,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * REFERENCES TEST.T_658_32 (ID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "REF_32")
+	@javax.persistence.Column(name = "REF_32", precision = 15)
 	public org.jooq.test.oracle.generatedclasses.test.enums.T_658_32 getRef_32() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF.REF_32);
 	}

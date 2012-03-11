@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 483510055;
+	private static final long serialVersionUID = 2012525505;
 
 	private java.lang.Integer                                                      id;
 	private java.lang.String                                                       firstName;
@@ -20,7 +20,7 @@ public class TAuthor implements java.io.Serializable {
 	private org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord address;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -29,7 +29,7 @@ public class TAuthor implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@javax.persistence.Column(name = "first_name")
+	@javax.persistence.Column(name = "first_name", length = 50)
 	public java.lang.String getFirstName() {
 		return this.firstName;
 	}
@@ -38,7 +38,7 @@ public class TAuthor implements java.io.Serializable {
 		this.firstName = firstName;
 	}
 
-	@javax.persistence.Column(name = "last_name", nullable = false)
+	@javax.persistence.Column(name = "last_name", nullable = false, length = 50)
 	public java.lang.String getLastName() {
 		return this.lastName;
 	}
@@ -56,7 +56,7 @@ public class TAuthor implements java.io.Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	@javax.persistence.Column(name = "year_of_birth")
+	@javax.persistence.Column(name = "year_of_birth", precision = 32)
 	public java.lang.Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}

@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderDetail> {
 
-	private static final long serialVersionUID = -1029858695;
+	private static final long serialVersionUID = 1034858190;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.SalesOrderHeader (SalesOrderID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SalesOrderID", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.SalesOrderID);
 	}
@@ -59,7 +59,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * 
 	 * PRIMARY KEY
 	 */
-	@javax.persistence.Column(name = "SalesOrderDetailID", nullable = false)
+	@javax.persistence.Column(name = "SalesOrderDetailID", nullable = false, precision = 10)
 	public java.lang.Integer getSalesOrderDetailID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.SalesOrderDetailID);
 	}
@@ -74,7 +74,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CarrierTrackingNumber")
+	@javax.persistence.Column(name = "CarrierTrackingNumber", length = 25)
 	public java.lang.String getCarrierTrackingNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.CarrierTrackingNumber);
 	}
@@ -89,7 +89,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "OrderQty", nullable = false)
+	@javax.persistence.Column(name = "OrderQty", nullable = false, precision = 5)
 	public java.lang.Short getOrderQty() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.OrderQty);
 	}
@@ -116,7 +116,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.ProductID);
 	}
@@ -143,7 +143,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 * REFERENCES Sales.SpecialOfferProduct (SpecialOfferID, ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SpecialOfferID", nullable = false)
+	@javax.persistence.Column(name = "SpecialOfferID", nullable = false, precision = 10)
 	public java.lang.Integer getSpecialOfferID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.SpecialOfferID);
 	}
@@ -158,7 +158,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "UnitPrice", nullable = false)
+	@javax.persistence.Column(name = "UnitPrice", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getUnitPrice() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.UnitPrice);
 	}
@@ -173,7 +173,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "UnitPriceDiscount", nullable = false)
+	@javax.persistence.Column(name = "UnitPriceDiscount", nullable = false, precision = 19, scale = 4)
 	public java.math.BigDecimal getUnitPriceDiscount() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.UnitPriceDiscount);
 	}
@@ -188,7 +188,7 @@ public class SalesOrderDetail extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "LineTotal", nullable = false)
+	@javax.persistence.Column(name = "LineTotal", nullable = false, precision = 38, scale = 6)
 	public java.math.BigDecimal getLineTotal() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesOrderDetail.SalesOrderDetail.LineTotal);
 	}

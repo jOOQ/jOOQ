@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> {
 
-	private static final long serialVersionUID = 1452064589;
+	private static final long serialVersionUID = 1222534192;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.ID);
 	}
@@ -42,7 +42,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "STRING_ARRAY")
+	@javax.persistence.Column(name = "STRING_ARRAY", length = 101)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY getSTRING_ARRAY() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.STRING_ARRAY);
 	}
@@ -57,7 +57,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "NUMBER_ARRAY")
+	@javax.persistence.Column(name = "NUMBER_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getNUMBER_ARRAY() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.NUMBER_ARRAY);
 	}
@@ -72,7 +72,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY")
+	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY getNUMBER_LONG_ARRAY() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.NUMBER_LONG_ARRAY);
 	}
@@ -87,7 +87,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "DATE_ARRAY")
+	@javax.persistence.Column(name = "DATE_ARRAY", length = 49)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY getDATE_ARRAY() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.DATE_ARRAY);
 	}

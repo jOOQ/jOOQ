@@ -72,6 +72,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 database.getSchema(record.getValue(ROUTINES.ROUTINE_SCHEMA)),
                 record.getValueAsString("data_type"),
+                record.getValue(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
                 record.getValue(ROUTINES.NUMERIC_SCALE),
                 record.getValue(ROUTINES.TYPE_UDT_NAME));
@@ -87,6 +88,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
         for (Record record : create().select(
                 PARAMETERS.PARAMETER_NAME,
                 PARAMETERS.DATA_TYPE,
+                PARAMETERS.CHARACTER_MAXIMUM_LENGTH,
                 PARAMETERS.NUMERIC_PRECISION,
                 PARAMETERS.NUMERIC_SCALE,
                 PARAMETERS.UDT_NAME,
@@ -104,6 +106,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(PARAMETERS.DATA_TYPE),
+                record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE),
                 record.getValue(PARAMETERS.UDT_NAME));

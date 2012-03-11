@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "Address", schema = "Person")
 public class Address implements java.io.Serializable {
 
-	private static final long serialVersionUID = 606145201;
+	private static final long serialVersionUID = -1004944940;
 
 	private java.lang.Integer  AddressID;
 	private java.lang.String   AddressLine1;
@@ -22,7 +22,7 @@ public class Address implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "AddressID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "AddressID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getAddressID() {
 		return this.AddressID;
 	}
@@ -31,7 +31,7 @@ public class Address implements java.io.Serializable {
 		this.AddressID = AddressID;
 	}
 
-	@javax.persistence.Column(name = "AddressLine1", nullable = false)
+	@javax.persistence.Column(name = "AddressLine1", nullable = false, length = 60)
 	public java.lang.String getAddressLine1() {
 		return this.AddressLine1;
 	}
@@ -40,7 +40,7 @@ public class Address implements java.io.Serializable {
 		this.AddressLine1 = AddressLine1;
 	}
 
-	@javax.persistence.Column(name = "AddressLine2")
+	@javax.persistence.Column(name = "AddressLine2", length = 60)
 	public java.lang.String getAddressLine2() {
 		return this.AddressLine2;
 	}
@@ -49,7 +49,7 @@ public class Address implements java.io.Serializable {
 		this.AddressLine2 = AddressLine2;
 	}
 
-	@javax.persistence.Column(name = "City", nullable = false)
+	@javax.persistence.Column(name = "City", nullable = false, length = 30)
 	public java.lang.String getCity() {
 		return this.City;
 	}
@@ -58,7 +58,7 @@ public class Address implements java.io.Serializable {
 		this.City = City;
 	}
 
-	@javax.persistence.Column(name = "StateProvinceID", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return this.StateProvinceID;
 	}
@@ -67,7 +67,7 @@ public class Address implements java.io.Serializable {
 		this.StateProvinceID = StateProvinceID;
 	}
 
-	@javax.persistence.Column(name = "PostalCode", nullable = false)
+	@javax.persistence.Column(name = "PostalCode", nullable = false, length = 15)
 	public java.lang.String getPostalCode() {
 		return this.PostalCode;
 	}

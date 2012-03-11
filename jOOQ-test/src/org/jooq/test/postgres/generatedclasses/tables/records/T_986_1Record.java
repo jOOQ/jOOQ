@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_986_1", schema = "public")
 public class T_986_1Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 1609808563;
+	private static final long serialVersionUID = 1867185835;
 
 	/**
 	 * An uncommented item
@@ -34,7 +34,7 @@ public class T_986_1Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	 * REFERENCES public.x_unused (id)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ref")
+	@javax.persistence.Column(name = "ref", precision = 32)
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1.REF);
 	}

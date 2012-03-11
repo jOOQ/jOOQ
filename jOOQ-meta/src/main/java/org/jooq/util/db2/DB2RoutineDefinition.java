@@ -116,6 +116,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                     getSchema(),
                     dataType,
                     precision,
+                    precision,
                     scale);
 
                 addParameter(InOutDefinition.RETURN, new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type));
@@ -127,6 +128,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                     getDatabase(),
                     getSchema(),
                     dataType,
+                    precision,
                     precision,
                     scale);
 
@@ -160,6 +162,7 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(Procparms.TYPENAME),
+                record.getValue(Procparms.LENGTH),
                 record.getValue(Procparms.LENGTH),
                 record.getValue(Procparms.SCALE));
 

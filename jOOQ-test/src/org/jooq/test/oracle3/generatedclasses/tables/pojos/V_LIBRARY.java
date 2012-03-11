@@ -10,12 +10,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
 public class V_LIBRARY implements java.io.Serializable {
 
-	private static final long serialVersionUID = -146057467;
+	private static final long serialVersionUID = 796418137;
 
 	private java.lang.String AUTHOR;
 	private java.lang.String TITLE;
 
-	@javax.persistence.Column(name = "AUTHOR")
+	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAUTHOR() {
 		return this.AUTHOR;
 	}
@@ -24,7 +24,7 @@ public class V_LIBRARY implements java.io.Serializable {
 		this.AUTHOR = AUTHOR;
 	}
 
-	@javax.persistence.Column(name = "TITLE", nullable = false)
+	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE() {
 		return this.TITLE;
 	}

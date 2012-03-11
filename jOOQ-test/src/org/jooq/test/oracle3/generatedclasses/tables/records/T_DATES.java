@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> {
 
-	private static final long serialVersionUID = 506330807;
+	private static final long serialVersionUID = 1860710931;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.ID);
 	}
@@ -42,7 +42,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "D")
+	@javax.persistence.Column(name = "D", length = 7)
 	public java.sql.Date getD() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.D);
 	}
@@ -57,7 +57,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "T")
+	@javax.persistence.Column(name = "T", length = 11)
 	public java.sql.Timestamp getT() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.T);
 	}
@@ -72,7 +72,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TS")
+	@javax.persistence.Column(name = "TS", length = 11)
 	public java.sql.Timestamp getTS() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.TS);
 	}
@@ -87,7 +87,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "D_INT")
+	@javax.persistence.Column(name = "D_INT", precision = 7)
 	public java.lang.Integer getD_INT() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.D_INT);
 	}
@@ -102,7 +102,7 @@ public class T_DATES extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ora
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TS_BIGINT")
+	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTS_BIGINT() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES.TS_BIGINT);
 	}

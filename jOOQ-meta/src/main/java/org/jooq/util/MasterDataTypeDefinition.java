@@ -55,6 +55,11 @@ public class MasterDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
+    public final int getLength() {
+        return underlying.getLength();
+    }
+
+    @Override
     public final int getPrecision() {
         return underlying.getPrecision();
     }

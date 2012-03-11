@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.records;
 @javax.persistence.Table(name = "vStateProvinceCountryRegion", schema = "Person")
 public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> {
 
-	private static final long serialVersionUID = 1433052575;
+	private static final long serialVersionUID = -565144267;
 
 	/**
 	 * An uncommented item
@@ -22,7 +22,7 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StateProvinceID", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceID", nullable = false, precision = 10)
 	public java.lang.Integer getStateProvinceID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.StateProvinceID);
 	}
@@ -37,7 +37,7 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StateProvinceCode", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceCode", nullable = false, length = 3)
 	public java.lang.String getStateProvinceCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.StateProvinceCode);
 	}
@@ -67,7 +67,7 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "StateProvinceName", nullable = false)
+	@javax.persistence.Column(name = "StateProvinceName", nullable = false, length = 50)
 	public java.lang.String getStateProvinceName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.StateProvinceName);
 	}
@@ -82,7 +82,7 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "TerritoryID", nullable = false)
+	@javax.persistence.Column(name = "TerritoryID", nullable = false, precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.TerritoryID);
 	}
@@ -97,7 +97,7 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.CountryRegionCode);
 	}
@@ -112,7 +112,7 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableRecordImpl<o
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CountryRegionName", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionName", nullable = false, length = 50)
 	public java.lang.String getCountryRegionName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion.CountryRegionName);
 	}

@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_library", schema = "public")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -761935805;
+	private static final long serialVersionUID = 291353944;
 
 	/**
 	 * An uncommented item
@@ -37,7 +37,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "title")
+	@javax.persistence.Column(name = "title", length = 400)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);
 	}

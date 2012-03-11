@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vJobCandidateEmployment", schema = "HumanResources")
 public class vJobCandidateEmployment implements java.io.Serializable {
 
-	private static final long serialVersionUID = 865736883;
+	private static final long serialVersionUID = 1612702651;
 
 	private java.lang.Integer  JobCandidateID;
 	private java.sql.Timestamp Emp_StartDate;
@@ -24,7 +24,7 @@ public class vJobCandidateEmployment implements java.io.Serializable {
 	private java.lang.String   Emp_Loc_State;
 	private java.lang.String   Emp_Loc_City;
 
-	@javax.persistence.Column(name = "JobCandidateID", nullable = false)
+	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)
 	public java.lang.Integer getJobCandidateID() {
 		return this.JobCandidateID;
 	}
@@ -51,7 +51,7 @@ public class vJobCandidateEmployment implements java.io.Serializable {
 		this.Emp_EndDate = Emp_EndDate;
 	}
 
-	@javax.persistence.Column(name = "Emp.OrgName")
+	@javax.persistence.Column(name = "Emp.OrgName", length = 100)
 	public java.lang.String getEmp_OrgName() {
 		return this.Emp_OrgName;
 	}
@@ -60,7 +60,7 @@ public class vJobCandidateEmployment implements java.io.Serializable {
 		this.Emp_OrgName = Emp_OrgName;
 	}
 
-	@javax.persistence.Column(name = "Emp.JobTitle")
+	@javax.persistence.Column(name = "Emp.JobTitle", length = 100)
 	public java.lang.String getEmp_JobTitle() {
 		return this.Emp_JobTitle;
 	}

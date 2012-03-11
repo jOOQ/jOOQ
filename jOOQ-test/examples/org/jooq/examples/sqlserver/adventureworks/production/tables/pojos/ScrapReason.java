@@ -10,14 +10,14 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "ScrapReason", schema = "Production")
 public class ScrapReason implements java.io.Serializable {
 
-	private static final long serialVersionUID = 437072022;
+	private static final long serialVersionUID = 1755825898;
 
 	private java.lang.Short    ScrapReasonID;
 	private java.lang.String   Name;
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ScrapReasonID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ScrapReasonID", unique = true, nullable = false, precision = 5)
 	public java.lang.Short getScrapReasonID() {
 		return this.ScrapReasonID;
 	}
@@ -26,7 +26,7 @@ public class ScrapReason implements java.io.Serializable {
 		this.ScrapReasonID = ScrapReasonID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}

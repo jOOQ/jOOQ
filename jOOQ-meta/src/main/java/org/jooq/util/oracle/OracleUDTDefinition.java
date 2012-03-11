@@ -65,6 +65,7 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
                 ALL_TYPE_ATTRS.ATTR_NAME,
                 ALL_TYPE_ATTRS.ATTR_NO,
                 ALL_TYPE_ATTRS.ATTR_TYPE_NAME,
+                ALL_TYPE_ATTRS.LENGTH,
                 ALL_TYPE_ATTRS.PRECISION,
                 ALL_TYPE_ATTRS.SCALE)
             .from(ALL_TYPE_ATTRS)
@@ -76,6 +77,7 @@ public class OracleUDTDefinition extends AbstractUDTDefinition {
                 getDatabase(),
                 getSchema(),
                 record.getValue(ALL_TYPE_ATTRS.ATTR_TYPE_NAME),
+                record.getValueAsInteger(ALL_TYPE_ATTRS.LENGTH, 0),
                 record.getValueAsInteger(ALL_TYPE_ATTRS.PRECISION, 0),
                 record.getValueAsInteger(ALL_TYPE_ATTRS.SCALE, 0));
 

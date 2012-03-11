@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "v_library", schema = "public")
 public class VLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2127849624;
+	private static final long serialVersionUID = 1422034483;
 
 	private java.lang.String author;
 	private java.lang.String title;
@@ -24,7 +24,7 @@ public class VLibrary implements java.io.Serializable {
 		this.author = author;
 	}
 
-	@javax.persistence.Column(name = "title")
+	@javax.persistence.Column(name = "title", length = 400)
 	public java.lang.String getTitle() {
 		return this.title;
 	}

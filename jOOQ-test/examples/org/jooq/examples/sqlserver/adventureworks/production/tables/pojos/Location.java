@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class Location implements java.io.Serializable {
 
-	private static final long serialVersionUID = 90465316;
+	private static final long serialVersionUID = 1439113007;
 
 	private java.lang.Short      LocationID;
 	private java.lang.String     Name;
@@ -19,7 +19,7 @@ public class Location implements java.io.Serializable {
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "LocationID", unique = true, nullable = false, precision = 5)
 	public java.lang.Short getLocationID() {
 		return this.LocationID;
 	}
@@ -28,7 +28,7 @@ public class Location implements java.io.Serializable {
 		this.LocationID = LocationID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}
@@ -37,7 +37,7 @@ public class Location implements java.io.Serializable {
 		this.Name = Name;
 	}
 
-	@javax.persistence.Column(name = "CostRate", nullable = false)
+	@javax.persistence.Column(name = "CostRate", nullable = false, precision = 10, scale = 4)
 	public java.math.BigDecimal getCostRate() {
 		return this.CostRate;
 	}
@@ -46,7 +46,7 @@ public class Location implements java.io.Serializable {
 		this.CostRate = CostRate;
 	}
 
-	@javax.persistence.Column(name = "Availability", nullable = false)
+	@javax.persistence.Column(name = "Availability", nullable = false, precision = 8, scale = 2)
 	public java.math.BigDecimal getAvailability() {
 		return this.Availability;
 	}

@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.records;
 @javax.persistence.Table(name = "ErrorLog", schema = "dbo")
 public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> {
 
-	private static final long serialVersionUID = -2076448614;
+	private static final long serialVersionUID = -638213887;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ErrorLogID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ErrorLogID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getErrorLogID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorLogID);
 	}
@@ -57,7 +57,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "UserName", nullable = false)
+	@javax.persistence.Column(name = "UserName", nullable = false, length = 128)
 	public java.lang.String getUserName() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.UserName);
 	}
@@ -72,7 +72,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ErrorNumber", nullable = false)
+	@javax.persistence.Column(name = "ErrorNumber", nullable = false, precision = 10)
 	public java.lang.Integer getErrorNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorNumber);
 	}
@@ -87,7 +87,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ErrorSeverity")
+	@javax.persistence.Column(name = "ErrorSeverity", precision = 10)
 	public java.lang.Integer getErrorSeverity() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorSeverity);
 	}
@@ -102,7 +102,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ErrorState")
+	@javax.persistence.Column(name = "ErrorState", precision = 10)
 	public java.lang.Integer getErrorState() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorState);
 	}
@@ -117,7 +117,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ErrorProcedure")
+	@javax.persistence.Column(name = "ErrorProcedure", length = 126)
 	public java.lang.String getErrorProcedure() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorProcedure);
 	}
@@ -132,7 +132,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ErrorLine")
+	@javax.persistence.Column(name = "ErrorLine", precision = 10)
 	public java.lang.Integer getErrorLine() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorLine);
 	}
@@ -147,7 +147,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "ErrorMessage", nullable = false)
+	@javax.persistence.Column(name = "ErrorMessage", nullable = false, length = 4000)
 	public java.lang.String getErrorMessage() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog.ErrorMessage);
 	}

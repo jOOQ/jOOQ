@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "ProductModel", schema = "Production")
 public class ProductModel implements java.io.Serializable {
 
-	private static final long serialVersionUID = -569445307;
+	private static final long serialVersionUID = 1304203417;
 
 	private java.lang.Integer  ProductModelID;
 	private java.lang.String   Name;
@@ -20,7 +20,7 @@ public class ProductModel implements java.io.Serializable {
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "ProductModelID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "ProductModelID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getProductModelID() {
 		return this.ProductModelID;
 	}
@@ -29,7 +29,7 @@ public class ProductModel implements java.io.Serializable {
 		this.ProductModelID = ProductModelID;
 	}
 
-	@javax.persistence.Column(name = "Name", nullable = false)
+	@javax.persistence.Column(name = "Name", nullable = false, length = 50)
 	public java.lang.String getName() {
 		return this.Name;
 	}

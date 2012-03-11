@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> {
 
-	private static final long serialVersionUID = -985521712;
+	private static final long serialVersionUID = 1179363900;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	 * REFERENCES Person.CountryRegion (CountryRegionCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CountryRegionCode", nullable = false)
+	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)
 	public java.lang.String getCountryRegionCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.CountryRegionCode);
 	}
@@ -71,7 +71,7 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableRecordImpl<org
 	 * REFERENCES Sales.Currency (CurrencyCode)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "CurrencyCode", nullable = false)
+	@javax.persistence.Column(name = "CurrencyCode", nullable = false, length = 3)
 	public java.lang.String getCurrencyCode() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency.CurrencyCode);
 	}

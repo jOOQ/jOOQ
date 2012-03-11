@@ -10,7 +10,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 @javax.persistence.Table(name = "Customer", schema = "Sales")
 public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Customer> {
 
-	private static final long serialVersionUID = 1965877116;
+	private static final long serialVersionUID = 1582925698;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false)
+	@javax.persistence.Column(name = "CustomerID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getCustomerID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.CustomerID);
 	}
@@ -54,7 +54,7 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	 * REFERENCES Sales.SalesTerritory (TerritoryID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "TerritoryID")
+	@javax.persistence.Column(name = "TerritoryID", precision = 10)
 	public java.lang.Integer getTerritoryID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.TerritoryID);
 	}
@@ -69,7 +69,7 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "AccountNumber", nullable = false)
+	@javax.persistence.Column(name = "AccountNumber", nullable = false, length = 10)
 	public java.lang.String getAccountNumber() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.AccountNumber);
 	}
@@ -84,7 +84,7 @@ public class Customer extends org.jooq.impl.UpdatableRecordImpl<org.jooq.example
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "CustomerType", nullable = false)
+	@javax.persistence.Column(name = "CustomerType", nullable = false, length = 1)
 	public java.lang.String getCustomerType() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.Customer.Customer.CustomerType);
 	}

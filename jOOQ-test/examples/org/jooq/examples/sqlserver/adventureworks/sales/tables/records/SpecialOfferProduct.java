@@ -12,7 +12,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.records;
 })
 public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> {
 
-	private static final long serialVersionUID = 2078807378;
+	private static final long serialVersionUID = -229514670;
 
 	/**
 	 * An uncommented item
@@ -40,7 +40,7 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES Sales.SpecialOffer (SpecialOfferID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "SpecialOfferID", nullable = false)
+	@javax.persistence.Column(name = "SpecialOfferID", nullable = false, precision = 10)
 	public java.lang.Integer getSpecialOfferID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.SpecialOfferID);
 	}
@@ -71,7 +71,7 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 * REFERENCES Production.Product (ProductID)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "ProductID", nullable = false)
+	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)
 	public java.lang.Integer getProductID() {
 		return getValue(org.jooq.examples.sqlserver.adventureworks.sales.tables.SpecialOfferProduct.SpecialOfferProduct.ProductID);
 	}

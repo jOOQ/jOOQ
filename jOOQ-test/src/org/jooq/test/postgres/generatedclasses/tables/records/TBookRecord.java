@@ -10,7 +10,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 428269649;
+	private static final long serialVersionUID = -1347664618;
 
 	/**
 	 * An uncommented item
@@ -27,7 +27,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * PRIMARY KEY
 	 */
 	@javax.persistence.Id
-	@javax.persistence.Column(name = "id", unique = true, nullable = false)
+	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 32)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.ID);
 	}
@@ -66,7 +66,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES public.t_author (id)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "author_id", nullable = false)
+	@javax.persistence.Column(name = "author_id", nullable = false, precision = 32)
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 	}
@@ -109,7 +109,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES public.t_author (id)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "co_author_id")
+	@javax.persistence.Column(name = "co_author_id", precision = 32)
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
 	}
@@ -140,7 +140,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "details_id")
+	@javax.persistence.Column(name = "details_id", precision = 32)
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID);
 	}
@@ -155,7 +155,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "title", nullable = false)
+	@javax.persistence.Column(name = "title", nullable = false, length = 400)
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.TITLE);
 	}
@@ -170,7 +170,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "published_in", nullable = false)
+	@javax.persistence.Column(name = "published_in", nullable = false, precision = 32)
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN);
 	}
@@ -197,7 +197,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 * REFERENCES public.t_language (id)
 	 * </pre></code>
 	 */
-	@javax.persistence.Column(name = "language_id", nullable = false)
+	@javax.persistence.Column(name = "language_id", nullable = false, precision = 32)
 	public org.jooq.test.postgres.generatedclasses.enums.TLanguage getLanguageId() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
 	}

@@ -54,7 +54,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 import org.jooq.Insert;
 import org.jooq.Record;
@@ -136,6 +135,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     public void testInsertUpdateGetSQLAndGetBindValues() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        // [#1128] Be sure that NULL values are created as bind variables too.
+        // They used to be always inlined for historic reasons.
+
         // INSERT INTO .. SET syntax
         // ----------------------------
         Insert<A> insert1 =
@@ -145,7 +147,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .set(TAuthor_LAST_NAME(), "Koontz");
 
         assertEquals(
-            Arrays.<Object>asList(1, null, "Koontz"),
+            asList((Object) 1, null, "Koontz"),
             insert1.getBindValues());
 
         // INSERT INTO .. VALUES syntax
@@ -155,7 +157,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 .values(1, null, "Hesse");
 
         assertEquals(
-            Arrays.<Object>asList(1, null, "Hesse"),
+            asList((Object) 1, null, "Hesse"),
             insert2.getBindValues());
     }
 

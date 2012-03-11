@@ -70,16 +70,16 @@ CREATE TABLE t_dates (
 
 CREATE TABLE t_booleans (
   id int,
-  one_zero int,
-  true_false_lc varchar(5),
-  true_false_uc varchar(5),
-  yes_no_lc varchar(3),
-  yes_no_uc varchar(3),
-  y_n_lc char(1),
-  y_n_uc char(1),
-  vc_boolean varchar(1),
-  c_boolean char(1),
-  n_boolean int,
+  one_zero int null,
+  true_false_lc varchar(5) null,
+  true_false_uc varchar(5) null,
+  yes_no_lc varchar(3) null,
+  yes_no_uc varchar(3) null,
+  y_n_lc char(1) null,
+  y_n_uc char(1) null,
+  vc_boolean varchar(1) null,
+  c_boolean char(1) null,
+  n_boolean int null,
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
 )

@@ -217,7 +217,7 @@ implements
 
     @Override
     public final <T> MergeImpl<R> set(Field<T> field, T value) {
-        return set(field, val(value));
+        return set(field, val(value, field));
     }
 
     @Override

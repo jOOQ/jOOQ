@@ -341,12 +341,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition like(String value) {
-        return like(val(value));
+        return like(val(value, String.class));
     }
 
     @Override
     public final Condition like(String value, char escape) {
-        return like(val(value), escape);
+        return like(val(value, String.class), escape);
     }
 
     @Override
@@ -361,12 +361,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notLike(String value) {
-        return notLike(val(value));
+        return notLike(val(value, String.class));
     }
 
     @Override
     public final Condition notLike(String value, char escape) {
-        return notLike(val(value), escape);
+        return notLike(val(value, String.class), escape);
     }
 
     @Override
@@ -433,7 +433,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
         for (T value : values) {
-            fields.add(val(value));
+            fields.add(val(value, this));
         }
 
         return in(fields.toArray(new Field<?>[0]));
@@ -464,7 +464,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         List<Field<?>> fields = new ArrayList<Field<?>>();
 
         for (T value : values) {
-            fields.add(val(value));
+            fields.add(val(value, this));
         }
 
         return notIn(fields.toArray(new Field<?>[0]));
@@ -478,7 +478,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition between(T minValue, T maxValue) {
-        return between(val(minValue), val(maxValue));
+        return between(val(minValue, this), val(maxValue, this));
     }
 
     @Override
@@ -488,7 +488,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notBetween(T minValue, T maxValue) {
-        return notBetween(val(minValue), val(maxValue));
+        return notBetween(val(minValue, this), val(maxValue, this));
     }
 
     @Override
@@ -498,7 +498,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition equal(T value) {
-        return equal(val(value));
+        return equal(val(value, this));
     }
 
     @Override
@@ -508,7 +508,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition equalIgnoreCase(String value) {
-        return equalIgnoreCase(val(value));
+        return equalIgnoreCase(val(value, String.class));
     }
 
     @Override
@@ -559,7 +559,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notEqual(T value) {
-        return notEqual(val(value));
+        return notEqual(val(value, this));
     }
 
     @Override
@@ -569,7 +569,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition notEqualIgnoreCase(String value) {
-        return notEqualIgnoreCase(val(value));
+        return notEqualIgnoreCase(val(value, String.class));
     }
 
     @Override
@@ -620,7 +620,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessThan(T value) {
-        return lessThan(val(value));
+        return lessThan(val(value, this));
     }
 
     @Override
@@ -671,7 +671,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition lessOrEqual(T value) {
-        return lessOrEqual(val(value));
+        return lessOrEqual(val(value, this));
     }
 
     @Override
@@ -722,7 +722,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterThan(T value) {
-        return greaterThan(val(value));
+        return greaterThan(val(value, this));
     }
 
     @Override
@@ -773,7 +773,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition greaterOrEqual(T value) {
-        return greaterOrEqual(val(value));
+        return greaterOrEqual(val(value, this));
     }
 
     @Override

@@ -168,7 +168,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
         SQLDataType<T> type = getDataType(context).getSQLDataType();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (getType() == BigDecimal.class && asList(DB2, DERBY, HSQLDB).contains(context.getDialect())) {
+        if (getValue() != null && getType() == BigDecimal.class && asList(DB2, DERBY, HSQLDB).contains(context.getDialect())) {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) getValue()).scale();
@@ -423,10 +423,11 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             else if (EnumType.class.isAssignableFrom(type)) {
                 context.sql(getBindVariable(context));
 
-                // [#968] Don't cast "synthetic" enum types
-                if (!StringUtils.isBlank(((EnumType) val).getName())) {
+                // [#968] Don't cast "synthetic" enum types (note, val can be null!)
+                String name = ((EnumType) type.getEnumConstants()[0]).getName();
+                if (!StringUtils.isBlank(name)) {
                     context.sql("::");
-                    context.literal(((EnumType) val).getName());
+                    context.literal(name);
                 }
             }
 

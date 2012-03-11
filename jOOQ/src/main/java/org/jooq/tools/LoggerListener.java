@@ -50,7 +50,7 @@ public class LoggerListener extends DefaultExecuteListener {
     private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
 
     @Override
-    public void executeStart(ExecuteContext ctx) {
+    public void renderEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled()) {
             if (ctx.query() != null) {
                 log.debug("Executing query", ctx.query().getSQL(true));

@@ -62,6 +62,7 @@ import static org.jooq.impl.Factory.trim;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.zero;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -766,7 +767,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                     .set(TBook_ID(), 6)
                     .set(TBook_AUTHOR_ID(), 8)
                     .set(TBook_PUBLISHED_IN(), 1994)
-                    .set((Field<Integer>)TBook_LANGUAGE_ID(), 1)
+                    .set((Field<Object>)TBook_LANGUAGE_ID(), on(TBook_LANGUAGE_ID().getDataType().getType()).get("en"))
                     .set(TBook_CONTENT_TEXT(), "Design Patterns are awesome")
                     .set(TBook_TITLE(), "Design Patterns"),
 

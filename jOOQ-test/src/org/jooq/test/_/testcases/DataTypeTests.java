@@ -371,7 +371,16 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     @Test
     public void testCastingToDialectDataType() throws Exception {
         for (DataType<?> type : getCastableDataTypes()) {
-            assertEquals(null, create().select(val(null).cast(type)).fetchOne(0));
+            if (getDialect() == SQLDialect.ASE ||
+                getDialect() == SQLDialect.DB2 ||
+                getDialect() == SQLDialect.SYBASE) {
+                if (type.getType() == Boolean.class) {
+                    log.info("SKIPPING", "Casting to bit type in Sybase ASE / SQL Anywhere");
+                    continue;
+                }
+            }
+
+            assertEquals(null, create().select(val(null, type).cast(type)).fetchOne(0));
         }
     }
 
@@ -420,14 +429,17 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 }
             }
 
-            if (getDialect() == SQLDialect.ASE) {
+            if (getDialect() == SQLDialect.ASE ||
+                getDialect() == SQLDialect.DB2 ||
+                getDialect() == SQLDialect.ORACLE ||
+                getDialect() == SQLDialect.SYBASE) {
                 if (type.getType() == Boolean.class) {
-                    log.info("SKIPPING", "Casting to bit type in Sybase ASE");
+                    log.info("SKIPPING", "Casting to bit type in Sybase ASE / SQL Anywhere");
                     continue;
                 }
             }
 
-            assertEquals(null, create().select(val(null).cast(type)).fetchOne(0));
+            assertEquals(null, create().select(val(null, type).cast(type)).fetchOne(0));
         }
     }
 

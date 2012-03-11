@@ -50,6 +50,7 @@ import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
+import org.jooq.RenderContext.CastMode;
 import org.jooq.SQLDialect;
 
 /**
@@ -78,6 +79,9 @@ class Cast<T> extends AbstractField<T> {
     @SuppressWarnings("unchecked")
     @Override
     public final void toSQL(RenderContext context) {
+    	// Avoid casting bind values inside an explicit cast...
+        CastMode castMode = context.castMode();
+
         if (context.getDialect() == SQLDialect.DERBY) {
 
             // [#857] Interestingly, Derby does not allow for casting numeric
@@ -87,7 +91,9 @@ class Cast<T> extends AbstractField<T> {
 
                 context.keyword("trim(cast(")
                        .keyword("cast(")
+                       .castMode(CastMode.NEVER)
                        .sql(field)
+                       .castMode(castMode)
                        .keyword(" as char(38))")
                        .keyword(" as ")
                        .keyword(getDataType(context).getCastTypeName(context))
@@ -102,7 +108,9 @@ class Cast<T> extends AbstractField<T> {
 
                 context.keyword("cast(")
                        .keyword("cast(")
+                       .castMode(CastMode.NEVER)
                        .sql(field)
+                       .castMode(castMode)
                        .keyword(" as decimal)")
                        .keyword(" as ")
                        .keyword(getDataType(context).getCastTypeName(context))
@@ -130,7 +138,9 @@ class Cast<T> extends AbstractField<T> {
 
         // Default rendering, if no special case has applied yet
         context.keyword("cast(")
+               .castMode(CastMode.NEVER)
                .sql(field)
+               .castMode(castMode)
                .keyword(" as ")
                .keyword(getDataType(context).getCastTypeName(context))
                .sql(")");

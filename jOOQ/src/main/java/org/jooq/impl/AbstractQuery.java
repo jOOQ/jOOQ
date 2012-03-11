@@ -112,6 +112,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query {
                 configuration = getConfiguration();
             }
 
+            // [#1191] The following triggers a start event on all listeners.
+            // This may be used to provide jOOQ with a JDBC connection, in case
+            // this Query / Configuration was previously deserialised
             ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 

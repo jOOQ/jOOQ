@@ -21,7 +21,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and SQL tracing" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 							<h2>Mapping your DEV schema to a productive environment</h2>
@@ -170,7 +170,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and SQL tracing" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 <?php 

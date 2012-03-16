@@ -83,6 +83,7 @@ import org.jooq.BindContext;
 import org.jooq.Case;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.DeleteQuery;
@@ -884,7 +885,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Result<Record> fetch(String sql) {
-        return fetch(sql, new Object[0]);
+        return resultQuery(sql).fetch();
     }
 
     /**
@@ -892,7 +893,23 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Result<Record> fetch(String sql, Object... bindings) {
-        return new SQLResultQuery(this, sql, bindings).fetch();
+        return resultQuery(sql, bindings).fetch();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
+        return resultQuery(sql).fetchLazy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
+        return resultQuery(sql, bindings).fetchLazy();
     }
 
     /**
@@ -900,7 +917,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final List<Result<Record>> fetchMany(String sql) {
-        return fetchMany(sql, new Object[0]);
+        return resultQuery(sql).fetchMany();
     }
 
     /**
@@ -908,7 +925,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final List<Result<Record>> fetchMany(String sql, Object... bindings) {
-        return new SQLResultQuery(this, sql, bindings).fetchMany();
+        return resultQuery(sql, bindings).fetchMany();
     }
 
     /**
@@ -916,7 +933,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Record fetchOne(String sql) {
-        return fetchOne(sql, new Object[0]);
+        return resultQuery(sql).fetchOne();
     }
 
     /**
@@ -924,7 +941,7 @@ public class Factory implements FactoryOperations {
      */
     @Override
     public final Record fetchOne(String sql, Object... bindings) {
-        return new SQLResultQuery(this, sql, bindings).fetchOne();
+        return resultQuery(sql, bindings).fetchOne();
     }
 
     /**

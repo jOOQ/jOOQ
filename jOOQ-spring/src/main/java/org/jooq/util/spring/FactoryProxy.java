@@ -50,6 +50,7 @@ import org.jooq.Attachable;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.Condition;
+import org.jooq.Cursor;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
 import org.jooq.FactoryOperations;
@@ -400,6 +401,16 @@ public class FactoryProxy implements FactoryOperations, MethodInterceptor {
     @Override
     public final Result<Record> fetch(String sql, Object... bindings) {
         return getDelegate().fetch(sql, bindings);
+    }
+
+    @Override
+    public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
+        return getDelegate().fetchLazy(sql);
+    }
+
+    @Override
+    public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
+        return getDelegate().fetchLazy(sql, bindings);
     }
 
     @Override

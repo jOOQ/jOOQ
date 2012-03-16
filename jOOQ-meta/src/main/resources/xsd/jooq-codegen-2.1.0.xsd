@@ -43,7 +43,26 @@
 
       <!-- The JDBC connection password -->
       <element name="password" type="string" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        Enlist custom JDBC driver properties that are provided to the
+        java.sql.DriverManager when fetching a connection
+        -->
+      <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1" />
     </all>
+  </complexType>
+
+  <complexType name="Properties">
+  	<sequence>
+  	  <element name="property" type="tns:Property" minOccurs="0" maxOccurs="unbounded"/>
+  	</sequence>
+  </complexType>
+
+  <complexType name="Property">
+  	<all>
+  	  <element name="key" type="string" minOccurs="1" maxOccurs="1"/>
+  	  <element name="value" type="string" minOccurs="1" maxOccurs="1"/>
+  	</all>
   </complexType>
 
   <complexType name="Generator">

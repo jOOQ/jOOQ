@@ -4,8 +4,16 @@
         <driver>org.hsqldb.jdbcDriver</driver>
         <url>jdbc:hsqldb:hsql://localhost</url>
         <schema>PUBLIC</schema>
-        <user>sa</user>
-        <password></password>
+        <properties>
+        	<property>
+        		<key>user</key>
+        		<value>sa</value>
+        	</property>
+        	<property>
+        		<key>password</key>
+        		<value></value>
+        	</property>
+        </properties>
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>

@@ -462,7 +462,7 @@ public class DefaultGenerator implements Generator {
                     out.print(" implements ");
                     out.print(MasterDataType.class);
                     out.print("<");
-                    out.print(data.getField(pk.getName()).getType());
+                    out.print(getJavaType(pk.getType()));
                     out.println("> {");
 
                     Set<ColumnDefinition> columns =
@@ -487,7 +487,7 @@ public class DefaultGenerator implements Generator {
                         String separator = "";
                         for (ColumnDefinition column : columns) {
                             out.print(separator);
-                            out.printNewJavaObject(record.getValue(column.getName()));
+                            out.printNewJavaObject(getJavaType(column.getType()), record.getValue(column.getName()));
 
                             separator = ", ";
                         }
@@ -501,7 +501,7 @@ public class DefaultGenerator implements Generator {
                     // Fields
                     for (ColumnDefinition column : columns) {
                         out.print("\tprivate final ");
-                        out.print(data.getField(column.getName()).getType());
+                        out.print(getJavaType(column.getType()));
                         out.print(" ");
                         out.println(strategy.getJavaMemberName(column) + ";");
                     }
@@ -513,7 +513,7 @@ public class DefaultGenerator implements Generator {
                     String separator = "";
                     for (ColumnDefinition column : columns) {
                         out.print(separator);
-                        out.print(data.getField(column.getName()).getType());
+                        out.print(getJavaType(column.getType()));
                         out.print(" ");
                         out.print(strategy.getJavaMemberName(column));
 
@@ -534,7 +534,7 @@ public class DefaultGenerator implements Generator {
                     out.println();
                     printOverride(out);
                     out.print("\tpublic ");
-                    out.print(data.getField(pk.getName()).getType());
+                    out.print(getJavaType(pk.getType()));
                     out.println(" getPrimaryKey() {");
                     out.println("\t\treturn " + strategy.getJavaMemberName(pk) + ";");
                     out.println("\t}");
@@ -543,7 +543,7 @@ public class DefaultGenerator implements Generator {
                     for (ColumnDefinition column : columns) {
                         printFieldJavaDoc(out, column);
                         out.print("\tpublic final ");
-                        out.print(data.getField(column.getName()).getType());
+                        out.print(getJavaType(column.getType()));
                         out.print(" ");
                         out.print(strategy.getJavaGetterName(column, Mode.DEFAULT));
                         out.println("() {");

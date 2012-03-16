@@ -60,6 +60,7 @@ import org.jooq.util.jaxb.ForcedType;
 import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.MasterDataTable;
+import org.jooq.util.jaxb.Property;
 import org.jooq.util.jaxb.Schema;
 import org.jooq.util.jaxb.Strategy;
 import org.jooq.util.jaxb.Target;
@@ -272,11 +273,23 @@ public class GenerationTool {
         Connection connection = null;
 
         try {
-            connection = DriverManager.getConnection(
-                    defaultString(j.getUrl()),
-                    defaultString(j.getUser()),
-                    defaultString(j.getPassword()));
 
+            // Initialise connection
+            // ---------------------
+            Properties properties = new Properties();
+            for (Property p : j.getProperties()) {
+                properties.put(p.getKey(), p.getValue());
+            }
+
+            if (!properties.containsKey("user"))
+                properties.put("user", defaultString(j.getUser()));
+            if (!properties.containsKey("password"))
+                properties.put("password", defaultString(j.getPassword()));
+
+            connection = DriverManager.getConnection(defaultString(j.getUrl()), properties);
+
+            // Initialise generator
+            // --------------------
             Class<Generator> generatorClass = (Class<Generator>) (!isBlank(g.getName())
                 ? Class.forName(trim(g.getName()))
                 : DefaultGenerator.class);

@@ -29,6 +29,7 @@
 				<include name="MasterDataTables.java"/>
 				<include name="ObjectFactory.java"/>
 				<include name="Schemata.java"/>
+				<include name="Properties.java"/>
 			</fileset>
 		</delete>
 	</target>

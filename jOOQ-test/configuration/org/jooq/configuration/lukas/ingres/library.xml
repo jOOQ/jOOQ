@@ -4,8 +4,6 @@
         <driver>com.ingres.jdbc.IngresDriver</driver>
         <url>jdbc:ingres://localhost:II7/test;dbms_user=test;dbms_password=test</url>
         <schema>test</schema>
-        <user></user>
-        <password></password>
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>

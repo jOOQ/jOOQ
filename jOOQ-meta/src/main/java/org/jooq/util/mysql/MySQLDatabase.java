@@ -229,18 +229,33 @@ public class MySQLDatabase extends AbstractDatabase {
 
         for (Record record : records) {
             SchemaDefinition schema = getSchema(record.getValue(Columns.TABLE_SCHEMA));
+
             String comment = record.getValue(Columns.COLUMN_COMMENT);
             String table = record.getValue(Columns.TABLE_NAME);
             String column = record.getValue(Columns.COLUMN_NAME);
             String name = table + "_" + column;
             String columnType = record.getValue(Columns.COLUMN_TYPE);
 
-            DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, comment);
-            for (String string : columnType.replaceAll("enum\\(|\\)", "").split(",")) {
-                definition.addLiteral(string.trim().replaceAll("'", ""));
-            }
+            // [#1237] Don't generate enum classes for columns in MySQL tables
+            // that are excluded from code generation
+            TableDefinition tableDefinition = getTable(schema, table);
+            if (tableDefinition != null) {
+                ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
 
-            result.add(definition);
+                if (columnDefinition != null) {
+                	
+                	// [#1137] Avoid generating enum classes for enum types that
+                	// are explicitly forced to another type
+                    if (getConfiguredForcedType(columnDefinition) == null) {
+                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schema, name, comment);
+                        for (String string : columnType.replaceAll("enum\\(|\\)", "").split(",")) {
+                            definition.addLiteral(string.trim().replaceAll("'", ""));
+                        }
+
+                        result.add(definition);
+                    }
+                }
+            }
         }
 
         return result;

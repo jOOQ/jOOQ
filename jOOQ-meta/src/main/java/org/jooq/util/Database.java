@@ -254,6 +254,12 @@ public interface Database {
     List<ForcedType> getConfiguredForcedTypes();
 
     /**
+     * Get the configured forced type object for any given {@link Definition},
+     * or <code>null</code> if no {@link ForcedType} matches the definition.
+     */
+    ForcedType getConfiguredForcedType(Definition definition);
+
+    /**
      * Database objects matching any of these regular expressions will not be
      * generated.
      */

@@ -124,6 +124,7 @@ public class MySQLDataType<T> extends AbstractDataType<T> {
 
     public static final MySQLDataType<String>     MEDIUMTEXT       = new MySQLDataType<String>(SQLDataType.CLOB, "mediumtext", "char");
     public static final MySQLDataType<String>     LONGTEXT         = new MySQLDataType<String>(SQLDataType.CLOB, "longtext", "char");
+    public static final MySQLDataType<String>     ENUM             = new MySQLDataType<String>(SQLDataType.VARCHAR, "enum", "char");
     public static final MySQLDataType<String>     SET              = new MySQLDataType<String>(SQLDataType.VARCHAR, "set", "char");
     public static final MySQLDataType<byte[]>     TINYBLOB         = new MySQLDataType<byte[]>(SQLDataType.BLOB, "tinyblob", "binary");
     public static final MySQLDataType<byte[]>     MEDIUMBLOB       = new MySQLDataType<byte[]>(SQLDataType.BLOB, "mediumblob", "binary");

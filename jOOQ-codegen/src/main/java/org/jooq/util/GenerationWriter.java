@@ -17,9 +17,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 
-import org.jooq.EnumType;
-import org.jooq.MasterDataType;
-import org.jooq.UDTRecord;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -183,72 +180,62 @@ public class GenerationWriter {
         writer.close();
     }
 
-    public <T> void printNewJavaObject(Object value) {
-        print(getNewJavaObject(value));
+    public <T> void printNewJavaObject(String type, Object value) {
+        print(getNewJavaObject(type, value));
     }
 
-    private <T> String getNewJavaObject(Object value) {
+    private <T> String getNewJavaObject(String type, Object value) {
         if (value == null) {
             return "null";
         }
 
-        Class<?> type = value.getClass();
-        if (type == Blob.class) {
+        if (type == Blob.class.getName()) {
             // Not supported
         }
-        else if (type == Boolean.class) {
+        else if (type == Boolean.class.getName()) {
             return Boolean.toString(getIsTrue(String.valueOf(value)));
         }
-        else if (type == BigInteger.class) {
+        else if (type == BigInteger.class.getName()) {
             return "new java.math.BigInteger(\"" + value + "\")";
         }
-        else if (type == BigDecimal.class) {
+        else if (type == BigDecimal.class.getName()) {
             return "new java.math.BigDecimal(\"" + value + "\")";
         }
-        else if (type == Byte.class) {
+        else if (type == Byte.class.getName()) {
             return "(byte) " + value;
         }
-        else if (type == byte[].class) {
+        else if (type == byte[].class.getName()) {
             // Not supported
         }
-        else if (type == Clob.class) {
+        else if (type == Clob.class.getName()) {
             // Not supported
         }
-        else if (type == Date.class) {
+        else if (type == Date.class.getName()) {
             return "new java.sql.Date(" + ((Date) value).getTime() + "L)";
         }
-        else if (type == Double.class) {
-            return Double.toString((Double) value);
+        else if (type == Double.class.getName()) {
+            return Double.toString(Double.valueOf("" + value));
         }
-        else if (type == Float.class) {
-            return Float.toString((Float) value) + "f";
+        else if (type == Float.class.getName()) {
+            return Float.toString(Float.valueOf("" + value)) + "f";
         }
-        else if (type == Integer.class) {
-            return Integer.toString((Integer) value);
+        else if (type == Integer.class.getName()) {
+            return Integer.toString(Integer.valueOf("" + value));
         }
-        else if (type == Long.class) {
-            return Long.toString((Long) value) + "L";
+        else if (type == Long.class.getName()) {
+            return Long.toString(Long.valueOf("" + value)) + "L";
         }
-        else if (type == Short.class) {
+        else if (type == Short.class.getName()) {
             return "(short) " + value;
         }
-        else if (type == String.class) {
+        else if (type == String.class.getName()) {
             return "\"" + value.toString().replace("\"", "\\\"") + "\"";
         }
-        else if (type == Time.class) {
+        else if (type == Time.class.getName()) {
             return "new java.sql.Time(" + ((Time) value).getTime() + "L)";
         }
-        else if (type == Timestamp.class) {
+        else if (type == Timestamp.class.getName()) {
             return "new java.sql.Timestamp(" + ((Timestamp) value).getTime() + "L)";
-        }
-        else if (MasterDataType.class.isAssignableFrom(type)) {
-            // Not supported
-        }
-        else if (EnumType.class.isAssignableFrom(type)) {
-            // Not supported
-        }
-        else if (UDTRecord.class.isAssignableFrom(type)) {
-            // Not supported
         }
         else {
             // Not supported

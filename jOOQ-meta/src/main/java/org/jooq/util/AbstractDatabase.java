@@ -373,6 +373,17 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final ForcedType getConfiguredForcedType(Definition definition) {
+        for (ForcedType forcedType : getConfiguredForcedTypes()) {
+            if (definition.getQualifiedName().matches(forcedType.getExpressions())) {
+                return forcedType;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public final EnumDefinition getEnum(SchemaDefinition schema, String name) {
         return getEnum(schema, name, false);
     }

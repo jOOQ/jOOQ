@@ -97,29 +97,28 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             Database db = container.getDatabase();
 
             // [#677] Forced types for matching regular expressions
-            for (ForcedType forcedType : db.getConfiguredForcedTypes()) {
-                if (getQualifiedName().matches(forcedType.getExpressions())) {
-                    log.debug("Forcing type", this + " into " + forcedType.getName());
-                    DataType<?> forcedDataType = null;
+            ForcedType forcedType = db.getConfiguredForcedType(this);
+            if (forcedType != null) {
+                log.debug("Forcing type", this + " into " + forcedType.getName());
+                DataType<?> forcedDataType = null;
 
-                    String t = definedType.getType();
-                    int l = definedType.getLength();
-                    int p = definedType.getPrecision();
-                    int s = definedType.getScale();
+                String t = definedType.getType();
+                int l = definedType.getLength();
+                int p = definedType.getPrecision();
+                int s = definedType.getScale();
 
-                    try {
-                        forcedDataType = getDialectDataType(db.getDialect(), forcedType.getName(), p, s);
-                    } catch (SQLDialectNotSupportedException ignore) {}
+                try {
+                    forcedDataType = getDialectDataType(db.getDialect(), forcedType.getName(), p, s);
+                } catch (SQLDialectNotSupportedException ignore) {}
 
-                    // [#677] SQLDataType matches are actual type-rewrites
-                    if (forcedDataType != null) {
-                        type = new DefaultDataTypeDefinition(db, getSchema(), forcedType.getName(), l, p, s);
-                    }
+                // [#677] SQLDataType matches are actual type-rewrites
+                if (forcedDataType != null) {
+                    type = new DefaultDataTypeDefinition(db, getSchema(), forcedType.getName(), l, p, s);
+                }
 
-                    // Other forced types are UDT's, enums, etc.
-                    else {
-                        type = new DefaultDataTypeDefinition(db, getSchema(), t, l, p, s, forcedType.getName());
-                    }
+                // Other forced types are UDT's, enums, etc.
+                else {
+                    type = new DefaultDataTypeDefinition(db, getSchema(), t, l, p, s, forcedType.getName());
                 }
             }
 

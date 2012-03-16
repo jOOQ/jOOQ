@@ -66,8 +66,8 @@ CREATE TABLE t_booleans (
   one_zero int,
   true_false_lc varchar(5),
   true_false_uc varchar(5),
-  yes_no_lc varchar(3),
-  yes_no_uc varchar(3),
+  yes_no_lc enum('yes', 'no'),
+  yes_no_uc enum('YES', 'NO'),
   y_n_lc char(1),
   y_n_uc char(1),
   vc_boolean varchar(1),
@@ -224,6 +224,7 @@ CREATE TABLE t_author (
 
 CREATE TABLE t_book_details (
   ID INT NOT NULL COMMENT 'The details ID',
+  E enum('A', 'B', 'C') COMMENT '#1237 Don''t generate an enum for this',
 
   CONSTRAINT pk_t_book_details PRIMARY KEY (ID)
 ) ENGINE = InnoDB

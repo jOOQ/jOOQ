@@ -4149,12 +4149,6 @@ public class Factory implements FactoryOperations {
     @Support
     public static <T> Field<T> val(T value) {
 
-        // null is intercepted immediately
-        // TODO [#1128] Don't do this, create a NULL bind value instead!
-//        if (value == null) {
-//            return (Field<T>) NULL();
-//        }
-
         // Prevent errors due to type erasure and unchecked invocation
         if (value instanceof Field<?>) {
             return (Field<T>) value;

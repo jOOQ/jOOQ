@@ -2842,7 +2842,18 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
       generatortargetdirectory="${basedir}/src"/>
 </target>]]></fo:block>
 
+							<fo:block font-size="11pt">
+								Note that when running code generation with ant's &lt;java/&gt; task,
+								you may have to set fork="true":
+							</fo:block>
 
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- Run the code generation task -->
+<target name="generate-test-classes">
+  <java fork="true" classname="org.jooq.util.GenerationTool">
+    [...]
+  </java>
+</target>
+]]></fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Integrate generation with Maven</fo:block>
 							<fo:block font-size="11pt">Using the official jOOQ-codegen-maven plugin, you can integrate
 								source code generation in your Maven build process: </fo:block>

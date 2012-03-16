@@ -8,12 +8,18 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 405253871;
+	private static final long serialVersionUID = 1303653357;
 
 	/**
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
+	 * FOREIGN KEY (book_store_name)
+	 * REFERENCES t_book_store (name)
+	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
@@ -23,6 +29,12 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
+	 * FOREIGN KEY (book_store_name)
+	 * REFERENCES t_book_store (name)
+	 * </pre></code>
 	 */
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
@@ -32,6 +44,30 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
+	 * FOREIGN KEY (book_store_name)
+	 * REFERENCES t_book_store (name)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.T_BOOK_STORE)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME)))
+			.fetchOne();
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
+	 * FOREIGN KEY (book_id)
+	 * REFERENCES t_book (ID)
+	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
@@ -41,9 +77,33 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
+	 * FOREIGN KEY (book_id)
+	 * REFERENCES t_book (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
+	 * FOREIGN KEY (book_id)
+	 * REFERENCES t_book (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord fetchTBook() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBook.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID)))
+			.fetchOne();
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 831063331;
+	private static final long serialVersionUID = 595217960;
 
 	/**
 	 * The singleton instance of t_dates
@@ -61,7 +61,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlit
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.math.BigInteger> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
 
 	/**
 	 * No further instances allowed

@@ -38,6 +38,7 @@ package org.jooq.util;
 
 import static org.jooq.impl.Factory.table;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.Record;
@@ -137,6 +138,16 @@ implements TableDefinition {
     @Override
     public final ColumnDefinition getColumn(String columnName) {
         return getElement(columnName);
+    }
+
+    @Override
+    public final ColumnDefinition getColumn(String columnName, boolean ignoreCase) {
+        return getElement(columnName, ignoreCase);
+    }
+
+    @Override
+    protected List<ColumnDefinition> getElements0() throws SQLException {
+        return null;
     }
 
     @Override

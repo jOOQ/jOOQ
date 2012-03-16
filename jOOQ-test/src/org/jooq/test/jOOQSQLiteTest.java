@@ -678,7 +678,7 @@ public class jOOQSQLiteTest extends jOOQAbstractTest<
 
     @Override
     protected boolean supportsReferences() {
-        return false;
+        return true;
     }
 
     @Override

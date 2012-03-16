@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -488483914;
+	private static final long serialVersionUID = 1212614150;
 
 	/**
 	 * An uncommented item
@@ -30,6 +30,24 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.ID)))
+			.fetch();
+	}
+
+	/**
+	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_2
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.AUTHOR_ID, value);
@@ -37,6 +55,12 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_2
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.AUTHOR_ID);
@@ -44,6 +68,28 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_2
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.T_AUTHOR)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_1
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
@@ -51,9 +97,31 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_1
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.CO_AUTHOR_ID);
+	}
+
+	/**
+	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_1
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.T_AUTHOR)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.CO_AUTHOR_ID)))
+			.fetchOne();
 	}
 
 	/**
@@ -100,15 +168,27 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_LANGUAGE_1
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES t_language (id)
+	 * </pre></code>
 	 */
-	public void setLanguageId(java.lang.Integer value) {
+	public void setLanguageId(org.jooq.test.sqlite.generatedclasses.enums.TLanguage value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.LANGUAGE_ID, value);
 	}
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_LANGUAGE_1
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES t_language (id)
+	 * </pre></code>
 	 */
-	public java.lang.Integer getLanguageId() {
+	public org.jooq.test.sqlite.generatedclasses.enums.TLanguage getLanguageId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBook.LANGUAGE_ID);
 	}
 

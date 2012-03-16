@@ -35,7 +35,7 @@ CREATE TABLE t_dates (
   t time,
   ts datetime,
   d_int int,
-  ts_bigint bigint,
+  ts_bigint int8,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )
@@ -101,7 +101,7 @@ CREATE TABLE t_658_21 (
 /
 
 CREATE TABLE t_658_31 (
-  id BIGINT NOT NULL,
+  id int8 NOT NULL,
 
   CONSTRAINT pk_t_658_31 PRIMARY KEY (id)
 )
@@ -124,8 +124,8 @@ CREATE TABLE t_658_22 (
 /
 
 CREATE TABLE t_658_32 (
-  id BIGINT NOT NULL,
-  cd BIGINT NOT NULL,
+  id int8 NOT NULL,
+  cd int8 NOT NULL,
 
   CONSTRAINT pk_t_658_32 PRIMARY KEY (id)
 )
@@ -134,10 +134,10 @@ CREATE TABLE t_658_32 (
 CREATE TABLE t_658_ref (
   ref_11 char(3),
   ref_21 int,
-  ref_31 bigint,
+  ref_31 int8,
   ref_12 char(3),
   ref_22 int,
-  ref_32 bigint,
+  ref_32 int8,
 
   CONSTRAINT fk_t_658_11 FOREIGN KEY (ref_11) REFERENCES t_658_11(id),
   CONSTRAINT fk_t_658_21 FOREIGN KEY (ref_21) REFERENCES t_658_21(id),

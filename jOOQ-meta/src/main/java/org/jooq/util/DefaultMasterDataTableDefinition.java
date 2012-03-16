@@ -159,6 +159,11 @@ public class DefaultMasterDataTableDefinition extends AbstractDefinition impleme
     }
 
     @Override
+    public ColumnDefinition getColumn(String columnName, boolean ignoreCase) {
+        return delegate.getColumn(columnName, ignoreCase);
+    }
+
+    @Override
     public ColumnDefinition getColumn(int columnIndex) {
         return delegate.getColumn(columnIndex);
     }

@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -946132479;
+	private static final long serialVersionUID = 1372974852;
 
 	/**
 	 * The singleton instance of t_book
@@ -37,11 +37,23 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_2
+	 * FOREIGN KEY (AUTHOR_ID)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_AUTHOR_1
+	 * FOREIGN KEY (co_author_id)
+	 * REFERENCES t_author (ID)
+	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
@@ -62,8 +74,14 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_book_T_LANGUAGE_1
+	 * FOREIGN KEY (LANGUAGE_ID)
+	 * REFERENCES t_language (id)
+	 * </pre></code>
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, org.jooq.test.sqlite.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.sqlite.generatedclasses.enums.TLanguage.class), T_BOOK);
 
 	/**
 	 * An uncommented item
@@ -91,5 +109,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_ID);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_AUTHOR_2, org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_T_AUTHOR_1);
 	}
 }

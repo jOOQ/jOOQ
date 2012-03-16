@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1205753061;
+	private static final long serialVersionUID = 655025389;
 
 	/**
 	 * An uncommented item
@@ -30,6 +30,24 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValueAsShort(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.ID)))
+			.fetch();
+	}
+
+	/**
+	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_x_test_case_64_69_X_UNUSED_1
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES x_unused (ID)
+	 * </pre></code>
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
@@ -37,9 +55,31 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 
 	/**
 	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_x_test_case_64_69_X_UNUSED_1
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES x_unused (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
+	}
+
+	/**
+	 * An uncommented item
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_x_test_case_64_69_X_UNUSED_1
+	 * FOREIGN KEY (UNUSED_ID)
+	 * REFERENCES x_unused (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID)))
+			.fetchOne();
 	}
 
 	/**

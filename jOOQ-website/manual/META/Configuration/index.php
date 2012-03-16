@@ -241,7 +241,18 @@ function printContent() {
       generatortargetdirectory="${basedir}/src"/&gt;
 &lt;/target&gt;</pre>
 
+							<p>
+								Note that when running code generation with ant's &lt;java/&gt; task,
+								you may have to set fork="true":
+							</p>
 
+<pre class="prettyprint lang-xml">&lt;!-- Run the code generation task --&gt;
+&lt;target name="generate-test-classes"&gt;
+  &lt;java fork="true" classname="org.jooq.util.GenerationTool"&gt;
+    [...]
+  &lt;/java&gt;
+&lt;/target&gt;
+</pre>
 							<h3>Integrate generation with Maven</h3>
 							<p>Using the official jOOQ-codegen-maven plugin, you can integrate
 								source code generation in your Maven build process: </p>

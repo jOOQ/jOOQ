@@ -44,8 +44,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -119,18 +117,9 @@ public class SQLiteDatabase extends AbstractDatabase {
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         for (TableDefinition table : getTables(getSchemata().get(0))) {
-            Result<Record> result = null;
-
-            try {
-                result = create().fetch("pragma foreign_key_list(" + table.getName() + ")");
-            }
-            catch (DataAccessException e) {
-                // TODO [#1232] This shouldn't be necessary...
-                continue;
-            }
-
             Map<String, Integer> map = new HashMap<String, Integer>();
-            for (Record record : result) {
+
+            for (Record record : create().fetch("pragma foreign_key_list(" + table.getName() + ")")) {
                 String foreignKeyPrefix =
                     "fk_" + table.getName() +
                     "_" + record.getValue("table");

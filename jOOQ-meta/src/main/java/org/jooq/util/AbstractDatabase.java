@@ -289,19 +289,19 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final TableDefinition getTable(SchemaDefinition schema, String name) {
-        for (TableDefinition table : getTables(schema)) {
-            if (table.getName().equals(name)) {
-                return table;
-            }
+        return getTable(schema, name, false);
+    }
+
+    @Override
+    public final TableDefinition getTable(SchemaDefinition schema, String name, boolean ignoreCase) {
+        TableDefinition result = null;
+
+        result = getDefinition(getTables(schema), name, ignoreCase);
+        if (result == null) {
+            result = getDefinition(getMasterDataTables(schema), name, ignoreCase);
         }
 
-        for (TableDefinition table : getMasterDataTables(schema)) {
-            if (table.getName().equals(name)) {
-                return table;
-            }
-        }
-
-        return null;
+        return result;
     }
 
     @Override
@@ -324,13 +324,12 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name) {
-        for (MasterDataTableDefinition table : getMasterDataTables(schema)) {
-            if (table.getName().equals(name)) {
-                return table;
-            }
-        }
+        return getMasterDataTable(schema, name, false);
+    }
 
-        return null;
+    @Override
+    public final MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getMasterDataTables(schema), name, ignoreCase);
     }
 
     @Override
@@ -375,13 +374,12 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final EnumDefinition getEnum(SchemaDefinition schema, String name) {
-        for (EnumDefinition e : getEnums(schema)) {
-            if (e.getName().equals(name)) {
-                return e;
-            }
-        }
+        return getEnum(schema, name, false);
+    }
 
-        return null;
+    @Override
+    public final EnumDefinition getEnum(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getEnums(schema), name, ignoreCase);
     }
 
     @Override
@@ -404,13 +402,12 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final ArrayDefinition getArray(SchemaDefinition schema, String name) {
-        for (ArrayDefinition e : getArrays(schema)) {
-            if (e.getName().equals(name)) {
-                return e;
-            }
-        }
+        return getArray(schema, name, false);
+    }
 
-        return null;
+    @Override
+    public final ArrayDefinition getArray(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getArrays(schema), name, ignoreCase);
     }
 
     @Override
@@ -433,13 +430,12 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final UDTDefinition getUDT(SchemaDefinition schema, String name) {
-        for (UDTDefinition e : getUDTs(schema)) {
-            if (e.getName().equals(name)) {
-                return e;
-            }
-        }
+        return getUDT(schema, name, false);
+    }
 
-        return null;
+    @Override
+    public final UDTDefinition getUDT(SchemaDefinition schema, String name, boolean ignoreCase) {
+        return getDefinition(getUDTs(schema), name, ignoreCase);
     }
 
     @Override
@@ -490,6 +486,18 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return filterSchema(packages, schema);
+    }
+
+    static final <D extends Definition> D getDefinition(List<D> definitions, String name, boolean ignoreCase) {
+        for (D definition : definitions) {
+            if ((ignoreCase && definition.getName().equalsIgnoreCase(name)) ||
+                (!ignoreCase && definition.getName().equals(name))) {
+
+                return definition;
+            }
+        }
+
+        return null;
     }
 
     private final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {

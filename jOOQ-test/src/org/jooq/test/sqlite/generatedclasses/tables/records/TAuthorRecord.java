@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 217150868;
+	private static final long serialVersionUID = 1035752763;
 
 	/**
 	 * An uncommented item
@@ -26,6 +26,30 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.ID);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.ID)))
+			.fetch();
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBook.T_BOOK)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBook.AUTHOR_ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TAuthor.ID)))
+			.fetch();
 	}
 
 	/**

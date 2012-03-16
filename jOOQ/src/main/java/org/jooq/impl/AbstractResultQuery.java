@@ -142,6 +142,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
 
         try {
+            // TODO [#1232] Handle queries that don't return a ResultSet
             listener.executeStart(ctx);
             ctx.resultSet(ctx.statement().executeQuery());
             listener.executeEnd(ctx);

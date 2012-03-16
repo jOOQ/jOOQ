@@ -85,6 +85,11 @@ public interface Database {
     TableDefinition getTable(SchemaDefinition schema, String name);
 
     /**
+     * Get a table in this database by name
+     */
+    TableDefinition getTable(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
      * The master data tables contained in this database (for schema
      * {@link #getSchema(String)})
      */
@@ -94,6 +99,11 @@ public interface Database {
      * Get a master data table in this database by name
      */
     MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name);
+
+    /**
+     * Get a master data table in this database by name
+     */
+    MasterDataTableDefinition getMasterDataTable(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
      * The enum UDTs defined in this database
@@ -106,6 +116,11 @@ public interface Database {
     EnumDefinition getEnum(SchemaDefinition schema, String name);
 
     /**
+     * Get an enum UDT defined in this database by name
+     */
+    EnumDefinition getEnum(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
      * The UDTs defined in this database
      */
     List<UDTDefinition> getUDTs(SchemaDefinition schema);
@@ -116,6 +131,11 @@ public interface Database {
     UDTDefinition getUDT(SchemaDefinition schema, String name);
 
     /**
+     * Get a UDT defined in this database by name
+     */
+    UDTDefinition getUDT(SchemaDefinition schema, String name, boolean ignoreCase);
+
+    /**
      * The Arrays defined in this database
      */
     List<ArrayDefinition> getArrays(SchemaDefinition schema);
@@ -124,6 +144,11 @@ public interface Database {
      * Get a ARRAY defined in this database by name
      */
     ArrayDefinition getArray(SchemaDefinition schema, String name);
+
+    /**
+     * Get a ARRAY defined in this database by name
+     */
+    ArrayDefinition getArray(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
      * The stored routines (procedures and functions) contained in this database

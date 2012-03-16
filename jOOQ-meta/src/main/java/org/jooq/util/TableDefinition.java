@@ -59,6 +59,11 @@ public interface TableDefinition extends Definition {
     ColumnDefinition getColumn(String columnName);
 
     /**
+     * Get a column in this type by its name
+     */
+    ColumnDefinition getColumn(String columnName, boolean ignoreCase);
+
+    /**
      * Get a column in this type by its index (starting at 0)
      */
     ColumnDefinition getColumn(int columnIndex);

@@ -768,7 +768,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             create().truncate(TAuthor()).execute();
 
             // The above should fail if foreign keys are supported
-            if (supportsReferences()) {
+            if (!Arrays.asList(INGRES, SQLITE).contains(getDialect())) {
                 fail();
             }
         } catch (Exception expected) {

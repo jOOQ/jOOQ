@@ -87,17 +87,16 @@ extends AbstractDefinition {
         return elements;
     }
 
-    protected final E getElement(String columnName) {
-        for (E column : getElements()) {
-            if (column.getName().equals(columnName)) {
-                return column;
-            }
-        }
-        return null;
+    protected final E getElement(String name) {
+        return getElement(name, false);
     }
 
-    protected final E getElement(int columnIndex) {
-        return getElements().get(columnIndex);
+    protected final E getElement(String name, boolean ignoreCase) {
+        return AbstractDatabase.getDefinition(getElements(), name, ignoreCase);
+    }
+
+    protected final E getElement(int index) {
+        return getElements().get(index);
     }
 
     protected abstract List<E> getElements0() throws SQLException;

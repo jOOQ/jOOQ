@@ -39,9 +39,13 @@ import static org.jooq.util.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -114,6 +118,61 @@ public class SQLiteDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        for (TableDefinition table : getTables(getSchemata().get(0))) {
+            Result<Record> result = null;
+
+            try {
+                result = create().fetch("pragma foreign_key_list(" + table.getName() + ")");
+            }
+            catch (DataAccessException e) {
+                // TODO [#1232] This shouldn't be necessary...
+                continue;
+            }
+
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            for (Record record : result) {
+                String foreignKeyPrefix =
+                    "fk_" + table.getName() +
+                    "_" + record.getValue("table");
+
+                Integer sequence = map.get(foreignKeyPrefix);
+                if (sequence == null) {
+                    sequence = 0;
+                }
+
+                if (0 == record.getValue("seq", Integer.class)) {
+                    sequence = sequence + 1;
+                }
+
+                map.put(foreignKeyPrefix, sequence);
+
+                String foreignKey =
+                    "fk_" + table.getName() +
+                    "_" + record.getValue("table") +
+                    "_" + sequence;
+
+                String foreignKeyTable = table.getName();
+                String foreignKeyColumn = record.getValueAsString("from");
+
+                // SQLite mixes up cases from the actual declaration and the
+                // reference definition! It's possible that a table is declared
+                // in lower case, and the foreign key in upper case. Hence,
+                // correct the foreign key
+                TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTable);
+                TableDefinition referencedTable = getTable(getSchemata().get(0), record.getValueAsString("table"), true);
+
+                if (referencedTable != null) {
+                    String uniqueKey =
+                        "pk_" + referencedTable.getName() +
+                        "_" + referencedTable.getColumn(record.getValueAsString("to"), true).getName();
+
+                    if (referencingTable != null) {
+                        ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
+                        relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, getSchemata().get(0));
+                    }
+                }
+            }
+        }
     }
 
     @Override

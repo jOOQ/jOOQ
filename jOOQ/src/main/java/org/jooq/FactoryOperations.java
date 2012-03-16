@@ -626,6 +626,14 @@ public interface FactoryOperations extends Configuration {
      *       .execute();
      * </pre></code>
      * <p>
+     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
+     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * statement. This is particularly true for these dialects:
+     * <ul>
+     * <li> {@link SQLDialect#INGRES}</li>
+     * <li> {@link SQLDialect#SQLITE}</li>
+     * </ul>
+     * <p>
      * Note, this statement is only supported in DSL mode. Immediate execution
      * is omitted for future extensibility of this command.
      */

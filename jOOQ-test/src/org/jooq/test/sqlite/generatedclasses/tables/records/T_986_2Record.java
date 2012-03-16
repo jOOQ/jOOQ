@@ -8,12 +8,18 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 977364261;
+	private static final long serialVersionUID = -619158871;
 
 	/**
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_986_2_X_UNUSED_1
+	 * FOREIGN KEY (REF)
+	 * REFERENCES x_unused (ID)
+	 * </pre></code>
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF, value);
@@ -23,9 +29,33 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_986_2_X_UNUSED_1
+	 * FOREIGN KEY (REF)
+	 * REFERENCES x_unused (ID)
+	 * </pre></code>
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT fk_t_986_2_X_UNUSED_1
+	 * FOREIGN KEY (REF)
+	 * REFERENCES x_unused (ID)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF)))
+			.fetchOne();
 	}
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 670012198;
+	private static final long serialVersionUID = 875151126;
 
 	/**
 	 * An uncommented item
@@ -93,14 +93,14 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * An uncommented item
 	 */
-	public void setTsBigint(java.math.BigInteger value) {
+	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TDates.TS_BIGINT, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	public java.math.BigInteger getTsBigint() {
+	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TDates.TS_BIGINT);
 	}
 

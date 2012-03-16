@@ -8,7 +8,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
  */
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1763065001;
+	private static final long serialVersionUID = 1183179475;
 
 	/**
 	 * An uncommented item
@@ -26,6 +26,18 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME)))
+			.fetch();
 	}
 
 	/**

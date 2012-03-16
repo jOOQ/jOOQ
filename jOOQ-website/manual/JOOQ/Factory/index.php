@@ -83,7 +83,7 @@ function printContent() {
      							
 <li>
      								
-<a href="<?=$root?>/manual/ADVANCED/ExecuteListener/" title="jOOQ Manual reference: Execute listeners and SQL tracing">Execute listeners and SQL tracing</a>
+<a href="<?=$root?>/manual/ADVANCED/ExecuteListener/" title="jOOQ Manual reference: Execute listeners and the jOOQ Console">Execute listeners and SQL tracing</a>
      							
 </li>
    							

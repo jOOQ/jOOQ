@@ -761,7 +761,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="ExecuteListener">Execute listeners and SQL tracing<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="ExecuteListener">Execute listeners and the jOOQ Console<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="ExecuteListener"/>
 </fo:basic-link>
 </fo:inline>
@@ -5899,8 +5899,8 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExecuteListener">
 <fo:marker marker-class-name="section">
-<fo:block>4.3. Execute listeners and SQL tracing</fo:block>
-</fo:marker>4.3. Execute listeners and SQL tracing</fo:block>
+<fo:block>4.3. Execute listeners and the jOOQ Console</fo:block>
+</fo:marker>4.3. Execute listeners and the jOOQ Console</fo:block>
 <fo:block font-size="11pt">
 							Feel the heart beat of your SQL statements at a very low level using listeners
 						</fo:block>
@@ -5914,8 +5914,66 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								can also provide custom implementations of Connection, PreparedStatement and ResultSet
 								to jOOQ in apropriate methods. For convenience, consider extending
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/DefaultExecuteListener.java')">org.jooq.impl.DefaultExecuteListener</fo:basic-link>
-								instead of implementing this interface. Please read the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html')">ExecuteListener Javadoc</fo:basic-link>
+								instead of implementing this interface.
+							</fo:block>
+							<fo:block font-size="11pt">
+								Here is a sample implementation of an ExecuteListener, that is simply counting
+								the number of queries per type that are being executed using jOOQ:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[package com.example;
+
+public class StatisticsListener extends DefaultExecuteListener {
+    public static Map<ExecuteType, Integer> STATISTICS = new HashMap<ExecuteType, Integer>();
+
+    // Count "start" events for every type of query executed by jOOQ
+    @Override
+    public void start(ExecuteContext ctx) {
+        Integer count = STATISTICS.get(ctx.type());
+
+        if (count == null) {
+            count = 0;
+        }
+
+        STATISTICS.put(ctx.type(), count + 1);
+    }
+}]]></fo:block>
+
+							<fo:block font-size="11pt">
+								Now, configure jOOQ's runtime to load your listener
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<settings>
+  <executeListeners>
+    <executeListener>com.example.StatisticsListener</executeListener>
+  </executeListeners>
+</settings>]]></fo:block>
+
+							<fo:block font-size="11pt">
+								And log results any time with a snippet like this:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[log.info("STATISTICS");
+log.info("----------");
+
+for (ExecuteType type : ExecuteType.values()) {
+    log.info(type.name(), StatisticsListener.STATISTICS.get(type) + " executions");
+}]]></fo:block>
+                            <fo:block font-size="11pt">
+                            	This may result in the following log output:
+                            </fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">15:16:52,982  INFO - TEST STATISTICS
+15:16:52,982  INFO - ---------------
+15:16:52,983  INFO - READ                     : 919 executions
+15:16:52,983  INFO - WRITE                    : 117 executions
+15:16:52,983  INFO - DDL                      : 2 executions
+15:16:52,983  INFO - BATCH                    : 4 executions
+15:16:52,983  INFO - ROUTINE                  : 21 executions
+15:16:52,983  INFO - OTHER                    : 30 executions</fo:block>
+							<fo:block font-size="11pt">
+								Please read the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html')">ExecuteListener Javadoc</fo:basic-link>
 								for more details
 							</fo:block>
 
@@ -5923,20 +5981,128 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 							<fo:block font-size="11pt">
 							    The ExecuteListener API was driven by a feature request by Christopher Deckers, who has
 							    had the courtesy to contribute the jOOQ Console, a sample application interfacing
-							    with jOOQ's ExecuteListeners. Please note that the jOOQ Console is still experimental.
+							    with jOOQ's ExecuteListeners. The jOOQ Console logs all queries executed by jOOQ and
+							    displays them nicely in a Swing application. With the jOOQ Console's logger, you can:
+						    </fo:block>
+						    <fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Activate the console's DebugListener anytime (in-process or if the remote server is active).</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">View simple and batch queries and their parameters.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Reformat queries along with syntax highlighting for better readability.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">View stack trace of originator of the call.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Dump the stack to stdout when in an IDE, to directly navigate to relevant classes.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Track execution time, binding time, parsing time, rows read, fields read.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Show/hide queries depending on their type (SELECT, UPDATE, etc.).</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Sort any column (timing columns, queries, types, etc.)</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    	<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Easy copy paste of rows/columns to Spreadsheet editors.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+						    </fo:list-block>
+</fo:block>
+
+						    <fo:block font-size="11pt">
+						    	A short overview of such a debugging session can be seen here:
+						    </fo:block>
+   							<fo:block font-size="11pt">
+								<fo:block text-align="center">
+<fo:external-graphic padding-top="10pt" padding-bottom="10pt" src="url('C:/Users/lukas/workspace/jOOQ-website/img/jooq-console-01.png')"/>
+</fo:block>
+							</fo:block>
+						    <fo:block font-size="11pt">
+							    Please note that the jOOQ Console is still experimental.
 							    Any feedback is very welcome on
 							    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://groups.google.com/group/jooq-user')">the jooq-user group</fo:basic-link>
 							</fo:block>
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ Console operation modes</fo:block>
 							<fo:block font-size="11pt">
-								Here are the steps you need to do to run the console
+								The jOOQ Console can be run in two different modes:
 							</fo:block>
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Create a new RemoteDebuggerServer in your application that listens to
-// incoming connections on a given port
-SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">In-process mode: running in the same process as the queries you're analysing</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">"headless" mode: running remotely</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
 
 							<fo:block font-size="11pt">
-								And configure the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java')">org.jooq.debug.DebugListener</fo:basic-link> in the
-								Factory's settings:
+								Both modes will require that you set the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java')">org.jooq.debug.DebugListener</fo:basic-link>
+								in the Factory's settings. When using XML settings:
 							</fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<settings>
@@ -5946,22 +6112,148 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
 </settings>]]></fo:block>
 
 							<fo:block font-size="11pt">
-								Now start your application and the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/console/Console.java')">org.jooq.debug.console.Console</fo:basic-link>, and start profiling!
-								Use this command to start the console:
+								Or when using programmatic settings:
+							</fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[Settings settings = new Settings()
+    .getExecuteListeners().add("org.jooq.debug.DebugListener");
+Factory factory = new Factory(connection, dialect, settings);]]></fo:block>
+
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">In-process mode</fo:block>
+							<fo:block font-size="11pt">
+								The in-process mode is useful for Swing applications or other,
+								locally run Java programs accessing the database via jOOQ.
+								In order to launch the jOOQ Console "in-process", specify the
+								previously documented settings and launch the Console as follows:
 							</fo:block>
 
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">java -cp jooq-console-2.0.5.jar;rsyntaxtextarea-1.5.0.jar org.jooq.debug.console.Console [host] [port]</fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// Define a DatabaseDescriptor for the "in-process" mode
+// It is needed for the "Editor" tab
+DatabaseDescriptor descriptor = new DatabaseDescriptor() {
+
+    // Return your generated schema. This is used by the console
+    // to introspect your schema data
+    @Override
+    public Schema getSchema() {
+        return com.example.MySchema.MY_SCHEMA;
+    }
+
+    // Return the SQL dialect that you're using
+    @Override
+    public SQLDialect getSQLDialect() {
+        return SQLDialect.ORACLE;
+    }
+
+    // Return a connection
+    @Override
+    public Connection createConnection() {
+        try {
+            return DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "test", "test");
+        }
+        catch (Exception ignore) {}
+    }
+};
+
+// Now pass this database descriptor to the Console and make it visible
+try {
+
+    // Use this for a nicer look-and-feel
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
+    // Create a new Console
+    Console console = new Console(descriptor, true);
+    console.setLoggingActive(true);
+    console.setVisible(true);
+}
+catch (Exception ignore) {}
+]]></fo:block>
 
 							<fo:block font-size="11pt">
-							<fo:block text-align="center">
-<fo:external-graphic padding-top="10pt" padding-bottom="10pt" src="url('C:/Users/lukas/workspace/jOOQ-website/img/jooq-console-01.png')"/>
+								Only in the in-process mode, you can execute ad-hoc queries directly
+								from the console, if you provide it with proper DatabaseDescriptor.
+								These queries are executed from the Editor pane which features:
+							</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">SQL editing within the console.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Incremental search on tables.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Simple code completion with tables/columns/SQL keywords.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Syntax highlighting and formatting capabilities.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Results shown in one or several tabs.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">Easy analysis of Logger output by copy/pasting/running queries in the Editor.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
+   							<fo:block font-size="11pt">
+								<fo:block text-align="center">
+<fo:external-graphic padding-top="10pt" padding-bottom="10pt" src="url('C:/Users/lukas/workspace/jOOQ-website/img/jooq-console-02.png')"/>
 </fo:block>
 							</fo:block>
 
+                            <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">"Headless" mode</fo:block>
 							<fo:block font-size="11pt">
-								The jOOQ Console also has other modes of execution, which will be documented here
-								soon.
+								In J2EE or other server/client environments, you may not be able
+								to run the console in the same process as your application. You
+								can then run the jOOQ Console in "headless" mode. In addition to
+								the previously documented settings, you'll have to start a
+								debugger server in your application process, that the console can
+								connect to:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Create a new RemoteDebuggerServer in your application that listens to
+// incoming connections on a given port
+SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
+
+							<fo:block font-size="11pt">
+								Now start your application along with the debugger server
+								and launch the console with this command:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">java -jar jooq-console-2.1.0.jar [host] [port]</fo:block>
+
+							<fo:block font-size="11pt">
+								Depending on your distribution, you may have to manually add
+								rsyntaxtextarea-1.5.0.jar and jOOQ artefacts on your classpath.
 							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="OracleHints">
 <fo:marker marker-class-name="section">

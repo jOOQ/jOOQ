@@ -53,6 +53,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.swing.UIManager;
+
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
@@ -72,6 +74,8 @@ import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.debug.DebugListener;
+import org.jooq.debug.console.Console;
+import org.jooq.debug.console.DatabaseDescriptor;
 import org.jooq.debug.console.remote.RemoteDebuggerServer;
 import org.jooq.impl.Factory;
 import org.jooq.test._.TestStatisticsListener;
@@ -409,6 +413,34 @@ public abstract class jOOQAbstractTest<
         if (!connectionInitialised) {
             connectionInitialised = true;
             connection = getConnection0(null, null);
+
+            boolean runConsoleInProcess = false;
+            if (runConsoleInProcess) {
+                DatabaseDescriptor descriptor = new DatabaseDescriptor() {
+                    @Override
+                    public Schema getSchema() {
+                        return jOOQAbstractTest.this.schema();
+                    }
+
+                    @Override
+                    public SQLDialect getSQLDialect() {
+                        return SQLDialect.ORACLE;
+                    }
+
+                    @Override
+                    public Connection createConnection() {
+                        return jOOQAbstractTest.this.getConnection();
+                    }
+                };
+
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    Console console = new Console(descriptor, true);
+                    console.setLoggingActive(true);
+                    console.setVisible(true);
+                }
+                catch (Exception ignore) {}
+            }
         }
 
         return connection;

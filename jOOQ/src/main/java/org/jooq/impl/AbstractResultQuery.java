@@ -142,19 +142,27 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
 
         try {
-            // TODO [#1232] Handle queries that don't return a ResultSet
+            // [#1232] Avoid executeQuery() in order to handle queries that may
+            // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
             listener.executeStart(ctx);
-            ctx.resultSet(ctx.statement().executeQuery());
+            if (ctx.statement().execute()) {
+                ctx.resultSet(ctx.statement().getResultSet());
+            }
             listener.executeEnd(ctx);
 
             // Fetch a single result set
             if (!many) {
-                FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
-                cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType());
+                if (ctx.resultSet() != null) {
+                    FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
+                    cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType());
 
-                if (!lazy) {
-                    result = cursor.fetch();
-                    cursor = null;
+                    if (!lazy) {
+                        result = cursor.fetch();
+                        cursor = null;
+                    }
+                }
+                else {
+                    result = new ResultImpl<R>(ctx, new FieldList());
                 }
             }
 
@@ -162,7 +170,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             else {
                 results = new ArrayList<Result<Record>>();
 
-                for (;;) {
+                while (ctx.resultSet() != null) {
                     FieldProvider fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData());
                     Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, true);
                     results.add(c.fetch());
@@ -171,7 +179,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                         ctx.resultSet(ctx.statement().getResultSet());
                     }
                     else {
-                        break;
+                        ctx.resultSet(null);
                     }
                 }
 

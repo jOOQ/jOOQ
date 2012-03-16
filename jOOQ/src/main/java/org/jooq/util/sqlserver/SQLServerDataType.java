@@ -114,7 +114,7 @@ public class SQLServerDataType<T> extends AbstractDataType<T> {
     public static final SQLServerDataType<byte[]>     IMAGE            = new SQLServerDataType<byte[]>(SQLDataType.BINARY, "image");
     public static final SQLServerDataType<String>     UNIQUEIDENTIFIER = new SQLServerDataType<String>(SQLDataType.VARCHAR, "uniqueidentifier");
     public static final SQLServerDataType<Long>       ROWVERSION       = new SQLServerDataType<Long>(SQLDataType.BIGINT, "rowversion");
-    public static final SQLServerDataType<Long>       TIMESTAMP       = new SQLServerDataType<Long>(SQLDataType.BIGINT, "timestamp");
+    public static final SQLServerDataType<Long>       TIMESTAMP        = new SQLServerDataType<Long>(SQLDataType.BIGINT, "timestamp");
 
     private SQLServerDataType(SQLDataType<T> sqlDataType, String typeName) {
         super(SQLDialect.SQLSERVER, sqlDataType, sqlDataType.getType(), typeName);

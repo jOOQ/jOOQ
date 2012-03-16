@@ -281,26 +281,19 @@ public final class FieldTypeHelper {
         }
     }
 
-    static <T> T getFromResultSet(ExecuteContext ctx, Field<T> field, int index)
+
+    static <T, U> U getFromResultSet(ExecuteContext ctx, Field<U> field, int index)
         throws SQLException {
 
-        Class<? extends T> type = field.getType();
-        Class<?> actual = type;
-
-        // TODO [#650] This conversion code is still somewhat experimental...
-        // conversion and fetching should be made more object-oriented
-        Converter<?, ? extends T> converter = DataTypes.converter(type);
-        if (converter != null) {
-            actual = converter.fromType();
-        }
-
-        Object result = getFromResultSet(ctx, actual, index);
+        @SuppressWarnings("unchecked")
+        Converter<T, U> converter = (Converter<T, U>) DataTypes.converter(field.getType());
 
         if (converter != null) {
-            result = ((Converter) converter).from(result);
+            return converter.from(getFromResultSet(ctx, converter.fromType(), index));
         }
-
-        return (T) result;
+        else {
+            return getFromResultSet(ctx, field.getType(), index);
+        }
     }
 
     @SuppressWarnings("unchecked")

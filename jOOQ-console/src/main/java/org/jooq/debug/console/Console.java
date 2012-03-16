@@ -470,7 +470,8 @@ public class Console extends JFrame {
 
     public static void main(String[] args) {
     	if(args.length < 2) {
-    		System.out.println("Usage: <prog> <ip> <port>");
+    	    System.out.println("Please specify IP and port of a running RemoteDebuggerServer");
+    		System.out.println("Usage: Console <ip> <port>");
     		return;
     	}
     	try {

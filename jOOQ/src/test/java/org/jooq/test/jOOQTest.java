@@ -965,10 +965,16 @@ public class jOOQTest {
     public void testNullFunction() throws Exception {
         Field<?> f = val((Object) null);
         assertEquals("null", r_refI().render(f));
-        assertEquals("null", r_ref().render(f));
+        assertEquals("?", r_ref().render(f));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setObject(1, null);
+        }});
 
         int i = b_ref().bind(f).peekIndex();
-        assertEquals(1, i);
+        assertEquals(2, i);
+
+        context.assertIsSatisfied();
     }
 
     @Test

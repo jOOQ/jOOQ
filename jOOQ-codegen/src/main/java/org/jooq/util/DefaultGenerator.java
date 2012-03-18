@@ -248,6 +248,7 @@ public class DefaultGenerator implements Generator {
 	    log.info("  instance fields", generateInstanceFields());
 	    log.info("  JPA annotations", generateJPAAnnotations());
 	    log.info("  navigation methods", generateNavigationMethods());
+	    log.info("  records", generateRecords());
 	    log.info("  pojos", generatePojos());
 	    log.info("  relations", generateRelations());
 

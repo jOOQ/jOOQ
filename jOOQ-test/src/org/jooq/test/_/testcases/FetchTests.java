@@ -253,6 +253,12 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
     @Test
     public void testFetchWithoutResults() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+                log.info("SKIPPING", "Fetch without results tests");
+                return;
+        }
+
         Result<Record> result =
         create().fetch(
             create().update(TAuthor())

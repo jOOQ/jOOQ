@@ -174,7 +174,7 @@
             <navigationMethods>true</navigationMethods>
             <deprecated>true</deprecated>
             <instanceFields>true</instanceFields>
-            <generatedAnnotation>true</generatedAnnotation>
+            <generatedAnnotation>false</generatedAnnotation>
             <records>true</records>
             <pojos>false</pojos>
             <jpaAnnotations>false</jpaAnnotations>

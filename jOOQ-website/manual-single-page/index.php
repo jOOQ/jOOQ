@@ -379,7 +379,7 @@ CREATE TABLE t_book_to_book_store (
 <li>From the classpath at /jooq-settings.xml</li>
 								
 <li>From the settings defaults, as specified in
-								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</a>
 								
 </li>
 							
@@ -405,7 +405,7 @@ CREATE TABLE t_book_to_book_store (
 							<p>
 								Please refer to the jOOQ runtime configuration XSD for more details:<br>
 								
-<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</a>
 							
 </p>
 
@@ -1750,7 +1750,7 @@ public void bind(BindContext context) throws DataAccessException;</pre>
 								There are also lots of advanced configuration parameters, which will be
 								treated in the <a href="#AdvancedConfiguration" title="jOOQ Manual reference: Advanced configuration of the generator">manual's next section</a>
 								Note, you can find the official XSD file at
-							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</a>
+							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd</a>
 							   for a formal specification</p>
 
 							<h2>Run jOOQ code generation</h2>
@@ -4612,7 +4612,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								their own LOG schema instance. Then you can enhance your RenderMapping
 								like this (e.g. using an XML configuration file): </p>
 
-<pre class="prettyprint lang-xml">&lt;settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd"&gt;
+<pre class="prettyprint lang-xml">&lt;settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd"&gt;
   &lt;renderMapping&gt;
     &lt;schemata&gt;
       &lt;schema&gt;

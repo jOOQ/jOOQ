@@ -149,7 +149,7 @@ function printContent() {
 								There are also lots of advanced configuration parameters, which will be
 								treated in the <a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced configuration of the generator">manual's next section</a>
 								Note, you can find the official XSD file at
-							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</a>
+							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd</a>
 							   for a formal specification</p>
 
 							<h2>Run jOOQ code generation</h2>

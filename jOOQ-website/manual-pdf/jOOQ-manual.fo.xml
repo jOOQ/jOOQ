@@ -1131,7 +1131,7 @@ CREATE TABLE t_book_to_book_store (
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">From the settings defaults, as specified in
-								    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</fo:basic-link>
+								    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</fo:basic-link>
 								</fo:block>
 </fo:list-item-body>
 </fo:list-item>
@@ -1166,7 +1166,7 @@ CREATE TABLE t_book_to_book_store (
 </fo:block>
 							<fo:block font-size="11pt">
 								Please refer to the jOOQ runtime configuration XSD for more details:<fo:block/>
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</fo:basic-link>
 							</fo:block>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory subclasses</fo:block>
@@ -2786,7 +2786,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 								There are also lots of advanced configuration parameters, which will be
 								treated in the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="AdvancedConfiguration">manual's next section</fo:basic-link>
 								Note, you can find the official XSD file at
-							   <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd')">http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd</fo:basic-link>
+							   <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd</fo:basic-link>
 							   for a formal specification</fo:block>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run jOOQ code generation</fo:block>
@@ -6192,7 +6192,7 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								their own LOG schema instance. Then you can enhance your RenderMapping
 								like this (e.g. using an XML configuration file): </fo:block>
 
-<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd">
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd">
   <renderMapping>
     <schemata>
       <schema>

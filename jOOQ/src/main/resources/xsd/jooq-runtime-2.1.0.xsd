@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd"
+  xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+  jaxb:version="1.0" jaxb:extensionBindingPrefixes="xjc"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd">
+
+  <annotation>
+    <appinfo>
+      <jaxb:globalBindings>
+        <xjc:serializable uid="205"/>
+      </jaxb:globalBindings>
+    </appinfo>
+  </annotation>
+
+  <element name="settings" type="jooq-runtime:Settings"/>
+
+  <complexType name="Settings">
+    <all>
+      <!-- Configure render mapping for runtime schema / table rewriting in
+           generated SQL -->
+      <element name="renderMapping" type="jooq-runtime:RenderMapping" minOccurs="0" maxOccurs="1"/>
+
+      <!-- Whether rendered schema, table, column names, etc should be quoted
+           in rendered SQL, or transformed in any other way.
+           This is set to "QUOTED" by default for backwards-compatibility -->
+      <element name="renderNameStyle" type="jooq-runtime:RenderNameStyle" minOccurs="0" maxOccurs="1" default="QUOTED"/>
+
+      <!-- Whether SQL keywords should be rendered with upper or lower case -->
+      <element name="renderKeywordStyle" type="jooq-runtime:RenderKeywordStyle" minOccurs="0" maxOccurs="1" default="LOWER"/>
+
+      <!-- Whether rendered SQL should be pretty-printed -->
+      <element name="renderFormatted" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
+
+      <!-- The type of statement that is to be executed -->
+      <element name="statementType" type="jooq-runtime:StatementType" minOccurs="0" maxOccurs="1" default="PREPARED_STATEMENT"/>
+
+      <!-- When set to true, this will add jOOQ's default logging ExecuteListeners -->
+      <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
+
+      <!-- The event listeners to be notified upon execution events -->
+      <element name="executeListeners" type="jooq-runtime:ExecuteListeners" minOccurs="0" maxOccurs="1"/>
+    </all>
+  </complexType>
+
+  <complexType name="RenderMapping">
+    <all>
+      <!-- The default schema as defined in org.jooq.Schema.getName()
+           This schema will be omitted in rendered SQL -->
+      <element name="defaultSchema" type="string" minOccurs="0" maxOccurs="1"/>
+
+      <!-- The mapped schemata configuration -->
+      <element name="schemata" type="jooq-runtime:MappedSchemata" minOccurs="0" maxOccurs="1"/>
+    </all>
+  </complexType>
+
+  <complexType name="MappedSchemata">
+    <sequence>
+      <element name="schema" type="jooq-runtime:MappedSchema" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MappedSchema">
+    <all>
+      <!-- The input schema as defined in org.jooq.Schema.getName() -->
+      <element name="input" type="string" minOccurs="1" maxOccurs="1"/>
+
+      <!-- The output schema as it will be rendered in SQL
+           When this is omitted, you can still apply table mapping -->
+      <element name="output" type="string" minOccurs="0" maxOccurs="1"/>
+
+      <!-- Configure table mapping for runtime table rewriting in
+           generated SQL -->
+      <element name="tables" type="jooq-runtime:MappedTables" minOccurs="0" maxOccurs="1"/>
+    </all>
+  </complexType>
+
+  <complexType name="MappedTables">
+    <sequence>
+      <element name="table" type="jooq-runtime:MappedTable" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MappedTable">
+    <all>
+      <!-- The input schema as defined in org.jooq.Table.getName() -->
+      <element name="input" type="string" minOccurs="1" maxOccurs="1"/>
+
+      <!-- The output schema as it will be rendered in SQL -->
+      <element name="output" type="string" minOccurs="1" maxOccurs="1"/>
+    </all>
+  </complexType>
+
+  <simpleType name="StatementType">
+    <restriction base="string">
+
+      <!-- Execute statements with inlined bind values, avoiding JDBC's
+           PreparedStatements -->
+      <enumeration value="STATIC_STATEMENT"/>
+
+      <!-- Execute statements with bind values, using JDBC's
+           PreparedStatements -->
+      <enumeration value="PREPARED_STATEMENT"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderNameStyle">
+    <restriction base="string">
+
+      <!-- Render object names quoted, as defined in the database. Use this
+           to stay on the safe side with case-sensitivity and special
+           characters. For instance:
+           Oracle    : "SYS"."ALL_TAB_COLS"
+           MySQL     : `information_schema`.`TABLES`
+           SQL Server: [INFORMATION_SCHEMA].[TABLES] -->
+      <enumeration value="QUOTED"/>
+
+      <!-- Render object names, as defined in the database. For instance:
+           Oracle    : SYS.ALL_TAB_COLS
+           MySQL     : information_schema.TABLES
+           SQL Server: INFORMATION_SCHEMA.TABLES -->
+      <enumeration value="AS_IS"/>
+
+      <!-- Force rendering object names in lower case. For instance:
+           Oracle    : sys.all_tab_cols
+           MySQL     : information_schema.tables
+           SQL Server: information_schema.tables -->
+      <enumeration value="LOWER"/>
+
+      <!-- Force rendering object names in upper case. For instance:
+           Oracle    : SYS.ALL_TAB_COLS
+           MySQL     : INFORMATION_SCHEMA.TABLES
+           SQL Server: INFORMATION_SCHEMA.TABLES -->
+      <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="RenderKeywordStyle">
+    <restriction base="string">
+
+      <!-- Keywords are rendered in lower case. For instance:
+           select .. from .. where .. -->
+      <enumeration value="LOWER"/>
+
+      <!-- Keywords are rendered in upper case. For instance:
+           SELECT .. FROM .. WHERE .. -->
+      <enumeration value="UPPER"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="ExecuteListeners">
+    <sequence>
+
+      <!-- An event listener implementing org.jooq.ExecuteListener -->
+      <element name="executeListener" type="string" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+</schema>

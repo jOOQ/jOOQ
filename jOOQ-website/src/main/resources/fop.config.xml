@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fop version="1.0">
+	<renderers>
+		<renderer mime="application/pdf">
+			<filterList>
+				<!-- provides compression using zlib flate (default is on) -->
+				<value>flate</value>
+			</filterList>
+			<fonts>
+				<font 
+					metrics-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/georgia.xml" 
+					embed-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/georgia.ttf"
+					kerning="yes">
+					<font-triplet name="Georgia" style="normal" weight="normal" />
+				</font>
+			</fonts>
+		</renderer>
+	</renderers>
+</fop>

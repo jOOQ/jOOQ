@@ -1,0 +1,851 @@
+/**
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * All rights reserved.
+ *
+ * This software is licensed to you under the Apache License, Version 2.0
+ * (the "License"); You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * . Redistributions of source code must retain the above copyright notice, this
+ *   list of conditions and the following disclaimer.
+ *
+ * . Redistributions in binary form must reproduce the above copyright notice,
+ *   this list of conditions and the following disclaimer in the documentation
+ *   and/or other materials provided with the distribution.
+ *
+ * . Neither the name "jOOQ" nor the names of its contributors may be
+ *   used to endorse or promote products derived from this software without
+ *   specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+package org.jooq;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
+import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.Factory;
+import org.jooq.tools.LoggerListener;
+import org.jooq.tools.StopWatchListener;
+
+/**
+ * An event listener for {@link Query}, {@link Routine}, or {@link ResultSet}
+ * render, prepare, bind, execute, fetch steps.
+ * <p>
+ * <code>ExecuteListener</code> is a base type for loggers, debuggers,
+ * profilers, data collectors that can be hooked into a jOOQ {@link Factory}
+ * using the {@link Settings#getExecuteListeners()} property, passing
+ * <code>Settings</code> to
+ * {@link Factory#Factory(java.sql.Connection, SQLDialect, Settings)}. Advanced
+ * <code>ExecuteListeners</code> can also provide custom implementations of
+ * {@link Connection}, {@link PreparedStatement} and {@link ResultSet} to jOOQ
+ * in apropriate methods. For convenience, consider extending
+ * {@link DefaultExecuteListener} instead of implementing this interface. This
+ * will prevent compilation errors in future versions of jOOQ, when this
+ * interface might get new methods.
+ * <p>
+ * The following table explains how every type of statement / operation invokes
+ * callback methods in the correct order for all registered
+ * <code>ExecuteListeners</code>. Find a legend below the table for the various
+ * use cases.
+ * <table border="1">
+ * <tr>
+ * <th>Callback method</th>
+ * <th>Use case [1]</th>
+ * <th>Use case [2]</th>
+ * <th>Use case [3]</th>
+ * <th>Use case [4]</th>
+ * <th>Use case [5]</th>
+ * <th>Use case [6]</th>
+ * </tr>
+ * <tr>
+ * <td> {@link #start(ExecuteContext)}</code></td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #renderStart(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #renderEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #prepareStart(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #prepareEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, Nx (for every query)</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #bindStart(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>Yes, Nx (for every value set)</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #bindEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>Yes, Nx (for every value set)</td>
+ * <td>No</td>
+ * <td>Yes, 1
+ * <tr>
+ * <td> {@link #executeStart(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #executeEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #fetchStart(ExecuteContext)}</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #resultStart(ExecuteContext)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #recordStart(ExecuteContext)}<br/>
+ * </td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #recordEnd(ExecuteContext)}</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>Yes, Nx</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #resultEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x (Nx for {@link Cursor#fetch(int)}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #fetchEnd(ExecuteContext)}</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x (Nx for {@link ResultQuery#fetchMany()}</td>
+ * <td>Yes, 1x</td>
+ * <td>No</td>
+ * <td>No</td>
+ * <td>No</td>
+ * </tr>
+ * <tr>
+ * <td> {@link #end(ExecuteContext)}</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * <td>Yes, 1x</td>
+ * </tr>
+ * </table>
+ * <br/>
+ * <h3>Legend:</h3>
+ * <ol>
+ * <li>Used with {@link ResultQuery} of statement type
+ * {@link StatementType#PREPARED_STATEMENT}</li>
+ * <li>Used with {@link ResultQuery} of statement type
+ * {@link StatementType#STATIC_STATEMENT}</li>
+ * <li>Used with {@link Factory#fetch(ResultSet)} or with
+ * {@link InsertResultStep#fetch()}</li>
+ * <li>Used with {@link Factory#batch(Query)}</li>
+ * <li>Used with {@link Factory#batch(Query[])}</li>
+ * <li>Used with a {@link Routine} standalone call</li>
+ * </ol>
+ * <p>
+ * If nothing is specified, the default is to use {@link LoggerListener} and
+ * {@link StopWatchListener} as the only event listeners.
+ *
+ * @author Lukas Eder
+ */
+public interface ExecuteListener {
+
+    /**
+     * Called to initialise an <code>ExecuteListener</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * </ul>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#setConnection(Connection)}: The connection used
+     * for execution. This may be particularly interesting if a {@link Query}
+     * was de-serialised and is thus lacking the underlying connection</li>
+     * </ul>
+     */
+    void start(ExecuteContext ctx);
+
+    /**
+     * Called before rendering SQL from a <code>QueryPart</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * </ul>
+     */
+    void renderStart(ExecuteContext ctx);
+
+    /**
+     * Called after rendering SQL from a <code>QueryPart</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
+     * statement that is about to be executed. You can modify this statement
+     * freely.</li>
+     * </ul>
+     */
+    void renderEnd(ExecuteContext ctx);
+
+    /**
+     * Called before preparing / creating the SQL statement
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#sql(String)}: The rendered <code>SQL</code>
+     * statement that is about to be executed. You can modify this statement
+     * freely.</li>
+     * </ul>
+     */
+    void prepareStart(ExecuteContext ctx);
+
+    /**
+     * Called after preparing / creating the SQL statement
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <code>Statement</code>, <code>PreparedStatement</code>, or
+     * <code>CallableStatement</code> that is about to be executed. You can
+     * modify this statement freely, or wrap {@link ExecuteContext#statement()}
+     * with your enriched statement wrapper</li>
+     * </ul>
+     */
+    void prepareEnd(ExecuteContext ctx);
+
+    /**
+     * Called before binding variables to the <code>PreparedStatement</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#statement(PreparedStatement)}: The
+     * <code>PreparedStatement</code>, or <code>CallableStatement</code> that is
+     * about to be executed. You can modify this statement freely, or wrap
+     * {@link ExecuteContext#statement()} with your enriched statement wrapper</li>
+     * </ul>
+     * <p>
+     * Note that this method is not called when executing queries of type
+     * {@link StatementType#STATIC_STATEMENT}
+     */
+    void bindStart(ExecuteContext ctx);
+
+    /**
+     * Called after binding variables to the <code>PreparedStatement</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * </ul>
+     * <p>
+     * Note that this method is not called when executing queries of type
+     * {@link StatementType#STATIC_STATEMENT}
+     */
+    void bindEnd(ExecuteContext ctx);
+
+    /**
+     * Called before executing a statement
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * </ul>
+     */
+    void executeStart(ExecuteContext ctx);
+
+    /**
+     * Called after executing a statement
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * is about to be fetched or <code>null</code>, if the <code>Query</code>
+     * returns no result set, or if a <code>Routine</code> is being executed.</li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#resultSet(ResultSet)}: The
+     * <code>ResultSet</code> that is about to be fetched. You can modify this
+     * result set freely, or wrap {@link ExecuteContext#resultSet()} with your
+     * enriched result set wrapper</li>
+     * </ul>
+     */
+    void executeEnd(ExecuteContext ctx);
+
+    /**
+     * Called before fetching data from a <code>ResultSet</code>.
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * is about to be fetched.</li>
+     * </ul>
+     * <p>
+     * Overridable attributes in <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#resultSet(ResultSet)}: The
+     * <code>ResultSet</code> that is about to be fetched. You can modify this
+     * result set freely, or wrap {@link ExecuteContext#resultSet()} with your
+     * enriched result set wrapper</li>
+     * </ul>
+     * <p>
+     * In case of multiple <code>ResultSets</code> with
+     * {@link ResultQuery#fetchMany()}, this is called several times, once per
+     * <code>ResultSet</code>
+     * <p>
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines.
+     */
+    void fetchStart(ExecuteContext ctx);
+
+    /**
+     * Called before fetching a set of records from a <code>ResultSet</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#result()}: The set of records that are about to
+     * be fetched.</li>
+     * </ul>
+     * <p>
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines. This is also not called when
+     * fetching single records, with {@link Cursor#fetchOne()} for instance.
+     */
+    void resultStart(ExecuteContext ctx);
+
+    /**
+     * Called before fetching a record from a <code>ResultSet</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#record()}: The <code>Record</code> that is
+     * about to be fetched.</li>
+     * </ul>
+     * <p>
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines.
+     */
+    void recordStart(ExecuteContext ctx);
+
+    /**
+     * Called after fetching a record from a <code>ResultSet</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * was fetched.</li>
+     * </ul>
+     * <p>
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines.
+     */
+    void recordEnd(ExecuteContext ctx);
+
+    /**
+     * Called after fetching a set of records from a <code>ResultSet</code>
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * </li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * is about to be fetched.</li>
+     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * was fetched.</li>
+     * <li> {@link ExecuteContext#result()}: The set of records that were
+     * fetched.</li>
+     * </ul>
+     * <p>
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines. This is also not called when
+     * fetching single records, with {@link Cursor#fetchOne()} for instance.
+     */
+    void resultEnd(ExecuteContext ctx);
+
+    /**
+     * Called after fetching data from a <code>ResultSet</code>.
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * Note that the <code>Statement</code> is already closed!</li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * was fetched. Note that the <code>ResultSet</code> is already closed!</li>
+     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * was fetched.</li>
+     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * fetched.</li>
+     * </ul>
+     * <p>
+     * In case of multiple <code>ResultSets</code> with
+     * {@link ResultQuery#fetchMany()}, this is called several times, once per
+     * <code>ResultSet</code>
+     * <p>
+     * Note that this method is not called when executing queries that do not
+     * return a result, or when executing routines.
+     */
+    void fetchEnd(ExecuteContext ctx);
+
+    /**
+     * Called at the end of the execution lifecycle..
+     * <p>
+     * Available attributes from <code>ExecuteContext</code>:
+     * <ul>
+     * <li> {@link ExecuteContext#getConnection()}: The connection used for
+     * execution</li>
+     * <li> {@link ExecuteContext#configuration()}: The execution configuration</li>
+     * <li> {@link ExecuteContext#query()}: The <code>Query</code> object, if a
+     * jOOQ query is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#routine()}: The <code>Routine</code> object, if
+     * a jOOQ routine is being executed or <code>null</code> otherwise</li>
+     * <li> {@link ExecuteContext#sql()}: The rendered <code>SQL</code> statement
+     * that is about to be executed, or <code>null</code> if the
+     * <code>SQL</code> statement is unknown..</li>
+     * <li> {@link ExecuteContext#statement()}: The
+     * <code>PreparedStatement</code> that is about to be executed, or
+     * <code>null</code> if no statement is known to jOOQ. This can be any of
+     * the following: <br/>
+     * <br/>
+     * <ul>
+     * <li>A <code>java.sql.PreparedStatement</code> from your JDBC driver when
+     * a jOOQ <code>Query</code> is being executed as
+     * {@link StatementType#PREPARED_STATEMENT}</li>
+     * <li>A <code>java.sql.Statement</code> from your JDBC driver wrapped in a
+     * <code>java.sql.PreparedStatement</code> when your jOOQ <code>Query</code>
+     * is being executed as {@link StatementType#STATIC_STATEMENT}</li>
+     * <li>A <code>java.sql.CallableStatement</code> when you are executing a
+     * jOOQ <code>Routine</code></li>
+     * </ul>
+     * Note that the <code>Statement</code> is already closed!</li>
+     * <li> {@link ExecuteContext#resultSet()}: The <code>ResultSet</code> that
+     * was fetched or <code>null</code>, if no result set was fetched. Note that
+     * if any <code>ResultSet</code> is already closed!</li>
+     * <li> {@link ExecuteContext#record()}: The last <code>Record</code> that
+     * was fetched or null if no records were fetched.</li>
+     * <li> {@link ExecuteContext#result()}: The last set of records that were
+     * fetched or null if no records were fetched.</li>
+     * </ul>
+     */
+    void end(ExecuteContext ctx);
+}

@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
+import static org.jooq.SQLDialect.ASE;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
@@ -142,12 +143,20 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         }
 
         try {
+            listener.executeStart(ctx);
+
+            // JTDS doesn't seem to implement PreparedStatement.execute()
+            // correctly, at least not for sp_help
+            if (ctx.getDialect() == ASE) {
+                ctx.resultSet(ctx.statement().executeQuery());
+            }
+
             // [#1232] Avoid executeQuery() in order to handle queries that may
             // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
-            listener.executeStart(ctx);
-            if (ctx.statement().execute()) {
+            else if (ctx.statement().execute()) {
                 ctx.resultSet(ctx.statement().getResultSet());
             }
+
             listener.executeEnd(ctx);
 
             // Fetch a single result set

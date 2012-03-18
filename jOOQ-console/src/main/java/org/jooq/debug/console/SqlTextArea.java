@@ -45,8 +45,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -107,65 +105,56 @@ public class SqlTextArea extends RSyntaxTextArea {
                 }
             }
         });
-        addMouseListener(new MouseAdapter() {
+    }
+
+    @Override
+    public JPopupMenu getPopupMenu() {
+        boolean isEditable = isEditable();
+        JPopupMenu popupMenu = new JPopupMenu();
+        final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        JMenuItem copyClipboardMenuItem = new JMenuItem("Copy");
+        copyClipboardMenuItem.setEnabled(getSelectionStart() < getSelectionEnd());
+        copyClipboardMenuItem.addActionListener(new ActionListener() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                maybeShowPopup(e);
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                maybeShowPopup(e);
-            }
-            private void maybeShowPopup(MouseEvent e) {
-                if(e.isPopupTrigger()) {
-                    boolean isEditable = isEditable();
-                    JPopupMenu popupMenu = new JPopupMenu();
-                    final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                    JMenuItem copyClipboardMenuItem = new JMenuItem("Copy");
-                    copyClipboardMenuItem.setEnabled(getSelectionStart() < getSelectionEnd());
-                    copyClipboardMenuItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            copyAsRtf();
-                        }
-                    });
-                    popupMenu.add(copyClipboardMenuItem);
-                    JMenuItem pasteClipboardMenuItem = new JMenuItem("Paste");
-                    pasteClipboardMenuItem.setEnabled(false);
-                    if(isEditable && clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                        try {
-                            final String data = (String)clipboard.getData(DataFlavor.stringFlavor);
-                            if(data != null && data.length() > 0) {
-                                pasteClipboardMenuItem.addActionListener(new ActionListener() {
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        replaceSelection(data);
-                                    }
-                                });
-                                pasteClipboardMenuItem.setEnabled(true);
-                            }
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    popupMenu.add(pasteClipboardMenuItem);
-                    popupMenu.addSeparator();
-                    JMenuItem formatMenuItem = new JMenuItem("Format");
-                    formatMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_MASK | KeyEvent.SHIFT_MASK));
-                    formatMenuItem.setEnabled(isEditable && getSelectionStart() < getSelectionEnd());
-                    formatMenuItem.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            formatSelection();
-                        }
-                    });
-                    popupMenu.add(formatMenuItem);
-                    if(popupMenu.getComponentCount() > 0) {
-                        popupMenu.show(SqlTextArea.this, e.getX(), e.getY());
-                    }
-                }
+            public void actionPerformed(ActionEvent e) {
+                copyAsRtf();
             }
         });
+        popupMenu.add(copyClipboardMenuItem);
+        JMenuItem pasteClipboardMenuItem = new JMenuItem("Paste");
+        pasteClipboardMenuItem.setEnabled(false);
+        if(isEditable && clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
+            try {
+                final String data = (String)clipboard.getData(DataFlavor.stringFlavor);
+                if(data != null && data.length() > 0) {
+                    pasteClipboardMenuItem.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            replaceSelection(data);
+                        }
+                    });
+                    pasteClipboardMenuItem.setEnabled(true);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        popupMenu.add(pasteClipboardMenuItem);
+        popupMenu.addSeparator();
+        JMenuItem formatMenuItem = new JMenuItem("Format");
+        formatMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_MASK | KeyEvent.SHIFT_MASK));
+        formatMenuItem.setEnabled(isEditable && getSelectionStart() < getSelectionEnd());
+        formatMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                formatSelection();
+            }
+        });
+        popupMenu.add(formatMenuItem);
+        if(popupMenu.getComponentCount() > 0) {
+            return popupMenu;
+        }
+        return null;
     }
 
     private void formatSelection() {

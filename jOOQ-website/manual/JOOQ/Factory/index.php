@@ -81,7 +81,7 @@ function printContent() {
 <li>From the classpath at /jooq-settings.xml</li>
 								
 <li>From the settings defaults, as specified in
-								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</a>
 								
 </li>
 							
@@ -107,7 +107,7 @@ function printContent() {
 							<p>
 								Please refer to the jOOQ runtime configuration XSD for more details:<br>
 								
-<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</a>
 							
 </p>
 

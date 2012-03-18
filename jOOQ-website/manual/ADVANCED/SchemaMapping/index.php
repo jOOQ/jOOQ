@@ -78,7 +78,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								their own LOG schema instance. Then you can enhance your RenderMapping
 								like this (e.g. using an XML configuration file): </p>
 
-<pre class="prettyprint lang-xml">&lt;settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd"&gt;
+<pre class="prettyprint lang-xml">&lt;settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd"&gt;
   &lt;renderMapping&gt;
     &lt;schemata&gt;
       &lt;schema&gt;

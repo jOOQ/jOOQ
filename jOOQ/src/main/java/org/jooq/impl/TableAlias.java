@@ -113,9 +113,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
      * Register a field for this table alias
      */
     private <T> void registerTableField(Field<T> field) {
-
-        // Instanciating a TableFieldImpl will add the field to [this]
-        new TableFieldImpl<R, T>(field.getName(), field.getDataType(), this);
+        aliasedFields.add(new TableFieldImpl<R, T>(field.getName(), field.getDataType(), this));
     }
 
     @Override

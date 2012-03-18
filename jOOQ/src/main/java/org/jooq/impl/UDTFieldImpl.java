@@ -62,7 +62,11 @@ class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> implement
         super(name, type);
 
         this.udt = udt;
-        this.udt.getFields().add(this);
+
+        // [#1199] The public API of UDT returns immutable field lists
+        if (udt instanceof UDTImpl) {
+            ((UDTImpl<?>) udt).getFieldList().add(this);
+        }
     }
 
     @Override

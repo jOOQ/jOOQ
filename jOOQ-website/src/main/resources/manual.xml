@@ -184,7 +184,17 @@ CREATE TABLE t_book_to_book_store (
 							<p>
 								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
 								The <reference class="org.jooq.conf.Settings" title="Settings"/> class is a JAXB-annotated
-								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								type, that can be provided to a Factory in several ways:
+							</p>
+							<ul>
+								<li>In the constructor. This will override default settings below</li>
+								<li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
+								<li>From the classpath at /jooq-settings.xml</li>
+								<li>From the settings defaults, as specified in
+								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+								</li>
+							</ul>
+							<p>
 								Subsequent sections of the manual contain some more in-depth explanations about these settings:
 							</p>
 							<ul>
@@ -197,7 +207,7 @@ CREATE TABLE t_book_to_book_store (
    							</ul>
 							<p>
 								Please refer to the jOOQ runtime configuration XSD for more details:<br/>
-								<a href="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+								<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
 							</p>
 
 							<h3>Factory subclasses</h3>
@@ -1283,6 +1293,13 @@ create.attach(select);</java>
 
 
 							<h2>Automatically attaching QueryParts</h2>
+							<p>
+								Note, this functionality is deprecated with jOOQ 2.1.0.
+								Please use the <reference id="ExecuteListener" title="ExecuteListener"/> API
+								instead, to provide jOOQ queries with a
+								<reference class="java.sql.Connection"/> before
+								execution.
+							</p>
 							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
 <java>// Create your own custom ConfigurationProvider that will make
 // your default Factory available to jOOQ
@@ -1444,6 +1461,11 @@ public void bind(BindContext context) throws DataAccessException;</java>
     <url>jdbc:oracle:thin:@[your jdbc connection parameters]</url>
     <user>[your database user]</user>
     <password>[your database password]</password>
+    <!-- You can also pass user/password and other JDBC properties in the optional properties tag: -->
+    <properties>
+      <property><key>user</key><value>[db-user]</value></property>
+      <property><key>password</key><value>[db-password]</value></property>
+    </properties>
   </jdbc>
 
   <generator>
@@ -1798,6 +1820,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }</java>
 
+                            <h3>jooq-meta configuration</h3>
 							<p>
 								Within the &lt;generator/&gt; element, there are other configuration elements:
 							</p>
@@ -1835,16 +1858,25 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
   <!-- A configuration element to configure master data table enum classes -->
   <masterDataTables>...</masterDataTables>
 
-  <!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk -->
-  <enumTypes>...</enumTypes>
+  <!-- A configuration element to configure custom data types -->
+  <customTypes>...</customTypes>
 
   <!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk -->
+       artefacts (e.g. in combination with customTypes) -->
   <forcedTypes>...</forcedTypes>
 </database>]]></xml>
 
+							<p>
+								Check out the some of the manual's "advanced" sections
+								to find out more about the advanced configuration parameters.
+							</p>
+							<ul>
+								<li><reference id="SchemaMapping" title="Schema mapping"/></li>
+								<li><reference id="MasterData" title="Master data types"/></li>
+								<li><reference id="CustomTypes" title="Custom types"/></li>
+							</ul>
+
+							<h3>jooq-codegen configuration</h3>
                             <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
 
 <xml><![CDATA[<!-- These properties can be added to the generate element: -->
@@ -1874,6 +1906,11 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to true -->
   <generatedAnnotation>true</generatedAnnotation>
 
+  <!-- Generate jOOQ Record classes for type-safe querying. You can
+       turn this off, if you don't need "active records" for CRUD
+       Defaults to true -->
+  <records>true</records>
+
   <!-- Generate POJOs in addition to Record classes for usage of the
        ResultQuery.fetchInto(Class) API
        Defaults to false -->
@@ -1884,13 +1921,6 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false -->
   <jpaAnnotations>false</jpaAnnotations>
 </generate>]]></xml>
-
-							<p>
-								Check out the manual's section about
-								<reference id="MasterData" title="master data"/>
-								to find out more
-								about those advanced configuration parameters.
-							</p>
 						</content>
 					</section>
 
@@ -2008,6 +2038,67 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</java>
     // Navigation methods for foreign keys
     public List&lt;TBookRecord&gt; fetchTBooks() { // [...]
 }</java>
+
+
+							<h3>Generated or custom POJO's instead of jOOQ's Records</h3>
+							<p>
+								If you're using jOOQ along with Hibernate / JPA, or if you
+								want to use your own, custom domain-model instead of jOOQ's
+								Record type-hierarchy, you can choose to select values into
+								POJOs. Let's say you defined a POJO for authors:
+							</p>
+
+<java><![CDATA[package com.example;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class MyAuthor {
+    // Some fields may be public
+    @Column(name = "ID")
+    public int id;
+
+    // Others are private and have associated getters / setters:
+    private String firstName;
+    private String lastName;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "FIRST_NAME")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Column(name = "LAST_NAME")
+    public String getLastName() {
+        return lastName;
+    }
+}]]></java>
+
+                            <p>
+                            	The above could be your custom POJO or a POJO generated
+                            	by jooq-codegen (see
+                            	<reference id="AdvancedConfiguration" title="the manual's section about advanced codegen configuration"/>
+                            	for more details). Also, JPA-annotations are not necessary
+                            	if you wish to let jOOQ map record columns onto your POJO
+                            	attributes by convention. Instead of fetching records normally,
+                            	you can now let jOOQ fetch records "into" your custom type:
+                            </p>
+
+<java><![CDATA[List<MyAuthor> results = create.select().from(TAuthor.T_AUTHOR).fetchInto(MyAuthor.class);]]></java>
+
+							<p>
+								Read the javadoc for
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html#into%28java.lang.Class%29" title="Record.into() javadoc, explaining about how to map jOOQ Records onto custom types">Record.into()</a>
+								for more details.
+							</p>
 						</content>
 					</section>
 
@@ -2882,7 +2973,11 @@ Table<Record> naturalRightOuterJoin(TableLike<?> table);
 // Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
 // table into another one using a list of PIVOT values
 PivotForStep pivot(Field<?>... aggregateFunctions);
-PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);]]></java>
+PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
+
+// Relational division can be applied to a table, transforming it into a
+// "quotient" using an intuitive syntax
+DivideByOnStep divideBy(Table<?> divisor);]]></java>
 
 							<p>
 								The <reference class="org.jooq.TableOnStep" title="TableOnStep"/> type
@@ -2905,10 +3000,16 @@ TableOnConditionStep onKey() throws DataAccessException;
 TableOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></java>
 
-							<p>
+							<ul>
+							<li>
 								For more details about the PIVOT clause, see the
 								<reference id="PIVOT" title="manual's section about the Oracle PIVOT syntax"/>
-							</p>
+							</li>
+							<li>
+								For more details about the DIVIDE BY clause, see the
+								<reference id="DIVISION" title="manual's section about the relational division syntax"/>
+							</li>
+							</ul>
 						</content>
 					</section>
 
@@ -4052,6 +4153,159 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 					</section>
 
 
+					<section id="CustomTypes">
+						<title>Custom data types and type conversion</title>
+						<slogan>
+							SQL data types are very limited in number. While some databases offer
+							enumeration types or user-defined types, others only ship with the SQL
+							standard. Read this chapter to see how to use custom types with jOOQ
+						</slogan>
+						<content>
+							<h2>Your custom type and its associated Converter</h2>
+							<p>
+								When using a custom type in jOOQ, you need to let jOOQ know about
+								its associated <reference class="org.jooq.Converter"/>.
+								A converter essentially has two generic type parameters:
+							</p>
+							<ul>
+								<li>&lt;U&gt;: The user-defined Java type. This could be <reference class="java.util.GregorianCalendar"/>, for instance.</li>
+								<li>&lt;T&gt;: The database / SQL type. This could be <reference class="java.sql.Timestamp"/>, for instance.</li>
+							</ul>
+							<p>
+								The above conversion implies that you may want to use a GregorianCalendar for
+								SQL timestamps, rather than the timestamp type itself. You could then write
+								a Converter like this:
+							</p>
+
+<java><![CDATA[package com.example;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import org.jooq.Converter;
+
+// Bind T to Timestamp and U to Gregorian calendar, here
+public class CalendarConverter implements Converter<Timestamp, GregorianCalendar> {
+
+    // Provide jOOQ with Class<?> objects of <U> and <T>. These are used by
+    // jOOQ to discover your converter based on your custom type
+    // --------------------------------------------------------------------
+    @Override
+    public Class<Timestamp> fromType() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public Class<GregorianCalendar> toType() {
+        return GregorianCalendar.class;
+    }
+
+    // Implement the type conversion methods. Convert your user-defined type
+    // "from" the SQL type when reading "from" the database, or "to" the SQL
+    // type when writing "to" the database.
+    @Override
+    public GregorianCalendar from(Timestamp databaseObject) {
+        GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+        calendar.setTimeInMillis(databaseObject.getTime());
+        return calendar;
+    }
+
+    @Override
+    public Timestamp to(GregorianCalendar userObject) {
+        return new Timestamp(userObject.getTime().getTime());
+    }
+}
+]]></java>
+
+							<p>
+								Such a Converter can now be used in various places of the jOOQ
+								API, especially when reading data from the database:
+							</p>
+
+<java><![CDATA[List<GregorianCalendar> result =
+create.select(T_AUTHOR.DATE_OF_BIRTH)
+      .from(T_AUTHOR)
+      .fetch(0, new CalendarConverter());]]></java>
+
+      						<h3>Using Converters in generated code</h3>
+      						<p>
+								A more common use-case, however, is to let jOOQ know about custom
+								types at code generation time. Use the following configuration elements
+								to specify, that you'd like to use GregorianCalendar for all database
+								fields that start with DATE_OF_
+      						</p>
+
+<xml><![CDATA[<database>
+  <!-- First, register your custom types here -->
+  <customTypes>
+    <customType>
+      <!-- Specify the fully-qualified class name of your custom type -->
+      <name>java.util.GregorianCalendar</name>
+
+      <!-- Associate that custom type with your converter. Note, a
+           custom type can only have one converter in jOOQ -->
+      <converter>com.example.CalendarConverter</converter>
+    </customType>
+  </customTypes>
+
+  <!-- Then, associate custom types with database columns -->
+  <forcedTypes>
+    <forcedType>
+      <!-- Specify again he fully-qualified class name of your custom type -->
+      <name>java.util.GregorianCalendar</name>
+
+      <!-- Add a list of comma-separated regular expressions matching columns -->
+      <expressions>.*\.DATE_OF_.*</expressions>
+    </forcedType>
+  </forcedTypes>
+</database>]]></xml>
+
+                            <p>
+                            	The above configuration will lead to T_AUTHOR.DATE_OF_BIRTH
+                            	being generated like this:
+                            </p>
+
+<java>public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
+
+    // [...]
+    public final TableField&lt;TAuthorRecord, GregorianCalendar&gt; DATE_OF_BIRTH =    // [...]
+    // [...]
+
+}</java>
+
+                            <p>
+                            	This means that the bound of &lt;T&gt; will be GregorianCalendar,
+                            	wherever you reference DATE_OF_BIRTH. jOOQ will use your custom
+                            	converter when binding variables and when fetching data from
+                            	<reference class="java.util.ResultSet"/>:
+                            </p>
+
+<java><![CDATA[// Get all date of births of authors born after 1980
+List<GregorianCalendar> result =
+create.selectFrom(T_AUTHOR)
+      .where(T_AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
+      .fetch(T_AUTHOR.DATE_OF_BIRTH);]]></java>
+
+      						<p>
+      						    Read more about advanced code generation configuration in
+      						    <reference id="AdvancedConfiguration" title="the manual's section about advanced code generation configuration"/>.
+      						</p>
+
+      						<h3>Using Converters for enum types</h3>
+      						<p>
+      							Java's Enum types can be very useful in SQL too.
+      							Some databases support enumeration types natively (MySQL, Postgres).
+      							In other cases, you can use the above custom type configuration
+      							also to provide jOOQ with Converters for your custom Enum types.
+      							Instead of implementing <reference class="org.jooq.Converter"/>,
+      							you may choose to extend <reference class="org.jooq.impl.EnumConverter"/>
+      							instead, which provides some enum-specific default behaviour.
+      						</p>
+						</content>
+					</section>
+
+
 					<section id="SchemaMapping">
 						<title>Mapping generated schemata and tables</title>
 						<slogan>
@@ -4543,6 +4797,76 @@ create.select(create.rownum())
 								PIVOT clause will be added later. Also, jOOQ may simulate PIVOT for other
 								dialects in the future.
 							</p>
+						</content>
+				    </section>
+
+
+				    <section id="DIVISION">
+				    	<title>jOOQ's relational division syntax</title>
+				    	<slogan>
+				    	    Relational division is a rather academic topic that is not used in
+				    	    every-day SQL. Nevertheless, it can be extremely powerful in some
+				    	    remote cases. jOOQ supports it intuitively
+						</slogan>
+						<content>
+							<h2>Relational division</h2>
+							<p>
+							    There is one operation in relational algebra that is not given
+							    a lot of attention, because it is rarely used in real-world
+							    applications. It is the relational division, the opposite operation
+							    of the cross product (or, relational multiplication).
+								The following is an approximate definition of a relational division:
+							</p>
+
+<config>Assume the following cross join / cartesian product
+C = A × B
+
+Then it can be said that
+A = C ÷ B
+B = C ÷ A</config>
+
+
+							<p>
+							   With jOOQ, you can simplify using relational divisions
+							   by using the following syntax:
+							</p>
+
+<java>C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)</java>
+
+							<p>The above roughly translates to</p>
+
+<sql>SELECT DISTINCT C.TEXT FROM C "c1"
+WHERE NOT EXISTS (
+  SELECT 1 FROM B
+  WHERE NOT EXISTS (
+    SELECT 1 FROM C "c2"
+    WHERE "c2".TEXT = "c1".TEXT
+    AND "c2".ID = B.C_ID
+  )
+)</sql>
+
+							<p>
+								Or in plain text: Find those TEXT values in C
+								whose ID's correspond to all ID's in B. Note
+								that from the above SQL statement, it is immediately
+								clear that proper indexing is of the essence.
+								Be sure to have indexes on all columns referenced
+								from the on(...) and returning(...) clauses.
+							</p>
+
+							<p>
+								For more information about relational division
+								and some nice, real-life examples, see
+							</p>
+
+							<ul>
+								<li>
+									<a href="http://en.wikipedia.org/wiki/Relational_algebra#Division" title="Wikipedia article on relational division">http://en.wikipedia.org/wiki/Relational_algebra#Division</a>
+								</li>
+								<li>
+									<a href="http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/" title="A nice summary of what relational division is and how it is best implemented in SQL">http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/</a>
+								</li>
+							</ul>
 						</content>
 				    </section>
 

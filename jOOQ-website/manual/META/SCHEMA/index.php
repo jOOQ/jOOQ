@@ -25,7 +25,7 @@ function printContent() {
 							<h2>The Schema</h2>
 							<p>
 								As of jOOQ 1.5, the top-level generated object is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Schema.java" title="Internal API reference: org.jooq.Schema">org.jooq.Schema</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Schema.html" title="Internal API reference: org.jooq.Schema">org.jooq.Schema</a>.
 								The Schema itself has no relevant functionality, except for holding
 								the schema name for all dependent generated artefacts. jOOQ queries try
 								to always fully qualify an entity within the database using that Schema

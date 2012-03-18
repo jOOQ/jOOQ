@@ -27,8 +27,8 @@ function printContent() {
 							<h2>Tables and TableRecords</h2>
 							<p>
 								The most important generated artefacts are
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">Tables</a> and
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableRecord.java" title="Internal API reference: org.jooq.TableRecord">TableRecords</a>. As
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">Tables</a> and
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html" title="Internal API reference: org.jooq.TableRecord">TableRecords</a>. As
 								discussed in previous chapters about
 								<a href="<?=$root?>/manual/JOOQ/Table/" title="jOOQ Manual reference: Tables and Fields">Tables</a> and
 								<a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results and Records">Results</a>, jOOQ uses the
@@ -89,6 +89,67 @@ function printContent() {
     // Navigation methods for foreign keys
     public List&lt;TBookRecord&gt; fetchTBooks() { // [...]
 }</pre>
+
+
+							<h3>Generated or custom POJO's instead of jOOQ's Records</h3>
+							<p>
+								If you're using jOOQ along with Hibernate / JPA, or if you
+								want to use your own, custom domain-model instead of jOOQ's
+								Record type-hierarchy, you can choose to select values into
+								POJOs. Let's say you defined a POJO for authors:
+							</p>
+
+<pre class="prettyprint lang-java">package com.example;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class MyAuthor {
+    // Some fields may be public
+    @Column(name = "ID")
+    public int id;
+
+    // Others are private and have associated getters / setters:
+    private String firstName;
+    private String lastName;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "FIRST_NAME")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Column(name = "LAST_NAME")
+    public String getLastName() {
+        return lastName;
+    }
+}</pre>
+
+                            <p>
+                            	The above could be your custom POJO or a POJO generated
+                            	by jooq-codegen (see
+                            	<a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced configuration of the generator">the manual's section about advanced codegen configuration</a>
+                            	for more details). Also, JPA-annotations are not necessary
+                            	if you wish to let jOOQ map record columns onto your POJO
+                            	attributes by convention. Instead of fetching records normally,
+                            	you can now let jOOQ fetch records "into" your custom type:
+                            </p>
+
+<pre class="prettyprint lang-java">List&lt;MyAuthor&gt; results = create.select().from(TAuthor.T_AUTHOR).fetchInto(MyAuthor.class);</pre>
+
+							<p>
+								Read the javadoc for
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html#into%28java.lang.Class%29" title="Record.into() javadoc, explaining about how to map jOOQ Records onto custom types">Record.into()</a>
+								for more details.
+							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">previous</a> : <a title="Next section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">next</a></td>

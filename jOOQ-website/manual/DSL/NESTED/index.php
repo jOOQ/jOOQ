@@ -48,7 +48,7 @@ function printContent() {
 </table>
 
                             <p>More examples like the above can be guessed from the
-                            <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">org.jooq.Field</a> API, as documented in the manual's section about
+                            <a href="http://www.jooq.org/javadoc/latest/org/jooq/Field.html" title="Internal API reference: org.jooq.Field">org.jooq.Field</a> API, as documented in the manual's section about
                             <a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>. For the = operator, the available comparisons are these:</p>
 
 <pre class="prettyprint lang-java">Condition equal(Select&lt;?&gt; query);

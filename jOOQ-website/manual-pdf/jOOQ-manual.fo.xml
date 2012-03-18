@@ -10,9 +10,9 @@
 <fo:flow font-family="Helvetica" flow-name="xsl-region-body">
 <fo:block font-family="Georgia" margin-right="20mm" margin-left="20mm" width="100%">
 <fo:block padding-top="60mm" font-size="36pt" text-align="center" width="100%">The jOOQ User Manual</fo:block>
-<fo:block padding-top="20mm" color="#555555" font-size="12pt" text-align="justify" width="100%">SQL was never meant to be abstracted. To be confined in the narrow 
-	   						boundaries of heavy mappers, hiding the beauty and simplicity of relational data. 
-	   						SQL was never meant to be object-oriented. SQL was never meant to be anything 
+<fo:block padding-top="20mm" color="#555555" font-size="12pt" text-align="justify" width="100%">SQL was never meant to be abstracted. To be confined in the narrow
+	   						boundaries of heavy mappers, hiding the beauty and simplicity of relational data.
+	   						SQL was never meant to be object-oriented. SQL was never meant to be anything
 	   						other than... SQL!</fo:block>
 <fo:block padding-top="20mm" text-align="center" width="100%">
 <fo:external-graphic padding-top="10pt" padding-bottom="10pt" src="url('C:/Users/lukas/workspace/jOOQ-website/img/logo.png')"/>
@@ -745,6 +745,22 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
+<fo:basic-link internal-destination="CustomTypes">Custom data types and type conversion<fo:leader leader-pattern="dots"/>
+<fo:page-number-citation ref-id="CustomTypes"/>
+</fo:basic-link>
+</fo:inline>
+</fo:block>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">3.</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:block text-align-last="justify">
+<fo:inline>
 <fo:basic-link internal-destination="SchemaMapping">Mapping generated schemata and tables<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="SchemaMapping"/>
 </fo:basic-link>
@@ -755,7 +771,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">3.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -771,7 +787,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">4.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -787,7 +803,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">5.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -803,7 +819,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">6.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -819,7 +835,23 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">7.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">8.</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:block text-align-last="justify">
+<fo:inline>
+<fo:basic-link internal-destination="DIVISION">jOOQ's relational division syntax<fo:leader leader-pattern="dots"/>
+<fo:page-number-citation ref-id="DIVISION"/>
+</fo:basic-link>
+</fo:inline>
+</fo:block>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">9.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -835,7 +867,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">8.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">10.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -851,7 +883,7 @@
 </fo:list-item>
 <fo:list-item>
 <fo:list-item-label>
-<fo:block font-size="11pt" page-break-inside="avoid">9.</fo:block>
+<fo:block font-size="11pt" page-break-inside="avoid">11.</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
@@ -1016,9 +1048,9 @@ CREATE TABLE t_book_to_book_store (
 							</fo:list-block>
 </fo:block>
 							<fo:block font-size="11pt">
-								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java')">org.jooq.impl.Factory</fo:basic-link>
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/Factory.html')">org.jooq.impl.Factory</fo:basic-link>
 								class is the main class from where you will create all jOOQ objects.
-								The Factory implements <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java')">org.jooq.Configuration</fo:basic-link>
+								The Factory implements <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Configuration.html')">org.jooq.Configuration</fo:basic-link>
 								and needs to be instanciated with the Configuration's properties:
 							</fo:block>
 							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
@@ -1029,7 +1061,7 @@ CREATE TABLE t_book_to_book_store (
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
-<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java')">org.jooq.SQLDialect</fo:basic-link> :
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SQLDialect.html')">org.jooq.SQLDialect</fo:basic-link> :
 								The dialect of your database. This may be any of the currently
 								supported database types</fo:block>
 </fo:list-item-body>
@@ -1051,7 +1083,7 @@ CREATE TABLE t_book_to_book_store (
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
-<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java')">org.jooq.conf.Settings</fo:basic-link> :
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html')">org.jooq.conf.Settings</fo:basic-link> :
     							An optional runtime configuration.</fo:block>
 </fo:list-item-body>
 </fo:list-item>
@@ -1064,8 +1096,48 @@ CREATE TABLE t_book_to_book_store (
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory settings</fo:block>
 							<fo:block font-size="11pt">
 								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
-								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java')">Settings</fo:basic-link> class is a JAXB-annotated
-								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html')">Settings</fo:basic-link> class is a JAXB-annotated
+								type, that can be provided to a Factory in several ways:
+							</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">In the constructor. This will override default settings below</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">From a location specified by a JVM parameter: -Dorg.jooq.settings</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">From the classpath at /jooq-settings.xml</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">From the settings defaults, as specified in
+								    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</fo:basic-link>
+								</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
+							<fo:block font-size="11pt">
 								Subsequent sections of the manual contain some more in-depth explanations about these settings:
 							</fo:block>
 							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
@@ -1094,7 +1166,7 @@ CREATE TABLE t_book_to_book_store (
 </fo:block>
 							<fo:block font-size="11pt">
 								Please refer to the jOOQ runtime configuration XSD for more details:<fo:block/>
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</fo:basic-link>
 							</fo:block>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory subclasses</fo:block>
@@ -1266,11 +1338,11 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							views are also considered tables by jOOQ.
 						</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table</fo:block>
-							<fo:block font-size="11pt">The formal definition of a <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java')">org.jooq.Table</fo:basic-link> starts with </fo:block>
+							<fo:block font-size="11pt">The formal definition of a <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Table.html')">org.jooq.Table</fo:basic-link> starts with </fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public interface Table&lt;R extends Record&gt; // [...]</fo:block>
 							<fo:block font-size="11pt">
 								This means that every table is associated with a subtype of the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Record.java')">org.jooq.Record</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Record.html')">org.jooq.Record</fo:basic-link>
 								class (see also
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Result">Results and Records</fo:basic-link>
 								). For anonymous or ad-hoc tables,
@@ -1355,9 +1427,9 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT 1 FROM DUAL</fo:block>
 							<fo:block font-size="11pt">
 								Then 1 is considered a Field or more explicitly, a
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Constant.java')">org.jooq.impl.Constant</fo:basic-link>,
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/Constant.html')">org.jooq.impl.Constant</fo:basic-link>,
 								which implements Field, and DUAL is considered a Table or more explicitly
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Dual.java')">org.jooq.impl.Dual</fo:basic-link>, which implements Table
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/Dual.html')">org.jooq.impl.Dual</fo:basic-link>, which implements Table
 							</fo:block>
 							<fo:block font-size="11pt">
 								More advanced uses become clear quickly, when you do things like
@@ -1365,7 +1437,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT 1 + 1 FROM DUAL</fo:block>
 							<fo:block font-size="11pt">
 								Where 1 + 1 itself is a Field or more explicitly, an
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Expression.java')">org.jooq.impl.Expression</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/Expression.html')">org.jooq.impl.Expression</fo:basic-link>
 								joining two Constants together.
 							</fo:block>
 							<fo:block font-size="11pt">
@@ -1376,7 +1448,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">TableFields</fo:block>
 							<fo:block font-size="11pt">
 								A specific type of field is the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableField.java')">org.jooq.TableField</fo:basic-link>,
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/TableField.html')">org.jooq.TableField</fo:basic-link>,
 								which represents a physical
 								Field in a physical Table. Both the
 								TableField and its referenced Table
@@ -1408,7 +1480,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Result</fo:block>
 							<fo:block font-size="11pt">
 								The
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Result.java')">Result</fo:basic-link>&lt;R extends <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Record.java')">Record</fo:basic-link>&gt;
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Result.html')">Result</fo:basic-link>&lt;R extends <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Record.html')">Record</fo:basic-link>&gt;
 								is essentially a wrapper for a List&lt;R extends Record&gt;
 								providing
 								many convenience methods for accessing single elements in
@@ -1416,7 +1488,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 								set. Depending on the type of SELECT statement,
 								&lt;R&gt; can be bound
 								to a sub-type of Record, for instance to an
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdatableRecord.java')">org.jooq.UpdatableRecord</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/UpdatableRecord.html')">org.jooq.UpdatableRecord</fo:basic-link>.
 								See the section on
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="UpdatableRecord">Updatable Records</fo:basic-link>
 								for further details.
@@ -1425,7 +1497,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Cursor</fo:block>
 							<fo:block font-size="11pt">
 								A similar object is the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Cursor.java')">Cursor</fo:basic-link>&lt;R extends Record&gt;.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Cursor.html')">Cursor</fo:basic-link>&lt;R extends Record&gt;.
 								Unlike the Result, the cursor has not fetched all data from the database yet.
 								This means, you save memory (and potentially speed), but you can only access
 								data sequentially and you have to keep a JDBC ResultSet alive. Cursors behave
@@ -1444,7 +1516,7 @@ void close() throws SQLException;</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Record</fo:block>
 							<fo:block font-size="11pt">
 								The Record itself holds all the data from your selected tuple. If it is
-								a <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableRecord.java')">org.jooq.TableRecord</fo:basic-link>, then it corresponds exactly to the type of one of your
+								a <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html')">org.jooq.TableRecord</fo:basic-link>, then it corresponds exactly to the type of one of your
 								physical tables in your database. But any anonymous or ad-hoc tuple can
 								be represented by the plain Record. A record mainly provides access to
 								its data and adds convenience methods for data type conversion. These
@@ -1480,7 +1552,7 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 							<fo:block font-size="11pt">
 								For more information about the type conversions that are supported by
 								jOOQ, read the Javadoc on
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/tools/Convert.java')">org.jooq.tools.Convert</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/tools/Convert.html')">org.jooq.tools.Convert</fo:basic-link>
 							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UpdatableRecord">
 <fo:marker marker-class-name="section">
@@ -1566,11 +1638,11 @@ book.deleteUsing(TBook.ID);</fo:block>
 							<fo:block font-size="11pt">
 								There are essentially two ways of creating SELECT statements in jOOQ.
 								For historical reasons, you can create
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SimpleSelectQuery.java')">org.jooq.SimpleSelectQuery</fo:basic-link> or
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectQuery.java')">org.jooq.SelectQuery</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SimpleSelectQuery.html')">org.jooq.SimpleSelectQuery</fo:basic-link> or
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectQuery.html')">org.jooq.SelectQuery</fo:basic-link>
 								objects and add additional query clauses, such as
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java')">Conditions</fo:basic-link> or
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SortField.java')">SortFields</fo:basic-link> to it.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Condition.html')">Conditions</fo:basic-link> or
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SortField.html')">SortFields</fo:basic-link> to it.
 								Since jOOQ 1.3, there is also the possibility to
 								create SELECT statements using jOOQ's
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="DSL">DSL API</fo:basic-link> in a much more intuitive
@@ -1630,7 +1702,7 @@ book.deleteUsing(TBook.ID);</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
-<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java')">org.jooq.Select</fo:basic-link>:
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link>:
 								    This Query subtype stands for a general type of SELECT statement.
 								    It is also the main Select type for the
 								    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="DSL">DSL API</fo:basic-link>. When executed, this object
@@ -1644,7 +1716,7 @@ book.deleteUsing(TBook.ID);</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
-<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SimpleSelectQuery.java')">org.jooq.SimpleSelectQuery</fo:basic-link>:
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SimpleSelectQuery.html')">org.jooq.SimpleSelectQuery</fo:basic-link>:
 									This Query will allow for selecting from single physical Tables only.
 									It therefore has access to the Table's generic type parameter
 									&lt;R extends Record&gt; and will provide a matching Result&lt;R&gt;.
@@ -1659,7 +1731,7 @@ book.deleteUsing(TBook.ID);</fo:block>
 </fo:list-item-label>
 <fo:list-item-body start-indent="body-start()">
 <fo:block font-size="11pt" page-break-inside="avoid">
-<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectQuery.java')">org.jooq.SelectQuery</fo:basic-link>:
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectQuery.html')">org.jooq.SelectQuery</fo:basic-link>:
 									This Query will allow for selecting a subset of Fields from several
 									Tables. Because the results of such a query are considered of an anonymous
 									or ad-hoc type, this Query will bind &lt;R&gt; to the general type Record
@@ -1713,8 +1785,8 @@ Result&lt;Record&gt; result = create.select()
 							<fo:block font-size="11pt">
 								In the above example, some generated artefacts are used for querying.
 								In this case, T_AUTHOR and T_BOOK are instances of types
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/test/oracle/generatedclasses/tables/TAuthor.java')">TAuthor</fo:basic-link> and
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/test/oracle/generatedclasses/tables/TBook.java')">TBook</fo:basic-link> respectively.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/test/oracle/generatedclasses/tables/TAuthor.html')">TAuthor</fo:basic-link> and
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/test/oracle/generatedclasses/tables/TBook.html')">TBook</fo:basic-link> respectively.
 								Their full qualification would read TAuthor.T_AUTHOR and TBook.T_BOOK, but in many cases,
 								it's useful to static import elements involved with queries, in order to decrease verbosity:
 								<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">import static com.example.jooq.Tables.*;</fo:block>
@@ -1772,8 +1844,8 @@ q.addOrderBy(T_BOOK.TITLE);</fo:block>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Fetching data</fo:block>
 							<fo:block font-size="11pt">
-								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java')">org.jooq.Select</fo:basic-link> interface extends
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ResultQuery.java')">org.jooq.ResultQuery</fo:basic-link>,
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link> interface extends
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/ResultQuery.html')">org.jooq.ResultQuery</fo:basic-link>,
 								which provides a range of methods to fetch data from the database.
 								Once you have constructed your SELECT query (see examples above), you
 								may choose to either simply execute() it, or use a variety of convenience
@@ -1962,7 +2034,7 @@ i.execute();</fo:block>
 </fo:table>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
-							<fo:block font-size="11pt">Using the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdateQuery.java')">org.jooq.UpdateQuery</fo:basic-link> class,
+							<fo:block font-size="11pt">Using the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/UpdateQuery.html')">org.jooq.UpdateQuery</fo:basic-link> class,
 							this is how you could express an UPDATE statement:</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
 u.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
@@ -2000,7 +2072,7 @@ u.execute();</fo:block>
 </fo:table>
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
-							<fo:block font-size="11pt">Using the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/DeleteQuery.java')">org.jooq.DeleteQuery</fo:basic-link> class,
+							<fo:block font-size="11pt">Using the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/DeleteQuery.html')">org.jooq.DeleteQuery</fo:basic-link> class,
 							this is how you could express a DELETE statement: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
 d.addConditions(T_AUTHOR.ID.equal(100));
@@ -2252,7 +2324,7 @@ LAST_NAME.equal(val("Poe"))</fo:block>
 							    for more information about jOOQ's internals),
 								and cannot be modified directly anymore. If you wish to reuse a query and
 								modify bind values between subsequent query executions, you can access them again
-								through the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java')">org.jooq.Query</fo:basic-link> interface:
+								through the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Query.html')">org.jooq.Query</fo:basic-link> interface:
 							</fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// Access the first bind value from a query. Indexes are counted from 1, just as with JDBC
@@ -2265,7 +2337,7 @@ if ("Poe".equal(param.getValue())) {
 }]]></fo:block>
 
 							<fo:block font-size="11pt">
-								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Param.java')">org.jooq.Param</fo:basic-link> type can also be named explicitly
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Param.html')">org.jooq.Param</fo:basic-link> type can also be named explicitly
 								using the Factory's param() methods:
 							</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// Create a query with a named parameter. You can then use that name for accessing the parameter again
@@ -2281,7 +2353,7 @@ param2.setValue("Orwell");
 ]]></fo:block>
 
 							<fo:block font-size="11pt">
-								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java')">org.jooq.Query</fo:basic-link> interface also allows for
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Query.html')">org.jooq.Query</fo:basic-link> interface also allows for
 								setting new bind values directly, without accessing the Param type:
 							</fo:block>
 
@@ -2336,9 +2408,9 @@ WHERE LAST_NAME = :lastName
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Everything is a QueryPart</fo:block>
 							<fo:block font-size="11pt">
 								A
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java')">org.jooq.Query</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Query.html')">org.jooq.Query</fo:basic-link>
 								and all its contained objects is a
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPart.java')">org.jooq.QueryPart</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/QueryPart.html')">org.jooq.QueryPart</fo:basic-link>.
 								QueryParts essentially provide this functionality:
 							</fo:block>
 							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
@@ -2363,14 +2435,14 @@ WHERE LAST_NAME = :lastName
 </fo:block>
 
 							<fo:block font-size="11pt">Both of these methods are contained in jOOQ's internal API's
-							   <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPartInternal.java')">org.jooq.QueryPartInternal</fo:basic-link>, which is
+							   <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/QueryPartInternal.html')">org.jooq.QueryPartInternal</fo:basic-link>, which is
 							   internally implemented by every QueryPart. QueryPart internals are best
 							   illustrated with an example.</fo:block>
 
 						   <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: CompareCondition</fo:block>
 						   <fo:block font-size="11pt">A simple example can be provided by checking out jOOQ's internal
 								representation of a
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/CompareCondition.java')">org.jooq.impl.CompareCondition</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/CompareCondition.html')">org.jooq.impl.CompareCondition</fo:basic-link>.
 								It is used for any condition
 								comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 								condition here: </fo:block>
@@ -2452,6 +2524,13 @@ create.attach(select);</fo:block>
 
 
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Automatically attaching QueryParts</fo:block>
+							<fo:block font-size="11pt">
+								Note, this functionality is deprecated with jOOQ 2.1.0.
+								Please use the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="ExecuteListener">ExecuteListener</fo:basic-link> API
+								instead, to provide jOOQ queries with a
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html')">java.sql.Connection</fo:basic-link> before
+								execution.
+							</fo:block>
 							<fo:block font-size="11pt">In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Create your own custom ConfigurationProvider that will make
 // your default Factory available to jOOQ
@@ -2508,8 +2587,8 @@ public abstract class CustomCondition extends AbstractCondition {
 							<fo:block font-size="11pt">These two classes are declared public and covered by integration
 								tests. When you extend these classes, you will have to provide your
 								own implementations for the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="QueryPart">QueryParts</fo:basic-link>'
-								bind(<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/BindContext.java')">BindContext</fo:basic-link>) and
-								toSQL(<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/RenderContext.java')">RenderContext</fo:basic-link>) methods:</fo:block>
+								bind(<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/BindContext.html')">BindContext</fo:basic-link>) and
+								toSQL(<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/RenderContext.html')">RenderContext</fo:basic-link>) methods:</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
 // in the correct order, passing the render context.
 //
@@ -2640,6 +2719,11 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
     <url>jdbc:oracle:thin:@[your jdbc connection parameters]</url>
     <user>[your database user]</user>
     <password>[your database password]</password>
+    <!-- You can also pass user/password and other JDBC properties in the optional properties tag: -->
+    <properties>
+      <property><key>user</key><value>[db-user]</value></property>
+      <property><key>password</key><value>[db-password]</value></property>
+    </properties>
   </jdbc>
 
   <generator>
@@ -3048,6 +3132,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }</fo:block>
 
+                            <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jooq-meta configuration</fo:block>
 							<fo:block font-size="11pt">
 								Within the &lt;generator/&gt; element, there are other configuration elements:
 							</fo:block>
@@ -3085,16 +3170,54 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
   <!-- A configuration element to configure master data table enum classes -->
   <masterDataTables>...</masterDataTables>
 
-  <!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk -->
-  <enumTypes>...</enumTypes>
+  <!-- A configuration element to configure custom data types -->
+  <customTypes>...</customTypes>
 
   <!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk -->
+       artefacts (e.g. in combination with customTypes) -->
   <forcedTypes>...</forcedTypes>
 </database>]]></fo:block>
 
+							<fo:block font-size="11pt">
+								Check out the some of the manual's "advanced" sections
+								to find out more about the advanced configuration parameters.
+							</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SchemaMapping">Schema mapping</fo:basic-link>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="MasterData">Master data types</fo:basic-link>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="CustomTypes">Custom types</fo:basic-link>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
+
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jooq-codegen configuration</fo:block>
                             <fo:block font-size="11pt">Also, you can add some optional advanced configuration parameters for the generator: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added to the generate element: -->
@@ -3124,6 +3247,11 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to true -->
   <generatedAnnotation>true</generatedAnnotation>
 
+  <!-- Generate jOOQ Record classes for type-safe querying. You can
+       turn this off, if you don't need "active records" for CRUD
+       Defaults to true -->
+  <records>true</records>
+
   <!-- Generate POJOs in addition to Record classes for usage of the
        ResultQuery.fetchInto(Class) API
        Defaults to false -->
@@ -3134,13 +3262,6 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false -->
   <jpaAnnotations>false</jpaAnnotations>
 </generate>]]></fo:block>
-
-							<fo:block font-size="11pt">
-								Check out the manual's section about
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="MasterData">master data</fo:basic-link>
-								to find out more
-								about those advanced configuration parameters.
-							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SCHEMA">
 <fo:marker marker-class-name="section">
 <fo:block>2.3. The schema, top-level generated artefact</fo:block>
@@ -3151,7 +3272,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Schema</fo:block>
 							<fo:block font-size="11pt">
 								As of jOOQ 1.5, the top-level generated object is the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Schema.java')">org.jooq.Schema</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Schema.html')">org.jooq.Schema</fo:basic-link>.
 								The Schema itself has no relevant functionality, except for holding
 								the schema name for all dependent generated artefacts. jOOQ queries try
 								to always fully qualify an entity within the database using that Schema
@@ -3190,8 +3311,8 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:bloc
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Tables and TableRecords</fo:block>
 							<fo:block font-size="11pt">
 								The most important generated artefacts are
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java')">Tables</fo:basic-link> and
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableRecord.java')">TableRecords</fo:basic-link>. As
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Table.html')">Tables</fo:basic-link> and
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html')">TableRecords</fo:basic-link>. As
 								discussed in previous chapters about
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Table">Tables</fo:basic-link> and
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Result">Results</fo:basic-link>, jOOQ uses the
@@ -3252,6 +3373,67 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:bloc
     // Navigation methods for foreign keys
     public List&lt;TBookRecord&gt; fetchTBooks() { // [...]
 }</fo:block>
+
+
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Generated or custom POJO's instead of jOOQ's Records</fo:block>
+							<fo:block font-size="11pt">
+								If you're using jOOQ along with Hibernate / JPA, or if you
+								want to use your own, custom domain-model instead of jOOQ's
+								Record type-hierarchy, you can choose to select values into
+								POJOs. Let's say you defined a POJO for authors:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[package com.example;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class MyAuthor {
+    // Some fields may be public
+    @Column(name = "ID")
+    public int id;
+
+    // Others are private and have associated getters / setters:
+    private String firstName;
+    private String lastName;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "FIRST_NAME")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Column(name = "LAST_NAME")
+    public String getLastName() {
+        return lastName;
+    }
+}]]></fo:block>
+
+                            <fo:block font-size="11pt">
+                            	The above could be your custom POJO or a POJO generated
+                            	by jooq-codegen (see
+                            	<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="AdvancedConfiguration">the manual's section about advanced codegen configuration</fo:basic-link>
+                            	for more details). Also, JPA-annotations are not necessary
+                            	if you wish to let jOOQ map record columns onto your POJO
+                            	attributes by convention. Instead of fetching records normally,
+                            	you can now let jOOQ fetch records "into" your custom type:
+                            </fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[List<MyAuthor> results = create.select().from(TAuthor.T_AUTHOR).fetchInto(MyAuthor.class);]]></fo:block>
+
+							<fo:block font-size="11pt">
+								Read the javadoc for
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Record.html#into%28java.lang.Class%29')">Record.into()</fo:basic-link>
+								for more details.
+							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURE">
 <fo:marker marker-class-name="section">
 <fo:block>2.5. Procedures and packages</fo:block>
@@ -3611,8 +3793,8 @@ CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</fo
 								rolls their own proprietary methods of dealing with these types. jOOQ
 								goes a different way, it hides those facts from you entirely. With
 								jOOQ, the above UDT's will be generated in simple
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDT.java')">UDT meta-model classes</fo:basic-link> and
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDTRecord.java')">UDT record classes</fo:basic-link> as such:
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/UDT.html')">UDT meta-model classes</fo:basic-link> and
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/UDTRecord.html')">UDT record classes</fo:basic-link> as such:
 							</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// There is an analogy between UDT/Table and UDTRecord/TableRecord...
 public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
@@ -3768,7 +3950,7 @@ RETURN u_string_array</fo:block>
 							<fo:block font-size="11pt">Note that it becomes clear immediately, that a mapping from
 								U_STRING_ARRAY to String[] is obvious. But a mapping from String[] to
 								U_STRING_ARRAY is not. These are the generated
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ArrayRecord.java')">org.jooq.ArrayRecord</fo:basic-link> and other
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/ArrayRecord.html')">org.jooq.ArrayRecord</fo:basic-link> and other
 								artefacts in Oracle: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]
@@ -3873,7 +4055,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 						</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Sequences as a source for identity values</fo:block>
 							<fo:block font-size="11pt"> Sequences implement the
-							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Sequence.java')">org.jooq.Sequence</fo:basic-link> interface, providing essentially this functionality:</fo:block>
+							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Sequence.html')">org.jooq.Sequence</fo:basic-link> interface, providing essentially this functionality:</fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Get a field for the CURRVAL sequence property
 Field&lt;T&gt; currval();
@@ -4000,12 +4182,12 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count());</fo:block>
 								section on <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="FUNCTIONS">aggregate operators</fo:basic-link>
 								 to learn more about the COUNT(*)
 								function). This type is the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectFromStep.java')">org.jooq.SelectFromStep</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectFromStep.html')">org.jooq.SelectFromStep</fo:basic-link>.
 								When you have a reference
 								to this type, you may add a FROM clause, although that clause is
 								optional. This is reflected by the fact, that the SelectFromStep type
 								extends
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java')">org.jooq.SelectJoinStep</fo:basic-link>,
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectJoinStep.html')">org.jooq.SelectJoinStep</fo:basic-link>,
 								which allows for adding the subsequent
 								clauses. Let's say you do decide to add a FROM clause, then you can
 								use this method for instance:
@@ -4020,8 +4202,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								select from, you may optionally choose to add a JOIN clause, as the
 								type returned by jOOQ is the step where you can add JOINs. Again,
 								adding these clauses is optional, as the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java')">org.jooq.SelectJoinStep</fo:basic-link> extends
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java')">org.jooq.SelectWhereStep</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectJoinStep.html')">org.jooq.SelectJoinStep</fo:basic-link> extends
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html')">org.jooq.SelectWhereStep</fo:basic-link>.
 								But let's say we add a JOIN: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// These join types are supported
 SelectOnStep                    join(Table&lt;?&gt; table);
@@ -4041,7 +4223,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 							<fo:block font-size="11pt">Now, if you do add a JOIN clause, you have to specify the JOIN .. ON
 								condition before you can add more clauses. That's not an optional step
 								for some JOIN types. This is reflected by the fact that
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectOnStep.java')">org.jooq.SelectOnStep</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectOnStep.html')">org.jooq.SelectOnStep</fo:basic-link>
 								is a top-level interface. </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// These join conditions are supported
@@ -4071,7 +4253,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java')">org.jooq.SelectWhereStep</fo:basic-link>: </fo:block>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html')">org.jooq.SelectWhereStep</fo:basic-link>: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SelectConditionStep where(Condition... conditions);
 
 // The example, continued:
@@ -4081,7 +4263,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, count())
       .where(T_BOOK.LANGUAGE.equal("DE"));</fo:block>
 
 							<fo:block font-size="11pt">Now the returned type
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java')">org.jooq.SelectConditionStep</fo:basic-link> is a special one, where
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectConditionStep.html')">org.jooq.SelectConditionStep</fo:basic-link> is a special one, where
 								you can add more conditions to the already existing WHERE clause.
 								Every time you add a condition, you will return to that
 								SelectConditionStep, as the number of additional conditions is
@@ -4179,7 +4361,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 
 							<fo:block font-size="11pt">
 								Now the most relevant super-type of the object we have just created is
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java')">org.jooq.Select</fo:basic-link>.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link>.
 								This type can be reused in various expressions such as in the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="UNION">UNION and other set operations</fo:basic-link>,
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="EXISTS">Nested select statements using the EXISTS operator</fo:basic-link>,
@@ -4237,7 +4419,7 @@ Record fetchOne();
 								before applying predicates, renaming operations and projections. Apart from the convenience
 								methods for joining table sources in the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SELECT">manual's section about the full SELECT syntax</fo:basic-link>,
-								the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java')">Table</fo:basic-link> type itself provides a
+								the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Table.html')">Table</fo:basic-link> type itself provides a
 								rich API for creating joined table sources. See an extract of the Table API:
 							</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// These are the various supported JOIN clauses. These JOIN types
@@ -4260,10 +4442,14 @@ Table<Record> naturalRightOuterJoin(TableLike<?> table);
 // Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
 // table into another one using a list of PIVOT values
 PivotForStep pivot(Field<?>... aggregateFunctions);
-PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);]]></fo:block>
+PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
+
+// Relational division can be applied to a table, transforming it into a
+// "quotient" using an intuitive syntax
+DivideByOnStep divideBy(Table<?> divisor);]]></fo:block>
 
 							<fo:block font-size="11pt">
-								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableOnStep.java')">TableOnStep</fo:basic-link> type
+								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/TableOnStep.html')">TableOnStep</fo:basic-link> type
 								contains methods for constructing the ON / ON KEY / USING clauses
 							</fo:block>
 
@@ -4283,10 +4469,32 @@ TableOnConditionStep onKey() throws DataAccessException;
 TableOnConditionStep onKey(TableField<?, ?>... keyFields) throws DataAccessException;
 TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
 
-							<fo:block font-size="11pt">
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+							<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
 								For more details about the PIVOT clause, see the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="PIVOT">manual's section about the Oracle PIVOT syntax</fo:basic-link>
 							</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+								For more details about the DIVIDE BY clause, see the
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="DIVISION">manual's section about the relational division syntax</fo:basic-link>
+							</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONDITION">
 <fo:marker marker-class-name="section">
 <fo:block>3.3. Conditions</fo:block>
@@ -4302,9 +4510,9 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
 								you're trying to apply.</fo:block>
 							<fo:block font-size="11pt">In jOOQ, most Conditions can be created and combined almost as
 								easily as in SQL itself. The two main participants for creating
-								Conditions are the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java')">Field</fo:basic-link>,
+								Conditions are the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Field.html')">Field</fo:basic-link>,
 								which is typically a participant of a
-								condition, and the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java')">Condition</fo:basic-link>
+								condition, and the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Condition.html')">Condition</fo:basic-link>
 								itself: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public interface Condition {
     Condition and(Condition other);
@@ -4481,9 +4689,9 @@ System.out.println("Books  : " + record.getValue("books"));</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The IN operator for use in semi-joins or anti-joins</fo:block>
 							<fo:block font-size="11pt">
 								In addition to a list of constant values, the IN operator in
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java')">org.jooq.Field</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Field.html')">org.jooq.Field</fo:basic-link>
 								also supports a
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java')">org.jooq.Select</fo:basic-link> as an argument.
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link> as an argument.
 								This can be any type of select as
 								discussed in the manual's section about
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Query">Query types</fo:basic-link>.
@@ -4585,19 +4793,19 @@ Condition notExists(Select&lt;?&gt; query);</fo:block>
 								on
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="CONDITION">Conditions</fo:basic-link>). There are also quite a few
 								convenience methods, where they might be useful. For instance in the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java')">org.jooq.Condition</fo:basic-link> itself: </fo:block>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Condition.html')">org.jooq.Condition</fo:basic-link> itself: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Condition andExists(Select&lt;?&gt; select);
 Condition andNotExists(Select&lt;?&gt; select);
 Condition orExists(Select&lt;?&gt; select);
 Condition orNotExists(Select&lt;?&gt; select);</fo:block>
 
-							<fo:block font-size="11pt">Or in the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java')">org.jooq.SelectWhereStep</fo:basic-link>:</fo:block>
+							<fo:block font-size="11pt">Or in the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html')">org.jooq.SelectWhereStep</fo:basic-link>:</fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SelectConditionStep whereExists(Select&lt;?&gt; select);
 SelectConditionStep whereNotExists(Select&lt;?&gt; select);</fo:block>
 
-							<fo:block font-size="11pt">Or in the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java')">org.jooq.SelectConditionStep</fo:basic-link>: </fo:block>
+							<fo:block font-size="11pt">Or in the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/SelectConditionStep.html')">org.jooq.SelectConditionStep</fo:basic-link>: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SelectConditionStep andExists(Select&lt;?&gt; select);
 SelectConditionStep andNotExists(Select&lt;?&gt; select);
@@ -4673,7 +4881,7 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</fo:block>
 </fo:table>
 
                             <fo:block font-size="11pt">More examples like the above can be guessed from the
-                            <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java')">org.jooq.Field</fo:basic-link> API, as documented in the manual's section about
+                            <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Field.html')">org.jooq.Field</fo:basic-link> API, as documented in the manual's section about
                             <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="CONDITION">Conditions</fo:basic-link>. For the = operator, the available comparisons are these:</fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Condition equal(Select&lt;?&gt; query);
@@ -4782,7 +4990,7 @@ create.select(T_AUTHOR.ID, books)
 <fo:block font-size="11pt">Unions, differences and intersections are vital set operations taken from set theory.</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's set operation API</fo:block>
 							<fo:block font-size="11pt">The
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java')">org.jooq.Select</fo:basic-link> API directly supports the UNION
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link> API directly supports the UNION
 								syntax for all types of Select as discussed in the manual's section about
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Query">Queries and Query subtypes</fo:basic-link>.
 								It consists of these methods: </fo:block>
@@ -5736,10 +5944,176 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								Also, be aware that it will be difficult to perform actual JOIN
 								operations on the underlying table with jOOQ, once the master data
 								type is generated. </fo:block>
+						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CustomTypes">
+<fo:marker marker-class-name="section">
+<fo:block>4.2. Custom data types and type conversion</fo:block>
+</fo:marker>4.2. Custom data types and type conversion</fo:block>
+<fo:block font-size="11pt">
+							SQL data types are very limited in number. While some databases offer
+							enumeration types or user-defined types, others only ship with the SQL
+							standard. Read this chapter to see how to use custom types with jOOQ
+						</fo:block>
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Your custom type and its associated Converter</fo:block>
+							<fo:block font-size="11pt">
+								When using a custom type in jOOQ, you need to let jOOQ know about
+								its associated <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Converter.html')">org.jooq.Converter</fo:basic-link>.
+								A converter essentially has two generic type parameters:
+							</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">&lt;U&gt;: The user-defined Java type. This could be <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://download.oracle.com/javase/6/docs/api/java/util/GregorianCalendar.html')">java.util.GregorianCalendar</fo:basic-link>, for instance.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">&lt;T&gt;: The database / SQL type. This could be <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://download.oracle.com/javase/6/docs/api/java/sql/Timestamp.html')">java.sql.Timestamp</fo:basic-link>, for instance.</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
+							<fo:block font-size="11pt">
+								The above conversion implies that you may want to use a GregorianCalendar for
+								SQL timestamps, rather than the timestamp type itself. You could then write
+								a Converter like this:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[package com.example;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import org.jooq.Converter;
+
+// Bind T to Timestamp and U to Gregorian calendar, here
+public class CalendarConverter implements Converter<Timestamp, GregorianCalendar> {
+
+    // Provide jOOQ with Class<?> objects of <U> and <T>. These are used by
+    // jOOQ to discover your converter based on your custom type
+    // --------------------------------------------------------------------
+    @Override
+    public Class<Timestamp> fromType() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public Class<GregorianCalendar> toType() {
+        return GregorianCalendar.class;
+    }
+
+    // Implement the type conversion methods. Convert your user-defined type
+    // "from" the SQL type when reading "from" the database, or "to" the SQL
+    // type when writing "to" the database.
+    @Override
+    public GregorianCalendar from(Timestamp databaseObject) {
+        GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+        calendar.setTimeInMillis(databaseObject.getTime());
+        return calendar;
+    }
+
+    @Override
+    public Timestamp to(GregorianCalendar userObject) {
+        return new Timestamp(userObject.getTime().getTime());
+    }
+}
+]]></fo:block>
+
+							<fo:block font-size="11pt">
+								Such a Converter can now be used in various places of the jOOQ
+								API, especially when reading data from the database:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[List<GregorianCalendar> result =
+create.select(T_AUTHOR.DATE_OF_BIRTH)
+      .from(T_AUTHOR)
+      .fetch(0, new CalendarConverter());]]></fo:block>
+
+      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using Converters in generated code</fo:block>
+      						<fo:block font-size="11pt">
+								A more common use-case, however, is to let jOOQ know about custom
+								types at code generation time. Use the following configuration elements
+								to specify, that you'd like to use GregorianCalendar for all database
+								fields that start with DATE_OF_
+      						</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<database>
+  <!-- First, register your custom types here -->
+  <customTypes>
+    <customType>
+      <!-- Specify the fully-qualified class name of your custom type -->
+      <name>java.util.GregorianCalendar</name>
+
+      <!-- Associate that custom type with your converter. Note, a
+           custom type can only have one converter in jOOQ -->
+      <converter>com.example.CalendarConverter</converter>
+    </customType>
+  </customTypes>
+
+  <!-- Then, associate custom types with database columns -->
+  <forcedTypes>
+    <forcedType>
+      <!-- Specify again he fully-qualified class name of your custom type -->
+      <name>java.util.GregorianCalendar</name>
+
+      <!-- Add a list of comma-separated regular expressions matching columns -->
+      <expressions>.*\.DATE_OF_.*</expressions>
+    </forcedType>
+  </forcedTypes>
+</database>]]></fo:block>
+
+                            <fo:block font-size="11pt">
+                            	The above configuration will lead to T_AUTHOR.DATE_OF_BIRTH
+                            	being generated like this:
+                            </fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
+
+    // [...]
+    public final TableField&lt;TAuthorRecord, GregorianCalendar&gt; DATE_OF_BIRTH =    // [...]
+    // [...]
+
+}</fo:block>
+
+                            <fo:block font-size="11pt">
+                            	This means that the bound of &lt;T&gt; will be GregorianCalendar,
+                            	wherever you reference DATE_OF_BIRTH. jOOQ will use your custom
+                            	converter when binding variables and when fetching data from
+                            	<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://download.oracle.com/javase/6/docs/api/java/util/ResultSet.html')">java.util.ResultSet</fo:basic-link>:
+                            </fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// Get all date of births of authors born after 1980
+List<GregorianCalendar> result =
+create.selectFrom(T_AUTHOR)
+      .where(T_AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
+      .fetch(T_AUTHOR.DATE_OF_BIRTH);]]></fo:block>
+
+      						<fo:block font-size="11pt">
+      						    Read more about advanced code generation configuration in
+      						    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="AdvancedConfiguration">the manual's section about advanced code generation configuration</fo:basic-link>.
+      						</fo:block>
+
+      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using Converters for enum types</fo:block>
+      						<fo:block font-size="11pt">
+      							Java's Enum types can be very useful in SQL too.
+      							Some databases support enumeration types natively (MySQL, Postgres).
+      							In other cases, you can use the above custom type configuration
+      							also to provide jOOQ with Converters for your custom Enum types.
+      							Instead of implementing <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Converter.html')">org.jooq.Converter</fo:basic-link>,
+      							you may choose to extend <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/EnumConverter.html')">org.jooq.impl.EnumConverter</fo:basic-link>
+      							instead, which provides some enum-specific default behaviour.
+      						</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SchemaMapping">
 <fo:marker marker-class-name="section">
-<fo:block>4.2. Mapping generated schemata and tables</fo:block>
-</fo:marker>4.2. Mapping generated schemata and tables</fo:block>
+<fo:block>4.3. Mapping generated schemata and tables</fo:block>
+</fo:marker>4.3. Mapping generated schemata and tables</fo:block>
 <fo:block font-size="11pt">
 							Sometimes, you cannot control productive schema names, because your
 							application is deployed on a shared host, and you only get one schema
@@ -5790,7 +6164,7 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							<fo:block font-size="11pt">When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/RenderMapping.java')">org.jooq.conf.RenderMapping</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/conf/RenderMapping.html')">org.jooq.conf.RenderMapping</fo:basic-link>
 								class, that you can equip your Factory's settings
 								with. Take the following example: </fo:block>
 
@@ -5910,21 +6284,21 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExecuteListener">
 <fo:marker marker-class-name="section">
-<fo:block>4.3. Execute listeners and the jOOQ Console</fo:block>
-</fo:marker>4.3. Execute listeners and the jOOQ Console</fo:block>
+<fo:block>4.4. Execute listeners and the jOOQ Console</fo:block>
+</fo:marker>4.4. Execute listeners and the jOOQ Console</fo:block>
 <fo:block font-size="11pt">
 							Feel the heart beat of your SQL statements at a very low level using listeners
 						</fo:block>
 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ExecuteListener</fo:block>
 							<fo:block font-size="11pt">
 								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Factory">jOOQ Factory Settings</fo:basic-link>
-								let you specify a list of <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ExecuteListener.java')">org.jooq.ExecuteListener</fo:basic-link> classes.
+								let you specify a list of <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html')">org.jooq.ExecuteListener</fo:basic-link> classes.
 								The ExecuteListener is essentially an event listener for
 								Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a
 								base type for loggers, debuggers, profilers, data collectors. Advanced ExecuteListeners
 								can also provide custom implementations of Connection, PreparedStatement and ResultSet
 								to jOOQ in apropriate methods. For convenience, consider extending
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/DefaultExecuteListener.java')">org.jooq.impl.DefaultExecuteListener</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/DefaultExecuteListener.html')">org.jooq.impl.DefaultExecuteListener</fo:basic-link>
 								instead of implementing this interface.
 							</fo:block>
 							<fo:block font-size="11pt">
@@ -6112,7 +6486,7 @@ for (ExecuteType type : ExecuteType.values()) {
 
 							<fo:block font-size="11pt">
 								Both modes will require that you set the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java')">org.jooq.debug.DebugListener</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/debug/DebugListener.html')">org.jooq.debug.DebugListener</fo:basic-link>
 								in the Factory's settings. When using XML settings:
 							</fo:block>
 
@@ -6268,8 +6642,8 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
 							</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="OracleHints">
 <fo:marker marker-class-name="section">
-<fo:block>4.4. Adding Oracle hints to queries</fo:block>
-</fo:marker>4.4. Adding Oracle hints to queries</fo:block>
+<fo:block>4.5. Adding Oracle hints to queries</fo:block>
+</fo:marker>4.5. Adding Oracle hints to queries</fo:block>
 <fo:block font-size="11pt">
 							Oracle has a powerful syntax to add hints as comments directly in your SQL
 						</fo:block>
@@ -6290,8 +6664,8 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
 								SELECT [DISTINCT] keywords and the actual projection list </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONNECTBY">
 <fo:marker marker-class-name="section">
-<fo:block>4.5. The Oracle CONNECT BY clause</fo:block>
-</fo:marker>4.5. The Oracle CONNECT BY clause</fo:block>
+<fo:block>4.6. The Oracle CONNECT BY clause</fo:block>
+</fo:marker>4.6. The Oracle CONNECT BY clause</fo:block>
 <fo:block font-size="11pt">
 							Hierarchical queries are supported by many RDBMS using the WITH clause.
 							Oracle has a very neat and much less verbose syntax for hierarchical
@@ -6344,8 +6718,8 @@ create.select(create.rownum())
 </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PIVOT">
 <fo:marker marker-class-name="section">
-<fo:block>4.6. The Oracle 11g PIVOT clause</fo:block>
-</fo:marker>4.6. The Oracle 11g PIVOT clause</fo:block>
+<fo:block>4.7. The Oracle 11g PIVOT clause</fo:block>
+</fo:marker>4.7. The Oracle 11g PIVOT clause</fo:block>
 <fo:block font-size="11pt">
 				    	    Oracle 11g has formally introduced the very powerful PIVOT clause, which
 				    	    allows to specify a pivot column, expected grouping values for pivoting,
@@ -6362,16 +6736,99 @@ create.select(create.rownum())
 
 							<fo:block font-size="11pt">
 								The PIVOT clause is available from the
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java')">org.jooq.Table</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Table.html')">org.jooq.Table</fo:basic-link>
 								type, as pivoting is done directly on a table.
 								Currently, only Oracle's PIVOT clause is supported. Support for SQL Server's
 								PIVOT clause will be added later. Also, jOOQ may simulate PIVOT for other
 								dialects in the future.
 							</fo:block>
+						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="DIVISION">
+<fo:marker marker-class-name="section">
+<fo:block>4.8. jOOQ's relational division syntax</fo:block>
+</fo:marker>4.8. jOOQ's relational division syntax</fo:block>
+<fo:block font-size="11pt">
+				    	    Relational division is a rather academic topic that is not used in
+				    	    every-day SQL. Nevertheless, it can be extremely powerful in some
+				    	    remote cases. jOOQ supports it intuitively
+						</fo:block>
+							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Relational division</fo:block>
+							<fo:block font-size="11pt">
+							    There is one operation in relational algebra that is not given
+							    a lot of attention, because it is rarely used in real-world
+							    applications. It is the relational division, the opposite operation
+							    of the cross product (or, relational multiplication).
+								The following is an approximate definition of a relational division:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Assume the following cross join / cartesian product
+C = A × B
+
+Then it can be said that
+A = C ÷ B
+B = C ÷ A</fo:block>
+
+
+							<fo:block font-size="11pt">
+							   With jOOQ, you can simplify using relational divisions
+							   by using the following syntax:
+							</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)</fo:block>
+
+							<fo:block font-size="11pt">The above roughly translates to</fo:block>
+
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT DISTINCT C.TEXT FROM C "c1"
+WHERE NOT EXISTS (
+  SELECT 1 FROM B
+  WHERE NOT EXISTS (
+    SELECT 1 FROM C "c2"
+    WHERE "c2".TEXT = "c1".TEXT
+    AND "c2".ID = B.C_ID
+  )
+)</fo:block>
+
+							<fo:block font-size="11pt">
+								Or in plain text: Find those TEXT values in C
+								whose ID's correspond to all ID's in B. Note
+								that from the above SQL statement, it is immediately
+								clear that proper indexing is of the essence.
+								Be sure to have indexes on all columns referenced
+								from the on(...) and returning(...) clauses.
+							</fo:block>
+
+							<fo:block font-size="11pt">
+								For more information about relational division
+								and some nice, real-life examples, see
+							</fo:block>
+
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+									<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://en.wikipedia.org/wiki/Relational_algebra#Division')">http://en.wikipedia.org/wiki/Relational_algebra#Division</fo:basic-link>
+								</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">
+									<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/')">http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/</fo:basic-link>
+								</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Export">
 <fo:marker marker-class-name="section">
-<fo:block>4.7. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
-</fo:marker>4.7. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
+<fo:block>4.9. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
+</fo:marker>4.9. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
 <fo:block font-size="11pt">
 							Get your data out of the Java world. Stream your data using any of the supported, wide-spread formats
 						</fo:block>
@@ -6469,8 +6926,8 @@ String text = create.selectFrom(T_BOOK).fetch().format();</fo:block>
 +---+---------+-----------+</fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Import">
 <fo:marker marker-class-name="section">
-<fo:block>4.8. Importing data from XML, CSV</fo:block>
-</fo:marker>4.8. Importing data from XML, CSV</fo:block>
+<fo:block>4.10. Importing data from XML, CSV</fo:block>
+</fo:marker>4.10. Importing data from XML, CSV</fo:block>
 <fo:block font-size="11pt">
 							Use jOOQ to easily merge imported data into your database.
 						</fo:block>
@@ -6579,8 +7036,8 @@ Query query = error.query();]]></fo:block>
 							<fo:block font-size="11pt">This will be implemented soon... </fo:block>
 						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Batch">
 <fo:marker marker-class-name="section">
-<fo:block>4.9. Using JDBC batch operations</fo:block>
-</fo:marker>4.9. Using JDBC batch operations</fo:block>
+<fo:block>4.11. Using JDBC batch operations</fo:block>
+</fo:marker>4.11. Using JDBC batch operations</fo:block>
 <fo:block font-size="11pt">
 							Some JDBC drivers have highly optimised means of executing batch
 							operations. The JDBC interface for those operations is a bit verbose.

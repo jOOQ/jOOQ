@@ -21,7 +21,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 							<h2>Mapping your DEV schema to a productive environment</h2>
@@ -50,7 +50,7 @@ function printContent() {
 							<p>When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/RenderMapping.java" title="Internal API reference: org.jooq.conf.RenderMapping">org.jooq.conf.RenderMapping</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/RenderMapping.html" title="Internal API reference: org.jooq.conf.RenderMapping">org.jooq.conf.RenderMapping</a>
 								class, that you can equip your Factory's settings
 								with. Take the following example: </p>
 
@@ -170,7 +170,7 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 <?php 

@@ -127,6 +127,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }</pre>
 
+                            <h3>jooq-meta configuration</h3>
 							<p>
 								Within the &lt;generator/&gt; element, there are other configuration elements:
 							</p>
@@ -164,16 +165,35 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
   &lt;!-- A configuration element to configure master data table enum classes --&gt;
   &lt;masterDataTables&gt;...&lt;/masterDataTables&gt;
 
-  &lt;!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
-  &lt;enumTypes&gt;...&lt;/enumTypes&gt;
+  &lt;!-- A configuration element to configure custom data types --&gt;
+  &lt;customTypes&gt;...&lt;/customTypes&gt;
 
   &lt;!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
+       artefacts (e.g. in combination with customTypes) --&gt;
   &lt;forcedTypes&gt;...&lt;/forcedTypes&gt;
 &lt;/database&gt;</pre>
 
+							<p>
+								Check out the some of the manual's "advanced" sections
+								to find out more about the advanced configuration parameters.
+							</p>
+							<ul>
+								
+<li>
+<a href="<?=$root?>/manual/ADVANCED/SchemaMapping/" title="jOOQ Manual reference: Mapping generated schemata and tables">Schema mapping</a>
+</li>
+								
+<li>
+<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">Master data types</a>
+</li>
+								
+<li>
+<a href="<?=$root?>/manual/ADVANCED/CustomTypes/" title="jOOQ Manual reference: Custom data types and type conversion">Custom types</a>
+</li>
+							
+</ul>
+
+							<h3>jooq-codegen configuration</h3>
                             <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
 
 <pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
@@ -203,6 +223,11 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to true --&gt;
   &lt;generatedAnnotation&gt;true&lt;/generatedAnnotation&gt;
 
+  &lt;!-- Generate jOOQ Record classes for type-safe querying. You can
+       turn this off, if you don't need "active records" for CRUD
+       Defaults to true --&gt;
+  &lt;records&gt;true&lt;/records&gt;
+
   &lt;!-- Generate POJOs in addition to Record classes for usage of the
        ResultQuery.fetchInto(Class) API
        Defaults to false --&gt;
@@ -213,13 +238,6 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false --&gt;
   &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
 &lt;/generate&gt;</pre>
-
-							<p>
-								Check out the manual's section about
-								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
-								to find out more
-								about those advanced configuration parameters.
-							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced configuration of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>

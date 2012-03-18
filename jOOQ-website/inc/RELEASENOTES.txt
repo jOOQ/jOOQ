@@ -9,6 +9,119 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.1.0 - March 18, 2012
+=================================================================
+
+With this version, jOOQ attempts to follow versioning rules
+imposed by semantic versioning: http://semver.org/
+There will be 1 minor release per month, and a couple of patch
+releases per year, depending on popular demand
+
+The main improvements for this release include
+
+- The possibility of providing jOOQ with a custom type mapping.
+  You can now define your own Converter types that are used by
+  jOOQ to map a database's SQLDataTypes to your custom types.
+  This is particularly useful for Java's enums. Read more about
+  custom converters in the manual:
+  http://www.jooq.org/manual/ADVANCED/CustomTypes/
+
+- There are a lot of new runtime configuration options to control
+  the SQL style of SQL rendered by jOOQ. You can now specify
+  whether table/column names should be quoted / capitalised /
+  lower-cased, whether SQL keywords should be capitalised or not,
+  etc...
+
+- The handling of NULL has been improved in favour of using jOOQ
+  as a SQL builder library (e.g. along with Spring for execution)
+  NULL is no longer inlined, but bound as a variable.
+
+- jOOQ now supports simulation of the relational division
+  operation using an intuitive syntax. Read more about the
+  relational division here:
+  http://en.wikipedia.org/wiki/Relational_algebra#Division
+
+Features and improvements
+-------------------------
+#161  - Add runtime configuration to pretty print rendered SQL
+#349  - Add SQLite relations support
+#491  - Add runtime configuration for SQL keyword style (upper
+        case, lower case)
+#521  - Add runtime configuration for SQL reference style (upper
+        case, lower case, as-is, quoted)
+#1150 - Add code generation option to disable generation of
+        records
+#1181 - Add support for SQL Server data types timestamp and
+        rowversion
+#1188 - Load default Settings from the classpath at
+        /jooq-settings.xml, or from -Dorg.jooq.settings
+#1193 - Specify main-class in jOOQ Console's manifest.mf and
+        include dependency in jar file
+#1194 - Add ColumnDefinition.isNullable()
+#1202 - Add support for the relational division operation:
+        A.divideBy(B).on(A.ID.equal(B.A_ID)).returning(A.X, ...)
+#1207 - Add Factory.batch(Collection<? extends Query>) for
+        convenience
+#1208 - Render @javax.persistence.Column(nullable = false)
+        property, if available
+#1209 - Render @javax.persistence.Column(length, precision,
+        scale) properties, if available
+#1215 - Add org.jooq.Converter<T, U> for custom type mapping
+#1216 - Overload Record, Result.getValue() and .setValue()
+        methods to accept a Converter
+#1217 - Add EnumConverter as a base type for custom enum
+        converters
+#1218 - Add code generation options to generate <customTypes/>
+        referencing a Java type and a Converter
+#1224 - Add DataTypeDefinition.getLength() to jooq-meta's type
+        system
+#1233 - Support custom JDBC properties for jooq-codegen
+#1234 - Add Database.getTable(SchemaDefinition, String, boolean)
+        to fetch tables case-insensitively
+#1239 - Add Factory.fetchLazy(String, Object...)
+
+API changes (backwards-compatible)
+----------------------------------
+#1191 - Deprecate ConfigurationRegistry and replace by equivalent
+        ExecuteListener feature
+#1219 - API Bug: Cannot use LIMIT .. OFFSET along with FOR UPDATE
+
+Bug fixes
+---------
+#625  - Remove dependency from generated Routines to the
+        generator's SQLDialect
+#1128 - NULL is inlined in INSERT statement instead of binding it
+        as a variable. This can cause issues when using jOOQ with
+        Spring
+#1137 - Exclude MySQL column-level enum types when that column is
+        overridden by a <forcedType/>
+#1158 - Derby cannot handle inlined NULL literals in some
+        contexts
+#1180 - Execute BatchMultiple (multi-query batch query), when
+        executing BatchSimple (single-query, multi-bind-value
+        query) with StatementType == STATIC_STATEMENT
+#1189 - TableMapping regression for SQLite database
+#1190 - Cannot store SQLite records when using
+        StatementType.STATIC_STATEMENT
+#1199 - Table.getFields() returns an internal representation of a
+        table's field list. Make generated tables immutable!
+#1200 - Internal API leak exposed through covariance in
+        AbstractType.getFields()
+#1211 - Enforce method name disambiguation also when using custom
+        strategies in jooq-codegen
+#1212 - Enforce identifier disambiguation also when using custom
+        strategies in jooq-codegen
+#1221 - Incorrect ExecuteListener invocation for INSERT ..
+        RETURNING. executeStart() and executeEnd() are omitted
+#1223 - Cache ExecuteListener classes for performance
+#1225 - Bind NULL byte[] as java.sql.Types.BINARY instead of
+        BLOB in Postgres, to avoid errors
+#1226 - Bind NULL UDTs with their associated type name in Oracle
+#1232 - SQLException when Factory.fetch() does not return a
+        ResultSet
+#1237 - Don't generate enum classes for columns in MySQL tables
+        that are excluded from code generation
+
 Version 2.0.5 - February 26, 2012
 =================================================================
 

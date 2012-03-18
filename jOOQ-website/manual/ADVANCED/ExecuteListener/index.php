@@ -25,13 +25,13 @@ function printContent() {
 							<h2>ExecuteListener</h2>
 							<p>
 								The <a href="<?=$root?>/manual/JOOQ/Factory/" title="jOOQ Manual reference: The Factory class">jOOQ Factory Settings</a>
-								let you specify a list of <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ExecuteListener.java" title="Internal API reference: org.jooq.ExecuteListener">org.jooq.ExecuteListener</a> classes.
+								let you specify a list of <a href="http://www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html" title="Internal API reference: org.jooq.ExecuteListener">org.jooq.ExecuteListener</a> classes.
 								The ExecuteListener is essentially an event listener for
 								Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a
 								base type for loggers, debuggers, profilers, data collectors. Advanced ExecuteListeners
 								can also provide custom implementations of Connection, PreparedStatement and ResultSet
 								to jOOQ in apropriate methods. For convenience, consider extending
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/DefaultExecuteListener.java" title="Internal API reference: org.jooq.impl.DefaultExecuteListener">org.jooq.impl.DefaultExecuteListener</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/DefaultExecuteListener.html" title="Internal API reference: org.jooq.impl.DefaultExecuteListener">org.jooq.impl.DefaultExecuteListener</a>
 								instead of implementing this interface.
 							</p>
 							<p>
@@ -151,7 +151,7 @@ for (ExecuteType type : ExecuteType.values()) {
 
 							<p>
 								Both modes will require that you set the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-console/src/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
 								in the Factory's settings. When using XML settings:
 							</p>
 

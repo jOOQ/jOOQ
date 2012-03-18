@@ -35,8 +35,8 @@ public abstract class CustomCondition extends AbstractCondition {
 							<p>These two classes are declared public and covered by integration
 								tests. When you extend these classes, you will have to provide your
 								own implementations for the <a href="<?=$root?>/manual/JOOQ/QueryPart/" title="jOOQ Manual reference: QueryParts and the global architecture">QueryParts</a>'
-								bind(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/BindContext.java" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and
-								toSQL(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/RenderContext.java" title="Internal API reference: org.jooq.RenderContext">RenderContext</a>) methods:</p>
+								bind(<a href="http://www.jooq.org/javadoc/latest/org/jooq/BindContext.html" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and
+								toSQL(<a href="http://www.jooq.org/javadoc/latest/org/jooq/RenderContext.html" title="Internal API reference: org.jooq.RenderContext">RenderContext</a>) methods:</p>
 <pre class="prettyprint lang-java">// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
 // in the correct order, passing the render context.
 //

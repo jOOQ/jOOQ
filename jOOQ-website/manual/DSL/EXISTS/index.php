@@ -46,19 +46,19 @@ Condition notExists(Select&lt;?&gt; query);</pre>
 								on
 								<a href="<?=$root?>/manual/DSL/CONDITION/" title="jOOQ Manual reference: Conditions">Conditions</a>). There are also quite a few
 								convenience methods, where they might be useful. For instance in the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Condition.html" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
 
 <pre class="prettyprint lang-java">Condition andExists(Select&lt;?&gt; select);
 Condition andNotExists(Select&lt;?&gt; select);
 Condition orExists(Select&lt;?&gt; select);
 Condition orNotExists(Select&lt;?&gt; select);</pre>
 
-							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>:</p>
+							<p>Or in the <a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>:</p>
 
 <pre class="prettyprint lang-java">SelectConditionStep whereExists(Select&lt;?&gt; select);
 SelectConditionStep whereNotExists(Select&lt;?&gt; select);</pre>
 
-							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a>: </p>
+							<p>Or in the <a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectConditionStep.html" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a>: </p>
 
 <pre class="prettyprint lang-java">SelectConditionStep andExists(Select&lt;?&gt; select);
 SelectConditionStep andNotExists(Select&lt;?&gt; select);

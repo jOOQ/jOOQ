@@ -178,8 +178,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             // Fetch several result sets
             else {
                 results = new ArrayList<Result<Record>>();
+                boolean anyResults = false;
 
                 while (ctx.resultSet() != null) {
+                    anyResults = true;
+
                     FieldProvider fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData());
                     Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, true);
                     results.add(c.fetch());
@@ -192,7 +195,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     }
                 }
 
-                ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+                // Call this only when there was at least one ResultSet.
+                // Otherwise, this call is not supported by ojdbc...
+                if (anyResults) {
+                    ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+                }
+
                 ctx.statement().close();
             }
         }

@@ -1445,4 +1445,9 @@ public abstract class jOOQAbstractTest<
     public void testLoader() throws Exception {
         new LoaderTests(this).testLoader();
     }
+
+    @Test
+    public void testVoid() {
+        // A final test case to clean up the test database
+    }
 }

@@ -4,11 +4,11 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<xsl:output encoding="UTF-8" method="html" omit-xml-declaration="yes" indent="yes"/>
-	
+
 	<xsl:template match="html-only" mode="content">
 		<xsl:apply-templates mode="content"/>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="toc">
 		<xsl:if test="count(sections/section) &gt; 0">
 			<ol>
@@ -17,27 +17,27 @@
 						<xsl:variable name="href">
 							<xsl:apply-templates select="." mode="href"/>
 						</xsl:variable>
-						
+
 						<a href="{$href}" title="{title}">
 							<xsl:value-of select="title"/>
 						</a>
-						
+
 						<xsl:apply-templates select="." mode="toc"/>
 					</li>
 				</xsl:for-each>
 			</ol>
 		</xsl:if>
 	</xsl:template>
-	
+
 	<xsl:template match="content">
 		<xsl:apply-templates select="@*|node()" mode="content"/>
 	</xsl:template>
-	
+
 	<xsl:template match="@*|node()" mode="content">
 		<xsl:choose>
 			<xsl:when test="name(.) = 'reference'">
 				<xsl:variable name="id" select="@id"/>
-				
+
 				<a>
 					<xsl:attribute name="href">
 						<xsl:choose>
@@ -52,34 +52,41 @@
 									</xsl:message>
 								</xsl:if>
 							</xsl:when>
-							
+
 							<xsl:when test="@class and starts-with(@class, 'org.jooq.test')">
 								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ-test/src/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.java</xsl:text>
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
-							
-							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
-								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/</xsl:text>
+
+							<xsl:when test="@class and starts-with(@class, 'org.jooq.debug')">
+								<xsl:text>https://github.com/lukaseder/jOOQ/blob/master/jOOQ-console/src/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.java</xsl:text>
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
-							
+
+							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
+								<xsl:text>http://www.jooq.org/javadoc/latest/</xsl:text>
+								<xsl:value-of select="translate(@class, '.', '/')"/>
+								<xsl:text>.html</xsl:text>
+								<xsl:value-of select="@anchor"/>
+							</xsl:when>
+
 							<xsl:when test="@class and starts-with(@class, 'java')">
 								<xsl:text>http://download.oracle.com/javase/6/docs/api/</xsl:text>
 								<xsl:value-of select="translate(@class, '.', '/')"/>
 								<xsl:text>.html</xsl:text>
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
-							
+
 							<xsl:when test="@ticket">
 								<xsl:text>https://sourceforge.net/apps/trac/jooq/ticket/</xsl:text>
 								<xsl:value-of select="@ticket"/>
 								<xsl:value-of select="@anchor"/>
 							</xsl:when>
-							
+
 							<xsl:otherwise>
 								<xsl:message>
 									<xsl:text>Reference not supported</xsl:text>
@@ -87,7 +94,7 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:attribute>
-					
+
 					<xsl:attribute name="title">
 						<xsl:choose>
 							<xsl:when test="@id">
@@ -108,7 +115,7 @@
 							</xsl:when>
 						</xsl:choose>
 					</xsl:attribute>
-					
+
 					<xsl:choose>
 						<xsl:when test="@title">
 							<xsl:value-of select="@title"/>

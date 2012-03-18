@@ -25,7 +25,7 @@ function printContent() {
 </table>
 							<h2>Sequences as a source for identity values</h2>
 							<p> Sequences implement the
-							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Sequence.java" title="Internal API reference: org.jooq.Sequence">org.jooq.Sequence</a> interface, providing essentially this functionality:</p>
+							<a href="http://www.jooq.org/javadoc/latest/org/jooq/Sequence.html" title="Internal API reference: org.jooq.Sequence">org.jooq.Sequence</a> interface, providing essentially this functionality:</p>
 
 <pre class="prettyprint lang-java">// Get a field for the CURRVAL sequence property
 Field&lt;T&gt; currval();

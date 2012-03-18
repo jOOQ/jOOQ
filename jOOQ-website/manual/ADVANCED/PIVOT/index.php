@@ -21,7 +21,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">next</a></td>
 </tr>
 </table>
 							<h2>PIVOT (aggregate FOR column IN (columns))</h2>
@@ -35,7 +35,7 @@ function printContent() {
 
 							<p>
 								The PIVOT clause is available from the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">org.jooq.Table</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">org.jooq.Table</a>
 								type, as pivoting is done directly on a table.
 								Currently, only Oracle's PIVOT clause is supported. Support for SQL Server's
 								PIVOT clause will be added later. Also, jOOQ may simulate PIVOT for other
@@ -43,7 +43,7 @@ function printContent() {
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">next</a></td>
 </tr>
 </table>
 <?php 

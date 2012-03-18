@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">previous</a> : <a title="Next section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">next</a></td>
 </tr>
 </table>
 							<h2>Enumeration tables</h2>
@@ -134,7 +134,7 @@ function printContent() {
 								type is generated. </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">previous</a> : <a title="Next section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">next</a></td>
 </tr>
 </table>
 <?php 

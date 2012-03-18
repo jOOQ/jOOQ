@@ -63,12 +63,12 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count());</pre>
 								section on <a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="jOOQ Manual reference: Functions and aggregate operators">aggregate operators</a>
 								 to learn more about the COUNT(*)
 								function). This type is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectFromStep.java" title="Internal API reference: org.jooq.SelectFromStep">org.jooq.SelectFromStep</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectFromStep.html" title="Internal API reference: org.jooq.SelectFromStep">org.jooq.SelectFromStep</a>.
 								When you have a reference
 								to this type, you may add a FROM clause, although that clause is
 								optional. This is reflected by the fact, that the SelectFromStep type
 								extends
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a>,
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectJoinStep.html" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a>,
 								which allows for adding the subsequent
 								clauses. Let's say you do decide to add a FROM clause, then you can
 								use this method for instance:
@@ -83,8 +83,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								select from, you may optionally choose to add a JOIN clause, as the
 								type returned by jOOQ is the step where you can add JOINs. Again,
 								adding these clauses is optional, as the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a> extends
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectJoinStep.html" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a> extends
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>.
 								But let's say we add a JOIN: </p>
 <pre class="prettyprint lang-java">// These join types are supported
 SelectOnStep                    join(Table&lt;?&gt; table);
@@ -104,7 +104,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 							<p>Now, if you do add a JOIN clause, you have to specify the JOIN .. ON
 								condition before you can add more clauses. That's not an optional step
 								for some JOIN types. This is reflected by the fact that
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectOnStep.java" title="Internal API reference: org.jooq.SelectOnStep">org.jooq.SelectOnStep</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectOnStep.html" title="Internal API reference: org.jooq.SelectOnStep">org.jooq.SelectOnStep</a>
 								is a top-level interface. </p>
 
 <pre class="prettyprint lang-java">// These join conditions are supported
@@ -134,7 +134,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>: </p>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>: </p>
 <pre class="prettyprint lang-java">SelectConditionStep where(Condition... conditions);
 
 // The example, continued:
@@ -144,7 +144,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, count())
       .where(T_BOOK.LANGUAGE.equal("DE"));</pre>
 
 							<p>Now the returned type
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a> is a special one, where
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectConditionStep.html" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a> is a special one, where
 								you can add more conditions to the already existing WHERE clause.
 								Every time you add a condition, you will return to that
 								SelectConditionStep, as the number of additional conditions is
@@ -242,7 +242,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 
 							<p>
 								Now the most relevant super-type of the object we have just created is
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>.
 								This type can be reused in various expressions such as in the
 								<a href="<?=$root?>/manual/DSL/UNION/" title="jOOQ Manual reference: UNION and other set operations">UNION and other set operations</a>,
 								<a href="<?=$root?>/manual/DSL/EXISTS/" title="jOOQ Manual reference: Nested SELECT using the EXISTS operator">Nested select statements using the EXISTS operator</a>,

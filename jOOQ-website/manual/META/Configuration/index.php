@@ -82,6 +82,11 @@ function printContent() {
     &lt;url&gt;jdbc:oracle:thin:@[your jdbc connection parameters]&lt;/url&gt;
     &lt;user&gt;[your database user]&lt;/user&gt;
     &lt;password&gt;[your database password]&lt;/password&gt;
+    &lt;!-- You can also pass user/password and other JDBC properties in the optional properties tag: --&gt;
+    &lt;properties&gt;
+      &lt;property&gt;&lt;key&gt;user&lt;/key&gt;&lt;value&gt;[db-user]&lt;/value&gt;&lt;/property&gt;
+      &lt;property&gt;&lt;key&gt;password&lt;/key&gt;&lt;value&gt;[db-password]&lt;/value&gt;&lt;/property&gt;
+    &lt;/properties&gt;
   &lt;/jdbc&gt;
 
   &lt;generator&gt;

@@ -27,11 +27,11 @@ function printContent() {
 							<p>
 								There are essentially two ways of creating SELECT statements in jOOQ.
 								For historical reasons, you can create
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SimpleSelectQuery.java" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a> or
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectQuery.java" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SimpleSelectQuery.html" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a> or
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectQuery.html" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>
 								objects and add additional query clauses, such as
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">Conditions</a> or
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SortField.java" title="Internal API reference: org.jooq.SortField">SortFields</a> to it.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Condition.html" title="Internal API reference: org.jooq.Condition">Conditions</a> or
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SortField.html" title="Internal API reference: org.jooq.SortField">SortFields</a> to it.
 								Since jOOQ 1.3, there is also the possibility to
 								create SELECT statements using jOOQ's
 								<a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL API</a> in a much more intuitive
@@ -60,7 +60,7 @@ function printContent() {
 							<ul>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>:
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>:
 								    This Query subtype stands for a general type of SELECT statement.
 								    It is also the main Select type for the
 								    <a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL API</a>. When executed, this object
@@ -68,7 +68,7 @@ function printContent() {
 								    This type is further subtyped for the various uses of a SELECT statement as such:</li>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SimpleSelectQuery.java" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a>:
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/SimpleSelectQuery.html" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a>:
 									This Query will allow for selecting from single physical Tables only.
 									It therefore has access to the Table's generic type parameter
 									&lt;R extends Record&gt; and will provide a matching Result&lt;R&gt;.
@@ -77,7 +77,7 @@ function printContent() {
 									Then you will be able to perform updates on your result set immediately.</li>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectQuery.java" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>:
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectQuery.html" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>:
 									This Query will allow for selecting a subset of Fields from several
 									Tables. Because the results of such a query are considered of an anonymous
 									or ad-hoc type, this Query will bind &lt;R&gt; to the general type Record
@@ -167,8 +167,8 @@ q.addOrderBy(T_BOOK.TITLE);</pre>
 
 							<h3>Fetching data</h3>
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> interface extends
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ResultQuery.java" title="Internal API reference: org.jooq.ResultQuery">org.jooq.ResultQuery</a>,
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> interface extends
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/ResultQuery.html" title="Internal API reference: org.jooq.ResultQuery">org.jooq.ResultQuery</a>,
 								which provides a range of methods to fetch data from the database.
 								Once you have constructed your SELECT query (see examples above), you
 								may choose to either simply execute() it, or use a variety of convenience
@@ -340,7 +340,7 @@ i.execute();</pre>
 </table>
 
 							<h3>Example: Non-DSL Query</h3>
-							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdateQuery.java" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class,
+							<p>Using the <a href="http://www.jooq.org/javadoc/latest/org/jooq/UpdateQuery.html" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class,
 							this is how you could express an UPDATE statement:</p>
 <pre class="prettyprint lang-java">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
 u.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
@@ -369,7 +369,7 @@ u.execute();</pre>
 </table>
 
 							<h3>Example: Non-DSL Query</h3>
-							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/DeleteQuery.java" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class,
+							<p>Using the <a href="http://www.jooq.org/javadoc/latest/org/jooq/DeleteQuery.html" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class,
 							this is how you could express a DELETE statement: </p>
 <pre class="prettyprint lang-java">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
 d.addConditions(T_AUTHOR.ID.equal(100));

@@ -28,7 +28,7 @@ function printContent() {
 							<h2>The Result</h2>
 							<p>
 								The
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Result.java" title="Internal API reference: org.jooq.Result">Result</a>&lt;R extends <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Record.java" title="Internal API reference: org.jooq.Record">Record</a>&gt;
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Result.html" title="Internal API reference: org.jooq.Result">Result</a>&lt;R extends <a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html" title="Internal API reference: org.jooq.Record">Record</a>&gt;
 								is essentially a wrapper for a List&lt;R extends Record&gt;
 								providing
 								many convenience methods for accessing single elements in
@@ -36,7 +36,7 @@ function printContent() {
 								set. Depending on the type of SELECT statement,
 								&lt;R&gt; can be bound
 								to a sub-type of Record, for instance to an
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdatableRecord.java" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UpdatableRecord.html" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>.
 								See the section on
 								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>
 								for further details.
@@ -45,7 +45,7 @@ function printContent() {
 							<h2>The Cursor</h2>
 							<p>
 								A similar object is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Cursor.java" title="Internal API reference: org.jooq.Cursor">Cursor</a>&lt;R extends Record&gt;.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Cursor.html" title="Internal API reference: org.jooq.Cursor">Cursor</a>&lt;R extends Record&gt;.
 								Unlike the Result, the cursor has not fetched all data from the database yet.
 								This means, you save memory (and potentially speed), but you can only access
 								data sequentially and you have to keep a JDBC ResultSet alive. Cursors behave
@@ -64,7 +64,7 @@ void close() throws SQLException;</pre>
 							<h2>The Record</h2>
 							<p>
 								The Record itself holds all the data from your selected tuple. If it is
-								a <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableRecord.java" title="Internal API reference: org.jooq.TableRecord">org.jooq.TableRecord</a>, then it corresponds exactly to the type of one of your
+								a <a href="http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html" title="Internal API reference: org.jooq.TableRecord">org.jooq.TableRecord</a>, then it corresponds exactly to the type of one of your
 								physical tables in your database. But any anonymous or ad-hoc tuple can
 								be represented by the plain Record. A record mainly provides access to
 								its data and adds convenience methods for data type conversion. These
@@ -100,7 +100,7 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 							<p>
 								For more information about the type conversions that are supported by
 								jOOQ, read the Javadoc on
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/tools/Convert.java" title="Internal API reference: org.jooq.tools.Convert">org.jooq.tools.Convert</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/tools/Convert.html" title="Internal API reference: org.jooq.tools.Convert">org.jooq.tools.Convert</a>
 							
 </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">

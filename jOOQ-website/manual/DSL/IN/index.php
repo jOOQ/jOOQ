@@ -26,9 +26,9 @@ function printContent() {
 							<h2>The IN operator for use in semi-joins or anti-joins</h2>
 							<p>
 								In addition to a list of constant values, the IN operator in
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">org.jooq.Field</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Field.html" title="Internal API reference: org.jooq.Field">org.jooq.Field</a>
 								also supports a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> as an argument.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> as an argument.
 								This can be any type of select as
 								discussed in the manual's section about
 								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Query types</a>.

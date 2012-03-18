@@ -204,6 +204,9 @@ function printContent() {
 <a title="Master data generation. Enumeration tables" href="#MasterData">Master data generation. Enumeration tables</a>
 </li>
 <li>
+<a title="Custom data types and type conversion" href="#CustomTypes">Custom data types and type conversion</a>
+</li>
+<li>
 <a title="Mapping generated schemata and tables" href="#SchemaMapping">Mapping generated schemata and tables</a>
 </li>
 <li>
@@ -217,6 +220,9 @@ function printContent() {
 </li>
 <li>
 <a title="The Oracle 11g PIVOT clause" href="#PIVOT">The Oracle 11g PIVOT clause</a>
+</li>
+<li>
+<a title="jOOQ's relational division syntax" href="#DIVISION">jOOQ's relational division syntax</a>
 </li>
 <li>
 <a title="Exporting to XML, CSV, JSON, HTML, Text" href="#Export">Exporting to XML, CSV, JSON, HTML, Text</a>
@@ -332,15 +338,15 @@ CREATE TABLE t_book_to_book_store (
 							
 </ul>
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a>
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Factory.html" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a>
 								class is the main class from where you will create all jOOQ objects.
-								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a>
+								The Factory implements <a href="http://www.jooq.org/javadoc/latest/org/jooq/Configuration.html" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a>
 								and needs to be instanciated with the Configuration's properties:
 							</p>
 							<ul>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> :
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/SQLDialect.html" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> :
 								The dialect of your database. This may be any of the currently
 								supported database types</li>
 								
@@ -350,7 +356,7 @@ CREATE TABLE t_book_to_book_store (
     							lifecycle of your Factory</li>
     							
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">org.jooq.conf.Settings</a> :
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html" title="Internal API reference: org.jooq.conf.Settings">org.jooq.conf.Settings</a> :
     							An optional runtime configuration.</li>
 							
 </ul>
@@ -361,8 +367,24 @@ CREATE TABLE t_book_to_book_store (
 							<h3>Factory settings</h3>
 							<p>
 								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
-								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
+								type, that can be provided to a Factory in several ways:
+							</p>
+							<ul>
+								
+<li>In the constructor. This will override default settings below</li>
+								
+<li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
+								
+<li>From the classpath at /jooq-settings.xml</li>
+								
+<li>From the settings defaults, as specified in
+								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+								
+</li>
+							
+</ul>
+							<p>
 								Subsequent sections of the manual contain some more in-depth explanations about these settings:
 							</p>
 							<ul>
@@ -383,7 +405,7 @@ CREATE TABLE t_book_to_book_store (
 							<p>
 								Please refer to the jOOQ runtime configuration XSD for more details:<br>
 								
-<a href="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
 							
 </p>
 
@@ -499,11 +521,11 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							views are also considered tables by jOOQ.
 						</p>
 							<h2>The Table</h2>
-							<p>The formal definition of a <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">org.jooq.Table</a> starts with </p>
+							<p>The formal definition of a <a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">org.jooq.Table</a> starts with </p>
 							<pre class="prettyprint lang-java">public interface Table&lt;R extends Record&gt; // [...]</pre>
 							<p>
 								This means that every table is associated with a subtype of the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Record.java" title="Internal API reference: org.jooq.Record">org.jooq.Record</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html" title="Internal API reference: org.jooq.Record">org.jooq.Record</a>
 								class (see also
 								<a href="#Result" title="jOOQ Manual reference: Results and Records">Results and Records</a>
 								). For anonymous or ad-hoc tables,
@@ -575,9 +597,9 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<pre class="prettyprint lang-sql">SELECT 1 FROM DUAL</pre>
 							<p>
 								Then 1 is considered a Field or more explicitly, a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Constant.java" title="Internal API reference: org.jooq.impl.Constant">org.jooq.impl.Constant</a>,
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Constant.html" title="Internal API reference: org.jooq.impl.Constant">org.jooq.impl.Constant</a>,
 								which implements Field, and DUAL is considered a Table or more explicitly
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Dual.java" title="Internal API reference: org.jooq.impl.Dual">org.jooq.impl.Dual</a>, which implements Table
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Dual.html" title="Internal API reference: org.jooq.impl.Dual">org.jooq.impl.Dual</a>, which implements Table
 							</p>
 							<p>
 								More advanced uses become clear quickly, when you do things like
@@ -585,7 +607,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<pre class="prettyprint lang-sql">SELECT 1 + 1 FROM DUAL</pre>
 							<p>
 								Where 1 + 1 itself is a Field or more explicitly, an
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Expression.java" title="Internal API reference: org.jooq.impl.Expression">org.jooq.impl.Expression</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Expression.html" title="Internal API reference: org.jooq.impl.Expression">org.jooq.impl.Expression</a>
 								joining two Constants together.
 							</p>
 							<p>
@@ -596,7 +618,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<h2>TableFields</h2>
 							<p>
 								A specific type of field is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableField.java" title="Internal API reference: org.jooq.TableField">org.jooq.TableField</a>,
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/TableField.html" title="Internal API reference: org.jooq.TableField">org.jooq.TableField</a>,
 								which represents a physical
 								Field in a physical Table. Both the
 								TableField and its referenced Table
@@ -625,7 +647,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<h2>The Result</h2>
 							<p>
 								The
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Result.java" title="Internal API reference: org.jooq.Result">Result</a>&lt;R extends <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Record.java" title="Internal API reference: org.jooq.Record">Record</a>&gt;
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Result.html" title="Internal API reference: org.jooq.Result">Result</a>&lt;R extends <a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html" title="Internal API reference: org.jooq.Record">Record</a>&gt;
 								is essentially a wrapper for a List&lt;R extends Record&gt;
 								providing
 								many convenience methods for accessing single elements in
@@ -633,7 +655,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 								set. Depending on the type of SELECT statement,
 								&lt;R&gt; can be bound
 								to a sub-type of Record, for instance to an
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdatableRecord.java" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UpdatableRecord.html" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>.
 								See the section on
 								<a href="#UpdatableRecord" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>
 								for further details.
@@ -642,7 +664,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<h2>The Cursor</h2>
 							<p>
 								A similar object is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Cursor.java" title="Internal API reference: org.jooq.Cursor">Cursor</a>&lt;R extends Record&gt;.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Cursor.html" title="Internal API reference: org.jooq.Cursor">Cursor</a>&lt;R extends Record&gt;.
 								Unlike the Result, the cursor has not fetched all data from the database yet.
 								This means, you save memory (and potentially speed), but you can only access
 								data sequentially and you have to keep a JDBC ResultSet alive. Cursors behave
@@ -661,7 +683,7 @@ void close() throws SQLException;</pre>
 							<h2>The Record</h2>
 							<p>
 								The Record itself holds all the data from your selected tuple. If it is
-								a <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableRecord.java" title="Internal API reference: org.jooq.TableRecord">org.jooq.TableRecord</a>, then it corresponds exactly to the type of one of your
+								a <a href="http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html" title="Internal API reference: org.jooq.TableRecord">org.jooq.TableRecord</a>, then it corresponds exactly to the type of one of your
 								physical tables in your database. But any anonymous or ad-hoc tuple can
 								be represented by the plain Record. A record mainly provides access to
 								its data and adds convenience methods for data type conversion. These
@@ -697,7 +719,7 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 							<p>
 								For more information about the type conversions that are supported by
 								jOOQ, read the Javadoc on
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/tools/Convert.java" title="Internal API reference: org.jooq.tools.Convert">org.jooq.tools.Convert</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/tools/Convert.html" title="Internal API reference: org.jooq.tools.Convert">org.jooq.tools.Convert</a>
 							
 </p>
 						<h1 id="UpdatableRecord">
@@ -778,11 +800,11 @@ book.deleteUsing(TBook.ID);</pre>
 							<p>
 								There are essentially two ways of creating SELECT statements in jOOQ.
 								For historical reasons, you can create
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SimpleSelectQuery.java" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a> or
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectQuery.java" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SimpleSelectQuery.html" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a> or
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectQuery.html" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>
 								objects and add additional query clauses, such as
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">Conditions</a> or
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SortField.java" title="Internal API reference: org.jooq.SortField">SortFields</a> to it.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Condition.html" title="Internal API reference: org.jooq.Condition">Conditions</a> or
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SortField.html" title="Internal API reference: org.jooq.SortField">SortFields</a> to it.
 								Since jOOQ 1.3, there is also the possibility to
 								create SELECT statements using jOOQ's
 								<a href="#DSL" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL API</a> in a much more intuitive
@@ -811,7 +833,7 @@ book.deleteUsing(TBook.ID);</pre>
 							<ul>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>:
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>:
 								    This Query subtype stands for a general type of SELECT statement.
 								    It is also the main Select type for the
 								    <a href="#DSL" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL API</a>. When executed, this object
@@ -819,7 +841,7 @@ book.deleteUsing(TBook.ID);</pre>
 								    This type is further subtyped for the various uses of a SELECT statement as such:</li>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SimpleSelectQuery.java" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a>:
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/SimpleSelectQuery.html" title="Internal API reference: org.jooq.SimpleSelectQuery">org.jooq.SimpleSelectQuery</a>:
 									This Query will allow for selecting from single physical Tables only.
 									It therefore has access to the Table's generic type parameter
 									&lt;R extends Record&gt; and will provide a matching Result&lt;R&gt;.
@@ -828,7 +850,7 @@ book.deleteUsing(TBook.ID);</pre>
 									Then you will be able to perform updates on your result set immediately.</li>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectQuery.java" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>:
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectQuery.html" title="Internal API reference: org.jooq.SelectQuery">org.jooq.SelectQuery</a>:
 									This Query will allow for selecting a subset of Fields from several
 									Tables. Because the results of such a query are considered of an anonymous
 									or ad-hoc type, this Query will bind &lt;R&gt; to the general type Record
@@ -918,8 +940,8 @@ q.addOrderBy(T_BOOK.TITLE);</pre>
 
 							<h3>Fetching data</h3>
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> interface extends
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ResultQuery.java" title="Internal API reference: org.jooq.ResultQuery">org.jooq.ResultQuery</a>,
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> interface extends
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/ResultQuery.html" title="Internal API reference: org.jooq.ResultQuery">org.jooq.ResultQuery</a>,
 								which provides a range of methods to fetch data from the database.
 								Once you have constructed your SELECT query (see examples above), you
 								may choose to either simply execute() it, or use a variety of convenience
@@ -1091,7 +1113,7 @@ i.execute();</pre>
 </table>
 
 							<h3>Example: Non-DSL Query</h3>
-							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UpdateQuery.java" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class,
+							<p>Using the <a href="http://www.jooq.org/javadoc/latest/org/jooq/UpdateQuery.html" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class,
 							this is how you could express an UPDATE statement:</p>
 <pre class="prettyprint lang-java">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
 u.addValue(T_AUTHOR.FIRST_NAME, "Hermann");
@@ -1120,7 +1142,7 @@ u.execute();</pre>
 </table>
 
 							<h3>Example: Non-DSL Query</h3>
-							<p>Using the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/DeleteQuery.java" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class,
+							<p>Using the <a href="http://www.jooq.org/javadoc/latest/org/jooq/DeleteQuery.html" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class,
 							this is how you could express a DELETE statement: </p>
 <pre class="prettyprint lang-java">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
 d.addConditions(T_AUTHOR.ID.equal(100));
@@ -1329,7 +1351,7 @@ LAST_NAME.equal(val("Poe"))</pre>
 							    for more information about jOOQ's internals),
 								and cannot be modified directly anymore. If you wish to reuse a query and
 								modify bind values between subsequent query executions, you can access them again
-								through the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface:
+								through the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Query.html" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface:
 							</p>
 
 <pre class="prettyprint lang-java">// Access the first bind value from a query. Indexes are counted from 1, just as with JDBC
@@ -1342,7 +1364,7 @@ if ("Poe".equal(param.getValue())) {
 }</pre>
 
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Param.java" title="Internal API reference: org.jooq.Param">org.jooq.Param</a> type can also be named explicitly
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Param.html" title="Internal API reference: org.jooq.Param">org.jooq.Param</a> type can also be named explicitly
 								using the Factory's param() methods:
 							</p>
 <pre class="prettyprint lang-java">// Create a query with a named parameter. You can then use that name for accessing the parameter again
@@ -1358,7 +1380,7 @@ param2.setValue("Orwell");
 </pre>
 
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface also allows for
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Query.html" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface also allows for
 								setting new bind values directly, without accessing the Param type:
 							</p>
 
@@ -1401,9 +1423,9 @@ WHERE LAST_NAME = :lastName
 							<h2>Everything is a QueryPart</h2>
 							<p>
 								A
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Query.html" title="Internal API reference: org.jooq.Query">org.jooq.Query</a>
 								and all its contained objects is a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPart.java" title="Internal API reference: org.jooq.QueryPart">org.jooq.QueryPart</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/QueryPart.html" title="Internal API reference: org.jooq.QueryPart">org.jooq.QueryPart</a>.
 								QueryParts essentially provide this functionality:
 							</p>
 							<ul>
@@ -1415,14 +1437,14 @@ WHERE LAST_NAME = :lastName
 </ul>
 
 							<p>Both of these methods are contained in jOOQ's internal API's
-							   <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPartInternal.java" title="Internal API reference: org.jooq.QueryPartInternal">org.jooq.QueryPartInternal</a>, which is
+							   <a href="http://www.jooq.org/javadoc/latest/org/jooq/QueryPartInternal.html" title="Internal API reference: org.jooq.QueryPartInternal">org.jooq.QueryPartInternal</a>, which is
 							   internally implemented by every QueryPart. QueryPart internals are best
 							   illustrated with an example.</p>
 
 						   <h2>Example: CompareCondition</h2>
 						   <p>A simple example can be provided by checking out jOOQ's internal
 								representation of a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/CompareCondition.java" title="Internal API reference: org.jooq.impl.CompareCondition">org.jooq.impl.CompareCondition</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/CompareCondition.html" title="Internal API reference: org.jooq.impl.CompareCondition">org.jooq.impl.CompareCondition</a>.
 								It is used for any condition
 								comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 								condition here: </p>
@@ -1501,6 +1523,13 @@ create.attach(select);</pre>
 
 
 							<h2>Automatically attaching QueryParts</h2>
+							<p>
+								Note, this functionality is deprecated with jOOQ 2.1.0.
+								Please use the <a href="#ExecuteListener" title="jOOQ Manual reference: Execute listeners and the jOOQ Console">ExecuteListener</a> API
+								instead, to provide jOOQ queries with a
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a> before
+								execution.
+							</p>
 							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
 <pre class="prettyprint lang-java">// Create your own custom ConfigurationProvider that will make
 // your default Factory available to jOOQ
@@ -1542,8 +1571,8 @@ public abstract class CustomCondition extends AbstractCondition {
 							<p>These two classes are declared public and covered by integration
 								tests. When you extend these classes, you will have to provide your
 								own implementations for the <a href="#QueryPart" title="jOOQ Manual reference: QueryParts and the global architecture">QueryParts</a>'
-								bind(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/BindContext.java" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and
-								toSQL(<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/RenderContext.java" title="Internal API reference: org.jooq.RenderContext">RenderContext</a>) methods:</p>
+								bind(<a href="http://www.jooq.org/javadoc/latest/org/jooq/BindContext.html" title="Internal API reference: org.jooq.BindContext">BindContext</a>) and
+								toSQL(<a href="http://www.jooq.org/javadoc/latest/org/jooq/RenderContext.html" title="Internal API reference: org.jooq.RenderContext">RenderContext</a>) methods:</p>
 <pre class="prettyprint lang-java">// This method must produce valid SQL. If your QueryPart contains other QueryParts, you may delegate SQL code generation to them
 // in the correct order, passing the render context.
 //
@@ -1654,6 +1683,11 @@ public void bind(BindContext context) throws DataAccessException;</pre>
     &lt;url&gt;jdbc:oracle:thin:@[your jdbc connection parameters]&lt;/url&gt;
     &lt;user&gt;[your database user]&lt;/user&gt;
     &lt;password&gt;[your database password]&lt;/password&gt;
+    &lt;!-- You can also pass user/password and other JDBC properties in the optional properties tag: --&gt;
+    &lt;properties&gt;
+      &lt;property&gt;&lt;key&gt;user&lt;/key&gt;&lt;value&gt;[db-user]&lt;/value&gt;&lt;/property&gt;
+      &lt;property&gt;&lt;key&gt;password&lt;/key&gt;&lt;value&gt;[db-password]&lt;/value&gt;&lt;/property&gt;
+    &lt;/properties&gt;
   &lt;/jdbc&gt;
 
   &lt;generator&gt;
@@ -2016,6 +2050,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }</pre>
 
+                            <h3>jooq-meta configuration</h3>
 							<p>
 								Within the &lt;generator/&gt; element, there are other configuration elements:
 							</p>
@@ -2053,16 +2088,35 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
   &lt;!-- A configuration element to configure master data table enum classes --&gt;
   &lt;masterDataTables&gt;...&lt;/masterDataTables&gt;
 
-  &lt;!-- A configuration element to configure synthetic enum types
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
-  &lt;enumTypes&gt;...&lt;/enumTypes&gt;
+  &lt;!-- A configuration element to configure custom data types --&gt;
+  &lt;customTypes&gt;...&lt;/customTypes&gt;
 
   &lt;!-- A configuration element to configure type overrides for generated
-       artefacts (e.g. in combination with enumTypes)
-       This is EXPERIMENTAL functionality. Use at your own risk --&gt;
+       artefacts (e.g. in combination with customTypes) --&gt;
   &lt;forcedTypes&gt;...&lt;/forcedTypes&gt;
 &lt;/database&gt;</pre>
 
+							<p>
+								Check out the some of the manual's "advanced" sections
+								to find out more about the advanced configuration parameters.
+							</p>
+							<ul>
+								
+<li>
+<a href="#SchemaMapping" title="jOOQ Manual reference: Mapping generated schemata and tables">Schema mapping</a>
+</li>
+								
+<li>
+<a href="#MasterData" title="jOOQ Manual reference: Master data generation. Enumeration tables">Master data types</a>
+</li>
+								
+<li>
+<a href="#CustomTypes" title="jOOQ Manual reference: Custom data types and type conversion">Custom types</a>
+</li>
+							
+</ul>
+
+							<h3>jooq-codegen configuration</h3>
                             <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
 
 <pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
@@ -2092,6 +2146,11 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to true --&gt;
   &lt;generatedAnnotation&gt;true&lt;/generatedAnnotation&gt;
 
+  &lt;!-- Generate jOOQ Record classes for type-safe querying. You can
+       turn this off, if you don't need "active records" for CRUD
+       Defaults to true --&gt;
+  &lt;records&gt;true&lt;/records&gt;
+
   &lt;!-- Generate POJOs in addition to Record classes for usage of the
        ResultQuery.fetchInto(Class) API
        Defaults to false --&gt;
@@ -2102,13 +2161,6 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false --&gt;
   &lt;jpaAnnotations&gt;false&lt;/jpaAnnotations&gt;
 &lt;/generate&gt;</pre>
-
-							<p>
-								Check out the manual's section about
-								<a href="#MasterData" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a>
-								to find out more
-								about those advanced configuration parameters.
-							</p>
 						<h1 id="SCHEMA">
 <a name="SCHEMA"></a>2.3. The schema, top-level generated artefact</h1><p>The schema is the top-level generated object in jOOQ. In many
 							RDBMS, the schema coincides with the owner of tables and other objects
@@ -2116,7 +2168,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 							<h2>The Schema</h2>
 							<p>
 								As of jOOQ 1.5, the top-level generated object is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Schema.java" title="Internal API reference: org.jooq.Schema">org.jooq.Schema</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Schema.html" title="Internal API reference: org.jooq.Schema">org.jooq.Schema</a>.
 								The Schema itself has no relevant functionality, except for holding
 								the schema name for all dependent generated artefacts. jOOQ queries try
 								to always fully qualify an entity within the database using that Schema
@@ -2153,8 +2205,8 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
 							<h2>Tables and TableRecords</h2>
 							<p>
 								The most important generated artefacts are
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">Tables</a> and
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableRecord.java" title="Internal API reference: org.jooq.TableRecord">TableRecords</a>. As
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">Tables</a> and
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html" title="Internal API reference: org.jooq.TableRecord">TableRecords</a>. As
 								discussed in previous chapters about
 								<a href="#Table" title="jOOQ Manual reference: Tables and Fields">Tables</a> and
 								<a href="#Result" title="jOOQ Manual reference: Results and Records">Results</a>, jOOQ uses the
@@ -2215,6 +2267,67 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</pre>
     // Navigation methods for foreign keys
     public List&lt;TBookRecord&gt; fetchTBooks() { // [...]
 }</pre>
+
+
+							<h3>Generated or custom POJO's instead of jOOQ's Records</h3>
+							<p>
+								If you're using jOOQ along with Hibernate / JPA, or if you
+								want to use your own, custom domain-model instead of jOOQ's
+								Record type-hierarchy, you can choose to select values into
+								POJOs. Let's say you defined a POJO for authors:
+							</p>
+
+<pre class="prettyprint lang-java">package com.example;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity
+public class MyAuthor {
+    // Some fields may be public
+    @Column(name = "ID")
+    public int id;
+
+    // Others are private and have associated getters / setters:
+    private String firstName;
+    private String lastName;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(name = "FIRST_NAME")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @Column(name = "LAST_NAME")
+    public String getLastName() {
+        return lastName;
+    }
+}</pre>
+
+                            <p>
+                            	The above could be your custom POJO or a POJO generated
+                            	by jooq-codegen (see
+                            	<a href="#AdvancedConfiguration" title="jOOQ Manual reference: Advanced configuration of the generator">the manual's section about advanced codegen configuration</a>
+                            	for more details). Also, JPA-annotations are not necessary
+                            	if you wish to let jOOQ map record columns onto your POJO
+                            	attributes by convention. Instead of fetching records normally,
+                            	you can now let jOOQ fetch records "into" your custom type:
+                            </p>
+
+<pre class="prettyprint lang-java">List&lt;MyAuthor&gt; results = create.select().from(TAuthor.T_AUTHOR).fetchInto(MyAuthor.class);</pre>
+
+							<p>
+								Read the javadoc for
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html#into%28java.lang.Class%29" title="Record.into() javadoc, explaining about how to map jOOQ Records onto custom types">Record.into()</a>
+								for more details.
+							</p>
 						<h1 id="PROCEDURE">
 <a name="PROCEDURE"></a>2.5. Procedures and packages</h1><p>
 							Procedure support is one of the most important reasons why you should consider
@@ -2511,8 +2624,8 @@ CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</pr
 								rolls their own proprietary methods of dealing with these types. jOOQ
 								goes a different way, it hides those facts from you entirely. With
 								jOOQ, the above UDT's will be generated in simple
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDT.java" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDTRecord.java" title="Internal API reference: org.jooq.UDTRecord">UDT record classes</a> as such:
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UDT.html" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UDTRecord.html" title="Internal API reference: org.jooq.UDTRecord">UDT record classes</a> as such:
 							</p>
 <pre class="prettyprint lang-java">// There is an analogy between UDT/Table and UDTRecord/TableRecord...
 public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
@@ -2636,7 +2749,7 @@ RETURN u_string_array</pre>
 							<p>Note that it becomes clear immediately, that a mapping from
 								U_STRING_ARRAY to String[] is obvious. But a mapping from String[] to
 								U_STRING_ARRAY is not. These are the generated
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ArrayRecord.java" title="Internal API reference: org.jooq.ArrayRecord">org.jooq.ArrayRecord</a> and other
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/ArrayRecord.html" title="Internal API reference: org.jooq.ArrayRecord">org.jooq.ArrayRecord</a> and other
 								artefacts in Oracle: </p>
 
 <pre class="prettyprint lang-java">public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]
@@ -2721,7 +2834,7 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 						</p>
 							<h2>Sequences as a source for identity values</h2>
 							<p> Sequences implement the
-							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Sequence.java" title="Internal API reference: org.jooq.Sequence">org.jooq.Sequence</a> interface, providing essentially this functionality:</p>
+							<a href="http://www.jooq.org/javadoc/latest/org/jooq/Sequence.html" title="Internal API reference: org.jooq.Sequence">org.jooq.Sequence</a> interface, providing essentially this functionality:</p>
 
 <pre class="prettyprint lang-java">// Get a field for the CURRVAL sequence property
 Field&lt;T&gt; currval();
@@ -2833,12 +2946,12 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count());</pre>
 								section on <a href="#FUNCTIONS" title="jOOQ Manual reference: Functions and aggregate operators">aggregate operators</a>
 								 to learn more about the COUNT(*)
 								function). This type is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectFromStep.java" title="Internal API reference: org.jooq.SelectFromStep">org.jooq.SelectFromStep</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectFromStep.html" title="Internal API reference: org.jooq.SelectFromStep">org.jooq.SelectFromStep</a>.
 								When you have a reference
 								to this type, you may add a FROM clause, although that clause is
 								optional. This is reflected by the fact, that the SelectFromStep type
 								extends
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a>,
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectJoinStep.html" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a>,
 								which allows for adding the subsequent
 								clauses. Let's say you do decide to add a FROM clause, then you can
 								use this method for instance:
@@ -2853,8 +2966,8 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								select from, you may optionally choose to add a JOIN clause, as the
 								type returned by jOOQ is the step where you can add JOINs. Again,
 								adding these clauses is optional, as the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectJoinStep.java" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a> extends
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectJoinStep.html" title="Internal API reference: org.jooq.SelectJoinStep">org.jooq.SelectJoinStep</a> extends
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>.
 								But let's say we add a JOIN: </p>
 <pre class="prettyprint lang-java">// These join types are supported
 SelectOnStep                    join(Table&lt;?&gt; table);
@@ -2874,7 +2987,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 							<p>Now, if you do add a JOIN clause, you have to specify the JOIN .. ON
 								condition before you can add more clauses. That's not an optional step
 								for some JOIN types. This is reflected by the fact that
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectOnStep.java" title="Internal API reference: org.jooq.SelectOnStep">org.jooq.SelectOnStep</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectOnStep.html" title="Internal API reference: org.jooq.SelectOnStep">org.jooq.SelectOnStep</a>
 								is a top-level interface. </p>
 
 <pre class="prettyprint lang-java">// These join conditions are supported
@@ -2904,7 +3017,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								see above, we're back to the SelectJoinStep. This means, we can
 								re-iterate and add another JOIN clause, just like in SQL. Or we go on
 								to the next step, adding conditions in the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>: </p>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>: </p>
 <pre class="prettyprint lang-java">SelectConditionStep where(Condition... conditions);
 
 // The example, continued:
@@ -2914,7 +3027,7 @@ create.select(TAuthor.FIRST_NAME, TAuthor.LAST_NAME, count())
       .where(T_BOOK.LANGUAGE.equal("DE"));</pre>
 
 							<p>Now the returned type
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a> is a special one, where
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectConditionStep.html" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a> is a special one, where
 								you can add more conditions to the already existing WHERE clause.
 								Every time you add a condition, you will return to that
 								SelectConditionStep, as the number of additional conditions is
@@ -3012,7 +3125,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 
 							<p>
 								Now the most relevant super-type of the object we have just created is
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a>.
 								This type can be reused in various expressions such as in the
 								<a href="#UNION" title="jOOQ Manual reference: UNION and other set operations">UNION and other set operations</a>,
 								<a href="#EXISTS" title="jOOQ Manual reference: Nested SELECT using the EXISTS operator">Nested select statements using the EXISTS operator</a>,
@@ -3067,7 +3180,7 @@ Record fetchOne();
 								before applying predicates, renaming operations and projections. Apart from the convenience
 								methods for joining table sources in the
 								<a href="#SELECT" title="jOOQ Manual reference: Complete SELECT syntax">manual's section about the full SELECT syntax</a>,
-								the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">Table</a> type itself provides a
+								the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">Table</a> type itself provides a
 								rich API for creating joined table sources. See an extract of the Table API:
 							</p>
 <pre class="prettyprint lang-java">// These are the various supported JOIN clauses. These JOIN types
@@ -3090,10 +3203,14 @@ Table&lt;Record&gt; naturalRightOuterJoin(TableLike&lt;?&gt; table);
 // Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
 // table into another one using a list of PIVOT values
 PivotForStep pivot(Field&lt;?&gt;... aggregateFunctions);
-PivotForStep pivot(Collection&lt;? extends Field&lt;?&gt;&gt; aggregateFunctions);</pre>
+PivotForStep pivot(Collection&lt;? extends Field&lt;?&gt;&gt; aggregateFunctions);
+
+// Relational division can be applied to a table, transforming it into a
+// "quotient" using an intuitive syntax
+DivideByOnStep divideBy(Table&lt;?&gt; divisor);</pre>
 
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableOnStep.java" title="Internal API reference: org.jooq.TableOnStep">TableOnStep</a> type
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/TableOnStep.html" title="Internal API reference: org.jooq.TableOnStep">TableOnStep</a> type
 								contains methods for constructing the ON / ON KEY / USING clauses
 							</p>
 
@@ -3113,11 +3230,21 @@ TableOnConditionStep onKey() throws DataAccessException;
 TableOnConditionStep onKey(TableField&lt;?, ?&gt;... keyFields) throws DataAccessException;
 TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
 
-							<p>
+							<ul>
+							
+<li>
 								For more details about the PIVOT clause, see the
 								<a href="#PIVOT" title="jOOQ Manual reference: The Oracle 11g PIVOT clause">manual's section about the Oracle PIVOT syntax</a>
 							
-</p>
+</li>
+							
+<li>
+								For more details about the DIVIDE BY clause, see the
+								<a href="#DIVISION" title="jOOQ Manual reference: jOOQ's relational division syntax">manual's section about the relational division syntax</a>
+							
+</li>
+							
+</ul>
 						<h1 id="CONDITION">
 <a name="CONDITION"></a>3.3. Conditions</h1><p>
 							The creation of conditions is the part of any database abstraction that
@@ -3130,9 +3257,9 @@ TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
 								you're trying to apply.</p>
 							<p>In jOOQ, most Conditions can be created and combined almost as
 								easily as in SQL itself. The two main participants for creating
-								Conditions are the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">Field</a>,
+								Conditions are the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Field.html" title="Internal API reference: org.jooq.Field">Field</a>,
 								which is typically a participant of a
-								condition, and the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">Condition</a>
+								condition, and the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Condition.html" title="Internal API reference: org.jooq.Condition">Condition</a>
 								itself: </p>
 <pre class="prettyprint lang-java">public interface Condition {
     Condition and(Condition other);
@@ -3303,9 +3430,9 @@ System.out.println("Books  : " + record.getValue("books"));</pre>
 							<h2>The IN operator for use in semi-joins or anti-joins</h2>
 							<p>
 								In addition to a list of constant values, the IN operator in
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">org.jooq.Field</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Field.html" title="Internal API reference: org.jooq.Field">org.jooq.Field</a>
 								also supports a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> as an argument.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> as an argument.
 								This can be any type of select as
 								discussed in the manual's section about
 								<a href="#Query" title="jOOQ Manual reference: The Query and its various subtypes">Query types</a>.
@@ -3376,19 +3503,19 @@ Condition notExists(Select&lt;?&gt; query);</pre>
 								on
 								<a href="#CONDITION" title="jOOQ Manual reference: Conditions">Conditions</a>). There are also quite a few
 								convenience methods, where they might be useful. For instance in the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Condition.html" title="Internal API reference: org.jooq.Condition">org.jooq.Condition</a> itself: </p>
 
 <pre class="prettyprint lang-java">Condition andExists(Select&lt;?&gt; select);
 Condition andNotExists(Select&lt;?&gt; select);
 Condition orExists(Select&lt;?&gt; select);
 Condition orNotExists(Select&lt;?&gt; select);</pre>
 
-							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectWhereStep.java" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>:</p>
+							<p>Or in the <a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectWhereStep.html" title="Internal API reference: org.jooq.SelectWhereStep">org.jooq.SelectWhereStep</a>:</p>
 
 <pre class="prettyprint lang-java">SelectConditionStep whereExists(Select&lt;?&gt; select);
 SelectConditionStep whereNotExists(Select&lt;?&gt; select);</pre>
 
-							<p>Or in the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SelectConditionStep.java" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a>: </p>
+							<p>Or in the <a href="http://www.jooq.org/javadoc/latest/org/jooq/SelectConditionStep.html" title="Internal API reference: org.jooq.SelectConditionStep">org.jooq.SelectConditionStep</a>: </p>
 
 <pre class="prettyprint lang-java">SelectConditionStep andExists(Select&lt;?&gt; select);
 SelectConditionStep andNotExists(Select&lt;?&gt; select);
@@ -3443,7 +3570,7 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</pre>
 </table>
 
                             <p>More examples like the above can be guessed from the
-                            <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">org.jooq.Field</a> API, as documented in the manual's section about
+                            <a href="http://www.jooq.org/javadoc/latest/org/jooq/Field.html" title="Internal API reference: org.jooq.Field">org.jooq.Field</a> API, as documented in the manual's section about
                             <a href="#CONDITION" title="jOOQ Manual reference: Conditions">Conditions</a>. For the = operator, the available comparisons are these:</p>
 
 <pre class="prettyprint lang-java">Condition equal(Select&lt;?&gt; query);
@@ -3531,7 +3658,7 @@ create.select(T_AUTHOR.ID, books)
 <a name="UNION"></a>3.8. UNION and other set operations</h1><p>Unions, differences and intersections are vital set operations taken from set theory.</p>
 							<h2>jOOQ's set operation API</h2>
 							<p>The
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> API directly supports the UNION
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> API directly supports the UNION
 								syntax for all types of Select as discussed in the manual's section about
 								<a href="#Query" title="jOOQ Manual reference: The Query and its various subtypes">Queries and Query subtypes</a>.
 								It consists of these methods: </p>
@@ -4275,8 +4402,158 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								Also, be aware that it will be difficult to perform actual JOIN
 								operations on the underlying table with jOOQ, once the master data
 								type is generated. </p>
+						<h1 id="CustomTypes">
+<a name="CustomTypes"></a>4.2. Custom data types and type conversion</h1><p>
+							SQL data types are very limited in number. While some databases offer
+							enumeration types or user-defined types, others only ship with the SQL
+							standard. Read this chapter to see how to use custom types with jOOQ
+						</p>
+							<h2>Your custom type and its associated Converter</h2>
+							<p>
+								When using a custom type in jOOQ, you need to let jOOQ know about
+								its associated <a href="http://www.jooq.org/javadoc/latest/org/jooq/Converter.html" title="Internal API reference: org.jooq.Converter">org.jooq.Converter</a>.
+								A converter essentially has two generic type parameters:
+							</p>
+							<ul>
+								
+<li>&lt;U&gt;: The user-defined Java type. This could be <a href="http://download.oracle.com/javase/6/docs/api/java/util/GregorianCalendar.html" title="External API reference: java.util.GregorianCalendar">java.util.GregorianCalendar</a>, for instance.</li>
+								
+<li>&lt;T&gt;: The database / SQL type. This could be <a href="http://download.oracle.com/javase/6/docs/api/java/sql/Timestamp.html" title="External API reference: java.sql.Timestamp">java.sql.Timestamp</a>, for instance.</li>
+							
+</ul>
+							<p>
+								The above conversion implies that you may want to use a GregorianCalendar for
+								SQL timestamps, rather than the timestamp type itself. You could then write
+								a Converter like this:
+							</p>
+
+<pre class="prettyprint lang-java">package com.example;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import org.jooq.Converter;
+
+// Bind T to Timestamp and U to Gregorian calendar, here
+public class CalendarConverter implements Converter&lt;Timestamp, GregorianCalendar&gt; {
+
+    // Provide jOOQ with Class&lt;?&gt; objects of &lt;U&gt; and &lt;T&gt;. These are used by
+    // jOOQ to discover your converter based on your custom type
+    // --------------------------------------------------------------------
+    @Override
+    public Class&lt;Timestamp&gt; fromType() {
+        return Timestamp.class;
+    }
+
+    @Override
+    public Class&lt;GregorianCalendar&gt; toType() {
+        return GregorianCalendar.class;
+    }
+
+    // Implement the type conversion methods. Convert your user-defined type
+    // "from" the SQL type when reading "from" the database, or "to" the SQL
+    // type when writing "to" the database.
+    @Override
+    public GregorianCalendar from(Timestamp databaseObject) {
+        GregorianCalendar calendar = (GregorianCalendar) Calendar.getInstance();
+        calendar.setTimeInMillis(databaseObject.getTime());
+        return calendar;
+    }
+
+    @Override
+    public Timestamp to(GregorianCalendar userObject) {
+        return new Timestamp(userObject.getTime().getTime());
+    }
+}
+</pre>
+
+							<p>
+								Such a Converter can now be used in various places of the jOOQ
+								API, especially when reading data from the database:
+							</p>
+
+<pre class="prettyprint lang-java">List&lt;GregorianCalendar&gt; result =
+create.select(T_AUTHOR.DATE_OF_BIRTH)
+      .from(T_AUTHOR)
+      .fetch(0, new CalendarConverter());</pre>
+
+      						<h3>Using Converters in generated code</h3>
+      						<p>
+								A more common use-case, however, is to let jOOQ know about custom
+								types at code generation time. Use the following configuration elements
+								to specify, that you'd like to use GregorianCalendar for all database
+								fields that start with DATE_OF_
+      						</p>
+
+<pre class="prettyprint lang-xml">&lt;database&gt;
+  &lt;!-- First, register your custom types here --&gt;
+  &lt;customTypes&gt;
+    &lt;customType&gt;
+      &lt;!-- Specify the fully-qualified class name of your custom type --&gt;
+      &lt;name&gt;java.util.GregorianCalendar&lt;/name&gt;
+
+      &lt;!-- Associate that custom type with your converter. Note, a
+           custom type can only have one converter in jOOQ --&gt;
+      &lt;converter&gt;com.example.CalendarConverter&lt;/converter&gt;
+    &lt;/customType&gt;
+  &lt;/customTypes&gt;
+
+  &lt;!-- Then, associate custom types with database columns --&gt;
+  &lt;forcedTypes&gt;
+    &lt;forcedType&gt;
+      &lt;!-- Specify again he fully-qualified class name of your custom type --&gt;
+      &lt;name&gt;java.util.GregorianCalendar&lt;/name&gt;
+
+      &lt;!-- Add a list of comma-separated regular expressions matching columns --&gt;
+      &lt;expressions&gt;.*\.DATE_OF_.*&lt;/expressions&gt;
+    &lt;/forcedType&gt;
+  &lt;/forcedTypes&gt;
+&lt;/database&gt;</pre>
+
+                            <p>
+                            	The above configuration will lead to T_AUTHOR.DATE_OF_BIRTH
+                            	being generated like this:
+                            </p>
+
+<pre class="prettyprint lang-java">public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
+
+    // [...]
+    public final TableField&lt;TAuthorRecord, GregorianCalendar&gt; DATE_OF_BIRTH =    // [...]
+    // [...]
+
+}</pre>
+
+                            <p>
+                            	This means that the bound of &lt;T&gt; will be GregorianCalendar,
+                            	wherever you reference DATE_OF_BIRTH. jOOQ will use your custom
+                            	converter when binding variables and when fetching data from
+                            	<a href="http://download.oracle.com/javase/6/docs/api/java/util/ResultSet.html" title="External API reference: java.util.ResultSet">java.util.ResultSet</a>:
+                            </p>
+
+<pre class="prettyprint lang-java">// Get all date of births of authors born after 1980
+List&lt;GregorianCalendar&gt; result =
+create.selectFrom(T_AUTHOR)
+      .where(T_AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))
+      .fetch(T_AUTHOR.DATE_OF_BIRTH);</pre>
+
+      						<p>
+      						    Read more about advanced code generation configuration in
+      						    <a href="#AdvancedConfiguration" title="jOOQ Manual reference: Advanced configuration of the generator">the manual's section about advanced code generation configuration</a>.
+      						</p>
+
+      						<h3>Using Converters for enum types</h3>
+      						<p>
+      							Java's Enum types can be very useful in SQL too.
+      							Some databases support enumeration types natively (MySQL, Postgres).
+      							In other cases, you can use the above custom type configuration
+      							also to provide jOOQ with Converters for your custom Enum types.
+      							Instead of implementing <a href="http://www.jooq.org/javadoc/latest/org/jooq/Converter.html" title="Internal API reference: org.jooq.Converter">org.jooq.Converter</a>,
+      							you may choose to extend <a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/EnumConverter.html" title="Internal API reference: org.jooq.impl.EnumConverter">org.jooq.impl.EnumConverter</a>
+      							instead, which provides some enum-specific default behaviour.
+      						</p>
 						<h1 id="SchemaMapping">
-<a name="SchemaMapping"></a>4.2. Mapping generated schemata and tables</h1><p>
+<a name="SchemaMapping"></a>4.3. Mapping generated schemata and tables</h1><p>
 							Sometimes, you cannot control productive schema names, because your
 							application is deployed on a shared host, and you only get one schema
 							to work with.
@@ -4307,7 +4584,7 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							<p>When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/RenderMapping.java" title="Internal API reference: org.jooq.conf.RenderMapping">org.jooq.conf.RenderMapping</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/RenderMapping.html" title="Internal API reference: org.jooq.conf.RenderMapping">org.jooq.conf.RenderMapping</a>
 								class, that you can equip your Factory's settings
 								with. Take the following example: </p>
 
@@ -4426,19 +4703,19 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 								for more details
 							</p>
 						<h1 id="ExecuteListener">
-<a name="ExecuteListener"></a>4.3. Execute listeners and the jOOQ Console</h1><p>
+<a name="ExecuteListener"></a>4.4. Execute listeners and the jOOQ Console</h1><p>
 							Feel the heart beat of your SQL statements at a very low level using listeners
 						</p>
 							<h2>ExecuteListener</h2>
 							<p>
 								The <a href="#Factory" title="jOOQ Manual reference: The Factory class">jOOQ Factory Settings</a>
-								let you specify a list of <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ExecuteListener.java" title="Internal API reference: org.jooq.ExecuteListener">org.jooq.ExecuteListener</a> classes.
+								let you specify a list of <a href="http://www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html" title="Internal API reference: org.jooq.ExecuteListener">org.jooq.ExecuteListener</a> classes.
 								The ExecuteListener is essentially an event listener for
 								Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a
 								base type for loggers, debuggers, profilers, data collectors. Advanced ExecuteListeners
 								can also provide custom implementations of Connection, PreparedStatement and ResultSet
 								to jOOQ in apropriate methods. For convenience, consider extending
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/DefaultExecuteListener.java" title="Internal API reference: org.jooq.impl.DefaultExecuteListener">org.jooq.impl.DefaultExecuteListener</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/DefaultExecuteListener.html" title="Internal API reference: org.jooq.impl.DefaultExecuteListener">org.jooq.impl.DefaultExecuteListener</a>
 								instead of implementing this interface.
 							</p>
 							<p>
@@ -4558,7 +4835,7 @@ for (ExecuteType type : ExecuteType.values()) {
 
 							<p>
 								Both modes will require that you set the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
+								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-console/src/org/jooq/debug/DebugListener.java" title="Internal API reference: org.jooq.debug.DebugListener">org.jooq.debug.DebugListener</a>
 								in the Factory's settings. When using XML settings:
 							</p>
 
@@ -4675,7 +4952,7 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</pre>
 								rsyntaxtextarea-1.5.0.jar and jOOQ artefacts on your classpath.
 							</p>
 						<h1 id="OracleHints">
-<a name="OracleHints"></a>4.4. Adding Oracle hints to queries</h1><p>
+<a name="OracleHints"></a>4.5. Adding Oracle hints to queries</h1><p>
 							Oracle has a powerful syntax to add hints as comments directly in your SQL
 						</p>
 							<h2>How to embed Oracle hints in SELECT</h2>
@@ -4694,7 +4971,7 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</pre>
 								that clause, the passed string will always be put in between the
 								SELECT [DISTINCT] keywords and the actual projection list </p>
 						<h1 id="CONNECTBY">
-<a name="CONNECTBY"></a>4.5. The Oracle CONNECT BY clause</h1><p>
+<a name="CONNECTBY"></a>4.6. The Oracle CONNECT BY clause</h1><p>
 							Hierarchical queries are supported by many RDBMS using the WITH clause.
 							Oracle has a very neat and much less verbose syntax for hierarchical
 							queries: CONNECT BY .. STARTS WITH
@@ -4745,7 +5022,7 @@ create.select(create.rownum())
 |...21 record(s) truncated...
 </pre>
 						<h1 id="PIVOT">
-<a name="PIVOT"></a>4.6. The Oracle 11g PIVOT clause</h1><p>
+<a name="PIVOT"></a>4.7. The Oracle 11g PIVOT clause</h1><p>
 				    	    Oracle 11g has formally introduced the very powerful PIVOT clause, which
 				    	    allows to specify a pivot column, expected grouping values for pivoting,
 				    	    as well as a set of aggregate functions
@@ -4761,14 +5038,85 @@ create.select(create.rownum())
 
 							<p>
 								The PIVOT clause is available from the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">org.jooq.Table</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">org.jooq.Table</a>
 								type, as pivoting is done directly on a table.
 								Currently, only Oracle's PIVOT clause is supported. Support for SQL Server's
 								PIVOT clause will be added later. Also, jOOQ may simulate PIVOT for other
 								dialects in the future.
 							</p>
+						<h1 id="DIVISION">
+<a name="DIVISION"></a>4.8. jOOQ's relational division syntax</h1><p>
+				    	    Relational division is a rather academic topic that is not used in
+				    	    every-day SQL. Nevertheless, it can be extremely powerful in some
+				    	    remote cases. jOOQ supports it intuitively
+						</p>
+							<h2>Relational division</h2>
+							<p>
+							    There is one operation in relational algebra that is not given
+							    a lot of attention, because it is rarely used in real-world
+							    applications. It is the relational division, the opposite operation
+							    of the cross product (or, relational multiplication).
+								The following is an approximate definition of a relational division:
+							</p>
+
+<pre class="prettyprint">Assume the following cross join / cartesian product
+C = A &times; B
+
+Then it can be said that
+A = C &divide; B
+B = C &divide; A</pre>
+
+
+							<p>
+							   With jOOQ, you can simplify using relational divisions
+							   by using the following syntax:
+							</p>
+
+<pre class="prettyprint lang-java">C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)</pre>
+
+							<p>The above roughly translates to</p>
+
+<pre class="prettyprint lang-sql">SELECT DISTINCT C.TEXT FROM C "c1"
+WHERE NOT EXISTS (
+  SELECT 1 FROM B
+  WHERE NOT EXISTS (
+    SELECT 1 FROM C "c2"
+    WHERE "c2".TEXT = "c1".TEXT
+    AND "c2".ID = B.C_ID
+  )
+)</pre>
+
+							<p>
+								Or in plain text: Find those TEXT values in C
+								whose ID's correspond to all ID's in B. Note
+								that from the above SQL statement, it is immediately
+								clear that proper indexing is of the essence.
+								Be sure to have indexes on all columns referenced
+								from the on(...) and returning(...) clauses.
+							</p>
+
+							<p>
+								For more information about relational division
+								and some nice, real-life examples, see
+							</p>
+
+							<ul>
+								
+<li>
+									
+<a href="http://en.wikipedia.org/wiki/Relational_algebra#Division" title="Wikipedia article on relational division">http://en.wikipedia.org/wiki/Relational_algebra#Division</a>
+								
+</li>
+								
+<li>
+									
+<a href="http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/" title="A nice summary of what relational division is and how it is best implemented in SQL">http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/</a>
+								
+</li>
+							
+</ul>
 						<h1 id="Export">
-<a name="Export"></a>4.7. Exporting to XML, CSV, JSON, HTML, Text</h1><p>
+<a name="Export"></a>4.9. Exporting to XML, CSV, JSON, HTML, Text</h1><p>
 							Get your data out of the Java world. Stream your data using any of the supported, wide-spread formats
 						</p>
 							<h2>Exporting with jOOQ</h2>
@@ -4864,7 +5212,7 @@ String text = create.selectFrom(T_BOOK).fetch().format();</pre>
 |  2|        1|Animal Farm|
 +---+---------+-----------+</pre>
 						<h1 id="Import">
-<a name="Import"></a>4.8. Importing data from XML, CSV</h1><p>
+<a name="Import"></a>4.10. Importing data from XML, CSV</h1><p>
 							Use jOOQ to easily merge imported data into your database.
 						</p>
 							<h2>Importing with jOOQ</h2>
@@ -4971,7 +5319,7 @@ Query query = error.query();</pre>
 							<h3>XML </h3>
 							<p>This will be implemented soon... </p>
 						<h1 id="Batch">
-<a name="Batch"></a>4.9. Using JDBC batch operations</h1><p>
+<a name="Batch"></a>4.11. Using JDBC batch operations</h1><p>
 							Some JDBC drivers have highly optimised means of executing batch
 							operations. The JDBC interface for those operations is a bit verbose.
 							jOOQ abstracts that by re-using the existing query API's

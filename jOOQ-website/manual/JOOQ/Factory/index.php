@@ -40,15 +40,15 @@ function printContent() {
 							
 </ul>
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Factory.java" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a>
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Factory.html" title="Internal API reference: org.jooq.impl.Factory">org.jooq.impl.Factory</a>
 								class is the main class from where you will create all jOOQ objects.
-								The Factory implements <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Configuration.java" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a>
+								The Factory implements <a href="http://www.jooq.org/javadoc/latest/org/jooq/Configuration.html" title="Internal API reference: org.jooq.Configuration">org.jooq.Configuration</a>
 								and needs to be instanciated with the Configuration's properties:
 							</p>
 							<ul>
 								
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/SQLDialect.java" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> :
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/SQLDialect.html" title="Internal API reference: org.jooq.SQLDialect">org.jooq.SQLDialect</a> :
 								The dialect of your database. This may be any of the currently
 								supported database types</li>
 								
@@ -58,7 +58,7 @@ function printContent() {
     							lifecycle of your Factory</li>
     							
 <li>
-<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">org.jooq.conf.Settings</a> :
+<a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html" title="Internal API reference: org.jooq.conf.Settings">org.jooq.conf.Settings</a> :
     							An optional runtime configuration.</li>
 							
 </ul>
@@ -69,8 +69,24 @@ function printContent() {
 							<h3>Factory settings</h3>
 							<p>
 								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/conf/Settings.java" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
-								type. In future releases of jOOQ, these settings can be loaded from an XML file automatically.
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
+								type, that can be provided to a Factory in several ways:
+							</p>
+							<ul>
+								
+<li>In the constructor. This will override default settings below</li>
+								
+<li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
+								
+<li>From the classpath at /jooq-settings.xml</li>
+								
+<li>From the settings defaults, as specified in
+								    <a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+								
+</li>
+							
+</ul>
+							<p>
 								Subsequent sections of the manual contain some more in-depth explanations about these settings:
 							</p>
 							<ul>
@@ -91,7 +107,7 @@ function printContent() {
 							<p>
 								Please refer to the jOOQ runtime configuration XSD for more details:<br>
 								
-<a href="http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
+<a href="http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.0.5.xsd</a>
 							
 </p>
 

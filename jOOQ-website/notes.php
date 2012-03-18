@@ -1,4 +1,4 @@
-<?php 
+<?php
 require 'frame.php';
 function getH1() {
 	return 'The history of jOOQ<br/>From 2009 to ' . date('Y');
@@ -25,7 +25,7 @@ function printContent() {
 			print $contents[$i];
 			print '</h3>';
 		}
-		
+
 		else if (substr($contents[$i], 0, 3) == '===') {
 			// Skip
 		}
@@ -35,32 +35,32 @@ function printContent() {
 		else if (trim($contents[$i]) == '' && substr($contents[$i + 1], 0, 1) != '-') {
 			print '<p>';
 		}
-		
-		// Create an <ul> from a list of "dashed" elements 
+
+		// Create an <ul> from a list of "dashed" elements
 		else if (substr($contents[$i], 0, 1) == '-') {
 			print '<ul>';
-			
+
 			while (trim($contents[$i]) != '') {
 				print '<li>';
-				print preg_replace('%-\s+(.*)%', '$1', $contents[$i]);
-				
+				print preg_replace('%-\s+(.*)%', '$1', markup($contents[$i]));
+
 				while (trim($contents[++$i]) != '' && substr($contents[$i], 0, 1) != '-') {
-					print htmlentities($contents[$i]);
+					print markup(htmlentities($contents[$i]));
 				}
-				
+
 				print '</li>';
 			}
-			
+
 			print '</ul><p>';
 		}
-		
+
 		// Create a ticket-table from a list of "hashed" elements
 		else if (substr($contents[$i], 0, 1) == '#') {
 			print '<table class="ticket-table">';
-			
+
 			while (trim($contents[$i]) != '') {
 				$ticket = preg_replace('%#(\d+).*%', '$1', $contents[$i]);
-				
+
 				print '<tr>';
 				print '<td width="80">';
 				print '<a href="https://sourceforge.net/apps/trac/jooq/ticket/' . $ticket . '">#';
@@ -69,15 +69,15 @@ function printContent() {
 				print '</td>';
 				print '<td>';
 				print htmlentities(preg_replace('%#\d+\s+-\s+(.*)%', '$1', $contents[$i]));
-				
+
 				while (trim($contents[++$i]) != '' && substr($contents[$i], 0, 1) != '#') {
 					print htmlentities($contents[$i]);
 				}
-				
+
 				print '</td>';
 				print '</tr>';
 			}
-			
+
 			print '</table>';
 		}
 		else {

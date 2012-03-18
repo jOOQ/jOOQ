@@ -28,6 +28,9 @@ function printContent() {
 <a title="Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a>
 </li>
 <li>
+<a title="Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a>
+</li>
+<li>
 <a title="Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a>
 </li>
 <li>
@@ -41,6 +44,9 @@ function printContent() {
 </li>
 <li>
 <a title="The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a>
+</li>
+<li>
+<a title="jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">jOOQ's relational division syntax</a>
 </li>
 <li>
 <a title="Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a>

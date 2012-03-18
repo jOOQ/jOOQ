@@ -26,11 +26,11 @@ function printContent() {
 </tr>
 </table>
 							<h2>The Table</h2>
-							<p>The formal definition of a <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">org.jooq.Table</a> starts with </p>
+							<p>The formal definition of a <a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">org.jooq.Table</a> starts with </p>
 							<pre class="prettyprint lang-java">public interface Table&lt;R extends Record&gt; // [...]</pre>
 							<p>
 								This means that every table is associated with a subtype of the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Record.java" title="Internal API reference: org.jooq.Record">org.jooq.Record</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html" title="Internal API reference: org.jooq.Record">org.jooq.Record</a>
 								class (see also
 								<a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results and Records">Results and Records</a>
 								). For anonymous or ad-hoc tables,
@@ -102,9 +102,9 @@ function printContent() {
 							<pre class="prettyprint lang-sql">SELECT 1 FROM DUAL</pre>
 							<p>
 								Then 1 is considered a Field or more explicitly, a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Constant.java" title="Internal API reference: org.jooq.impl.Constant">org.jooq.impl.Constant</a>,
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Constant.html" title="Internal API reference: org.jooq.impl.Constant">org.jooq.impl.Constant</a>,
 								which implements Field, and DUAL is considered a Table or more explicitly
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Dual.java" title="Internal API reference: org.jooq.impl.Dual">org.jooq.impl.Dual</a>, which implements Table
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Dual.html" title="Internal API reference: org.jooq.impl.Dual">org.jooq.impl.Dual</a>, which implements Table
 							</p>
 							<p>
 								More advanced uses become clear quickly, when you do things like
@@ -112,7 +112,7 @@ function printContent() {
 							<pre class="prettyprint lang-sql">SELECT 1 + 1 FROM DUAL</pre>
 							<p>
 								Where 1 + 1 itself is a Field or more explicitly, an
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/Expression.java" title="Internal API reference: org.jooq.impl.Expression">org.jooq.impl.Expression</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/Expression.html" title="Internal API reference: org.jooq.impl.Expression">org.jooq.impl.Expression</a>
 								joining two Constants together.
 							</p>
 							<p>
@@ -123,7 +123,7 @@ function printContent() {
 							<h2>TableFields</h2>
 							<p>
 								A specific type of field is the
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableField.java" title="Internal API reference: org.jooq.TableField">org.jooq.TableField</a>,
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/TableField.html" title="Internal API reference: org.jooq.TableField">org.jooq.TableField</a>,
 								which represents a physical
 								Field in a physical Table. Both the
 								TableField and its referenced Table

@@ -78,7 +78,7 @@ LAST_NAME.equal(val("Poe"))</pre>
 							    for more information about jOOQ's internals),
 								and cannot be modified directly anymore. If you wish to reuse a query and
 								modify bind values between subsequent query executions, you can access them again
-								through the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface:
+								through the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Query.html" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface:
 							</p>
 
 <pre class="prettyprint lang-java">// Access the first bind value from a query. Indexes are counted from 1, just as with JDBC
@@ -91,7 +91,7 @@ if ("Poe".equal(param.getValue())) {
 }</pre>
 
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Param.java" title="Internal API reference: org.jooq.Param">org.jooq.Param</a> type can also be named explicitly
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Param.html" title="Internal API reference: org.jooq.Param">org.jooq.Param</a> type can also be named explicitly
 								using the Factory's param() methods:
 							</p>
 <pre class="prettyprint lang-java">// Create a query with a named parameter. You can then use that name for accessing the parameter again
@@ -107,7 +107,7 @@ param2.setValue("Orwell");
 </pre>
 
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface also allows for
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Query.html" title="Internal API reference: org.jooq.Query">org.jooq.Query</a> interface also allows for
 								setting new bind values directly, without accessing the Param type:
 							</p>
 

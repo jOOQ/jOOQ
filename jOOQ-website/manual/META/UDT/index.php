@@ -115,8 +115,8 @@ CREATE OR REPLACE PROCEDURE p_check_address (address IN OUT u_address_type);</pr
 								rolls their own proprietary methods of dealing with these types. jOOQ
 								goes a different way, it hides those facts from you entirely. With
 								jOOQ, the above UDT's will be generated in simple
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDT.java" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/UDTRecord.java" title="Internal API reference: org.jooq.UDTRecord">UDT record classes</a> as such:
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UDT.html" title="Internal API reference: org.jooq.UDT">UDT meta-model classes</a> and
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UDTRecord.html" title="Internal API reference: org.jooq.UDTRecord">UDT record classes</a> as such:
 							</p>
 <pre class="prettyprint lang-java">// There is an analogy between UDT/Table and UDTRecord/TableRecord...
 public class UAddressType extends UDTImpl&lt;UAddressTypeRecord&gt; {
@@ -240,7 +240,7 @@ RETURN u_string_array</pre>
 							<p>Note that it becomes clear immediately, that a mapping from
 								U_STRING_ARRAY to String[] is obvious. But a mapping from String[] to
 								U_STRING_ARRAY is not. These are the generated
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/ArrayRecord.java" title="Internal API reference: org.jooq.ArrayRecord">org.jooq.ArrayRecord</a> and other
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/ArrayRecord.html" title="Internal API reference: org.jooq.ArrayRecord">org.jooq.ArrayRecord</a> and other
 								artefacts in Oracle: </p>
 
 <pre class="prettyprint lang-java">public class UStringArrayRecord extends ArrayRecordImpl&lt;String&gt; {  // [...]

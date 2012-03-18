@@ -22,7 +22,7 @@ function printContent() {
 </table>
 							<h2>jOOQ's set operation API</h2>
 							<p>The
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Select.java" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> API directly supports the UNION
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> API directly supports the UNION
 								syntax for all types of Select as discussed in the manual's section about
 								<a href="<?=$root?>/manual/JOOQ/Query/" title="jOOQ Manual reference: The Query and its various subtypes">Queries and Query subtypes</a>.
 								It consists of these methods: </p>

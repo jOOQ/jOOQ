@@ -25,9 +25,9 @@ function printContent() {
 							<h2>Everything is a QueryPart</h2>
 							<p>
 								A
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Query.java" title="Internal API reference: org.jooq.Query">org.jooq.Query</a>
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Query.html" title="Internal API reference: org.jooq.Query">org.jooq.Query</a>
 								and all its contained objects is a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPart.java" title="Internal API reference: org.jooq.QueryPart">org.jooq.QueryPart</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/QueryPart.html" title="Internal API reference: org.jooq.QueryPart">org.jooq.QueryPart</a>.
 								QueryParts essentially provide this functionality:
 							</p>
 							<ul>
@@ -39,14 +39,14 @@ function printContent() {
 </ul>
 
 							<p>Both of these methods are contained in jOOQ's internal API's
-							   <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/QueryPartInternal.java" title="Internal API reference: org.jooq.QueryPartInternal">org.jooq.QueryPartInternal</a>, which is
+							   <a href="http://www.jooq.org/javadoc/latest/org/jooq/QueryPartInternal.html" title="Internal API reference: org.jooq.QueryPartInternal">org.jooq.QueryPartInternal</a>, which is
 							   internally implemented by every QueryPart. QueryPart internals are best
 							   illustrated with an example.</p>
 
 						   <h2>Example: CompareCondition</h2>
 						   <p>A simple example can be provided by checking out jOOQ's internal
 								representation of a
-								<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/impl/CompareCondition.java" title="Internal API reference: org.jooq.impl.CompareCondition">org.jooq.impl.CompareCondition</a>.
+								<a href="http://www.jooq.org/javadoc/latest/org/jooq/impl/CompareCondition.html" title="Internal API reference: org.jooq.impl.CompareCondition">org.jooq.impl.CompareCondition</a>.
 								It is used for any condition
 								comparing two fields as for example the T_AUTHOR.ID = T_BOOK.AUTHOR_ID
 								condition here: </p>

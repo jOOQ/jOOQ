@@ -30,9 +30,9 @@ function printContent() {
 								you're trying to apply.</p>
 							<p>In jOOQ, most Conditions can be created and combined almost as
 								easily as in SQL itself. The two main participants for creating
-								Conditions are the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Field.java" title="Internal API reference: org.jooq.Field">Field</a>,
+								Conditions are the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Field.html" title="Internal API reference: org.jooq.Field">Field</a>,
 								which is typically a participant of a
-								condition, and the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Condition.java" title="Internal API reference: org.jooq.Condition">Condition</a>
+								condition, and the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Condition.html" title="Internal API reference: org.jooq.Condition">Condition</a>
 								itself: </p>
 <pre class="prettyprint lang-java">public interface Condition {
     Condition and(Condition other);

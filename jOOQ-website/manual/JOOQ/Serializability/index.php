@@ -45,6 +45,13 @@ create.attach(select);</pre>
 
 
 							<h2>Automatically attaching QueryParts</h2>
+							<p>
+								Note, this functionality is deprecated with jOOQ 2.1.0.
+								Please use the <a href="<?=$root?>/manual/ADVANCED/ExecuteListener/" title="jOOQ Manual reference: Execute listeners and the jOOQ Console">ExecuteListener</a> API
+								instead, to provide jOOQ queries with a
+								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a> before
+								execution.
+							</p>
 							<p>In simple cases, you can register a ConfigurationProvider in jOOQ's ConfigurationRegistry</p>
 <pre class="prettyprint lang-java">// Create your own custom ConfigurationProvider that will make
 // your default Factory available to jOOQ

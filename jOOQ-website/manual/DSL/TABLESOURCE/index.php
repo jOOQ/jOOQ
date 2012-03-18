@@ -30,7 +30,7 @@ function printContent() {
 								before applying predicates, renaming operations and projections. Apart from the convenience
 								methods for joining table sources in the
 								<a href="<?=$root?>/manual/DSL/SELECT/" title="jOOQ Manual reference: Complete SELECT syntax">manual's section about the full SELECT syntax</a>,
-								the <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/Table.java" title="Internal API reference: org.jooq.Table">Table</a> type itself provides a
+								the <a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">Table</a> type itself provides a
 								rich API for creating joined table sources. See an extract of the Table API:
 							</p>
 <pre class="prettyprint lang-java">// These are the various supported JOIN clauses. These JOIN types
@@ -53,10 +53,14 @@ Table&lt;Record&gt; naturalRightOuterJoin(TableLike&lt;?&gt; table);
 // Oracle and SQL Server also know PIVOT / UNPIVOT clauses for transforming a
 // table into another one using a list of PIVOT values
 PivotForStep pivot(Field&lt;?&gt;... aggregateFunctions);
-PivotForStep pivot(Collection&lt;? extends Field&lt;?&gt;&gt; aggregateFunctions);</pre>
+PivotForStep pivot(Collection&lt;? extends Field&lt;?&gt;&gt; aggregateFunctions);
+
+// Relational division can be applied to a table, transforming it into a
+// "quotient" using an intuitive syntax
+DivideByOnStep divideBy(Table&lt;?&gt; divisor);</pre>
 
 							<p>
-								The <a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ/src/main/java/org/jooq/TableOnStep.java" title="Internal API reference: org.jooq.TableOnStep">TableOnStep</a> type
+								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/TableOnStep.html" title="Internal API reference: org.jooq.TableOnStep">TableOnStep</a> type
 								contains methods for constructing the ON / ON KEY / USING clauses
 							</p>
 
@@ -76,11 +80,21 @@ TableOnConditionStep onKey() throws DataAccessException;
 TableOnConditionStep onKey(TableField&lt;?, ?&gt;... keyFields) throws DataAccessException;
 TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
 
-							<p>
+							<ul>
+							
+<li>
 								For more details about the PIVOT clause, see the
 								<a href="<?=$root?>/manual/ADVANCED/PIVOT/" title="jOOQ Manual reference: The Oracle 11g PIVOT clause">manual's section about the Oracle PIVOT syntax</a>
 							
-</p>
+</li>
+							
+<li>
+								For more details about the DIVIDE BY clause, see the
+								<a href="<?=$root?>/manual/ADVANCED/DIVISION/" title="jOOQ Manual reference: jOOQ's relational division syntax">manual's section about the relational division syntax</a>
+							
+</li>
+							
+</ul>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/TABLESOURCE/">Table sources</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>

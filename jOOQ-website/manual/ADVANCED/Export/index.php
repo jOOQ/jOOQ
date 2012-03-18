@@ -19,7 +19,7 @@ function printContent() {
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
 </tr>
 </table>
 							<h2>Exporting with jOOQ</h2>
@@ -116,7 +116,7 @@ String text = create.selectFrom(T_BOOK).fetch().format();</pre>
 +---+---------+-----------+</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Export/">Exporting to XML, CSV, JSON, HTML, Text</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">previous</a> : <a title="Next section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">next</a></td>
 </tr>
 </table>
 <?php 

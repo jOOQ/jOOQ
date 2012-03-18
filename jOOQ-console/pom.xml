@@ -197,7 +197,6 @@
             <artifactId>rsyntaxtextarea</artifactId>
             <version>1.5.0</version>
             <type>jar</type>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jooq</groupId>

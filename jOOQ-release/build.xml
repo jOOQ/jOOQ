@@ -50,8 +50,10 @@
 
  		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\apache\ant\ant\1.8.2\ant-1.8.2.jar"/>
 
-		<!-- Include rsyntaxtextarea.jar binaries in jooq-console.jar -->
+		<!-- Include jooq.jar and rsyntaxtextarea.jar binaries in jooq-console.jar -->
+		<unzip dest="${dir.release}/${version}/third-party/src/unzipped" src="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
 		<unzip dest="${dir.release}/${version}/third-party/src/unzipped" src="${dir.release}/${version}/third-party/lib/rsyntaxtextarea-1.5.0.jar"/>
+
 
 		<jar update="true" destfile="${dir.release}/${version}/lib/jooq-console-${version}.jar">
 			<fileset dir="${dir.release}/${version}/third-party/src/unzipped">

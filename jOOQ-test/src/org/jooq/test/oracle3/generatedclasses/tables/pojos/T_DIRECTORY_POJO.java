@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
-public class T_DIRECTORY implements java.io.Serializable {
+public class T_DIRECTORY_POJO implements java.io.Serializable {
 
-	private static final long serialVersionUID = 545722935;
+	private static final long serialVersionUID = 784456382;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer PARENT_ID;

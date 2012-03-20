@@ -12,9 +12,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
-public class X_UNUSED implements java.io.Serializable {
+public class X_UNUSED_POJO implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1973272972;
+	private static final long serialVersionUID = -572603293;
 
 	private java.lang.Integer    ID;
 	private java.lang.String     NAME;

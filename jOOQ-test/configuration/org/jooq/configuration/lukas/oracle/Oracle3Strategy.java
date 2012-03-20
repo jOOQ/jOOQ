@@ -67,6 +67,10 @@ public class Oracle3Strategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
+        if (mode == Mode.POJO) {
+            return definition.getOutputName() + "_POJO";
+        }
+
         return definition.getOutputName();
     }
 

@@ -51,7 +51,7 @@
 					</execution>
 				</executions>
 			</plugin>
-        
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -109,7 +109,7 @@
 					<notree>true</notree>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -118,7 +118,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -127,11 +127,11 @@
                     <downloadSources>true</downloadSources>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.2.0-SNAPSHOT</version>
+                <version>2.1.0</version>
                 <extensions>true</extensions>
                 <executions>
                     <execution>
@@ -167,12 +167,12 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <issueManagement>
 		<system>Trac</system>
 		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
 	</issueManagement>
-	
+
 	<developers>
 		<developer>
 			<name>Lukas Eder</name>
@@ -183,7 +183,7 @@
 			<email>sergey.epik@gmail.com</email>
 		</developer>
 	</developers>
-	
+
     <dependencies>
         <dependency>
             <groupId>org.jooq</groupId>

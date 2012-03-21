@@ -42,7 +42,6 @@ import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
-import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableTable;
 
@@ -53,7 +52,7 @@ import org.jooq.UpdatableTable;
  *
  * @author Lukas Eder
  */
-public class UpdatableTableImpl<R extends TableRecord<R>> extends TableImpl<R> implements UpdatableTable<R> {
+public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implements UpdatableTable<R> {
 
     /**
      * Generated UID

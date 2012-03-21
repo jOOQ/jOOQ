@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * A book store
  */
-public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> {
+public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = -1321418142;
+	private static final long serialVersionUID = -625932448;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK_STORE
@@ -20,20 +20,20 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	/**
 	 * The class holding records for this type
 	 */
-	private static final java.lang.Class<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> __RECORD_TYPE = org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE.class;
+	private static final java.lang.Class<org.jooq.Record> __RECORD_TYPE = org.jooq.Record.class;
 
 	/**
 	 * The class holding records for this type
 	 */
 	@Override
-	public java.lang.Class<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> getRecordType() {
+	public java.lang.Class<org.jooq.Record> getRecordType() {
 		return __RECORD_TYPE;
 	}
 
 	/**
 	 * The books store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
 	 * No further instances allowed
@@ -50,14 +50,14 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.Record> getMainKey() {
 		return org.jooq.test.oracle3.generatedclasses.Keys.UK_T_BOOK_STORE_NAME;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE>>asList(org.jooq.test.oracle3.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
+	public java.util.List<org.jooq.UniqueKey<org.jooq.Record>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.Record>>asList(org.jooq.test.oracle3.generatedclasses.Keys.UK_T_BOOK_STORE_NAME);
 	}
 
 	@Override

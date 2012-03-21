@@ -37,6 +37,9 @@ package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static org.jooq.tools.reflect.Reflect.on;
+
+import java.util.List;
 
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -53,6 +56,8 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 import org.junit.Test;
 
@@ -121,6 +126,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#677] [#1013] This doesn't work correctly yet for
         // Ingres, HSQLDB, H2, Derby, Sybase ASE
         // Double-check again for Postgres
+
+        // Insertion
+        // --------------------------------------------------------------------
         assertEquals(1,
         create().insertInto(TBooleans())
                 .set(TBooleans_ID(), 1)
@@ -151,6 +159,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 //                .set(TBooleans_N(), true)
                 .execute());
 
+        // Selection
+        // --------------------------------------------------------------------
         Result<?> result =
         create().selectFrom(TBooleans())
                 .where(TBooleans_ID().in(1, 2))
@@ -196,6 +206,46 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 //
 //        assertFalse(result.getValue(0, TBooleans_N()));
 //        assertTrue(result.getValue(1, TBooleans_N()));
+
+        // Conversion to custom POJOs
+        // --------------------------------------------------------------------
+        try {
+            Reflect booleans = on(TBooleans().getClass().getPackage().getName() + ".pojos." + TBooleans().getClass().getSimpleName());
+
+            List<Object> b =
+            create().selectFrom(TBooleans())
+                    .orderBy(TBooleans_ID().asc())
+                    .fetchInto((Class<?>) booleans.get());
+
+            assertEquals(2, b.size());
+            assertEquals(1, on(b.get(0)).call("getId").get());
+            assertEquals(2, on(b.get(1)).call("getId").get());
+
+            assertEquals(Boolean_10.ZERO, on(b.get(0)).call("getOneZero").get());
+            assertEquals(Boolean_10.ONE, on(b.get(1)).call("getOneZero").get());
+
+            assertEquals(Boolean_TF_LC.FALSE, on(b.get(0)).call("getTrueFalseLc").get());
+            assertEquals(Boolean_TF_LC.TRUE, on(b.get(1)).call("getTrueFalseLc").get());
+
+            assertEquals(Boolean_TF_UC.FALSE, on(b.get(0)).call("getTrueFalseUc").get());
+            assertEquals(Boolean_TF_UC.TRUE, on(b.get(1)).call("getTrueFalseUc").get());
+
+            assertEquals(Boolean_YES_NO_LC.no, on(b.get(0)).call("getYesNoLc").get());
+            assertEquals(Boolean_YES_NO_LC.yes, on(b.get(1)).call("getYesNoLc").get());
+
+            assertEquals(Boolean_YES_NO_UC.NO, on(b.get(0)).call("getYesNoUc").get());
+            assertEquals(Boolean_YES_NO_UC.YES, on(b.get(1)).call("getYesNoUc").get());
+
+            assertEquals(Boolean_YN_LC.n, on(b.get(0)).call("getYNLc").get());
+            assertEquals(Boolean_YN_LC.y, on(b.get(1)).call("getYNLc").get());
+
+            assertEquals(Boolean_YN_UC.N, on(b.get(0)).call("getYNUc").get());
+            assertEquals(Boolean_YN_UC.Y, on(b.get(1)).call("getYNUc").get());
+        }
+        catch (ReflectException e) {
+            log.info("SKIPPING", "Generated POJO tests");
+        }
+
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

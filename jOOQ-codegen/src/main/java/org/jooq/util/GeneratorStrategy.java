@@ -36,6 +36,7 @@
 package org.jooq.util;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * A strategy for naming various artefacts generated from {@link Definition}'s
@@ -167,6 +168,44 @@ public interface GeneratorStrategy {
 
     /**
      * This is the same as calling
+     * <code>getJavaClassExtends(definition, Mode.DEFAULT)</code>
+     *
+     * @return The super class name of the Java class representing this object,
+     *         e.g. [com.example.AbstractPojo]. If this returns
+     *         <code>null</code> or an empty string, then no super class is
+     *         extended.
+     */
+    String getJavaClassExtends(Definition definition);
+
+    /**
+     * @return The super class name of the Java class representing this object,
+     *         e.g. [com.example.AbstractPojo]. If this returns
+     *         <code>null</code> or an empty string, then no super class is
+     *         extended.
+     */
+    String getJavaClassExtends(Definition definition, Mode mode);
+
+    /**
+     * This is the same as calling
+     * <code>getJavaClassImplements(definition, Mode.DEFAULT)</code>
+     *
+     * @return The implemented interface names of the Java class name
+     *         representing this object, e.g. [com.example.Pojo] If this returns
+     *         <code>null</code> or an empty list, then no interfaces are
+     *         implemented.
+     */
+    List<String> getJavaClassImplements(Definition definition);
+
+    /**
+     * @return The implemented interface names of the Java class name
+     *         representing this object, e.g. [com.example.Pojo]. If this
+     *         returns <code>null</code> or an empty list, then no interfaces
+     *         are implemented.
+     */
+    List<String> getJavaClassImplements(Definition definition, Mode mode);
+
+    /**
+     * This is the same as calling
      * <code>getJavaClassName(definition, Mode.DEFAULT)</code>
      *
      * @return The Java class name representing this object, e.g. [MyTable]
@@ -287,8 +326,8 @@ public interface GeneratorStrategy {
         POJO,
 
         /**
-         * The enum mode. This is used when a {@link EnumDefinition}'s class
-         * is being rendered
+         * The enum mode. This is used when a {@link EnumDefinition}'s class is
+         * being rendered
          */
         ENUM,
 

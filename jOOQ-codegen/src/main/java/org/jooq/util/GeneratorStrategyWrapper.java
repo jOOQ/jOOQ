@@ -41,6 +41,7 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -206,6 +207,20 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         }
 
         return result;
+    }
+
+    @Override
+    public String getJavaClassExtends(Definition definition, Mode mode) {
+
+        // [#1243] Only POJO mode can accept super classes
+        return delegate.getJavaClassExtends(definition, mode);
+    }
+
+    @Override
+    public List<String> getJavaClassImplements(Definition definition, Mode mode) {
+
+        // [#1243] All generation modes can accept interfaces
+        return delegate.getJavaClassImplements(definition, mode);
     }
 
     @Override

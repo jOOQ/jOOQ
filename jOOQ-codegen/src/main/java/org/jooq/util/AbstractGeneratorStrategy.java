@@ -36,6 +36,7 @@
 package org.jooq.util;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Common base class for convenience method abstraction
@@ -116,6 +117,16 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
     @Override
     public final String getJavaMethodName(Definition definition) {
         return getJavaMethodName(definition, Mode.DEFAULT);
+    }
+
+    @Override
+    public final String getJavaClassExtends(Definition definition) {
+        return getJavaClassExtends(definition, Mode.DEFAULT);
+    }
+
+    @Override
+    public final List<String> getJavaClassImplements(Definition definition) {
+        return getJavaClassImplements(definition, Mode.DEFAULT);
     }
 
     @Override

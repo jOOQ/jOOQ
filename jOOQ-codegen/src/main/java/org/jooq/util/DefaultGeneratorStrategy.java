@@ -37,6 +37,10 @@ package org.jooq.util;
 
 import static org.jooq.util.GenerationUtil.convertToJavaIdentifier;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.tools.StringUtils;
 
 /**
@@ -106,6 +110,22 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
         return getJavaClassName0LC(definition, Mode.DEFAULT);
+    }
+
+    @Override
+    public String getJavaClassExtends(Definition definition, Mode mode) {
+        return null;
+    }
+
+    @Override
+    public List<String> getJavaClassImplements(Definition definition, Mode mode) {
+        List<String> result = new ArrayList<String>();
+
+        if (mode == Mode.POJO) {
+            result.add(Serializable.class.getName());
+        }
+
+        return result;
     }
 
     @Override

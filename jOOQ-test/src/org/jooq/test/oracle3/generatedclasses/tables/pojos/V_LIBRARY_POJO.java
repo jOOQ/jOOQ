@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
-public class V_LIBRARY_POJO implements java.io.Serializable {
+public class V_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -232374048;
+	private static final long serialVersionUID = -240219677;
 
 	private java.lang.String AUTHOR;
 	private java.lang.String TITLE;

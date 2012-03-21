@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * An unused table in the same schema.
  */
-public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> {
+public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -224491186;
+	private static final long serialVersionUID = -1846801173;
 
 	/**
 	 * The singleton instance of TEST.X_UNUSED

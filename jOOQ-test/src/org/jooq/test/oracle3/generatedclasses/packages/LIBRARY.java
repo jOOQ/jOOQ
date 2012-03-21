@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  *
  * Convenience access to all stored procedures and functions in LIBRARY
  */
-public final class LIBRARY extends org.jooq.impl.PackageImpl {
+public final class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1296072562;
+	private static final long serialVersionUID = 277161264;
 
 	/**
 	 * The singleton instance of TEST.LIBRARY

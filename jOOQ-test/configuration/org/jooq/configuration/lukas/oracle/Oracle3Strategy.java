@@ -35,6 +35,10 @@
  */
 package org.jooq.configuration.lukas.oracle;
 
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+
 import org.jooq.util.DefaultGeneratorStrategy;
 import org.jooq.util.Definition;
 
@@ -63,6 +67,38 @@ public class Oracle3Strategy extends DefaultGeneratorStrategy {
     @Override
     public String getJavaMethodName(Definition definition, Mode mode) {
         return "call_" + definition.getOutputName();
+    }
+
+    @Override
+    public String getJavaClassExtends(Definition definition, Mode mode) {
+        // A little useless fun
+
+        if (definition.getName().toLowerCase().contains("book")) {
+            return Object.class.getName();
+        }
+        else {
+            return ThreadDeath.class.getName();
+        }
+    }
+
+    @Override
+    public List<String> getJavaClassImplements(Definition definition, Mode mode) {
+        if (mode == Mode.POJO) {
+            if (definition.getName().toLowerCase().contains("book")) {
+                return Arrays.asList(Serializable.class.getName());
+            }
+            else {
+                return Arrays.asList(Cloneable.class.getName());
+            }
+        }
+        else {
+            if (definition.getName().toLowerCase().contains("library")) {
+                return Arrays.asList(Serializable.class.getName(), Cloneable.class.getName());
+            }
+            else {
+                return Arrays.asList(Cloneable.class.getName(), Cloneable.class.getName());
+            }
+        }
     }
 
     @Override

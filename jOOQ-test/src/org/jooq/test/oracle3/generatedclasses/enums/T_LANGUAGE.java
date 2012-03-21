@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.enums;
  *
  * An entity holding language master data
  */
-public enum T_LANGUAGE implements org.jooq.MasterDataType<java.lang.Integer> {
+public enum T_LANGUAGE implements java.lang.Cloneable, org.jooq.MasterDataType<java.lang.Integer> {
 
 	/**
 	 * English

@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
-public class X_TEST_CASE_64_69_POJO implements java.io.Serializable {
+public class X_TEST_CASE_64_69_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 2021290169;
+	private static final long serialVersionUID = -1333623784;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer UNUSED_ID;

@@ -45,7 +45,9 @@ import java.io.IOException;
 import java.lang.reflect.TypeVariable;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -296,6 +298,7 @@ public class DefaultGenerator implements Generator {
 			outS.print(strategy.getJavaClassName(schema));
 			outS.print(" extends ");
 			outS.print(SchemaImpl.class);
+			printImplements(outS, schema, Mode.DEFAULT);
 			outS.println(" {");
 			outS.printSerial();
 			outS.println();
@@ -324,6 +327,7 @@ public class DefaultGenerator implements Generator {
             outF.print(strategy.getJavaClassName(schema, Mode.FACTORY));
             outF.print(" extends ");
             outF.print(database.getDialect().getFactory());
+            printImplements(outF, schema, Mode.FACTORY);
             outF.println(" {");
             outF.printSerial();
 
@@ -460,11 +464,9 @@ public class DefaultGenerator implements Generator {
 
                     out.print("public enum ");
                     out.print(strategy.getJavaClassName(table));
-                    out.print(" implements ");
-                    out.print(MasterDataType.class);
-                    out.print("<");
-                    out.print(getJavaType(pk.getType()));
-                    out.println("> {");
+                    printImplements(out, table, Mode.ENUM,
+                        MasterDataType.class.getName() + "<" + getJavaType(pk.getType()) + ">");
+                    out.println(" {");
 
                     Set<ColumnDefinition> columns =
                         new LinkedHashSet<ColumnDefinition>(Arrays.asList(pk, l, d));
@@ -591,7 +593,9 @@ public class DefaultGenerator implements Generator {
         			out.print(baseClass);
         			out.print("<");
     			    out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
-        			out.println("> {");
+        			out.print(">");
+        			printImplements(out, table, Mode.RECORD);
+        			out.println(" {");
         			out.printSerial();
         			printSingletonInstance(table, out);
         			printRecordTypeMethod(table, out);
@@ -808,7 +812,9 @@ public class DefaultGenerator implements Generator {
 
                     out.print("public class ");
                     out.print(strategy.getJavaClassName(table, Mode.POJO));
-                    out.print(" implements java.io.Serializable {");
+                    printExtends(out, table, Mode.POJO);
+                    printImplements(out, table, Mode.POJO);
+                    out.print(" {");
                     out.println();
                     out.printSerial();
 
@@ -1080,7 +1086,9 @@ public class DefaultGenerator implements Generator {
         			out.print(baseClass);
         			out.print("<");
         			out.print(strategy.getFullJavaClassName(table, Mode.RECORD));
-        			out.println("> {");
+        			out.print(">");
+        			printImplements(out, table, Mode.RECORD);
+        		    out.println(" {");
         			out.printSerial();
 
         			for (ColumnDefinition column : table.getColumns()) {
@@ -1131,8 +1139,10 @@ public class DefaultGenerator implements Generator {
                     // [#799] Oracle UDTs with member procedures have similarities
                     // with packages
                     if (udt.getRoutines().size() > 0) {
-                        out.print(" implements ");
-                        out.print(org.jooq.Package.class);
+                        printImplements(out, udt, Mode.DEFAULT, org.jooq.Package.class.getName());
+                    }
+                    else {
+                        printImplements(out, udt, Mode.DEFAULT);
                     }
 
                     out.println(" {");
@@ -1217,7 +1227,9 @@ public class DefaultGenerator implements Generator {
                     out.print(UDTRecordImpl.class);
                     out.print("<");
                     out.print(strategy.getFullJavaClassName(udt, Mode.RECORD));
-                    out.println("> {");
+                    out.print(">");
+                    printImplements(out, udt, Mode.RECORD);
+                    out.println(" {");
 
                     out.printSerial();
                     out.println();
@@ -1339,7 +1351,9 @@ public class DefaultGenerator implements Generator {
                     out.print(ArrayRecordImpl.class);
                     out.print("<");
                     out.print(getJavaType(array.getElementType()));
-                    out.println("> {");
+                    out.print(">");
+                    printImplements(out, array, Mode.RECORD);
+                    out.println(" {");
                     out.printSerial();
 
                     out.println();
@@ -1411,8 +1425,7 @@ public class DefaultGenerator implements Generator {
 
                     out.print("public enum ");
                     out.print(strategy.getJavaClassName(e, Mode.ENUM));
-                    out.print(" implements ");
-                    out.print(EnumType.class);
+                    printImplements(out, e, Mode.ENUM, EnumType.class.getName());
                     out.print(" {");
                     out.println();
 
@@ -1524,6 +1537,7 @@ public class DefaultGenerator implements Generator {
                     outPkg.print(strategy.getJavaClassName(pkg));
                     outPkg.print(" extends ");
                     outPkg.print(PackageImpl.class);
+                    printImplements(outPkg, pkg, Mode.DEFAULT);
                     outPkg.println(" {");
                     outPkg.printSerial();
                     printSingletonInstance(pkg, outPkg);
@@ -1582,6 +1596,36 @@ public class DefaultGenerator implements Generator {
         // XXX [#651] Refactoring-cursor
         watch.splitInfo("GENERATION FINISHED!");
 	}
+
+    private void printExtends(GenerationWriter out, Definition definition, Mode mode) {
+        String superclass = strategy.getJavaClassExtends(definition, mode);
+
+        if (!StringUtils.isBlank(superclass)) {
+            out.print(" extends ");
+            out.print(superclass);
+        }
+    }
+
+    private void printImplements(GenerationWriter out, Definition definition, Mode mode, String... forcedInterfaces) {
+        List<String> interfaces = strategy.getJavaClassImplements(definition, mode);
+
+        interfaces = new ArrayList<String>(interfaces == null ? Collections.<String>emptyList() : interfaces);
+        interfaces.addAll(Arrays.asList(forcedInterfaces));
+
+        if (!interfaces.isEmpty()) {
+            String glue = " implements ";
+
+            // Avoid duplicates
+            for (String i : new LinkedHashSet<String>(interfaces)) {
+                if (!StringUtils.isBlank(i)) {
+                    out.print(glue);
+                    out.print(i);
+
+                    glue = ", ";
+                }
+            }
+        }
+    }
 
     private void printTableJPAAnnotation(GenerationWriter out, TableDefinition table) {
         SchemaDefinition schema = table.getSchema();
@@ -1754,7 +1798,7 @@ public class DefaultGenerator implements Generator {
         }
 
         out.print(">");
-
+        printImplements(out, routine, Mode.DEFAULT);
         out.println(" {");
         out.printSerial();
         out.println();

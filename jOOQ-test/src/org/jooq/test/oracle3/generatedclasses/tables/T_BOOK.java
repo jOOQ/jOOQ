@@ -8,9 +8,9 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * An entity holding books
  */
-public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> {
+public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1816081451;
+	private static final long serialVersionUID = -551983258;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK

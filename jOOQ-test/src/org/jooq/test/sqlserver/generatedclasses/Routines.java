@@ -207,6 +207,30 @@ public final class Routines {
 	}
 
 	/**
+	 * Call dbo.p_default
+	 *
+	 * @param pInNumber IN parameter
+	 * @param pOutNumber IN OUT parameter
+	 * @param pInVarchar IN parameter
+	 * @param pOutVarchar IN OUT parameter
+	 * @param pInDate IN parameter
+	 * @param pOutDate IN OUT parameter
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static org.jooq.test.sqlserver.generatedclasses.routines.PDefault pDefault(org.jooq.Configuration configuration, java.lang.Integer pInNumber, java.lang.Integer pOutNumber, java.lang.String pInVarchar, java.lang.String pOutVarchar, java.sql.Date pInDate, java.sql.Date pOutDate) {
+		org.jooq.test.sqlserver.generatedclasses.routines.PDefault p = new org.jooq.test.sqlserver.generatedclasses.routines.PDefault();
+		p.setPInNumber(pInNumber);
+		p.setPOutNumber(pOutNumber);
+		p.setPInVarchar(pInVarchar);
+		p.setPOutVarchar(pOutVarchar);
+		p.setPInDate(pInDate);
+		p.setPOutDate(pOutDate);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * Call dbo.p_unused
 	 *
 	 * @param in1 IN parameter

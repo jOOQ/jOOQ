@@ -53,6 +53,7 @@ DROP PROCEDURE p_tables2/
 DROP PROCEDURE p_tables3/
 DROP PROCEDURE p_tables4/
 DROP PROCEDURE p_many_parameters/
+DROP PROCEDURE p_default/
 DROP FUNCTION f_arrays1/
 DROP FUNCTION f_arrays2/
 DROP FUNCTION f_arrays3/
@@ -753,6 +754,22 @@ BEGIN
 END p_tables4;
 /
 
+
+CREATE OR REPLACE PROCEDURE p_default (
+  p_in_number   IN  number   := 0,
+  p_out_number  OUT number,
+  p_in_varchar  IN  varchar2 := '0',
+  p_out_varchar OUT varchar2,
+  p_in_date     IN  date     := date '1981-07-10',
+  p_out_date    OUT date
+)
+IS
+BEGIN
+    p_out_number := p_in_number;
+	p_out_varchar := p_in_varchar;
+	p_out_date := p_in_date;
+END p_default;
+/
 
 CREATE OR REPLACE PROCEDURE p_many_parameters (
   f000 number, f001 number, f002 number, f003 number, f004 number,

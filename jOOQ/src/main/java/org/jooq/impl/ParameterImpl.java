@@ -54,8 +54,12 @@ class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
 
     private static final long serialVersionUID = -5277225593751085577L;
 
-    ParameterImpl(String name, DataType<T> type) {
+    private final boolean     isDefaulted;
+
+    ParameterImpl(String name, DataType<T> type, boolean isDefaulted) {
         super(name, type);
+
+        this.isDefaulted = isDefaulted;
     }
 
     @Override
@@ -69,5 +73,10 @@ class ParameterImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
     @Override
     public final void toSQL(RenderContext context) {
         context.literal(getName());
+    }
+
+    @Override
+    public final boolean isDefaulted() {
+        return isDefaulted;
     }
 }

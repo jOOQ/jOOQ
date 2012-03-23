@@ -36,6 +36,8 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 /**
  * A parameter to a stored procedure or function.
  *
@@ -44,4 +46,35 @@ package org.jooq;
  */
 public interface Parameter<T> extends NamedTypeProviderQueryPart<T> {
 
+    /**
+     * Whether this parameter has a default value
+     * <p>
+     * Procedures and functions with defaulted parameters behave slightly
+     * different from ones without defaulted parameters. In PL/SQL and other
+     * procedural languages, it is possible to pass parameters by name,
+     * reordering names and omitting defaulted parameters: <code><pre>
+     * CREATE PROCEDURE MY_PROCEDURE (P_DEFAULTED IN NUMBER := 0
+     *                                P_MANDATORY IN NUMBER);
+     *
+     * -- The above procedure can be called as such:
+     * BEGIN
+     *   -- Assign parameters by index
+     *   MY_PROCEDURE(1, 2);
+     *
+     *   -- Assign parameters by name
+     *   MY_PROCEDURE(P_DEFAULTED => 1,
+     *                P_MANDATORY => 2);
+     *
+     *   -- Omitting defaulted parameters
+     *   MY_PROCEDURE(P_MANDATORY => 2);
+     * END;
+     * </pre></code>
+     * <p>
+     * If a procedure has defaulted parameters, jOOQ binds them by name, rather
+     * than by index.
+     * <p>
+     * Currently, this is only supported for Oracle
+     */
+    @Support({ ORACLE })
+    boolean isDefaulted();
 }

@@ -2507,6 +2507,10 @@ public class DefaultGenerator implements Generator {
 		    type instanceof TableDefinition ||
 		    type instanceof UDTDefinition;
 
+		boolean isDefaulted =
+		    column instanceof ParameterDefinition &&
+		    ((ParameterDefinition) column).isDefaulted();
+
 		if (type instanceof TableDefinition) {
 		    if (generateInstanceFields()) {
 		        out.print("\tpublic final ");
@@ -2557,6 +2561,10 @@ public class DefaultGenerator implements Generator {
 			else {
 			    out.print(", " + strategy.getJavaIdentifier(type));
 			}
+		}
+
+		if (isDefaulted) {
+		    out.print(", true");
 		}
 
 		out.println(");");

@@ -3,6 +3,7 @@ DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p_create_author/
 DROP PROCEDURE p_create_author_by_name/
 DROP PROCEDURE p391/
+DROP PROCEDURE p_default/
 
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
@@ -399,6 +400,21 @@ BEGIN
 
   SET o2 = io2;
   SET io2 = i2;
+END
+/
+
+CREATE PROCEDURE p_default (
+  IN  p_in_number   INTEGER DEFAULT(0),
+  OUT p_out_number  INTEGER,
+  IN  p_in_varchar  VARCHAR(10) DEFAULT('0'),
+  OUT p_out_varchar VARCHAR(10),
+  IN  p_in_date     DATE DEFAULT('1981-07-10'),
+  OUT p_out_date    DATE
+) LANGUAGE SQL
+BEGIN
+  SET p_out_number = p_in_number;
+  SET p_out_varchar = p_in_varchar;
+  SET p_out_date = p_in_date;
 END
 /
 

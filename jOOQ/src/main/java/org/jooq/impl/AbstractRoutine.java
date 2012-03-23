@@ -46,8 +46,10 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
@@ -82,20 +84,29 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
      */
     private static final long                 serialVersionUID = 6330037113167106443L;
 
+    // ------------------------------------------------------------------------
+    // Meta-data attributes (the same for every call)
+    // ------------------------------------------------------------------------
+
     private final Package                     pkg;
     private final List<Parameter<?>>          allParameters;
     private final List<Parameter<?>>          inParameters;
     private final List<Parameter<?>>          outParameters;
-    private final Map<Parameter<?>, Field<?>> inValues;
     private final DataType<T>                 type;
+    private Parameter<T>                      returnParameter;
+    private boolean                           overloaded;
+
+    // ------------------------------------------------------------------------
+    // Call-data attributes (call-specific)
+    // ------------------------------------------------------------------------
+
+    private final Map<Parameter<?>, Field<?>> inValues;
+    private final Set<Parameter<?>>           inValuesNonDefaulted;
+    private transient Field<T>                function;
 
     private final AttachableImpl              attachable;
     private final Map<Parameter<?>, Object>   results;
     private final Map<Parameter<?>, Integer>  parameterIndexes;
-
-    private Parameter<T>                      returnParameter;
-    private boolean                           overloaded;
-    private transient Field<T>                function;
 
     // ------------------------------------------------------------------------
     // Constructors
@@ -160,6 +171,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
         this.inParameters = new ArrayList<Parameter<?>>();
         this.outParameters = new ArrayList<Parameter<?>>();
         this.inValues = new HashMap<Parameter<?>, Field<?>>();
+        this.inValuesNonDefaulted = new HashSet<Parameter<?>>();
         this.results = new HashMap<Parameter<?>, Object>();
         this.type = type;
     }
@@ -189,9 +201,10 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             setField(parameter, val(null, parameter.getDataType()));
         }
 
-        // Add the field to the in-values
+        // [#1183] Add the field to the in-values and mark them as non-defaulted
         else {
             inValues.put(parameter, value);
+            inValuesNonDefaulted.add(parameter);
         }
     }
 
@@ -326,6 +339,12 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     @Override
     public final void bind(BindContext context) {
         for (Parameter<?> parameter : getParameters()) {
+
+            // [#1183] Skip defaulted parameters
+            if (getInParameters().contains(parameter) && !inValuesNonDefaulted.contains(parameter)) {
+                continue;
+            }
+
             int index = context.peekIndex();
             parameterIndexes.put(parameter, index);
 
@@ -349,19 +368,17 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql("{ ");
+        toSQLBegin(context);
 
         if (getReturnParameter() != null) {
-            context.sql("? = ");
+            toSQLAssign(context);
         }
 
-        context.sql("call ");
-        toSQLQualifiedName(context);
+        toSQLCall(context);
         context.sql("(");
 
         String separator = "";
         for (Parameter<?> parameter : getParameters()) {
-            context.sql(separator);
 
             // The return value has already been written
             if (parameter.equals(getReturnParameter())) {
@@ -370,7 +387,13 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
             // OUT and IN OUT parameters are always written as a '?' bind variable
             else if (getOutParameters().contains(parameter)) {
-                context.sql("?");
+                context.sql(separator);
+                toSQLOutParam(context, parameter);
+            }
+
+            // [#1183] Omit defaulted parameters
+            else if (!inValuesNonDefaulted.contains(parameter)) {
+                continue;
             }
 
             // IN parameters are rendered normally
@@ -382,13 +405,97 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                     value = value.cast(parameter.getType());
                 }
 
-                context.sql(value);
+                context.sql(separator);
+                toSQLInParam(context, parameter, value);
             }
 
             separator = ", ";
         }
 
-        context.sql(") }");
+        context.sql(")");
+        toSQLEnd(context);
+    }
+
+    private final void toSQLEnd(RenderContext context) {
+        switch (context.getDialect()) {
+            case ORACLE:
+                context.sql(";")
+                       .formatIndentEnd()
+                       .formatSeparator()
+                       .keyword("end;");
+                break;
+
+            default:
+                context.sql(" }");
+                break;
+        }
+    }
+
+    private final void toSQLBegin(RenderContext context) {
+        switch (context.getDialect()) {
+            case ORACLE:
+                context.keyword("begin")
+                       .formatIndentStart()
+                       .formatSeparator();
+                break;
+
+            default:
+                context.sql("{ ");
+                break;
+        }
+    }
+
+    private final void toSQLAssign(RenderContext context) {
+        switch (context.getDialect()) {
+            case ORACLE:
+                context.sql("? := ");
+                break;
+
+            default:
+                context.sql("? = ");
+                break;
+        }
+    }
+
+    private final void toSQLCall(RenderContext context) {
+        switch (context.getDialect()) {
+            case ORACLE:
+                break;
+
+            default:
+                context.sql("call ");
+                break;
+        }
+
+        toSQLQualifiedName(context);
+    }
+
+    private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
+        switch (context.getDialect()) {
+            case ORACLE:
+                context.sql(parameter);
+                context.sql(" => ");
+                break;
+
+            default:
+                break;
+        }
+
+        context.sql("?");
+    }
+
+    private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
+        switch (context.getDialect()) {
+            case ORACLE:
+                context.sql(parameter);
+                context.sql(" => ");
+                break;
+
+            default:
+                break;
+        }
+
+        context.sql(value);
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
@@ -407,11 +514,10 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
     private final void fetchOutParameters(ExecuteContext ctx) throws SQLException {
         for (Parameter<?> parameter : getParameters()) {
-            int index = parameterIndexes.get(parameter);
-
             if (parameter.equals(getReturnParameter()) ||
                 getOutParameters().contains(parameter)) {
 
+                int index = parameterIndexes.get(parameter);
                 results.put(parameter, FieldTypeHelper.getFromStatement(ctx, parameter.getType(), index));
             }
         }
@@ -527,6 +633,11 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
 
         // IN parameters are initialised with null by default
         inValues.put(parameter, val(null, parameter.getDataType()));
+
+        // [#1183] non-defaulted parameters are marked as such
+        if (!parameter.isDefaulted()) {
+            inValuesNonDefaulted.add(parameter);
+        }
     }
 
     protected final void addInOutParameter(Parameter<?> parameter) {
@@ -564,7 +675,20 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
      * @param type The data type of the field
      */
     protected static final <T> Parameter<T> createParameter(String name, DataType<T> type) {
-        return new ParameterImpl<T>(name, type);
+        return createParameter(name, type, false);
+    }
+
+    /**
+     * Subclasses may call this method to create {@link UDTField} objects that
+     * are linked to this table.
+     *
+     * @param name The name of the field (case-sensitive!)
+     * @param type The data type of the field
+     * @param isDefaulted Whether the parameter is defaulted (see
+     *            {@link Parameter#isDefaulted()}
+     */
+    protected static final <T> Parameter<T> createParameter(String name, DataType<T> type, boolean isDefaulted) {
+        return new ParameterImpl<T>(name, type, isDefaulted);
     }
 
     /**

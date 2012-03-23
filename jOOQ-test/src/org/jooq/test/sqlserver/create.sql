@@ -17,6 +17,7 @@ DROP PROCEDURE p_create_author/
 DROP PROCEDURE p_create_author_by_name/
 DROP PROCEDURE p_author_exists/
 DROP PROCEDURE p391/
+DROP PROCEDURE p_default/
 DROP FUNCTION f_many_parameters/
 DROP FUNCTION f_author_exists/
 DROP FUNCTION f_one/
@@ -570,6 +571,21 @@ BEGIN
 
   SET @o2 = @io2;
   SET @io2 = @i2;
+END;
+/
+
+CREATE PROCEDURE p_default (
+  @p_in_number       INTEGER = 0,
+  @p_out_number      INTEGER OUT,
+  @p_in_varchar      VARCHAR(10) = '0',
+  @p_out_varchar     VARCHAR(10) OUT,
+  @p_in_date         DATE = '1981-07-10',
+  @p_out_date        DATE OUT
+) AS
+BEGIN
+  SET @p_out_number = @p_in_number;
+  SET @p_out_varchar = @p_in_varchar;
+  SET @p_out_date = @p_in_date;
 END;
 /
 

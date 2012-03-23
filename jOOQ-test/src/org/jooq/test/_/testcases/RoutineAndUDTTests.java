@@ -62,6 +62,8 @@ import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 
 import org.junit.Test;
 
@@ -218,6 +220,43 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 assertEquals("3", "" + invoke(result3b, "getReturnValue"));
                 break;
         }
+    }
+
+    @Test
+    public void testStoredProcedureWithDefaultParameters() {
+        if (cRoutines() == null) {
+            log.info("SKIPPING", "procedure tests with default parameters");
+            return;
+        }
+
+        Reflect pdefault;
+        try {
+            pdefault = Reflect.on(cRoutines().getPackage().getName() + ".routines.PDefault");
+
+            if (!pdefault.field("P_IN_NUMBER").call("isDefaulted").<Boolean>get()) {
+                log.info("SKIPPING", "procedure tests with default parameters");
+                return;
+            }
+        }
+        catch (ReflectException e) {
+            log.info("SKIPPING", "procedure tests with default parameters");
+            return;
+        }
+
+        Reflect executedWithDefaults = pdefault.create();
+        executedWithDefaults.call("execute", create());
+        assertEquals(0, executedWithDefaults.call("getPOutNumber").<Number>get().intValue());
+        assertEquals("0", executedWithDefaults.call("getPOutVarchar").get());
+        assertEquals(Date.valueOf("1981-07-10"), executedWithDefaults.call("getPOutDate").get());
+
+        Reflect executedWithoutDefault = pdefault.create();
+        executedWithoutDefault.call("setPInNumber", 123);
+        executedWithoutDefault.call("setPInVarchar", "abc");
+        executedWithoutDefault.call("setPInDate", Date.valueOf("2012-01-01"));
+        executedWithoutDefault.call("execute", create());
+        assertEquals(123, executedWithoutDefault.call("getPOutNumber").<Number>get().intValue());
+        assertEquals("abc", executedWithoutDefault.call("getPOutVarchar").get());
+        assertEquals(Date.valueOf("2012-01-01"), executedWithoutDefault.call("getPOutDate").get());
     }
 
     @Test

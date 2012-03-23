@@ -76,7 +76,8 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	            ALL_ARGUMENTS.DATA_PRECISION,
 	            ALL_ARGUMENTS.DATA_SCALE,
 	            ALL_ARGUMENTS.TYPE_NAME,
-	            ALL_ARGUMENTS.POSITION)
+	            ALL_ARGUMENTS.POSITION,
+	            ALL_ARGUMENTS.DEFAULTED)
 	        .from(ALL_ARGUMENTS)
             .where(ALL_ARGUMENTS.OWNER.equal(getSchema().getName()))
             .and(ALL_ARGUMENTS.OBJECT_NAME.equal(getName()))
@@ -116,7 +117,8 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
                 this,
                 name,
                 position,
-                type);
+                type,
+                record.getValue(ALL_ARGUMENTS.DEFAULTED, boolean.class));
 
             addParameter(inOut, parameter);
 	    }

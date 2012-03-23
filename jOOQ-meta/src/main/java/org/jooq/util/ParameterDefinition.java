@@ -35,6 +35,8 @@
  */
 package org.jooq.util;
 
+import org.jooq.Parameter;
+
 /**
  * An interface defining a parameter of a stored procedure or stored function.
  *
@@ -42,4 +44,10 @@ package org.jooq.util;
  */
 public interface ParameterDefinition extends TypedElementDefinition<RoutineDefinition> {
 
+    /**
+     * Whether the parameter has a default value.
+     * <p>
+     * @see Parameter#isDefaulted()
+     */
+    boolean isDefaulted();
 }

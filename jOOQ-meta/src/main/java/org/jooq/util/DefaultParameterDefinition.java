@@ -46,7 +46,20 @@ public class DefaultParameterDefinition
     extends AbstractTypedElementDefinition<RoutineDefinition>
     implements ParameterDefinition {
 
+    private final boolean isDefaulted;
+
     public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type) {
+        this(routine, name, position, type, false);
+    }
+
+    public DefaultParameterDefinition(RoutineDefinition routine, String name, int position, DataTypeDefinition type, boolean isDefaulted) {
         super(routine, name, position, type, null);
+
+        this.isDefaulted = isDefaulted;
+    }
+
+    @Override
+    public boolean isDefaulted() {
+        return isDefaulted;
     }
 }

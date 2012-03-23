@@ -1347,6 +1347,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testStoredProcedureWithDefaultParameters() throws Exception {
+        new RoutineAndUDTTests(this).testStoredProcedureWithDefaultParameters();
+    }
+
+    @Test
     public void testArrayTables() throws Exception {
         new RoutineAndUDTTests(this).testArrayTables();
     }

@@ -66,8 +66,10 @@ import org.jooq.exception.DataAccessException;
  * <li>DB2, H2, and HSQLDB don't allow for JDBC escape syntax when calling
  * functions. Functions must be used in a SELECT statement</li>
  * <li>H2 only knows functions (without OUT parameters)</li>
- * <li>Oracle functions may have OUT parameters/li>
+ * <li>Oracle functions may have OUT parameters</li>
  * <li>Oracle knows functions that mustn't be used in SQL statements</li>
+ * <li>Oracle parameters can have default values (to support this, jOOQ renders
+ * PL/SQL instead of the JDBC escape syntax)</li>
  * <li>Postgres only knows functions (with all features combined)</li>
  * <li>The Sybase JDBC driver doesn't handle null values correctly when using
  * the JDBC escape syntax on functions</li>

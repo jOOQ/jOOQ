@@ -49,6 +49,8 @@ import org.jooq.tools.unsigned.UByte;
 import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
@@ -244,6 +246,16 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
      * The {@link Types#TIME} type
      */
     public static final SQLDataType<Time> TIME = new SQLDataType<Time>(Time.class, "time");
+
+    /**
+     * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type
+     */
+    public static final SQLDataType<YearToMonth> INTERVAL_YEAR_TO_MONTH = new SQLDataType<YearToMonth>(YearToMonth.class, "interval_year_to_month");
+
+    /**
+     * The SQL standard <code>INTERVAL DAY TO SECOND</code> data type
+     */
+    public static final SQLDataType<DayToSecond> INTERVAL_DAY_TO_SECOND = new SQLDataType<DayToSecond>(DayToSecond.class, "interval_day_to_second");
 
     // -------------------------------------------------------------------------
     // Binary types

@@ -64,6 +64,8 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.unsigned.UNumber;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 
 /**
  * @author Lukas Eder
@@ -218,6 +220,14 @@ class DefaultBindContext extends AbstractBindContext {
         }
         else if (type == Timestamp.class) {
             stmt.setTimestamp(nextIndex(), (Timestamp) value);
+        }
+        
+        // [#566] Interval data types are best bound as Strings
+        else if (type == YearToMonth.class) {
+            stmt.setString(nextIndex(), value.toString());
+        }
+        else if (type == DayToSecond.class) {
+            stmt.setString(nextIndex(), value.toString());
         }
         else if (UNumber.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), value.toString());

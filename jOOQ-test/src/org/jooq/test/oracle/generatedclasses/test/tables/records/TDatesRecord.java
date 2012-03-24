@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1682763519;
+	private static final long serialVersionUID = -1288086985;
 
 	/**
 	 * An uncommented item
@@ -105,6 +105,36 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.TS_BIGINT);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setIY(org.jooq.types.YearToMonth value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_Y, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	@javax.persistence.Column(name = "I_Y", precision = 2)
+	public org.jooq.types.YearToMonth getIY() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_Y);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setID(org.jooq.types.DayToSecond value) {
+		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_D, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
+	public org.jooq.types.DayToSecond getID() {
+		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_D);
 	}
 
 	/**

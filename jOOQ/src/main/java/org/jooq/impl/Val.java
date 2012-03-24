@@ -118,7 +118,13 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                 return;
 
             case SOME:
-                if (context.cast()) {
+
+                // [#566] JDBC doesn't explicitly support interval data types.
+                // To be on the safe side, always cast these types
+                if (getDataType().isInterval()) {
+                    toSQLCast(context);
+                }
+                else if (context.cast()) {
                     toSQLCast(context);
                 }
                 else {
@@ -157,8 +163,16 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             }
         }
 
-        // Most RDBMS can handle constants as typeless literals
-        toSQL(context, getValue(), getType());
+        // [#566] JDBC doesn't explicitly support interval data types.
+        // To be on the safe side, always cast these types
+        if (getDataType().isInterval()) {
+            toSQLCast(context);
+        }
+
+        // Most RDBMS can infer types for bind values
+        else {
+            toSQL(context, getValue(), getType());
+        }
     }
 
     /**
@@ -213,9 +227,9 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
     }
 
     private void toSQLCast(RenderContext context, DataType<?> type, int precision, int scale) {
-        context.sql("cast(")
-               .sql(getBindVariable(context))
-               .sql(" as ")
+        context.sql("cast(");
+        toSQL(context, getValue(), getType());
+        context.sql(" as ")
                .sql(type.getCastTypeName(context, precision, scale))
                .sql(")");
     }

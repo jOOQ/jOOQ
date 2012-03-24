@@ -77,6 +77,8 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UNumber;
 import org.jooq.tools.unsigned.UShort;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
@@ -159,6 +161,14 @@ public final class FieldTypeHelper {
         }
         else if (type == Timestamp.class) {
             return (T) stream.readTimestamp();
+        }
+        else if (type == YearToMonth.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : YearToMonth.valueOf(string));
+        }
+        else if (type == DayToSecond.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : DayToSecond.valueOf(string));
         }
         else if (type == UByte.class) {
             String string = stream.readString();
@@ -256,6 +266,12 @@ public final class FieldTypeHelper {
         }
         else if (type == Timestamp.class) {
             stream.writeTimestamp((Timestamp) value);
+        }
+        else if (type == YearToMonth.class) {
+            stream.writeString(value.toString());
+        }
+        else if (type == DayToSecond.class) {
+            stream.writeString(value.toString());
         }
 //        else if (type.isArray()) {
 //            stream.writeArray(value);
@@ -362,6 +378,14 @@ public final class FieldTypeHelper {
         }
         else if (type == Timestamp.class) {
             return (T) getTimestamp(ctx.getDialect(), rs, index);
+        }
+        else if (type == YearToMonth.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : YearToMonth.valueOf(string));
+        }
+        else if (type == DayToSecond.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : DayToSecond.valueOf(string));
         }
         else if (type == UByte.class) {
             String string = rs.getString(index);
@@ -627,6 +651,14 @@ public final class FieldTypeHelper {
         }
         else if (type == Timestamp.class) {
             return (T) stmt.getTimestamp(index);
+        }
+        else if (type == YearToMonth.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : YearToMonth.valueOf(string));
+        }
+        else if (type == DayToSecond.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : DayToSecond.valueOf(string));
         }
         else if (type == UByte.class) {
             String string = stmt.getString(index);

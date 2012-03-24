@@ -102,6 +102,20 @@ public final class YearToMonth implements Interval<YearToMonth> {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Inteval API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final YearToMonth neg() {
+        return new YearToMonth(years, months, !negative);
+    }
+
+    @Override
+    public final YearToMonth abs() {
+        return new YearToMonth(years, months, false);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Comparable and Object API
     // -------------------------------------------------------------------------
 

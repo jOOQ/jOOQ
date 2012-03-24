@@ -131,6 +131,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
+import org.jooq.types.DayToSecond;
 
 /**
  * A factory providing implementations to the org.jooq interfaces
@@ -4450,7 +4451,7 @@ public class Factory implements FactoryOperations {
     }
 
     // -------------------------------------------------------------------------
-    // XXX Pseudo fields and date time functions
+    // XXX date time functions
     // -------------------------------------------------------------------------
 
     /**
@@ -4482,6 +4483,165 @@ public class Factory implements FactoryOperations {
     public static Field<Timestamp> currentTimestamp() {
         return new CurrentTimestamp();
     }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Date date1, Date date2) {
+        return dateDiff(val(date1), val(date2));
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
+        return dateDiff(nullSafe(date1), val(date2));
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
+        return dateDiff(val(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
+        // TODO [#585] This cast shouldn't be necessary
+        return nullSafe(date1).sub(nullSafe(date2)).cast(Integer.class);
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
+        return timestampDiff(val(timestamp1), val(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
+        return timestampDiff(nullSafe(timestamp1), val(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
+        return timestampDiff(val(timestamp1), nullSafe(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
+        // TODO [#585] This cast shouldn't be necessary
+        return nullSafe(timestamp1).sub(nullSafe(timestamp2)).cast(DayToSecond.class);
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timeDiff(Time time1, Time time2) {
+        return timeDiff(val(time1), val(time2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timeDiff(Field<Time> time1, Time time2) {
+        return timeDiff(nullSafe(time1), val(time2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timeDiff(Time time1, Field<Time> time2) {
+        return timeDiff(val(time1), nullSafe(time2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timeDiff(Field<Time> time1, Field<Time> time2) {
+        // TODO [#585] This cast shouldn't be necessary
+        return nullSafe(time1).sub(nullSafe(time2)).cast(DayToSecond.class);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX other functions
+    // -------------------------------------------------------------------------
 
     /**
      * Get the current_user() function

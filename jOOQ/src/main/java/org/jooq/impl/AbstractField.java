@@ -71,6 +71,7 @@ import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
+import org.jooq.types.Interval;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
@@ -225,12 +226,17 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         }
     }
 
+    @Override
+    public final Field<T> add(Interval<?> value) {
+        return add(val(value));
+    }
+
     /**
      * This default implementation is known to be overridden by
      * {@link Expression} to generate neater expressions
      */
     @Override
-    public Field<T> add(Field<? extends Number> value) {
+    public Field<T> add(Field<?> value) {
         return new Expression<T>(ADD, this, nullSafe(value));
     }
 
@@ -249,7 +255,12 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     }
 
     @Override
-    public final Field<T> sub(Field<? extends Number> value) {
+    public final Field<T> sub(Interval<?> value) {
+        return sub(val(value));
+    }
+
+    @Override
+    public final Field<T> sub(Field<?> value) {
         return new Expression<T>(SUBTRACT, this, nullSafe(value));
     }
 

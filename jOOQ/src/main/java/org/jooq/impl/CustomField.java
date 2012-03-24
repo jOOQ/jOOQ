@@ -136,7 +136,7 @@ public abstract class CustomField<T> extends AbstractField<T> {
     }
 
     @Override
-    public final Field<T> add(Field<? extends Number> value) {
+    public final Field<T> add(Field<?> value) {
         return super.add(value);
     }
 

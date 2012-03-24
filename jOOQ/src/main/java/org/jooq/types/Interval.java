@@ -101,4 +101,13 @@ import java.io.Serializable;
  */
 public interface Interval<T extends Interval<T>> extends Serializable, Comparable<T> {
 
+    /**
+     * Negate the interval (change its sign)
+     */
+    T neg();
+
+    /**
+     * Get the absolute value of the interval (set its sign to positive)
+     */
+    T abs();
 }

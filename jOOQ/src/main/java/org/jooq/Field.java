@@ -54,6 +54,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.jooq.impl.Factory;
+import org.jooq.types.Interval;
 
 /**
  * A field used in tables and conditions
@@ -291,60 +292,161 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
 
     /**
      * An arithmetic expression adding this to value.
-     * <p>
-     * <ul>
-     * <li>If this is a numeric field, then the value is added arithmetically</li>
-     * <li>If this is a date time field, then [value] days are added to this date</li>
-     * </ul>
+     *
+     * @see #add(Field)
      */
     @Support
     Field<T> add(Number value);
 
     /**
-     * An arithmetic expression adding this to value
+     * An arithmetic expression adding an interval to this.
+     *
+     * @see #add(Field)
      */
     @Support
-    Field<T> add(Field<? extends Number> value);
+    Field<T> add(Interval<?> value);
+
+    /**
+     * An arithmetic expression to add value to this.
+     * <p>
+     * The behaviour of this operation is as follows:
+     * <table border="1">
+     * <tr>
+     * <th>Operand 1</th>
+     * <th>Operand 2</th>
+     * <th>Result Type</th>
+     * </tr>
+     * <tr>
+     * <td>Numeric</td>
+     * <td>Numeric</td>
+     * <td>Numeric</td>
+     * </tr>
+     * <tr>
+     * <td>Date / Time</td>
+     * <td>Numeric</td>
+     * <td>Date / Time</td>
+     * </tr>
+     * <tr>
+     * <td>Date / Time</td>
+     * <td>Interval</td>
+     * <td>Date / Time</td>
+     * </tr>
+     * <tr>
+     * <td>Interval</td>
+     * <td>Interval</td>
+     * <td>Interval</td>
+     * </tr>
+     * </table>
+     */
+    @Support
+    Field<T> add(Field<?> value);
 
     /**
      * An arithmetic expression subtracting value from this.
-     * <p>
-     * <ul>
-     * <li>If this is a numeric field, then the value is subtracted
-     * arithmetically</li>
-     * <li>If this is a date time field, then [value] days are subtracted to
-     * this date</li>
-     * </ul>
+     *
+     * @see #sub(Field)
      */
     @Support
     Field<T> sub(Number value);
 
     /**
-     * An arithmetic expression subtracting value from this
+     * An arithmetic expression subtracting an interval from this.
+     *
+     * @see #sub(Field)
      */
     @Support
-    Field<T> sub(Field<? extends Number> value);
+    Field<T> sub(Interval<?> value);
+
+    /**
+     * An arithmetic expression subtracting value from this.
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <th>Operand 1</th>
+     * <th>Operand 2</th>
+     * <th>Result Type</th>
+     * </tr>
+     * <tr>
+     * <td>Numeric</td>
+     * <td>Numeric</td>
+     * <td>Numeric</td>
+     * </tr>
+     * <tr>
+     * <td>Date / Time</td>
+     * <td>Numeric</td>
+     * <td>Date / Time</td>
+     * </tr>
+     * <tr>
+     * <td>Date / Time</td>
+     * <td>Interval</td>
+     * <td>Date / Time</td>
+     * </tr>
+     * <tr>
+     * <td>Interval</td>
+     * <td>Interval</td>
+     * <td>Interval</td>
+     * </tr>
+     * </table>
+     * <p>
+     * In order to subtract one date time field from another, use any of these
+     * methods:
+     * <ul>
+     * <li> {@link Factory#dateDiff(Field, Field)}</li>
+     * <li> {@link Factory#timeDiff(Field, Field)}</li>
+     * <li> {@link Factory#timestampDiff(Field, Field)}</li>
+     * </ul>
+     */
+    @Support
+    Field<T> sub(Field<?> value);
 
     /**
      * An arithmetic expression multiplying this with value
+     * <p>
+     * <ul>
+     * <li>If this is a numeric field, then the result is a number of the same
+     * type as this field.</li>
+     * <li>If this is an <code>INTERVAL</code> field, then the result is also an
+     * <code>INTERVAL</code> field (see {@link Interval})</li>
+     * </ul>
      */
     @Support
     Field<T> mul(Number value);
 
     /**
      * An arithmetic expression multiplying this with value
+     * <p>
+     * <ul>
+     * <li>If this is a numeric field, then the result is a number of the same
+     * type as this field.</li>
+     * <li>If this is an <code>INTERVAL</code> field, then the result is also an
+     * <code>INTERVAL</code> field (see {@link Interval})</li>
+     * </ul>
      */
     @Support
     Field<T> mul(Field<? extends Number> value);
 
     /**
      * An arithmetic expression dividing this by value
+     * <p>
+     * <ul>
+     * <li>If this is a numeric field, then the result is a number of the same
+     * type as this field.</li>
+     * <li>If this is an <code>INTERVAL</code> field, then the result is also an
+     * <code>INTERVAL</code> field (see {@link Interval})</li>
+     * </ul>
      */
     @Support
     Field<T> div(Number value);
 
     /**
      * An arithmetic expression dividing this by value
+     * <p>
+     * <ul>
+     * <li>If this is a numeric field, then the result is a number of the same
+     * type as this field.</li>
+     * <li>If this is an <code>INTERVAL</code> field, then the result is also an
+     * <code>INTERVAL</code> field (see {@link Interval})</li>
+     * </ul>
      */
     @Support
     Field<T> div(Field<? extends Number> value);

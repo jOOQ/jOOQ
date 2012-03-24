@@ -10,14 +10,16 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = -773110900;
+	private static final long serialVersionUID = -1288318414;
 
-	private java.lang.Integer  id;
-	private java.sql.Date      d;
-	private java.sql.Timestamp t;
-	private java.sql.Timestamp ts;
-	private java.lang.Integer  dInt;
-	private java.lang.Long     tsBigint;
+	private java.lang.Integer          id;
+	private java.sql.Date              d;
+	private java.sql.Timestamp         t;
+	private java.sql.Timestamp         ts;
+	private java.lang.Integer          dInt;
+	private java.lang.Long             tsBigint;
+	private org.jooq.types.YearToMonth iY;
+	private org.jooq.types.DayToSecond iD;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -72,5 +74,23 @@ public class TDates implements java.io.Serializable {
 
 	public void setTsBigint(java.lang.Long tsBigint) {
 		this.tsBigint = tsBigint;
+	}
+
+	@javax.persistence.Column(name = "I_Y", precision = 2)
+	public org.jooq.types.YearToMonth getIY() {
+		return this.iY;
+	}
+
+	public void setIY(org.jooq.types.YearToMonth iY) {
+		this.iY = iY;
+	}
+
+	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
+	public org.jooq.types.DayToSecond getID() {
+		return this.iD;
+	}
+
+	public void setID(org.jooq.types.DayToSecond iD) {
+		this.iD = iD;
 	}
 }

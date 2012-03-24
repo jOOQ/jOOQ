@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 336868389;
+	private static final long serialVersionUID = 2000943673;
 
 	/**
 	 * The singleton instance of TEST.T_DATES
@@ -59,6 +59,16 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	 * An uncommented item
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
+
+	/**
+	 * An uncommented item
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, org.jooq.types.YearToMonth> I_Y = createField("I_Y", org.jooq.impl.SQLDataType.INTERVAL_YEAR_TO_MONTH, this);
+
+	/**
+	 * An uncommented item
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVAL_DAY_TO_SECOND, this);
 
 	/**
 	 * No further instances allowed

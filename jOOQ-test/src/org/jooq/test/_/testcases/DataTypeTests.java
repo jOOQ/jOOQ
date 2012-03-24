@@ -77,6 +77,8 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.tools.unsigned.Unsigned;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 
 import org.junit.Test;
 
@@ -1193,7 +1195,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         create().select(
             val(new Date(0)).as("d"),
             val(new Time(0)).as("t"),
-            val(new Timestamp(0)).as("ts")).fetchOne();
+            val(new Timestamp(0)).as("ts"),
+            val(new YearToMonth(0)).as("iy"),
+            val(new DayToSecond(0)).as("id")
+        ).fetchOne();
 
         // ... (except for SQLite)
         if (getDialect() != SQLITE)
@@ -1201,5 +1206,30 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         assertEquals(new Time(0), record.getValue("t"));
         assertEquals(new Timestamp(0), record.getValue("ts"));
+        assertEquals(new YearToMonth(0), record.getValue("iy"));
+        assertEquals(new DayToSecond(0), record.getValue("id"));
+
+        // TODO: Add tests for reading date / time / interval types into pojos
+
+        // [#566] INTERVAL arithmetic
+        // --------------------------
+        record =
+        create().select(
+            val(new YearToMonth(1)).div(2).as("y1"),
+            val(new YearToMonth(1)).mul(2).as("y2"),
+            val(new YearToMonth(1)).div(2).mul(2).as("y3"),
+
+            val(new DayToSecond(1)).div(2).as("d1"),
+            val(new DayToSecond(1)).mul(2).as("d2"),
+            val(new DayToSecond(1)).div(2).mul(2).as("d3")
+        ).fetchOne();
+
+        assertEquals(new YearToMonth(0, 6), record.getValue("y1"));
+        assertEquals(new YearToMonth(2), record.getValue("y2"));
+        assertEquals(new YearToMonth(1), record.getValue("y3"));
+
+        assertEquals(new DayToSecond(0, 12), record.getValue("d1"));
+        assertEquals(new DayToSecond(2), record.getValue("d2"));
+        assertEquals(new DayToSecond(1), record.getValue("d3"));
     }
  }

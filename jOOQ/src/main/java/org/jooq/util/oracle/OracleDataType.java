@@ -47,6 +47,8 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 
 /**
  * Supported data types for the {@link SQLDialect#ORACLE} dialect
@@ -81,6 +83,8 @@ public class OracleDataType<T> extends AbstractDataType<T> {
     public static final OracleDataType<Date>       DATE                   = new OracleDataType<Date>(SQLDataType.DATE, "date");
     public static final OracleDataType<Timestamp>  TIMESTAMP              = new OracleDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
     public static final OracleDataType<byte[]>     BLOB                   = new OracleDataType<byte[]>(SQLDataType.BLOB, "blob");
+    public static final OracleDataType<YearToMonth>  INTERVALYEARTOMONTH    = new OracleDataType<YearToMonth>(SQLDataType.INTERVAL_YEAR_TO_MONTH, "interval year to month");
+    public static final OracleDataType<DayToSecond>  INTERVALDAYTOSECOND    = new OracleDataType<DayToSecond>(SQLDataType.INTERVAL_DAY_TO_SECOND, "interval day to second");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDataTypes

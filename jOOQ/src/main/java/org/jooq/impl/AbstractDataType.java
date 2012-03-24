@@ -58,6 +58,7 @@ import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
+import org.jooq.types.Interval;
 
 /**
  * A common base class for data types.
@@ -455,7 +456,12 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isTemporal() {
-        return java.util.Date.class.isAssignableFrom(type);
+        return java.util.Date.class.isAssignableFrom(type) || isInterval();
+    }
+
+    @Override
+    public final boolean isInterval() {
+        return Interval.class.isAssignableFrom(type);
     }
 
     @Override

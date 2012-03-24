@@ -39,6 +39,8 @@ import java.io.Serializable;
 import java.sql.Types;
 
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.YearToMonth;
 
 /**
  * A common interface to all dialect-specific data types
@@ -200,9 +202,21 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#DATE}</li>
      * <li> {@link SQLDataType#TIME}</li>
      * <li> {@link SQLDataType#TIMESTAMP}</li>
+     * <li> {@link YearToMonth}</li>
+     * <li> {@link DayToSecond}</li>
      * </ul>
      */
     boolean isTemporal();
+
+    /**
+     * Whether this data type is any interval type. This applies to any of
+     * these types.
+     * <ul>
+     * <li> {@link YearToMonth}</li>
+     * <li> {@link DayToSecond}</li>
+     * </ul>
+     */
+    boolean isInterval();
 
     /**
      * Whether this data type is any binary type. This applies to any of these

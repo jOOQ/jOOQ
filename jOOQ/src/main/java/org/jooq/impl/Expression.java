@@ -92,7 +92,7 @@ class Expression<T> extends AbstractFunction<T> {
     }
 
     @Override
-    public final Field<T> add(Field<? extends Number> value) {
+    public final Field<T> add(Field<?> value) {
         if (operator == ExpressionOperator.ADD) {
             rhs.add(value);
             return this;

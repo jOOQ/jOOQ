@@ -44,6 +44,8 @@ import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
+import static org.jooq.impl.Factory.dateDiff;
+import static org.jooq.impl.Factory.timestampDiff;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.unsigned.Unsigned.ubyte;
 import static org.jooq.tools.unsigned.Unsigned.uint;
@@ -1191,6 +1193,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     public void testDateTime() throws Exception {
 
         // [#1009] SQL DATE doesn't have a time zone. SQL TIMESTAMP does
+        long tsShift = -3600000;
+
         Record record =
         create().select(
             val(new Date(0)).as("d"),
@@ -1202,7 +1206,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         // ... (except for SQLite)
         if (getDialect() != SQLITE)
-            assertEquals(new Date(-3600000), record.getValue("d"));
+            assertEquals(new Date(tsShift), record.getValue("d"));
 
         assertEquals(new Time(0), record.getValue("t"));
         assertEquals(new Timestamp(0), record.getValue("ts"));
@@ -1211,8 +1215,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         // TODO: Add tests for reading date / time / interval types into pojos
 
-        // [#566] INTERVAL arithmetic
-        // --------------------------
+        // [#566] INTERVAL arithmetic: multiplication
+        // ------------------------------------------
         record =
         create().select(
             val(new YearToMonth(1)).div(2).as("y1"),
@@ -1231,5 +1235,82 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(new DayToSecond(0, 12), record.getValue("d1"));
         assertEquals(new DayToSecond(2), record.getValue("d2"));
         assertEquals(new DayToSecond(1), record.getValue("d3"));
+
+        // [#566] INTERVAL arithmetic: addition
+        // ------------------------------------
+        record =
+        create().select(
+            val(new Date(0)).add(1).as("d1"),
+            val(new Date(0)).sub(1).as("d2"),
+            val(new Date(0)).add(new YearToMonth(1, 6)).as("d3"),
+            val(new Date(0)).sub(new YearToMonth(1, 6)).as("d4"),
+            val(new Date(0)).add(new DayToSecond(2)).as("d5"),
+            val(new Date(0)).sub(new DayToSecond(2)).as("d6"),
+
+            val(new Timestamp(0)).add(1).as("ts1"),
+            val(new Timestamp(0)).sub(1).as("ts2"),
+            val(new Timestamp(0)).add(new YearToMonth(1, 6)).as("ts3"),
+            val(new Timestamp(0)).sub(new YearToMonth(1, 6)).as("ts4"),
+            val(new Timestamp(0)).add(new DayToSecond(2)).as("ts5"),
+            val(new Timestamp(0)).sub(new DayToSecond(2)).as("ts6")
+        ).fetchOne();
+
+        Calendar cal;
+
+        cal = cal();
+        cal.add(Calendar.DATE, 1);
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d1"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts1"));
+
+        cal = cal();
+        cal.add(Calendar.DATE, -1);
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d2"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts2"));
+
+        cal = cal();
+        cal.add(Calendar.MONTH, 18);
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d3"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts3"));
+
+        cal = cal();
+        cal.add(Calendar.MONTH, -18);
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d4"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts4"));
+
+        cal = cal();
+        cal.add(Calendar.DATE, 2);
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d5"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts5"));
+
+        cal = cal();
+        cal.add(Calendar.DATE, -2);
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d6"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts6"));
+
+        // [#566] INTERVAL arithmetic: difference
+        // --------------------------------------
+        record =
+        create().select(
+            dateDiff(new Date(0), new Date(24 * 60 * 60 * 1000L)).as("d1"),
+            dateDiff(new Date(24 * 60 * 60 * 1000L), new Date(0)).as("d2"),
+            //TODO [#566] Make this work!
+            //timeDiff(new Time(0), new Time(60 * 60 * 1000L)).as("t1"),
+            //timeDiff(new Time(60 * 60 * 1000L), new Time(0)).as("t2"),
+            timestampDiff(new Timestamp(0), new Timestamp(24 * 60 * 60 * 1000L)).as("ts1"),
+            timestampDiff(new Timestamp(24 * 60 * 60 * 1000L), new Timestamp(0)).as("ts2")
+        ).fetchOne();
+
+        assertEquals(-1, record.getValue("d1"));
+        assertEquals(1, record.getValue("d2"));
+        //assertEquals(new DayToSecond(0, 1).neg(), record.getValue("t1"));
+        //assertEquals(new DayToSecond(0, 1), record.getValue("t2"));
+        assertEquals(new DayToSecond(1).neg(), record.getValue("ts1"));
+        assertEquals(new DayToSecond(1), record.getValue("ts2"));
+    }
+
+    private Calendar cal() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(-3600000);
+        return cal;
     }
  }

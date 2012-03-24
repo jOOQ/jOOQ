@@ -134,6 +134,20 @@ public final class DayToSecond implements Interval<DayToSecond> {
     }
 
     // -------------------------------------------------------------------------
+    // XXX Inteval API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DayToSecond neg() {
+        return new DayToSecond(days, hours, minutes, seconds, nano, !negative);
+    }
+
+    @Override
+    public final DayToSecond abs() {
+        return new DayToSecond(days, hours, minutes, seconds, nano, false);
+    }
+
+    // -------------------------------------------------------------------------
     // XXX Comparable and Object API
     // -------------------------------------------------------------------------
 

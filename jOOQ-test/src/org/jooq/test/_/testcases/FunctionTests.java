@@ -115,6 +115,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
 
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -794,10 +795,18 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Field<Timestamp> yesterday = now.sub(1);
         record = create().select(tomorrow, ts, yesterday).fetchOne();
 
+        // Be sure this test doesn't fail when we switch from CET to CEST :-)
+        Calendar cal = Calendar.getInstance();
+        long tNow = cal.getTimeInMillis();
+        cal.add(Calendar.DATE, 1);
+        long tTomorrow = cal.getTimeInMillis();
+        cal.add(Calendar.DATE, -2);
+        long tYesterday = cal.getTimeInMillis();
+
         // Ingres truncates milliseconds. Ignore this fact
-        assertEquals(24 * 60 * 60,
+        assertEquals((tNow - tYesterday) / 1000,
             (record.getValue(ts).getTime() / 1000 - record.getValue(yesterday).getTime() / 1000));
-        assertEquals(24 * 60 * 60,
+        assertEquals((tTomorrow - tNow) / 1000,
             (record.getValue(tomorrow).getTime() / 1000 - record.getValue(ts).getTime() / 1000));
     }
 

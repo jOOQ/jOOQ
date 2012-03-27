@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.util.postgres.PGIntervalConverter.toPGInterval;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -221,13 +222,23 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type == Timestamp.class) {
             stmt.setTimestamp(nextIndex(), (Timestamp) value);
         }
-        
+
         // [#566] Interval data types are best bound as Strings
         else if (type == YearToMonth.class) {
-            stmt.setString(nextIndex(), value.toString());
+            if (dialect == POSTGRES) {
+                stmt.setObject(nextIndex(), toPGInterval((YearToMonth) value));
+            }
+            else {
+                stmt.setString(nextIndex(), value.toString());
+            }
         }
         else if (type == DayToSecond.class) {
-            stmt.setString(nextIndex(), value.toString());
+            if (dialect == POSTGRES) {
+                stmt.setObject(nextIndex(), toPGInterval((DayToSecond) value));
+            }
+            else {
+                stmt.setString(nextIndex(), value.toString());
+            }
         }
         else if (UNumber.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), value.toString());

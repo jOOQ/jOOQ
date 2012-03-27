@@ -62,84 +62,84 @@ public class OracleDataType<T> extends AbstractDataType<T> {
     /**
      * Generated UID
      */
-    private static final long                      serialVersionUID       = -5677365115109672781L;
+    private static final long                        serialVersionUID       = -5677365115109672781L;
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final OracleDataType<BigDecimal> NUMBER                 = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "number", true);
-    public static final OracleDataType<BigDecimal> NUMERIC                = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric", true);
-    public static final OracleDataType<BigDecimal> DECIMAL                = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal", true);
-    public static final OracleDataType<BigDecimal> DEC                    = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "dec", true);
-    public static final OracleDataType<String>     VARCHAR2               = new OracleDataType<String>(SQLDataType.VARCHAR, "varchar2", "varchar2(4000)");
-    public static final OracleDataType<String>     VARCHAR                = new OracleDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar2(4000)");
-    public static final OracleDataType<String>     CHAR                   = new OracleDataType<String>(SQLDataType.CHAR, "char", "varchar2(4000)");
-    public static final OracleDataType<String>     CLOB                   = new OracleDataType<String>(SQLDataType.CLOB, "clob");
-    public static final OracleDataType<String>     NVARCHAR2              = new OracleDataType<String>(SQLDataType.NVARCHAR, "nvarchar2", "varchar2(4000)");
-    public static final OracleDataType<String>     NVARCHAR               = new OracleDataType<String>(SQLDataType.NVARCHAR, "nvarchar", "varchar2(4000)");
-    public static final OracleDataType<String>     NCHAR                  = new OracleDataType<String>(SQLDataType.NCHAR, "nchar", "varchar2(4000)");
-    public static final OracleDataType<String>     NCLOB                  = new OracleDataType<String>(SQLDataType.NCLOB, "nclob");
-    public static final OracleDataType<Date>       DATE                   = new OracleDataType<Date>(SQLDataType.DATE, "date");
-    public static final OracleDataType<Timestamp>  TIMESTAMP              = new OracleDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
-    public static final OracleDataType<byte[]>     BLOB                   = new OracleDataType<byte[]>(SQLDataType.BLOB, "blob");
-    public static final OracleDataType<YearToMonth>  INTERVALYEARTOMONTH    = new OracleDataType<YearToMonth>(SQLDataType.INTERVAL_YEAR_TO_MONTH, "interval year to month");
-    public static final OracleDataType<DayToSecond>  INTERVALDAYTOSECOND    = new OracleDataType<DayToSecond>(SQLDataType.INTERVAL_DAY_TO_SECOND, "interval day to second");
+    public static final OracleDataType<BigDecimal>   NUMBER                 = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "number", true);
+    public static final OracleDataType<BigDecimal>   NUMERIC                = new OracleDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric", true);
+    public static final OracleDataType<BigDecimal>   DECIMAL                = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal", true);
+    public static final OracleDataType<BigDecimal>   DEC                    = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "dec", true);
+    public static final OracleDataType<String>       VARCHAR2               = new OracleDataType<String>(SQLDataType.VARCHAR, "varchar2", "varchar2(4000)");
+    public static final OracleDataType<String>       VARCHAR                = new OracleDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar2(4000)");
+    public static final OracleDataType<String>       CHAR                   = new OracleDataType<String>(SQLDataType.CHAR, "char", "varchar2(4000)");
+    public static final OracleDataType<String>       CLOB                   = new OracleDataType<String>(SQLDataType.CLOB, "clob");
+    public static final OracleDataType<String>       NVARCHAR2              = new OracleDataType<String>(SQLDataType.NVARCHAR, "nvarchar2", "varchar2(4000)");
+    public static final OracleDataType<String>       NVARCHAR               = new OracleDataType<String>(SQLDataType.NVARCHAR, "nvarchar", "varchar2(4000)");
+    public static final OracleDataType<String>       NCHAR                  = new OracleDataType<String>(SQLDataType.NCHAR, "nchar", "varchar2(4000)");
+    public static final OracleDataType<String>       NCLOB                  = new OracleDataType<String>(SQLDataType.NCLOB, "nclob");
+    public static final OracleDataType<Date>         DATE                   = new OracleDataType<Date>(SQLDataType.DATE, "date");
+    public static final OracleDataType<Timestamp>    TIMESTAMP              = new OracleDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
+    public static final OracleDataType<byte[]>       BLOB                   = new OracleDataType<byte[]>(SQLDataType.BLOB, "blob");
+    public static final OracleDataType<YearToMonth>  INTERVALYEARTOMONTH    = new OracleDataType<YearToMonth>(SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
+    public static final OracleDataType<DayToSecond>  INTERVALDAYTOSECOND    = new OracleDataType<DayToSecond>(SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final OracleDataType<byte[]>  __BINARY               = new OracleDataType<byte[]>(SQLDataType.BINARY, "blob");
-    protected static final OracleDataType<Long>    __BIGINT               = new OracleDataType<Long>(SQLDataType.BIGINT, "number", "number(19)");
-    protected static final OracleDataType<Boolean> __BIT                  = new OracleDataType<Boolean>(SQLDataType.BIT, "number", "number(1)");
-    protected static final OracleDataType<Boolean> __BOOLEAN              = new OracleDataType<Boolean>(SQLDataType.BOOLEAN, "number", "number(1)");
-    protected static final OracleDataType<Double>  __DOUBLE               = new OracleDataType<Double>(SQLDataType.DOUBLE, "number");
-    protected static final OracleDataType<Double>  __FLOAT                = new OracleDataType<Double>(SQLDataType.FLOAT, "number");
-    protected static final OracleDataType<Integer> __INTEGER              = new OracleDataType<Integer>(SQLDataType.INTEGER, "number", "number(10)");
-    protected static final OracleDataType<byte[]>  __LONGVARBINARY        = new OracleDataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
-    protected static final OracleDataType<String>  __LONGVARCHAR          = new OracleDataType<String>(SQLDataType.LONGVARCHAR, "varchar2", "varchar2(4000)");
-    protected static final OracleDataType<String>  __LONGNVARCHAR         = new OracleDataType<String>(SQLDataType.LONGNVARCHAR, "varchar2", "varchar2(4000)");
-    protected static final OracleDataType<Float>   __REAL                 = new OracleDataType<Float>(SQLDataType.REAL, "number");
-    protected static final OracleDataType<Short>   __SMALLINT             = new OracleDataType<Short>(SQLDataType.SMALLINT, "number", "number(5)");
-    protected static final OracleDataType<Time>    __TIME                 = new OracleDataType<Time>(SQLDataType.TIME, "timestamp");
-    protected static final OracleDataType<Byte>    __TINYINT              = new OracleDataType<Byte>(SQLDataType.TINYINT, "number", "number(3)");
-    protected static final OracleDataType<byte[]>  __VARBINARY            = new OracleDataType<byte[]>(SQLDataType.VARBINARY, "blob");
+    protected static final OracleDataType<byte[]>    __BINARY               = new OracleDataType<byte[]>(SQLDataType.BINARY, "blob");
+    protected static final OracleDataType<Long>      __BIGINT               = new OracleDataType<Long>(SQLDataType.BIGINT, "number", "number(19)");
+    protected static final OracleDataType<Boolean>   __BIT                  = new OracleDataType<Boolean>(SQLDataType.BIT, "number", "number(1)");
+    protected static final OracleDataType<Boolean>   __BOOLEAN              = new OracleDataType<Boolean>(SQLDataType.BOOLEAN, "number", "number(1)");
+    protected static final OracleDataType<Double>    __DOUBLE               = new OracleDataType<Double>(SQLDataType.DOUBLE, "number");
+    protected static final OracleDataType<Double>    __FLOAT                = new OracleDataType<Double>(SQLDataType.FLOAT, "number");
+    protected static final OracleDataType<Integer>   __INTEGER              = new OracleDataType<Integer>(SQLDataType.INTEGER, "number", "number(10)");
+    protected static final OracleDataType<byte[]>    __LONGVARBINARY        = new OracleDataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
+    protected static final OracleDataType<String>    __LONGVARCHAR          = new OracleDataType<String>(SQLDataType.LONGVARCHAR, "varchar2", "varchar2(4000)");
+    protected static final OracleDataType<String>    __LONGNVARCHAR         = new OracleDataType<String>(SQLDataType.LONGNVARCHAR, "varchar2", "varchar2(4000)");
+    protected static final OracleDataType<Float>     __REAL                 = new OracleDataType<Float>(SQLDataType.REAL, "number");
+    protected static final OracleDataType<Short>     __SMALLINT             = new OracleDataType<Short>(SQLDataType.SMALLINT, "number", "number(5)");
+    protected static final OracleDataType<Time>      __TIME                 = new OracleDataType<Time>(SQLDataType.TIME, "timestamp");
+    protected static final OracleDataType<Byte>      __TINYINT              = new OracleDataType<Byte>(SQLDataType.TINYINT, "number", "number(3)");
+    protected static final OracleDataType<byte[]>    __VARBINARY            = new OracleDataType<byte[]>(SQLDataType.VARBINARY, "blob");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final OracleDataType<BigInteger> __BIGINTEGER        = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "number");
+    protected static final OracleDataType<BigInteger>   __BIGINTEGER        = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "number");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final OracleDataType<Result<Record>> REF_CURSOR         = new OracleDataType<Result<Record>>(SQLDataType.RESULT, "ref cursor");
+    public static final OracleDataType<Result<Record>>  REF_CURSOR          = new OracleDataType<Result<Record>>(SQLDataType.RESULT, "ref cursor");
 
-    public static final OracleDataType<String>     LONG                   = new OracleDataType<String>(SQLDataType.CLOB, "long");
-    public static final OracleDataType<byte[]>     RAW                    = new OracleDataType<byte[]>(SQLDataType.BLOB, "raw");
-    public static final OracleDataType<byte[]>     LONGRAW                = new OracleDataType<byte[]>(SQLDataType.BLOB, "longraw");
-    public static final OracleDataType<byte[]>     BFILE                  = new OracleDataType<byte[]>(SQLDataType.BLOB, "bfile");
+    public static final OracleDataType<String>       LONG                   = new OracleDataType<String>(SQLDataType.CLOB, "long");
+    public static final OracleDataType<byte[]>       RAW                    = new OracleDataType<byte[]>(SQLDataType.BLOB, "raw");
+    public static final OracleDataType<byte[]>       LONGRAW                = new OracleDataType<byte[]>(SQLDataType.BLOB, "longraw");
+    public static final OracleDataType<byte[]>       BFILE                  = new OracleDataType<byte[]>(SQLDataType.BLOB, "bfile");
 
     // PL/SQL data types
-    public static final OracleDataType<Integer>    BINARY_INTEGER         = new OracleDataType<Integer>(SQLDataType.INTEGER, "binary_integer");
-    public static final OracleDataType<Integer>    PLS_INTEGER            = new OracleDataType<Integer>(SQLDataType.INTEGER, "pls_integer");
-    public static final OracleDataType<Integer>    NATURAL                = new OracleDataType<Integer>(SQLDataType.INTEGER, "natural");
-    public static final OracleDataType<Integer>    NATURALN               = new OracleDataType<Integer>(SQLDataType.INTEGER, "naturaln");
-    public static final OracleDataType<Integer>    POSITIVE               = new OracleDataType<Integer>(SQLDataType.INTEGER, "positive");
-    public static final OracleDataType<Integer>    POSITIVEN              = new OracleDataType<Integer>(SQLDataType.INTEGER, "positiven");
-    public static final OracleDataType<Integer>    SIGNTYPE               = new OracleDataType<Integer>(SQLDataType.INTEGER, "signtype");
-    public static final OracleDataType<Double>     REAL                   = new OracleDataType<Double>(SQLDataType.DOUBLE, "real");
-    public static final OracleDataType<Double>     DOUBLE_PRECISION       = new OracleDataType<Double>(SQLDataType.DOUBLE, "double_precision");
-    public static final OracleDataType<Double>     BINARY_DOUBLE          = new OracleDataType<Double>(SQLDataType.DOUBLE, "binary_double");
-    public static final OracleDataType<BigDecimal> FLOAT                  = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "float");
-    public static final OracleDataType<BigDecimal> BINARY_FLOAT           = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "binary_float");
-    public static final OracleDataType<BigInteger> INTEGER                = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "integer");
-    public static final OracleDataType<BigInteger> INT                    = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "int");
-    public static final OracleDataType<BigInteger> SMALLINT               = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "smallint");
-    public static final OracleDataType<Boolean>    BOOLEAN                = new OracleDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
+    public static final OracleDataType<Integer>      BINARY_INTEGER         = new OracleDataType<Integer>(SQLDataType.INTEGER, "binary_integer");
+    public static final OracleDataType<Integer>      PLS_INTEGER            = new OracleDataType<Integer>(SQLDataType.INTEGER, "pls_integer");
+    public static final OracleDataType<Integer>      NATURAL                = new OracleDataType<Integer>(SQLDataType.INTEGER, "natural");
+    public static final OracleDataType<Integer>      NATURALN               = new OracleDataType<Integer>(SQLDataType.INTEGER, "naturaln");
+    public static final OracleDataType<Integer>      POSITIVE               = new OracleDataType<Integer>(SQLDataType.INTEGER, "positive");
+    public static final OracleDataType<Integer>      POSITIVEN              = new OracleDataType<Integer>(SQLDataType.INTEGER, "positiven");
+    public static final OracleDataType<Integer>      SIGNTYPE               = new OracleDataType<Integer>(SQLDataType.INTEGER, "signtype");
+    public static final OracleDataType<Double>       REAL                   = new OracleDataType<Double>(SQLDataType.DOUBLE, "real");
+    public static final OracleDataType<Double>       DOUBLE_PRECISION       = new OracleDataType<Double>(SQLDataType.DOUBLE, "double_precision");
+    public static final OracleDataType<Double>       BINARY_DOUBLE          = new OracleDataType<Double>(SQLDataType.DOUBLE, "binary_double");
+    public static final OracleDataType<BigDecimal>   FLOAT                  = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "float");
+    public static final OracleDataType<BigDecimal>   BINARY_FLOAT           = new OracleDataType<BigDecimal>(SQLDataType.DECIMAL, "binary_float");
+    public static final OracleDataType<BigInteger>   INTEGER                = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "integer");
+    public static final OracleDataType<BigInteger>   INT                    = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "int");
+    public static final OracleDataType<BigInteger>   SMALLINT               = new OracleDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "smallint");
+    public static final OracleDataType<Boolean>      BOOLEAN                = new OracleDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
 
     private OracleDataType(SQLDataType<T> sqlDataType, String typeName) {
         this(sqlDataType, typeName, false);

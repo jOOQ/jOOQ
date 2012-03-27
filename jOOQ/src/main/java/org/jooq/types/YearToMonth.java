@@ -72,6 +72,14 @@ public final class YearToMonth implements Interval<YearToMonth> {
     }
 
     private YearToMonth(int years, int months, boolean negative) {
+
+        // Perform normalisation. Specifically, Postgres may return intervals
+        // such as 0-13
+        if (months >= 12) {
+            years += (months / 12);
+            months %= 12;
+        }
+
         this.negative = negative;
         this.years = years;
         this.months = months;
@@ -113,6 +121,14 @@ public final class YearToMonth implements Interval<YearToMonth> {
     @Override
     public final YearToMonth abs() {
         return new YearToMonth(years, months, false);
+    }
+
+    public final int getYears() {
+        return years;
+    }
+
+    public final int getMonths() {
+        return months;
     }
 
     // -------------------------------------------------------------------------

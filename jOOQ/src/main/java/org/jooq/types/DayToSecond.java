@@ -38,6 +38,7 @@ package org.jooq.types;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -53,7 +54,7 @@ public final class DayToSecond implements Interval<DayToSecond> {
      * Generated UID
      */
     private static final long    serialVersionUID = -3853596481984643811L;
-    private static final Pattern PATTERN          = Pattern.compile("(\\+|-)?(\\d+) (\\d+):(\\d+):(\\d+)\\.(\\d+)");
+    private static final Pattern PATTERN          = Pattern.compile("(\\+|-)?(?:(\\d+) )?(\\d+):(\\d+):(\\d+)(?:\\.(\\d+))?");
 
     private final boolean        negative;
     private final int            days;
@@ -98,6 +99,26 @@ public final class DayToSecond implements Interval<DayToSecond> {
     }
 
     private DayToSecond(int days, int hours, int minutes, int seconds, int nano, boolean negative) {
+
+        // Perform normalisation. Specifically, Postgres may return intervals
+        // such as 24:00:00, 25:13:15, etc...
+        if (nano >= 1000000000) {
+            seconds += (nano / 1000000000);
+            nano %= 1000000000;
+        }
+        if (seconds >= 60) {
+            minutes += (seconds / 60);
+            seconds %= 60;
+        }
+        if (minutes >= 60) {
+            hours += (minutes / 60);
+            minutes %= 60;
+        }
+        if (hours >= 24) {
+            days += (hours / 24);
+            hours %= 24;
+        }
+
         this.negative = negative;
         this.days = days;
         this.hours = hours;
@@ -120,11 +141,11 @@ public final class DayToSecond implements Interval<DayToSecond> {
 
             if (matcher.find()) {
                 boolean negative = "-".equals(matcher.group(1));
-                int days = Integer.parseInt(matcher.group(2));
-                int hours = Integer.parseInt(matcher.group(3));
-                int minutes = Integer.parseInt(matcher.group(4));
-                int seconds = Integer.parseInt(matcher.group(5));
-                int nano = Integer.parseInt(StringUtils.rightPad(matcher.group(6), 9, "0"));
+                int days = Convert.convert(matcher.group(2), int.class);
+                int hours = Convert.convert(matcher.group(3), int.class);
+                int minutes = Convert.convert(matcher.group(4), int.class);
+                int seconds = Convert.convert(matcher.group(5), int.class);
+                int nano = Convert.convert(StringUtils.rightPad(matcher.group(6), 9, "0"), int.class);
 
                 return new DayToSecond(days, hours, minutes, seconds, nano, negative);
             }
@@ -145,6 +166,26 @@ public final class DayToSecond implements Interval<DayToSecond> {
     @Override
     public final DayToSecond abs() {
         return new DayToSecond(days, hours, minutes, seconds, nano, false);
+    }
+
+    public final int getDays() {
+        return days;
+    }
+
+    public final int getHours() {
+        return hours;
+    }
+
+    public final int getMinutes() {
+        return minutes;
+    }
+
+    public final int getSeconds() {
+        return seconds;
+    }
+
+    public final int getNano() {
+        return nano;
     }
 
     // -------------------------------------------------------------------------

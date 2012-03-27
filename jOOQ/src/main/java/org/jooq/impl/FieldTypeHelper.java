@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.getNewFactory;
 
 import java.math.BigDecimal;
@@ -87,6 +88,7 @@ import org.jooq.util.hsqldb.HSQLDBDataType;
 import org.jooq.util.ingres.IngresDataType;
 import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.oracle.OracleDataType;
+import org.jooq.util.postgres.PGIntervalConverter;
 import org.jooq.util.postgres.PGobjectParser;
 import org.jooq.util.postgres.PostgresDataType;
 import org.jooq.util.sqlite.SQLiteDataType;
@@ -380,12 +382,24 @@ public final class FieldTypeHelper {
             return (T) getTimestamp(ctx.getDialect(), rs, index);
         }
         else if (type == YearToMonth.class) {
-            String string = rs.getString(index);
-            return (T) (string == null ? null : YearToMonth.valueOf(string));
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = rs.getObject(index);
+                return (T) (object == null ? null : PGIntervalConverter.toYearToMonth(object));
+            }
+            else {
+                String string = rs.getString(index);
+                return (T) (string == null ? null : YearToMonth.valueOf(string));
+            }
         }
         else if (type == DayToSecond.class) {
-            String string = rs.getString(index);
-            return (T) (string == null ? null : DayToSecond.valueOf(string));
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = rs.getObject(index);
+                return (T) (object == null ? null : PGIntervalConverter.toDayToSecond(object));
+            }
+            else {
+                String string = rs.getString(index);
+                return (T) (string == null ? null : DayToSecond.valueOf(string));
+            }
         }
         else if (type == UByte.class) {
             String string = rs.getString(index);
@@ -653,12 +667,24 @@ public final class FieldTypeHelper {
             return (T) stmt.getTimestamp(index);
         }
         else if (type == YearToMonth.class) {
-            String string = stmt.getString(index);
-            return (T) (string == null ? null : YearToMonth.valueOf(string));
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = stmt.getObject(index);
+                return (T) (object == null ? null : PGIntervalConverter.toYearToMonth(object));
+            }
+            else {
+                String string = stmt.getString(index);
+                return (T) (string == null ? null : YearToMonth.valueOf(string));
+            }
         }
         else if (type == DayToSecond.class) {
-            String string = stmt.getString(index);
-            return (T) (string == null ? null : DayToSecond.valueOf(string));
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = stmt.getObject(index);
+                return (T) (object == null ? null : PGIntervalConverter.toDayToSecond(object));
+            }
+            else {
+                String string = stmt.getString(index);
+                return (T) (string == null ? null : DayToSecond.valueOf(string));
+            }
         }
         else if (type == UByte.class) {
             String string = stmt.getString(index);

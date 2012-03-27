@@ -250,12 +250,12 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
     /**
      * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type
      */
-    public static final SQLDataType<YearToMonth> INTERVAL_YEAR_TO_MONTH = new SQLDataType<YearToMonth>(YearToMonth.class, "interval_year_to_month");
+    public static final SQLDataType<YearToMonth> INTERVALYEARTOMONTH = new SQLDataType<YearToMonth>(YearToMonth.class, "interval year to month");
 
     /**
      * The SQL standard <code>INTERVAL DAY TO SECOND</code> data type
      */
-    public static final SQLDataType<DayToSecond> INTERVAL_DAY_TO_SECOND = new SQLDataType<DayToSecond>(DayToSecond.class, "interval_day_to_second");
+    public static final SQLDataType<DayToSecond> INTERVALDAYTOSECOND = new SQLDataType<DayToSecond>(DayToSecond.class, "interval day to second");
 
     // -------------------------------------------------------------------------
     // Binary types

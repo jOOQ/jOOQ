@@ -52,7 +52,6 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.impl.Factory;
-import org.jooq.impl.SQLDataType;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -191,29 +190,13 @@ public class OracleDatabase extends AbstractDatabase {
                     ALL_SEQUENCES.SEQUENCE_NAME)
                 .fetch()) {
 
-            DataTypeDefinition type;
 
             SchemaDefinition schema = getSchema(record.getValue(ALL_SEQUENCES.SEQUENCE_OWNER));
             BigInteger value = record.getValue(ALL_SEQUENCES.MAX_VALUE, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
-
-            if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 2, 0);
-            }
-            else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 4, 0);
-            }
-            else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 9, 0);
-            }
-            else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 18, 0);
-            }
-            else {
-                type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 38, 0);
-            }
+            DataTypeDefinition type = getDataTypeForMAX_VAL(schema, value);
 
             result.add(new DefaultSequenceDefinition(
-                getSchema(record.getValue(ALL_SEQUENCES.SEQUENCE_OWNER)),
+                schema,
                 record.getValue(ALL_SEQUENCES.SEQUENCE_NAME),
                 type));
         }

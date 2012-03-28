@@ -81,6 +81,7 @@ import org.jooq.tools.unsigned.UShort;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.util.ase.ASEDataType;
+import org.jooq.util.cubrid.CUBRIDDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.h2.H2DataType;
@@ -820,6 +821,8 @@ public final class FieldTypeHelper {
         switch (dialect) {
             case ASE:
                 return ASEDataType.getDataType(type);
+            case CUBRID:
+                return CUBRIDDataType.getDataType(type);
             case DB2:
                 return DB2DataType.getDataType(type);
             case DERBY:

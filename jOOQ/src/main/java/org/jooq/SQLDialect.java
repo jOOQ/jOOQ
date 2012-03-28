@@ -38,6 +38,7 @@ package org.jooq;
 
 import org.jooq.impl.Factory;
 import org.jooq.util.ase.ASEFactory;
+import org.jooq.util.cubrid.CUBRIDFactory;
 import org.jooq.util.db2.DB2Factory;
 import org.jooq.util.derby.DerbyFactory;
 import org.jooq.util.h2.H2Factory;
@@ -69,6 +70,11 @@ public enum SQLDialect {
      * The Sybase Adaptive Server SQL dialect
      */
     ASE("ASE", ASEFactory.class),
+
+    /**
+     * The CUBRID SQL dialect
+     */
+    CUBRID("CUBRID", CUBRIDFactory.class),
 
     /**
      * The IBM DB2 SQL dialect

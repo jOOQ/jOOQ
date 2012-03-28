@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
+    <jdbc>
+        <driver>cubrid.jdbc.driver.CUBRIDDriver</driver>
+        <url>jdbc:cubrid:localhost:33000:demodb:::</url>
+        <user>dba</user>
+        <password></password>
+    </jdbc>
+    <generator>
+        <name>org.jooq.util.DefaultGenerator</name>
+        <database>
+            <name>org.jooq.util.cubrid.CUBRIDDatabase</name>
+            <includes>db_class,db_attribute,db_index,db_index_key,db_serial</includes>
+            <excludes></excludes>
+            <inputSchema>DBA</inputSchema>
+        </database>
+        <generate>
+            <deprecated>false</deprecated>
+            <instanceFields>true</instanceFields>
+            <generatedAnnotation>true</generatedAnnotation>
+            <records>false</records>
+        </generate>
+        <target>
+            <packageName>org.jooq.util.cubrid.dba</packageName>
+            <directory>./src/main/java</directory>
+        </target>
+    </generator>
+</configuration>

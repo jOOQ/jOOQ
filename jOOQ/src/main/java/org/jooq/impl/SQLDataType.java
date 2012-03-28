@@ -52,6 +52,7 @@ import org.jooq.tools.unsigned.UShort;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 import org.jooq.util.ase.ASEDataType;
+import org.jooq.util.cubrid.CUBRIDDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
 import org.jooq.util.h2.H2DataType;
@@ -309,6 +310,7 @@ public final class SQLDataType<T> extends AbstractDataType<T> {
 
         try {
             Class.forName(ASEDataType.class.getName());
+            Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DB2DataType.class.getName());
             Class.forName(DerbyDataType.class.getName());
             Class.forName(H2DataType.class.getName());

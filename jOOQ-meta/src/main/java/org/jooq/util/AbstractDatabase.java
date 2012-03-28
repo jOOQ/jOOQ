@@ -38,12 +38,14 @@ package org.jooq.util;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.SQLDialect;
+import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.CustomType;
@@ -665,4 +667,29 @@ public abstract class AbstractDatabase implements Database {
      * {@link #getArrays(SchemaDefinition)}
      */
     protected abstract List<ArrayDefinition> getArrays0() throws SQLException;
+
+    /**
+     * Get the data type considering a known max value
+     */
+    protected final DataTypeDefinition getDataTypeForMAX_VAL(SchemaDefinition schema, BigInteger value) {
+        DataTypeDefinition type;
+
+        if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 2, 0);
+        }
+        else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 4, 0);
+        }
+        else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 9, 0);
+        }
+        else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 18, 0);
+        }
+        else {
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 38, 0);
+        }
+
+        return type;
+    }
 }

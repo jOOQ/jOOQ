@@ -370,7 +370,7 @@ public class jOOQCUBRIDTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
-        return T_639NumbersTable.BYTE;
+        return null;
     }
 
     @Override

@@ -57,6 +57,7 @@ import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -512,7 +513,10 @@ public final class FieldTypeHelper {
             Date date = rs.getDate(index);
 
             if (date != null) {
-                date = new Date((rs.getDate(index).getTime() / 1000) * 1000);
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(date.getTime());
+                cal.set(Calendar.MILLISECOND, 0);
+                date = new Date(cal.getTimeInMillis());
             }
 
             return date;
@@ -534,7 +538,25 @@ public final class FieldTypeHelper {
             }
 
             return null;
-        } else {
+        }
+
+        // Cubrid SQL dates are incorrectly fetched. Reset milliseconds...
+        // See http://jira.cubrid.org/browse/APIS-159
+        // See https://sourceforge.net/apps/trac/cubridinterface/ticket/140
+        else if (dialect == CUBRID) {
+            Time time = rs.getTime(index);
+
+            if (time != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(time.getTime());
+                cal.set(Calendar.MILLISECOND, 0);
+                time = new Time(cal.getTimeInMillis());
+            }
+
+            return time;
+        }
+
+        else {
             return rs.getTime(index);
         }
     }

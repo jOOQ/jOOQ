@@ -865,8 +865,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
         later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
         later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
-        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
-        assertEquals(activeCount + 4, Thread.activeCount());
+        assertEquals(activeCount + 3, Thread.activeCount());
 
         // This should be enough to ensure that GC will collect finished threads
         later = null;

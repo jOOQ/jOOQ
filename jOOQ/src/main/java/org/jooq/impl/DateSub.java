@@ -71,6 +71,9 @@ class DateSub<T> extends AbstractFunction<T> {
             case ASE:
                 return function("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
 
+            case CUBRID:
+                return function("subdate", getDataType(), field, val(value));
+
             case DB2:
             case HSQLDB:
                 return field.sub(field("? day", BigDecimal.class, value));

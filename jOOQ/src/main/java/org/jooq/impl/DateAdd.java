@@ -71,6 +71,9 @@ class DateAdd<T> extends AbstractFunction<T> {
             case ASE:
                 return function("dateadd", getDataType(), literal("day"), val(value), field);
 
+            case CUBRID:
+                return function("adddate", getDataType(), field, val(value));
+
             case DB2:
             case HSQLDB:
                 return field.add(field("? day", BigDecimal.class, value));

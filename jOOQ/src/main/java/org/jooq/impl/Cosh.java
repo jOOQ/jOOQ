@@ -66,6 +66,7 @@ class Cosh extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ASE:
+            case CUBRID:
             case HSQLDB:
             case INGRES:
             case MYSQL:

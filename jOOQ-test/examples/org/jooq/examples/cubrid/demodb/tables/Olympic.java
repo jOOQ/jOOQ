@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Olympic extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord> {
 
-	private static final long serialVersionUID = 1565507859;
+	private static final long serialVersionUID = 10402767;
 
 	/**
 	 * The singleton instance of PUBLIC.olympic
@@ -86,13 +86,13 @@ public class Olympic extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_OLYMPIC_HOST_YEAR;
+		return org.jooq.examples.cubrid.demodb.Keys.OLYMPIC__PK_OLYMPIC_HOST_YEAR;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_OLYMPIC_HOST_YEAR);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.OLYMPIC__PK_OLYMPIC_HOST_YEAR);
 	}
 
 	@Override

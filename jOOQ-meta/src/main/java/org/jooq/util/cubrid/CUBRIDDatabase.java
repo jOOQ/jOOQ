@@ -36,12 +36,15 @@
 
 package org.jooq.util.cubrid;
 
+import static org.jooq.impl.Factory.concat;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX_KEY;
 import static org.jooq.util.cubrid.dba.Tables.DB_SERIAL;
 
 import java.math.BigInteger;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,7 @@ import org.jooq.Result;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
@@ -72,7 +76,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(DB_INDEX.IS_UNIQUE.isTrue().and(DB_INDEX.IS_PRIMARY_KEY.isFalse()))) {
             SchemaDefinition schema = getSchema(record.getValue(DB_CLASS.OWNER_NAME));
-            String key = record.getValue(DB_INDEX.INDEX_NAME);
+            String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(DB_CLASS.CLASS_NAME);
             String columnName = record.getValue(DB_INDEX_KEY.KEY_ATTR_NAME);
 
@@ -87,7 +91,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(DB_INDEX.IS_PRIMARY_KEY.isTrue())) {
             SchemaDefinition schema = getSchema(record.getValue(DB_CLASS.OWNER_NAME));
-            String key = record.getValue(DB_INDEX.INDEX_NAME);
+            String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(DB_CLASS.CLASS_NAME);
             String columnName = record.getValue(DB_INDEX_KEY.KEY_ATTR_NAME);
 
@@ -101,7 +105,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
     private Result<Record> fetchKeys(Condition condition) {
         return
         create().select(
-                    DB_INDEX.INDEX_NAME,
+                    concat(DB_CLASS.CLASS_NAME, val("__"), DB_INDEX.INDEX_NAME).as("constraint_name"),
                     DB_INDEX_KEY.KEY_ATTR_NAME,
                     DB_CLASS.CLASS_NAME,
                     DB_CLASS.OWNER_NAME)
@@ -120,6 +124,36 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
+        DatabaseMetaData meta = create().getConnection().getMetaData();
+
+        for (String table : create()
+                .selectDistinct(DB_INDEX.CLASS_NAME)
+                .from(DB_INDEX)
+                .where(DB_INDEX.IS_FOREIGN_KEY.isTrue())
+                .fetch(DB_INDEX.CLASS_NAME)) {
+
+            for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
+                SchemaDefinition foreignKeySchema = getSchema(getInputSchemata().get(0));
+                SchemaDefinition uniqueKeySchema = getSchema(getInputSchemata().get(0));
+
+                String foreignKeyName =
+                    record.getValue("FKTABLE_NAME", String.class) +
+                    "__" +
+                    record.getValue("FK_NAME", String.class);
+                String foreignKeyTableName = record.getValue("FKTABLE_NAME", String.class);
+                String foreignKeyColumnName = record.getValue("FKCOLUMN_NAME", String.class);
+                String uniqueKeyName =
+                    record.getValue("PKTABLE_NAME", String.class) +
+                    "__" +
+                    record.getValue("PK_NAME", String.class);
+
+                TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
+                if (referencingTable != null) {
+                    ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
+                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
+                }
+            }
+        }
     }
 
     @Override

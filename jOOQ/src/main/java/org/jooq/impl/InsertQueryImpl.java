@@ -159,6 +159,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             switch (context.getDialect()) {
 
                 // MySQL has a nice syntax for this
+                case CUBRID:
                 case MYSQL: {
                     toSQLInsert(context);
                     context.formatSeparator()
@@ -202,6 +203,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             switch (context.getDialect()) {
 
                 // MySQL has a nice syntax for this
+                case CUBRID:
                 case MYSQL: {
                     bindInsert(context);
                     break;
@@ -341,6 +343,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
                 case ASE:
+                case CUBRID:
                 case DERBY:
                 case H2:
                 case INGRES:
@@ -406,6 +409,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
                 case ASE:
+                case CUBRID:
                 case DERBY:
                 case H2:
                 case INGRES:
@@ -441,7 +445,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     break;
                 }
 
-               // These dialects have full JDBC support
+                // These dialects have full JDBC support
                 case DB2:
                 case HSQLDB:
                 case ORACLE:

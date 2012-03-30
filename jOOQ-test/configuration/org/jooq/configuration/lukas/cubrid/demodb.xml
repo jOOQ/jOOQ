@@ -19,7 +19,7 @@
         <generate>
             <relations>true</relations>
             <navigationMethods>true</navigationMethods>
-            <deprecated>true</deprecated>
+            <deprecated>false</deprecated>
             <instanceFields>true</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
             <records>true</records>

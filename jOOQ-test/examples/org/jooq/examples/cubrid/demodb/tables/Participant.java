@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Participant extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord> {
 
-	private static final long serialVersionUID = -914586083;
+	private static final long serialVersionUID = 804090550;
 
 	/**
 	 * The singleton instance of PUBLIC.participant
@@ -32,6 +32,12 @@ public class Participant extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT participant__fk_participant_host_year
+	 * FOREIGN KEY (host_year)
+	 * REFERENCES PUBLIC.olympic (host_year)
+	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord, java.lang.Integer> HOST_YEAR = createField("host_year", org.jooq.impl.SQLDataType.INTEGER, this);
 
@@ -39,6 +45,12 @@ public class Participant extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT participant__fk_participant_nation_code
+	 * FOREIGN KEY (nation_code)
+	 * REFERENCES PUBLIC.nation (code)
+	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord, java.lang.String> NATION_CODE = createField("nation_code", org.jooq.impl.SQLDataType.CHAR, this);
 
@@ -73,13 +85,19 @@ public class Participant extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_PARTICIPANT_HOST_YEAR_NATION_CODE;
+		return org.jooq.examples.cubrid.demodb.Keys.PARTICIPANT__PK_PARTICIPANT_HOST_YEAR_NATION_CODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_PARTICIPANT_HOST_YEAR_NATION_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PARTICIPANT__PK_PARTICIPANT_HOST_YEAR_NATION_CODE);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord, ?>> getReferences() {
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord, ?>>asList(org.jooq.examples.cubrid.demodb.Keys.PARTICIPANT__FK_PARTICIPANT_HOST_YEAR, org.jooq.examples.cubrid.demodb.Keys.PARTICIPANT__FK_PARTICIPANT_NATION_CODE);
 	}
 
 	@Override

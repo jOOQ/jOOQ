@@ -239,6 +239,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("`").sql(literal).sql("`");
                     break;
 
+                case CUBRID:
                 case DB2:
                 case DERBY:
                 case H2:

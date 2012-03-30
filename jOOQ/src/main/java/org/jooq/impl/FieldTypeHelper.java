@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.getNewFactory;
 
@@ -492,6 +493,7 @@ public final class FieldTypeHelper {
     }
 
     private static Date getDate(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+
         // SQLite's type affinity needs special care...
         if (dialect == SQLDialect.SQLITE) {
             String date = rs.getString(index);
@@ -501,12 +503,28 @@ public final class FieldTypeHelper {
             }
 
             return null;
-        } else {
+        }
+
+        // Cubrid SQL dates are incorrectly fetched. Reset milliseconds...
+        // See http://jira.cubrid.org/browse/APIS-159
+        // See https://sourceforge.net/apps/trac/cubridinterface/ticket/140
+        else if (dialect == CUBRID) {
+            Date date = rs.getDate(index);
+
+            if (date != null) {
+                date = new Date((rs.getDate(index).getTime() / 1000) * 1000);
+            }
+
+            return date;
+        }
+
+        else {
             return rs.getDate(index);
         }
     }
 
     private static Time getTime(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+
         // SQLite's type affinity needs special care...
         if (dialect == SQLDialect.SQLITE) {
             String time = rs.getString(index);
@@ -522,6 +540,7 @@ public final class FieldTypeHelper {
     }
 
     private static Timestamp getTimestamp(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+
         // SQLite's type affinity needs special care...
         if (dialect == SQLDialect.SQLITE) {
             String timestamp = rs.getString(index);

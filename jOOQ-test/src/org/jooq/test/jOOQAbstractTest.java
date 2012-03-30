@@ -36,6 +36,7 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.SQLDialect.CUBRID;
 
 import java.io.File;
 import java.io.InputStream;
@@ -328,6 +329,11 @@ public abstract class jOOQAbstractTest<
 
                 // There are no IF EXISTS clauses in Sybase ASE
                 else if (e.getMessage().contains("doesn't exist") && getDialect() == SQLDialect.ASE) {
+                    continue;
+                }
+
+                // There is no IF EXISTS clause in CUBRID's DROP VIEW statement
+                else if (getDialect() == CUBRID && sql.trim().startsWith("DROP")) {
                     continue;
                 }
 

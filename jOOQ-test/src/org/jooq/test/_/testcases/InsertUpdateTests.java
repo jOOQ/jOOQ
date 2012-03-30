@@ -40,6 +40,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -768,7 +769,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             create().truncate(TAuthor()).execute();
 
             // The above should fail if foreign keys are supported
-            if (!Arrays.asList(INGRES, SQLITE).contains(getDialect())) {
+            if (!Arrays.asList(CUBRID, INGRES, SQLITE).contains(getDialect())) {
                 fail();
             }
         } catch (Exception expected) {

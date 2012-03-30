@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -146,6 +147,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     case DERBY:
 
                     // These dialects have some trouble, when they mostly get it right.
+                    case CUBRID:
                     case H2:
                     case HSQLDB:
 
@@ -352,9 +354,14 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
-                // Normal behaviour: Apply JDBC escape syntax
+                // These dialects implement SQL standard date literals
+                else if (dialect == CUBRID) {
+                    context.keyword("date '").sql(val.toString()).sql("'");
+                }
+
+                // Fallback: Apply JDBC escape syntax
                 else {
-                    context.sql("{d '").sql(val.toString()).sql("'}");
+                    context.keyword("{d '").sql(val.toString()).sql("'}");
                 }
             }
             else if (type == Timestamp.class) {
@@ -369,9 +376,14 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
-                // Normal behaviour: Apply JDBC escape syntax
+                // CUBRID timestamps have no fractional seconds
+                else if (dialect == CUBRID) {
+                    context.keyword("datetime '").sql(val.toString()).sql("'");
+                }
+
+                // Fallback: Apply JDBC escape syntax
                 else {
-                    context.sql("{ts '").sql(val.toString()).sql("'}");
+                    context.keyword("{ts '").sql(val.toString()).sql("'}");
                 }
             }
             else if (type == Time.class) {
@@ -381,9 +393,14 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     context.sql("'").sql(val.toString()).sql("'");
                 }
 
-                // Normal behaviour: Apply JDBC escape syntax
+                // CUBRID timestamps have no fractional seconds
+                else if (dialect == CUBRID) {
+                    context.keyword("time '").sql(val.toString()).sql("'");
+                }
+
+                // Fallback: Apply JDBC escape syntax
                 else {
-                    context.sql("{t '").sql(val.toString()).sql("'}");
+                    context.keyword("{t '").sql(val.toString()).sql("'}");
                 }
             }
             else if (type.isArray()) {

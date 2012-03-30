@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Athlete extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.AthleteRecord> {
 
-	private static final long serialVersionUID = 1949978925;
+	private static final long serialVersionUID = 825486753;
 
 	/**
 	 * The singleton instance of PUBLIC.athlete
@@ -76,13 +76,13 @@ public class Athlete extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.AthleteRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_ATHLETE_CODE;
+		return org.jooq.examples.cubrid.demodb.Keys.ATHLETE__PK_ATHLETE_CODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.AthleteRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.AthleteRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_ATHLETE_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.AthleteRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.ATHLETE__PK_ATHLETE_CODE);
 	}
 
 	@Override

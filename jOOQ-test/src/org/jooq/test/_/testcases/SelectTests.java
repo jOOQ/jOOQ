@@ -333,6 +333,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     @Test
     public void testForUpdateClauses() throws Exception {
         switch (getDialect()) {
+            case CUBRID:
             case SQLITE:
             case SQLSERVER:
                 log.info("SKIPPING", "FOR UPDATE tests");

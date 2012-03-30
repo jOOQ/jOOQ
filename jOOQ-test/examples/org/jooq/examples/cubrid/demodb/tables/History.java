@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class History extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord> {
 
-	private static final long serialVersionUID = -217390322;
+	private static final long serialVersionUID = 1851718220;
 
 	/**
 	 * The singleton instance of PUBLIC.history
@@ -73,13 +73,13 @@ public class History extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_HISTORY_EVENT_CODE_ATHLETE;
+		return org.jooq.examples.cubrid.demodb.Keys.HISTORY__PK_HISTORY_EVENT_CODE_ATHLETE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_HISTORY_EVENT_CODE_ATHLETE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.HISTORY__PK_HISTORY_EVENT_CODE_ATHLETE);
 	}
 
 	@Override

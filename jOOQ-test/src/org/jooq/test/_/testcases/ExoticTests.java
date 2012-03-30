@@ -43,9 +43,21 @@ import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
+import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
+import static org.jooq.util.oracle.OracleFactory.level;
+import static org.jooq.util.oracle.OracleFactory.prior;
+import static org.jooq.util.oracle.OracleFactory.rownum;
+import static org.jooq.util.oracle.OracleFactory.sysConnectByPath;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -214,7 +226,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     }
 
     @Test
-    public void testRelationalDivision() {
+    public void testRelationalDivision() throws Exception {
 
         // Books and bookstores. There's only one book that is contained in
         // every bookstore:
@@ -247,5 +259,121 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         assertEquals(asList((Object) 1, "abc"), asList(result.get(0).intoArray()));
         assertEquals(asList((Object) 3, "abc"), asList(result.get(1).intoArray()));
+    }
+
+    @Test
+    public void testConnectBySimple() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DB2:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "Connect by tests");
+                return;
+        }
+
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+            create().select(rownum())
+                    .connectBy(level().lessThan(10))
+                    .fetch(rownum()));
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+            create().select(rownum())
+                    .connectByNoCycle(level().lessThan(10))
+                    .fetch(rownum()));
+
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+            create().select(rownum())
+                    .connectBy(level().lessThan(10))
+                    .and("1 = ?", 1)
+                    .startWith("? = ?", 1, 1)
+                    .fetch(rownum()));
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
+            create().select(rownum())
+                    .connectByNoCycle(level().lessThan(10))
+                    .and("1 = ?", 1)
+                    .startWith("? = ?", 1, 1)
+                    .fetch(rownum()));
+
+        Result<Record> result =
+        create().select(rownum(), connectByIsCycle(), connectByIsLeaf())
+                .connectByNoCycle(level().lessThan(4))
+                .fetch();
+
+        assertEquals(Integer.valueOf(1), result.getValue(0, rownum()));
+        assertEquals(Integer.valueOf(2), result.getValue(1, rownum()));
+        assertEquals(Integer.valueOf(3), result.getValue(2, rownum()));
+
+        assertEquals(Boolean.FALSE, result.getValue(0, connectByIsLeaf()));
+        assertEquals(Boolean.FALSE, result.getValue(1, connectByIsLeaf()));
+        assertEquals(Boolean.TRUE, result.getValue(2, connectByIsLeaf()));
+
+        assertEquals(Boolean.FALSE, result.getValue(0, connectByIsCycle()));
+        assertEquals(Boolean.FALSE, result.getValue(1, connectByIsCycle()));
+        assertEquals(Boolean.FALSE, result.getValue(2, connectByIsCycle()));
+    }
+
+    @Test
+    public void testConnectByDirectory() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case DB2:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "Connect by tests");
+                return;
+        }
+
+        List<?> paths =
+        create().select(substring(sysConnectByPath(TDirectory_NAME(), "/"), 2))
+                .from(TDirectory())
+                .where(trueCondition())
+                .and(trueCondition())
+                .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
+                .startWith(TDirectory_PARENT_ID().isNull())
+                .orderBy(one())
+                .fetch(0);
+
+        assertEquals(26, paths.size());
+        assertEquals(Arrays.asList(
+            "C:",
+            "C:/eclipse",
+            "C:/eclipse/configuration",
+            "C:/eclipse/dropins",
+            "C:/eclipse/eclipse.exe",
+            "C:/eclipse/eclipse.ini",
+            "C:/eclipse/features",
+            "C:/eclipse/plugins",
+            "C:/eclipse/p2",
+            "C:/eclipse/readme",
+            "C:/eclipse/readme/readme_eclipse.html",
+            "C:/eclipse/src",
+            "C:/Program Files",
+            "C:/Program Files/Internet Explorer",
+            "C:/Program Files/Internet Explorer/de-DE",
+            "C:/Program Files/Internet Explorer/ielowutil.exe",
+            "C:/Program Files/Internet Explorer/iexplore.exe",
+            "C:/Program Files/Java",
+            "C:/Program Files/Java/jre6",
+            "C:/Program Files/Java/jre6/bin",
+            "C:/Program Files/Java/jre6/bin/java.exe",
+            "C:/Program Files/Java/jre6/bin/javaw.exe",
+            "C:/Program Files/Java/jre6/bin/javaws.exe",
+            "C:/Program Files/Java/jre6/lib",
+            "C:/Program Files/Java/jre6/lib/javaws.jar",
+            "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
     }
 }

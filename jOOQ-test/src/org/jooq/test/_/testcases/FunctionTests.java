@@ -392,7 +392,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     @Test
     public void testFunctionsOnStrings() throws Exception {
 
-        // [#1241] TODO Casting. This doesn't work in Derby
+        // [#1241] Casting to CHAR. Some dialects don't like that. They should
+        // be casting to VARCHAR instead
         assertEquals("abc",
         create().select(field("cast('abc' as char(3))", SQLDataType.CHAR))
                 .where(field("cast('abc' as char(3))", SQLDataType.CHAR).equal("abc"))

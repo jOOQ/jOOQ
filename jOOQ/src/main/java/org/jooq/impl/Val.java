@@ -153,6 +153,10 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     // [#722] TODO This is probably not entirely right.
                     case INGRES:
 
+                    // [#1261] There are only a few corner-cases, where this is
+                	// really needed. Check back on related CUBRID bugs
+                    case CUBRID:
+                    	
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
                     case POSTGRES:
@@ -183,7 +187,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
         SQLDataType<T> type = getDataType(context).getSQLDataType();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (getValue() != null && getType() == BigDecimal.class && asList(DB2, DERBY, HSQLDB).contains(context.getDialect())) {
+        if (getValue() != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, HSQLDB).contains(context.getDialect())) {
 
             // Add precision / scale on BigDecimals
             int scale = ((BigDecimal) getValue()).scale();

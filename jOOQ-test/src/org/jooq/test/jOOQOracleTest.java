@@ -42,8 +42,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
@@ -77,20 +75,12 @@ import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.countBo
 import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.load;
 import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_976;
 import static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
-import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
-import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
-import static org.jooq.util.oracle.OracleFactory.level;
-import static org.jooq.util.oracle.OracleFactory.prior;
-import static org.jooq.util.oracle.OracleFactory.rownum;
-import static org.jooq.util.oracle.OracleFactory.sysConnectByPath;
 import static org.jooq.util.oracle.OracleFactory.sysContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -830,90 +820,6 @@ public class jOOQOracleTest extends jOOQAbstractTest<
         assertEquals(1, create().selectOne().hint("/*+ALL_ROWS*/").fetchOne(0));
         assertEquals(1, create().select(val(1)).hint("/*+ALL_ROWS*/").fetchOne(0));
         assertEquals(1, create().selectDistinct(val(1)).hint("/*+ALL_ROWS*/").fetchOne(0));
-    }
-
-    @Test
-    public void testOracleConnectBySimple() throws Exception {
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora().select(rownum())
-                 .connectBy(level().lessThan(10))
-                 .fetch(rownum()));
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora().select(rownum())
-                 .connectByNoCycle(level().lessThan(10))
-                 .fetch(rownum()));
-
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora().select(rownum())
-                 .connectBy(level().lessThan(10))
-                 .and("1 = ?", 1)
-                 .startWith("? = ?", 1, 1)
-                 .fetch(rownum()));
-        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9),
-            ora().select(rownum())
-                 .connectByNoCycle(level().lessThan(10))
-                 .and("1 = ?", 1)
-                 .startWith("? = ?", 1, 1)
-                 .fetch(rownum()));
-
-        Result<Record> result =
-        ora().select(rownum(), connectByIsCycle(), connectByIsLeaf())
-             .connectByNoCycle(level().lessThan(4))
-             .fetch();
-
-        assertEquals(Integer.valueOf(1), result.getValue(0, rownum()));
-        assertEquals(Integer.valueOf(2), result.getValue(1, rownum()));
-        assertEquals(Integer.valueOf(3), result.getValue(2, rownum()));
-
-        assertEquals(Boolean.FALSE, result.getValue(0, connectByIsLeaf()));
-        assertEquals(Boolean.FALSE, result.getValue(1, connectByIsLeaf()));
-        assertEquals(Boolean.TRUE, result.getValue(2, connectByIsLeaf()));
-
-        assertEquals(Boolean.FALSE, result.getValue(0, connectByIsCycle()));
-        assertEquals(Boolean.FALSE, result.getValue(1, connectByIsCycle()));
-        assertEquals(Boolean.FALSE, result.getValue(2, connectByIsCycle()));
-    }
-
-    @Test
-    public void testOracleConnectByDirectory() throws Exception {
-        List<?> paths =
-        ora().select(substring(sysConnectByPath(TDirectory_NAME(), "/"), 2))
-             .from(TDirectory())
-             .where(trueCondition())
-             .and(trueCondition())
-             .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
-             .startWith(TDirectory_PARENT_ID().isNull())
-             .orderBy(one())
-             .fetch(0);
-
-        assertEquals(26, paths.size());
-        assertEquals(Arrays.asList(
-            "C:",
-            "C:/eclipse",
-            "C:/eclipse/configuration",
-            "C:/eclipse/dropins",
-            "C:/eclipse/eclipse.exe",
-            "C:/eclipse/eclipse.ini",
-            "C:/eclipse/features",
-            "C:/eclipse/plugins",
-            "C:/eclipse/p2",
-            "C:/eclipse/readme",
-            "C:/eclipse/readme/readme_eclipse.html",
-            "C:/eclipse/src",
-            "C:/Program Files",
-            "C:/Program Files/Internet Explorer",
-            "C:/Program Files/Internet Explorer/de-DE",
-            "C:/Program Files/Internet Explorer/ielowutil.exe",
-            "C:/Program Files/Internet Explorer/iexplore.exe",
-            "C:/Program Files/Java",
-            "C:/Program Files/Java/jre6",
-            "C:/Program Files/Java/jre6/bin",
-            "C:/Program Files/Java/jre6/bin/java.exe",
-            "C:/Program Files/Java/jre6/bin/javaw.exe",
-            "C:/Program Files/Java/jre6/bin/javaws.exe",
-            "C:/Program Files/Java/jre6/lib",
-            "C:/Program Files/Java/jre6/lib/javaws.jar",
-            "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
     }
 
     // @Test [#1119] TODO reactivate this test

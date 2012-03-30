@@ -1428,6 +1428,16 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testConnectBySimple() throws Exception {
+        new ExoticTests(this).testConnectBySimple();
+    }
+
+    @Test
+    public void testConnectByDirectory() throws Exception {
+        new ExoticTests(this).testConnectByDirectory();
+    }
+
+    @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerOnResultQuery();
     }

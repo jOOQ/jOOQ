@@ -854,7 +854,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Field<?> user = trim(lower(currentUser()));
         Record record = create().select(user).fetchOne();
 
-        assertTrue(Arrays.asList("test", "db2admin", "sa", "root@localhost", "postgres", "dbo", "dba")
+        assertTrue(Arrays.asList("test", "db2admin", "sa", "root@localhost", "postgres", "dbo", "dba", "dba@lukas-hp")
             .contains(record.getValue(user)));
     }
 

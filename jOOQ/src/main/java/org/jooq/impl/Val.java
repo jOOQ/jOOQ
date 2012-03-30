@@ -147,7 +147,6 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     case DERBY:
 
                     // These dialects have some trouble, when they mostly get it right.
-                    case CUBRID:
                     case H2:
                     case HSQLDB:
 

@@ -651,7 +651,7 @@ public abstract class jOOQAbstractTest<
     protected abstract UpdatableTable<D> TDirectory();
     protected abstract TableField<D, Integer> TDirectory_ID();
     protected abstract TableField<D, Integer> TDirectory_PARENT_ID();
-    protected abstract TableField<D, Byte> TDirectory_IS_DIRECTORY();
+    protected abstract TableField<D, Integer> TDirectory_IS_DIRECTORY();
     protected abstract TableField<D, String> TDirectory_NAME();
 
     protected abstract UpdatableTable<T> TTriggers();

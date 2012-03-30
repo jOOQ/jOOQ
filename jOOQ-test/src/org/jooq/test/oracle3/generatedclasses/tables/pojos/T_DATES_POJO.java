@@ -10,14 +10,16 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class T_DATES_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1137165902;
+	private static final long serialVersionUID = 1304078440;
 
-	private java.lang.Integer  ID;
-	private java.sql.Date      D;
-	private java.sql.Timestamp T;
-	private java.sql.Timestamp TS;
-	private java.lang.Integer  D_INT;
-	private java.lang.Long     TS_BIGINT;
+	private java.lang.Integer          ID;
+	private java.sql.Date              D;
+	private java.sql.Timestamp         T;
+	private java.sql.Timestamp         TS;
+	private java.lang.Integer          D_INT;
+	private java.lang.Long             TS_BIGINT;
+	private org.jooq.types.YearToMonth I_Y;
+	private org.jooq.types.DayToSecond I_D;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -72,5 +74,23 @@ public class T_DATES_POJO extends java.lang.ThreadDeath implements java.lang.Clo
 
 	public void setTS_BIGINT(java.lang.Long TS_BIGINT) {
 		this.TS_BIGINT = TS_BIGINT;
+	}
+
+	@javax.persistence.Column(name = "I_Y", precision = 2)
+	public org.jooq.types.YearToMonth getI_Y() {
+		return this.I_Y;
+	}
+
+	public void setI_Y(org.jooq.types.YearToMonth I_Y) {
+		this.I_Y = I_Y;
+	}
+
+	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
+	public org.jooq.types.DayToSecond getI_D() {
+		return this.I_D;
+	}
+
+	public void setI_D(org.jooq.types.DayToSecond I_D) {
+		this.I_D = I_D;
 	}
 }

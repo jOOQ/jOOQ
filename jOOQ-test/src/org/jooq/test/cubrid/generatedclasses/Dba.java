@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses;
  */
 public class Dba extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1364291472;
+	private static final long serialVersionUID = -1747808426;
 
 	/**
 	 * The singleton instance of DBA
@@ -46,6 +46,7 @@ public class Dba extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.cubrid.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.cubrid.generatedclasses.tables.TDates.T_DATES,
+			org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY,
 			org.jooq.test.cubrid.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.cubrid.generatedclasses.tables.TTriggers.T_TRIGGERS,

@@ -42,8 +42,8 @@ import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.max;
-import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.table;
@@ -338,42 +338,41 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         }
 
         List<?> paths =
-        create().select(substring(sysConnectByPath(TDirectory_NAME(), "/"), 2))
+        create().select(substring(sysConnectByPath(lower(TDirectory_NAME()), "/"), 2).as("dir"))
                 .from(TDirectory())
                 .where(trueCondition())
                 .and(trueCondition())
                 .connectBy(prior(TDirectory_ID()).equal(TDirectory_PARENT_ID()))
                 .startWith(TDirectory_PARENT_ID().isNull())
-                .orderBy(one())
+                .orderBy(1)
                 .fetch(0);
 
-        assertEquals(26, paths.size());
+        assertEquals(25, paths.size());
         assertEquals(Arrays.asList(
-            "C:",
-            "C:/eclipse",
-            "C:/eclipse/configuration",
-            "C:/eclipse/dropins",
-            "C:/eclipse/eclipse.exe",
-            "C:/eclipse/eclipse.ini",
-            "C:/eclipse/features",
-            "C:/eclipse/plugins",
-            "C:/eclipse/p2",
-            "C:/eclipse/readme",
-            "C:/eclipse/readme/readme_eclipse.html",
-            "C:/eclipse/src",
-            "C:/Program Files",
-            "C:/Program Files/Internet Explorer",
-            "C:/Program Files/Internet Explorer/de-DE",
-            "C:/Program Files/Internet Explorer/ielowutil.exe",
-            "C:/Program Files/Internet Explorer/iexplore.exe",
-            "C:/Program Files/Java",
-            "C:/Program Files/Java/jre6",
-            "C:/Program Files/Java/jre6/bin",
-            "C:/Program Files/Java/jre6/bin/java.exe",
-            "C:/Program Files/Java/jre6/bin/javaw.exe",
-            "C:/Program Files/Java/jre6/bin/javaws.exe",
-            "C:/Program Files/Java/jre6/lib",
-            "C:/Program Files/Java/jre6/lib/javaws.jar",
-            "C:/Program Files/Java/jre6/lib/rt.jar"), paths);
+            "c:",
+            "c:/eclipse",
+            "c:/eclipse/configuration",
+            "c:/eclipse/dropins",
+            "c:/eclipse/eclipse.exe",
+            "c:/eclipse/eclipse.ini",
+            "c:/eclipse/features",
+            "c:/eclipse/plugins",
+            "c:/eclipse/readme",
+            "c:/eclipse/readme/readme_eclipse.html",
+            "c:/eclipse/src",
+            "c:/program files",
+            "c:/program files/internet explorer",
+            "c:/program files/internet explorer/de-de",
+            "c:/program files/internet explorer/ielowutil.exe",
+            "c:/program files/internet explorer/iexplore.exe",
+            "c:/program files/java",
+            "c:/program files/java/jre6",
+            "c:/program files/java/jre6/bin",
+            "c:/program files/java/jre6/bin/java.exe",
+            "c:/program files/java/jre6/bin/javaw.exe",
+            "c:/program files/java/jre6/bin/javaws.exe",
+            "c:/program files/java/jre6/lib",
+            "c:/program files/java/jre6/lib/javaws.jar",
+            "c:/program files/java/jre6/lib/rt.jar"), paths);
     }
 }

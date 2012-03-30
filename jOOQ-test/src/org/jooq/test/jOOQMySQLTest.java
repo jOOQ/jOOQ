@@ -560,7 +560,7 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<XUnusedRecord, Byte> TDirectory_IS_DIRECTORY() {
+    protected TableField<XUnusedRecord, Integer> TDirectory_IS_DIRECTORY() {
         return null;
     }
 

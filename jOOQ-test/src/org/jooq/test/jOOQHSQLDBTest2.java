@@ -551,7 +551,7 @@ public class jOOQHSQLDBTest2 extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TDirectoryRecord, Byte> TDirectory_IS_DIRECTORY() {
+    protected TableField<TDirectoryRecord, Integer> TDirectory_IS_DIRECTORY() {
         return T_DIRECTORY.IS_DIRECTORY;
     }
 

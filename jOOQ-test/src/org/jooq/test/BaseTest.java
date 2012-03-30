@@ -519,7 +519,7 @@ public abstract class BaseTest<
         return delegate.TDirectory_PARENT_ID();
     }
 
-    protected TableField<D, Byte> TDirectory_IS_DIRECTORY() {
+    protected TableField<D, Integer> TDirectory_IS_DIRECTORY() {
         return delegate.TDirectory_IS_DIRECTORY();
     }
 

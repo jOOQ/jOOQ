@@ -12,6 +12,7 @@ DROP TABLE t_book/
 DROP TABLE t_book_details/
 DROP TABLE t_author/
 DROP TABLE t_language/
+DROP TABLE t_directory/
 DROP TABLE x_test_case_85/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
@@ -89,6 +90,17 @@ AFTER INSERT
 ON t_triggers
 EXECUTE AFTER
 UPDATE t_triggers SET id = id_generated, counter = id_generated * 2
+/
+
+CREATE TABLE t_directory (
+  id           int NOT NULL,
+  parent_id    int,
+  is_directory int,
+  "name"       varchar(50),
+
+  CONSTRAINT pk_t_directory PRIMARY KEY (ID),
+  CONSTRAINT pk_t_directory_self FOREIGN KEY (PARENT_ID) REFERENCES t_directory(ID) ON DELETE CASCADE
+)
 /
 
 CREATE TABLE t_language (

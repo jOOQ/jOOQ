@@ -37,13 +37,10 @@ package org.jooq.util.oracle;
 
 import java.sql.Connection;
 
-import org.jooq.BindContext;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
-import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
 import org.jooq.impl.SQLDataType;
 
@@ -131,77 +128,5 @@ public class OracleFactory extends Factory {
      */
     public static Field<String> sysContext(String namespace, String parameter, int length) {
         return function("sys_context", SQLDataType.VARCHAR, val(namespace), val(parameter), val(length));
-    }
-
-    // -------------------------------------------------------------------------
-    // Pseudo-and functions for use in the context of a CONNECT BY clause
-    // -------------------------------------------------------------------------
-
-    /**
-     * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
-     * along with <code>CONNECT BY</code> clauses)
-     */
-    public static Field<Integer> level() {
-        return field("level", Integer.class);
-    }
-
-    /**
-     * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
-     * (to be used along with <code>CONNECT BY</code> clauses)
-     */
-    public static Field<Boolean> connectByIsCycle() {
-        return field("connect_by_iscycle", Boolean.class);
-    }
-
-    /**
-     * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
-     * (to be used along with <code>CONNECT BY</code> clauses)
-     */
-    public static Field<Boolean> connectByIsLeaf() {
-        return field("connect_by_isleaf", Boolean.class);
-    }
-
-    /**
-     * Retrieve the Oracle-specific
-     * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
-     * along with <code>CONNECT BY</code> clauses).
-     */
-    public static Field<String> sysConnectByPath(Field<?> field, String separator) {
-        String escaped = "'" + separator.replace("'", "''") + "'";
-        return function("sys_connect_by_path", String.class, field, literal(escaped));
-    }
-
-    /**
-     * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
-     * (to be used along with <code>CONNECT BY</code> clauses)
-     */
-    public static <T> Field<T> prior(Field<T> field) {
-        return new Prior<T>(field);
-    }
-
-    private static class Prior<T> extends CustomField<T> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -530284767039331529L;
-
-        private final Field<T>    field;
-
-        Prior(Field<T> field) {
-            super("prior", field.getDataType());
-
-            this.field = field;
-        }
-
-        @Override
-        public final void toSQL(RenderContext context) {
-            context.keyword("prior ").sql(field);
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.bind(field);
-        }
     }
 }

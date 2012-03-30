@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1865260204;
+	private static final long serialVersionUID = -285258429;
 
 	/**
 	 * The singleton instance of TEST.T_DIRECTORY
@@ -49,7 +49,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.Recor
 	/**
 	 * An uncommented item
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.Byte> IS_DIRECTORY = createField("IS_DIRECTORY", org.jooq.impl.SQLDataType.TINYINT, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> IS_DIRECTORY = createField("IS_DIRECTORY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
 	 * An uncommented item

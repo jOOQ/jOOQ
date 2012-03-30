@@ -305,11 +305,11 @@ END t_triggers_trigger;
 CREATE TABLE t_directory (
   id           number(7) NOT NULL,
   parent_id    number(7),
-  is_directory number(1),
+  is_directory number(7),
   "name"       varchar2(50),
 
   CONSTRAINT pk_t_directory PRIMARY KEY (ID),
-  CONSTRAINT pk_t_directory_self FOREIGN KEY (PARENT_ID) REFERENCES t_directory(ID)
+  CONSTRAINT pk_t_directory_self FOREIGN KEY (PARENT_ID) REFERENCES t_directory(ID) ON DELETE CASCADE
 )
 /
 

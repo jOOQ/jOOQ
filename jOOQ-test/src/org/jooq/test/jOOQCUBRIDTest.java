@@ -34,6 +34,7 @@ package org.jooq.test;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.cubrid.generatedclasses.Tables.T_DIRECTORY;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.cubrid.generatedclasses.Tables.V_AUTHOR;
@@ -67,6 +68,7 @@ import org.jooq.test.cubrid.generatedclasses.tables.TBook;
 import org.jooq.test.cubrid.generatedclasses.tables.TBookStore;
 import org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.cubrid.generatedclasses.tables.TBooleans;
+import org.jooq.test.cubrid.generatedclasses.tables.TDirectory;
 import org.jooq.test.cubrid.generatedclasses.tables.TIdentity;
 import org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.cubrid.generatedclasses.tables.TTriggers;
@@ -81,6 +83,7 @@ import org.jooq.test.cubrid.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord;
@@ -113,7 +116,7 @@ public class jOOQCUBRIDTest extends jOOQAbstractTest<
         XUnusedRecord,
         TDatesRecord,
         TBooleansRecord,
-        XUnusedRecord,
+        TDirectoryRecord,
         TTriggersRecord,
         XUnusedRecord,
         TIdentityRecord,
@@ -514,28 +517,28 @@ public class jOOQCUBRIDTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<XUnusedRecord> TDirectory() {
-        return null;
+    protected UpdatableTable<TDirectoryRecord> TDirectory() {
+        return T_DIRECTORY;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
-        return null;
+    protected TableField<TDirectoryRecord, Integer> TDirectory_ID() {
+        return TDirectory.ID;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
-        return null;
+    protected TableField<TDirectoryRecord, Integer> TDirectory_PARENT_ID() {
+        return TDirectory.PARENT_ID;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Byte> TDirectory_IS_DIRECTORY() {
-        return null;
+    protected TableField<TDirectoryRecord, Integer> TDirectory_IS_DIRECTORY() {
+        return TDirectory.IS_DIRECTORY;
     }
 
     @Override
-    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
-        return null;
+    protected TableField<TDirectoryRecord, String> TDirectory_NAME() {
+        return TDirectory.NAME;
     }
 
     @Override

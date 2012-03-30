@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 1112825583;
+	private static final long serialVersionUID = -2033765815;
 
 	/**
 	 * An uncommented item
@@ -90,15 +90,15 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	/**
 	 * An uncommented item
 	 */
-	public void setIsDirectory(java.lang.Byte value) {
+	public void setIsDirectory(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.IS_DIRECTORY, value);
 	}
 
 	/**
 	 * An uncommented item
 	 */
-	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 1)
-	public java.lang.Byte getIsDirectory() {
+	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
+	public java.lang.Integer getIsDirectory() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.IS_DIRECTORY);
 	}
 

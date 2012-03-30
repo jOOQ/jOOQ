@@ -71,6 +71,11 @@ public final class Tables {
 	public static org.jooq.test.cubrid.generatedclasses.tables.TDates T_DATES = org.jooq.test.cubrid.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table DBA.t_directory
+	 */
+	public static org.jooq.test.cubrid.generatedclasses.tables.TDirectory T_DIRECTORY = org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY;
+
+	/**
 	 * The table DBA.t_identity
 	 */
 	public static org.jooq.test.cubrid.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.cubrid.generatedclasses.tables.TIdentity.T_IDENTITY;

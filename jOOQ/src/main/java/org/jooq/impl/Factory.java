@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -3643,6 +3644,57 @@ public class Factory implements FactoryOperations {
     @Support
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
         return new Radians(nullSafe(field));
+    }
+
+    // -------------------------------------------------------------------------
+    // Pseudo-fields and functions for use in the context of a CONNECT BY clause
+    // -------------------------------------------------------------------------
+
+    /**
+     * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
+     * along with <code>CONNECT BY</code> clauses)
+     */
+    @Support({ CUBRID, ORACLE })
+    public static Field<Integer> level() {
+        return field("level", Integer.class);
+    }
+
+    /**
+     * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
+     * (to be used along with <code>CONNECT BY</code> clauses)
+     */
+    @Support({ CUBRID, ORACLE })
+    public static Field<Boolean> connectByIsCycle() {
+        return field("connect_by_iscycle", Boolean.class);
+    }
+
+    /**
+     * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
+     * (to be used along with <code>CONNECT BY</code> clauses)
+     */
+    @Support({ CUBRID, ORACLE })
+    public static Field<Boolean> connectByIsLeaf() {
+        return field("connect_by_isleaf", Boolean.class);
+    }
+
+    /**
+     * Retrieve the Oracle-specific
+     * <code>SYS_CONNECT_BY_PATH(field, separator)</code> function (to be used
+     * along with <code>CONNECT BY</code> clauses).
+     */
+    @Support({ CUBRID, ORACLE })
+    public static Field<String> sysConnectByPath(Field<?> field, String separator) {
+        String escaped = "'" + separator.replace("'", "''") + "'";
+        return function("sys_connect_by_path", String.class, field, literal(escaped));
+    }
+
+    /**
+     * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
+     * (to be used along with <code>CONNECT BY</code> clauses)
+     */
+    @Support({ CUBRID, ORACLE })
+    public static <T> Field<T> prior(Field<T> field) {
+        return new Prior<T>(field);
     }
 
     // -------------------------------------------------------------------------

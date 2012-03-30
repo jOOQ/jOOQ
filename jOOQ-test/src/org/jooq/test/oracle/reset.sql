@@ -76,7 +76,6 @@ INSERT INTO t_directory VALUES                     ( 1, null, 1, 'C:')/
 		INSERT INTO t_directory VALUES             ( 3,    2, 1, 'configuration')/
 		INSERT INTO t_directory VALUES             ( 4,    2, 1, 'dropins')/
 		INSERT INTO t_directory VALUES             ( 5,    2, 1, 'features')/
-		INSERT INTO t_directory VALUES             ( 6,    2, 1, 'p2')/
 		INSERT INTO t_directory VALUES             ( 7,    2, 1, 'plugins')/
 		INSERT INTO t_directory VALUES             ( 8,    2, 1, 'readme')/
 			INSERT INTO t_directory VALUES         ( 9,    8, 0, 'readme_eclipse.html')/

@@ -151,8 +151,8 @@ implements
                .bind((QueryPart) getFrom())
                .declareTables(false)
                .bind(getWhere())
-               .bind(getConnectBy())
                .bind(getConnectByStartWith())
+               .bind(getConnectBy())
                .bind((QueryPart) getGroupBy())
                .bind(getHaving())
                .bind((QueryPart) getOrderBy());
@@ -503,20 +503,12 @@ implements
         // CONNECT BY clause
         // -----------------
         if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
-            context.formatSeparator()
-                   .keyword("connect by");
 
-            if (connectByNoCycle) {
-                context.keyword(" nocycle");
-            }
-
-            context.sql(" ").sql(getConnectBy());
-
-            if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
-                context.formatSeparator()
-                       .keyword("start with ")
-                       .sql(getConnectByStartWith());
-            }
+            // CUBRID supports this clause only as [ START WITH .. ] CONNECT BY
+            // Oracle also knows the CONNECT BY .. [ START WITH ] alternative
+            // syntax
+            toSQLStartWith(context);
+            toSQLConnectBy(context);
         }
 
         // GROUP BY and HAVING clause
@@ -540,6 +532,25 @@ implements
                    .keyword("order by ")
                    .sql(getOrderBy());
         }
+    }
+
+    private void toSQLStartWith(RenderContext context) {
+        if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
+            context.formatSeparator()
+                   .keyword("start with ")
+                   .sql(getConnectByStartWith());
+        }
+    }
+
+    private void toSQLConnectBy(RenderContext context) {
+        context.formatSeparator()
+               .keyword("connect by");
+
+        if (connectByNoCycle) {
+            context.keyword(" nocycle");
+        }
+
+        context.sql(" ").sql(getConnectBy());
     }
 
     // @Mixin - Declaration in SelectQuery

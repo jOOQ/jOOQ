@@ -182,6 +182,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      * <p>
      * This has been observed to work with all dialects
      */
+    @Support
     DivideByOnStep divideBy(Table<?> divisor);
 
     /**

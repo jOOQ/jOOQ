@@ -40,6 +40,9 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.falseCondition;
@@ -139,7 +142,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         // This query causes a failure in Ingres. Potentially a bug. See E_OP039F_BOOLFACT on
         // http://docs.ingres.com/ingres/9.2/ingres-92-message-guide/1283-errors-from-opf#E_OP039F_BOOLFACT
-        if (getDialect() != SQLDialect.DB2 && getDialect() != SQLDialect.INGRES) {
+        if (!asList(CUBRID, DB2, INGRES).contains(getDialect())) {
 
             // Advanced JOIN usages with single JOIN condition
             Result<Record> result = create().select()
@@ -420,7 +423,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     public void testInverseAndNestedJoin() throws Exception {
 
         // [#1086] TODO: Fix this for SQLite
-        if (getDialect() == SQLITE) {
+        // In CUBRID, it is not suupported
+        if (getDialect() == SQLITE || getDialect() == CUBRID) {
             log.info("SKIPPING", "Nested JOINs");
             return;
         }

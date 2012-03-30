@@ -336,14 +336,15 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // SQLite will select last_insert_rowid() after the INSER
                 case SQLITE:
                 // Sybase will select @@identity after the INSERT
+                case CUBRID:
                 case SYBASE:
                     super.prepare(ctx);
                     return;
 
                 // Some dialects can only return AUTO_INCREMENT values
                 // Other values have to be fetched in a second step
+                // [#1260] TODO CUBRID supports this, but there's a JDBC bug
                 case ASE:
-                case CUBRID:
                 case DERBY:
                 case H2:
                 case INGRES:
@@ -397,6 +398,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // TODO [#832] Fix this. This might be a driver issue. JDBC
                 // Generated keys don't work with jconn3, but they seem to work
                 // with jTDS (which is used for Sybase ASE integration)
+                case CUBRID:
                 case SYBASE: {
                     listener.executeStart(ctx);
                     result = ctx.statement().executeUpdate();
@@ -408,8 +410,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
                 // Additional values have to be fetched explicitly
+                // [#1260] TODO CUBRID supports this, but there's a JDBC bug
                 case ASE:
-                case CUBRID:
                 case DERBY:
                 case H2:
                 case INGRES:

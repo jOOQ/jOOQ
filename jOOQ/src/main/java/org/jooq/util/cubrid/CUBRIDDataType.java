@@ -79,8 +79,8 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
     public static final CUBRIDDataType<String>     VARCHAR                  = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "varchar");
     public static final CUBRIDDataType<String>     CHARVARYING              = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "char varying");
     public static final CUBRIDDataType<String>     CHARACTERVARYING         = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "character varying");
-    public static final CUBRIDDataType<String>     CHAR                     = new CUBRIDDataType<String>(SQLDataType.CHAR, "char");
-    public static final CUBRIDDataType<String>     CHARACTER                = new CUBRIDDataType<String>(SQLDataType.CHAR, "character");
+    public static final CUBRIDDataType<String>     CHAR                     = new CUBRIDDataType<String>(SQLDataType.CHAR, "char", "varchar");
+    public static final CUBRIDDataType<String>     CHARACTER                = new CUBRIDDataType<String>(SQLDataType.CHAR, "character", "varchar");
     public static final CUBRIDDataType<String>     STRING                   = new CUBRIDDataType<String>(SQLDataType.VARCHAR, "string");
     public static final CUBRIDDataType<String>     NCHAR                    = new CUBRIDDataType<String>(SQLDataType.NCHAR, "nchar");
     public static final CUBRIDDataType<String>     NCHARVARYING             = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "nchar varying");

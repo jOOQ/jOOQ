@@ -167,10 +167,12 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         // INSERT MULTIPLE .. RETURNING
         // ----------------------------
+        // TODO [#1260] This probably works for CUBRID
         // TODO [#832] Make this work for Sybase also
         // TODO [#1004] Make this work for SQL Server also
         // TODO ... and then, think about Ingres, H2 and Derby as well
-        if (getDialect() == SYBASE ||
+        if (getDialect() == CUBRID ||
+            getDialect() == SYBASE ||
             getDialect() == SQLSERVER ||
             getDialect() == INGRES ||
             getDialect() == H2 ||
@@ -521,6 +523,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         switch (getDialect()) {
             case ASE:
+            // TODO [#1260] This should work eventually, when CUBRID fixes this
+            // JDBC bug
+            case CUBRID:
             case DERBY:
             case H2:
             case INGRES:

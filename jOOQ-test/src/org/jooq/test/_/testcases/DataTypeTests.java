@@ -41,6 +41,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
@@ -1199,9 +1200,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         create().select(
             val(new Date(0)).as("d"),
             val(new Time(0)).as("t"),
-            val(new Timestamp(0)).as("ts"),
-            val(new YearToMonth(0)).as("iy"),
-            val(new DayToSecond(0)).as("id")
+            val(new Timestamp(0)).as("ts")
         ).fetchOne();
 
         // ... (except for SQLite)
@@ -1210,6 +1209,23 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         assertEquals(new Time(0), record.getValue("t"));
         assertEquals(new Timestamp(0), record.getValue("ts"));
+
+        // Interval tests
+        // --------------
+        if (getDialect() == CUBRID) {
+            log.info("SKIPPING", "Interval tests");
+            return;
+        }
+
+        record =
+        create().select(
+            val(new Date(0)).as("d"),
+            val(new Time(0)).as("t"),
+            val(new Timestamp(0)).as("ts"),
+            val(new YearToMonth(0)).as("iy"),
+            val(new DayToSecond(0)).as("id")
+        ).fetchOne();
+
         assertEquals(new YearToMonth(0), record.getValue("iy"));
         assertEquals(new DayToSecond(0), record.getValue("id"));
 

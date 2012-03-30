@@ -94,6 +94,20 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
+            // LIMIT [offset], [limit] supported by CUBRID
+            // -------------------------------------------
+            case CUBRID: {
+                context.castMode(NEVER)
+                       .formatSeparator()
+                       .keyword("limit ")
+                       .sql(offsetOrZero)
+                       .sql(", ")
+                       .sql(numberOfRows)
+                       .castMode(castMode);
+
+                break;
+            }
+
             case DERBY: {
 
                 // Casts are not supported here...
@@ -208,6 +222,14 @@ class Limit extends AbstractQueryPart {
             case SQLITE: {
                 context.bind(numberOfRows);
                 context.bind(offsetOrZero);
+                break;
+            }
+
+            // LIMIT [offset], [limit] supported by CUBRID
+            // -------------------------------------------
+            case CUBRID: {
+                context.bind(offsetOrZero);
+                context.bind(numberOfRows);
                 break;
             }
 

@@ -462,6 +462,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 assertEquals(Integer.valueOf(48), record.getValue(bitLength));
                 assertEquals(Integer.valueOf(6), record.getValue(octetLength));
                 break;
+
             default:
                 assertEquals(Integer.valueOf(24), record.getValue(bitLength));
                 assertEquals(Integer.valueOf(3), record.getValue(octetLength));

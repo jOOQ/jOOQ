@@ -109,6 +109,7 @@ class SortFieldImpl<T> extends AbstractNamedTypeProviderQueryPart<T> implements 
 
                 // These dialects don't support this syntax at all
                 case ASE:
+                case CUBRID:
                 case INGRES:
                 case MYSQL:
                 case SQLITE:

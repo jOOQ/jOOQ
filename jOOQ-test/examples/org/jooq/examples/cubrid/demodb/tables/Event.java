@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Event extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.EventRecord> {
 
-	private static final long serialVersionUID = -1544702914;
+	private static final long serialVersionUID = -292152258;
 
 	/**
 	 * The singleton instance of PUBLIC.event
@@ -71,13 +71,13 @@ public class Event extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cu
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.EventRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_EVENT_CODE;
+		return org.jooq.examples.cubrid.demodb.Keys.EVENT__PK_EVENT_CODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.EventRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.EventRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_EVENT_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.EventRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.EVENT__PK_EVENT_CODE);
 	}
 
 	@Override

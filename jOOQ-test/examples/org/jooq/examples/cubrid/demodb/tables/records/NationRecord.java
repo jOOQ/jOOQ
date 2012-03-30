@@ -10,7 +10,7 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @javax.persistence.Table(name = "nation", schema = "PUBLIC")
 public class NationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.NationRecord> {
 
-	private static final long serialVersionUID = -126024393;
+	private static final long serialVersionUID = 1114832197;
 
 	/**
 	 * An uncommented item
@@ -30,6 +30,18 @@ public class NationRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	@javax.persistence.Column(name = "code", unique = true, nullable = false, length = 3)
 	public java.lang.String getCode() {
 		return getValue(org.jooq.examples.cubrid.demodb.tables.Nation.NATION.CODE);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord> fetchParticipantList() {
+		return create()
+			.selectFrom(org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT)
+			.where(org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT.NATION_CODE.equal(getValue(org.jooq.examples.cubrid.demodb.tables.Nation.NATION.CODE)))
+			.fetch();
 	}
 
 	/**

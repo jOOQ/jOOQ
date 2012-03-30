@@ -82,6 +82,9 @@ class Dual extends AbstractTable<Record> {
                        .literal("SYSTEM_USERS");
                 break;
 
+            // These dialects don't have a DUAL table. But simulation is needed
+            // for queries like SELECT 1 WHERE 1 = 1
+            case CUBRID:
             case INGRES:
                 context.keyword("(select 1 as dual) as dual");
                 break;

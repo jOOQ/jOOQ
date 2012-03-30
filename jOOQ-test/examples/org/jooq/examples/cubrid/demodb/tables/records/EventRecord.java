@@ -10,7 +10,7 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @javax.persistence.Table(name = "event", schema = "PUBLIC")
 public class EventRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.EventRecord> {
 
-	private static final long serialVersionUID = -1891026539;
+	private static final long serialVersionUID = 166047376;
 
 	/**
 	 * An uncommented item
@@ -30,6 +30,18 @@ public class EventRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	@javax.persistence.Column(name = "code", unique = true, nullable = false)
 	public java.lang.Integer getCode() {
 		return getValue(org.jooq.examples.cubrid.demodb.tables.Event.EVENT.CODE);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.examples.cubrid.demodb.tables.records.GameRecord> fetchGameList() {
+		return create()
+			.selectFrom(org.jooq.examples.cubrid.demodb.tables.Game.GAME)
+			.where(org.jooq.examples.cubrid.demodb.tables.Game.GAME.EVENT_CODE.equal(getValue(org.jooq.examples.cubrid.demodb.tables.Event.EVENT.CODE)))
+			.fetch();
 	}
 
 	/**

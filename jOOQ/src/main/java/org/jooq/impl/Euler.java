@@ -62,6 +62,7 @@ class Euler extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ASE:
+            case CUBRID:
             case DB2:
             case DERBY:
             case H2:

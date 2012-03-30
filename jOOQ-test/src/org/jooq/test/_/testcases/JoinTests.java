@@ -546,6 +546,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case DERBY:
             case H2:
             case MYSQL:

@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Nation extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.NationRecord> {
 
-	private static final long serialVersionUID = -480563514;
+	private static final long serialVersionUID = -1208304136;
 
 	/**
 	 * The singleton instance of PUBLIC.nation
@@ -66,13 +66,13 @@ public class Nation extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.c
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.NationRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_NATION_CODE;
+		return org.jooq.examples.cubrid.demodb.Keys.NATION__PK_NATION_CODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.NationRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.NationRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_NATION_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.NationRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.NATION__PK_NATION_CODE);
 	}
 
 	@Override

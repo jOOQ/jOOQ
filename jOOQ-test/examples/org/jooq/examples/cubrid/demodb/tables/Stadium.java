@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Stadium extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord> {
 
-	private static final long serialVersionUID = 2068855390;
+	private static final long serialVersionUID = 1082636874;
 
 	/**
 	 * The singleton instance of PUBLIC.stadium
@@ -76,13 +76,13 @@ public class Stadium extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_STADIUM_CODE;
+		return org.jooq.examples.cubrid.demodb.Keys.STADIUM__PK_STADIUM_CODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_STADIUM_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.STADIUM__PK_STADIUM_CODE);
 	}
 
 	@Override

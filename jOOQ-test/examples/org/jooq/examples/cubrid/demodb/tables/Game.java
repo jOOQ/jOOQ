@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Game extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.GameRecord> {
 
-	private static final long serialVersionUID = 1253356251;
+	private static final long serialVersionUID = 1424735884;
 
 	/**
 	 * The singleton instance of PUBLIC.game
@@ -39,6 +39,12 @@ public class Game extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cub
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT game__fk_game_event_code
+	 * FOREIGN KEY (event_code)
+	 * REFERENCES PUBLIC.event (code)
+	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.GameRecord, java.lang.Integer> EVENT_CODE = createField("event_code", org.jooq.impl.SQLDataType.INTEGER, this);
 
@@ -46,6 +52,12 @@ public class Game extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cub
 	 * An uncommented item
 	 * 
 	 * PRIMARY KEY
+	 * <p>
+	 * <code><pre>
+	 * CONSTRAINT game__fk_game_athlete_code
+	 * FOREIGN KEY (athlete_code)
+	 * REFERENCES PUBLIC.athlete (code)
+	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.GameRecord, java.lang.Integer> ATHLETE_CODE = createField("athlete_code", org.jooq.impl.SQLDataType.INTEGER, this);
 
@@ -85,13 +97,19 @@ public class Game extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cub
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.GameRecord> getMainKey() {
-		return org.jooq.examples.cubrid.demodb.Keys.PK_GAME_HOST_YEAR_EVENT_CODE_ATHLETE_CODE;
+		return org.jooq.examples.cubrid.demodb.Keys.GAME__PK_GAME_HOST_YEAR_EVENT_CODE_ATHLETE_CODE;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.GameRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.GameRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.PK_GAME_HOST_YEAR_EVENT_CODE_ATHLETE_CODE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.examples.cubrid.demodb.tables.records.GameRecord>>asList(org.jooq.examples.cubrid.demodb.Keys.GAME__PK_GAME_HOST_YEAR_EVENT_CODE_ATHLETE_CODE);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public java.util.List<org.jooq.ForeignKey<org.jooq.examples.cubrid.demodb.tables.records.GameRecord, ?>> getReferences() {
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.examples.cubrid.demodb.tables.records.GameRecord, ?>>asList(org.jooq.examples.cubrid.demodb.Keys.GAME__FK_GAME_EVENT_CODE, org.jooq.examples.cubrid.demodb.Keys.GAME__FK_GAME_ATHLETE_CODE);
 	}
 
 	@Override

@@ -63,6 +63,7 @@ class Rollup extends AbstractFunction<Object> {
     @Override
     final Field<Object> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+            case CUBRID:
             case MYSQL:
                 return new WithRollup();
 

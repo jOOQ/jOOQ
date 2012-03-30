@@ -10,7 +10,7 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @javax.persistence.Table(name = "olympic", schema = "PUBLIC")
 public class OlympicRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord> {
 
-	private static final long serialVersionUID = -57913018;
+	private static final long serialVersionUID = 1910004220;
 
 	/**
 	 * An uncommented item
@@ -30,6 +30,18 @@ public class OlympicRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "host_year", unique = true, nullable = false)
 	public java.lang.Integer getHostYear() {
 		return getValue(org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.HOST_YEAR);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord> fetchParticipantList() {
+		return create()
+			.selectFrom(org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT)
+			.where(org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT.HOST_YEAR.equal(getValue(org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC.HOST_YEAR)))
+			.fetch();
 	}
 
 	/**

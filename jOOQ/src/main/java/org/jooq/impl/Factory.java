@@ -1272,6 +1272,7 @@ public class Factory implements FactoryOperations {
                 return select(field).fetchOne(field);
             }
 
+            case CUBRID:
             case MYSQL: {
                 Field<BigInteger> field = field("last_insert_id()", BigInteger.class);
                 return select(field).fetchOne(field);

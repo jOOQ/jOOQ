@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.impl.Factory.field;
 
 import org.jooq.Configuration;
@@ -65,20 +66,21 @@ class SequenceFunction<T extends Number> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
-            case DB2:    // No break
-            case INGRES: // No break
-            case ORACLE: // No break
+            case DB2:
+            case INGRES:
+            case ORACLE:
             case SYBASE: {
                 String field = getQualifiedName(configuration) + "." + method;
                 return field(field, getDataType());
             }
-            case H2: // No break
+            
+            case H2:
             case POSTGRES: {
                 String field = method + "('" + getQualifiedName(configuration) + "')";
                 return field(field, getDataType());
             }
 
-            case DERBY: // No break
+            case DERBY:
             case HSQLDB: {
                 if ("nextval".equals(method)) {
                     String field = "next value for " + getQualifiedName(configuration);
@@ -87,6 +89,19 @@ class SequenceFunction<T extends Number> extends AbstractFunction<T> {
                 else {
                     throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + configuration.getDialect() + " dialect.");
                 }
+            }
+
+            case CUBRID: {
+                String field = getQualifiedName(configuration) + ".";
+
+                if ("nextval".equals(method)) {
+                    field += "next_value";
+                }
+                else {
+                    field += "current_value";
+                }
+
+                return field(field, getDataType());
             }
 
             // Default is needed for hashCode() and toString()
@@ -100,7 +115,7 @@ class SequenceFunction<T extends Number> extends AbstractFunction<T> {
     private final String getQualifiedName(Configuration configuration) {
         RenderContext local = create(configuration).renderContext();
 
-        if (sequence.schema != null) {
+        if (sequence.schema != null && configuration.getDialect() != CUBRID) {
             local.sql(Util.getMappedSchema(configuration, sequence.schema));
             local.sql(".");
         }

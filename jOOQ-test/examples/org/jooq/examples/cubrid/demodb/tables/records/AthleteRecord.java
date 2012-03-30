@@ -10,7 +10,7 @@ package org.jooq.examples.cubrid.demodb.tables.records;
 @javax.persistence.Table(name = "athlete", schema = "PUBLIC")
 public class AthleteRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.cubrid.demodb.tables.records.AthleteRecord> {
 
-	private static final long serialVersionUID = -927949830;
+	private static final long serialVersionUID = -882075162;
 
 	/**
 	 * An uncommented item
@@ -30,6 +30,18 @@ public class AthleteRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	@javax.persistence.Column(name = "code", unique = true, nullable = false)
 	public java.lang.Integer getCode() {
 		return getValue(org.jooq.examples.cubrid.demodb.tables.Athlete.ATHLETE.CODE);
+	}
+
+	/**
+	 * An uncommented item
+	 * 
+	 * PRIMARY KEY
+	 */
+	public java.util.List<org.jooq.examples.cubrid.demodb.tables.records.GameRecord> fetchGameList() {
+		return create()
+			.selectFrom(org.jooq.examples.cubrid.demodb.tables.Game.GAME)
+			.where(org.jooq.examples.cubrid.demodb.tables.Game.GAME.ATHLETE_CODE.equal(getValue(org.jooq.examples.cubrid.demodb.tables.Athlete.ATHLETE.CODE)))
+			.fetch();
 	}
 
 	/**

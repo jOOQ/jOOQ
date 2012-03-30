@@ -286,6 +286,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -440,6 +441,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -512,6 +514,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -553,6 +556,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -596,6 +600,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "testRecordFromUpdatePK() tests");
@@ -638,6 +643,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -687,6 +693,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");
@@ -718,6 +725,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // TODO [#791] Fix test data and have all upper case columns everywhere
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case INGRES:
             case POSTGRES:
                 log.info("SKIPPING", "fetchInto() tests");

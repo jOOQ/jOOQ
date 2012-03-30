@@ -44,6 +44,7 @@ import static org.jooq.JoinType.NATURAL_LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.NATURAL_RIGHT_OUTER_JOIN;
 import static org.jooq.JoinType.RIGHT_OUTER_JOIN;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
@@ -168,15 +169,15 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
     }
 
     private final boolean simulateNaturalJoin(RenderContext context) {
-        return type == NATURAL_JOIN && asList(ASE, DB2, INGRES, SQLSERVER).contains(context.getDialect());
+        return type == NATURAL_JOIN && asList(ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.getDialect());
     }
 
     private final boolean simulateNaturalLeftOuterJoin(RenderContext context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
     }
 
     private final boolean simulateNaturalRightOuterJoin(RenderContext context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
     }
 
     private final void toSQLJoinCondition(RenderContext context) {
@@ -184,7 +185,7 @@ class JoinTable extends AbstractTable<Record> implements TableOnStep, TableOnCon
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
-            if (asList(ASE, DB2, H2, SQLSERVER, SYBASE).contains(context.getDialect())) {
+            if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.getDialect())) {
                 String glue = " on ";
                 for (Field<?> field : using) {
                     context.keyword(glue)

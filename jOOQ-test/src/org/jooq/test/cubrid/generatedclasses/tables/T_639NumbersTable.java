@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -918138381;
+	private static final long serialVersionUID = 450704777;
 
 	/**
 	 * The singleton instance of DBA.t_639_numbers_table
@@ -34,11 +34,6 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * PRIMARY KEY
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_639_NUMBERS_TABLE);
-
-	/**
-	 * An uncommented item
-	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Short> BYTE = createField("byte", org.jooq.impl.SQLDataType.SMALLINT, T_639_NUMBERS_TABLE);
 
 	/**
 	 * An uncommented item

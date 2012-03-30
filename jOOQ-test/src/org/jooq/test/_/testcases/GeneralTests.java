@@ -43,6 +43,7 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -504,10 +505,15 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (getDialect() == SQLDialect.DB2 ||
-                    getDialect() == SQLDialect.H2) {
+                if (getDialect() == DB2 ||
+                    getDialect() == H2) {
 
                     sequences++;
+                }
+
+                // CUBRID generates sequences for AUTO_INCREMENT columns
+                else if (getDialect() == CUBRID) {
+                    sequences += 3;
                 }
 
                 // Oracle has additional sequences for [#961]
@@ -562,6 +568,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
             // [#986] Some foreign key name collision checks
             if (getDialect() == ASE ||
+                getDialect() == CUBRID ||
                 getDialect() == DB2 ||
                 getDialect() == POSTGRES ||
                 getDialect() == SQLITE ||

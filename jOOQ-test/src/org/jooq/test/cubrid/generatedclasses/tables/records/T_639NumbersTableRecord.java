@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
  */
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 246731630;
+	private static final long serialVersionUID = -252235026;
 
 	/**
 	 * An uncommented item
@@ -26,20 +26,6 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable.ID);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public void setByte(java.lang.Short value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable.BYTE, value);
-	}
-
-	/**
-	 * An uncommented item
-	 */
-	public java.lang.Short getByte() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_639NumbersTable.BYTE);
 	}
 
 	/**

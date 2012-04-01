@@ -115,7 +115,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     protected final void prepare(ExecuteContext ctx) throws SQLException {
         super.prepare(ctx);
 
-        if (size > 0) {
+        // [#1263] Allow for negative fetch sizes to support some non-standard
+        // MySQL feature, where Integer.MIN_VALUE is used
+        if (size != 0) {
             if (log.isDebugEnabled())
                 log.debug("Setting fetch size", size);
 

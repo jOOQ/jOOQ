@@ -214,20 +214,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> add(Number value) {
-
-        // Date time arithmetic
-        if (java.util.Date.class.isAssignableFrom(getType())) {
-            return new DateAdd<T>(this, value);
-        }
-
-        // Numeric arithmetic
-        else {
-            return add(val(value));
-        }
-    }
-
-    @Override
-    public final Field<T> add(Interval<?> value) {
         return add(val(value));
     }
 
@@ -242,20 +228,6 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Field<T> sub(Number value) {
-
-        // Date time arithmetic
-        if (java.util.Date.class.isAssignableFrom(getType())) {
-            return new DateSub<T>(this, value);
-        }
-
-        // Numeric arithmetic
-        else {
-            return sub(val(value));
-        }
-    }
-
-    @Override
-    public final Field<T> sub(Interval<?> value) {
         return sub(val(value));
     }
 

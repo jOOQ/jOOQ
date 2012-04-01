@@ -446,7 +446,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     @Override
     public final boolean isNumeric() {
-        return Number.class.isAssignableFrom(type);
+        return Number.class.isAssignableFrom(type) && !isInterval();
     }
 
     @Override
@@ -455,8 +455,13 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final boolean isDateTime() {
+        return java.util.Date.class.isAssignableFrom(type);
+    }
+
+    @Override
     public final boolean isTemporal() {
-        return java.util.Date.class.isAssignableFrom(type) || isInterval();
+        return isDateTime() || isInterval();
     }
 
     @Override

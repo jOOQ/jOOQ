@@ -71,6 +71,7 @@ import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.tools.StringUtils;
+import org.jooq.types.Interval;
 
 /**
  * @author Lukas Eder
@@ -120,12 +121,13 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
             case SOME:
 
-                // [#566] JDBC doesn't explicitly support interval data types.
-                // To be on the safe side, always cast these types
-                if (getDataType().isInterval()) {
+                // This dialect must cast
+                if (context.cast()) {
                     toSQLCast(context);
                 }
-                else if (context.cast()) {
+
+                // In some cases, we should still cast
+                else if (shouldCast(context)) {
                     toSQLCast(context);
                 }
                 else {
@@ -134,6 +136,19 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
                 return;
         }
+
+        // See if we "should" cast, to stay on the safe side
+        if (shouldCast(context)) {
+            toSQLCast(context);
+        }
+
+        // Most RDBMS can infer types for bind values
+        else {
+            toSQL(context, getValue(), getType());
+        }
+    }
+
+    private boolean shouldCast(RenderContext context) {
 
         // In default mode, casting is only done when parameters are NOT inlined
         if (!context.inline()) {
@@ -154,30 +169,31 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                     case INGRES:
 
                     // [#1261] There are only a few corner-cases, where this is
-                	// really needed. Check back on related CUBRID bugs
+                    // really needed. Check back on related CUBRID bugs
                     case CUBRID:
-                    	
+
                     // [#1029] Postgres and [#632] Sybase need explicit casting
                     // in very rare cases.
                     case POSTGRES:
                     case SYBASE: {
-                        toSQLCast(context);
-                        return;
+                        return true;
                     }
                 }
             }
         }
 
-        // [#566] JDBC doesn't explicitly support interval data types.
-        // To be on the safe side, always cast these types
-        if (getDataType().isInterval()) {
-            toSQLCast(context);
+        // [#566] JDBC doesn't explicitly support interval data types. To be on
+        // the safe side, always cast these types in those dialects that support
+        // them
+        else if (getDataType().isInterval()) {
+            switch (context.getDialect()) {
+                case ORACLE:
+                case POSTGRES:
+                    return true;
+            }
         }
 
-        // Most RDBMS can infer types for bind values
-        else {
-            toSQL(context, getValue(), getType());
-        }
+        return false;
     }
 
     /**
@@ -339,6 +355,14 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
                            .sql("'");
                 }
             }
+
+            // Interval extends Number, so let Interval come first!
+            else if (Interval.class.isAssignableFrom(type)) {
+                context.sql("'")
+                       .sql(val.toString())
+                       .sql("'");
+            }
+
             else if (Number.class.isAssignableFrom(type)) {
                 context.sql(val.toString());
             }

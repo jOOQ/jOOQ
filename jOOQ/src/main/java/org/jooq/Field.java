@@ -299,14 +299,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
     Field<T> add(Number value);
 
     /**
-     * An arithmetic expression adding an interval to this.
-     *
-     * @see #add(Field)
-     */
-    @Support
-    Field<T> add(Interval<?> value);
-
-    /**
      * An arithmetic expression to add value to this.
      * <p>
      * The behaviour of this operation is as follows:
@@ -348,14 +340,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      */
     @Support
     Field<T> sub(Number value);
-
-    /**
-     * An arithmetic expression subtracting an interval from this.
-     *
-     * @see #sub(Field)
-     */
-    @Support
-    Field<T> sub(Interval<?> value);
 
     /**
      * An arithmetic expression subtracting value from this.

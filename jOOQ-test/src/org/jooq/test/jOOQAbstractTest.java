@@ -1079,6 +1079,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testDateTimeArithmetic() throws Exception {
+        new DataTypeTests(this).testDateTimeArithmetic();
+    }
+
+    @Test
     public void testManager() throws Exception {
         new CRUDTests(this).testManager();
     }

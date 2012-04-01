@@ -44,11 +44,16 @@ import org.jooq.tools.StringUtils;
 /**
  * An implementation for the SQL standard <code>INTERVAL YEAR TO MONTH</code>
  * data type.
+ * <p>
+ * <code>DayToSecond</code> is a {@link Number} whose {@link Number#intValue()}
+ * represents the (truncated) number of days of the interval,
+ * {@link Number#doubleValue()} represents the approximative number of days
+ * (including hours, minutes, seconds, nanoseconds) of the interval.
  *
  * @author Lukas Eder
  * @see Interval
  */
-public final class DayToSecond implements Interval<DayToSecond> {
+public final class DayToSecond extends Number implements Interval<DayToSecond> {
 
     /**
      * Generated UID
@@ -137,25 +142,84 @@ public final class DayToSecond implements Interval<DayToSecond> {
      */
     public static DayToSecond valueOf(String string) {
         if (string != null) {
-            Matcher matcher = PATTERN.matcher(string);
+            // Accept also doubles as the number of days
+            try {
+                return valueOf(Double.valueOf(string));
+            }
+            catch (NumberFormatException e) {
+                Matcher matcher = PATTERN.matcher(string);
 
-            if (matcher.find()) {
-                boolean negative = "-".equals(matcher.group(1));
-                int days = Convert.convert(matcher.group(2), int.class);
-                int hours = Convert.convert(matcher.group(3), int.class);
-                int minutes = Convert.convert(matcher.group(4), int.class);
-                int seconds = Convert.convert(matcher.group(5), int.class);
-                int nano = Convert.convert(StringUtils.rightPad(matcher.group(6), 9, "0"), int.class);
+                if (matcher.find()) {
+                    boolean negative = "-".equals(matcher.group(1));
 
-                return new DayToSecond(days, hours, minutes, seconds, nano, negative);
+                    int days = Convert.convert(matcher.group(2), int.class);
+                    int hours = Convert.convert(matcher.group(3), int.class);
+                    int minutes = Convert.convert(matcher.group(4), int.class);
+                    int seconds = Convert.convert(matcher.group(5), int.class);
+                    int nano = Convert.convert(StringUtils.rightPad(matcher.group(6), 9, "0"), int.class);
+
+                    return new DayToSecond(days, hours, minutes, seconds, nano, negative);
+                }
             }
         }
 
         return null;
     }
 
+    /**
+     * Load a {@link Double} representation of a <code>INTERVAL DAY TO SECOND</code>
+     *
+     * @param days The number of days as a fractional number
+     * @return The loaded <code>INTERVAL DAY TO SECOND</code> object
+     */
+    public static DayToSecond valueOf(double days) {
+        double abs = Math.abs(days);
+
+        int d = (int) abs; abs = (abs - d) * 24.0;
+        int h = (int) abs; abs = (abs - h) * 60.0;
+        int m = (int) abs; abs = (abs - m) * 60.0;
+        int s = (int) abs; abs = (abs - s) * 1000000000.0;
+        int n = (int) abs;
+
+        DayToSecond result = new DayToSecond(d, h, m, s, n);
+
+        if (days < 0) {
+            result = result.neg();
+        }
+
+        return result;
+    }
+
     // -------------------------------------------------------------------------
-    // XXX Inteval API
+    // XXX Number API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final int intValue() {
+        return (int) doubleValue();
+    }
+
+    @Override
+    public final long longValue() {
+        return (long) doubleValue();
+    }
+
+    @Override
+    public final float floatValue() {
+        return (float) doubleValue();
+    }
+
+    @Override
+    public final double doubleValue() {
+        return getTotalDays();
+    }
+
+    private final int negativeFactor() {
+        return negative ? -1 : 1;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Interval API
     // -------------------------------------------------------------------------
 
     @Override
@@ -168,24 +232,92 @@ public final class DayToSecond implements Interval<DayToSecond> {
         return new DayToSecond(days, hours, minutes, seconds, nano, false);
     }
 
+    /**
+     * Get the day-part of this interval
+     */
     public final int getDays() {
         return days;
     }
 
+    /**
+     * Get the hour-part of this interval
+     */
     public final int getHours() {
         return hours;
     }
 
+    /**
+     * Get the minute-part of this interval
+     */
     public final int getMinutes() {
         return minutes;
     }
 
+    /**
+     * Get the second-part of this interval
+     */
     public final int getSeconds() {
         return seconds;
     }
 
+    /**
+     * Get the nano-part of this interval
+     */
     public final int getNano() {
         return nano;
+    }
+
+    /**
+     * Get the whole interval in days
+     */
+    public final double getTotalDays() {
+        return getTotalNano() / 1000000000.0 / 3600.0 / 24.0;
+    }
+
+    /**
+     * Get the whole interval in hours
+     */
+    public final double getTotalHours() {
+        return getTotalNano() / 1000000000.0 / 3600.0;
+    }
+
+    /**
+     * Get the whole interval in minutes
+     */
+    public final double getTotalMinutes() {
+        return getTotalNano() / 1000000000.0 / 60.0;
+    }
+
+    /**
+     * Get the whole interval in seconds
+     */
+    public final double getTotalSeconds() {
+        return getTotalNano() / 1000000000.0;
+    }
+
+    /**
+     * Get the whole interval in milli-seconds
+     */
+    public final double getTotalMilli() {
+        return getTotalNano() / 1000000.0;
+    }
+
+    /**
+     * Get the whole interval in micro-seconds
+     */
+    public final double getTotalMicro() {
+        return getTotalNano() / 1000.0;
+    }
+
+    /**
+     * Get the whole interval in nano-seconds
+     */
+    public final double getTotalNano() {
+        return negativeFactor() * (nano +
+            1000000000.0 * seconds +
+            1000000000.0 * 60.0 * minutes +
+            1000000000.0 * 3600.0 * hours +
+            1000000000.0 * 3600.0 * 24.0 * days);
     }
 
     // -------------------------------------------------------------------------
@@ -288,7 +420,7 @@ public final class DayToSecond implements Interval<DayToSecond> {
             sb.append("0");
         sb.append(seconds);
         sb.append(".");
-        sb.append(nano);
+        sb.append(StringUtils.leftPad("" + nano, 9, "0"));
 
         return sb.toString();
     }

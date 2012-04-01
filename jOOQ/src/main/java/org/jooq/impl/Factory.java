@@ -4582,8 +4582,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
-        // TODO [#585] This cast shouldn't be necessary
-        return nullSafe(date1).sub(nullSafe(date2)).cast(Integer.class);
+        return new DateDiff(nullSafe(date1), nullSafe(date2));
     }
 
     /**
@@ -4635,8 +4634,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
-        // TODO [#585] This cast shouldn't be necessary
-        return nullSafe(timestamp1).sub(nullSafe(timestamp2)).cast(DayToSecond.class);
+        return new TimestampDiff(timestamp1, timestamp2);
     }
 
     /**

@@ -35,70 +35,60 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
-import static org.jooq.impl.Factory.val;
 
-import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.types.DayToSecond;
 
 /**
  * @author Lukas Eder
- * @deprecated - This implementation is no longer needed when date time
- *             arithmetic is implemented completely
  */
-@Deprecated
-class DateSub<T> extends AbstractFunction<T> {
+class TimestampDiff extends AbstractFunction<DayToSecond> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -4070594108194592245L;
+    private static final long serialVersionUID = -4813228000332771961L;
 
-    private final Field<T>    field;
-    private final Number      value;
+    private final Field<Timestamp> timestamp1;
+    private final Field<Timestamp> timestamp2;
 
-    DateSub(Field<T> field, Number value) {
-        super("-", field.getDataType(), field);
+    TimestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
+        super("timestampdiff", SQLDataType.INTERVALDAYTOSECOND, timestamp1, timestamp2);
 
-        this.field = field;
-        this.value = value;
+        this.timestamp1 = timestamp1;
+        this.timestamp2 = timestamp2;
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
+    final Field<DayToSecond> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
+
+            // Sybase ASE's datediff incredibly overflows on 3 days' worth of
+            // microseconds. That's why the days have to be leveled at first
             case ASE:
-                return function("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
+                Field<Double> days = function("datediff", SQLDataType.DOUBLE, literal("day"), timestamp2, timestamp1);
+                Field<Double> milli = function("datediff", SQLDataType.DOUBLE, literal("ms"), timestamp2.add(days), timestamp1);
+                return (Field) days.add(milli.div(new DayToSecond(1).getTotalMilli()));
 
+            // CUBRID's datetime operations operate on a millisecond level
             case CUBRID:
-                return function("subdate", getDataType(), field, val(value));
+                return (Field) timestamp1.sub(timestamp2).div(new DayToSecond(1).getTotalMilli());
 
-            case DB2:
-            case HSQLDB:
-                return field.sub(field("? day", BigDecimal.class, value));
-
-            case DERBY:
-                return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
-                    val(-value.intValue()), field);
-
-            case INGRES:
-                return field.sub(field("date('" + value + " days')", BigDecimal.class));
-
+            // MySQL's datetime operations operate on a microsecond level
             case MYSQL:
-                return function("timestampadd", getDataType(), field("day"), val(-value.intValue()), field);
+                return function("timestampdiff", getDataType(), literal("microsecond"), timestamp2, timestamp1).div(new DayToSecond(1).getTotalMicro());
 
-            case POSTGRES:
-                return field.sub(field("interval '" + value + " days'", BigDecimal.class));
+            case ORACLE:
 
-            case SQLITE:
-                return function("datetime", getDataType(), field, val("-" + value + " day"));
-
-            default:
-                return field.sub(val(value));
+             // TODO [#585] This cast shouldn't be necessary
+            return timestamp1.sub(timestamp2).cast(DayToSecond.class);
         }
+
+        return null;
     }
 }

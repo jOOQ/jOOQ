@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2011, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0
@@ -344,15 +344,11 @@ public class SchemaMapping implements Serializable {
         if (table != null) {
             Schema schema = table.getSchema();
 
-            // Derived table or some other type
-            if (schema == null) {
-                return table;
-            }
-
+            // [#1189] Schema can be null in SQLite
             // [#1186] TODO: replace this by calling table.getQualifiedName()
-            String schemaName = schema.getName();
+            String schemaName = (schema == null) ? "" : schema.getName();
             String tableName = table.getName();
-            String key = schemaName + "." + tableName;
+            String key = (schema == null) ? tableName : (schemaName + "." + tableName);
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {

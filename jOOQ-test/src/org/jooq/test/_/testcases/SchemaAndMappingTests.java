@@ -131,10 +131,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
         Select<Record> q =
         create(settings).select(TBook_TITLE())
-                       .from(TAuthor())
-                       .join(TBook())
-                       .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
-                       .orderBy(TBook_ID().asc());
+                        .from(TAuthor())
+                        .join(TBook())
+                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
+                        .orderBy(TBook_ID().asc());
 
         // Assure T_* is replaced by V_*
         assertTrue(create(settings).render(q).contains(VAuthor().getName()));

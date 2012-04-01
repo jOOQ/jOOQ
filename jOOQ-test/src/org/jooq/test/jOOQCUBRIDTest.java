@@ -690,7 +690,7 @@ public class jOOQCUBRIDTest extends jOOQAbstractTest<
 
     @Override
     protected boolean supportsRecursiveQueries() {
-        return false;
+        return true;
     }
 
     @Override

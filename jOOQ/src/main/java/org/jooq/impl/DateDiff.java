@@ -35,70 +35,50 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
-import static org.jooq.impl.Factory.val;
 
-import java.math.BigDecimal;
+import java.sql.Date;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
 
 /**
  * @author Lukas Eder
- * @deprecated - This implementation is no longer needed when date time
- *             arithmetic is implemented completely
  */
-@Deprecated
-class DateSub<T> extends AbstractFunction<T> {
+class DateDiff extends AbstractFunction<Integer> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -4070594108194592245L;
+    private static final long serialVersionUID = -4813228000332771961L;
 
-    private final Field<T>    field;
-    private final Number      value;
+    private final Field<Date> date1;
+    private final Field<Date> date2;
 
-    DateSub(Field<T> field, Number value) {
-        super("-", field.getDataType(), field);
+    DateDiff(Field<Date> date1, Field<Date> date2) {
+        super("datediff", SQLDataType.INTEGER, date1, date2);
 
-        this.field = field;
-        this.value = value;
+        this.date1 = date1;
+        this.date2 = date2;
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
+    final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ASE:
-                return function("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
-
-            case CUBRID:
-                return function("subdate", getDataType(), field, val(value));
-
-            case DB2:
-            case HSQLDB:
-                return field.sub(field("? day", BigDecimal.class, value));
-
-            case DERBY:
-                return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
-                    val(-value.intValue()), field);
-
-            case INGRES:
-                return field.sub(field("date('" + value + " days')", BigDecimal.class));
+                return function("datediff", getDataType(), literal("day"), date2, date1);
 
             case MYSQL:
-                return function("timestampadd", getDataType(), field("day"), val(-value.intValue()), field);
+                return function("datediff", getDataType(), date1, date2);
 
-            case POSTGRES:
-                return field.sub(field("interval '" + value + " days'", BigDecimal.class));
+            case CUBRID:
+            case ORACLE:
 
-            case SQLITE:
-                return function("datetime", getDataType(), field, val("-" + value + " day"));
-
-            default:
-                return field.sub(val(value));
+            // TODO [#585] This cast shouldn't be necessary
+            return date1.sub(date2).cast(Integer.class);
         }
+
+        return null;
     }
 }

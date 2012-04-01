@@ -101,6 +101,9 @@ import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.Interval;
+import org.jooq.types.YearToMonth;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.oracle.OracleFactory;
 
@@ -2254,5 +2257,52 @@ public class jOOQTest {
         assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
         assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
+    }
+
+    @Test
+    public void testYearToMonth() {
+        for (int i = 0; i <= 5; i++) {
+            intervalChecks(i * 12, new YearToMonth(i));
+            intervalChecks(i * -12, new YearToMonth(i).neg());
+            intervalChecks(i, new YearToMonth(0, i));
+        }
+    }
+
+    @Test
+    public void testDayToSecond() {
+        for (int i = 0; i <= 5; i++) {
+            intervalChecks(i / 2.0, DayToSecond.valueOf(i / 2.0));
+            intervalChecks(i, new DayToSecond(i));
+            intervalChecks(i / 24.0, new DayToSecond(0, i));
+            intervalChecks(i / 24.0 / 60.0, new DayToSecond(0, 0, i));
+            intervalChecks(i / 24.0 / 3600.0, new DayToSecond(0, 0, 0, i));
+            intervalChecks(i / 24.0 / 3600.0 / 1000000000.0, new DayToSecond(0, 0, 0, 0, i));
+        }
+    }
+
+    private <I extends Number & Interval<I>> void intervalChecks(Number expected, I interval) {
+        if (expected.doubleValue() > 1 / 24.0) {
+            assertEquals(expected.doubleValue(), interval.doubleValue());
+            assertEquals(expected.floatValue(), interval.floatValue());
+        }
+        assertEquals(expected.byteValue(), interval.byteValue());
+        assertEquals(expected.shortValue(), interval.shortValue());
+        assertEquals(expected.intValue(), interval.intValue());
+        assertEquals(expected.longValue(), interval.longValue());
+
+        if (interval instanceof YearToMonth) {
+            YearToMonth y = YearToMonth.valueOf(interval.toString());
+            assertEquals(interval, y);
+        }
+        else {
+            DayToSecond m = DayToSecond.valueOf(interval.toString());
+            assertEquals(interval, m);
+            assertEquals(m.getDays(),
+                (int) m.getTotalDays());
+            assertEquals(m.getDays() * 24 + m.getHours(),
+                (int) m.getTotalHours());
+            assertEquals(m.getDays() * 24 * 60 + m.getHours() * 60 + m.getMinutes(),
+                (int) m.getTotalMinutes());
+        }
     }
 }

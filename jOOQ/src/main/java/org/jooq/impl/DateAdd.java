@@ -47,7 +47,10 @@ import org.jooq.Field;
 
 /**
  * @author Lukas Eder
+ * @deprecated - This implementation is no longer needed when date time
+ *             arithmetic is implemented completely
  */
+@Deprecated
 class DateAdd<T> extends AbstractFunction<T> {
 
     /**
@@ -79,10 +82,8 @@ class DateAdd<T> extends AbstractFunction<T> {
                 return field.add(field("? day", BigDecimal.class, value));
 
             case DERBY:
-                return new FnPrefixFunction<T>("timestampadd", getDataType(),
-                    field("SQL_TSI_DAY"),
-                    val(value.intValue()),
-                    field);
+                return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
+                    val(value.intValue()), field);
 
             case INGRES:
                 return field.add(field("date('" + value + " days')", BigDecimal.class));

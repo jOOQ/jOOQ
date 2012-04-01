@@ -35,70 +35,58 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.SQLDialect.CUBRID;
 
-import java.math.BigDecimal;
-
-import org.jooq.Configuration;
+import org.jooq.BindContext;
 import org.jooq.Field;
+import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
- * @deprecated - This implementation is no longer needed when date time
- *             arithmetic is implemented completely
  */
-@Deprecated
-class DateSub<T> extends AbstractFunction<T> {
+class IntervalLiteral<T> extends CustomField<T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -4070594108194592245L;
+    private static final long serialVersionUID = -530284767039331529L;
 
     private final Field<T>    field;
-    private final Number      value;
+    private final String      intervalType;
 
-    DateSub(Field<T> field, Number value) {
-        super("-", field.getDataType(), field);
+    IntervalLiteral(Field<T> field, String intervalType) {
+        super("interval", field.getDataType());
 
         this.field = field;
-        this.value = value;
+        this.intervalType = intervalType;
     }
 
     @Override
-    final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
-            case ASE:
-                return function("dateadd", getDataType(), literal("day"), val(-value.intValue()), field);
+    public final void toSQL(RenderContext context) {
+        if (context.getDialect() == CUBRID) {
+            boolean inline = context.inline();
 
-            case CUBRID:
-                return function("subdate", getDataType(), field, val(value));
+            context.keyword("interval ")
+                   .inline(true)
+                   .sql(field.getDataType().isNumeric() ? "" : "'")
+                   .sql(field)
+                   .sql(field.getDataType().isNumeric() ? "" : "'")
+                   .inline(inline)
+                   .sql(" ")
+                   .keyword(intervalType);
+        }
+        else {
+            context.keyword("interval ")
+                   .sql(field)
+                   .sql(" ")
+                   .keyword(intervalType);
+        }
+    }
 
-            case DB2:
-            case HSQLDB:
-                return field.sub(field("? day", BigDecimal.class, value));
-
-            case DERBY:
-                return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
-                    val(-value.intValue()), field);
-
-            case INGRES:
-                return field.sub(field("date('" + value + " days')", BigDecimal.class));
-
-            case MYSQL:
-                return function("timestampadd", getDataType(), field("day"), val(-value.intValue()), field);
-
-            case POSTGRES:
-                return field.sub(field("interval '" + value + " days'", BigDecimal.class));
-
-            case SQLITE:
-                return function("datetime", getDataType(), field, val("-" + value + " day"));
-
-            default:
-                return field.sub(val(value));
+    @Override
+    public final void bind(BindContext context) {
+        if (context.getDialect() != CUBRID) {
+            context.bind(field);
         }
     }
 }

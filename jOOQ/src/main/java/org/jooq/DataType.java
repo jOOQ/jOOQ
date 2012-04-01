@@ -202,9 +202,22 @@ public interface DataType<T> extends Serializable {
      * <li> {@link SQLDataType#DATE}</li>
      * <li> {@link SQLDataType#TIME}</li>
      * <li> {@link SQLDataType#TIMESTAMP}</li>
+     * </ul>
+     */
+    boolean isDateTime();
+
+    /**
+     * Whether this data type is any date or time type. This applies to any of
+     * these types.
+     * <ul>
+     * <li> {@link SQLDataType#DATE}</li>
+     * <li> {@link SQLDataType#TIME}</li>
+     * <li> {@link SQLDataType#TIMESTAMP}</li>
      * <li> {@link YearToMonth}</li>
      * <li> {@link DayToSecond}</li>
      * </ul>
+     * <p>
+     * This is a combination of {@link #isDateTime()} or {@link #isInterval()}
      */
     boolean isTemporal();
 

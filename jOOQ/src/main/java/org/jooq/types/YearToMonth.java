@@ -41,11 +41,14 @@ import java.util.regex.Pattern;
 /**
  * An implementation for the SQL standard <code>INTERVAL YEAR TO MONTH</code>
  * data type.
+ * <p>
+ * <code>YearToMonth</code> is a {@link Number} whose {@link Number#intValue()}
+ * represents the number of months of the interval.
  *
  * @author Lukas Eder
  * @see Interval
  */
-public final class YearToMonth implements Interval<YearToMonth> {
+public final class YearToMonth extends Number implements Interval<YearToMonth> {
 
     /**
      * Generated UID
@@ -110,7 +113,7 @@ public final class YearToMonth implements Interval<YearToMonth> {
     }
 
     // -------------------------------------------------------------------------
-    // XXX Inteval API
+    // XXX Interval API
     // -------------------------------------------------------------------------
 
     @Override
@@ -129,6 +132,30 @@ public final class YearToMonth implements Interval<YearToMonth> {
 
     public final int getMonths() {
         return months;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX Number API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final int intValue() {
+        return (negative ? -1 : 1) * 12 * years + months;
+    }
+
+    @Override
+    public final long longValue() {
+        return intValue();
+    }
+
+    @Override
+    public final float floatValue() {
+        return intValue();
+    }
+
+    @Override
+    public final double doubleValue() {
+        return intValue();
     }
 
     // -------------------------------------------------------------------------

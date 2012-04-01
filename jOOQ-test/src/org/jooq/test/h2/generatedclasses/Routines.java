@@ -11,6 +11,44 @@ package org.jooq.test.h2.generatedclasses;
 public final class Routines {
 
 	/**
+	 * Call PUBLIC.F1256
+	 *
+	 * @param p1
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static java.lang.String f1256(org.jooq.Configuration configuration, java.lang.String p1) {
+		org.jooq.test.h2.generatedclasses.routines.F1256 f = new org.jooq.test.h2.generatedclasses.routines.F1256();
+		f.setP1(p1);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get PUBLIC.F1256 as a field
+	 *
+	 * @param p1
+	 */
+	public static org.jooq.Field<java.lang.String> f1256(java.lang.String p1) {
+		org.jooq.test.h2.generatedclasses.routines.F1256 f = new org.jooq.test.h2.generatedclasses.routines.F1256();
+		f.setP1(p1);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get PUBLIC.F1256 as a field
+	 *
+	 * @param p1
+	 */
+	public static org.jooq.Field<java.lang.String> f1256(org.jooq.Field<java.lang.String> p1) {
+		org.jooq.test.h2.generatedclasses.routines.F1256 f = new org.jooq.test.h2.generatedclasses.routines.F1256();
+		f.setP1(p1);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call PUBLIC.F317
 	 *
 	 * @param p1

@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> {
 
-	private static final long serialVersionUID = -1802832030;
+	private static final long serialVersionUID = 1758796388;
 
 	/**
 	 * The singleton instance of TEST.T_DATES
@@ -59,6 +59,22 @@ public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 * An uncommented item
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
+
+	/**
+	 * An uncommented item
+	 * 
+	 * The SQL type of this item (INTERVAL YEAR(2) TO MONTH) could not be mapped.<br/>
+	 * Deserialising this field might not work!
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.lang.Object> I_Y = createField("I_Y", org.jooq.util.oracle.OracleDataType.getDefaultDataType("INTERVAL YEAR(2) TO MONTH"), this);
+
+	/**
+	 * An uncommented item
+	 * 
+	 * The SQL type of this item (INTERVAL DAY(2) TO SECOND(6)) could not be mapped.<br/>
+	 * Deserialising this field might not work!
+	 */
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.lang.Object> I_D = createField("I_D", org.jooq.util.oracle.OracleDataType.getDefaultDataType("INTERVAL DAY(2) TO SECOND(6)"), this);
 
 	/**
 	 * No further instances allowed

@@ -788,7 +788,7 @@ public class DefaultGenerator implements Generator {
 
             for (TableDefinition table : database.getTables(schema)) {
                 try {
-                    log.info("Generating table POJO", strategy.getFileName(table));
+                    log.info("Generating table POJO", strategy.getFileName(table, Mode.POJO));
 
                     GenerationWriter out = new GenerationWriter(strategy.getFile(table, Mode.POJO));
                     printHeader(out, table, Mode.POJO);
@@ -796,7 +796,7 @@ public class DefaultGenerator implements Generator {
                     printTableJPAAnnotation(out, table);
 
                     out.print("public class ");
-                    out.print(strategy.getJavaClassName(table));
+                    out.print(strategy.getJavaClassName(table, Mode.POJO));
                     out.print(" implements java.io.Serializable {");
                     out.println();
                     out.printSerial();
@@ -812,7 +812,7 @@ public class DefaultGenerator implements Generator {
                         out.print("\tprivate ");
                         out.print(StringUtils.rightPad(getJavaType(column.getType()), maxLength));
                         out.print(" ");
-                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column, Mode.POJO)));
                         out.println(";");
                     }
 
@@ -828,7 +828,7 @@ public class DefaultGenerator implements Generator {
                         out.println("() {");
 
                         out.print("\t\treturn this.");
-                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column, Mode.POJO)));
                         out.println(";");
                         out.println("\t}");
 
@@ -839,13 +839,13 @@ public class DefaultGenerator implements Generator {
                         out.print("(");
                         out.print(getJavaType(column.getType()));
                         out.print(" ");
-                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column, Mode.POJO)));
                         out.println(") {");
 
                         out.print("\t\tthis.");
-                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column, Mode.POJO)));
                         out.print(" = ");
-                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column)));
+                        out.print(convertToJavaIdentifier(strategy.getJavaMemberName(column, Mode.POJO)));
                         out.println(";");
                         out.println("\t}");
                     }

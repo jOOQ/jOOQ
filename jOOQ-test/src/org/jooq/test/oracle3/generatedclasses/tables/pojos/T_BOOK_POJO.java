@@ -10,9 +10,9 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
-public class T_BOOK implements java.io.Serializable {
+public class T_BOOK_POJO implements java.io.Serializable {
 
-	private static final long serialVersionUID = 860717959;
+	private static final long serialVersionUID = 424586160;
 
 	private java.lang.Integer                                       ID;
 	private java.lang.Integer                                       AUTHOR_ID;

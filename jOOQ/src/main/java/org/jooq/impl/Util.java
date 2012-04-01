@@ -54,6 +54,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -94,13 +96,18 @@ final class Util {
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
      * clauses.
      */
-    static final char      ESCAPE = '!';
+    static final char                          ESCAPE            = '!';
 
     /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
      * classpath.
      */
-    private static Boolean isJPAAvailable;
+    private static Boolean                     isJPAAvailable;
+
+    /**
+     * A cache for {@link ExecuteListener} classes
+     */
+    private static final Map<String, Class<?>> EXECUTE_LISTENERS = new ConcurrentHashMap<String, Class<?>>();
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
@@ -842,16 +849,26 @@ final class Util {
         }
 
         for (String listener : configuration.getSettings().getExecuteListeners()) {
-            try {
-                // [#1170] TODO: Cache these classes?
-                result.add((ExecuteListener) Class.forName(listener).newInstance());
-            }
-            catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            result.add(getListener(listener));
         }
 
         return result;
+    }
+
+    private static final ExecuteListener getListener(String name) {
+        try {
+            Class<?> type = EXECUTE_LISTENERS.get(name);
+
+            if (type == null) {
+                type = Class.forName(name);
+                EXECUTE_LISTENERS.put(name, type);
+            }
+
+            return (ExecuteListener) type.newInstance();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

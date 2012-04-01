@@ -37,6 +37,7 @@
 package org.jooq.util.cubrid;
 
 import static org.jooq.impl.Factory.concat;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
@@ -163,12 +164,13 @@ public class CUBRIDDatabase extends AbstractDatabase {
         for (Record record : create()
                 .select(
                     DB_SERIAL.NAME,
-                    DB_SERIAL.MAX_VAL)
+                    DB_SERIAL.MAX_VAL,
+                    field("owner.name", String.class).as("owner"))
                 .from(DB_SERIAL)
+                .where(field("owner.name", String.class).in(getInputSchemata()))
                 .fetch()) {
 
-            // TODO: How to join DB_SERIAL.OWNER?
-            SchemaDefinition schema = getSchema(getInputSchemata().get(0));
+            SchemaDefinition schema = getSchema(record.getValue("owner", String.class));
             BigInteger value = record.getValue(DB_SERIAL.MAX_VAL, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
             DataTypeDefinition type = getDataTypeForMAX_VAL(schema, value);
 

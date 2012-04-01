@@ -26,6 +26,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/iijdbc.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.163.jar" sourcepath="/jOOQ-sources/h2-1.3.163-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/rsyntaxtextarea-1.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/JDBC-8.4.1.1018-cubrid.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-console"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

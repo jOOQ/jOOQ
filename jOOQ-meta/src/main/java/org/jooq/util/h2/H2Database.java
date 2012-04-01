@@ -244,6 +244,9 @@ public class H2Database extends AbstractDatabase {
                 .from(FUNCTION_ALIASES)
                 .leftOuterJoin(TYPE_INFO)
                 .on(FunctionAliases.DATA_TYPE.equal(TypeInfo.DATA_TYPE))
+                // [#1256] TODO implement this correctly. Not sure if POS = 0
+                // is the right predicate to rule out duplicate entries in TYPE_INFO
+                .and(TypeInfo.POS.equal(0))
                 .where(FunctionAliases.ALIAS_SCHEMA.in(getInputSchemata()))
                 .and(FunctionAliases.RETURNS_RESULT.in((short) 1, (short) 2))
                 .orderBy(FunctionAliases.ALIAS_NAME).fetch()) {

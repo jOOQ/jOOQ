@@ -77,8 +77,8 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
     public static final DerbyDataType<BigDecimal> NUMERIC                    = new DerbyDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
     public static final DerbyDataType<String>     VARCHAR                    = new DerbyDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
     public static final DerbyDataType<String>     LONGVARCHAR                = new DerbyDataType<String>(SQLDataType.LONGVARCHAR, "long varchar");
-    public static final DerbyDataType<String>     CHAR                       = new DerbyDataType<String>(SQLDataType.CHAR, "char");
-    public static final DerbyDataType<String>     CHARACTER                  = new DerbyDataType<String>(SQLDataType.CHAR, "character");
+    public static final DerbyDataType<String>     CHAR                       = new DerbyDataType<String>(SQLDataType.CHAR, "char", "varchar(32672)");
+    public static final DerbyDataType<String>     CHARACTER                  = new DerbyDataType<String>(SQLDataType.CHAR, "character", "varchar(32672)");
     public static final DerbyDataType<String>     CLOB                       = new DerbyDataType<String>(SQLDataType.CLOB, "clob");
     public static final DerbyDataType<String>     CHARACTERLARGEOBJECT       = new DerbyDataType<String>(SQLDataType.CLOB, "character large object");
     public static final DerbyDataType<String>     CHARVARYING                = new DerbyDataType<String>(SQLDataType.VARCHAR, "char varying", "char varying(32672)");
@@ -97,7 +97,7 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
     protected static final DerbyDataType<byte[]>     __BINARY                = new DerbyDataType<byte[]>(SQLDataType.BINARY, "blob");
     protected static final DerbyDataType<Boolean>    __BIT                   = new DerbyDataType<Boolean>(SQLDataType.BIT, "boolean");
     protected static final DerbyDataType<byte[]>     __LONGVARBINARY         = new DerbyDataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
-    protected static final DerbyDataType<String>     __NCHAR                 = new DerbyDataType<String>(SQLDataType.NCHAR, "char");
+    protected static final DerbyDataType<String>     __NCHAR                 = new DerbyDataType<String>(SQLDataType.NCHAR, "char", "varchar(32672)");
     protected static final DerbyDataType<String>     __NCLOB                 = new DerbyDataType<String>(SQLDataType.NCLOB, "clob");
     protected static final DerbyDataType<String>     __LONGNVARCHAR          = new DerbyDataType<String>(SQLDataType.LONGNVARCHAR, "long varchar");
     protected static final DerbyDataType<String>     __NVARCHAR              = new DerbyDataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(32672)");

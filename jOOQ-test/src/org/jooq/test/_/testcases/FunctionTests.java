@@ -126,6 +126,7 @@ import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -388,6 +389,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
 
     @Test
     public void testFunctionsOnStrings() throws Exception {
+
+        // [#1241] Casting to CHAR. Some dialects don't like that. They should
+        // be casting to VARCHAR instead
+        assertEquals("abc",
+        create().select(field("cast('abc' as char(3))", SQLDataType.CHAR))
+                .where(field("cast('abc' as char(3))", SQLDataType.CHAR).equal("abc"))
+                .fetchOne(0, String.class));
 
         // Trimming
         assertEquals("abc", create().select(trim("abc")).fetchOne(0));

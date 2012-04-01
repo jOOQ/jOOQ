@@ -70,8 +70,8 @@ public class DB2DataType<T> extends AbstractDataType<T> {
     public static final DB2DataType<BigDecimal> DECIMAL     = new DB2DataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
     public static final DB2DataType<BigDecimal> DECFLOAT    = new DB2DataType<BigDecimal>(SQLDataType.DECIMAL, "decfloat");
     public static final DB2DataType<String>     VARCHAR     = new DB2DataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final DB2DataType<String>     CHAR        = new DB2DataType<String>(SQLDataType.CHAR, "char");
-    public static final DB2DataType<String>     CHARACTER   = new DB2DataType<String>(SQLDataType.CHAR, "character");
+    public static final DB2DataType<String>     CHAR        = new DB2DataType<String>(SQLDataType.CHAR, "char", "varchar(32672)");
+    public static final DB2DataType<String>     CHARACTER   = new DB2DataType<String>(SQLDataType.CHAR, "character", "varchar(32672)");
     public static final DB2DataType<String>     LONGVARCHAR = new DB2DataType<String>(SQLDataType.LONGVARCHAR, "long varchar");
     public static final DB2DataType<String>     CLOB        = new DB2DataType<String>(SQLDataType.CLOB, "clob");
     public static final DB2DataType<byte[]>     BLOB        = new DB2DataType<byte[]>(SQLDataType.BLOB, "blob");
@@ -87,7 +87,7 @@ public class DB2DataType<T> extends AbstractDataType<T> {
     protected static final DB2DataType<Boolean>    __BIT           = new DB2DataType<Boolean>(SQLDataType.BIT, "smallint");
     protected static final DB2DataType<Boolean>    __BOOLEAN       = new DB2DataType<Boolean>(SQLDataType.BOOLEAN, "smallint");
     protected static final DB2DataType<byte[]>     __LONGVARBINARY = new DB2DataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
-    protected static final DB2DataType<String>     __NCHAR         = new DB2DataType<String>(SQLDataType.NCHAR, "char");
+    protected static final DB2DataType<String>     __NCHAR         = new DB2DataType<String>(SQLDataType.NCHAR, "char", "varchar(32672)");
     protected static final DB2DataType<String>     __NCLOB         = new DB2DataType<String>(SQLDataType.NCLOB, "clob");
     protected static final DB2DataType<String>     __LONGNVARCHAR  = new DB2DataType<String>(SQLDataType.LONGNVARCHAR, "long varchar");
     protected static final DB2DataType<BigDecimal> __NUMERIC       = new DB2DataType<BigDecimal>(SQLDataType.NUMERIC, "decimal", "decimal");

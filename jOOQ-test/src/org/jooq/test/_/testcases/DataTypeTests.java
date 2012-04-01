@@ -43,6 +43,7 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.cast;
@@ -1215,6 +1216,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // Interval tests
         // --------------
         if (getDialect() == ASE ||
+            getDialect() == DB2 ||
             getDialect() == CUBRID ||
             getDialect() == MYSQL) {
 

@@ -44,18 +44,18 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
-class IntervalLiteral<T> extends CustomField<T> {
+class IntervalLiteral extends CustomField<Object> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -530284767039331529L;
 
-    private final Field<T>    field;
+    private final Field<?>    field;
     private final String      intervalType;
 
-    IntervalLiteral(Field<T> field, String intervalType) {
-        super("interval", field.getDataType());
+    IntervalLiteral(Field<?> field, String intervalType) {
+        super("interval", SQLDataType.OTHER);
 
         this.field = field;
         this.intervalType = intervalType;
@@ -63,23 +63,39 @@ class IntervalLiteral<T> extends CustomField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (context.getDialect() == CUBRID) {
-            boolean inline = context.inline();
+        switch (context.getDialect()) {
+            case CUBRID: {
+                boolean inline = context.inline();
 
-            context.keyword("interval ")
-                   .inline(true)
-                   .sql(field.getDataType().isNumeric() ? "" : "'")
-                   .sql(field)
-                   .sql(field.getDataType().isNumeric() ? "" : "'")
-                   .inline(inline)
-                   .sql(" ")
-                   .keyword(intervalType);
-        }
-        else {
-            context.keyword("interval ")
-                   .sql(field)
-                   .sql(" ")
-                   .keyword(intervalType);
+                context.keyword("interval ")
+                       .inline(true)
+                       .sql(field.getDataType().isNumeric() ? "" : "'")
+                       .sql(field)
+                       .sql(field.getDataType().isNumeric() ? "" : "'")
+                       .inline(inline)
+                       .sql(" ")
+                       .keyword(intervalType);
+
+                break;
+            }
+
+            case DB2:
+            case HSQLDB: {
+                context.sql(field)
+                       .sql(" ")
+                       .keyword(intervalType);
+
+                break;
+            }
+
+            default: {
+                context.keyword("interval ")
+                       .sql(field)
+                       .sql(" ")
+                       .keyword(intervalType);
+
+                break;
+            }
         }
     }
 

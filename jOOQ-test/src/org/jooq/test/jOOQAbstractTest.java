@@ -877,6 +877,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchWithoutResults() throws Exception {
+        new FetchTests(this).testFetchWithoutResults();
+    }
+
+    @Test
     public void testFetchIntoWithAnnotations() throws Exception {
         new FetchTests(this).testFetchIntoWithAnnotations();
     }

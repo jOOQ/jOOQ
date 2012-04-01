@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
@@ -247,6 +248,36 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, D, T, U, I, IPK, T658, T725, T639
         assertEquals(4, results.get(0).size());
         assertEquals(BOOK_IDS, results.get(0).getValues(TBook_ID(), Integer.class));
         assertEquals(BOOK_TITLES, results.get(0).getValues(TBook_TITLE()));
+    }
+
+    @Test
+    public void testFetchWithoutResults() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+                log.info("SKIPPING", "Fetch without results tests");
+                return;
+        }
+
+        Result<Record> result =
+        create().fetch(
+            create().update(TAuthor())
+                    .set(TAuthor_FIRST_NAME(), "Hugo")
+                    .where(TAuthor_ID().equal(100))
+                    .getSQL(true));
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
+
+        List<Result<Record>> results =
+        create().fetchMany(
+            create().update(TAuthor())
+                    .set(TAuthor_FIRST_NAME(), "Hugo")
+                    .where(TAuthor_ID().equal(100))
+                    .getSQL(true));
+
+        assertNotNull(result);
+        assertEquals(0, results.size());
+
     }
 
     @Test

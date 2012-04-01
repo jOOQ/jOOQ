@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
+import static org.jooq.SQLDialect.ASE;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
@@ -145,25 +146,45 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         try {
             listener.executeStart(ctx);
-            ctx.resultSet(ctx.statement().executeQuery());
+
+            // JTDS doesn't seem to implement PreparedStatement.execute()
+            // correctly, at least not for sp_help
+            if (ctx.getDialect() == ASE) {
+                ctx.resultSet(ctx.statement().executeQuery());
+            }
+
+            // [#1232] Avoid executeQuery() in order to handle queries that may
+            // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
+            else if (ctx.statement().execute()) {
+                ctx.resultSet(ctx.statement().getResultSet());
+            }
+
             listener.executeEnd(ctx);
 
             // Fetch a single result set
             if (!many) {
-                FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
-                cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType());
+                if (ctx.resultSet() != null) {
+                    FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
+                    cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType());
 
-                if (!lazy) {
-                    result = cursor.fetch();
-                    cursor = null;
+                    if (!lazy) {
+                        result = cursor.fetch();
+                        cursor = null;
+                    }
+                }
+                else {
+                    result = new ResultImpl<R>(ctx, new FieldList());
                 }
             }
 
             // Fetch several result sets
             else {
                 results = new ArrayList<Result<Record>>();
+                boolean anyResults = false;
 
-                for (;;) {
+                while (ctx.resultSet() != null) {
+                    anyResults = true;
+
                     FieldProvider fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData());
                     Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, true);
                     results.add(c.fetch());
@@ -172,11 +193,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                         ctx.resultSet(ctx.statement().getResultSet());
                     }
                     else {
-                        break;
+                        ctx.resultSet(null);
                     }
                 }
 
-                ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+                // Call this only when there was at least one ResultSet.
+                // Otherwise, this call is not supported by ojdbc...
+                if (anyResults) {
+                    ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
+                }
+
                 ctx.statement().close();
             }
         }

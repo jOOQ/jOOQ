@@ -9,6 +9,7 @@ DROP ALIAS IF EXISTS f_author_exists/
 DROP ALIAS IF EXISTS f_one/
 DROP ALIAS IF EXISTS f_number/
 DROP ALIAS IF EXISTS f317/
+DROP ALIAS IF EXISTS f1256/
 DROP ALIAS IF EXISTS p_create_author/
 DROP ALIAS IF EXISTS p_create_author_by_name/
 DROP ALIAS IF EXISTS f_get_one_cursor/
@@ -384,6 +385,7 @@ SELECT * FROM t_book
 CREATE ALIAS f_one FOR "org.jooq.test.h2.F.fOne";/
 CREATE ALIAS f_number FOR "org.jooq.test.h2.F.fNumber";/
 CREATE ALIAS f317 FOR "org.jooq.test.h2.F.f317";/
+CREATE ALIAS f1256 FOR "org.jooq.test.h2.F.f1256";/
 CREATE ALIAS f_arrays1 FOR "org.jooq.test.h2.F.f_arrays1";/
 CREATE ALIAS f_arrays2 FOR "org.jooq.test.h2.F.f_arrays2";/
 CREATE ALIAS f_arrays3 FOR "org.jooq.test.h2.F.f_arrays3";/

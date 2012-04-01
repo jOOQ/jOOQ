@@ -124,6 +124,10 @@ public class F {
         return 1000 * p1 + 100 * p2 + p4;
     }
 
+    public static String f1256(String string) {
+        return string;
+    }
+
     public static Integer fNumber(Integer n) {
         return n;
     }

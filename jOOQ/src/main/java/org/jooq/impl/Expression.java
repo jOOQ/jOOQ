@@ -65,6 +65,7 @@ import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.val;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -169,7 +170,8 @@ class Expression<T> extends AbstractFunction<T> {
         // [#585] Date time arithmetic for numeric or interval RHS
         else if (asList(ADD, SUBTRACT).contains(operator) &&
              lhs.getDataType().isDateTime() &&
-            !rhs.get(0).getDataType().isDateTime()) {
+            (rhs.get(0).getDataType().isNumeric() ||
+             rhs.get(0).getDataType().isInterval())) {
 
             return new DateExpression();
         }
@@ -263,6 +265,30 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case DB2:
+                case HSQLDB: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
+
+                        if (operator == ADD) {
+                            return lhs.add(new IntervalLiteral(val(interval.intValue()), "month"));
+                        }
+                        else {
+                            return lhs.sub(new IntervalLiteral(val(interval.intValue()), "month"));
+                        }
+                    }
+                    else {
+                        DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
+
+                        if (operator == ADD) {
+                            return (Field) lhs.cast(Timestamp.class).add(new IntervalLiteral(val(interval.getTotalMicro()), "microseconds"));
+                        }
+                        else {
+                            return (Field) lhs.cast(Timestamp.class).sub(new IntervalLiteral(val(interval.getTotalMicro()), "microseconds"));
+                        }
+                    }
+                }
+
                 case CUBRID:
                 case MYSQL: {
                     org.jooq.types.Interval<?> interval = ((Param<org.jooq.types.Interval<?>>) rhs.get(0)).getValue();
@@ -287,13 +313,24 @@ class Expression<T> extends AbstractFunction<T> {
 
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.getDialect()) {
-                case ASE:
+                case ASE: {
                     if (operator == ADD) {
                         return function("dateadd", getDataType(), literal("day"), rhsAsNumber(), lhs);
                     }
                     else {
                         return function("dateadd", getDataType(), literal("day"), rhsAsNumber().neg(), lhs);
                     }
+                }
+
+                case DB2:
+                case HSQLDB: {
+                    if (operator == ADD) {
+                        return lhs.add(new IntervalLiteral(rhsAsNumber(), "day"));
+                    }
+                    else {
+                        return lhs.sub(new IntervalLiteral(rhsAsNumber(), "day"));
+                    }
+                }
 
                 case CUBRID:
                 case MYSQL: {

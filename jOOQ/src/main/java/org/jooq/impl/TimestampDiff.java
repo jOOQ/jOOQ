@@ -73,11 +73,19 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case ASE:
                 Field<Double> days = function("datediff", SQLDataType.DOUBLE, literal("day"), timestamp2, timestamp1);
                 Field<Double> milli = function("datediff", SQLDataType.DOUBLE, literal("ms"), timestamp2.add(days), timestamp1);
-                return (Field) days.add(milli.div(new DayToSecond(1).getTotalMilli()));
+                return (Field) days.add(milli.div(literal(new DayToSecond(1).getTotalMilli())));
 
             // CUBRID's datetime operations operate on a millisecond level
             case CUBRID:
-                return (Field) timestamp1.sub(timestamp2).div(new DayToSecond(1).getTotalMilli());
+                return (Field) timestamp1.sub(timestamp2).div(literal(new DayToSecond(1).getTotalMilli()));
+
+            // Fun with DB2 dates. Find some info here:
+            // http://www.ibm.com/developerworks/data/library/techarticle/0211yip/0211yip3.html
+            case DB2:
+                return (Field) function("days", SQLDataType.INTEGER, timestamp1).sub(
+                               function("days", SQLDataType.INTEGER, timestamp2)).add(
+                               function("midnight_seconds", SQLDataType.INTEGER, timestamp1).sub(
+                               function("midnight_seconds", SQLDataType.INTEGER, timestamp2)).div(literal(86400.0)));
 
             // MySQL's datetime operations operate on a microsecond level
             case MYSQL:

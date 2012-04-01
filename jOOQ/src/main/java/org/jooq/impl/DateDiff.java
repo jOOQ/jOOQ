@@ -72,6 +72,10 @@ class DateDiff extends AbstractFunction<Integer> {
             case MYSQL:
                 return function("datediff", getDataType(), date1, date2);
 
+            case DB2:
+                return function("days", getDataType(), date1).sub(
+                       function("days", getDataType(), date2));
+
             case CUBRID:
             case ORACLE:
 

@@ -48,6 +48,8 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.dateDiff;
@@ -531,6 +533,16 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             .from(TBook())
             .where(TBook_ID().equal(1))
             .fetch().getValue(0, 0));
+    }
+
+    @Test
+    public void testNestedCasting() throws Exception {
+        assertEquals(1,
+            create().select(val(1).cast(Long.class).cast(Integer.class)).fetchOne(0));
+        assertEquals(3,
+            create().select(val(1).cast(Long.class).add(val(2).cast(String.class).cast(Integer.class)).cast(Integer.class)).fetchOne(0));
+        assertEquals("3",
+            create().select(val(1).add(val("2")).cast(String.class)).fetchOne(0));
     }
 
     @Test
@@ -1222,7 +1234,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             getDialect() == DERBY ||
             getDialect() == CUBRID ||
             getDialect() == H2 ||
-            getDialect() == MYSQL) {
+            getDialect() == MYSQL ||
+            getDialect() == SQLSERVER ||
+            getDialect() == SQLITE ||
+            getDialect() == SYBASE) {
 
             log.info("SKIPPING", "Interval tests");
         }

@@ -849,6 +849,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testNestedCasting() throws Exception {
+        new DataTypeTests(this).testNestedCasting();
+    }
+
+    @Test
     public void testCastingToSQLDataType() throws Exception {
         new DataTypeTests(this).testCastingToSQLDataType();
     }

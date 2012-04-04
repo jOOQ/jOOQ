@@ -86,19 +86,23 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                 return (Field) function("days", SQLDataType.INTEGER, timestamp1).sub(
                                function("days", SQLDataType.INTEGER, timestamp2)).add(
                                function("midnight_seconds", SQLDataType.INTEGER, timestamp1).sub(
-                               function("midnight_seconds", SQLDataType.INTEGER, timestamp2)).div(literal(86400.0)));
+                               function("midnight_seconds", SQLDataType.INTEGER, timestamp2)).div(literal(new DayToSecond(1).getTotalSeconds())));
 
             case DERBY:
                 return (Field) new FnPrefixFunction<Integer>("timestampdiff",
-                    SQLDataType.INTEGER, field("SQL_TSI_SECOND"), timestamp2, timestamp1).div(literal(86400.0));
+                    SQLDataType.INTEGER, field("SQL_TSI_SECOND"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalSeconds()));
 
             case H2:
             case HSQLDB:
-                return function("datediff", getDataType(), literal("'ms'"), timestamp2, timestamp1).div(literal(86400000.0));
+                return function("datediff", getDataType(), literal("'ms'"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalMilli()));
 
             // MySQL's datetime operations operate on a microsecond level
             case MYSQL:
-                return function("timestampdiff", getDataType(), literal("microsecond"), timestamp2, timestamp1).div(new DayToSecond(1).getTotalMicro());
+                return function("timestampdiff", getDataType(), literal("microsecond"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalMicro()));
+
+            case SQLSERVER:
+            case SYBASE:
+                return function("datediff", getDataType(), literal("ms"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalMilli()));
 
             case ORACLE:
             case POSTGRES:

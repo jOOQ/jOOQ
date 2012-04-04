@@ -37,6 +37,9 @@ package org.jooq.types;
 
 import java.io.Serializable;
 
+import org.jooq.Field;
+import org.jooq.SQLDialect;
+
 /**
  * A substitute for JDBC's missing <code>java.sql.Interval</code> data type.
  * <p>
@@ -97,7 +100,17 @@ import java.io.Serializable;
  * </tr>
  * </table>
  * <p>
- * Interval implementations can be expected to also also extend {@link Number}
+ * Interval implementations can be expected to also also extend {@link Number}.
+ * True SQL standard INTERVAL data types have been observed to be supported by
+ * any of these dialects:
+ * <ul>
+ * <li> {@link SQLDialect#INGRES}</li>
+ * <li> {@link SQLDialect#ORACLE}</li>
+ * <li> {@link SQLDialect#POSTGRES}</li>
+ * </ul>
+ * <p>
+ * In other dialects, jOOQ allows for using them for date time arithmetic. See
+ * {@link Field#add(Field)}, {@link Field#sub(Field)}
  *
  * @author Lukas Eder
  */

@@ -228,7 +228,9 @@ class Expression<T> extends AbstractFunction<T> {
             SQLDialect dialect = configuration.getDialect();
 
             switch (dialect) {
-                case ASE: {
+                case ASE:
+                case SYBASE:
+                case SQLSERVER: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
 
@@ -240,8 +242,9 @@ class Expression<T> extends AbstractFunction<T> {
                         }
                     }
                     else {
+                        // SQL Server needs this cast.
+                        Field<?> result = lhs.cast(Timestamp.class);
                         DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
-                        Field<T> result = lhs;
 
                         if (operator == ADD) {
                             if (interval.getNano() != 0) {
@@ -266,7 +269,7 @@ class Expression<T> extends AbstractFunction<T> {
                             }
                         }
 
-                        return result;
+                        return (Field) result;
                     }
                 }
 
@@ -363,7 +366,9 @@ class Expression<T> extends AbstractFunction<T> {
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.getDialect()) {
-                case ASE: {
+                case ASE:
+                case SQLSERVER:
+                case SYBASE: {
                     if (operator == ADD) {
                         return function("dateadd", getDataType(), literal("day"), rhsAsNumber(), lhs);
                     }
@@ -403,7 +408,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                // That implementation seems a bit off...
+                // Ingres is not working yet
                 case INGRES: {
                     if (operator == ADD) {
                         return lhs.add(field("date('" + rhsAsNumber() + " days')", Object.class));
@@ -423,11 +428,17 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case SQLITE:
+                    if (operator == ADD) {
+                        return function("datetime", getDataType(), lhs, literal("+" + rhsAsNumber() + " day"));
+                    }
+                    else {
+                        return function("datetime", getDataType(), lhs, literal("-" + rhsAsNumber() + " day"));
+                    }
+
                 // These dialects can add / subtract days using +/- operators
                 case H2:
                 case ORACLE:
-                case SYBASE:
-                case SQLSERVER:
                 default:
                     return new DefaultExpression();
             }

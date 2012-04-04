@@ -68,6 +68,8 @@ class DateDiff extends AbstractFunction<Integer> {
     final Field<Integer> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ASE:
+            case SQLSERVER:
+            case SYBASE:
                 return function("datediff", getDataType(), literal("day"), date2, date1);
 
             case MYSQL:

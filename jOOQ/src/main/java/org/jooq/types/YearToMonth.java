@@ -140,7 +140,7 @@ public final class YearToMonth extends Number implements Interval<YearToMonth> {
 
     @Override
     public final int intValue() {
-        return (negative ? -1 : 1) * 12 * years + months;
+        return (negative ? -1 : 1) * (12 * years + months);
     }
 
     @Override

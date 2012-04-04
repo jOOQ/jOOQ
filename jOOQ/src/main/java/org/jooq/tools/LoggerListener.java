@@ -54,6 +54,7 @@ public class LoggerListener extends DefaultExecuteListener {
         if (log.isDebugEnabled()) {
             if (ctx.query() != null) {
                 log.debug("Executing query", ctx.query().getSQL(true));
+                log.debug("Executing query", ctx.query().getSQL(false));
             }
             else if (!StringUtils.isBlank(ctx.sql())) {
                 log.debug("Executing query", ctx.sql());

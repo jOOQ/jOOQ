@@ -185,7 +185,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
         // [#566] JDBC doesn't explicitly support interval data types. To be on
         // the safe side, always cast these types in those dialects that support
         // them
-        else if (getDataType().isInterval()) {
+        if (getDataType().isInterval()) {
             switch (context.getDialect()) {
                 case ORACLE:
                 case POSTGRES:

@@ -82,10 +82,12 @@ class DateDiff extends AbstractFunction<Integer> {
                     getDataType(), field("SQL_TSI_DAY"), date2, date1);
 
             case H2:
+            case HSQLDB:
                 return function("datediff", getDataType(), literal("'day'"), date2, date1);
 
             case CUBRID:
             case ORACLE:
+            case POSTGRES:
 
             // TODO [#585] This cast shouldn't be necessary
             return date1.sub(date2).cast(Integer.class);

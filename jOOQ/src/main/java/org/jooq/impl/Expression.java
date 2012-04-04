@@ -66,6 +66,7 @@ import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.val;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
@@ -220,6 +221,9 @@ class Expression<T> extends AbstractFunction<T> {
             }
         }
 
+        /**
+         * Return the expression to be rendered when the RHS is an interval type
+         */
         private final Field<T> getIntervalExpression(Configuration configuration) {
             SQLDialect dialect = configuration.getDialect();
 
@@ -266,8 +270,7 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                case DB2:
-                case HSQLDB: {
+                case DB2: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
 
@@ -280,7 +283,6 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                     else {
                         DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
-
                         if (operator == ADD) {
                             return (Field) lhs.cast(Timestamp.class).add(new IntervalLiteral(val(interval.getTotalMicro()), "microseconds"));
                         }
@@ -290,7 +292,8 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                case DERBY: {
+                case DERBY:
+                case HSQLDB: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
 
@@ -349,11 +352,15 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case ORACLE:
                 default:
                     return new DefaultExpression();
             }
         }
 
+        /**
+         * Return the expression to be rendered when the RHS is a number type
+         */
         private final Field<T> getNumberExpression(Configuration configuration) {
             switch (configuration.getDialect()) {
                 case ASE: {
@@ -393,6 +400,26 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                     else {
                         return function("date_add", getDataType(), lhs, new IntervalLiteral(rhsAsNumber().neg(), "day"));
+                    }
+                }
+
+                // That implementation seems a bit off...
+                case INGRES: {
+                    if (operator == ADD) {
+                        return lhs.add(field("date('" + rhsAsNumber() + " days')", Object.class));
+                    }
+                    else {
+                        return lhs.sub(field("date('" + rhsAsNumber() + " days')", Object.class));
+                    }
+                }
+
+                // Postgres can add / subtract days using +/- operators only to DATE
+                case POSTGRES: {
+                    if (getType() == Date.class) {
+                        return new DefaultExpression();
+                    }
+                    else {
+                        return new Expression(operator, lhs.cast(Date.class), rhsAsNumber());
                     }
                 }
 

@@ -93,6 +93,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                     SQLDataType.INTEGER, field("SQL_TSI_SECOND"), timestamp2, timestamp1).div(literal(86400.0));
 
             case H2:
+            case HSQLDB:
                 return function("datediff", getDataType(), literal("'ms'"), timestamp2, timestamp1).div(literal(86400000.0));
 
             // MySQL's datetime operations operate on a microsecond level
@@ -100,6 +101,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                 return function("timestampdiff", getDataType(), literal("microsecond"), timestamp2, timestamp1).div(new DayToSecond(1).getTotalMicro());
 
             case ORACLE:
+            case POSTGRES:
 
              // TODO [#585] This cast shouldn't be necessary
             return timestamp1.sub(timestamp2).cast(DayToSecond.class);

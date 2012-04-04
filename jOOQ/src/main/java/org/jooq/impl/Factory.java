@@ -4637,59 +4637,6 @@ public class Factory implements FactoryOperations {
         return new TimestampDiff(timestamp1, timestamp2);
     }
 
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timeDiff(Time time1, Time time2) {
-        return timeDiff(val(time1), val(time2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timeDiff(Field<Time> time1, Time time2) {
-        return timeDiff(nullSafe(time1), val(time2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timeDiff(Time time1, Field<Time> time2) {
-        return timeDiff(val(time1), nullSafe(time2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timeDiff(Field<Time> time1, Field<Time> time2) {
-        // TODO [#585] This cast shouldn't be necessary
-        return nullSafe(time1).sub(nullSafe(time2)).cast(DayToSecond.class);
-    }
-
     // -------------------------------------------------------------------------
     // XXX other functions
     // -------------------------------------------------------------------------

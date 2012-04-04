@@ -96,6 +96,8 @@ import java.io.Serializable;
  * <td>Interval</td>
  * </tr>
  * </table>
+ * <p>
+ * Interval implementations can be expected to also also extend {@link Number}
  *
  * @author Lukas Eder
  */
@@ -110,4 +112,34 @@ public interface Interval<T extends Interval<T>> extends Serializable, Comparabl
      * Get the absolute value of the interval (set its sign to positive)
      */
     T abs();
+
+    /**
+     * @see Number#doubleValue()
+     */
+    double doubleValue();
+
+    /**
+     * @see Number#floatValue()
+     */
+    float floatValue();
+
+    /**
+     * @see Number#longValue()
+     */
+    long longValue();
+
+    /**
+     * @see Number#intValue()
+     */
+    int intValue();
+
+    /**
+     * @see Number#byteValue()
+     */
+    byte byteValue();
+
+    /**
+     * @see Number#shortValue()
+     */
+    short shortValue();
 }

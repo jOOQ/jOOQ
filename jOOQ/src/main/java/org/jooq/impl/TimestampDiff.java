@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 
@@ -86,6 +87,13 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                                function("days", SQLDataType.INTEGER, timestamp2)).add(
                                function("midnight_seconds", SQLDataType.INTEGER, timestamp1).sub(
                                function("midnight_seconds", SQLDataType.INTEGER, timestamp2)).div(literal(86400.0)));
+
+            case DERBY:
+                return (Field) new FnPrefixFunction<Integer>("timestampdiff",
+                    SQLDataType.INTEGER, field("SQL_TSI_SECOND"), timestamp2, timestamp1).div(literal(86400.0));
+
+            case H2:
+                return function("datediff", getDataType(), literal("'ms'"), timestamp2, timestamp1).div(literal(86400000.0));
 
             // MySQL's datetime operations operate on a microsecond level
             case MYSQL:

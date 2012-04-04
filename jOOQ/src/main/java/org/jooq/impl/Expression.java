@@ -61,6 +61,7 @@ import static org.jooq.impl.Factory.bitAnd;
 import static org.jooq.impl.Factory.bitNot;
 import static org.jooq.impl.Factory.bitOr;
 import static org.jooq.impl.Factory.bitXor;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 import static org.jooq.impl.Factory.val;
@@ -289,6 +290,33 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case DERBY: {
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
+
+                        if (operator == ADD) {
+                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_MONTH"),
+                                val(interval.intValue()), lhs);
+                        }
+                        else {
+                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_MONTH"),
+                                val(-interval.intValue()), lhs);
+                        }
+                    }
+                    else {
+                        DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
+
+                        if (operator == ADD) {
+                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_SECOND"),
+                                val((long) interval.getTotalSeconds()), lhs);
+                        }
+                        else {
+                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_SECOND"),
+                                val((long) -interval.getTotalSeconds()), lhs);
+                        }
+                    }
+                }
+
                 case CUBRID:
                 case MYSQL: {
                     org.jooq.types.Interval<?> interval = ((Param<org.jooq.types.Interval<?>>) rhs.get(0)).getValue();
@@ -303,6 +331,21 @@ class Expression<T> extends AbstractFunction<T> {
                     else {
                         String intervalType = (dialect == MYSQL) ? "day_microsecond" : "day_millisecond";
                         return function("date_add", getDataType(), lhs, new IntervalLiteral(val(interval), intervalType));
+                    }
+                }
+
+                case H2: {
+                    org.jooq.types.Interval<?> interval = ((Param<org.jooq.types.Interval<?>>) rhs.get(0)).getValue();
+
+                    if (operator == SUBTRACT) {
+                        interval = interval.neg();
+                    }
+
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        return function("dateadd", getDataType(), literal("'month'"), val(interval.intValue()), lhs);
+                    }
+                    else {
+                        return function("dateadd", getDataType(), literal("'ms'"), val((long) ((DayToSecond) interval).getTotalMilli()), lhs);
                     }
                 }
 
@@ -332,6 +375,17 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case DERBY: {
+                    if (operator == ADD) {
+                        return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
+                            rhsAsNumber(), lhs);
+                    }
+                    else {
+                        return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
+                            rhsAsNumber().neg(), lhs);
+                    }
+                }
+
                 case CUBRID:
                 case MYSQL: {
                     if (operator == ADD) {
@@ -343,6 +397,7 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 // These dialects can add / subtract days using +/- operators
+                case H2:
                 case ORACLE:
                 case SYBASE:
                 case SQLSERVER:

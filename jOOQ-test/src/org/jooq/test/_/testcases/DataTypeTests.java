@@ -44,6 +44,8 @@ import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.cast;
@@ -1217,7 +1219,9 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // --------------
         if (getDialect() == ASE ||
             getDialect() == DB2 ||
+            getDialect() == DERBY ||
             getDialect() == CUBRID ||
+            getDialect() == H2 ||
             getDialect() == MYSQL) {
 
             log.info("SKIPPING", "Interval tests");

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.literal;
 
@@ -75,6 +76,13 @@ class DateDiff extends AbstractFunction<Integer> {
             case DB2:
                 return function("days", getDataType(), date1).sub(
                        function("days", getDataType(), date2));
+
+            case DERBY:
+                return new FnPrefixFunction<Integer>("timestampdiff",
+                    getDataType(), field("SQL_TSI_DAY"), date2, date1);
+
+            case H2:
+                return function("datediff", getDataType(), literal("'day'"), date2, date1);
 
             case CUBRID:
             case ORACLE:

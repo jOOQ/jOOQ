@@ -2333,6 +2333,136 @@ public class Factory implements FactoryOperations {
     // ------------------------------------------------------------------------
 
     /**
+     * Get the current_date() function
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Date> currentDate() {
+        return new CurrentDate();
+    }
+
+    /**
+     * Get the current_time() function
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Time> currentTime() {
+        return new CurrentTime();
+    }
+
+    /**
+     * Get the current_timestamp() function
+     * <p>
+     * This translates into any dialect
+     */
+    @Support
+    public static Field<Timestamp> currentTimestamp() {
+        return new CurrentTimestamp();
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Date date1, Date date2) {
+        return dateDiff(val(date1), val(date2));
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
+        return dateDiff(nullSafe(date1), val(date2));
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
+        return dateDiff(val(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the date difference in number of days
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
+        return new DateDiff(nullSafe(date1), nullSafe(date2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
+        return timestampDiff(val(timestamp1), val(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
+        return timestampDiff(nullSafe(timestamp1), val(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
+        return timestampDiff(val(timestamp1), nullSafe(timestamp2));
+    }
+
+    /**
+     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
+     * type
+     * <p>
+     * This translates into any dialect
+     *
+     * @see Field#sub(Field)
+     */
+    @Support
+    public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
+        return new TimestampDiff(timestamp1, timestamp2);
+    }
+
+    /**
      * Get the extract(field, datePart) function
      * <p>
      * This translates into any dialect
@@ -2350,6 +2480,138 @@ public class Factory implements FactoryOperations {
     @Support
     public static Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart) {
         return new Extract(nullSafe(field), datePart);
+    }
+
+    /**
+     * Get the year part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#YEAR}
+     */
+    @Support
+    public static Field<Integer> year(java.util.Date value) {
+        return extract(value, DatePart.YEAR);
+    }
+
+    /**
+     * Get the year part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * with {@link DatePart#YEAR}
+     */
+    @Support
+    public static Field<Integer> year(Field<? extends java.util.Date> field) {
+        return extract(field, DatePart.YEAR);
+    }
+
+    /**
+     * Get the month part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#MONTH}
+     */
+    @Support
+    public static Field<Integer> month(java.util.Date value) {
+        return extract(value, DatePart.MONTH);
+    }
+
+    /**
+     * Get the month part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * with {@link DatePart#MONTH}
+     */
+    @Support
+    public static Field<Integer> month(Field<? extends java.util.Date> field) {
+        return extract(field, DatePart.MONTH);
+    }
+
+    /**
+     * Get the day part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#DAY}
+     */
+    @Support
+    public static Field<Integer> day(java.util.Date value) {
+        return extract(value, DatePart.DAY);
+    }
+
+    /**
+     * Get the day part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * with {@link DatePart#DAY}
+     */
+    @Support
+    public static Field<Integer> day(Field<? extends java.util.Date> field) {
+        return extract(field, DatePart.DAY);
+    }
+
+    /**
+     * Get the hour part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#HOUR}
+     */
+    @Support
+    public static Field<Integer> hour(java.util.Date value) {
+        return extract(value, DatePart.HOUR);
+    }
+
+    /**
+     * Get the hour part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * with {@link DatePart#HOUR}
+     */
+    @Support
+    public static Field<Integer> hour(Field<? extends java.util.Date> field) {
+        return extract(field, DatePart.HOUR);
+    }
+
+    /**
+     * Get the minute part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#MINUTE}
+     */
+    @Support
+    public static Field<Integer> minute(java.util.Date value) {
+        return extract(value, DatePart.MINUTE);
+    }
+
+    /**
+     * Get the minute part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * with {@link DatePart#MINUTE}
+     */
+    @Support
+    public static Field<Integer> minute(Field<? extends java.util.Date> field) {
+        return extract(field, DatePart.MINUTE);
+    }
+
+    /**
+     * Get the second part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * with {@link DatePart#SECOND}
+     */
+    @Support
+    public static Field<Integer> second(java.util.Date value) {
+        return extract(value, DatePart.SECOND);
+    }
+
+    /**
+     * Get the second part of a date
+     * <p>
+     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * with {@link DatePart#SECOND}
+     */
+    @Support
+    public static Field<Integer> second(Field<? extends java.util.Date> field) {
+        return extract(field, DatePart.SECOND);
     }
 
     // ------------------------------------------------------------------------
@@ -4501,140 +4763,6 @@ public class Factory implements FactoryOperations {
     @Support
     public static Field<BigDecimal> e() {
         return new Euler();
-    }
-
-    // -------------------------------------------------------------------------
-    // XXX date time functions
-    // -------------------------------------------------------------------------
-
-    /**
-     * Get the current_date() function
-     * <p>
-     * This translates into any dialect
-     */
-    @Support
-    public static Field<Date> currentDate() {
-        return new CurrentDate();
-    }
-
-    /**
-     * Get the current_time() function
-     * <p>
-     * This translates into any dialect
-     */
-    @Support
-    public static Field<Time> currentTime() {
-        return new CurrentTime();
-    }
-
-    /**
-     * Get the current_timestamp() function
-     * <p>
-     * This translates into any dialect
-     */
-    @Support
-    public static Field<Timestamp> currentTimestamp() {
-        return new CurrentTimestamp();
-    }
-
-    /**
-     * Get the date difference in number of days
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<Integer> dateDiff(Date date1, Date date2) {
-        return dateDiff(val(date1), val(date2));
-    }
-
-    /**
-     * Get the date difference in number of days
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
-        return dateDiff(nullSafe(date1), val(date2));
-    }
-
-    /**
-     * Get the date difference in number of days
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
-        return dateDiff(val(date1), nullSafe(date2));
-    }
-
-    /**
-     * Get the date difference in number of days
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
-        return new DateDiff(nullSafe(date1), nullSafe(date2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
-        return timestampDiff(val(timestamp1), val(timestamp2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
-        return timestampDiff(nullSafe(timestamp1), val(timestamp2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
-        return timestampDiff(val(timestamp1), nullSafe(timestamp2));
-    }
-
-    /**
-     * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
-     * <p>
-     * This translates into any dialect
-     *
-     * @see Field#sub(Field)
-     */
-    @Support
-    public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
-        return new TimestampDiff(timestamp1, timestamp2);
     }
 
     // -------------------------------------------------------------------------

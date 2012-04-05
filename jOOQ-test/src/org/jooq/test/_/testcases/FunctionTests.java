@@ -70,6 +70,7 @@ import static org.jooq.impl.Factory.currentDate;
 import static org.jooq.impl.Factory.currentTime;
 import static org.jooq.impl.Factory.currentTimestamp;
 import static org.jooq.impl.Factory.currentUser;
+import static org.jooq.impl.Factory.day;
 import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.deg;
 import static org.jooq.impl.Factory.exp;
@@ -77,6 +78,7 @@ import static org.jooq.impl.Factory.extract;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.floor;
 import static org.jooq.impl.Factory.greatest;
+import static org.jooq.impl.Factory.hour;
 import static org.jooq.impl.Factory.least;
 import static org.jooq.impl.Factory.length;
 import static org.jooq.impl.Factory.ln;
@@ -84,6 +86,8 @@ import static org.jooq.impl.Factory.log;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.lpad;
 import static org.jooq.impl.Factory.ltrim;
+import static org.jooq.impl.Factory.minute;
+import static org.jooq.impl.Factory.month;
 import static org.jooq.impl.Factory.nullif;
 import static org.jooq.impl.Factory.nvl;
 import static org.jooq.impl.Factory.nvl2;
@@ -97,6 +101,7 @@ import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.rpad;
 import static org.jooq.impl.Factory.rtrim;
+import static org.jooq.impl.Factory.second;
 import static org.jooq.impl.Factory.shl;
 import static org.jooq.impl.Factory.shr;
 import static org.jooq.impl.Factory.sign;
@@ -109,6 +114,7 @@ import static org.jooq.impl.Factory.tanh;
 import static org.jooq.impl.Factory.trim;
 import static org.jooq.impl.Factory.upper;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.year;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -762,14 +768,23 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         // ... and the extract function
         // ----------------------------
-        Field<Integer> year = extract(now, DatePart.YEAR).as("y");
-        Field<Integer> month = extract(now, DatePart.MONTH).as("m");
-        Field<Integer> day = extract(now, DatePart.DAY).as("dd");
-        Field<Integer> hour = extract(now, DatePart.HOUR).as("h");
-        Field<Integer> minute = extract(now, DatePart.MINUTE).as("mn");
-        Field<Integer> second = extract(now, DatePart.SECOND).as("sec");
+        Field<Integer> year1 = extract(now, DatePart.YEAR).as("y1");
+        Field<Integer> month1 = extract(now, DatePart.MONTH).as("m1");
+        Field<Integer> day1 = extract(now, DatePart.DAY).as("dd1");
+        Field<Integer> hour1 = extract(now, DatePart.HOUR).as("h1");
+        Field<Integer> minute1 = extract(now, DatePart.MINUTE).as("mn1");
+        Field<Integer> second1 = extract(now, DatePart.SECOND).as("sec1");
 
-        q1.addSelect(ts, date, time, year, month, day, hour, minute, second);
+        Field<Integer> year2 = year(now).as("y2");
+        Field<Integer> month2 = month(now).as("m2");
+        Field<Integer> day2 = day(now).as("dd2");
+        Field<Integer> hour2 = hour(now).as("h2");
+        Field<Integer> minute2 = minute(now).as("mn2");
+        Field<Integer> second2 = second(now).as("sec2");
+
+        q1.addSelect(ts, date, time,
+            year1, month1, day1, hour1, minute1, second1,
+            year2, month2, day2, hour2, minute2, second2);
         q1.execute();
 
         Record record = q1.getResult().get(0);
@@ -784,12 +799,19 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
         }
 
-        assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[0]), record.getValue(year));
-        assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[1]), record.getValue(month));
-        assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[2]), record.getValue(day));
-        assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[0]), record.getValue(hour));
-        assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[1]), record.getValue(minute));
-        assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[2].split("\\.")[0]), record.getValue(second));
+        assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[0]), record.getValue(year1));
+        assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[1]), record.getValue(month1));
+        assertEquals(Integer.valueOf(timestamp.split(" ")[0].split("-")[2]), record.getValue(day1));
+        assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[0]), record.getValue(hour1));
+        assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[1]), record.getValue(minute1));
+        assertEquals(Integer.valueOf(timestamp.split(" ")[1].split(":")[2].split("\\.")[0]), record.getValue(second1));
+
+        assertEquals(record.getValue(year1), record.getValue(year2));
+        assertEquals(record.getValue(month1), record.getValue(month2));
+        assertEquals(record.getValue(day1), record.getValue(day2));
+        assertEquals(record.getValue(hour1), record.getValue(hour2));
+        assertEquals(record.getValue(minute1), record.getValue(minute2));
+        assertEquals(record.getValue(second1), record.getValue(second2));
 
         // Timestamp arithmetic
         // --------------------

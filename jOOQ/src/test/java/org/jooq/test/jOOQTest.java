@@ -377,6 +377,24 @@ public class jOOQTest {
             Factory.extract((java.util.Date) null, DatePart.DAY),
             Factory.extract((Field<java.util.Date>) null, DatePart.DAY));
         assertEquals(
+            Factory.year((java.util.Date) null),
+            Factory.year((Field<java.util.Date>) null));
+        assertEquals(
+            Factory.month((java.util.Date) null),
+            Factory.month((Field<java.util.Date>) null));
+        assertEquals(
+            Factory.day((java.util.Date) null),
+            Factory.day((Field<java.util.Date>) null));
+        assertEquals(
+            Factory.hour((java.util.Date) null),
+            Factory.hour((Field<java.util.Date>) null));
+        assertEquals(
+            Factory.minute((java.util.Date) null),
+            Factory.minute((Field<java.util.Date>) null));
+        assertEquals(
+            Factory.second((java.util.Date) null),
+            Factory.second((Field<java.util.Date>) null));
+        assertEquals(
             Factory.floor((Integer) null),
             Factory.floor((Field<Integer>) null));
         assertEquals(

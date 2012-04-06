@@ -301,24 +301,20 @@ class Expression<T> extends AbstractFunction<T> {
                         YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
 
                         if (operator == ADD) {
-                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_MONTH"),
-                                val(interval.intValue()), lhs);
+                            return field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }", getDataType(), val(interval.intValue()), lhs);
                         }
                         else {
-                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_MONTH"),
-                                val(-interval.intValue()), lhs);
+                            return field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }", getDataType(), val(-interval.intValue()), lhs);
                         }
                     }
                     else {
                         DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
 
                         if (operator == ADD) {
-                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_SECOND"),
-                                val((long) interval.getTotalSeconds()), lhs);
+                            return field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }", getDataType(), val((long) interval.getTotalSeconds()), lhs);
                         }
                         else {
-                            return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_SECOND"),
-                                val((long) -interval.getTotalSeconds()), lhs);
+                            return field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }", getDataType(), val((long) -interval.getTotalSeconds()), lhs);
                         }
                     }
                 }
@@ -393,12 +389,10 @@ class Expression<T> extends AbstractFunction<T> {
 
                 case DERBY: {
                     if (operator == ADD) {
-                        return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
-                            rhsAsNumber(), lhs);
+                        return field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber(), lhs);
                     }
                     else {
-                        return new FnPrefixFunction<T>("timestampadd", getDataType(), field("SQL_TSI_DAY"),
-                            rhsAsNumber().neg(), lhs);
+                        return field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber().neg(), lhs);
                     }
                 }
 

@@ -61,20 +61,21 @@ class CurrentTime extends AbstractFunction<Time> {
     final Field<Time> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ORACLE:
-                return function("sysdate", SQLDataType.TIME);
+                return field("sysdate", SQLDataType.TIME);
 
-            case DERBY:    // No break
-            case HSQLDB:   // No break
-            case INGRES:   // No break
-            case POSTGRES: // No break
-            case SQLITE:   // No break
-                return field("current_time", Time.class);
+            case DB2:
+            case DERBY:
+            case HSQLDB:
+            case INGRES:
+            case POSTGRES:
+            case SQLITE:
+                return field("current_time", SQLDataType.TIME);
 
             case SQLSERVER:
-                return field("convert(time, current_timestamp)", Time.class);
+                return field("convert(time, current_timestamp)", SQLDataType.TIME);
 
             case SYBASE:
-                return field("current time", Time.class);
+                return field("current time", SQLDataType.TIME);
         }
 
         return function("current_time", SQLDataType.TIME);

@@ -80,8 +80,7 @@ class DateDiff extends AbstractFunction<Integer> {
                        function("days", getDataType(), date2));
 
             case DERBY:
-                return new FnPrefixFunction<Integer>("timestampdiff",
-                    getDataType(), field("SQL_TSI_DAY"), date2, date1);
+                return field("{fn {timestampdiff}({sql_tsi_day}, {0}, {1}) }", getDataType(), date2, date1);
 
             case H2:
             case HSQLDB:

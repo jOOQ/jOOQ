@@ -76,7 +76,9 @@ class SQLClause<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        String[] sqlParts = StringUtils.split("\\{[\\w\\s]+\\}", sql);
+        // Tokenise {keywords} and placeholders {1} {2}.
+        // Avoid tokenising JDBC escape syntax, e.g. {fn xx()}
+        String[] sqlParts = StringUtils.split("\\{(?!(fn|d|t|ts)\\b)[\\w\\s]+\\}", sql);
 
         int i = 0;
         for (String sqlPart : sqlParts) {

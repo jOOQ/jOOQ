@@ -64,18 +64,19 @@ class CurrentTimestamp extends AbstractFunction<Timestamp> {
                 return function("current_bigdatetime", SQLDataType.TIMESTAMP);
 
             case ORACLE:
-                return function("sysdate", SQLDataType.TIMESTAMP);
+                return field("sysdate", SQLDataType.TIMESTAMP);
 
-            case DERBY:    // No break
-            case HSQLDB:   // No break
-            case INGRES:   // No break
-            case POSTGRES: // No break
-            case SQLITE:   // No break
+            case DB2:
+            case DERBY:
+            case HSQLDB:
+            case INGRES:
+            case POSTGRES:
+            case SQLITE:
             case SQLSERVER:
-                return field("current_timestamp", Timestamp.class);
+                return field("current_timestamp", SQLDataType.TIMESTAMP);
 
             case SYBASE:
-                return field("current timestamp", Timestamp.class);
+                return field("current timestamp", SQLDataType.TIMESTAMP);
         }
 
         return function("current_timestamp", SQLDataType.TIMESTAMP);

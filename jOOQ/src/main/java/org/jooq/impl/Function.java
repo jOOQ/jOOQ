@@ -38,6 +38,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.one;
@@ -145,7 +147,7 @@ class Function<T> extends AbstractField<T> implements
     @Override
     public final void bind(BindContext context) {
 
-        if (term == LIST_AGG && asList(MYSQL, CUBRID).contains(context.getDialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.getDialect())) {
             context.bind(arguments.get(0));
             context.bind((QueryPart) withinGroupOrderBy);
 
@@ -165,10 +167,10 @@ class Function<T> extends AbstractField<T> implements
     public final void toSQL(RenderContext context) {
         context.sql(getFNName(context.getDialect()));
 
-        if (term == LIST_AGG && asList(MYSQL, CUBRID).contains(context.getDialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.getDialect())) {
             toSQLGroupConcat(context);
         }
-        if (term == LIST_AGG && asList(SYBASE).contains(context.getDialect())) {
+        else if (term == LIST_AGG && asList(SYBASE).contains(context.getDialect())) {
             toSQLList(context);
         }
         else {
@@ -179,7 +181,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     /**
-     * [#1275] <code>LIST_AGG</code> simulation for MySQL and CUBRID
+     * [#1275] <code>LIST_AGG</code> simulation for CUBRID, HSQLDB, MySQL
      */
     private void toSQLList(RenderContext context) {
         context.sql("(");

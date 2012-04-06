@@ -75,9 +75,11 @@ import org.jooq.WindowRowsStep;
  */
 class Function<T> extends AbstractField<T> implements
 
-    // Cascading interface implementations for aggregate and window function behaviour
+    // Cascading interface implementations for aggregate function behaviour
     OrderedAggregateFunction<T>,
     AggregateFunction<T>,
+
+    // and for window function behaviour
     WindowIgnoreNullsStep<T>,
     WindowPartitionByStep<T>,
     WindowRowsStep<T>,

@@ -94,6 +94,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.FactoryOperations;
 import org.jooq.Field;
 import org.jooq.FieldProvider;
+import org.jooq.GroupConcatOrderByStep;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
@@ -4258,6 +4259,8 @@ public class Factory implements FactoryOperations {
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
+     *
+     * @see #groupConcat(Field)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
@@ -4276,11 +4279,60 @@ public class Factory implements FactoryOperations {
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
+     *
+     * @see #groupConcat(Field, String)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
-    public static OrderedAggregateFunction<String> listAgg(Field<?> field, String delimiter) {
-        Field<String> literal = literal("'" + delimiter.replace("'", "''") + "'");
+    public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
+        Field<String> literal = literal("'" + separator.replace("'", "''") + "'");
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal);
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     * <p>
+     * This is natively supported by
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID}</li>
+     * <li> {@link SQLDialect#H2}</li>
+     * <li> {@link SQLDialect#HSQLDB}</li>
+     * <li> {@link SQLDialect#MYSQL}</li>
+     * </ul>
+     * <p>
+     * It is simulated by the following dialects:
+     * <ul>
+     * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
+     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * </ul>
+     *
+     * @see #listAgg(Field)
+     */
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    public static GroupConcatOrderByStep groupConcat(Field<?> field) {
+        return new GroupConcat(nullSafe(field));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     * <p>
+     * This is natively supported by
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID}</li>
+     * <li> {@link SQLDialect#H2}</li>
+     * <li> {@link SQLDialect#HSQLDB}</li>
+     * <li> {@link SQLDialect#MYSQL}</li>
+     * </ul>
+     * <p>
+     * It is simulated by the following dialects:
+     * <ul>
+     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * </ul>
+     *
+     * @see #listAgg(Field)
+     */
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, SYBASE })
+    public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
+        return new GroupConcat(nullSafe(field), true);
     }
 
     // -------------------------------------------------------------------------

@@ -48,6 +48,7 @@ import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.impl.Factory.cumeDist;
 import static org.jooq.impl.Factory.denseRank;
 import static org.jooq.impl.Factory.firstValue;
+import static org.jooq.impl.Factory.groupConcat;
 import static org.jooq.impl.Factory.lag;
 import static org.jooq.impl.Factory.lead;
 import static org.jooq.impl.Factory.listAgg;
@@ -746,7 +747,13 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Result<?> result1 = create().select(
                 TAuthor_FIRST_NAME(),
                 TAuthor_LAST_NAME(),
-                listAgg(TBook_ID(), ", ").withinGroupOrderBy(TBook_ID().desc()).as("books"))
+                listAgg(TBook_ID(), ", ")
+                    .withinGroupOrderBy(TBook_ID().desc())
+                    .as("books1"),
+                groupConcat(TBook_ID())
+                    .orderBy(TBook_ID().desc())
+                    .separator(", ")
+                    .as("books2"))
             .from(TAuthor())
             .join(TBook()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
             .groupBy(
@@ -759,8 +766,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(2, result1.size());
         assertEquals(AUTHOR_FIRST_NAMES, result1.getValues(TAuthor_FIRST_NAME()));
         assertEquals(AUTHOR_LAST_NAMES, result1.getValues(TAuthor_LAST_NAME()));
-        assertEquals("2, 1", result1.getValue(0, "books"));
-        assertEquals("4, 3", result1.getValue(1, "books"));
+        assertEquals("2, 1", result1.getValue(0, "books1"));
+        assertEquals("2, 1", result1.getValue(0, "books2"));
+        assertEquals("4, 3", result1.getValue(1, "books1"));
+        assertEquals("4, 3", result1.getValue(1, "books2"));
 
         switch (getDialect()) {
             case CUBRID:

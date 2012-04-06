@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 689818989;
+	private static final long serialVersionUID = -1625495140;
 
 	/**
 	 * An uncommented item
@@ -32,7 +32,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71a
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES DBA.x_test_case_64_69 (id)
 	 * </pre></code>
@@ -45,7 +45,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71a
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES DBA.x_test_case_64_69 (id)
 	 * </pre></code>
@@ -58,7 +58,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71a
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES DBA.x_test_case_64_69 (id)
 	 * </pre></code>

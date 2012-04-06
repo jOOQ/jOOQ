@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1280355069;
+	private static final long serialVersionUID = 261624484;
 
 	/**
 	 * An uncommented item
@@ -48,7 +48,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
 	 * </pre></code>
@@ -61,7 +61,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
 	 * </pre></code>
@@ -75,7 +75,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_64_69
+	 * CONSTRAINT FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES TEST.X_UNUSED (ID)
 	 * </pre></code>

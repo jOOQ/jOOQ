@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1301886301;
+	private static final long serialVersionUID = 82438267;
 
 	/**
 	 * The singleton instance of DBA.x_test_case_71
@@ -39,7 +39,7 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
+	 * CONSTRAINT x_test_case_71__fk_x_test_case_71a
 	 * FOREIGN KEY (test_case_64_69_id)
 	 * REFERENCES DBA.x_test_case_64_69 (id)
 	 * </pre></code>
@@ -67,6 +67,6 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.cubrid.generatedclasses.Keys.X_TEST_CASE_71__FK_X_TEST_CASE_71);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.cubrid.generatedclasses.Keys.X_TEST_CASE_71__FK_X_TEST_CASE_71A);
 	}
 }

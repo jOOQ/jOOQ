@@ -36,59 +36,224 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.one;
+
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
+import org.jooq.AggregateFunction;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
+import org.jooq.WindowFinalStep;
+import org.jooq.WindowIgnoreNullsStep;
+import org.jooq.WindowOrderByStep;
+import org.jooq.WindowOverStep;
+import org.jooq.WindowPartitionByStep;
+import org.jooq.WindowRowsAndStep;
+import org.jooq.WindowRowsStep;
 
 /**
+ * A field that handles built-in functions, aggregate functions, and window
+ * functions.
+ *
  * @author Lukas Eder
  */
-class Function<T> extends AbstractField<T> {
+class Function<T> extends AbstractField<T> implements
 
-    private static final long serialVersionUID = 347252741712134044L;
+    // Cascading interface implementations for aggregate and window function behaviour
+    OrderedAggregateFunction<T>,
+    AggregateFunction<T>,
+    WindowIgnoreNullsStep<T>,
+    WindowPartitionByStep<T>,
+    WindowRowsStep<T>,
+    WindowRowsAndStep<T>
+    {
 
-    private final QueryPart[] arguments;
-    private final Term        term;
+    private static final long              serialVersionUID = 347252741712134044L;
+
+    private final QueryPartList<QueryPart> arguments;
+    private final Term                     term;
+    private final boolean                  distinct;
+    private final SortFieldList            withinGroupOrderBy;
+    private final FieldList                partitionBy;
+    private final SortFieldList            orderBy;
+
+    private boolean                        over;
+    private boolean                        partitionByOne;
+    private boolean                        ignoreNulls;
+    private boolean                        respectNulls;
+    private Integer                        rowsStart;
+    private Integer                        rowsEnd;
+
+
+    // -------------------------------------------------------------------------
+    // XXX Constructors
+    // -------------------------------------------------------------------------
 
     Function(String name, DataType<T> type, QueryPart... arguments) {
-        super(name, type);
-
-        this.arguments = arguments;
-        this.term = null;
+        this(name, false, type, arguments);
     }
 
     Function(Term term, DataType<T> type, QueryPart... arguments) {
+        this(term, false, type, arguments);
+    }
+
+    Function(String name, boolean distinct, DataType<T> type, QueryPart... arguments) {
+        super(name, type);
+
+        this.term = null;
+        this.distinct = distinct;
+        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.withinGroupOrderBy = new SortFieldList();
+        this.partitionBy = new FieldList();
+        this.orderBy = new SortFieldList();
+    }
+
+    Function(Term term, boolean distinct, DataType<T> type, QueryPart... arguments) {
         super(term.name().toLowerCase(), type);
 
-        this.arguments = arguments;
         this.term = term;
+        this.distinct = distinct;
+        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.withinGroupOrderBy = new SortFieldList();
+        this.partitionBy = new FieldList();
+        this.orderBy = new SortFieldList();
     }
+
+    // -------------------------------------------------------------------------
+    // XXX QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final List<Attachable> getAttachables() {
-        return getAttachables(arguments);
+        return getAttachables(arguments, withinGroupOrderBy, partitionBy, orderBy);
     }
 
     @Override
     public final void toSQL(RenderContext context) {
         context.sql(getFNName(context.getDialect()));
-        context.sql("(");
+        toSQLArguments(context);
+        toSQLWithinGroupClause(context);
+        toSQLOverClause(context);
+    }
 
-        String separator = "";
-        for (QueryPart field : arguments) {
-            context.sql(separator);
-            toSQLField(context, field);
+    private void toSQLOverClause(RenderContext context) {
+        if (!over) return;
 
-            separator = ", ";
+        String glue = "";
+        context.keyword(" over (");
+        if (!partitionBy.isEmpty()) {
+            if (partitionByOne && context.getDialect() == SQLDialect.SYBASE) {
+                // Ignore partition clause. Sybase does not support this construct
+            }
+            else {
+                context.sql(glue)
+                       .keyword("partition by ")
+                       .sql(partitionBy);
+
+                glue = " ";
+            }
+        }
+
+        if (!orderBy.isEmpty()) {
+            context.sql(glue)
+                   .keyword("order by ");
+
+            switch (context.getDialect()) {
+
+                // SQL Server and Sybase don't allow for fully qualified fields
+                // in the ORDER BY clause of an analytic expression
+                case SQLSERVER: // No break
+                case SYBASE: {
+                    for (SortField<?> f : orderBy) {
+                        SortFieldImpl<?> field = (SortFieldImpl<?>) f;
+                        field.toSQLInAnalyticClause(context);
+                    }
+
+                    break;
+                }
+
+                default: {
+                    context.sql(orderBy);
+                    break;
+                }
+            }
+
+            glue = " ";
+        }
+
+        if (rowsStart != null) {
+            context.sql(glue);
+            context.keyword("rows ");
+
+            if (rowsEnd != null) {
+                context.keyword("between ");
+                toSQLRows(context, rowsStart);
+
+                context.keyword(" and ");
+                toSQLRows(context, rowsEnd);
+            }
+            else {
+                toSQLRows(context, rowsStart);
+            }
+
+            glue = " ";
         }
 
         context.sql(")");
-        toSQLSuffix(context);
+    }
+
+    /**
+     * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
+     */
+    private void toSQLWithinGroupClause(RenderContext context) {
+        if (!withinGroupOrderBy.isEmpty()) {
+            context.keyword(" within group (order by ")
+                   .sql(withinGroupOrderBy)
+                   .sql(")");
+        }
+    }
+
+    /**
+     * Render function arguments and argument modifiers
+     */
+    private void toSQLArguments(RenderContext context) {
+        context.sql("(");
+
+        if (distinct) {
+            context.keyword("distinct ");
+        }
+
+        if (!arguments.isEmpty()) {
+            context.sql(arguments);
+        }
+
+        if (ignoreNulls) {
+            if (context.getDialect() == SQLDialect.DB2) {
+                context.sql(", 'IGNORE NULLS'");
+            }
+            else {
+                context.keyword(" ignore nulls");
+            }
+        }
+        else if (respectNulls) {
+            if (context.getDialect() == SQLDialect.DB2) {
+                context.sql(", 'RESPECT NULLS'");
+            }
+            else {
+                context.keyword(" respect nulls");
+            }
+        }
+
+        context.sql(")");
     }
 
     private final String getFNName(SQLDialect dialect) {
@@ -100,29 +265,32 @@ class Function<T> extends AbstractField<T> {
         }
     }
 
-    final Term getTerm() {
-        return term;
+    private final void toSQLRows(RenderContext context, Integer rows) {
+        if (rows == Integer.MIN_VALUE) {
+            context.keyword("unbounded preceding");
+        }
+        else if (rows == Integer.MAX_VALUE) {
+            context.keyword("unbounded following");
+        }
+        else if (rows < 0) {
+            context.sql(-rows);
+            context.keyword(" preceding");
+        }
+        else if (rows > 0) {
+            context.sql(rows);
+            context.keyword(" following");
+        }
+        else {
+            context.keyword("current row");
+        }
     }
-
-
-    /**
-     * Render the argument field. This renders the field directly, by default.
-     * Subclasses may override this method, if needed (e.g. to render
-     * count(distinct [field])
-     */
-    protected void toSQLField(RenderContext context, QueryPart field) {
-        context.sql(field);
-    }
-
-    /**
-     * Render additional SQL. Subclasses may override this method, if needed
-     * (e.g. to render <code>WITHIN GROUP (ORDER BY ..)</code>)
-     */
-    protected void toSQLSuffix(RenderContext context) {}
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(arguments);
+        context.bind((QueryPart) arguments)
+               .bind((QueryPart) withinGroupOrderBy)
+               .bind((QueryPart) partitionBy)
+               .bind((QueryPart) orderBy);
     }
 
     @Override
@@ -130,7 +298,170 @@ class Function<T> extends AbstractField<T> {
         return false;
     }
 
-    final QueryPart[] getArguments() {
+    // -------------------------------------------------------------------------
+    // XXX aggregate and window function fluent API methods
+    // -------------------------------------------------------------------------
+
+    final QueryPartList<QueryPart> getArguments() {
         return arguments;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
+        withinGroupOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields) {
+        withinGroupOrderBy.addAll(Arrays.asList(fields));
+        return this;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields) {
+        withinGroupOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowPartitionByStep<T> over() {
+        over = true;
+        return this;
+    }
+
+    @Override
+    public final WindowOverStep<T> ignoreNulls() {
+        ignoreNulls = true;
+        respectNulls = false;
+        return this;
+    }
+
+    @Override
+    public final WindowOverStep<T> respectNulls() {
+        ignoreNulls = false;
+        respectNulls = true;
+        return this;
+    }
+
+    @Override
+    public final WindowOrderByStep<T> partitionBy(Field<?>... fields) {
+        partitionBy.addAll(Arrays.asList(fields));
+        return this;
+    }
+
+    @Override
+    public final WindowOrderByStep<T> partitionByOne() {
+        partitionByOne = true;
+        partitionBy.add(one());
+        return this;
+    }
+
+    @Override
+    public final WindowRowsStep<T> orderBy(Field<?>... fields) {
+        orderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowRowsStep<T> orderBy(SortField<?>... fields) {
+        orderBy.addAll(Arrays.asList(fields));
+        return this;
+    }
+
+    @Override
+    public final WindowRowsStep<T> orderBy(Collection<SortField<?>> fields) {
+        orderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> rowsUnboundedPreceding() {
+        rowsStart = Integer.MIN_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> rowsPreceding(int number) {
+        rowsStart = -number;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> rowsCurrentRow() {
+        rowsStart = 0;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> rowsUnboundedFollowing() {
+        rowsStart = Integer.MAX_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> rowsFollowing(int number) {
+        rowsStart = number;
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> rowsBetweenUnboundedPreceding() {
+        rowsUnboundedPreceding();
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> rowsBetweenPreceding(int number) {
+        rowsPreceding(number);
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> rowsBetweenCurrentRow() {
+        rowsCurrentRow();
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> rowsBetweenUnboundedFollowing() {
+        rowsUnboundedFollowing();
+        return this;
+    }
+
+    @Override
+    public final WindowRowsAndStep<T> rowsBetweenFollowing(int number) {
+        rowsFollowing(number);
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> andUnboundedPreceding() {
+        rowsEnd = Integer.MIN_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> andPreceding(int number) {
+        rowsEnd = -number;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> andCurrentRow() {
+        rowsEnd = 0;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> andUnboundedFollowing() {
+        rowsEnd = Integer.MAX_VALUE;
+        return this;
+    }
+
+    @Override
+    public final WindowFinalStep<T> andFollowing(int number) {
+        rowsEnd = number;
+        return this;
     }
 }

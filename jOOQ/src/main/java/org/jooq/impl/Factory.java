@@ -4070,7 +4070,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
-        return new AggregateFunctionImpl<Integer>("count", SQLDataType.INTEGER, nullSafe(field));
+        return new Function<Integer>("count", SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -4078,7 +4078,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
-        return new AggregateFunctionImpl<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
+        return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
 
     /**
@@ -4086,7 +4086,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
-        return new AggregateFunctionImpl<T>("max", nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("max", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4094,7 +4094,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
-        return new AggregateFunctionImpl<T>("max", true, nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("max", true, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4102,7 +4102,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
-        return new AggregateFunctionImpl<T>("min", nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("min", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4110,7 +4110,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
-        return new AggregateFunctionImpl<T>("min", true, nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("min", true, nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4118,7 +4118,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("sum", SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>("sum", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4126,7 +4126,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4134,7 +4134,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4142,7 +4142,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4157,7 +4157,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ HSQLDB, ORACLE, SYBASE })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>("median", SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>("median", SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4179,7 +4179,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4201,7 +4201,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4223,7 +4223,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4243,7 +4243,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
-        return new AggregateFunctionImpl<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
+        return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
 
     /**
@@ -4251,7 +4251,7 @@ public class Factory implements FactoryOperations {
      */
     @Support(ORACLE)
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
-        return new AggregateFunctionImpl<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
+        return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
 
     /**
@@ -4259,7 +4259,7 @@ public class Factory implements FactoryOperations {
      */
     @Support(ORACLE)
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String delimiter) {
-        return new AggregateFunctionImpl<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal("'" + delimiter.replace("'", "''") + "'"));
+        return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal("'" + delimiter.replace("'", "''") + "'"));
     }
 
     // -------------------------------------------------------------------------
@@ -4274,7 +4274,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rowNumber() {
-        return new WindowFunction<Integer>("row_number", SQLDataType.INTEGER);
+        return new Function<Integer>("row_number", SQLDataType.INTEGER);
     }
 
     /**
@@ -4285,7 +4285,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rank() {
-        return new WindowFunction<Integer>("rank", SQLDataType.INTEGER);
+        return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
 
     /**
@@ -4296,7 +4296,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> denseRank() {
-        return new WindowFunction<Integer>("dense_rank", SQLDataType.INTEGER);
+        return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
 
     /**
@@ -4307,7 +4307,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ POSTGRES, ORACLE, SYBASE })
     public static WindowOverStep<BigDecimal> percentRank() {
-        return new WindowFunction<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
+        return new Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
 
     /**
@@ -4318,7 +4318,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ POSTGRES, ORACLE, SYBASE })
     public static WindowOverStep<BigDecimal> cumeDist() {
-        return new WindowFunction<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
+        return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
 
     /**
@@ -4329,7 +4329,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ POSTGRES, ORACLE, SQLSERVER })
     public static WindowOverStep<Integer> ntile(int number) {
-        return new WindowFunction<Integer>("ntile", SQLDataType.INTEGER, field("" + number, Integer.class));
+        return new Function<Integer>("ntile", SQLDataType.INTEGER, field("" + number, Integer.class));
     }
 
     /**
@@ -4340,7 +4340,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
-        return new WindowFunction<T>("first_value", nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4351,7 +4351,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
-        return new WindowFunction<T>("last_value", nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4362,7 +4362,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
-        return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4373,7 +4373,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
-        return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset));
+        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset));
     }
 
     /**
@@ -4399,7 +4399,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
-        return new WindowFunction<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
+        return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
     }
 
     /**
@@ -4410,7 +4410,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
-        return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field));
+        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field));
     }
 
     /**
@@ -4421,7 +4421,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
-        return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset));
+        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset));
     }
 
     /**
@@ -4447,7 +4447,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
-        return new WindowFunction<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
+        return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), literal(offset), nullSafe(defaultValue));
     }
 
     // -------------------------------------------------------------------------

@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -56,7 +57,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     private final List<T>     wrappedList      = new ArrayList<T>();
 
     QueryPartList() {
-        this(null);
+        this((Collection<T>) null);
     }
 
     QueryPartList(Collection<? extends T> wrappedList) {
@@ -66,6 +67,11 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
             addAll(wrappedList);
         }
     }
+
+    QueryPartList(T... wrappedList) {
+        this(Arrays.asList(wrappedList));
+    }
+
 
     @Override
     public final List<Attachable> getAttachables() {

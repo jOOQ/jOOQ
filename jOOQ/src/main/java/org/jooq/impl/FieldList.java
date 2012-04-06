@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -63,7 +62,7 @@ class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
     }
 
     FieldList(Field<?>... wrappedList) {
-        super(Arrays.asList(wrappedList));
+        super(wrappedList);
     }
 
     @SuppressWarnings("unchecked")

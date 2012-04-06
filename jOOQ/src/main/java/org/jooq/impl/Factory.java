@@ -4248,18 +4248,35 @@ public class Factory implements FactoryOperations {
 
     /**
      * Get the aggregated concatenation for a field.
+     * <p>
+     * This is natively supported by {@link SQLDialect#ORACLE}. It is simulated
+     * by the following dialects:
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
+     * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT()</code></li>
+     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * </ul>
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
 
     /**
      * Get the aggregated concatenation for a field.
+     * <p>
+     * This is natively supported by {@link SQLDialect#ORACLE}. It is simulated
+     * by the following dialects:
+     * <ul>
+     * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
+     * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT</code></li>
+     * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * </ul>
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String delimiter) {
-        return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal("'" + delimiter.replace("'", "''") + "'"));
+        Field<String> literal = literal("'" + delimiter.replace("'", "''") + "'");
+        return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal);
     }
 
     // -------------------------------------------------------------------------

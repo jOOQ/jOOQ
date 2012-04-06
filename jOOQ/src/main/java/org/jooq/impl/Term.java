@@ -103,6 +103,18 @@ enum Term {
     LIST_AGG {
         @Override
         public String translate(SQLDialect dialect) {
+            switch (dialect) {
+                case CUBRID:
+                case MYSQL:
+                    return "group_concat";
+
+                case ORACLE:
+                    return "listagg";
+
+                case SYBASE:
+                    return "list";
+            }
+
             return "listagg";
         }
     },

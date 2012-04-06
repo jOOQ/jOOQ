@@ -75,7 +75,7 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support
+    @Support(ORACLE)
     AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields);
 
     /**

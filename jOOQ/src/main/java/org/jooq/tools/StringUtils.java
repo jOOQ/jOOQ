@@ -16,6 +16,11 @@
  */
 package org.jooq.tools;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * <p>
@@ -1132,5 +1137,49 @@ public final class StringUtils {
     public static String toCamelCaseLC(String string) {
         String cc = toCamelCase(string);
         return cc.substring(0, 1).toLowerCase() + cc.substring(1);
+    }
+
+    /**
+     * A custom adaptation of {@link Pattern#split(CharSequence, int)}.
+     * <p>
+     * This is useful if the matched split-tokens should be returned as well.
+     * For example: <code><pre>
+     * split("e", "hello world")    // ["h", "e", "llo world"]
+     * split("o", "hello world")    // ["hell", "o", " w", "o", "rld"]
+     * split("[eo]", "hello world") // ["h", "e", "ll", "o", " w", "o", "rld"]
+     * </pre></code>
+     * <p>
+     * The result will always be an odd-length array.
+     */
+    public static String[] split(String regex, CharSequence input) {
+        int index = 0;
+        ArrayList<String> matchList = new ArrayList<String>();
+        Matcher m = Pattern.compile(regex).matcher(input);
+
+        // Add segments before each match found
+        while (m.find()) {
+            matchList.add(input.subSequence(index, m.start()).toString());
+            matchList.add(input.subSequence(m.start(), m.end()).toString());
+
+            index = m.end();
+        }
+
+        // If no match was found, return this
+        if (index == 0)
+            return new String[] { input.toString() };
+
+        // Add remaining segment
+        matchList.add(input.subSequence(index, input.length()).toString());
+
+        // Construct result
+        Iterator<String> it = matchList.iterator();
+        while (it.hasNext()) {
+            if ("".equals(it.next())) {
+                it.remove();
+            }
+        }
+
+        String[] result = new String[matchList.size()];
+        return matchList.toArray(result);
     }
 }

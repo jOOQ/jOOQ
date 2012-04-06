@@ -37,17 +37,13 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Factory.literal;
 
-import java.util.List;
-
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -73,22 +69,22 @@ class Extract extends AbstractFunction<Integer> {
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
-                        return function("strftime", SQLDataType.INTEGER, val("%Y"), field);
+                        return function("strftime", SQLDataType.INTEGER, literal("'%Y'"), field);
                     case MONTH:
-                        return function("strftime", SQLDataType.INTEGER, val("%m"), field);
+                        return function("strftime", SQLDataType.INTEGER, literal("'%m'"), field);
                     case DAY:
-                        return function("strftime", SQLDataType.INTEGER, val("%d"), field);
+                        return function("strftime", SQLDataType.INTEGER, literal("'%d'"), field);
                     case HOUR:
-                        return function("strftime", SQLDataType.INTEGER, val("%H"), field);
+                        return function("strftime", SQLDataType.INTEGER, literal("'%H'"), field);
                     case MINUTE:
-                        return function("strftime", SQLDataType.INTEGER, val("%M"), field);
+                        return function("strftime", SQLDataType.INTEGER, literal("'%M'"), field);
                     case SECOND:
-                        return function("strftime", SQLDataType.INTEGER, val("%S"), field);
+                        return function("strftime", SQLDataType.INTEGER, literal("'%S'"), field);
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            case DERBY:    // No break
+            case DERBY:
             case DB2:
                 switch (datePart) {
                     case YEAR:
@@ -110,17 +106,17 @@ class Extract extends AbstractFunction<Integer> {
             case ORACLE:
                 switch (datePart) {
                     case YEAR:
-                        return function("to_char", SQLDataType.INTEGER, field, val("YYYY"));
+                        return function("to_char", SQLDataType.INTEGER, field, literal("'YYYY'"));
                     case MONTH:
-                        return function("to_char", SQLDataType.INTEGER, field, val("MM"));
+                        return function("to_char", SQLDataType.INTEGER, field, literal("'MM'"));
                     case DAY:
-                        return function("to_char", SQLDataType.INTEGER, field, val("DD"));
+                        return function("to_char", SQLDataType.INTEGER, field, literal("'DD'"));
                     case HOUR:
-                        return function("to_char", SQLDataType.INTEGER, field, val("HH24"));
+                        return function("to_char", SQLDataType.INTEGER, field, literal("'HH24'"));
                     case MINUTE:
-                        return function("to_char", SQLDataType.INTEGER, field, val("MI"));
+                        return function("to_char", SQLDataType.INTEGER, field, literal("'MI'"));
                     case SECOND:
-                        return function("to_char", SQLDataType.INTEGER, field, val("SS"));
+                        return function("to_char", SQLDataType.INTEGER, field, literal("'SS'"));
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
@@ -145,56 +141,15 @@ class Extract extends AbstractFunction<Integer> {
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
 
-            case INGRES:   // No break
-            case MYSQL:    // No break
-            case POSTGRES: // No break
-            case HSQLDB:   // No break
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case HSQLDB:
             case H2:
 
             // A default implementation is necessary for hashCode() and toString()
             default:
-                return new SQLExtract();
-        }
-    }
-
-    /**
-     * The default implementation according to the SQL standard.
-     *
-     * @author Lukas Eder
-     */
-    private class SQLExtract extends AbstractField<Integer> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 5979696080332410352L;
-
-        SQLExtract() {
-            super("extract", SQLDataType.INTEGER);
-        }
-
-        @Override
-        public final List<Attachable> getAttachables() {
-            return getAttachables(Extract.this.getArguments());
-        }
-
-        @Override
-        public final void toSQL(RenderContext context) {
-            context.keyword("extract(")
-                   .sql(datePart.toSQL())
-                   .keyword(" from ")
-                   .sql(field)
-                   .sql(")");
-        }
-
-        @Override
-        public final boolean isNullLiteral() {
-            return false;
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.bind(field);
+                return field("{extract}({" + datePart.toSQL() + " from} {0})", SQLDataType.INTEGER, field);
         }
     }
 }

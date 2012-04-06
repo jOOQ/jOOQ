@@ -35,16 +35,12 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -65,44 +61,10 @@ class Rollup extends AbstractFunction<Object> {
         switch (configuration.getDialect()) {
             case CUBRID:
             case MYSQL:
-                return new WithRollup();
+                return field("{0} {with rollup}", new FieldList(asList(getArguments())));
 
             default:
                 return function("rollup", Object.class, getArguments());
-        }
-    }
-
-    private class WithRollup extends AbstractField<Object> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1298546875559286735L;
-
-        WithRollup() {
-            super("rollup", SQLDataType.OTHER);
-        }
-
-        @Override
-        public final List<Attachable> getAttachables() {
-            return Rollup.this.getAttachables();
-        }
-
-        @Override
-        public final void toSQL(RenderContext context) {
-            context.sql(new FieldList(Arrays.asList(getArguments())))
-                   .formatSeparator()
-                   .keyword("with rollup");
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.bind(getArguments());
-        }
-
-        @Override
-        public final boolean isNullLiteral() {
-            return false;
         }
     }
 }

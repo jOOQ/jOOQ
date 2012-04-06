@@ -35,35 +35,78 @@
  */
 package org.jooq.impl;
 
+import java.util.List;
+
+import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Field;
+import org.jooq.DataType;
+import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+import org.jooq.exception.DataAccessException;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
  */
-class Prior<T> extends CustomField<T> {
+class SQLClause<T> extends AbstractField<T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -530284767039331529L;
+    private static final long serialVersionUID = 3132876322089761785L;
 
-    private final Field<T>    field;
+    private final String      sql;
+    private final QueryPart[] parts;
 
-    Prior(Field<T> field) {
-        super("prior", field.getDataType());
+    SQLClause(String sql, DataType<T> type, QueryPart... parts) {
+        super(sql, type);
 
-        this.field = field;
+        this.sql = sql;
+        this.parts = parts;
+    }
+
+    // ------------------------------------------------------------------------
+    // Field API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final List<Attachable> getAttachables() {
+        return null;
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("prior ").sql(field);
+        String[] sqlParts = StringUtils.split("\\{[\\w\\s]+\\}", sql);
+
+        int i = 0;
+        for (String sqlPart : sqlParts) {
+            if (sqlPart.matches("\\{\\d+\\}")) {
+                if (i == parts.length) {
+                    throw new DataAccessException("The number of placeholders must match the number of query parts : " + sql);
+                }
+
+                context.sql(parts[i++]);
+            }
+            else if (sqlPart.matches("\\{[\\w\\s]+\\}")) {
+                context.keyword(sqlPart.substring(1, sqlPart.length() - 1));
+            }
+            else {
+                context.sql(sqlPart);
+            }
+        }
+
+        if (i != parts.length) {
+            throw new DataAccessException("The number of placeholders must match the number of query parts : " + sql);
+        }
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field);
+        context.bind(parts);
+    }
+
+    @Override
+    public final boolean isNullLiteral() {
+        return "null".equalsIgnoreCase(sql);
     }
 }

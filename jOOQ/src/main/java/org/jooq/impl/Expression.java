@@ -278,19 +278,19 @@ class Expression<T> extends AbstractFunction<T> {
                         YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
 
                         if (operator == ADD) {
-                            return lhs.add(new IntervalLiteral(val(interval.intValue()), "month"));
+                            return lhs.add(field("{0} month", val(interval.intValue())));
                         }
                         else {
-                            return lhs.sub(new IntervalLiteral(val(interval.intValue()), "month"));
+                            return lhs.sub(field("{0} month", val(interval.intValue())));
                         }
                     }
                     else {
                         DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
                         if (operator == ADD) {
-                            return (Field) lhs.cast(Timestamp.class).add(new IntervalLiteral(val(interval.getTotalMicro()), "microseconds"));
+                            return (Field) lhs.cast(Timestamp.class).add(field("{0} microseconds", val(interval.getTotalMicro())));
                         }
                         else {
-                            return (Field) lhs.cast(Timestamp.class).sub(new IntervalLiteral(val(interval.getTotalMicro()), "microseconds"));
+                            return (Field) lhs.cast(Timestamp.class).sub(field("{0} microseconds", val(interval.getTotalMicro())));
                         }
                     }
                 }
@@ -332,11 +332,15 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return function("date_add", getDataType(), lhs, new IntervalLiteral(val(interval), "year_month"));
+                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, val(interval));
                     }
                     else {
-                        String intervalType = (dialect == MYSQL) ? "day_microsecond" : "day_millisecond";
-                        return function("date_add", getDataType(), lhs, new IntervalLiteral(val(interval), intervalType));
+                        if (dialect == MYSQL) {
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, val(interval));
+                        }
+                        else {
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, val(interval));
+                        }
                     }
                 }
 
@@ -380,10 +384,10 @@ class Expression<T> extends AbstractFunction<T> {
                 case DB2:
                 case HSQLDB: {
                     if (operator == ADD) {
-                        return lhs.add(new IntervalLiteral(rhsAsNumber(), "day"));
+                        return lhs.add(field("{0} day", rhsAsNumber()));
                     }
                     else {
-                        return lhs.sub(new IntervalLiteral(rhsAsNumber(), "day"));
+                        return lhs.sub(field("{0} day", rhsAsNumber()));
                     }
                 }
 
@@ -401,10 +405,10 @@ class Expression<T> extends AbstractFunction<T> {
                 case CUBRID:
                 case MYSQL: {
                     if (operator == ADD) {
-                        return function("date_add", getDataType(), lhs, new IntervalLiteral(rhsAsNumber(), "day"));
+                        return field("{date_add}({0}, {interval} {1} {day})", getDataType(), lhs, rhsAsNumber());
                     }
                     else {
-                        return function("date_add", getDataType(), lhs, new IntervalLiteral(rhsAsNumber().neg(), "day"));
+                        return field("{date_add}({0}, {interval} {1} {day})", getDataType(), lhs, rhsAsNumber().neg());
                     }
                 }
 

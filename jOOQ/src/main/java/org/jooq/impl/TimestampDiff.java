@@ -89,8 +89,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                                function("midnight_seconds", SQLDataType.INTEGER, timestamp2)).div(literal(new DayToSecond(1).getTotalSeconds())));
 
             case DERBY:
-                return (Field) new FnPrefixFunction<Integer>("timestampdiff",
-                    SQLDataType.INTEGER, field("SQL_TSI_SECOND"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalSeconds()));
+                return (Field) field("{fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", SQLDataType.INTEGER, timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalSeconds()));
 
             case H2:
             case HSQLDB:

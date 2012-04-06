@@ -59,17 +59,16 @@ class CurrentUser extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case ASE:
+            case ORACLE:
                 return field("user", SQLDataType.VARCHAR);
 
-            case ORACLE:
-                return function("user", SQLDataType.VARCHAR);
-
-            case DERBY:     // No break
-            case HSQLDB:    // No break
-            case INGRES:    // No break
-            case POSTGRES:  // No break
-            case SQLSERVER: // No break
-            case SQLITE:    // No break
+            case DB2:
+            case DERBY:
+            case HSQLDB:
+            case INGRES:
+            case POSTGRES:
+            case SQLSERVER:
+            case SQLITE:
             case SYBASE:
                 return field("current_user", String.class);
         }

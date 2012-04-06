@@ -40,7 +40,6 @@ import java.util.List;
 
 import org.jooq.Attachable;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -77,9 +76,8 @@ class Function<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(getFNPrefix());
         context.sql(getFNName(context.getDialect()));
-        context.sql(getArgumentListDelimiter(context, "("));
+        context.sql("(");
 
         String separator = "";
         for (QueryPart field : arguments) {
@@ -89,8 +87,7 @@ class Function<T> extends AbstractField<T> {
             separator = ", ";
         }
 
-        context.sql(getArgumentListDelimiter(context, ")"));
-        context.sql(getFNSuffix());
+        context.sql(")");
         toSQLSuffix(context);
     }
 
@@ -107,49 +104,6 @@ class Function<T> extends AbstractField<T> {
         return term;
     }
 
-    /**
-     * Subclasses may override this method to add an additional prefix in the
-     * function SQL string
-     */
-    protected String getFNPrefix() {
-        return "";
-    }
-
-    /**
-     * Subclasses may override this method to add an additional suffix in the
-     * function SQL string
-     */
-    protected String getFNSuffix() {
-        return "";
-    }
-
-    private final String getArgumentListDelimiter(Configuration configuration, String delimiter) {
-        switch (configuration.getDialect()) {
-            case ORACLE:   // No break
-            case DB2:      // No break
-
-                // Empty argument lists do not have parentheses ()
-                if (arguments.length == 0) {
-                    return "";
-                } else {
-                    return delimiter;
-                }
-
-            case SQLITE:   // No break
-            case DERBY:    // No break
-            case H2:       // No break
-            case HSQLDB:   // No break
-            case INGRES:   // No break
-            case MYSQL:    // No break
-            case POSTGRES: // No break
-            case SQLSERVER:// No break
-            case SYBASE:
-
-            // Default behaviour is needed for hashCode() and toString();
-            default:
-                return delimiter;
-        }
-    }
 
     /**
      * Render the argument field. This renders the field directly, by default.

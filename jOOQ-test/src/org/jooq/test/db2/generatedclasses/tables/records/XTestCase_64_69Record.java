@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables.records;
  */
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1482383974;
+	private static final long serialVersionUID = -2109285977;
 
 	/**
 	 * An uncommented item
@@ -44,7 +44,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69
+	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
@@ -57,7 +57,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69
+	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
@@ -70,7 +70,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69
+	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>

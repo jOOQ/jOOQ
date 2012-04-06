@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses.tables;
  */
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1661153491;
+	private static final long serialVersionUID = 1113080151;
 
 	/**
 	 * The singleton instance of LUKAS.X_TEST_CASE_64_69
@@ -39,7 +39,7 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69
+	 * CONSTRAINT X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES LUKAS.X_UNUSED (ID)
 	 * </pre></code>
@@ -67,6 +67,6 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.db2.generatedclasses.Keys.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.db2.generatedclasses.Keys.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A);
 	}
 }

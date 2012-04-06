@@ -12,7 +12,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_64_69", schema = "test2")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1010262030;
+	private static final long serialVersionUID = 49054844;
 
 	/**
 	 * An uncommented item
@@ -50,7 +50,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES test2.x_unused (ID, NAME)
 	 * </pre></code>
@@ -63,7 +63,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 * An uncommented item
 	 * <p>
 	 * <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69
+	 * CONSTRAINT fk_x_test_case_64_69a
 	 * FOREIGN KEY (UNUSED_ID)
 	 * REFERENCES test2.x_unused (ID, NAME)
 	 * </pre></code>

@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Term.LIST_AGG;
@@ -172,8 +173,8 @@ class Function<T> extends AbstractField<T> implements
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.getDialect())) {
             toSQLGroupConcat(context);
         }
-        else if (term == LIST_AGG && asList(SYBASE).contains(context.getDialect())) {
-            toSQLList(context);
+        else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(context.getDialect())) {
+            toSQLStringAgg(context);
         }
         else if (term == LIST_AGG && asList(DB2).contains(context.getDialect())) {
             toSQLXMLAGG(context);
@@ -233,9 +234,9 @@ class Function<T> extends AbstractField<T> implements
     }
 
     /**
-     * [#1275] <code>LIST_AGG</code> simulation for CUBRID, HSQLDB, MySQL
+     * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
      */
-    private void toSQLList(RenderContext context) {
+    private void toSQLStringAgg(RenderContext context) {
         context.sql(getFNName(context.getDialect()));
         context.sql("(");
 
@@ -243,7 +244,16 @@ class Function<T> extends AbstractField<T> implements
             context.keyword("distinct ");
         }
 
-        context.sql(arguments);
+        // The explicit cast is needed in Postgres
+        context.sql(((Field<?>) arguments.get(0)).cast(String.class));
+
+        if (arguments.size() > 1) {
+            context.sql(", ");
+            context.sql(arguments.get(1));
+        }
+        else {
+            context.sql(", ''");
+        }
 
         if (!withinGroupOrderBy.isEmpty()) {
             context.keyword(" order by ")
@@ -251,6 +261,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         context.sql(")");
+        toSQLOverClause(context);
     }
 
     /**

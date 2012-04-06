@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
@@ -59,18 +60,18 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     GroupConcatSeparatorStep orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     GroupConcatSeparatorStep orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     GroupConcatSeparatorStep orderBy(Collection<SortField<?>> fields);
 }

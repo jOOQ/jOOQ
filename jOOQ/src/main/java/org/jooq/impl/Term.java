@@ -118,6 +118,9 @@ enum Term {
                 case ORACLE:
                     return "listagg";
 
+                case POSTGRES:
+                    return "string_agg";
+
                 case SYBASE:
                     return "list";
             }

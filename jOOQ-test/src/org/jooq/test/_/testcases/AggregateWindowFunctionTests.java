@@ -736,7 +736,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             case ASE:
             case DERBY:
             case INGRES:
-            case POSTGRES:
             case SQLITE:
             case SQLSERVER:
                 log.info("SKIPPING", "LISTAGG tests");
@@ -776,6 +775,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             case H2:
             case HSQLDB:
             case MYSQL:
+            case POSTGRES:
             case SYBASE:
                 log.info("SKIPPING", "LISTAGG window function tests");
                 return;

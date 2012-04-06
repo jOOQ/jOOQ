@@ -4263,7 +4263,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #groupConcat(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -4284,7 +4284,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #groupConcat(Field, String)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         Field<String> literal = literal("'" + separator.replace("'", "''") + "'");
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal);
@@ -4310,7 +4310,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #listAgg(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(nullSafe(field));
     }
@@ -4333,7 +4333,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #listAgg(Field)
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, POSTGRES, SYBASE })
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
         return new GroupConcat(nullSafe(field), true);
     }

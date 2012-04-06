@@ -36,7 +36,12 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Term.LIST_AGG;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -138,14 +143,87 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(getFNName(context.getDialect()));
-        toSQLArguments(context);
-        toSQLWithinGroupClause(context);
-        toSQLOverClause(context);
+    public final void bind(BindContext context) {
+
+        if (term == LIST_AGG && asList(MYSQL, CUBRID).contains(context.getDialect())) {
+            context.bind(arguments.get(0));
+            context.bind((QueryPart) withinGroupOrderBy);
+
+            if (arguments.size() > 1) {
+                context.bind(arguments.get(1));
+            }
+        }
+        else {
+            context.bind((QueryPart) arguments)
+                   .bind((QueryPart) withinGroupOrderBy)
+                   .bind((QueryPart) partitionBy)
+                   .bind((QueryPart) orderBy);
+        }
     }
 
-    private void toSQLOverClause(RenderContext context) {
+    @Override
+    public final void toSQL(RenderContext context) {
+        context.sql(getFNName(context.getDialect()));
+
+        if (term == LIST_AGG && asList(MYSQL, CUBRID).contains(context.getDialect())) {
+            toSQLGroupConcat(context);
+        }
+        if (term == LIST_AGG && asList(SYBASE).contains(context.getDialect())) {
+            toSQLList(context);
+        }
+        else {
+            toSQLArguments(context);
+            toSQLWithinGroupClause(context);
+            toSQLOverClause(context);
+        }
+    }
+
+    /**
+     * [#1275] <code>LIST_AGG</code> simulation for MySQL and CUBRID
+     */
+    private void toSQLList(RenderContext context) {
+        context.sql("(");
+
+        if (distinct) {
+            context.keyword("distinct ");
+        }
+
+        context.sql(arguments);
+
+        if (!withinGroupOrderBy.isEmpty()) {
+            context.keyword(" order by ")
+                   .sql(withinGroupOrderBy);
+        }
+
+        context.sql(")");
+    }
+
+    /**
+     * [#1273] <code>LIST_AGG</code> simulation for MySQL and CUBRID
+     */
+    private final void toSQLGroupConcat(RenderContext context) {
+        context.sql("(");
+
+        if (distinct) {
+            context.keyword("distinct ");
+        }
+
+        context.sql(arguments.get(0));
+
+        if (!withinGroupOrderBy.isEmpty()) {
+            context.keyword(" order by ")
+                   .sql(withinGroupOrderBy);
+        }
+
+        if (arguments.size() > 1) {
+            context.keyword(" separator ")
+                   .sql(arguments.get(1));
+        }
+
+        context.sql(")");
+    }
+
+    private final void toSQLOverClause(RenderContext context) {
         if (!over) return;
 
         String glue = "";
@@ -214,7 +292,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * Render <code>WITHIN GROUP (ORDER BY ..)</code> clause
      */
-    private void toSQLWithinGroupClause(RenderContext context) {
+    private final void toSQLWithinGroupClause(RenderContext context) {
         if (!withinGroupOrderBy.isEmpty()) {
             context.keyword(" within group (order by ")
                    .sql(withinGroupOrderBy)
@@ -225,7 +303,7 @@ class Function<T> extends AbstractField<T> implements
     /**
      * Render function arguments and argument modifiers
      */
-    private void toSQLArguments(RenderContext context) {
+    private final void toSQLArguments(RenderContext context) {
         context.sql("(");
 
         if (distinct) {
@@ -283,14 +361,6 @@ class Function<T> extends AbstractField<T> implements
         else {
             context.keyword("current row");
         }
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.bind((QueryPart) arguments)
-               .bind((QueryPart) withinGroupOrderBy)
-               .bind((QueryPart) partitionBy)
-               .bind((QueryPart) orderBy);
     }
 
     @Override

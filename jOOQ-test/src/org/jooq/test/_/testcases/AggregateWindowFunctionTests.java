@@ -733,17 +733,14 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     public void testListAgg() throws Exception {
         switch (getDialect()) {
             case ASE:
-            case CUBRID:
             case DB2:
             case DERBY:
             case H2:
             case HSQLDB:
             case INGRES:
-            case MYSQL:
             case POSTGRES:
             case SQLITE:
             case SQLSERVER:
-            case SYBASE:
                 log.info("SKIPPING", "LISTAGG tests");
                 return;
         }
@@ -751,7 +748,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Result<?> result1 = create().select(
                 TAuthor_FIRST_NAME(),
                 TAuthor_LAST_NAME(),
-                listAgg(TBook_TITLE(), ", ").withinGroupOrderBy(TBook_ID().desc()).as("books"))
+                listAgg(TBook_ID(), ", ").withinGroupOrderBy(TBook_ID().desc()).as("books"))
             .from(TAuthor())
             .join(TBook()).on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
             .groupBy(
@@ -764,8 +761,16 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         assertEquals(2, result1.size());
         assertEquals(AUTHOR_FIRST_NAMES, result1.getValues(TAuthor_FIRST_NAME()));
         assertEquals(AUTHOR_LAST_NAMES, result1.getValues(TAuthor_LAST_NAME()));
-        assertEquals("Animal Farm, 1984", result1.getValue(0, "books"));
-        assertEquals("Brida, O Alquimista", result1.getValue(1, "books"));
+        assertEquals("2, 1", result1.getValue(0, "books"));
+        assertEquals("4, 3", result1.getValue(1, "books"));
+
+        switch (getDialect()) {
+            case CUBRID:
+            case MYSQL:
+            case SYBASE:
+                log.info("SKIPPING", "LISTAGG window function tests");
+                return;
+        }
 
         Result<?> result2 = create().select(
                 TAuthor_FIRST_NAME(),

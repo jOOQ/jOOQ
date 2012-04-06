@@ -151,26 +151,31 @@ implements
         }
 
         context.sql(")");
-
         if (!withinGroupOrderBy.isEmpty()) {
             context.keyword(" within group (order by ")
                    .sql(withinGroupOrderBy)
                    .sql(")");
         }
 
+        String glue = "";
         context.keyword(" over (");
         if (!partitionBy.isEmpty()) {
             if (partitionByOne && context.getDialect() == SQLDialect.SYBASE) {
                 // Ignore partition clause. Sybase does not support this construct
             }
             else {
-                context.keyword("partition by ")
+                context.sql(glue)
+                       .keyword("partition by ")
                        .sql(partitionBy);
+
+                glue = " ";
             }
         }
 
         if (!orderBy.isEmpty()) {
-            context.keyword("order by ");
+            context.sql(glue)
+            	   .keyword("order by ");
+
             switch (context.getDialect()) {
 
                 // SQL Server and Sybase don't allow for fully qualified fields
@@ -190,21 +195,26 @@ implements
                     break;
                 }
             }
+
+            glue = " ";
         }
 
         if (rowsStart != null) {
+            context.sql(glue);
             context.keyword("rows ");
 
             if (rowsEnd != null) {
                 context.keyword("between ");
                 toSQLRows(context, rowsStart);
 
-                context.keyword("and ");
+                context.keyword(" and ");
                 toSQLRows(context, rowsEnd);
             }
             else {
                 toSQLRows(context, rowsStart);
             }
+
+            glue = " ";
         }
 
         context.sql(")");

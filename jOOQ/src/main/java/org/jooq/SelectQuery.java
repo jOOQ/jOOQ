@@ -36,6 +36,7 @@
 
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
@@ -207,7 +208,8 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * Adds new conditions to the having clause of query, connecting them to
      * existing conditions with the provided operator
      *
-     * @param operator The operator to use to add the conditions to the existing conditions
+     * @param operator The operator to use to add the conditions to the existing
+     *            conditions
      * @param conditions The condition
      */
     @Support
@@ -217,7 +219,8 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      * Adds new conditions to the having clause of query, connecting them to
      * existing conditions with the provided operator
      *
-     * @param operator The operator to use to add the conditions to the existing conditions
+     * @param operator The operator to use to add the conditions to the existing
+     *            conditions
      * @param conditions The condition
      */
     @Support
@@ -235,25 +238,26 @@ public interface SelectQuery extends Select<Record>, ConditionProvider, OrderPro
      *       .execute();
      * </pre></code>
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     void addHint(String hint);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     void addConnectBy(Condition condition);
 
     /**
-     * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the query
+     * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
+     * query
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     void addConnectByNoCycle(Condition condition);
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     void setConnectByStartWith(Condition condition);
 }

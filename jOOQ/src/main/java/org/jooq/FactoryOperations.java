@@ -36,6 +36,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -642,21 +643,26 @@ public interface FactoryOperations extends Configuration {
     <R extends TableRecord<R>> Truncate<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
-    // Other queries for identites and sequences
+    // Other queries for identities and sequences
     // -------------------------------------------------------------------------
 
     /**
      * Retrieve the last inserted ID.
      * <p>
-     * This is poorly supported by {@link SQLDialect#SQLITE}<br/>
-     * This is NOT supported by {@link SQLDialect#POSTGRES} and
-     * {@link SQLDialect#ORACLE}
+     * Note, there are some restrictions to the following dialects:
+     * <ul>
+     * <li> {@link SQLDialect#DB2} doesn't support this</li>
+     * <li> {@link SQLDialect#ORACLE} doesn't support this</li>
+     * <li> {@link SQLDialect#POSTGRES} doesn't support this</li>
+     * <li> {@link SQLDialect#SQLITE} supports this, but its support is poorly
+     * documented.</li>
+     * </ul>
      *
      * @return The last inserted ID. This may be <code>null</code> in some
      *         dialects, if no such number is available.
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ASE, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE})
+    @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE })
     BigInteger lastID() throws DataAccessException;
 
     /**
@@ -665,7 +671,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -674,7 +680,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ DB2, H2, INGRES, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, INGRES, ORACLE, POSTGRES, SYBASE })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -731,7 +737,7 @@ public interface FactoryOperations extends Configuration {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES })
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES, SYBASE })
     int use(Schema schema) throws DataAccessException;
 
     /**
@@ -740,7 +746,7 @@ public interface FactoryOperations extends Configuration {
      * @see #use(Schema)
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES })
+    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES, SYBASE })
     int use(String schema) throws DataAccessException;
 
     // -------------------------------------------------------------------------
@@ -1001,7 +1007,7 @@ public interface FactoryOperations extends Configuration {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     * 
+     *
      * @param sql The SQL
      * @return The results from the executed query. This is never
      *         <code>null</code>, even if the database returns no
@@ -1034,7 +1040,7 @@ public interface FactoryOperations extends Configuration {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
-     * 
+     *
      * @param sql The SQL
      * @param bindings The bindings
      * @return The results from the executed query. This is never

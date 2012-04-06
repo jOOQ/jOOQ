@@ -98,7 +98,7 @@ public interface LockProvider {
      *
      * @param forUpdate The flag's value
      */
-    @Support({ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE})
+    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SYBASE })
     void setForUpdate(boolean forUpdate);
 
     /**
@@ -128,6 +128,7 @@ public interface LockProvider {
      * Some RDBMS allow for specifying the fields that should be locked by the
      * <code>FOR UPDATE</code> clause, instead of the full row.
      * <p>
+     *
      * @see #setForUpdateOf(Field...)
      */
     @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, SYBASE })

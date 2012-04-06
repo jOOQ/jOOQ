@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
@@ -135,6 +136,6 @@ public interface SelectFromStep extends SelectWhereStep {
      *       .execute();
      * </pre></code>
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     SelectFromStep hint(String hint);
 }

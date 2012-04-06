@@ -222,6 +222,15 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                              .from(TBook())
                              .where(TBook_AUTHOR_ID().equal(TAuthor_ID()))
                              .and(TBook_TITLE().equal("1984"))))
+
+                // SQLite doesn't support {=|<>|<|>|<=|>=} {ANY|ALL|SOME}, which
+                // is checked in PredicateTests. But do check simpler subqueries
+
+                .and(val(100).notEqual(create().selectOne()))
+                .and(val(0).lessThan(create().selectOne()))
+                .and(val(1).lessOrEqual(create().selectOne()))
+                .and(val(1).greaterThan(create().selectZero()))
+                .and(val(0).greaterOrEqual(create().selectZero()))
                 .limit(1)
                 .fetchOne(TAuthor_LAST_NAME()));
     }

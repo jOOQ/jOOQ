@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
 import org.jooq.impl.Factory;
@@ -87,7 +88,7 @@ public interface SelectConnectByConditionStep extends SelectStartWithStep {
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support(ORACLE)
+    @Support({CUBRID, ORACLE})
     SelectConnectByConditionStep and(Condition condition);
 
     /**
@@ -101,7 +102,7 @@ public interface SelectConnectByConditionStep extends SelectStartWithStep {
      *
      * @see Factory#condition(String)
      */
-    @Support(ORACLE)
+    @Support({CUBRID, ORACLE})
     SelectConnectByConditionStep and(String sql);
 
     /**
@@ -115,7 +116,7 @@ public interface SelectConnectByConditionStep extends SelectStartWithStep {
      *
      * @see Factory#condition(String, Object...)
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep and(String sql, Object... bindings);
 
 }

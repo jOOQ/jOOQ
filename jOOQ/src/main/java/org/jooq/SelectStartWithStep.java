@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
 /**
@@ -85,7 +86,7 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
      * <code>CONNECT BY</code> clause
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     SelectGroupByStep startWith(Condition condition);
 
     /**
@@ -97,7 +98,7 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     SelectGroupByStep startWith(String sql);
 
     /**
@@ -109,6 +110,6 @@ public interface SelectStartWithStep extends SelectGroupByStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      */
-    @Support(ORACLE)
+    @Support({ CUBRID, ORACLE })
     SelectGroupByStep startWith(String sql, Object... bindings);
 }

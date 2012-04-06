@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -71,9 +72,9 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * matches the value being inserted, then the <code>UPDATE</code> clause is
      * executed instead.
      * <p>
-     * MySQL is the only database that natively implements this type of clause.
-     * Some other databases simulate this clause using a <code>MERGE</code>
-     * statement. The conditions for a RDBMS to simulate this clause are:
+     * MySQL and CUBRID natively implements this type of clause. jOOQ can
+     * simulate this clause using a <code>MERGE</code> statement on some other
+     * databases. The conditions for a RDBMS to simulate this clause are:
      * <ul>
      * <li>The <code>INSERT</code> statement's table is an
      * {@link UpdatableTable}</li>
@@ -83,6 +84,6 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <p>
      * These are the dialects that fulfill the above requirements:
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 }

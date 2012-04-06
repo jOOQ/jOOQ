@@ -735,8 +735,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             case ASE:
             case DB2:
             case DERBY:
-            case H2:
-            case HSQLDB:
             case INGRES:
             case POSTGRES:
             case SQLITE:
@@ -766,6 +764,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         switch (getDialect()) {
             case CUBRID:
+            case H2:
+            case HSQLDB:
             case MYSQL:
             case SYBASE:
                 log.info("SKIPPING", "LISTAGG window function tests");

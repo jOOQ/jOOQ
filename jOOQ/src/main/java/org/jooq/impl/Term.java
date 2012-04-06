@@ -105,6 +105,8 @@ enum Term {
         public String translate(SQLDialect dialect) {
             switch (dialect) {
                 case CUBRID:
+                case H2:
+                case HSQLDB:
                 case MYSQL:
                     return "group_concat";
 

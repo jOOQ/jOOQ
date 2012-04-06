@@ -4253,11 +4253,13 @@ public class Factory implements FactoryOperations {
      * by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
+     * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT()</code></li>
+     * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      */
-    @Support({ CUBRID, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -4269,11 +4271,13 @@ public class Factory implements FactoryOperations {
      * by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
+     * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT</code></li>
+     * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      */
-    @Support({ CUBRID, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String delimiter) {
         Field<String> literal = literal("'" + delimiter.replace("'", "''") + "'");
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal);

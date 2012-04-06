@@ -56,4 +56,8 @@ class NamedQueryPartList<T extends NamedQueryPart> extends QueryPartList<T> {
     NamedQueryPartList(Collection<? extends T> wrappedList) {
         super(wrappedList);
     }
+
+    NamedQueryPartList(T... wrappedList) {
+        super(wrappedList);
+    }
 }

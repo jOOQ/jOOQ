@@ -155,8 +155,8 @@ implements
             // This loop finds all fields that are used in aggregate
             // functions. They're excluded from the GROUP BY clause
             for (Field<?> field : aggregateFunctions) {
-                if (field instanceof AggregateFunctionImpl) {
-                    for (QueryPart argument : ((AggregateFunctionImpl<?>) field).getArguments()) {
+                if (field instanceof Function) {
+                    for (QueryPart argument : ((Function<?>) field).getArguments()) {
                         if (argument instanceof Field) {
                             aggregatedFields.add((Field<?>) argument);
                         }

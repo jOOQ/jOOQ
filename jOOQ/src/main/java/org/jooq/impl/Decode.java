@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.function;
+
 import org.jooq.CaseConditionStep;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -70,7 +72,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
 
             // Oracle actually has this function
             case ORACLE: {
-                return new Function<Z>("decode", getDataType(), getArguments());
+                return function("decode", getDataType(), getArguments());
             }
 
             // Other dialects simulate it with a CASE ... WHEN expression

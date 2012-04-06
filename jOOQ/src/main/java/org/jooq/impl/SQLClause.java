@@ -71,7 +71,7 @@ class SQLClause<T> extends AbstractField<T> {
 
     @Override
     public final List<Attachable> getAttachables() {
-        return null;
+        return getAttachables(parts);
     }
 
     @Override

@@ -38,6 +38,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -66,6 +67,7 @@ import org.jooq.WindowOverStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
+import org.jooq.util.db2.DB2DataType;
 
 /**
  * A field that handles built-in functions, aggregate functions, and window
@@ -167,13 +169,14 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(getFNName(context.getDialect()));
-
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.getDialect())) {
             toSQLGroupConcat(context);
         }
         else if (term == LIST_AGG && asList(SYBASE).contains(context.getDialect())) {
             toSQLList(context);
+        }
+        else if (term == LIST_AGG && asList(DB2).contains(context.getDialect())) {
+            toSQLXMLAGG(context);
         }
         else {
             toSQLArguments(context);
@@ -183,9 +186,57 @@ class Function<T> extends AbstractField<T> implements
     }
 
     /**
+     * [#1276] <code>LIST_AGG</code> simulation for DB2
+     */
+    private void toSQLXMLAGG(RenderContext context) {
+
+        // This is a complete view of what the below SQL will render
+        // substr(xmlserialize(xmlagg(xmltext(concat(', ', title)) order by id) as varchar(1024)), 3)
+        if (arguments.size() > 1) {
+            context.keyword("substr(");
+        }
+
+        context.keyword("xmlserialize(xmlagg(xmltext(");
+
+        if (arguments.size() > 1) {
+            context.keyword("concat(")
+                   .sql(arguments.get(1))
+                   .sql(", ");
+        }
+
+        context.sql(arguments.get(0));
+
+        if (arguments.size() > 1) {
+            context.sql(")"); // CONCAT
+        }
+
+        context.sql(")"); // XMLTEXT
+
+        if (!withinGroupOrderBy.isEmpty()) {
+            context.keyword(" order by ")
+                   .sql(withinGroupOrderBy);
+        }
+
+        context.sql(")"); // XMLAGG
+        context.keyword(" as ");
+        context.sql(DB2DataType.VARCHAR.getCastTypeName());
+        context.sql(")"); // XMLSERIALIZE
+
+        if (arguments.size() > 1) {
+            context.sql(", ");
+
+            // The separator is of this form: [', '].
+            // The example has length 4
+            context.sql(arguments.get(1).toString().length() - 1);
+            context.sql(")"); // SUBSTR
+        }
+    }
+
+    /**
      * [#1275] <code>LIST_AGG</code> simulation for CUBRID, HSQLDB, MySQL
      */
     private void toSQLList(RenderContext context) {
+        context.sql(getFNName(context.getDialect()));
         context.sql("(");
 
         if (distinct) {
@@ -206,6 +257,7 @@ class Function<T> extends AbstractField<T> implements
      * [#1273] <code>LIST_AGG</code> simulation for MySQL and CUBRID
      */
     private final void toSQLGroupConcat(RenderContext context) {
+        context.sql(getFNName(context.getDialect()));
         context.sql("(");
 
         if (distinct) {
@@ -308,6 +360,7 @@ class Function<T> extends AbstractField<T> implements
      * Render function arguments and argument modifiers
      */
     private final void toSQLArguments(RenderContext context) {
+        context.sql(getFNName(context.getDialect()));
         context.sql("(");
 
         if (distinct) {

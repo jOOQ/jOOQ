@@ -110,6 +110,11 @@ enum Term {
                 case MYSQL:
                     return "group_concat";
 
+                // DB2 needs to do some rather complex XML manipulation to
+                // achieve the same results. XMLAGG() itself cannot do it
+                case DB2:
+                    return "xmlagg";
+
                 case ORACLE:
                     return "listagg";
 

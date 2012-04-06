@@ -4254,6 +4254,7 @@ public class Factory implements FactoryOperations {
      * by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
+     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT()</code></li>
@@ -4262,7 +4263,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #groupConcat(Field)
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -4274,6 +4275,7 @@ public class Factory implements FactoryOperations {
      * by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
+     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT</code></li>
@@ -4282,7 +4284,7 @@ public class Factory implements FactoryOperations {
      *
      * @see #groupConcat(Field, String)
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         Field<String> literal = literal("'" + separator.replace("'", "''") + "'");
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal);
@@ -4301,13 +4303,14 @@ public class Factory implements FactoryOperations {
      * <p>
      * It is simulated by the following dialects:
      * <ul>
+     * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      *
      * @see #listAgg(Field)
      */
-    @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, SYBASE })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(nullSafe(field));
     }

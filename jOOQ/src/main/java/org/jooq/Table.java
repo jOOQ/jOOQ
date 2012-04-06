@@ -37,6 +37,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -254,7 +255,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep rightOuterJoin(TableLike<?> table);
 
     /**
@@ -269,7 +270,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String)
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep rightOuterJoin(String sql);
 
     /**
@@ -284,7 +285,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -466,7 +467,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -482,7 +483,7 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String)
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql);
 
     /**
@@ -498,6 +499,6 @@ public interface Table<R extends Record> extends Type<R>, AliasProvider<Table<R>
      *
      * @see Factory#table(String, Object...)
      */
-    @Support({ ASE, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 }

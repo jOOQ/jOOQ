@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -95,7 +96,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * This is the same as calling {@link #limit(int, int)} with offset = 0, or
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectOffsetStep<R> limit(Param<Integer> numberOfRows);
 
     /**
@@ -109,7 +110,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(int offset, int numberOfRows);
 
     /**
@@ -124,7 +125,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * this may be simulated with a <code>ROW_NUMBER()</code> window function and
      * nested <code>SELECT</code> statements.
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -139,7 +140,7 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * this may be simulated with a <code>ROW_NUMBER()</code> window function and
      * nested <code>SELECT</code> statements.
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -154,6 +155,6 @@ public interface SimpleSelectLimitStep<R extends Record> extends SimpleSelectFor
      * this may be simulated with a <code>ROW_NUMBER()</code> window function
      * and nested <code>SELECT</code> statements.
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SimpleSelectForUpdateStep<R> limit(Param<Integer> offset, Param<Integer> numberOfRows);
 }

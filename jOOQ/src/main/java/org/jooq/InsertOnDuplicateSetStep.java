@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -67,14 +68,14 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
      * <code>ON DUPLICATE KEY UPDATE</code> clause
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -85,7 +86,7 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
      * types. Values can either be of type <code>&lt;T&gt;</code> or
      * <code>Field&lt;T&gt;</code>
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
 }

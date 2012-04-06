@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -120,7 +121,7 @@ public interface OrderProvider {
      *
      * @param numberOfRows The number of rows to return
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> numberOfRows);
 
     /**
@@ -137,7 +138,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, int numberOfRows);
 
     /**
@@ -155,7 +156,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> offset, int numberOfRows);
 
     /**
@@ -173,7 +174,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(int offset, Param<Integer> numberOfRows);
 
     /**
@@ -191,7 +192,7 @@ public interface OrderProvider {
      * @param offset The lowest offset starting at 0
      * @param numberOfRows The number of rows to return
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     void addLimit(Param<Integer> offset, Param<Integer> numberOfRows);
 
 }

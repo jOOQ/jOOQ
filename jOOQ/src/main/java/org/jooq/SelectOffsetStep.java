@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -57,7 +58,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * -- more than five books in German in the last three years
  * -- (from 2011), and sort those authors by last names
  * -- limiting results to the second and third row
- * 
+ *
  *   SELECT T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, COUNT(*)
  *     FROM T_AUTHOR
  *     JOIN T_BOOK ON T_AUTHOR.ID = T_BOOK.AUTHOR_ID
@@ -86,7 +87,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *       .of(TAuthor.FIRST_NAME, TAuthor.LAST_NAME)
  *       .noWait();
  * </pre></code> Refer to the manual for more details
- * 
+ *
  * @author Lukas Eder
  */
 public interface SelectOffsetStep extends SelectForUpdateStep {
@@ -99,7 +100,7 @@ public interface SelectOffsetStep extends SelectForUpdateStep {
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectForUpdateStep offset(int offset);
 
     /**
@@ -110,6 +111,6 @@ public interface SelectOffsetStep extends SelectForUpdateStep {
      * simulated with a <code>ROW_NUMBER()</code> window function and nested
      * <code>SELECT</code> statements.
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     SelectForUpdateStep offset(Param<Integer> offset);
 }

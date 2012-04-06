@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
@@ -45,7 +46,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.io.Serializable;
-
 
 /**
  * A type representing sequences in databases that support this.
@@ -72,12 +72,12 @@ public interface Sequence<T extends Number> extends Serializable {
     /**
      * Get the current value of this sequence
      */
-    @Support({ DB2, H2, INGRES, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, INGRES, ORACLE, POSTGRES, SYBASE })
     Field<T> currval();
 
     /**
      * Increment the sequence and get the next value
      */
-    @Support({ DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
     Field<T> nextval();
 }

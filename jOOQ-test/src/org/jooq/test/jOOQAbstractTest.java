@@ -1243,6 +1243,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testListAgg() throws Exception {
+        new AggregateWindowFunctionTests(this).testListAgg();
+    }
+
+    @Test
     public void testStoredFunctions() throws Exception {
         new RoutineAndUDTTests(this).testStoredFunctions();
     }

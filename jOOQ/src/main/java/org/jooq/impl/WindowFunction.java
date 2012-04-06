@@ -77,6 +77,7 @@ implements
     private final Term             term;
 
     private final QueryPartList<?> arguments;
+    private final SortFieldList    withinGroupOrderBy;
     private final FieldList        partitionBy;
     private final SortFieldList    orderBy;
 
@@ -86,22 +87,32 @@ implements
     private Integer                rowsStart;
     private Integer                rowsEnd;
 
-    public WindowFunction(String name, DataType<T> type, QueryPart... arguments) {
+    WindowFunction(String name, DataType<T> type, QueryPart... arguments) {
+        this(name, type, new SortFieldList(), arguments);
+    }
+
+    WindowFunction(Term term, DataType<T> type, QueryPart... arguments) {
+        this(term, type, new SortFieldList(), arguments);
+    }
+
+    WindowFunction(String name, DataType<T> type, SortFieldList withinGroupOrderBy, QueryPart... arguments) {
         super(name, type);
 
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
         this.arguments = new QueryPartList<QueryPart>(Arrays.asList(arguments));
         this.term = null;
+        this.withinGroupOrderBy = withinGroupOrderBy;
     }
 
-    public WindowFunction(Term term, DataType<T> type, QueryPart... arguments) {
+    WindowFunction(Term term, DataType<T> type, SortFieldList withinGroupOrderBy, QueryPart... arguments) {
         super(term.name().toLowerCase(), type);
 
         this.partitionBy = new FieldList();
         this.orderBy = new SortFieldList();
         this.arguments = new QueryPartList<QueryPart>(Arrays.asList(arguments));
         this.term = term;
+        this.withinGroupOrderBy = withinGroupOrderBy;
     }
 
     // -------------------------------------------------------------------------
@@ -139,11 +150,15 @@ implements
             }
         }
 
-        context.keyword(") over (")
-               .formatIndentLockStart();
+        context.sql(")");
 
-        boolean newLine = false;
+        if (!withinGroupOrderBy.isEmpty()) {
+            context.keyword(" within group (order by ")
+                   .sql(withinGroupOrderBy)
+                   .sql(")");
+        }
 
+        context.keyword(" over (");
         if (!partitionBy.isEmpty()) {
             if (partitionByOne && context.getDialect() == SQLDialect.SYBASE) {
                 // Ignore partition clause. Sybase does not support this construct
@@ -151,16 +166,10 @@ implements
             else {
                 context.keyword("partition by ")
                        .sql(partitionBy);
-
-                newLine = true;
             }
         }
 
         if (!orderBy.isEmpty()) {
-            if (newLine) {
-                context.formatSeparator();
-            }
-
             context.keyword("order by ");
             switch (context.getDialect()) {
 
@@ -181,24 +190,16 @@ implements
                     break;
                 }
             }
-
-            newLine = true;
         }
 
         if (rowsStart != null) {
-            if (newLine) {
-                context.formatSeparator();
-            }
-
             context.keyword("rows ");
 
             if (rowsEnd != null) {
                 context.keyword("between ");
                 toSQLRows(context, rowsStart);
 
-                context.formatSeparator()
-                       .keyword("and ");
-
+                context.keyword("and ");
                 toSQLRows(context, rowsEnd);
             }
             else {
@@ -206,8 +207,7 @@ implements
             }
         }
 
-        context.sql(")")
-               .formatIndentLockEnd();
+        context.sql(")");
     }
 
     private final String getFNName(SQLDialect dialect) {

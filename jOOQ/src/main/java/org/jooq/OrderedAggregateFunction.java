@@ -33,50 +33,55 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.tools;
+package org.jooq;
 
-import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
-import org.jooq.impl.DefaultExecuteListener;
+import static org.jooq.SQLDialect.ORACLE;
+
+import java.util.Collection;
 
 /**
- * A default {@link ExecuteListener} that just logs events to java.util.logging,
- * log4j, or slf4j using the {@link JooqLogger}
+ * An ordered aggregate function.
+ * <p>
+ * An ordered aggregate function is an aggregate function with a mandatory
+ * Oracle-specific <code>WITHIN GROUP (ORDER BY ..)</code> clause. An example is
+ * <code>LISTAGG</code>: <code><pre>
+ * SELECT   LISTAGG(TITLE, ', ')
+ *          WITHIN GROUP (ORDER BY TITLE)
+ * FROM     T_BOOK
+ * GROUP BY AUTHOR_ID
+ * </pre></code> The above function groups books by author and aggregates titles
+ * into a concatenated string.
+ * <p>
+ * Ordered aggregate functions can be further converted into window functions
+ * using the <code>OVER(PARTITION BY ..)</code> clause. For example: <code><pre>
+ * SELECT LISTAGG(TITLE, ', ')
+ *        WITHIN GROUP (ORDER BY TITLE)
+ *        OVER (PARTITION BY AUTHOR_ID)
+ * FROM   T_BOOK
+ * </pre></code>
  *
  * @author Lukas Eder
  */
-public class LoggerListener extends DefaultExecuteListener {
+public interface OrderedAggregateFunction<T> {
 
-    private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
+    /**
+     * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
+     * aggregate function
+     */
+    @Support(ORACLE)
+    AggregateFunction<T> withinGroupOrderBy(Field<?>... fields);
 
-    @Override
-    public void renderEnd(ExecuteContext ctx) {
-        if (log.isDebugEnabled()) {
-            if (ctx.query() != null) {
-                log.debug("Executing query", ctx.query().getSQL(true));
-            //  log.debug("Executing query", ctx.query().getSQL(false));
-            }
-            else if (!StringUtils.isBlank(ctx.sql())) {
-                log.debug("Executing query", ctx.sql());
-            }
-        }
-    }
+    /**
+     * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
+     * aggregate function
+     */
+    @Support
+    AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields);
 
-    @Override
-    public void recordEnd(ExecuteContext ctx) {
-        if (log.isTraceEnabled() && ctx.record() != null)
-            log.trace("Record fetched", ctx.record());
-    }
-
-    @Override
-    public void resultEnd(ExecuteContext ctx) {
-        if (log.isDebugEnabled() && ctx.result() != null) {
-            String comment = "Fetched result";
-
-            for (String line : ctx.result().format(5).split("\n")) {
-                log.debug(comment, line);
-                comment = "";
-            }
-        }
-    }
+    /**
+     * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
+     * aggregate function
+     */
+    @Support(ORACLE)
+    AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields);
 }

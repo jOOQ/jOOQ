@@ -100,6 +100,7 @@ import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeUsingStep;
+import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -4151,6 +4152,22 @@ public class Factory implements FactoryOperations {
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new AggregateFunctionImpl<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     */
+    @Support(ORACLE)
+    public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
+        return new AggregateFunctionImpl<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
+    }
+
+    /**
+     * Get the aggregated concatenation for a field.
+     */
+    @Support(ORACLE)
+    public static OrderedAggregateFunction<String> listAgg(Field<?> field, String delimiter) {
+        return new AggregateFunctionImpl<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), literal("'" + delimiter.replace("'", "''") + "'"));
     }
 
     // -------------------------------------------------------------------------

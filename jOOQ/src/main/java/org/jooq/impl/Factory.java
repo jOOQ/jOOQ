@@ -637,6 +637,98 @@ public class Factory implements FactoryOperations {
     }
 
     /**
+     * A custom SQL clause that can render arbitrary SQL elements.
+     * <p>
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
+     * <p>
+     * The above MySQL function can be expressed as such: <code><pre>
+     * clause("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @return A field wrapping the plain SQL
+     */
+    public static Field<Object> field(String sql, QueryPart... parts) {
+        return new SQLClause<Object>(sql, SQLDataType.OTHER, parts);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary SQL elements.
+     * <p>
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
+     * <p>
+     * The above MySQL function can be expressed as such: <code><pre>
+     * clause("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param type The field type
+     * @return A field wrapping the plain SQL
+     */
+    public static <T> Field<T> field(String sql, Class<T> type, QueryPart... parts) {
+        return new SQLClause<T>(sql, getDataType(type), parts);
+    }
+
+    /**
+     * A custom SQL clause that can render arbitrary SQL elements.
+     * <p>
+     * This is useful for constructing more complex SQL syntax elements wherever
+     * <code>Field</code> types are expected. An example for this is MySQL's
+     * <code>GROUP_CONCAT</code> aggregate function, which has MySQL-specific
+     * keywords that are hard to reflect in jOOQ's DSL: <code><pre>
+     * GROUP_CONCAT([DISTINCT] expr [,expr ...]
+     *       [ORDER BY {unsigned_integer | col_name | expr}
+     *           [ASC | DESC] [,col_name ...]]
+     *       [SEPARATOR str_val])
+     *       </pre></code>
+     * <p>
+     * The above MySQL function can be expressed as such: <code><pre>
+     * clause("GROUP_CONCAT(DISTINCT {0} ORDER BY {1} ASC DEPARATOR '-')", expr1, expr2);
+     * </pre></code>
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param type The field type
+     * @return A field wrapping the plain SQL
+     */
+    public static <T> Field<T> field(String sql, DataType<T> type, QueryPart... parts) {
+        return new SQLClause<T>(sql, type, parts);
+    }
+
+    /**
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
@@ -3958,7 +4050,7 @@ public class Factory implements FactoryOperations {
      */
     @Support({ CUBRID, ORACLE })
     public static <T> Field<T> prior(Field<T> field) {
-        return new Prior<T>(field);
+        return field("{prior} {0}", nullSafe(field).getDataType(), field);
     }
 
     // -------------------------------------------------------------------------

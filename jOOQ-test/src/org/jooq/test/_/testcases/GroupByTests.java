@@ -179,9 +179,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                     TBook_AUTHOR_ID()))
                 .fetch();
 
-        System.out.println(result.format());
-        assertEquals(9, result.size());
-
         if (getDialect() == DB2) {
             assertEquals(Arrays.asList(null, 1, 2, 3, 4, 1, 2, 3, 4), result.getValues(0));
             assertEquals(Arrays.asList(null, null, null, null, null, 1, 1, 2, 2), result.getValues(1));

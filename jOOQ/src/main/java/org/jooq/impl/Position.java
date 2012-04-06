@@ -38,13 +38,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
 
-import java.util.List;
-
-import org.jooq.Attachable;
-import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.RenderContext;
 
 /**
  * @author Lukas Eder
@@ -82,48 +77,7 @@ class Position extends AbstractFunction<Integer> {
                 return function("charindex", SQLDataType.INTEGER, search, in);
 
             default:
-                return new SQLPosition();
-        }
-    }
-
-    /**
-     * The default implementation according to the SQL standard.
-     *
-     * @author Lukas Eder
-     */
-    private class SQLPosition extends AbstractField<Integer> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = 5979696080332410352L;
-
-        SQLPosition() {
-            super("position", SQLDataType.INTEGER);
-        }
-
-        @Override
-        public final List<Attachable> getAttachables() {
-            return getAttachables(Position.this.getArguments());
-        }
-
-        @Override
-        public final void toSQL(RenderContext context) {
-            context.keyword("position(")
-                   .sql(search)
-                   .keyword(" in ")
-                   .sql(in)
-                   .sql(")");
-        }
-
-        @Override
-        public final boolean isNullLiteral() {
-            return false;
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            context.bind(search).bind(in);
+                return new SQLClause<Integer>("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
         }
     }
 }

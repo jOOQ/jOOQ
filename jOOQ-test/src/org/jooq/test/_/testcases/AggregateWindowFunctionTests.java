@@ -734,7 +734,6 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
     public void testListAgg() throws Exception {
         switch (getDialect()) {
             case ASE:
-            case DB2:
             case DERBY:
             case INGRES:
             case POSTGRES:
@@ -773,6 +772,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         switch (getDialect()) {
             case CUBRID:
+            case DB2:
             case H2:
             case HSQLDB:
             case MYSQL:

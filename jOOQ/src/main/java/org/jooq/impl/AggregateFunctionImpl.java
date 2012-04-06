@@ -35,20 +35,26 @@
  */
 package org.jooq.impl;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.jooq.AggregateFunction;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+import org.jooq.SortField;
 
-class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<T> {
+class AggregateFunctionImpl<T> extends Function<T> implements OrderedAggregateFunction<T>, AggregateFunction<T> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 1952351506930280715L;
 
-    private final boolean     distinct;
+    private final boolean       distinct;
+    private final SortFieldList withinGroupOrderBy;
 
     AggregateFunctionImpl(String name, DataType<T> type, Field<?>... arguments) {
         this(name, false, type, arguments);
@@ -62,21 +68,41 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
         super(name, type, arguments);
 
         this.distinct = distinct;
+        this.withinGroupOrderBy = new SortFieldList();
     }
 
     AggregateFunctionImpl(Term term, boolean distinct, DataType<T> type, Field<?>... arguments) {
         super(term, type, arguments);
 
         this.distinct = distinct;
+        this.withinGroupOrderBy = new SortFieldList();
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(Field<?>... fields) {
+        withinGroupOrderBy.addAll(fields);
+        return this;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields) {
+        withinGroupOrderBy.addAll(Arrays.asList(fields));
+        return this;
+    }
+
+    @Override
+    public final AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields) {
+        withinGroupOrderBy.addAll(fields);
+        return this;
     }
 
     @Override
     public final WindowFunction<T> over() {
         if (getTerm() != null) {
-            return new WindowFunction<T>(getTerm(), getDataType(), getArguments());
+            return new WindowFunction<T>(getTerm(), getDataType(), withinGroupOrderBy, getArguments());
         }
         else {
-            return new WindowFunction<T>(getName(), getDataType(), getArguments());
+            return new WindowFunction<T>(getName(), getDataType(), withinGroupOrderBy, getArguments());
         }
     }
 
@@ -87,5 +113,14 @@ class AggregateFunctionImpl<T> extends Function<T> implements AggregateFunction<
         }
 
         super.toSQLField(context, field);
+    }
+
+    @Override
+    protected final void toSQLSuffix(RenderContext context) {
+        if (!withinGroupOrderBy.isEmpty()) {
+            context.keyword(" within group (order by ")
+                   .sql(withinGroupOrderBy)
+                   .sql(")");
+        }
     }
 }

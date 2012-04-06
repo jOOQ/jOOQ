@@ -91,6 +91,7 @@ class Function<T> extends AbstractField<T> {
 
         context.sql(getArgumentListDelimiter(context, ")"));
         context.sql(getFNSuffix());
+        toSQLSuffix(context);
     }
 
     private final String getFNName(SQLDialect dialect) {
@@ -158,6 +159,12 @@ class Function<T> extends AbstractField<T> {
     protected void toSQLField(RenderContext context, QueryPart field) {
         context.sql(field);
     }
+
+    /**
+     * Render additional SQL. Subclasses may override this method, if needed
+     * (e.g. to render <code>WITHIN GROUP (ORDER BY ..)</code>)
+     */
+    protected void toSQLSuffix(RenderContext context) {}
 
     @Override
     public final void bind(BindContext context) {

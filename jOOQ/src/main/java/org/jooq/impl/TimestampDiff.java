@@ -37,7 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.SQLDataType.INTEGER;
 
 import java.sql.Timestamp;
 
@@ -67,47 +67,56 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
 
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
+        double milliInDay = new DayToSecond(1).getTotalMilli();
+
         switch (configuration.getDialect()) {
 
             // Sybase ASE's datediff incredibly overflows on 3 days' worth of
             // microseconds. That's why the days have to be leveled at first
             case ASE:
-                Field<Double> days = function("datediff", SQLDataType.DOUBLE, literal("day"), timestamp2, timestamp1);
-                Field<Double> milli = function("datediff", SQLDataType.DOUBLE, literal("ms"), timestamp2.add(days), timestamp1);
-                return (Field) days.add(milli.div(literal(new DayToSecond(1).getTotalMilli())));
+
+                // The difference in number of days
+                Field<Integer> days = field("{datediff}(day, {0}, {1})", INTEGER, timestamp2, timestamp1);
+
+                // The intra-day difference in number of milliseconds
+                Field<Integer> milli = field("{datediff}(ms, {0}, {1})", INTEGER, timestamp2.add(days), timestamp1);
+                return (Field) days.mul(86400000).add(milli);
 
             // CUBRID's datetime operations operate on a millisecond level
             case CUBRID:
-                return (Field) timestamp1.sub(timestamp2).div(literal(new DayToSecond(1).getTotalMilli()));
+                return (Field) timestamp1.sub(timestamp2);
 
             // Fun with DB2 dates. Find some info here:
             // http://www.ibm.com/developerworks/data/library/techarticle/0211yip/0211yip3.html
             case DB2:
-                return (Field) function("days", SQLDataType.INTEGER, timestamp1).sub(
-                               function("days", SQLDataType.INTEGER, timestamp2)).add(
-                               function("midnight_seconds", SQLDataType.INTEGER, timestamp1).sub(
-                               function("midnight_seconds", SQLDataType.INTEGER, timestamp2)).div(literal(new DayToSecond(1).getTotalSeconds())));
+                return (Field) function("days", INTEGER, timestamp1).sub(
+                               function("days", INTEGER, timestamp2)).mul(86400000).add(
+                               function("midnight_seconds", INTEGER, timestamp1).sub(
+                               function("midnight_seconds", INTEGER, timestamp2)).mul(1000));
 
             case DERBY:
-                return (Field) field("{fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", SQLDataType.INTEGER, timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalSeconds()));
+                return (Field) field("1000 * {fn {timestampdiff}({sql_tsi_second}, {0}, {1}) }", INTEGER, timestamp2, timestamp1);
 
             case H2:
             case HSQLDB:
-                return function("datediff", getDataType(), literal("'ms'"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalMilli()));
+                return field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
 
             // MySQL's datetime operations operate on a microsecond level
             case MYSQL:
-                return function("timestampdiff", getDataType(), literal("microsecond"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalMicro()));
+                return field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);
 
             case SQLSERVER:
             case SYBASE:
-                return function("datediff", getDataType(), literal("ms"), timestamp2, timestamp1).div(literal(new DayToSecond(1).getTotalMilli()));
+                return field("{datediff}(ms, {0}, {1})", getDataType(), timestamp2, timestamp1);
+
+            case SQLITE:
+                return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) * 1000", getDataType(), timestamp1, timestamp2);
 
             case ORACLE:
             case POSTGRES:
 
-             // TODO [#585] This cast shouldn't be necessary
-            return timestamp1.sub(timestamp2).cast(DayToSecond.class);
+                // TODO [#585] This cast shouldn't be necessary
+                return timestamp1.sub(timestamp2).cast(DayToSecond.class);
         }
 
         return null;

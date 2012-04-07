@@ -37,9 +37,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
 
 import org.jooq.Configuration;
 import org.jooq.DatePart;
@@ -69,17 +67,17 @@ class Extract extends AbstractFunction<Integer> {
             case SQLITE:
                 switch (datePart) {
                     case YEAR:
-                        return function("strftime", SQLDataType.INTEGER, literal("'%Y'"), field);
+                        return field("{strftime}('%Y', {0})", SQLDataType.INTEGER, field);
                     case MONTH:
-                        return function("strftime", SQLDataType.INTEGER, literal("'%m'"), field);
+                        return field("{strftime}('%m', {0})", SQLDataType.INTEGER, field);
                     case DAY:
-                        return function("strftime", SQLDataType.INTEGER, literal("'%d'"), field);
+                        return field("{strftime}('%d', {0})", SQLDataType.INTEGER, field);
                     case HOUR:
-                        return function("strftime", SQLDataType.INTEGER, literal("'%H'"), field);
+                        return field("{strftime}('%H', {0})", SQLDataType.INTEGER, field);
                     case MINUTE:
-                        return function("strftime", SQLDataType.INTEGER, literal("'%M'"), field);
+                        return field("{strftime}('%M', {0})", SQLDataType.INTEGER, field);
                     case SECOND:
-                        return function("strftime", SQLDataType.INTEGER, literal("'%S'"), field);
+                        return field("{strftime}('%S', {0})", SQLDataType.INTEGER, field);
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
@@ -106,17 +104,17 @@ class Extract extends AbstractFunction<Integer> {
             case ORACLE:
                 switch (datePart) {
                     case YEAR:
-                        return function("to_char", SQLDataType.INTEGER, field, literal("'YYYY'"));
+                        return field("{to_char}({0}, 'YYYY')", SQLDataType.INTEGER, field);
                     case MONTH:
-                        return function("to_char", SQLDataType.INTEGER, field, literal("'MM'"));
+                        return field("{to_char}({0}, 'MM')", SQLDataType.INTEGER, field);
                     case DAY:
-                        return function("to_char", SQLDataType.INTEGER, field, literal("'DD'"));
+                        return field("{to_char}({0}, 'DD')", SQLDataType.INTEGER, field);
                     case HOUR:
-                        return function("to_char", SQLDataType.INTEGER, field, literal("'HH24'"));
+                        return field("{to_char}({0}, 'HH24')", SQLDataType.INTEGER, field);
                     case MINUTE:
-                        return function("to_char", SQLDataType.INTEGER, field, literal("'MI'"));
+                        return field("{to_char}({0}, 'MI')", SQLDataType.INTEGER, field);
                     case SECOND:
-                        return function("to_char", SQLDataType.INTEGER, field, literal("'SS'"));
+                        return field("{to_char}({0}, 'SS')", SQLDataType.INTEGER, field);
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }
@@ -126,17 +124,17 @@ class Extract extends AbstractFunction<Integer> {
             case SYBASE:
                 switch (datePart) {
                     case YEAR:
-                        return function("datepart", SQLDataType.INTEGER, field("yy"), field);
+                        return field("{datepart}(yy, {0})", SQLDataType.INTEGER, field);
                     case MONTH:
-                        return function("datepart", SQLDataType.INTEGER, field("mm"), field);
+                        return field("{datepart}(mm, {0})", SQLDataType.INTEGER, field);
                     case DAY:
-                        return function("datepart", SQLDataType.INTEGER, field("dd"), field);
+                        return field("{datepart}(dd, {0})", SQLDataType.INTEGER, field);
                     case HOUR:
-                        return function("datepart", SQLDataType.INTEGER, field("hh"), field);
+                        return field("{datepart}(hh, {0})", SQLDataType.INTEGER, field);
                     case MINUTE:
-                        return function("datepart", SQLDataType.INTEGER, field("mi"), field);
+                        return field("{datepart}(mi, {0})", SQLDataType.INTEGER, field);
                     case SECOND:
-                        return function("datepart", SQLDataType.INTEGER, field("ss"), field);
+                        return field("{datepart}(ss, {0})", SQLDataType.INTEGER, field);
                     default:
                         throw new SQLDialectNotSupportedException("DatePart not supported: " + datePart);
                 }

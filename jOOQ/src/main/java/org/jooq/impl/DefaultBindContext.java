@@ -195,9 +195,6 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type == Clob.class) {
             stmt.setClob(nextIndex(), (Clob) value);
         }
-        else if (type == Date.class) {
-            stmt.setDate(nextIndex(), (Date) value);
-        }
         else if (type == Double.class) {
             stmt.setDouble(nextIndex(), (Double) value);
         }
@@ -216,11 +213,32 @@ class DefaultBindContext extends AbstractBindContext {
         else if (type == String.class) {
             stmt.setString(nextIndex(), (String) value);
         }
+
+        // There is potential for trouble when binding date time as such
+        // -------------------------------------------------------------
+        else if (type == Date.class) {
+            if (dialect == SQLITE) {
+                stmt.setString(nextIndex(), ((Date) value).toString());
+            }
+            else {
+                stmt.setDate(nextIndex(), (Date) value);
+            }
+        }
         else if (type == Time.class) {
-            stmt.setTime(nextIndex(), (Time) value);
+            if (dialect == SQLITE) {
+                stmt.setString(nextIndex(), ((Time) value).toString());
+            }
+            else {
+                stmt.setTime(nextIndex(), (Time) value);
+            }
         }
         else if (type == Timestamp.class) {
-            stmt.setTimestamp(nextIndex(), (Timestamp) value);
+            if (dialect == SQLITE) {
+                stmt.setString(nextIndex(), ((Timestamp) value).toString());
+            }
+            else {
+                stmt.setTimestamp(nextIndex(), (Timestamp) value);
+            }
         }
 
         // [#566] Interval data types are best bound as Strings

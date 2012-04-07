@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.condition;
@@ -2288,21 +2289,24 @@ public class jOOQTest {
 
     @Test
     public void testDayToSecond() {
+        for (double i = -1394892834972.0; i <= 23487289374987.0; i += 283749827.3839293) {
+            intervalChecks(i, DayToSecond.valueOf(i));
+        }
+
         for (int i = 0; i <= 5; i++) {
-            intervalChecks(i / 2.0, DayToSecond.valueOf(i / 2.0));
-            intervalChecks(i, new DayToSecond(i));
-            intervalChecks(i / 24.0, new DayToSecond(0, i));
-            intervalChecks(i / 24.0 / 60.0, new DayToSecond(0, 0, i));
-            intervalChecks(i / 24.0 / 3600.0, new DayToSecond(0, 0, 0, i));
-            intervalChecks(i / 24.0 / 3600.0 / 1000000000.0, new DayToSecond(0, 0, 0, 0, i));
+            intervalChecks(i * 1000 * 86400.0, new DayToSecond(i));
+            intervalChecks(i * 1000 * 3600.0, new DayToSecond(0, i));
+            intervalChecks(i * 1000 * 60.0, new DayToSecond(0, 0, i));
+            intervalChecks(i * 1000, new DayToSecond(0, 0, 0, i));
+            intervalChecks(i / 1000000.0, new DayToSecond(0, 0, 0, 0, i));
         }
     }
 
-    private <I extends Number & Interval<I>> void intervalChecks(Number expected, I interval) {
-        if (expected.doubleValue() > 1 / 24.0) {
-            assertEquals(expected.doubleValue(), interval.doubleValue());
-            assertEquals(expected.floatValue(), interval.floatValue());
-        }
+    private <I extends Number & Interval> void intervalChecks(Number expected, I interval) {
+        // Allow some floating point arithmetic inaccuracy
+        assertTrue(Math.abs(Double.doubleToLongBits(expected.doubleValue()) - Double.doubleToLongBits(interval.doubleValue())) < 50);
+        assertTrue(Math.abs(Float.floatToIntBits(expected.floatValue()) - Float.floatToIntBits(interval.floatValue())) < 5);
+
         assertEquals(expected.byteValue(), interval.byteValue());
         assertEquals(expected.shortValue(), interval.shortValue());
         assertEquals(expected.intValue(), interval.intValue());
@@ -2316,11 +2320,11 @@ public class jOOQTest {
             DayToSecond m = DayToSecond.valueOf(interval.toString());
             assertEquals(interval, m);
             assertEquals(m.getDays(),
-                (int) m.getTotalDays());
+                m.getSign() * (int) m.getTotalDays());
             assertEquals(m.getDays() * 24 + m.getHours(),
-                (int) m.getTotalHours());
+                m.getSign() * (int) m.getTotalHours());
             assertEquals(m.getDays() * 24 * 60 + m.getHours() * 60 + m.getMinutes(),
-                (int) m.getTotalMinutes());
+                m.getSign() * (int) m.getTotalMinutes());
         }
     }
 }

@@ -77,7 +77,7 @@
 
             <forcedTypes>
                 <forcedType>
-                    <name>BIT</name>
+                    <name>BOOLEAN</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
                 </forcedType>
 

@@ -42,6 +42,7 @@ import java.sql.Date;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
  * @author Lukas Eder
@@ -84,6 +85,9 @@ class DateDiff extends AbstractFunction<Integer> {
             case H2:
             case HSQLDB:
                 return field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
+
+            case INGRES:
+                throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
 
             case SQLITE:
                 return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);

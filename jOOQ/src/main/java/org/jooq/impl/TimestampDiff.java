@@ -43,6 +43,7 @@ import java.sql.Timestamp;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 
 /**
@@ -67,8 +68,6 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
 
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
-        double milliInDay = new DayToSecond(1).getTotalMilli();
-
         switch (configuration.getDialect()) {
 
             // Sybase ASE's datediff incredibly overflows on 3 days' worth of
@@ -100,6 +99,9 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case H2:
             case HSQLDB:
                 return field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
+
+            case INGRES:
+                throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
 
             // MySQL's datetime operations operate on a microsecond level
             case MYSQL:

@@ -80,6 +80,7 @@ import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
@@ -286,6 +287,27 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
+                case CUBRID:
+                case MYSQL: {
+                    Interval interval = rhsAsInterval();
+
+                    if (operator == SUBTRACT) {
+                        interval = interval.neg();
+                    }
+
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, val(interval, String.class));
+                    }
+                    else {
+                        if (dialect == MYSQL) {
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, val(interval, String.class));
+                        }
+                        else {
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, val(interval, String.class));
+                        }
+                    }
+                }
+
                 case DB2: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         if (operator == ADD) {
@@ -324,27 +346,6 @@ class Expression<T> extends AbstractFunction<T> {
                     }
                 }
 
-                case CUBRID:
-                case MYSQL: {
-                    Interval interval = rhsAsInterval();
-
-                    if (operator == SUBTRACT) {
-                        interval = interval.neg();
-                    }
-
-                    if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, val(interval, String.class));
-                    }
-                    else {
-                        if (dialect == MYSQL) {
-                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, val(interval, String.class));
-                        }
-                        else {
-                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, val(interval, String.class));
-                        }
-                    }
-                }
-
                 case H2: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
                         return field("{dateadd}('month', {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
@@ -352,6 +353,10 @@ class Expression<T> extends AbstractFunction<T> {
                     else {
                         return field("{dateadd}('ms', {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
                     }
+                }
+
+                case INGRES: {
+                    throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
                 }
 
                 case SQLITE: {
@@ -366,6 +371,7 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case ORACLE:
+                case POSTGRES:
                 default:
                     return new DefaultExpression();
             }
@@ -419,10 +425,10 @@ class Expression<T> extends AbstractFunction<T> {
                 // Ingres is not working yet
                 case INGRES: {
                     if (operator == ADD) {
-                        return lhs.add(field("{date}('" + rhsAsNumber() + " days')", Object.class));
+                        return lhs.add(field("{date}({0} || ' days')", Object.class, rhsAsNumber()));
                     }
                     else {
-                        return lhs.sub(field("{date}('" + rhsAsNumber() + " days')", Object.class));
+                        return lhs.sub(field("{date}({0} || ' days')", Object.class, rhsAsNumber()));
                     }
                 }
 

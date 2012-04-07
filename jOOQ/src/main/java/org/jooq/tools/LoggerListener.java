@@ -53,8 +53,16 @@ public class LoggerListener extends DefaultExecuteListener {
     public void renderEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled()) {
             if (ctx.query() != null) {
-                log.debug("Executing query", ctx.query().getSQL(true));
-            //  log.debug("Executing query", ctx.query().getSQL(false));
+
+                // Actual SQL passed to JDBC
+                log.debug("Executing query", ctx.sql());
+
+                // [#1278] DEBUG log also SQL with inlined bind values, if
+                // that is not the same as the actual SQL passed to JDBC
+                String inlined = ctx.query().getSQL(true);
+                if (!ctx.sql().equals(inlined)) {
+                    log.debug("-> with bind values", inlined);
+                }
             }
             else if (!StringUtils.isBlank(ctx.sql())) {
                 log.debug("Executing query", ctx.sql());

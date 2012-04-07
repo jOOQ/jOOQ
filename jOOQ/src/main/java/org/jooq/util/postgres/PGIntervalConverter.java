@@ -47,42 +47,81 @@ import org.jooq.types.YearToMonth;
  * Postgres returns an undisclosed internal type for intervals. This converter
  * takes care of converting the internal type to jOOQ's interval data types
  * {@link DayToSecond} and {@link YearToMonth}
+ * <p>
+ * Note, that Postgres uses some non-standard ways of describing negative
+ * intervals. Negative intervals have a sign before every date part!
  *
  * @author Lukas Eder
  */
 public class PGIntervalConverter {
 
+    /**
+     * Convert a jOOQ <code>DAY TO SECOND</code> interval to a Postgres representation
+     */
     public static Object toPGInterval(DayToSecond interval) {
         return on("org.postgresql.util.PGInterval").create(0, 0,
-            interval.getDays(),
-            interval.getHours(),
-            interval.getMinutes(),
-            interval.getSeconds() +
-            interval.getNano() / 1000000000.0).get();
+            interval.getSign() * interval.getDays(),
+            interval.getSign() * interval.getHours(),
+            interval.getSign() * interval.getMinutes(),
+            interval.getSign() * interval.getSeconds() +
+            interval.getSign() * interval.getNano() / 1000000000.0).get();
     }
 
+    /**
+     * Convert a jOOQ <code>YEAR TO MONTH</code> interval to a Postgres representation
+     */
     public static Object toPGInterval(YearToMonth interval) {
         return on("org.postgresql.util.PGInterval").create(
-            interval.getYears(),
-            interval.getMonths(),
+            interval.getSign() * interval.getYears(),
+            interval.getSign() * interval.getMonths(),
             0, 0, 0, 0.0).get();
     }
 
+    /**
+     * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
+     */
     public static DayToSecond toDayToSecond(Object pgInterval) {
+        boolean negative = pgInterval.toString().contains("-");
+
         Reflect i = on(pgInterval);
+        if (negative) {
+            i.call("scale", -1);
+        }
+
         Double seconds = i.call("getSeconds").<Double>get();
-        return new DayToSecond(
+        DayToSecond result = new DayToSecond(
             i.call("getDays").<Integer>get(),
             i.call("getHours").<Integer>get(),
             i.call("getMinutes").<Integer>get(),
             seconds.intValue(),
             (int) (1000000000 * (seconds - seconds.intValue())));
+
+        if (negative) {
+            result = result.neg();
+        }
+
+        return result;
     }
 
+    /**
+     * Convert a Postgres interval to a jOOQ <code>YEAR TO MONTH</code> interval
+     */
     public static YearToMonth toYearToMonth(Object pgInterval) {
+        boolean negative = pgInterval.toString().contains("-");
+
         Reflect i = on(pgInterval);
-        return new YearToMonth(
+        if (negative) {
+            i.call("scale", -1);
+        }
+
+        YearToMonth result = new YearToMonth(
             i.call("getYears").<Integer>get(),
             i.call("getMonths").<Integer>get());
+
+        if (negative) {
+            result = result.neg();
+        }
+
+        return result;
     }
 }

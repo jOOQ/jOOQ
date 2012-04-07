@@ -114,11 +114,10 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
 
             case ORACLE:
             case POSTGRES:
-
-                // TODO [#585] This cast shouldn't be necessary
-                return timestamp1.sub(timestamp2).cast(DayToSecond.class);
+                return field("{0} - {1}", getDataType(), timestamp1, timestamp2);
         }
 
-        return null;
+        // Default implementation for equals() and hashCode()
+        return timestamp1.sub(timestamp2).cast(DayToSecond.class);
     }
 }

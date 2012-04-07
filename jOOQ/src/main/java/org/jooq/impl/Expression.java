@@ -66,7 +66,6 @@ import static org.jooq.impl.Factory.function;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
@@ -428,14 +427,15 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case POSTGRES: {
-                    // Postgres can add / subtract days using +/- operators only to DATE
-                    DataType<T> type = lhs.getDataType();
 
-                    if (type.getType() == Date.class) {
-                        return new DefaultExpression();
+                    // This seems to be the most reliable way to avoid issues
+                    // with incompatible data types and timezones
+                    // ? + CAST (? || ' days' as interval)
+                    if (operator == ADD) {
+                        return lhs.add(rhsAsNumber().concat(" day").cast(DayToSecond.class));
                     }
                     else {
-                        return new Expression<Date>(operator, lhs.cast(Date.class), rhsAsNumber()).cast(type);
+                        return lhs.sub(rhsAsNumber().concat(" day").cast(DayToSecond.class));
                     }
                 }
 

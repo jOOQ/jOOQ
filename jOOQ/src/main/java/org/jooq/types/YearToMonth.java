@@ -38,17 +38,39 @@ package org.jooq.types;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.Field;
+import org.jooq.SQLDialect;
+
 /**
  * An implementation for the SQL standard <code>INTERVAL YEAR TO MONTH</code>
  * data type.
  * <p>
  * <code>YearToMonth</code> is a {@link Number} whose {@link Number#intValue()}
  * represents the number of months of the interval.
+ * <p>
+ * Note: only a few databases actually support this data type on its own. You
+ * can still use it for date time arithmetic in other databases, though, through
+ * {@link Field#add(Field)} and {@link Field#sub(Field)} Databases that have
+ * been observed to natively support <code>INTERVAL</code> data types are:
+ * <ul>
+ * <li> {@link SQLDialect#HSQLDB}</li>
+ * <li> {@link SQLDialect#INGRES}</li>
+ * <li> {@link SQLDialect#ORACLE}</li>
+ * <li> {@link SQLDialect#POSTGRES}</li>
+ * </ul>
+ * <p>
+ * These dialects have been observed to partially support <code>INTERVAL</code>
+ * data types in date time arithmetic functions, such as
+ * <code>TIMESTAMPADD</code>, and <code>TIMESTAMPDIFF</code>:
+ * <ul>
+ * <li> {@link SQLDialect#CUBRID}</li>
+ * <li> {@link SQLDialect#MYSQL}</li>
+ * </ul>
  *
  * @author Lukas Eder
  * @see Interval
  */
-public final class YearToMonth extends Number implements Interval<YearToMonth> {
+public final class YearToMonth extends Number implements Interval, Comparable<YearToMonth> {
 
     /**
      * Generated UID
@@ -132,6 +154,11 @@ public final class YearToMonth extends Number implements Interval<YearToMonth> {
 
     public final int getMonths() {
         return months;
+    }
+
+    @Override
+    public final int getSign() {
+        return negative ? -1 : 1;
     }
 
     // -------------------------------------------------------------------------

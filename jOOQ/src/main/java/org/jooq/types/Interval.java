@@ -101,30 +101,46 @@ import org.jooq.SQLDialect;
  * </table>
  * <p>
  * Interval implementations can be expected to also also extend {@link Number}.
- * True SQL standard INTERVAL data types have been observed to be supported by
- * any of these dialects:
+ * <p>
+ * Note: only a few databases actually support this data type on its own. You
+ * can still use it for date time arithmetic in other databases, though, through
+ * {@link Field#add(Field)} and {@link Field#sub(Field)} Databases that have
+ * been observed to natively support <code>INTERVAL</code> data types are:
  * <ul>
+ * <li> {@link SQLDialect#HSQLDB}</li>
  * <li> {@link SQLDialect#INGRES}</li>
  * <li> {@link SQLDialect#ORACLE}</li>
  * <li> {@link SQLDialect#POSTGRES}</li>
  * </ul>
  * <p>
- * In other dialects, jOOQ allows for using them for date time arithmetic. See
- * {@link Field#add(Field)}, {@link Field#sub(Field)}
+ * These dialects have been observed to partially support <code>INTERVAL</code>
+ * data types in date time arithmetic functions, such as
+ * <code>TIMESTAMPADD</code>, and <code>TIMESTAMPDIFF</code>:
+ * <ul>
+ * <li> {@link SQLDialect#CUBRID}</li>
+ * <li> {@link SQLDialect#MYSQL}</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
-public interface Interval<T extends Interval<T>> extends Serializable, Comparable<T> {
+public interface Interval extends Serializable {
 
     /**
      * Negate the interval (change its sign)
      */
-    T neg();
+    Interval neg();
 
     /**
      * Get the absolute value of the interval (set its sign to positive)
      */
-    T abs();
+    Interval abs();
+
+    /**
+     * The sign of the interval
+     *
+     * @return <code>1</code> for positive or zero, <code>-1</code> for negative
+     */
+    int getSign();
 
     /**
      * @see Number#doubleValue()

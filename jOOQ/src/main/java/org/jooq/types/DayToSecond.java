@@ -38,22 +38,44 @@ package org.jooq.types;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
 
 /**
- * An implementation for the SQL standard <code>INTERVAL YEAR TO MONTH</code>
+ * An implementation for the SQL standard <code>INTERVAL DAY TO SECOND</code>
  * data type.
  * <p>
  * <code>DayToSecond</code> is a {@link Number} whose {@link Number#intValue()}
- * represents the (truncated) number of days of the interval,
- * {@link Number#doubleValue()} represents the approximative number of days
- * (including hours, minutes, seconds, nanoseconds) of the interval.
+ * represents the (truncated) number of milliseconds of the interval,
+ * {@link Number#doubleValue()} represents the approximative number of
+ * milliseconds (including hours, minutes, seconds, nanoseconds) of the
+ * interval.
+ * <p>
+ * Note: only a few databases actually support this data type on its own. You
+ * can still use it for date time arithmetic in other databases, though, through
+ * {@link Field#add(Field)} and {@link Field#sub(Field)} Databases that have
+ * been observed to natively support <code>INTERVAL</code> data types are:
+ * <ul>
+ * <li> {@link SQLDialect#HSQLDB}</li>
+ * <li> {@link SQLDialect#INGRES}</li>
+ * <li> {@link SQLDialect#ORACLE}</li>
+ * <li> {@link SQLDialect#POSTGRES}</li>
+ * </ul>
+ * <p>
+ * These dialects have been observed to partially support <code>INTERVAL</code>
+ * data types in date time arithmetic functions, such as
+ * <code>TIMESTAMPADD</code>, and <code>TIMESTAMPDIFF</code>:
+ * <ul>
+ * <li> {@link SQLDialect#CUBRID}</li>
+ * <li> {@link SQLDialect#MYSQL}</li>
+ * </ul>
  *
  * @author Lukas Eder
  * @see Interval
  */
-public final class DayToSecond extends Number implements Interval<DayToSecond> {
+public final class DayToSecond extends Number implements Interval, Comparable<DayToSecond> {
 
     /**
      * Generated UID
@@ -169,21 +191,21 @@ public final class DayToSecond extends Number implements Interval<DayToSecond> {
     /**
      * Load a {@link Double} representation of a <code>INTERVAL DAY TO SECOND</code>
      *
-     * @param days The number of days as a fractional number
+     * @param milli The number of milliseconds as a fractional number
      * @return The loaded <code>INTERVAL DAY TO SECOND</code> object
      */
-    public static DayToSecond valueOf(double days) {
-        double abs = Math.abs(days);
+    public static DayToSecond valueOf(double milli) {
+        double abs = Math.abs(milli);
 
-        int d = (int) abs; abs = (abs - d) * 24.0;
-        int h = (int) abs; abs = (abs - h) * 60.0;
-        int m = (int) abs; abs = (abs - m) * 60.0;
-        int s = (int) abs; abs = (abs - s) * 1000000000.0;
-        int n = (int) abs;
+        int n = (int) ((abs % 1000) * 1000000.0); abs = Math.floor(abs / 1000);
+        int s = (int) (abs % 60); abs = Math.floor(abs / 60);
+        int m = (int) (abs % 60); abs = Math.floor(abs / 60);
+        int h = (int) (abs % 24); abs = Math.floor(abs / 24);
+        int d = (int) abs;
 
         DayToSecond result = new DayToSecond(d, h, m, s, n);
 
-        if (days < 0) {
+        if (milli < 0) {
             result = result.neg();
         }
 
@@ -211,11 +233,7 @@ public final class DayToSecond extends Number implements Interval<DayToSecond> {
 
     @Override
     public final double doubleValue() {
-        return getTotalDays();
-    }
-
-    private final int negativeFactor() {
-        return negative ? -1 : 1;
+        return getTotalMilli();
     }
 
     // -------------------------------------------------------------------------
@@ -261,6 +279,20 @@ public final class DayToSecond extends Number implements Interval<DayToSecond> {
     }
 
     /**
+     * Get the (truncated) milli-part of this interval
+     */
+    public final int getMilli() {
+        return nano / 1000000;
+    }
+
+    /**
+     * Get the (truncated) micro-part of this interval
+     */
+    public final int getMicro() {
+        return nano / 1000;
+    }
+
+    /**
      * Get the nano-part of this interval
      */
     public final int getNano() {
@@ -271,53 +303,89 @@ public final class DayToSecond extends Number implements Interval<DayToSecond> {
      * Get the whole interval in days
      */
     public final double getTotalDays() {
-        return getTotalNano() / 1000000000.0 / 3600.0 / 24.0;
+        return getSign() * (
+            nano / (24.0 * 3600.0 * 1000000000.0) +
+            seconds / (24.0 * 3600.0) +
+            minutes / (24.0 * 60.0) +
+            hours / 24.0 +
+            days);
     }
 
     /**
      * Get the whole interval in hours
      */
     public final double getTotalHours() {
-        return getTotalNano() / 1000000000.0 / 3600.0;
+        return getSign() * (
+            nano / (3600.0 * 1000000000.0) +
+            seconds / 3600.0 +
+            minutes / 60.0 +
+            hours +
+            24.0 * days);
     }
 
     /**
      * Get the whole interval in minutes
      */
     public final double getTotalMinutes() {
-        return getTotalNano() / 1000000000.0 / 60.0;
+        return getSign() * (
+            nano / (60.0 * 1000000000.0) +
+            seconds / 60.0 +
+            minutes +
+            60.0 * hours +
+            60.0 * 24.0 * days);
     }
 
     /**
      * Get the whole interval in seconds
      */
     public final double getTotalSeconds() {
-        return getTotalNano() / 1000000000.0;
-    }
+        return getSign() * (
+            nano / 1000000000.0 +
+            seconds +
+            60.0 * minutes +
+            3600.0 * hours +
+            3600.0 * 24.0 * days);
+     }
 
     /**
      * Get the whole interval in milli-seconds
      */
     public final double getTotalMilli() {
-        return getTotalNano() / 1000000.0;
+        return getSign() * (
+            nano / 1000000.0 +
+            1000.0 * seconds +
+            1000.0 * 60.0 * minutes +
+            1000.0 * 3600.0 * hours +
+            1000.0 * 3600.0 * 24.0 * days);
     }
 
     /**
      * Get the whole interval in micro-seconds
      */
     public final double getTotalMicro() {
-        return getTotalNano() / 1000.0;
+        return getSign() * (
+            nano / 1000.0 +
+            1000000.0 * seconds +
+            1000000.0 * 60.0 * minutes +
+            1000000.0 * 3600.0 * hours +
+            1000000.0 * 3600.0 * 24.0 * days);
     }
 
     /**
      * Get the whole interval in nano-seconds
      */
     public final double getTotalNano() {
-        return negativeFactor() * (nano +
+        return getSign() * (
+            nano +
             1000000000.0 * seconds +
             1000000000.0 * 60.0 * minutes +
             1000000000.0 * 3600.0 * hours +
             1000000000.0 * 3600.0 * 24.0 * days);
+    }
+
+    @Override
+    public final int getSign() {
+        return negative ? -1 : 1;
     }
 
     // -------------------------------------------------------------------------

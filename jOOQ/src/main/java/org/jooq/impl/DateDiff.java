@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
 
 import java.sql.Date;
 
@@ -70,7 +69,7 @@ class DateDiff extends AbstractFunction<Integer> {
             case ASE:
             case SQLSERVER:
             case SYBASE:
-                return function("datediff", getDataType(), literal("day"), date2, date1);
+                return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
 
             case MYSQL:
                 return function("datediff", getDataType(), date1, date2);
@@ -84,14 +83,17 @@ class DateDiff extends AbstractFunction<Integer> {
 
             case H2:
             case HSQLDB:
-                return function("datediff", getDataType(), literal("'day'"), date2, date1);
+                return field("{datediff}('day', {0}, {1})", getDataType(), date2, date1);
+
+            case SQLITE:
+                return field("({strftime}('%s', {0}) - {strftime}('%s', {1})) / 86400", getDataType(), date1, date2);
 
             case CUBRID:
             case ORACLE:
             case POSTGRES:
 
-            // TODO [#585] This cast shouldn't be necessary
-            return date1.sub(date2).cast(Integer.class);
+                // TODO [#585] This cast shouldn't be necessary
+                return date1.sub(date2).cast(Integer.class);
         }
 
         return null;

@@ -63,7 +63,7 @@ import static org.jooq.impl.Factory.bitOr;
 import static org.jooq.impl.Factory.bitXor;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 
 import java.sql.Date;
@@ -74,12 +74,15 @@ import java.util.List;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataTypeException;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 
 class Expression<T> extends AbstractFunction<T> {
@@ -152,10 +155,10 @@ class Expression<T> extends AbstractFunction<T> {
 
         // Many dialects don't support shifts. Use multiplication/division instead
         else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
-            return lhs.mul(Factory.power(literal(2), rhsAsNumber()));
+            return lhs.mul(Factory.power(two(), rhsAsNumber()));
         }
         else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
-            return lhs.div(Factory.power(literal(2), rhsAsNumber()));
+            return lhs.div(Factory.power(two(), rhsAsNumber()));
         }
 
         // These operators are not supported in any dialect
@@ -200,6 +203,36 @@ class Expression<T> extends AbstractFunction<T> {
         return (Field<Number>) rhs.get(0);
     }
 
+    @SuppressWarnings("unchecked")
+    private final YearToMonth rhsAsYTM() {
+        try {
+            return ((Param<YearToMonth>) rhs.get(0)).getValue();
+        }
+        catch (ClassCastException e) {
+            throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs.get(0));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final DayToSecond rhsAsDTS() {
+        try {
+            return ((Param<DayToSecond>) rhs.get(0)).getValue();
+        }
+        catch (ClassCastException e) {
+            throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs.get(0));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private final Interval rhsAsInterval() {
+        try {
+            return ((Param<Interval>) rhs.get(0)).getValue();
+        }
+        catch (ClassCastException e) {
+            throw new DataTypeException("Cannot perform datetime arithmetic with a non-numeric, non-interval data type on the right hand side of the expression: " + rhs.get(0));
+        }
+    }
+
     private class DateExpression extends AbstractFunction<T> {
 
         /**
@@ -226,71 +259,56 @@ class Expression<T> extends AbstractFunction<T> {
          */
         private final Field<T> getIntervalExpression(Configuration configuration) {
             SQLDialect dialect = configuration.getDialect();
+            int sign = (operator == ADD) ? 1 : -1;
 
             switch (dialect) {
                 case ASE:
                 case SYBASE:
                 case SQLSERVER: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
-
-                        if (operator == ADD) {
-                            return function("dateadd", getDataType(), literal("mm"), val(interval.intValue()), lhs);
-                        }
-                        else {
-                            return function("dateadd", getDataType(), literal("mm"), val(-interval.intValue()), lhs);
-                        }
+                        return field("{dateadd}(mm, {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     }
                     else {
                         // SQL Server needs this cast.
-                        Field<?> result = lhs.cast(Timestamp.class);
-                        DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
+                        Field<Timestamp> lhsAsTS = lhs.cast(Timestamp.class);
+                        DayToSecond interval = rhsAsDTS();
 
-                        if (operator == ADD) {
-                            if (interval.getNano() != 0) {
-                                int micro = interval.getNano() / 1000;
-
-                                result = function("dateadd", getDataType(), literal("us"), val(micro), result);
-                                result = function("dateadd", getDataType(), literal("ss"), val((long) interval.getTotalSeconds()), result);
-                            }
-                            else {
-                                result = function("dateadd", getDataType(), literal("ss"), val((long) interval.getTotalSeconds()), result);
-                            }
+                        // Be careful with 32-bit INT arithmetic. Sybase ASE
+                        // may fatally overflow when using micro-second precision
+                        if (interval.getNano() != 0) {
+                            return field("{dateadd}(ss, {0}, {dateadd}(us, {1}, {2}))", getDataType(),
+                                val(sign * (long) interval.getTotalSeconds()),
+                                val(sign * interval.getMicro()),
+                                lhsAsTS);
                         }
                         else {
-                            if (interval.getNano() != 0) {
-                                int micro = interval.getNano() / 1000;
-
-                                result = function("dateadd", getDataType(), literal("us"), val(-micro), result);
-                                result = function("dateadd", getDataType(), literal("ss"), val(-(long) interval.getTotalSeconds()), result);
-                            }
-                            else {
-                                result = function("dateadd", getDataType(), literal("ss"), val(-(long) interval.getTotalSeconds()), result);
-                            }
+                            return field("{dateadd}(ss, {0}, {1})", getDataType(), val(sign * (long) interval.getTotalSeconds()), lhsAsTS);
                         }
-
-                        return (Field) result;
                     }
                 }
 
                 case DB2: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
-
                         if (operator == ADD) {
-                            return lhs.add(field("{0} month", val(interval.intValue())));
+                            return lhs.add(field("{0} month", val(rhsAsYTM().intValue())));
                         }
                         else {
-                            return lhs.sub(field("{0} month", val(interval.intValue())));
+                            return lhs.sub(field("{0} month", val(rhsAsYTM().intValue())));
                         }
                     }
                     else {
-                        DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
+                        // DB2 needs this cast if lhs is of type DATE.
+                        DataType<T> type = lhs.getDataType();
+
                         if (operator == ADD) {
-                            return (Field) lhs.cast(Timestamp.class).add(field("{0} microseconds", val(interval.getTotalMicro())));
+                            return lhs.cast(Timestamp.class)
+                                .add(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
+                                .cast(type);
                         }
                         else {
-                            return (Field) lhs.cast(Timestamp.class).sub(field("{0} microseconds", val(interval.getTotalMicro())));
+                            return lhs.cast(Timestamp.class)
+                                .sub(field("{0} microseconds", val(rhsAsDTS().getTotalMicro())))
+                                .cast(type);
                         }
                     }
                 }
@@ -298,60 +316,53 @@ class Expression<T> extends AbstractFunction<T> {
                 case DERBY:
                 case HSQLDB: {
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        YearToMonth interval = ((Param<YearToMonth>) rhs.get(0)).getValue();
-
-                        if (operator == ADD) {
-                            return field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }", getDataType(), val(interval.intValue()), lhs);
-                        }
-                        else {
-                            return field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }", getDataType(), val(-interval.intValue()), lhs);
-                        }
+                        return field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
+                            getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     }
                     else {
-                        DayToSecond interval = ((Param<DayToSecond>) rhs.get(0)).getValue();
-
-                        if (operator == ADD) {
-                            return field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }", getDataType(), val((long) interval.getTotalSeconds()), lhs);
-                        }
-                        else {
-                            return field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }", getDataType(), val((long) -interval.getTotalSeconds()), lhs);
-                        }
+                        return field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }",
+                            getDataType(), val(sign * (long) rhsAsDTS().getTotalSeconds()), lhs);
                     }
                 }
 
                 case CUBRID:
                 case MYSQL: {
-                    org.jooq.types.Interval<?> interval = ((Param<org.jooq.types.Interval<?>>) rhs.get(0)).getValue();
+                    Interval interval = rhsAsInterval();
 
                     if (operator == SUBTRACT) {
                         interval = interval.neg();
                     }
 
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, val(interval));
+                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, val(interval, String.class));
                     }
                     else {
                         if (dialect == MYSQL) {
-                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, val(interval));
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, val(interval, String.class));
                         }
                         else {
-                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, val(interval));
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, val(interval, String.class));
                         }
                     }
                 }
 
                 case H2: {
-                    org.jooq.types.Interval<?> interval = ((Param<org.jooq.types.Interval<?>>) rhs.get(0)).getValue();
-
-                    if (operator == SUBTRACT) {
-                        interval = interval.neg();
-                    }
-
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return function("dateadd", getDataType(), literal("'month'"), val(interval.intValue()), lhs);
+                        return field("{dateadd}('month', {0}, {1})", getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     }
                     else {
-                        return function("dateadd", getDataType(), literal("'ms'"), val((long) ((DayToSecond) interval).getTotalMilli()), lhs);
+                        return field("{dateadd}('ms', {0}, {1})", getDataType(), val(sign * (long) rhsAsDTS().getTotalMilli()), lhs);
+                    }
+                }
+
+                case SQLITE: {
+                    String prefix = (sign > 0) ? "+" : "-";
+
+                    if (rhs.get(0).getType() == YearToMonth.class) {
+                        return field("{datetime}({0}, '" + prefix + rhsAsYTM().intValue() + " months')", getDataType(), lhs);
+                    }
+                    else {
+                        return field("{datetime}({0}, '" + prefix + rhsAsDTS().getTotalSeconds() + " seconds')", getDataType(), lhs);
                     }
                 }
 
@@ -370,10 +381,10 @@ class Expression<T> extends AbstractFunction<T> {
                 case SQLSERVER:
                 case SYBASE: {
                     if (operator == ADD) {
-                        return function("dateadd", getDataType(), literal("day"), rhsAsNumber(), lhs);
+                        return field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber(), lhs);
                     }
                     else {
-                        return function("dateadd", getDataType(), literal("day"), rhsAsNumber().neg(), lhs);
+                        return field("{dateadd}(day, {0}, {1})", getDataType(), rhsAsNumber().neg(), lhs);
                     }
                 }
 
@@ -409,29 +420,31 @@ class Expression<T> extends AbstractFunction<T> {
                 // Ingres is not working yet
                 case INGRES: {
                     if (operator == ADD) {
-                        return lhs.add(field("date('" + rhsAsNumber() + " days')", Object.class));
+                        return lhs.add(field("{date}('" + rhsAsNumber() + " days')", Object.class));
                     }
                     else {
-                        return lhs.sub(field("date('" + rhsAsNumber() + " days')", Object.class));
+                        return lhs.sub(field("{date}('" + rhsAsNumber() + " days')", Object.class));
                     }
                 }
 
-                // Postgres can add / subtract days using +/- operators only to DATE
                 case POSTGRES: {
-                    if (getType() == Date.class) {
+                    // Postgres can add / subtract days using +/- operators only to DATE
+                    DataType<T> type = lhs.getDataType();
+
+                    if (type.getType() == Date.class) {
                         return new DefaultExpression();
                     }
                     else {
-                        return new Expression(operator, lhs.cast(Date.class), rhsAsNumber());
+                        return new Expression<Date>(operator, lhs.cast(Date.class), rhsAsNumber()).cast(type);
                     }
                 }
 
                 case SQLITE:
                     if (operator == ADD) {
-                        return function("datetime", getDataType(), lhs, literal("+" + rhsAsNumber() + " day"));
+                        return field("{datetime}({0}, '+" + rhsAsNumber() + " day')", getDataType(), lhs);
                     }
                     else {
-                        return function("datetime", getDataType(), lhs, literal("-" + rhsAsNumber() + " day"));
+                        return field("{datetime}({0}, '-" + rhsAsNumber() + " day')", getDataType(), lhs);
                     }
 
                 // These dialects can add / subtract days using +/- operators

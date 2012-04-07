@@ -2718,6 +2718,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
+     * <li>CUBRID (simulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>DB2</li>
      * <li>MySQL (simulated using the GROUP BY .. WITH ROLLUP clause)</li>
      * <li>Oracle</li>
@@ -4258,6 +4259,7 @@ public class Factory implements FactoryOperations {
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT()</code></li>
+     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      *
@@ -4279,6 +4281,7 @@ public class Factory implements FactoryOperations {
      * <li> {@link SQLDialect#H2}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#HSQLDB}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#MYSQL}: Using <code>GROUP_CONCAT</code></li>
+     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      *
@@ -4305,6 +4308,7 @@ public class Factory implements FactoryOperations {
      * <ul>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
      * <li> {@link SQLDialect#ORACLE}: Using <code>LISTAGG()</code></li>
+     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      *
@@ -4329,6 +4333,7 @@ public class Factory implements FactoryOperations {
      * It is simulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
+     * <li> {@link SQLDialect#POSTGRES}: Using <code>STRING_AGG()</code></li>
      * </ul>
      *
      * @see #listAgg(Field)

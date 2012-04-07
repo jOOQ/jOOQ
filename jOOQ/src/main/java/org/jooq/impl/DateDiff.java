@@ -91,11 +91,10 @@ class DateDiff extends AbstractFunction<Integer> {
             case CUBRID:
             case ORACLE:
             case POSTGRES:
-
-                // TODO [#585] This cast shouldn't be necessary
-                return date1.sub(date2).cast(Integer.class);
+                return field("{0} - {1}", getDataType(), date1, date2);
         }
 
-        return null;
+        // Default implementation for equals() and hashCode()
+        return date1.sub(date2).cast(Integer.class);
     }
 }

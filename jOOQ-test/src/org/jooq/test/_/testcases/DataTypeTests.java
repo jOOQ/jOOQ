@@ -1250,15 +1250,22 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         else {
             record =
             create().select(
-                val(new Date(0)).as("d"),
-                val(new Time(0)).as("t"),
-                val(new Timestamp(0)).as("ts"),
+                val(new YearToMonth(1, 1)).as("iyplus"),
                 val(new YearToMonth(0)).as("iy"),
-                val(new DayToSecond(0)).as("id")
+                val(new YearToMonth(1, 1).neg()).as("iyminus"),
+
+                val(new DayToSecond(1, 1, 1, 1)).as("idplus"),
+                val(new DayToSecond(0)).as("id"),
+                val(new DayToSecond(1, 1, 1, 1).neg()).as("idminus")
             ).fetchOne();
 
+            assertEquals(new YearToMonth(1, 1), record.getValue("iyplus"));
             assertEquals(new YearToMonth(0), record.getValue("iy"));
+            assertEquals(new YearToMonth(1, 1).neg(), record.getValue("iyminus"));
+
+            assertEquals(new DayToSecond(1, 1, 1, 1), record.getValue("idplus"));
             assertEquals(new DayToSecond(0), record.getValue("id"));
+            assertEquals(new DayToSecond(1, 1, 1, 1).neg(), record.getValue("idminus"));
             // TODO: Add tests for reading date / time / interval types into pojos
 
             // [#566] INTERVAL arithmetic: multiplication
@@ -1294,21 +1301,31 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         // ------------------------------------
         Record record =
         create().select(
+
+            // Extra care needs to be taken with Postgres negative DAY TO SECOND
+            // intervals. Postgres allows for having several signs in intervals
             val(new Date(0)).add(1).as("d1"),
-            val(new Date(0)).sub(1).as("d2"),
+            val(new Date(0)).add(-1).as("d2a"),
+            val(new Date(0)).sub(1).as("d2b"),
             val(new Date(0)).add(new YearToMonth(1, 6)).as("d3"),
-            val(new Date(0)).sub(new YearToMonth(1, 6)).as("d4"),
+            val(new Date(0)).add(new YearToMonth(1, 6).neg()).as("d4a"),
+            val(new Date(0)).sub(new YearToMonth(1, 6)).as("d4b"),
             val(new Date(0)).add(new DayToSecond(2)).as("d5"),
-            val(new Date(0)).sub(new DayToSecond(2)).as("d6"),
+            val(new Date(0)).add(new DayToSecond(2).neg()).as("d6a"),
+            val(new Date(0)).sub(new DayToSecond(2)).as("d6b"),
 
             val(new Timestamp(0)).add(1).as("ts1"),
-            val(new Timestamp(0)).sub(1).as("ts2"),
+            val(new Timestamp(0)).add(-1).as("ts2a"),
+            val(new Timestamp(0)).sub(1).as("ts2b"),
             val(new Timestamp(0)).add(new YearToMonth(1, 6)).as("ts3"),
-            val(new Timestamp(0)).sub(new YearToMonth(1, 6)).as("ts4"),
+            val(new Timestamp(0)).add(new YearToMonth(1, 6).neg()).as("ts4a"),
+            val(new Timestamp(0)).sub(new YearToMonth(1, 6)).as("ts4b"),
             val(new Timestamp(0)).add(new DayToSecond(2)).as("ts5"),
-            val(new Timestamp(0)).sub(new DayToSecond(2)).as("ts6"),
+            val(new Timestamp(0)).add(new DayToSecond(2).neg()).as("ts6a"),
+            val(new Timestamp(0)).sub(new DayToSecond(2)).as("ts6b"),
             val(new Timestamp(0)).add(new DayToSecond(2, 6)).as("ts7"),
-            val(new Timestamp(0)).sub(new DayToSecond(2, 6)).as("ts8"),
+            val(new Timestamp(0)).add(new DayToSecond(2, 6).neg()).as("ts8a"),
+            val(new Timestamp(0)).sub(new DayToSecond(2, 6)).as("ts8b"),
 
             // Dummy field for simpler testing
             literal("'dummy'")
@@ -1323,8 +1340,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         cal = cal();
         cal.add(Calendar.DATE, -1);
-        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d2"));
-        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts2"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d2a"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d2b"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts2a"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts2b"));
 
         cal = cal();
         cal.add(Calendar.MONTH, 18);
@@ -1333,8 +1352,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         cal = cal();
         cal.add(Calendar.MONTH, -18);
-        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d4"));
-        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts4"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d4a"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d4b"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts4a"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts4b"));
 
         cal = cal();
         cal.add(Calendar.DATE, 2);
@@ -1343,8 +1364,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
         cal = cal();
         cal.add(Calendar.DATE, -2);
-        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d6"));
-        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts6"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d6a"));
+        assertEquals(new Date(cal.getTimeInMillis()), record.getValue("d6b"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts6a"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts6b"));
 
         cal = cal();
         cal.add(Calendar.DATE, 2);
@@ -1354,7 +1377,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         cal = cal();
         cal.add(Calendar.DATE, -2);
         cal.add(Calendar.HOUR, -6);
-        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts8"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts8a"));
+        assertEquals(new Timestamp(cal.getTimeInMillis() - tsShift), record.getValue("ts8b"));
 
         // [#566] INTERVAL arithmetic: difference
         // --------------------------------------
@@ -1366,7 +1390,10 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             //timeDiff(new Time(0), new Time(60 * 60 * 1000L)).as("t1"),
             //timeDiff(new Time(60 * 60 * 1000L), new Time(0)).as("t2"),
             timestampDiff(new Timestamp(0), new Timestamp(30 * 60 * 60 * 1000L)).as("ts1"),
-            timestampDiff(new Timestamp(30 * 60 * 60 * 1000L), new Timestamp(0)).as("ts2")
+            timestampDiff(new Timestamp(30 * 60 * 60 * 1000L), new Timestamp(0)).as("ts2"),
+
+            // Dummy field for simpler testing
+            literal("'dummy'")
         ).fetchOne();
 
         assertEquals(-1, record.getValue("d1"));

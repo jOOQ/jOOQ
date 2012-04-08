@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1892306852;
+	private static final long serialVersionUID = -1457728164;
 
 	/**
 	 * The singleton instance of TEST.V_BOOK
@@ -73,17 +73,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generate
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook() {
+	public VBook() {
 		super("V_BOOK", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook(java.lang.String alias) {
+	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VBook.V_BOOK);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 705465926;
+	private static final long serialVersionUID = 1286485398;
 
 	/**
 	 * The singleton instance of PUBLIC.T_ARRAYS
@@ -50,17 +50,11 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.sql.Date[]> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.getArrayDataType(), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TArrays() {
+	public TArrays() {
 		super("T_ARRAYS", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TArrays(java.lang.String alias) {
+	public TArrays(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS);
 	}
 

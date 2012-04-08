@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_658_REF extends org.jooq.impl.TableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 150925165;
+	private static final long serialVersionUID = -1787124707;
 
 	/**
 	 * The singleton instance of TEST.T_658_REF
@@ -94,17 +94,11 @@ public class T_658_REF extends org.jooq.impl.TableImpl<org.jooq.Record> implemen
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.enums.T_658_32> REF_32 = createField("REF_32", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.oracle3.generatedclasses.enums.T_658_32.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658_REF() {
+	public T_658_REF() {
 		super("T_658_REF", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658_REF(java.lang.String alias) {
+	public T_658_REF(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_658_REF.T_658_REF);
 	}
 

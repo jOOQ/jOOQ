@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1610940182;
+	private static final long serialVersionUID = -1067175958;
 
 	/**
 	 * The singleton instance of TEST.T_ARRAYS
@@ -55,17 +55,11 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.asArrayDataType(org.jooq.test.oracle.generatedclasses.test.udt.records.UDateArrayRecord.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TArrays() {
+	public TArrays() {
 		super("T_ARRAYS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TArrays(java.lang.String alias) {
+	public TArrays(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS);
 	}
 

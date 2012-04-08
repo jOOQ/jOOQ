@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class vVendor extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor> {
 
-	private static final long serialVersionUID = -136906519;
+	private static final long serialVersionUID = 862626281;
 
 	/**
 	 * The singleton instance of Purchasing.vVendor
@@ -113,17 +113,11 @@ public class vVendor extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.vVendor, java.lang.String> CountryRegionName = createField("CountryRegionName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vVendor() {
+	public vVendor() {
 		super("vVendor", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vVendor(java.lang.String alias) {
+	public vVendor(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.vVendor.vVendor);
 	}
 

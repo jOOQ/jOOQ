@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Nation extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.NationRecord> {
 
-	private static final long serialVersionUID = -1208304136;
+	private static final long serialVersionUID = 610414200;
 
 	/**
 	 * The singleton instance of PUBLIC.nation
@@ -50,17 +50,11 @@ public class Nation extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.c
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.NationRecord, java.lang.String> CAPITAL = createField("capital", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Nation() {
+	public Nation() {
 		super("nation", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Nation(java.lang.String alias) {
+	public Nation(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Nation.NATION);
 	}
 

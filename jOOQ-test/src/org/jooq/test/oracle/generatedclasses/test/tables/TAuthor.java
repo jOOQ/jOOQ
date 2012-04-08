@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1490948000;
+	private static final long serialVersionUID = 892787808;
 
 	/**
 	 * The singleton instance of TEST.T_AUTHOR
@@ -62,17 +62,11 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord, org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> ADDRESS = createField("ADDRESS", org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor() {
+	public TAuthor() {
 		super("T_AUTHOR", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor(java.lang.String alias) {
+	public TAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR);
 	}
 

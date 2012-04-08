@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class vEmployeeDepartmentHistory extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = -1309729877;
+	private static final long serialVersionUID = -260415317;
 
 	/**
 	 * The singleton instance of HumanResources.vEmployeeDepartmentHistory
@@ -83,17 +83,11 @@ public class vEmployeeDepartmentHistory extends org.jooq.impl.TableImpl<org.jooq
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployeeDepartmentHistory, java.sql.Timestamp> EndDate = createField("EndDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vEmployeeDepartmentHistory() {
+	public vEmployeeDepartmentHistory() {
 		super("vEmployeeDepartmentHistory", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vEmployeeDepartmentHistory(java.lang.String alias) {
+	public vEmployeeDepartmentHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployeeDepartmentHistory.vEmployeeDepartmentHistory);
 	}
 

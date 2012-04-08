@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -587003708;
+	private static final long serialVersionUID = 112930244;
 
 	/**
 	 * The singleton instance of TEST.T_DIRECTORY
@@ -56,17 +56,11 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDirectory() {
+	public TDirectory() {
 		super("T_DIRECTORY", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDirectory(java.lang.String alias) {
+	public TDirectory(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY);
 	}
 

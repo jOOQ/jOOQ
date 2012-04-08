@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1752411695;
+	private static final long serialVersionUID = -2009296289;
 
 	/**
 	 * The singleton instance of TEST.X_TEST_CASE_71
@@ -46,17 +46,11 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private XTestCase_71() {
+	public XTestCase_71() {
 		super("X_TEST_CASE_71", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private XTestCase_71(java.lang.String alias) {
+	public XTestCase_71(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 

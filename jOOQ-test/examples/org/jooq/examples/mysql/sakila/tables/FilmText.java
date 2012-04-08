@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> {
 
-	private static final long serialVersionUID = -1655032286;
+	private static final long serialVersionUID = 2068183970;
 
 	/**
 	 * The singleton instance of sakila.film_text
@@ -45,17 +45,11 @@ public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private FilmText() {
+	public FilmText() {
 		super("film_text", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private FilmText(java.lang.String alias) {
+	public FilmText(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT);
 	}
 

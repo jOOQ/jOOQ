@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1712639541;
+	private static final long serialVersionUID = 1903292517;
 
 	/**
 	 * The singleton instance of dba.V_LIBRARY
@@ -38,17 +38,11 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary() {
+	public VLibrary() {
 		super("V_LIBRARY", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary(java.lang.String alias) {
+	public VLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 

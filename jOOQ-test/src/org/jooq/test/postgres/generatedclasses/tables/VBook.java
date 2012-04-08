@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -53666140;
+	private static final long serialVersionUID = -1728984972;
 
 	/**
 	 * The singleton instance of public.v_book
@@ -78,17 +78,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.postgres.genera
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord, org.jooq.test.postgres.generatedclasses.enums.UBookStatus> STATUS = createField("status", org.jooq.util.postgres.PostgresDataType.VARCHAR.asEnumDataType(org.jooq.test.postgres.generatedclasses.enums.UBookStatus.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook() {
+	public VBook() {
 		super("v_book", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook(java.lang.String alias) {
+	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK);
 	}
 

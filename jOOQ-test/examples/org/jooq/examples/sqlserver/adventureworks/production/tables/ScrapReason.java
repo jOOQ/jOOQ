@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> {
 
-	private static final long serialVersionUID = 1027305550;
+	private static final long serialVersionUID = 1965974990;
 
 	/**
 	 * The singleton instance of Production.ScrapReason
@@ -45,17 +45,11 @@ public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ScrapReason() {
+	public ScrapReason() {
 		super("ScrapReason", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ScrapReason(java.lang.String alias) {
+	public ScrapReason(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ScrapReason.ScrapReason);
 	}
 

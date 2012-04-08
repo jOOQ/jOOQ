@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1511930099;
+	private static final long serialVersionUID = 1967935987;
 
 	/**
 	 * The singleton instance of TEST.T_BOOLEANS
@@ -85,17 +85,11 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBooleans() {
+	public TBooleans() {
 		super("T_BOOLEANS", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBooleans(java.lang.String alias) {
+	public TBooleans(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS);
 	}
 

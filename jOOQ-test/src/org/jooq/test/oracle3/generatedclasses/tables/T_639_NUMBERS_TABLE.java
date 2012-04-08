@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1935355743;
+	private static final long serialVersionUID = 926003887;
 
 	/**
 	 * The singleton instance of TEST.T_639_NUMBERS_TABLE
@@ -85,17 +85,11 @@ public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.NUMERIC, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_639_NUMBERS_TABLE() {
+	public T_639_NUMBERS_TABLE() {
 		super("T_639_NUMBERS_TABLE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_639_NUMBERS_TABLE(java.lang.String alias) {
+	public T_639_NUMBERS_TABLE(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE);
 	}
 

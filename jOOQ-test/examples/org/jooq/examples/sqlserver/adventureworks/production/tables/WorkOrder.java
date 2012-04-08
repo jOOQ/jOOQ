@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class WorkOrder extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> {
 
-	private static final long serialVersionUID = 326687010;
+	private static final long serialVersionUID = -77447262;
 
 	/**
 	 * The singleton instance of Production.WorkOrder
@@ -92,17 +92,11 @@ public class WorkOrder extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private WorkOrder() {
+	public WorkOrder() {
 		super("WorkOrder", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private WorkOrder(java.lang.String alias) {
+	public WorkOrder(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrder.WorkOrder);
 	}
 

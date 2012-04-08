@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1039315993;
+	private static final long serialVersionUID = -1417640119;
 
 	/**
 	 * The singleton instance of dba.t_book
@@ -95,17 +95,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook() {
+	public TBook() {
 		super("t_book", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook(java.lang.String alias) {
+	public TBook(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK);
 	}
 

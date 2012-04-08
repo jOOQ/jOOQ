@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1698094415;
+	private static final long serialVersionUID = -1025704033;
 
 	/**
 	 * The singleton instance of test2.v_author
@@ -60,17 +60,11 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor() {
+	public VAuthor() {
 		super("v_author", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor(java.lang.String alias) {
+	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 

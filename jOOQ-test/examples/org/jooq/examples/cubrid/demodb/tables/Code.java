@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Code extends org.jooq.impl.TableImpl<org.jooq.examples.cubrid.demodb.tables.records.CodeRecord> {
 
-	private static final long serialVersionUID = -1111681184;
+	private static final long serialVersionUID = 662791648;
 
 	/**
 	 * The singleton instance of PUBLIC.code
@@ -38,17 +38,11 @@ public class Code extends org.jooq.impl.TableImpl<org.jooq.examples.cubrid.demod
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.CodeRecord, java.lang.String> F_NAME = createField("f_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Code() {
+	public Code() {
 		super("code", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Code(java.lang.String alias) {
+	public Code(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Code.CODE);
 	}
 

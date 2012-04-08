@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Participant extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord> {
 
-	private static final long serialVersionUID = 804090550;
+	private static final long serialVersionUID = 1019445046;
 
 	/**
 	 * The singleton instance of PUBLIC.participant
@@ -69,17 +69,11 @@ public class Participant extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.ParticipantRecord, java.lang.Integer> BRONZE = createField("bronze", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Participant() {
+	public Participant() {
 		super("participant", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Participant(java.lang.String alias) {
+	public Participant(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Participant.PARTICIPANT);
 	}
 

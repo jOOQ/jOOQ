@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1008341536;
+	private static final long serialVersionUID = -280496752;
 
 	/**
 	 * The singleton instance of TEST.X_TEST_CASE_64_69
@@ -46,17 +46,11 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private X_TEST_CASE_64_69() {
+	public X_TEST_CASE_64_69() {
 		super("X_TEST_CASE_64_69", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private X_TEST_CASE_64_69(java.lang.String alias) {
+	public X_TEST_CASE_64_69(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69);
 	}
 

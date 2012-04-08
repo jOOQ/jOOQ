@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class Connection extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord> {
 
-	private static final long serialVersionUID = 364487202;
+	private static final long serialVersionUID = 1848872610;
 
 	/**
 	 * The singleton instance of PUBLIC.CONNECTION
@@ -33,17 +33,11 @@ public class Connection extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gen
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.ConnectionRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Connection() {
+	public Connection() {
 		super("CONNECTION", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Connection(java.lang.String alias) {
+	public Connection(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.Connection.CONNECTION);
 	}
 

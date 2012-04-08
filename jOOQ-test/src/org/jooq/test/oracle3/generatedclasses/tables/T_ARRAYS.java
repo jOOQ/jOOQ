@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_ARRAYS extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 207961677;
+	private static final long serialVersionUID = -458471171;
 
 	/**
 	 * The singleton instance of TEST.T_ARRAYS
@@ -55,17 +55,11 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> 
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY> DATE_ARRAY = createField("DATE_ARRAY", org.jooq.impl.SQLDataType.DATE.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_ARRAYS() {
+	public T_ARRAYS() {
 		super("T_ARRAYS", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_ARRAYS(java.lang.String alias) {
+	public T_ARRAYS(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS);
 	}
 

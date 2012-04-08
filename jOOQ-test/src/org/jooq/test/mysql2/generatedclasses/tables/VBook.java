@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -104566121;
+	private static final long serialVersionUID = 1081481447;
 
 	/**
 	 * The singleton instance of test2.v_book
@@ -80,17 +80,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord, org.jooq.test.mysql2.generatedclasses.enums.VBookStatus> STATUS = createField("STATUS", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql2.generatedclasses.enums.VBookStatus.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook() {
+	public VBook() {
 		super("v_book", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook(java.lang.String alias) {
+	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK);
 	}
 

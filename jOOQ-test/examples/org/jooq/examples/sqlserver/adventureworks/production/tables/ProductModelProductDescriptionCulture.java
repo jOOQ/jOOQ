@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductModelProductDescriptionCulture extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture> {
 
-	private static final long serialVersionUID = 982503332;
+	private static final long serialVersionUID = 1690598436;
 
 	/**
 	 * The singleton instance of Production.ProductModelProductDescriptionCulture
@@ -72,17 +72,11 @@ public class ProductModelProductDescriptionCulture extends org.jooq.impl.Updatab
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ProductModelProductDescriptionCulture() {
+	public ProductModelProductDescriptionCulture() {
 		super("ProductModelProductDescriptionCulture", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ProductModelProductDescriptionCulture(java.lang.String alias) {
+	public ProductModelProductDescriptionCulture(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductModelProductDescriptionCulture.ProductModelProductDescriptionCulture);
 	}
 

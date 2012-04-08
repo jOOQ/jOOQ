@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class vEmployee extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployee> {
 
-	private static final long serialVersionUID = 172934681;
+	private static final long serialVersionUID = -971976167;
 
 	/**
 	 * The singleton instance of HumanResources.vEmployee
@@ -116,17 +116,11 @@ public class vEmployee extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserv
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployee, java.lang.Object> AdditionalContactInfo = createField("AdditionalContactInfo", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vEmployee() {
+	public vEmployee() {
 		super("vEmployee", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vEmployee(java.lang.String alias) {
+	public vEmployee(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vEmployee.vEmployee);
 	}
 

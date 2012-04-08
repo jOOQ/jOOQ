@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -284329221;
+	private static final long serialVersionUID = -595099013;
 
 	/**
 	 * The singleton instance of dbo.t_book
@@ -93,17 +93,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlser
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.VARBINARY, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook() {
+	public TBook() {
 		super("t_book", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook(java.lang.String alias) {
+	public TBook(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK);
 	}
 

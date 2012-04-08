@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 1225516368;
+	private static final long serialVersionUID = -269442944;
 
 	/**
 	 * The singleton instance of public.v_library
@@ -38,17 +38,11 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gen
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary() {
+	public VLibrary() {
 		super("v_library", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary(java.lang.String alias) {
+	public VLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 

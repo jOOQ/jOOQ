@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears> {
 
-	private static final long serialVersionUID = 2131760882;
+	private static final long serialVersionUID = 1477749314;
 
 	/**
 	 * The singleton instance of Sales.vSalesPersonSalesByFiscalYears
@@ -63,17 +63,11 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableImpl<org.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPersonSalesByFiscalYears, java.math.BigDecimal> _2004 = createField("2004", org.jooq.impl.SQLDataType.NUMERIC, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vSalesPersonSalesByFiscalYears() {
+	public vSalesPersonSalesByFiscalYears() {
 		super("vSalesPersonSalesByFiscalYears", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vSalesPersonSalesByFiscalYears(java.lang.String alias) {
+	public vSalesPersonSalesByFiscalYears(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPersonSalesByFiscalYears.vSalesPersonSalesByFiscalYears);
 	}
 

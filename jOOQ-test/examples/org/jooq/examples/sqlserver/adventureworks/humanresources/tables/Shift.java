@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> {
 
-	private static final long serialVersionUID = -154374764;
+	private static final long serialVersionUID = 14909332;
 
 	/**
 	 * The singleton instance of HumanResources.Shift
@@ -55,17 +55,11 @@ public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Shift() {
+	public Shift() {
 		super("Shift", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Shift(java.lang.String alias) {
+	public Shift(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.Shift.Shift);
 	}
 

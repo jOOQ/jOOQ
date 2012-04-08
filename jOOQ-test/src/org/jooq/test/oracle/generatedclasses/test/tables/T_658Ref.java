@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -649068164;
+	private static final long serialVersionUID = -1359920516;
 
 	/**
 	 * The singleton instance of TEST.T_658_REF
@@ -94,17 +94,11 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_658RefRecord, org.jooq.test.oracle.generatedclasses.test.enums.T_658_32> REF_32 = createField("REF_32", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.oracle.generatedclasses.test.enums.T_658_32.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref() {
+	public T_658Ref() {
 		super("T_658_REF", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref(java.lang.String alias) {
+	public T_658Ref(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.T_658Ref.T_658_REF);
 	}
 

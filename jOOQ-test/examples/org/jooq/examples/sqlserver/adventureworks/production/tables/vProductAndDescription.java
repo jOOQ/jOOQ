@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class vProductAndDescription extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription> {
 
-	private static final long serialVersionUID = -1940849926;
+	private static final long serialVersionUID = 645228666;
 
 	/**
 	 * The singleton instance of Production.vProductAndDescription
@@ -53,17 +53,11 @@ public class vProductAndDescription extends org.jooq.impl.TableImpl<org.jooq.exa
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.vProductAndDescription, java.lang.String> Description = createField("Description", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vProductAndDescription() {
+	public vProductAndDescription() {
 		super("vProductAndDescription", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vProductAndDescription(java.lang.String alias) {
+	public vProductAndDescription(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.vProductAndDescription.vProductAndDescription);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1990301350;
+	private static final long serialVersionUID = -1188171638;
 
 	/**
 	 * The singleton instance of public.t_triggers
@@ -45,17 +45,11 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers() {
+	public TTriggers() {
 		super("t_triggers", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers(java.lang.String alias) {
+	public TTriggers(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 

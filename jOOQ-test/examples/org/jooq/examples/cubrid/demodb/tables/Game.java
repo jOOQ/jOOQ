@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Game extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.GameRecord> {
 
-	private static final long serialVersionUID = 1424735884;
+	private static final long serialVersionUID = -1291232244;
 
 	/**
 	 * The singleton instance of PUBLIC.game
@@ -81,17 +81,11 @@ public class Game extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cub
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.GameRecord, java.sql.Date> GAME_DATE = createField("game_date", org.jooq.impl.SQLDataType.DATE, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Game() {
+	public Game() {
 		super("game", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Game(java.lang.String alias) {
+	public Game(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Game.GAME);
 	}
 

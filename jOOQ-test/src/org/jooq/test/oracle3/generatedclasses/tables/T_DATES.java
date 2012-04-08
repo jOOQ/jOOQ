@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1199417431;
+	private static final long serialVersionUID = 683579897;
 
 	/**
 	 * The singleton instance of TEST.T_DATES
@@ -70,17 +70,11 @@ public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> i
 	 */
 	public final org.jooq.TableField<org.jooq.Record, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_DATES() {
+	public T_DATES() {
 		super("T_DATES", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_DATES(java.lang.String alias) {
+	public T_DATES(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES);
 	}
 

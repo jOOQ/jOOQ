@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1725346764;
+	private static final long serialVersionUID = -1256574052;
 
 	/**
 	 * The singleton instance of dba.x_unused
@@ -114,17 +114,11 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private XUnused() {
+	public XUnused() {
 		super("x_unused", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private XUnused(java.lang.String alias) {
+	public XUnused(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 

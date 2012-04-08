@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> {
 
-	private static final long serialVersionUID = -1771388998;
+	private static final long serialVersionUID = -1434237078;
 
 	/**
 	 * The singleton instance of sakila.category
@@ -45,17 +45,11 @@ public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Category() {
+	public Category() {
 		super("category", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Category(java.lang.String alias) {
+	public Category(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Category.CATEGORY);
 	}
 

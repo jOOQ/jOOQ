@@ -10,7 +10,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 775141831;
+	private static final long serialVersionUID = -401399689;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK_STORE
@@ -35,17 +35,11 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.Reco
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_BOOK_STORE() {
+	public T_BOOK_STORE() {
 		super("T_BOOK_STORE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_BOOK_STORE(java.lang.String alias) {
+	public T_BOOK_STORE(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
 	}
 

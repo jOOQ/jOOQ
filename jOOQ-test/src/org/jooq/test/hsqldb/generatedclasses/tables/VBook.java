@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1904343881;
+	private static final long serialVersionUID = 1964279047;
 
 	/**
 	 * The singleton instance of PUBLIC.V_BOOK
@@ -73,17 +73,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generate
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.VARBINARY, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook() {
+	public VBook() {
 		super("V_BOOK", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook(java.lang.String alias) {
+	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK);
 	}
 

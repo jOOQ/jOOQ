@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = 1447539917;
+	private static final long serialVersionUID = -442884227;
 
 	/**
 	 * The singleton instance of sakila.language
@@ -45,17 +45,11 @@ public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Language() {
+	public Language() {
 		super("language", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Language(java.lang.String alias) {
+	public Language(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE);
 	}
 

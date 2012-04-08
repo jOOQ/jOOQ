@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 639039036;
+	private static final long serialVersionUID = -1311617604;
 
 	/**
 	 * The singleton instance of dbo.t_triggers
@@ -45,17 +45,11 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers() {
+	public TTriggers() {
 		super("t_triggers", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers(java.lang.String alias) {
+	public TTriggers(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 

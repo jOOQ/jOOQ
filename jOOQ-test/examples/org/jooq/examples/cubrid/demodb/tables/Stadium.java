@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Stadium extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord> {
 
-	private static final long serialVersionUID = 1082636874;
+	private static final long serialVersionUID = 997514954;
 
 	/**
 	 * The singleton instance of PUBLIC.stadium
@@ -60,17 +60,11 @@ public class Stadium extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.StadiumRecord, java.lang.String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Stadium() {
+	public Stadium() {
 		super("stadium", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Stadium(java.lang.String alias) {
+	public Stadium(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Stadium.STADIUM);
 	}
 

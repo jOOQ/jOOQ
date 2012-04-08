@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class vStateProvinceCountryRegion extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion> {
 
-	private static final long serialVersionUID = 1328451346;
+	private static final long serialVersionUID = 772993938;
 
 	/**
 	 * The singleton instance of Person.vStateProvinceCountryRegion
@@ -63,17 +63,11 @@ public class vStateProvinceCountryRegion extends org.jooq.impl.TableImpl<org.joo
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vStateProvinceCountryRegion, java.lang.String> CountryRegionName = createField("CountryRegionName", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vStateProvinceCountryRegion() {
+	public vStateProvinceCountryRegion() {
 		super("vStateProvinceCountryRegion", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vStateProvinceCountryRegion(java.lang.String alias) {
+	public vStateProvinceCountryRegion(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.vStateProvinceCountryRegion.vStateProvinceCountryRegion);
 	}
 

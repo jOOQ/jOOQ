@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting> {
 
-	private static final long serialVersionUID = 1771520735;
+	private static final long serialVersionUID = -1027055777;
 
 	/**
 	 * The singleton instance of Production.WorkOrderRouting
@@ -106,17 +106,11 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrderRouting, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private WorkOrderRouting() {
+	public WorkOrderRouting() {
 		super("WorkOrderRouting", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private WorkOrderRouting(java.lang.String alias) {
+	public WorkOrderRouting(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.WorkOrderRouting.WorkOrderRouting);
 	}
 

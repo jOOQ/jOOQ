@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb;
  */
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1687384670;
+	private static final long serialVersionUID = -1557228553;
 
 	/**
 	 * The singleton instance of PUBLIC
@@ -26,8 +26,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
 			org.jooq.examples.cubrid.demodb.Sequences.EVENT_NO,
-			org.jooq.examples.cubrid.demodb.Sequences.STADIUM_NO,
-			org.jooq.examples.cubrid.demodb.Sequences.ATHLETE_AI_CODE);
+			org.jooq.examples.cubrid.demodb.Sequences.STADIUM_NO);
 	}
 
 	@Override

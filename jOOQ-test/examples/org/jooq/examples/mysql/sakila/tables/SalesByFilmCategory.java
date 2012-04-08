@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class SalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> {
 
-	private static final long serialVersionUID = -1586992470;
+	private static final long serialVersionUID = 1034750250;
 
 	/**
 	 * The singleton instance of sakila.sales_by_film_category
@@ -40,17 +40,11 @@ public class SalesByFilmCategory extends org.jooq.impl.TableImpl<org.jooq.exampl
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord, java.math.BigDecimal> TOTAL_SALES = createField("total_sales", org.jooq.impl.SQLDataType.DECIMAL, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private SalesByFilmCategory() {
+	public SalesByFilmCategory() {
 		super("sales_by_film_category", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private SalesByFilmCategory(java.lang.String alias) {
+	public SalesByFilmCategory(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY);
 	}
 

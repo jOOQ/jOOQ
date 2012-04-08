@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class DatabaseLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> {
 
-	private static final long serialVersionUID = 1847938319;
+	private static final long serialVersionUID = -851968801;
 
 	/**
 	 * The singleton instance of dbo.DatabaseLog
@@ -73,17 +73,11 @@ public class DatabaseLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.Object> XmlEvent = createField("XmlEvent", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private DatabaseLog() {
+	public DatabaseLog() {
 		super("DatabaseLog", org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private DatabaseLog(java.lang.String alias) {
+	public DatabaseLog(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo, org.jooq.examples.sqlserver.adventureworks.dbo.tables.DatabaseLog.DatabaseLog);
 	}
 

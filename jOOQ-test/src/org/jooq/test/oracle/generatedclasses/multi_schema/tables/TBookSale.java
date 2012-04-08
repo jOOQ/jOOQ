@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 1773946133;
+	private static final long serialVersionUID = 2011577749;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_BOOK_SALE
@@ -67,17 +67,11 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> SOLD_FOR = createField("SOLD_FOR", org.jooq.impl.SQLDataType.NUMERIC, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookSale() {
+	public TBookSale() {
 		super("T_BOOK_SALE", org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookSale(java.lang.String alias) {
+	public TBookSale(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE);
 	}
 

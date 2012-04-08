@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -1611299764;
+	private static final long serialVersionUID = -37695588;
 
 	/**
 	 * The singleton instance of test2.t_unsigned
@@ -48,17 +48,11 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gene
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TUnsignedRecord, org.jooq.tools.unsigned.ULong> U_LONG = createField("u_long", org.jooq.impl.SQLDataType.BIGINTUNSIGNED, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TUnsigned() {
+	public TUnsigned() {
 		super("t_unsigned", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TUnsigned(java.lang.String alias) {
+	public TUnsigned(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TUnsigned.T_UNSIGNED);
 	}
 

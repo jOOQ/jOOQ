@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> {
 
-	private static final long serialVersionUID = -1772580237;
+	private static final long serialVersionUID = -1543191101;
 
 	/**
 	 * The singleton instance of sakila.customer
@@ -87,17 +87,11 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Customer() {
+	public Customer() {
 		super("customer", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Customer(java.lang.String alias) {
+	public Customer(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER);
 	}
 

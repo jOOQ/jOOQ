@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> {
 
-	private static final long serialVersionUID = 1777267020;
+	private static final long serialVersionUID = -26315492;
 
 	/**
 	 * The singleton instance of dbo.ErrorLog
@@ -75,17 +75,11 @@ public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog, java.lang.String> ErrorMessage = createField("ErrorMessage", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ErrorLog() {
+	public ErrorLog() {
 		super("ErrorLog", org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ErrorLog(java.lang.String alias) {
+	public ErrorLog(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo, org.jooq.examples.sqlserver.adventureworks.dbo.tables.ErrorLog.ErrorLog);
 	}
 

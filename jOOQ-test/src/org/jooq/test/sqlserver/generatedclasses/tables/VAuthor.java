@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1903538293;
+	private static final long serialVersionUID = -663568395;
 
 	/**
 	 * The singleton instance of dbo.v_author
@@ -58,17 +58,11 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor() {
+	public VAuthor() {
 		super("v_author", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor(java.lang.String alias) {
+	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 

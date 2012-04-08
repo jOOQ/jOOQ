@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPersonQuotaHistory> {
 
-	private static final long serialVersionUID = 149787390;
+	private static final long serialVersionUID = -1702813362;
 
 	/**
 	 * The singleton instance of Sales.SalesPersonQuotaHistory
@@ -63,17 +63,11 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableTableImpl<or
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPersonQuotaHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private SalesPersonQuotaHistory() {
+	public SalesPersonQuotaHistory() {
 		super("SalesPersonQuotaHistory", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private SalesPersonQuotaHistory(java.lang.String alias) {
+	public SalesPersonQuotaHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.SalesPersonQuotaHistory.SalesPersonQuotaHistory);
 	}
 

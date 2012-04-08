@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> {
 
-	private static final long serialVersionUID = 3347876;
+	private static final long serialVersionUID = 53598964;
 
 	/**
 	 * The singleton instance of PUBLIC.PREPARED_STATEMENT
@@ -33,17 +33,11 @@ public class PreparedStatement extends org.jooq.impl.TableImpl<org.jooq.test.hsq
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private PreparedStatement() {
+	public PreparedStatement() {
 		super("PREPARED_STATEMENT", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private PreparedStatement(java.lang.String alias) {
+	public PreparedStatement(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -7636340;
+	private static final long serialVersionUID = -1272234404;
 
 	/**
 	 * The singleton instance of public.t_author
@@ -60,17 +60,11 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> ADDRESS = createField("address", org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE.getDataType(), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor() {
+	public TAuthor() {
 		super("t_author", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor(java.lang.String alias) {
+	public TAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 

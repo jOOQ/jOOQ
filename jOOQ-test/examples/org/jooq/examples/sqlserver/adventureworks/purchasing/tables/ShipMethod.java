@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class ShipMethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> {
 
-	private static final long serialVersionUID = -2044911349;
+	private static final long serialVersionUID = 900283147;
 
 	/**
 	 * The singleton instance of Purchasing.ShipMethod
@@ -60,17 +60,11 @@ public class ShipMethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ShipMethod() {
+	public ShipMethod() {
 		super("ShipMethod", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ShipMethod(java.lang.String alias) {
+	public ShipMethod(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.ShipMethod.ShipMethod);
 	}
 

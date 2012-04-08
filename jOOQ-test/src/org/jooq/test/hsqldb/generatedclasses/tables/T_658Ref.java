@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -1541162821;
+	private static final long serialVersionUID = -1484440469;
 
 	/**
 	 * The singleton instance of PUBLIC.T_658_REF
@@ -94,17 +94,11 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.hsqldb.generatedclasses.enums.T_658_32> REF_32 = createField("REF_32", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.hsqldb.generatedclasses.enums.T_658_32.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref() {
+	public T_658Ref() {
 		super("T_658_REF", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref(java.lang.String alias) {
+	public T_658Ref(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.T_658Ref.T_658_REF);
 	}
 

@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 432985963;
+	private static final long serialVersionUID = 1498399259;
 
 	/**
 	 * The singleton instance of test2.v_library
@@ -40,17 +40,11 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary() {
+	public VLibrary() {
 		super("v_library", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary(java.lang.String alias) {
+	public VLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 

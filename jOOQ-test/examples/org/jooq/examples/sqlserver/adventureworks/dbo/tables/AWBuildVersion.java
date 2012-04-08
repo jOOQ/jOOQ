@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables;
  */
 public class AWBuildVersion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion> {
 
-	private static final long serialVersionUID = 2076064518;
+	private static final long serialVersionUID = -549390538;
 
 	/**
 	 * The singleton instance of dbo.AWBuildVersion
@@ -50,17 +50,11 @@ public class AWBuildVersion extends org.jooq.impl.UpdatableTableImpl<org.jooq.ex
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.AWBuildVersion, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private AWBuildVersion() {
+	public AWBuildVersion() {
 		super("AWBuildVersion", org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private AWBuildVersion(java.lang.String alias) {
+	public AWBuildVersion(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo, org.jooq.examples.sqlserver.adventureworks.dbo.tables.AWBuildVersion.AWBuildVersion);
 	}
 

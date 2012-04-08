@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate> {
 
-	private static final long serialVersionUID = -1264099587;
+	private static final long serialVersionUID = 1572375373;
 
 	/**
 	 * The singleton instance of Sales.CurrencyRate
@@ -77,17 +77,11 @@ public class CurrencyRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CurrencyRate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private CurrencyRate() {
+	public CurrencyRate() {
 		super("CurrencyRate", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private CurrencyRate(java.lang.String alias) {
+	public CurrencyRate(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.CurrencyRate.CurrencyRate);
 	}
 

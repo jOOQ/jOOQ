@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = 116905659;
+	private static final long serialVersionUID = 360979435;
 
 	/**
 	 * The singleton instance of dba.t_658_ref
@@ -94,17 +94,11 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.sybase.generatedclasses.enums.T_658_32> REF_32 = createField("ref_32", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.sybase.generatedclasses.enums.T_658_32.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref() {
+	public T_658Ref() {
 		super("t_658_ref", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref(java.lang.String alias) {
+	public T_658Ref(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.T_658Ref.T_658_REF);
 	}
 

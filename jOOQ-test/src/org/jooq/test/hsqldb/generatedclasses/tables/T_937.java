@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = -1379555082;
+	private static final long serialVersionUID = 502816630;
 
 	/**
 	 * The singleton instance of PUBLIC.T_937
@@ -35,17 +35,11 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_937() {
+	public T_937() {
 		super("T_937", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_937(java.lang.String alias) {
+	public T_937(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937);
 	}
 

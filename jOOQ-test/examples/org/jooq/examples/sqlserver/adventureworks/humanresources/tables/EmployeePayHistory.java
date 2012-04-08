@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> {
 
-	private static final long serialVersionUID = 780889872;
+	private static final long serialVersionUID = 191845392;
 
 	/**
 	 * The singleton instance of HumanResources.EmployeePayHistory
@@ -63,17 +63,11 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private EmployeePayHistory() {
+	public EmployeePayHistory() {
 		super("EmployeePayHistory", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private EmployeePayHistory(java.lang.String alias) {
+	public EmployeePayHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeePayHistory.EmployeePayHistory);
 	}
 

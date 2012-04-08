@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class ProductCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCategory> {
 
-	private static final long serialVersionUID = 2059889899;
+	private static final long serialVersionUID = 520287083;
 
 	/**
 	 * The singleton instance of Production.ProductCategory
@@ -50,17 +50,11 @@ public class ProductCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCategory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ProductCategory() {
+	public ProductCategory() {
 		super("ProductCategory", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ProductCategory(java.lang.String alias) {
+	public ProductCategory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.ProductCategory.ProductCategory);
 	}
 

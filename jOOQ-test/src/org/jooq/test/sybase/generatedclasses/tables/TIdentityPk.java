@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -420620200;
+	private static final long serialVersionUID = -1258048680;
 
 	/**
 	 * The singleton instance of dba.t_identity_pk
@@ -40,17 +40,11 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TIdentityPk() {
+	public TIdentityPk() {
 		super("t_identity_pk", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TIdentityPk(java.lang.String alias) {
+	public TIdentityPk(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK);
 	}
 

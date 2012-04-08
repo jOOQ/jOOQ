@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 822535669;
+	private static final long serialVersionUID = -2033253211;
 
 	/**
 	 * The singleton instance of PUBLIC.V_LIBRARY
@@ -38,17 +38,11 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary() {
+	public VLibrary() {
 		super("V_LIBRARY", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary(java.lang.String alias) {
+	public VLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 

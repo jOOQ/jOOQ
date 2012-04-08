@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class vSalesPerson extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPerson> {
 
-	private static final long serialVersionUID = -1148117960;
+	private static final long serialVersionUID = -169904248;
 
 	/**
 	 * The singleton instance of Sales.vSalesPerson
@@ -133,17 +133,11 @@ public class vSalesPerson extends org.jooq.impl.TableImpl<org.jooq.examples.sqls
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vSalesPerson, java.math.BigDecimal> SalesLastYear = createField("SalesLastYear", org.jooq.impl.SQLDataType.NUMERIC, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vSalesPerson() {
+	public vSalesPerson() {
 		super("vSalesPerson", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vSalesPerson(java.lang.String alias) {
+	public vSalesPerson(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.vSalesPerson.vSalesPerson);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class vJobCandidate extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate> {
 
-	private static final long serialVersionUID = 1249746846;
+	private static final long serialVersionUID = -2098680418;
 
 	/**
 	 * The singleton instance of HumanResources.vJobCandidate
@@ -108,17 +108,11 @@ public class vJobCandidate extends org.jooq.impl.TableImpl<org.jooq.examples.sql
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidate, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vJobCandidate() {
+	public vJobCandidate() {
 		super("vJobCandidate", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vJobCandidate(java.lang.String alias) {
+	public vJobCandidate(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidate.vJobCandidate);
 	}
 

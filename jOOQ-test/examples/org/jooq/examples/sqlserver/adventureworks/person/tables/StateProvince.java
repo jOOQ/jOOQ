@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> {
 
-	private static final long serialVersionUID = 287362667;
+	private static final long serialVersionUID = 646969579;
 
 	/**
 	 * The singleton instance of Person.StateProvince
@@ -82,17 +82,11 @@ public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private StateProvince() {
+	public StateProvince() {
 		super("StateProvince", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private StateProvince(java.lang.String alias) {
+	public StateProvince(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.StateProvince.StateProvince);
 	}
 

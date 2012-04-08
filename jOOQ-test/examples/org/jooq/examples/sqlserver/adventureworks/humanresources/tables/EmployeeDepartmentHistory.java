@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> {
 
-	private static final long serialVersionUID = -1284157163;
+	private static final long serialVersionUID = 563649045;
 
 	/**
 	 * The singleton instance of HumanResources.EmployeeDepartmentHistory
@@ -84,17 +84,11 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private EmployeeDepartmentHistory() {
+	public EmployeeDepartmentHistory() {
 		super("EmployeeDepartmentHistory", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private EmployeeDepartmentHistory(java.lang.String alias) {
+	public EmployeeDepartmentHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.EmployeeDepartmentHistory.EmployeeDepartmentHistory);
 	}
 

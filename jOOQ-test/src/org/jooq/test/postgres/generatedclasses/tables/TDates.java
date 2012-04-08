@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 335309541;
+	private static final long serialVersionUID = 844661429;
 
 	/**
 	 * The singleton instance of public.t_dates
@@ -60,17 +60,11 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postg
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDates() {
+	public TDates() {
 		super("t_dates", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDates(java.lang.String alias) {
+	public TDates(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES);
 	}
 

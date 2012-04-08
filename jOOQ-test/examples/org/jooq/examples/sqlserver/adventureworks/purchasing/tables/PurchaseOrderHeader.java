@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> {
 
-	private static final long serialVersionUID = -1265498502;
+	private static final long serialVersionUID = -1357316998;
 
 	/**
 	 * The singleton instance of Purchasing.PurchaseOrderHeader
@@ -113,17 +113,11 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private PurchaseOrderHeader() {
+	public PurchaseOrderHeader() {
 		super("PurchaseOrderHeader", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private PurchaseOrderHeader(java.lang.String alias) {
+	public PurchaseOrderHeader(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.PurchaseOrderHeader.PurchaseOrderHeader);
 	}
 

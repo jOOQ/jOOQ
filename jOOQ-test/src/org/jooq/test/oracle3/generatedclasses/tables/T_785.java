@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -904969520;
+	private static final long serialVersionUID = 1601549952;
 
 	/**
 	 * The singleton instance of TEST.T_785
@@ -43,17 +43,11 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.Record> implements j
 	 */
 	public final org.jooq.TableField<org.jooq.Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_785() {
+	public T_785() {
 		super("T_785", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_785(java.lang.String alias) {
+	public T_785(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785);
 	}
 

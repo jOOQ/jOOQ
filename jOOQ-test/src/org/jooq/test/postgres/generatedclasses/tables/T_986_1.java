@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 1559256172;
+	private static final long serialVersionUID = 570729836;
 
 	/**
 	 * The singleton instance of public.t_986_1
@@ -39,17 +39,11 @@ public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.gene
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_986_1() {
+	public T_986_1() {
 		super("t_986_1", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_986_1(java.lang.String alias) {
+	public T_986_1(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.T_986_1.T_986_1);
 	}
 

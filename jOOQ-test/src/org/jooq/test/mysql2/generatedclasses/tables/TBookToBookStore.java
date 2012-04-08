@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1260878394;
+	private static final long serialVersionUID = -1906807738;
 
 	/**
 	 * The singleton instance of test2.t_book_to_book_store
@@ -61,17 +61,11 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookToBookStore() {
+	public TBookToBookStore() {
 		super("t_book_to_book_store", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookToBookStore(java.lang.String alias) {
+	public TBookToBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 

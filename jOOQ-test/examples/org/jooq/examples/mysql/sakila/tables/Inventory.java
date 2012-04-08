@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = 465950918;
+	private static final long serialVersionUID = 868929398;
 
 	/**
 	 * The singleton instance of sakila.inventory
@@ -62,17 +62,11 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Inventory() {
+	public Inventory() {
 		super("inventory", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Inventory(java.lang.String alias) {
+	public Inventory(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY);
 	}
 

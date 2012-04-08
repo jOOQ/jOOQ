@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 837237350;
+	private static final long serialVersionUID = 460829462;
 
 	/**
 	 * The singleton instance of dbo.t_785
@@ -43,17 +43,11 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_785() {
+	public T_785() {
 		super("t_785", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_785(java.lang.String alias) {
+	public T_785(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.T_785.T_785);
 	}
 

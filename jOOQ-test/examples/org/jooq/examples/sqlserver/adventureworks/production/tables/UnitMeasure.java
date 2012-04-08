@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> {
 
-	private static final long serialVersionUID = 196262958;
+	private static final long serialVersionUID = 1205735086;
 
 	/**
 	 * The singleton instance of Production.UnitMeasure
@@ -45,17 +45,11 @@ public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private UnitMeasure() {
+	public UnitMeasure() {
 		super("UnitMeasure", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private UnitMeasure(java.lang.String alias) {
+	public UnitMeasure(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.UnitMeasure.UnitMeasure);
 	}
 

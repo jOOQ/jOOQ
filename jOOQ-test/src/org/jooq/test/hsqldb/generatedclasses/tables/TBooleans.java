@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -285582912;
+	private static final long serialVersionUID = -1464111600;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOLEANS
@@ -85,17 +85,11 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hs
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("N_BOOLEAN", org.jooq.impl.SQLDataType.BOOLEAN, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBooleans() {
+	public TBooleans() {
 		super("T_BOOLEANS", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBooleans(java.lang.String alias) {
+	public TBooleans(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TBooleans.T_BOOLEANS);
 	}
 

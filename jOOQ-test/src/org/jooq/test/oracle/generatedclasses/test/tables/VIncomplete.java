@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> {
 
-	private static final long serialVersionUID = 912327757;
+	private static final long serialVersionUID = 1048461901;
 
 	/**
 	 * The singleton instance of TEST.V_INCOMPLETE
@@ -100,17 +100,11 @@ public class VIncomplete extends org.jooq.impl.TableImpl<org.jooq.test.oracle.ge
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord, java.lang.Object> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VIncomplete() {
+	public VIncomplete() {
 		super("V_INCOMPLETE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VIncomplete(java.lang.String alias) {
+	public VIncomplete(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 879945540;
+	private static final long serialVersionUID = 1432037652;
 
 	/**
 	 * The singleton instance of dba.v_book
@@ -73,17 +73,11 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook() {
+	public VBook() {
 		super("v_book", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VBook(java.lang.String alias) {
+	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.VBook.V_BOOK);
 	}
 

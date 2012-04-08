@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class StaffList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> {
 
-	private static final long serialVersionUID = -2096880895;
+	private static final long serialVersionUID = -137774463;
 
 	/**
 	 * The singleton instance of sakila.staff_list
@@ -70,17 +70,11 @@ public class StaffList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.s
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord, java.lang.Byte> SID = createField("SID", org.jooq.impl.SQLDataType.TINYINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private StaffList() {
+	public StaffList() {
 		super("staff_list", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private StaffList(java.lang.String alias) {
+	public StaffList(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST);
 	}
 

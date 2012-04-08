@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 599036935;
+	private static final long serialVersionUID = 340389047;
 
 	/**
 	 * The singleton instance of test2.t_book
@@ -100,17 +100,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> STATUS = createField("STATUS", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql2.generatedclasses.enums.TBookStatus.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook() {
+	public TBook() {
 		super("t_book", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook(java.lang.String alias) {
+	public TBook(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK);
 	}
 

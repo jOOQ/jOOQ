@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> {
 
-	private static final long serialVersionUID = -1003709939;
+	private static final long serialVersionUID = -1868381603;
 
 	/**
 	 * The singleton instance of Sales.CountryRegionCurrency
@@ -59,17 +59,11 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private CountryRegionCurrency() {
+	public CountryRegionCurrency() {
 		super("CountryRegionCurrency", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private CountryRegionCurrency(java.lang.String alias) {
+	public CountryRegionCurrency(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.CountryRegionCurrency.CountryRegionCurrency);
 	}
 

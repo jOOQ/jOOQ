@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> {
 
-	private static final long serialVersionUID = 1299502060;
+	private static final long serialVersionUID = 1580479804;
 
 	/**
 	 * The singleton instance of sakila.nicer_but_slower_film_list
@@ -70,17 +70,11 @@ public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.exa
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> ACTORS = createField("actors", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private NicerButSlowerFilmList() {
+	public NicerButSlowerFilmList() {
 		super("nicer_but_slower_film_list", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private NicerButSlowerFilmList(java.lang.String alias) {
+	public NicerButSlowerFilmList(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.NicerButSlowerFilmList.NICER_BUT_SLOWER_FILM_LIST);
 	}
 

@@ -21,11 +21,6 @@ public final class Sequences {
 	public static final org.jooq.Sequence<java.math.BigInteger> STADIUM_NO = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("stadium_no", org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
 
 	/**
-	 * The sequence PUBLIC.athlete_ai_code
-	 */
-	public static final org.jooq.Sequence<java.lang.Integer> ATHLETE_AI_CODE = new org.jooq.impl.SequenceImpl<java.lang.Integer>("athlete_ai_code", org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER);
-
-	/**
 	 * No instances
 	 */
 	private Sequences() {}

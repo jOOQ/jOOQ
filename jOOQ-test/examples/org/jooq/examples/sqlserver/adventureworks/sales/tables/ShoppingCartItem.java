@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class ShoppingCartItem extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem> {
 
-	private static final long serialVersionUID = 1090378437;
+	private static final long serialVersionUID = -1055336843;
 
 	/**
 	 * The singleton instance of Sales.ShoppingCartItem
@@ -66,17 +66,11 @@ public class ShoppingCartItem extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ShoppingCartItem, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ShoppingCartItem() {
+	public ShoppingCartItem() {
 		super("ShoppingCartItem", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ShoppingCartItem(java.lang.String alias) {
+	public ShoppingCartItem(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.ShoppingCartItem.ShoppingCartItem);
 	}
 

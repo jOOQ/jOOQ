@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1737352863;
+	private static final long serialVersionUID = -1899206113;
 
 	/**
 	 * The singleton instance of PUBLIC.X_TEST_CASE_71
@@ -46,17 +46,11 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.SMALLINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private XTestCase_71() {
+	public XTestCase_71() {
 		super("X_TEST_CASE_71", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private XTestCase_71(java.lang.String alias) {
+	public XTestCase_71(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 

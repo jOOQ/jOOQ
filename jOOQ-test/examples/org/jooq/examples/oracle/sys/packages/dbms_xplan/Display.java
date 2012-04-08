@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 303823828;
+	private static final long serialVersionUID = -1053260196;
 
 
 	/**
@@ -19,22 +19,22 @@ public class Display extends org.jooq.impl.AbstractRoutine<org.jooq.examples.ora
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> TABLE_NAME = createParameter("TABLE_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> STATEMENT_ID = createParameter("STATEMENT_ID", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FILTER_PREDS = createParameter("FILTER_PREDS", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * Create a new routine call instance

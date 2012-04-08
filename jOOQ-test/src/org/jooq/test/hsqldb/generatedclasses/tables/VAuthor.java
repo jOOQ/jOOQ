@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 745356515;
+	private static final long serialVersionUID = 24704307;
 
 	/**
 	 * The singleton instance of PUBLIC.V_AUTHOR
@@ -58,17 +58,11 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor() {
+	public VAuthor() {
 		super("V_AUTHOR", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor(java.lang.String alias) {
+	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 

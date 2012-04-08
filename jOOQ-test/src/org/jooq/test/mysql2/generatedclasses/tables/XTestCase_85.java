@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1975863193;
+	private static final long serialVersionUID = 1152990695;
 
 	/**
 	 * The singleton instance of test2.x_test_case_85
@@ -59,17 +59,11 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private XTestCase_85() {
+	public XTestCase_85() {
 		super("x_test_case_85", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private XTestCase_85(java.lang.String alias) {
+	public XTestCase_85(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 

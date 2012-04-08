@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Event extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.EventRecord> {
 
-	private static final long serialVersionUID = -292152258;
+	private static final long serialVersionUID = -1196424002;
 
 	/**
 	 * The singleton instance of PUBLIC.event
@@ -55,17 +55,11 @@ public class Event extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cu
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.EventRecord, java.lang.Integer> PLAYERS = createField("players", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Event() {
+	public Event() {
 		super("event", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Event(java.lang.String alias) {
+	public Event(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Event.EVENT);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables;
  */
 public class VendorContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact> {
 
-	private static final long serialVersionUID = -1308984518;
+	private static final long serialVersionUID = 1398064698;
 
 	/**
 	 * The singleton instance of Purchasing.VendorContact
@@ -70,17 +70,11 @@ public class VendorContact extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.VendorContact, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VendorContact() {
+	public VendorContact() {
 		super("VendorContact", org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VendorContact(java.lang.String alias) {
+	public VendorContact(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.purchasing.Purchasing.Purchasing, org.jooq.examples.sqlserver.adventureworks.purchasing.tables.VendorContact.VendorContact);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -745354794;
+	private static final long serialVersionUID = 1821854630;
 
 	/**
 	 * The singleton instance of TEST.T_639_NUMBERS_TABLE
@@ -85,17 +85,11 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord, java.math.BigDecimal> BIG_DECIMAL = createField("BIG_DECIMAL", org.jooq.impl.SQLDataType.NUMERIC, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_639NumbersTable() {
+	public T_639NumbersTable() {
 		super("T_639_NUMBERS_TABLE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_639NumbersTable(java.lang.String alias) {
+	public T_639NumbersTable(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 

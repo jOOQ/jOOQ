@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class vAdditionalContactInfo extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo> {
 
-	private static final long serialVersionUID = 939403023;
+	private static final long serialVersionUID = -772764529;
 
 	/**
 	 * The singleton instance of Person.vAdditionalContactInfo
@@ -113,17 +113,11 @@ public class vAdditionalContactInfo extends org.jooq.impl.TableImpl<org.jooq.exa
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.vAdditionalContactInfo, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vAdditionalContactInfo() {
+	public vAdditionalContactInfo() {
 		super("vAdditionalContactInfo", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vAdditionalContactInfo(java.lang.String alias) {
+	public vAdditionalContactInfo(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.vAdditionalContactInfo.vAdditionalContactInfo);
 	}
 

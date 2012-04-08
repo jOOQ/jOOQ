@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Olympic extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord> {
 
-	private static final long serialVersionUID = 10402767;
+	private static final long serialVersionUID = -1531688113;
 
 	/**
 	 * The singleton instance of PUBLIC.olympic
@@ -70,17 +70,11 @@ public class Olympic extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.OlympicRecord, java.lang.String> INTRODUCTION = createField("introduction", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Olympic() {
+	public Olympic() {
 		super("olympic", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Olympic(java.lang.String alias) {
+	public Olympic(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Olympic.OLYMPIC);
 	}
 

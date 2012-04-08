@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 731843109;
+	private static final long serialVersionUID = 1993935525;
 
 	/**
 	 * The singleton instance of test2.t_639_numbers_table
@@ -95,17 +95,11 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Double> DOUBLE = createField("DOUBLE", org.jooq.impl.SQLDataType.DOUBLE, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_639NumbersTable() {
+	public T_639NumbersTable() {
 		super("t_639_numbers_table", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_639NumbersTable(java.lang.String alias) {
+	public T_639NumbersTable(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 

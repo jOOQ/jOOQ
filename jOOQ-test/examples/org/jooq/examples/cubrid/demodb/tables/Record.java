@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class Record extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.RecordRecord> {
 
-	private static final long serialVersionUID = -1042580341;
+	private static final long serialVersionUID = 1689962507;
 
 	/**
 	 * The singleton instance of PUBLIC.record
@@ -66,17 +66,11 @@ public class Record extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.c
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.RecordRecord, java.lang.String> UNIT = createField("unit", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private Record() {
+	public Record() {
 		super("record", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private Record(java.lang.String alias) {
+	public Record(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.Record.RECORD);
 	}
 

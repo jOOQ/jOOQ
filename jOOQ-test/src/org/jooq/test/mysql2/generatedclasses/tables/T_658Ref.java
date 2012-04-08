@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = 1105892922;
+	private static final long serialVersionUID = 41267434;
 
 	/**
 	 * The singleton instance of test2.t_658_ref
@@ -94,17 +94,11 @@ public class T_658Ref extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gener
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_658RefRecord, org.jooq.test.mysql2.generatedclasses.enums.T_658_32> REF_32 = createField("ref_32", org.jooq.impl.SQLDataType.BIGINT.asMasterDataType(org.jooq.test.mysql2.generatedclasses.enums.T_658_32.class), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref() {
+	public T_658Ref() {
 		super("t_658_ref", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_658Ref(java.lang.String alias) {
+	public T_658Ref(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_658Ref.T_658_REF);
 	}
 

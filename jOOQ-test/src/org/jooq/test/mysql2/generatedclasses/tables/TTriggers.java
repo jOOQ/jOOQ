@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1722499909;
+	private static final long serialVersionUID = 121608811;
 
 	/**
 	 * The singleton instance of test2.t_triggers
@@ -45,17 +45,11 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.my
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers() {
+	public TTriggers() {
 		super("t_triggers", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers(java.lang.String alias) {
+	public TTriggers(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 

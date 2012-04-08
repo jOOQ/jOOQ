@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -471519130;
+	private static final long serialVersionUID = 1606867862;
 
 	/**
 	 * The singleton instance of public.t_identity
@@ -38,17 +38,11 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.postgres.ge
 	 */
 	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TIdentity() {
+	public TIdentity() {
 		super("t_identity", org.jooq.test.postgres.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TIdentity(java.lang.String alias) {
+	public TIdentity(java.lang.String alias) {
 		super(alias, org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 

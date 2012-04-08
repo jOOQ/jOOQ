@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1566222772;
+	private static final long serialVersionUID = -294859876;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_AUTHOR
@@ -63,17 +63,11 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Object> ADDRESS = createField("ADDRESS", org.jooq.util.oracle.OracleDataType.getDefaultDataType("U_ADDRESS_TYPE"), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor() {
+	public TAuthor() {
 		super("T_AUTHOR", org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor(java.lang.String alias) {
+	public TAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR);
 	}
 

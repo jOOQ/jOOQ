@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class CustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> {
 
-	private static final long serialVersionUID = 2026269368;
+	private static final long serialVersionUID = 444395832;
 
 	/**
 	 * The singleton instance of sakila.customer_list
@@ -75,17 +75,11 @@ public class CustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord, java.lang.Byte> SID = createField("SID", org.jooq.impl.SQLDataType.TINYINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private CustomerList() {
+	public CustomerList() {
 		super("customer_list", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private CustomerList(java.lang.String alias) {
+	public CustomerList(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -973826501;
+	private static final long serialVersionUID = 534301557;
 
 
 	/**
@@ -19,17 +19,17 @@ public class DisplaySqlPlanBaseline extends org.jooq.impl.AbstractRoutine<org.jo
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> SQL_HANDLE = createParameter("SQL_HANDLE", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> SQL_HANDLE = createParameter("SQL_HANDLE", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> PLAN_NAME = createParameter("PLAN_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> PLAN_NAME = createParameter("PLAN_NAME", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * Create a new routine call instance

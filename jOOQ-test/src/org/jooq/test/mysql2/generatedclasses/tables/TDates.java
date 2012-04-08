@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 499015501;
+	private static final long serialVersionUID = 1825563037;
 
 	/**
 	 * The singleton instance of test2.t_dates
@@ -60,17 +60,11 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDates() {
+	public TDates() {
 		super("t_dates", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDates(java.lang.String alias) {
+	public TDates(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES);
 	}
 

@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> {
 
-	private static final long serialVersionUID = 1962583118;
+	private static final long serialVersionUID = 1873053134;
 
 	/**
 	 * The singleton instance of sakila.actor_info
@@ -50,17 +50,11 @@ public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.s
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FILM_INFO = createField("film_info", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private ActorInfo() {
+	public ActorInfo() {
 		super("actor_info", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private ActorInfo(java.lang.String alias) {
+	public ActorInfo(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.ActorInfo.ACTOR_INFO);
 	}
 

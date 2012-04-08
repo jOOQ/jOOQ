@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1743486889;
+	private static final long serialVersionUID = -254559111;
 
 	/**
 	 * The singleton instance of dba.v_author
@@ -58,17 +58,11 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sybase.genera
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor() {
+	public VAuthor() {
 		super("v_author", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VAuthor(java.lang.String alias) {
+	public VAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 

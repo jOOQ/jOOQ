@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1832096729;
+	private static final long serialVersionUID = -818147977;
 
 	/**
 	 * The singleton instance of PUBLIC.T_TRIGGERS
@@ -45,17 +45,11 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hs
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers() {
+	public TTriggers() {
 		super("T_TRIGGERS", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TTriggers(java.lang.String alias) {
+	public TTriggers(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 

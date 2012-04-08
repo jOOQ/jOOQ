@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
  */
 public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> {
 
-	private static final long serialVersionUID = -537331678;
+	private static final long serialVersionUID = 357908338;
 
 	/**
 	 * The singleton instance of TEST.T_976
@@ -50,17 +50,11 @@ public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.j
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord> DATE_AS_TIMESTAMP_O = createField("O", org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE.getDataType(), this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private DateAsTimestampT_976() {
+	public DateAsTimestampT_976() {
 		super("T_976", org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private DateAsTimestampT_976(java.lang.String alias) {
+	public DateAsTimestampT_976(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
 	}
 

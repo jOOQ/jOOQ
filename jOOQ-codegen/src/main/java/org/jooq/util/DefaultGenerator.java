@@ -605,9 +605,17 @@ public class DefaultGenerator implements Generator {
         				printTableColumn(out, column, table);
         			}
 
+        			// [#1255] With instance fields, the table constructor may
+        			// be public, as tables are no longer singletons
         			out.println();
-        			printNoFurtherInstancesAllowedJavadoc(out);
-        			out.println("\tprivate " + strategy.getJavaClassName(table) + "() {");
+        			if (generateInstanceFields()) {
+        			    out.print("\tpublic ");
+        			}
+        			else {
+        			    printNoFurtherInstancesAllowedJavadoc(out);
+        			    out.print("\tprivate ");
+        			}
+        			out.println(strategy.getJavaClassName(table) + "() {");
 
         			if (!schema.isDefaultSchema()) {
         			    out.println("\t\tsuper(\"" + table.getOutputName() + "\", " + strategy.getFullJavaIdentifier(schema) + ");");
@@ -619,10 +627,11 @@ public class DefaultGenerator implements Generator {
 
         			// [#117] With instance fields, it makes sense to create a
         			// type-safe table alias
+        			// [#1255] With instance fields, the table constructor may
+        			// be public, as tables are no longer singletons
         			if (generateInstanceFields()) {
-            			out.println();
-            			printNoFurtherInstancesAllowedJavadoc(out);
-            			out.print("\tprivate ");
+                        out.println();
+            			out.print("\tpublic ");
             			out.print(strategy.getJavaClassName(table));
             			out.print("(");
             			out.print(String.class);

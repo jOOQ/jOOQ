@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb.tables;
  */
 public class History extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord> {
 
-	private static final long serialVersionUID = 1851718220;
+	private static final long serialVersionUID = 1458708172;
 
 	/**
 	 * The singleton instance of PUBLIC.history
@@ -57,17 +57,11 @@ public class History extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.cubrid.demodb.tables.records.HistoryRecord, java.lang.String> UNIT = createField("unit", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private History() {
+	public History() {
 		super("history", org.jooq.examples.cubrid.demodb.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private History(java.lang.String alias) {
+	public History(java.lang.String alias) {
 		super(alias, org.jooq.examples.cubrid.demodb.Public.PUBLIC, org.jooq.examples.cubrid.demodb.tables.History.HISTORY);
 	}
 

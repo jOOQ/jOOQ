@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 544915531;
+	private static final long serialVersionUID = -1281873839;
 
 
 	/**
@@ -29,17 +29,17 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
+	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> SQLSET_OWNER = createParameter("SQLSET_OWNER", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> SQLSET_OWNER = createParameter("SQLSET_OWNER", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * Create a new routine call instance

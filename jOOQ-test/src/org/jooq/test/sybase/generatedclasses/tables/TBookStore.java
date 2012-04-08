@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -824330613;
+	private static final long serialVersionUID = 889537163;
 
 	/**
 	 * The singleton instance of dba.t_book_store
@@ -35,17 +35,11 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookStore() {
+	public TBookStore() {
 		super("t_book_store", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookStore(java.lang.String alias) {
+	public TBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 2057899184;
+	private static final long serialVersionUID = 1640812032;
 
 	/**
 	 * The singleton instance of PUBLIC.T_DATES
@@ -60,17 +60,11 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqld
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDates() {
+	public TDates() {
 		super("T_DATES", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TDates(java.lang.String alias) {
+	public TDates(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES);
 	}
 

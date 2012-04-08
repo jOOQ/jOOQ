@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -751492848;
+	private static final long serialVersionUID = 907139776;
 
 	/**
 	 * The singleton instance of PUBLIC.T_IDENTITY
@@ -38,17 +38,11 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gene
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("VAL", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TIdentity() {
+	public TIdentity() {
 		super("T_IDENTITY", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TIdentity(java.lang.String alias) {
+	public TIdentity(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 

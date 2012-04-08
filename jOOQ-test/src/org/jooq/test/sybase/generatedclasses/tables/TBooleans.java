@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 972070689;
+	private static final long serialVersionUID = 179486705;
 
 	/**
 	 * The singleton instance of dba.t_booleans
@@ -85,17 +85,11 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord, java.lang.Boolean> N_BOOLEAN = createField("n_boolean", org.jooq.impl.SQLDataType.BIT, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBooleans() {
+	public TBooleans() {
 		super("t_booleans", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBooleans(java.lang.String alias) {
+	public TBooleans(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS);
 	}
 

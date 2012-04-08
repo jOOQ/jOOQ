@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1856734085;
+	private static final long serialVersionUID = -751508949;
 
 	/**
 	 * The singleton instance of MULTI_SCHEMA.T_BOOK
@@ -93,17 +93,11 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook() {
+	public TBook() {
 		super("T_BOOK", org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBook(java.lang.String alias) {
+	public TBook(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.multi_schema.MultiSchema.MULTI_SCHEMA, org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK);
 	}
 

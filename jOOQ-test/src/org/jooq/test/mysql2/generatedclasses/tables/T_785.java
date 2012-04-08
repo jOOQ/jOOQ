@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 614041402;
+	private static final long serialVersionUID = 2138780346;
 
 	/**
 	 * The singleton instance of test2.t_785
@@ -43,17 +43,11 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_785() {
+	public T_785() {
 		super("t_785", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private T_785(java.lang.String alias) {
+	public T_785(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785);
 	}
 

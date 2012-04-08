@@ -10,7 +10,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -91635986;
+	private static final long serialVersionUID = 1578546334;
 
 	/**
 	 * The singleton instance of test2.x_unused
@@ -116,17 +116,11 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private XUnused() {
+	public XUnused() {
 		super("x_unused", org.jooq.test.mysql2.generatedclasses.Test2.TEST2);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private XUnused(java.lang.String alias) {
+	public XUnused(java.lang.String alias) {
 		super(alias, org.jooq.test.mysql2.generatedclasses.Test2.TEST2, org.jooq.test.mysql2.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 

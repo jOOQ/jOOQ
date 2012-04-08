@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -904632508;
+	private static final long serialVersionUID = -1629946604;
 
 	/**
 	 * The singleton instance of dba.t_author
@@ -62,17 +62,11 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor() {
+	public TAuthor() {
 		super("t_author", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TAuthor(java.lang.String alias) {
+	public TAuthor(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 

@@ -10,7 +10,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = -983452758;
+	private static final long serialVersionUID = 2040027130;
 
 	/**
 	 * The singleton instance of sakila.sales_by_store
@@ -45,17 +45,11 @@ public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.math.BigDecimal> TOTAL_SALES = createField("total_sales", org.jooq.impl.SQLDataType.DECIMAL, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private SalesByStore() {
+	public SalesByStore() {
 		super("sales_by_store", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private SalesByStore(java.lang.String alias) {
+	public SalesByStore(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE);
 	}
 

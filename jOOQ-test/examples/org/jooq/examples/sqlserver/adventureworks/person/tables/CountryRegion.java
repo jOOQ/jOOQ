@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables;
  */
 public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> {
 
-	private static final long serialVersionUID = 1264003475;
+	private static final long serialVersionUID = -1922798317;
 
 	/**
 	 * The singleton instance of Person.CountryRegion
@@ -45,17 +45,11 @@ public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private CountryRegion() {
+	public CountryRegion() {
 		super("CountryRegion", org.jooq.examples.sqlserver.adventureworks.person.Person.Person);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private CountryRegion(java.lang.String alias) {
+	public CountryRegion(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.person.Person.Person, org.jooq.examples.sqlserver.adventureworks.person.tables.CountryRegion.CountryRegion);
 	}
 

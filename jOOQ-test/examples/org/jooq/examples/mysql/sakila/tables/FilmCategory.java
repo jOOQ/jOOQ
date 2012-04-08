@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila.tables;
  */
 public class FilmCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> {
 
-	private static final long serialVersionUID = -1015910708;
+	private static final long serialVersionUID = -488560820;
 
 	/**
 	 * The singleton instance of sakila.film_category
@@ -59,17 +59,11 @@ public class FilmCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 */
 	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord, java.sql.Timestamp> LAST_UPDATE = createField("last_update", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private FilmCategory() {
+	public FilmCategory() {
 		super("film_category", org.jooq.examples.mysql.sakila.Sakila.SAKILA);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private FilmCategory(java.lang.String alias) {
+	public FilmCategory(java.lang.String alias) {
 		super(alias, org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY);
 	}
 

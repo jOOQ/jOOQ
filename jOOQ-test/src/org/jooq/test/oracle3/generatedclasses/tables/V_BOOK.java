@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  */
 public class V_BOOK extends org.jooq.impl.TableImpl<org.jooq.Record> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 300450232;
+	private static final long serialVersionUID = -1210271736;
 
 	/**
 	 * The singleton instance of TEST.V_BOOK
@@ -73,17 +73,11 @@ public class V_BOOK extends org.jooq.impl.TableImpl<org.jooq.Record> implements 
 	 */
 	public final org.jooq.TableField<org.jooq.Record, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private V_BOOK() {
+	public V_BOOK() {
 		super("V_BOOK", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private V_BOOK(java.lang.String alias) {
+	public V_BOOK(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.V_BOOK.V_BOOK);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
  */
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 775721301;
+	private static final long serialVersionUID = -1944188715;
 
 	/**
 	 * The singleton instance of dbo.v_library
@@ -38,17 +38,11 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.ge
 	 */
 	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary() {
+	public VLibrary() {
 		super("v_library", org.jooq.test.sqlserver.generatedclasses.Dbo.DBO);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private VLibrary(java.lang.String alias) {
+	public VLibrary(java.lang.String alias) {
 		super(alias, org.jooq.test.sqlserver.generatedclasses.Dbo.DBO, org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 

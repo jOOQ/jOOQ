@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 2054207449;
+	private static final long serialVersionUID = 1841972521;
 
 	/**
 	 * The singleton instance of PUBLIC.X_UNUSED
@@ -124,17 +124,11 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> PREPARED_STATEMENT = createField("PREPARED_STATEMENT", org.jooq.impl.SQLDataType.INTEGER, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private XUnused() {
+	public XUnused() {
 		super("X_UNUSED", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private XUnused(java.lang.String alias) {
+	public XUnused(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 

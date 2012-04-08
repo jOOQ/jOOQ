@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
  */
 public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1351358879;
+	private static final long serialVersionUID = 1424665241;
 
 
 	/**
@@ -24,17 +24,17 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
+	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> DB_ID = createParameter("DB_ID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
+	public static final org.jooq.Parameter<java.math.BigInteger> DB_ID = createParameter("DB_ID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
 
 	/**
 	 * An uncommented item
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FORMAT = createParameter("FORMAT", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
 	 * Create a new routine call instance

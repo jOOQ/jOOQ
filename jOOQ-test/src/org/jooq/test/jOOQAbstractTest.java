@@ -72,6 +72,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
+import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.debug.DebugListener;
@@ -696,9 +697,12 @@ public abstract class jOOQAbstractTest<
     }
 
     protected final Factory create() {
-        Settings settings = SettingsTools.defaultSettings().withExecuteListeners(
-            TestStatisticsListener.class.getName(),
-            DebugListener.class.getName());
+        Settings settings = SettingsTools.defaultSettings()
+            .withRenderMapping(new RenderMapping()
+                .withDefaultSchema(""))
+            .withExecuteListeners(
+                TestStatisticsListener.class.getName(),
+                DebugListener.class.getName());
 
         return create(settings);
     }

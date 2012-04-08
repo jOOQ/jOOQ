@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables;
  */
 public class CreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard> {
 
-	private static final long serialVersionUID = -988732784;
+	private static final long serialVersionUID = -1408269856;
 
 	/**
 	 * The singleton instance of Sales.CreditCard
@@ -60,17 +60,11 @@ public class CreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CreditCard, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private CreditCard() {
+	public CreditCard() {
 		super("CreditCard", org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private CreditCard(java.lang.String alias) {
+	public CreditCard(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.sales.Sales.Sales, org.jooq.examples.sqlserver.adventureworks.sales.tables.CreditCard.CreditCard);
 	}
 

@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class String extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> {
 
-	private static final long serialVersionUID = -1840122003;
+	private static final long serialVersionUID = -1057176851;
 
 	/**
 	 * The singleton instance of PUBLIC.STRING
@@ -38,17 +38,11 @@ public class String extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord, java.lang.String> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private String() {
+	public String() {
 		super("STRING", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private String(java.lang.String alias) {
+	public String(java.lang.String alias) {
 		super(alias, org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC, org.jooq.test.hsqldb.generatedclasses.tables.String.STRING);
 	}
 

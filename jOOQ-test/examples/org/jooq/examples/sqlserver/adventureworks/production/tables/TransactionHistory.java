@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables;
  */
 public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory> {
 
-	private static final long serialVersionUID = 1509123300;
+	private static final long serialVersionUID = -1951887004;
 
 	/**
 	 * The singleton instance of Production.TransactionHistory
@@ -81,17 +81,11 @@ public class TransactionHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistory, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TransactionHistory() {
+	public TransactionHistory() {
 		super("TransactionHistory", org.jooq.examples.sqlserver.adventureworks.production.Production.Production);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TransactionHistory(java.lang.String alias) {
+	public TransactionHistory(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.production.Production.Production, org.jooq.examples.sqlserver.adventureworks.production.tables.TransactionHistory.TransactionHistory);
 	}
 

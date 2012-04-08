@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables;
  */
 public class vJobCandidateEmployment extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment> {
 
-	private static final long serialVersionUID = 1863731069;
+	private static final long serialVersionUID = -2076411267;
 
 	/**
 	 * The singleton instance of HumanResources.vJobCandidateEmployment
@@ -83,17 +83,11 @@ public class vJobCandidateEmployment extends org.jooq.impl.TableImpl<org.jooq.ex
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vJobCandidateEmployment, java.lang.String> Emp_Loc_City = createField("Emp.Loc.City", org.jooq.impl.SQLDataType.NVARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private vJobCandidateEmployment() {
+	public vJobCandidateEmployment() {
 		super("vJobCandidateEmployment", org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private vJobCandidateEmployment(java.lang.String alias) {
+	public vJobCandidateEmployment(java.lang.String alias) {
 		super(alias, org.jooq.examples.sqlserver.adventureworks.humanresources.HumanResources.HumanResources, org.jooq.examples.sqlserver.adventureworks.humanresources.tables.vJobCandidateEmployment.vJobCandidateEmployment);
 	}
 

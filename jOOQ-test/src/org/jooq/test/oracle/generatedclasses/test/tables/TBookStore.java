@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  */
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 60595484;
+	private static final long serialVersionUID = 230577132;
 
 	/**
 	 * The singleton instance of TEST.T_BOOK_STORE
@@ -35,17 +35,11 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookStore() {
+	public TBookStore() {
 		super("T_BOOK_STORE", org.jooq.test.oracle.generatedclasses.test.Test.TEST);
 	}
 
-	/**
-	 * No further instances allowed
-	 */
-	private TBookStore(java.lang.String alias) {
+	public TBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE);
 	}
 

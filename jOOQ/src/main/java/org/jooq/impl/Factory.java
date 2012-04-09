@@ -2613,7 +2613,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the month part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MONTH}
      */
     @Support
@@ -2646,7 +2646,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the hour part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Date, DatePart)
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#HOUR}
      */
     @Support

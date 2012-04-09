@@ -117,6 +117,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 
@@ -658,6 +659,22 @@ public class EditorPane extends JPanel {
                         value = "\"" + value + "\"";
                     }
                     return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                }
+            });
+            final TableCellRenderer booleanRenderer = table.getDefaultRenderer(Boolean.class);
+            table.setDefaultRenderer(Boolean.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component c = null;
+                    if(value == null) {
+                        c = super.getTableCellRendererComponent(table, " ", isSelected, hasFocus, row, column);
+                    } else {
+                        c = booleanRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    }
+                    if(!isSelected) {
+                        c.setBackground(row %2 == 0? UIManager.getColor("Table.background"): JTableX.getTableAlternateRowBackgroundColor());
+                    }
+                    return c;
                 }
             });
             table.setDefaultRenderer(Timestamp.class, new DefaultTableCellRenderer() {

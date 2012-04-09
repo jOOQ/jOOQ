@@ -124,6 +124,7 @@ create.select(FIRST_NAME, LAST_NAME, count())
     as well as some 130 integration tests with an overall of around 900 queries for any
     of these databases:</p>
 <ul>
+    <li>CUBRID 8.4.1</li>
     <li>DB2 9.7</li>
     <li>Derby 10.8</li>
     <li>H2 1.3.161</li>

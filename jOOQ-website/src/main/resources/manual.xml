@@ -3594,12 +3594,13 @@ Field<Integer> position(Field<String> field, Field<String> search);]]></java>
 								slightly different semantics. Here are some examples from
 								Factory: </p>
 
-<java><![CDATA[// Every-day functions
+<java><![CDATA[// Every-day, SQL standard aggregate functions
 AggregateFunction<Integer> count(Field<?> field);
 AggregateFunction<T> max(Field<T> field);
 AggregateFunction<T> min(Field<T> field);
 AggregateFunction<BigDecimal> sum(Field<? extends Number> field);
 AggregateFunction<BigDecimal> avg(Field<? extends Number> field);
+
 
 // DISTINCT keyword in aggregate functions
 AggregateFunction<Integer> countDistinct(Field<?> field);
@@ -3607,6 +3608,12 @@ AggregateFunction<T> maxDistinct(Field<T> field);
 AggregateFunction<T> minDistinct(Field<T> field);
 AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field);
 AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field);
+
+// String aggregate functions
+AggregateFunction<String> groupConcat(Field<?> field);
+AggregateFunction<String> groupConcatDistinct(Field<?> field);
+OrderedAggregateFunction<String> listAgg(Field<?> field);
+OrderedAggregateFunction<String> listAgg(Field<?> field, String separator);
 
 // Statistical functions
 AggregateFunction<BigDecimal> median(Field<? extends Number> field);

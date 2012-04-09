@@ -64,7 +64,7 @@ public class JTableX extends JTable {
     private static final Color EVEN_ROW_COLOR = Color.WHITE;
     private static final Color ODD_ROW_COLOR = getTableAlternateRowBackgroundColor();
 
-    private static Color getTableAlternateRowBackgroundColor() {
+    public static Color getTableAlternateRowBackgroundColor() {
         Color defaultBackground = UIManager.getDefaults().getColor("Panel.background");
         Color c = new Color((defaultBackground.getRed() + 0xFF) / 2, (defaultBackground.getGreen() + 0xFF) / 2, (defaultBackground.getBlue() + 0xFF) / 2);
         return c;

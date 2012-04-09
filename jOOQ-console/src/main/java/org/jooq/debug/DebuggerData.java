@@ -49,6 +49,7 @@ public class DebuggerData implements Serializable {
     private int id;
     private SqlQueryType queryType;
     private String[] queries;
+    private String parameterDescription;
     private Long preparationDuration;
     private Long bindingDuration;
     private long executionDuration;
@@ -56,7 +57,7 @@ public class DebuggerData implements Serializable {
     private long threadID;
     private StackTraceElement[] callerStackTraceElements;
 
-    public DebuggerData(SqlQueryType queryType, String[] queries, Long preparationDuration, Long bindingDuration, long executionDuration) {
+    public DebuggerData(SqlQueryType queryType, String[] queries, String parameterDescription, Long preparationDuration, Long bindingDuration, long executionDuration) {
         this.id = nextID++;
         Thread currentThread = Thread.currentThread();
         this.threadName = currentThread.getName();
@@ -64,6 +65,7 @@ public class DebuggerData implements Serializable {
         this.callerStackTraceElements = new Exception().getStackTrace();
         this.queryType = queryType;
         this.queries = queries;
+        this.parameterDescription = parameterDescription;
         this.preparationDuration = preparationDuration;
         this.bindingDuration = bindingDuration;
         this.executionDuration = executionDuration;
@@ -91,6 +93,13 @@ public class DebuggerData implements Serializable {
 
     public String[] getQueries() {
         return queries;
+    }
+
+    /**
+     * @return non null if queries consist of a single prepared statement with parameters.
+     */
+    public String getParameterDescription() {
+        return parameterDescription;
     }
 
     public Long getPreparedStatementPreparationDuration() {

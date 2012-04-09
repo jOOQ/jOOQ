@@ -759,7 +759,12 @@ public class LoggerPane extends JPanel {
             return sqlQueryDebuggerData.getQueryType();
         }
         public String[] getQueries() {
-            return sqlQueryDebuggerData.getQueries();
+            String parameterDescription = sqlQueryDebuggerData.getParameterDescription();
+            String[] queries = sqlQueryDebuggerData.getQueries();
+            if(parameterDescription != null) {
+                return new String[] {queries[0] + " -> " + parameterDescription};
+            }
+            return queries;
         }
         public Throwable getThrowable() {
             return throwable;

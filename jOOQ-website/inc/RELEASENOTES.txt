@@ -9,6 +9,86 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.2.0 - April 09, 2012
+=================================================================
+
+Finally, jOOQ has added support for another database, and a very
+promising one, that is. http://www.cubrid.org is a surprisingly
+original mixture of a relational and object-oriented database
+where tables and classes are synonyms, so are records and
+instances. The CUBRID database has a high level of compatibility
+with MySQL and is aimed at MySQL users wanting more performance
+for their web applications. For details, see the slides here:
+
+http://www.slideshare.net/cubrid/growing-in-the-wild-the-story-by-cubrid-database-developers
+
+jOOQ is proud to have become a CUBRID partner, looking forward
+to further cooperation with CUBRID in the near future.
+
+Apart from that, jOOQ now fully supports SQL standard INTERVAL
+data types. With JDBC and JPA lacking official support for this,
+jOOQ aims for becoming the tool of choice for vendor-specific
+date time arithmetic. True INTERVAL data type support is given in
+HSQLDB, Ingres, Oracle, Postgres databases. Besides that, CUBRID
+and MySQL support INTERVAL data type arguments in functions. In
+other dialects, jOOQ simulates DATEADD(), TIMESTAMPADD(),
+DATEDIFF(), TIMESTAMPDIFF().
+
+For jOOQ's OLAP friends, there is now also support for the Oracle
+LISTAGG function (LIST() in Sybase, XMLAGG() in DB2, STRING_AGG()
+in Postgres, GROUP_CONCAT() in CUBRID, H2, HSQLDB, MySQL).
+LISTAGG is an "ordered aggregate function", meaning that the
+aggregation is done using a specific ordering. Keep an eye out
+for more such function support in future versions.
+
+Features and improvements
+-------------------------
+#566  - Add support for INTERVAL data types
+#585  - Add support for DATE, TIME and INTERVAL arithmetic
+#1183 - Add support for DEFAULT values in Oracle stored procedure
+        parameters
+#1243 - Let generated POJOs (and Records) extend base classes
+        and implement interfaces
+#1252 - Avoid JDBC escape syntax for Oracle stored procedure
+        calls. Generate PL/SQL syntax, instead
+#1255 - Let generated Tables contain a public default constructor
+        to be able to extend those classes - Github issue #12
+#1257 - Add CUBRID support
+#1268 - Add Factory.field(String, QueryPart...) to generate
+        custom clauses
+#1269 - Add YEAR(), MONTH(), DAY(), HOUR(), MINUTE(), SECOND()
+        function support as shortcuts for EXTRACT()
+#1273 - Simulate GROUP_CONCAT() aggregate function using Oracle's
+        LISTAGG() function, where available
+#1274 - Add support for the Oracle LISTAGG(...) WITHIN GROUP
+        (ORDER BY ..) [ OVER (..) ] aggregate / analytic function
+#1275 - Simulate Sybase LIST() aggregate function using Oracle's
+        LISTAGG() function
+#1276 - Simulate Oracle's LISTAGG() in DB2 using XMLAGG(),
+        SUBSTR() and CONCAT()
+#1278 - DEBUG log both executed SQL and SQL with inlined bind
+        values
+
+API changes (backwards-compatible)
+----------------------------------
+#1262 - Pull up OracleFactory.prior() and other CONNECT BY
+        related methods to Factory
+
+Bug fixes
+---------
+#1241 - Wrong variable binding when comparing CHAR columns in
+        Derby and DB2 without explicit casting to VARCHAR
+#1244 - Cannot override class name in GeneratorStrategy in
+        Mode.POJO
+#1248 - Setting both <records>false</records> and
+        <relations>true</relations> leads to compilation errors
+#1256 - Fixed code generation issue with H2 user defined
+        functions returning VARCHAR
+#1263 - Pass fetchsizes <= 0 to the JDBC driver (for vendor-
+        specific MySQL compatibility)
+#1270 - Most databases allow for multiple identical foreign keys.
+        This leads to compilation errors in generated source code
+
 Version 2.1.0 - March 18, 2012
 =================================================================
 

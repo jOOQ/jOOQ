@@ -3833,12 +3833,13 @@ Field&lt;Integer&gt; position(Field&lt;String&gt; field, Field&lt;String&gt; sea
 								slightly different semantics. Here are some examples from
 								Factory: </p>
 
-<pre class="prettyprint lang-java">// Every-day functions
+<pre class="prettyprint lang-java">// Every-day, SQL standard aggregate functions
 AggregateFunction&lt;Integer&gt; count(Field&lt;?&gt; field);
 AggregateFunction&lt;T&gt; max(Field&lt;T&gt; field);
 AggregateFunction&lt;T&gt; min(Field&lt;T&gt; field);
 AggregateFunction&lt;BigDecimal&gt; sum(Field&lt;? extends Number&gt; field);
 AggregateFunction&lt;BigDecimal&gt; avg(Field&lt;? extends Number&gt; field);
+
 
 // DISTINCT keyword in aggregate functions
 AggregateFunction&lt;Integer&gt; countDistinct(Field&lt;?&gt; field);
@@ -3846,6 +3847,12 @@ AggregateFunction&lt;T&gt; maxDistinct(Field&lt;T&gt; field);
 AggregateFunction&lt;T&gt; minDistinct(Field&lt;T&gt; field);
 AggregateFunction&lt;BigDecimal&gt; sumDistinct(Field&lt;? extends Number&gt; field);
 AggregateFunction&lt;BigDecimal&gt; avgDistinct(Field&lt;? extends Number&gt; field);
+
+// String aggregate functions
+AggregateFunction&lt;String&gt; groupConcat(Field&lt;?&gt; field);
+AggregateFunction&lt;String&gt; groupConcatDistinct(Field&lt;?&gt; field);
+OrderedAggregateFunction&lt;String&gt; listAgg(Field&lt;?&gt; field);
+OrderedAggregateFunction&lt;String&gt; listAgg(Field&lt;?&gt; field, String separator);
 
 // Statistical functions
 AggregateFunction&lt;BigDecimal&gt; median(Field&lt;? extends Number&gt; field);

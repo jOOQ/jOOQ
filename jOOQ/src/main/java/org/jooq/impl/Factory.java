@@ -2591,7 +2591,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the year part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#YEAR}
      */
     @Support
@@ -2635,7 +2635,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the day part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DAY}
      */
     @Support
@@ -2646,7 +2646,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the hour part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Date, DatePart)}
+     * This is the same as calling {@link #extract(java.util.Date, DatePart)
      * with {@link DatePart#HOUR}
      */
     @Support
@@ -2657,7 +2657,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the hour part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#HOUR}
      */
     @Support
@@ -2679,7 +2679,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the minute part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MINUTE}
      */
     @Support
@@ -2701,7 +2701,7 @@ public class Factory implements FactoryOperations {
     /**
      * Get the second part of a date
      * <p>
-     * This is the same as calling {@link #extract(java.util.Field, DatePart)}
+     * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#SECOND}
      */
     @Support
@@ -4285,7 +4285,7 @@ public class Factory implements FactoryOperations {
      * <li> {@link SQLDialect#SYBASE}: Using <code>LIST()</code></li>
      * </ul>
      *
-     * @see #groupConcat(Field, String)
+     * @see #groupConcat(Field)
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {

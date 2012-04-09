@@ -377,7 +377,6 @@ public interface Field<T> extends NamedTypeProviderQueryPart<T>, AliasProvider<F
      * methods:
      * <ul>
      * <li> {@link Factory#dateDiff(Field, Field)}</li>
-     * <li> {@link Factory#timeDiff(Field, Field)}</li>
      * <li> {@link Factory#timestampDiff(Field, Field)}</li>
      * </ul>
      */

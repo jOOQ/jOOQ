@@ -151,7 +151,6 @@
                         <Export-Package>*</Export-Package>
                         <Import-Package>
                             javax.persistence;resolution:=optional,
-                            oracle.sql;resolution:=optional,
                             org.apache.log4j;resolution:=optional,
                             *
                         </Import-Package>

@@ -128,17 +128,14 @@ public class DebugListener extends DefaultExecuteListener {
 		ResultSet resultSet = ctx.resultSet();
 		String[] sql = ctx.batchSQL();
 		SqlQueryType sqlQueryType = SqlQueryType.detectType(sql[0]);
+		String parameterDescription = null;
 		if(sql.length == 1) {
 		    PreparedStatement statement = ctx.statement();
 		    if(statement instanceof UsageTrackingPreparedStatement) {
-		        String parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
-		        if(parameterDescription != null) {
-		            // Make a copy to not change internal structure.
-		            sql = new String[] {sql[0] + " -> " + parameterDescription};
-		        }
+		        parameterDescription = ((UsageTrackingPreparedStatement) statement).getParameterDescription();
 		    }
 		}
-		DebuggerData sqlQueryDebuggerData = new DebuggerData(sqlQueryType, sql, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
+		DebuggerData sqlQueryDebuggerData = new DebuggerData(sqlQueryType, sql, parameterDescription, startPreparationTime == 0? null: aggregatedPreparationDuration, startBindTime == 0? null: endBindTime - startBindTime, endExecutionTime - startExecutionTime);
 		for(Debugger listener: sqlQueryDebuggerList) {
 			listener.debugQueries(sqlQueryDebuggerData);
 		}

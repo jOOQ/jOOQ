@@ -89,6 +89,8 @@ import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.reflect.Reflect;
+import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
 
 
@@ -2809,18 +2811,25 @@ public class DefaultGenerator implements Generator {
 
             // Otherwise, reference the dialect-specific DataType itself.
             else {
-                sb.append("org.jooq.util.");
-                sb.append(db.getDialect().getName().toLowerCase());
+                String typeClass =
+                    "org.jooq.util." +
+                    db.getDialect().getName().toLowerCase() +
+                    "."+
+                    db.getDialect().getName()+
+                    "DataType";
+
+                sb.append(typeClass);
                 sb.append(".");
-                sb.append(db.getDialect().getName());
-                sb.append("DataType.");
 
                 try {
                     String type1 = getType(db, schema, t, p, s, u, null);
                     String type2 = getType(db, schema, t, 0, 0, u, null);
+                    String typeName = FieldTypeHelper.normalise(t);
 
-                    sb.append(FieldTypeHelper.normalise(t));
+                    // [#1298] Prevent compilation errors for missing types
+                    Reflect.on(typeClass).field(typeName);
 
+                    sb.append(typeName);
                     if (!type1.equals(type2)) {
                         Class<?> clazz = FieldTypeHelper.getDialectJavaType(db.getDialect(), t, p, s);
 
@@ -2832,6 +2841,13 @@ public class DefaultGenerator implements Generator {
 
                 // Mostly because of unsupported data types
                 catch (SQLDialectNotSupportedException e) {
+                    sb.append("getDefaultDataType(\"");
+                    sb.append(t);
+                    sb.append("\")");
+                }
+
+                // More unsupported data types
+                catch (ReflectException e) {
                     sb.append("getDefaultDataType(\"");
                     sb.append(t);
                     sb.append("\")");

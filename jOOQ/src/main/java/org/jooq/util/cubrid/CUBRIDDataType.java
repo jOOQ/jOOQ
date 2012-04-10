@@ -86,6 +86,7 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
     public static final CUBRIDDataType<String>     NCHARVARYING             = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "nchar varying");
     public static final CUBRIDDataType<String>     NATIONALCHARVARYING      = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "national char varying");
     public static final CUBRIDDataType<String>     NATIONALCHARACTERVARYING = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "national character varying");
+    public static final CUBRIDDataType<String>     VARNCHAR                 = new CUBRIDDataType<String>(SQLDataType.NVARCHAR, "varnchar");
     public static final CUBRIDDataType<String>     CLOB                     = new CUBRIDDataType<String>(SQLDataType.CLOB, "clob");
 
     public static final CUBRIDDataType<Date>       DATE                     = new CUBRIDDataType<Date>(SQLDataType.DATE, "date");
@@ -94,6 +95,7 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
     public static final CUBRIDDataType<Timestamp>  TIMESTAMP                = new CUBRIDDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
 
     public static final CUBRIDDataType<byte[]>     BITVARYING               = new CUBRIDDataType<byte[]>(SQLDataType.VARBINARY, "bitvarying");
+    public static final CUBRIDDataType<byte[]>     VARBIT                   = new CUBRIDDataType<byte[]>(SQLDataType.VARBINARY, "varbit");
     public static final CUBRIDDataType<byte[]>     BIT                      = new CUBRIDDataType<byte[]>(SQLDataType.BINARY, "bit");
     public static final CUBRIDDataType<byte[]>     BLOB                     = new CUBRIDDataType<byte[]>(SQLDataType.BLOB, "blob");
 
@@ -122,6 +124,14 @@ public class CUBRIDDataType<T> extends AbstractDataType<T> {
     // -------------------------------------------------------------------------
 
     public static final CUBRIDDataType<Double> MONETARY             = new CUBRIDDataType<Double>(SQLDataType.DOUBLE, "monetary");
+
+    // These types are not yet formally supported
+    public static final CUBRIDDataType<Object> OBJECT               = new CUBRIDDataType<Object>(SQLDataType.OTHER, "object");
+    public static final CUBRIDDataType<Object> OID                  = new CUBRIDDataType<Object>(SQLDataType.OTHER, "oid");
+    public static final CUBRIDDataType<Object> ELO                  = new CUBRIDDataType<Object>(SQLDataType.OTHER, "elo");
+    public static final CUBRIDDataType<Object> MULTISET             = new CUBRIDDataType<Object>(SQLDataType.OTHER, "multiset");
+    public static final CUBRIDDataType<Object> SEQUENCE             = new CUBRIDDataType<Object>(SQLDataType.OTHER, "sequence");
+    public static final CUBRIDDataType<Object> SET                  = new CUBRIDDataType<Object>(SQLDataType.OTHER, "set");
 
     private CUBRIDDataType(SQLDataType<T> sqlDataType, String typeName) {
         super(SQLDialect.CUBRID, sqlDataType, sqlDataType.getType(), typeName);

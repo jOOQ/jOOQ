@@ -41,6 +41,7 @@ import static org.jooq.impl.Factory.field;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.RenderContext;
+import org.jooq.Schema;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -73,7 +74,7 @@ class SequenceFunction<T extends Number> extends AbstractFunction<T> {
                 String field = getQualifiedName(configuration) + "." + method;
                 return field(field, getDataType());
             }
-            
+
             case H2:
             case POSTGRES: {
                 String field = method + "('" + getQualifiedName(configuration) + "')";
@@ -114,9 +115,10 @@ class SequenceFunction<T extends Number> extends AbstractFunction<T> {
 
     private final String getQualifiedName(Configuration configuration) {
         RenderContext local = create(configuration).renderContext();
+        Schema mappedSchema = Util.getMappedSchema(configuration, sequence.schema);
 
-        if (sequence.schema != null && configuration.getDialect() != CUBRID) {
-            local.sql(Util.getMappedSchema(configuration, sequence.schema));
+        if (mappedSchema != null && configuration.getDialect() != CUBRID) {
+            local.sql(mappedSchema);
             local.sql(".");
         }
 

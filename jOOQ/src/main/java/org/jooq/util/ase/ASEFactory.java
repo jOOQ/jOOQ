@@ -105,9 +105,6 @@ public class ASEFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
      */
     public ASEFactory() {
         super(SQLDialect.ASE);

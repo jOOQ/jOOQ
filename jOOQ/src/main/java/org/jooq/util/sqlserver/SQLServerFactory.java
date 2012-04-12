@@ -110,9 +110,6 @@ public class SQLServerFactory extends Factory {
      * <p>
      * Without a connection, this factory cannot execute queries. Use it to
      * render SQL only.
-     *
-     * @param connection The connection to use with objects created from this
-     *            factory
      */
     public SQLServerFactory() {
         super(SQLDialect.SQLSERVER);

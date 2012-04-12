@@ -9,6 +9,25 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.2.1 - April 12, 2012
+=================================================================
+
+This is a minor patch release, fixing some issues related to the
+code generation of the new CUBRID integration as well as other,
+minor issues. Upgrade if you're using CUBRID
+
+Bug fixes
+---------
+#1287 - Remove oracle.sql dependency also from OSGi information
+        in pom.xml
+#1288 - SQL syntax errors from sequences when using RenderMapping
+        with defaultSchema
+#1289 - DefaultBindContext logs as Util.class
+#1297 - Compilation error in CUBRID generated artefacts
+        referencing OBJECT types
+#1298 - Avoid source code generation errors when generating code
+        for unknown, dialect-specific data types
+
 Version 2.2.0 - April 09, 2012
 =================================================================
 

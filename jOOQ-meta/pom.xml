@@ -36,6 +36,55 @@
 		<finalName>${project.artifactId}-${project.version}</finalName>
 
 		<plugins>
+
+		    <!-- XJC-generate JAXB artefacts. Contribution is the courtesy
+		         of Sergey Epik -->
+			<plugin>
+			    <groupId>org.jvnet.jaxb2.maven2</groupId>
+			    <artifactId>maven-jaxb2-plugin</artifactId>
+			    <version>0.8.1</version>
+			    <executions>
+			        <execution>
+			            <goals>
+			                <goal>generate</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			    <configuration>
+			        <extension>true</extension>
+			        <strict>false</strict>
+			        <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+			        <schemaIncludes>
+			            <include>jooq-codegen-2.1.0.xsd</include>
+			        </schemaIncludes>
+			        <generatePackage>org.jooq.util.jaxb</generatePackage>
+			        <args>
+			            <arg>-Xxew</arg>
+			            <arg>-Xxew:instantiate lazy</arg>
+			            <arg>-Xxew:delete</arg>
+			            <arg>-Xfluent-api</arg>
+			            <arg>-Xdefault-value</arg>
+			        </args>
+			        <plugins>
+			            <plugin>
+			                <groupId>com.github.jaxb-xew-plugin</groupId>
+			                <artifactId>jaxb-xew-plugin</artifactId>
+			                <version>1.0</version>
+			           </plugin>
+			            <plugin>
+			                <groupId>org.jvnet.jaxb2_commons</groupId>
+			                <artifactId>jaxb2-fluent-api</artifactId>
+			                <version>3.0</version>
+			            </plugin>
+			            <plugin>
+			                <groupId>org.jvnet.jaxb2_commons</groupId>
+			                <artifactId>jaxb2-default-value</artifactId>
+			                <version>1.1</version>
+			            </plugin>
+			        </plugins>
+			    </configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -117,7 +166,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -133,7 +182,7 @@
 		<system>Trac</system>
 		<url>https://sourceforge.net/apps/trac/jooq/report/6</url>
 	</issueManagement>
-	
+
 	<developers>
 		<developer>
 			<name>Lukas Eder</name>

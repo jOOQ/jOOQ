@@ -94,6 +94,32 @@ public class OracleFactory extends Factory {
         super(connection, SQLDialect.ORACLE);
     }
 
+    /**
+     * Create a factory with settings configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public OracleFactory(Settings settings) {
+        super(SQLDialect.ORACLE, settings);
+    }
+
+    /**
+     * Create a connection-less factory
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     */
+    public OracleFactory() {
+        super(SQLDialect.ORACLE);
+    }
+
     // -------------------------------------------------------------------------
     // General pseudo-columns
     // -------------------------------------------------------------------------

@@ -91,4 +91,30 @@ public class SQLServerFactory extends Factory {
     public SQLServerFactory(Connection connection) {
         super(connection, SQLDialect.SQLSERVER);
     }
+
+    /**
+     * Create a factory with settings configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public SQLServerFactory(Settings settings) {
+        super(SQLDialect.SQLSERVER, settings);
+    }
+
+    /**
+     * Create a connection-less factory
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     */
+    public SQLServerFactory() {
+        super(SQLDialect.SQLSERVER);
+    }
 }

@@ -185,7 +185,7 @@ public class Factory implements FactoryOperations {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a factory with connection and dialect configured
+     * Create a factory with a connection and a dialect configured
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -196,7 +196,19 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a factory with connection, a dialect and a schema mapping
+     * Create a factory with a dialect configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param dialect The dialect to use with objects created from this factory
+     */
+    public Factory(SQLDialect dialect) {
+        this(null, dialect, null, null, null);
+    }
+
+    /**
+     * Create a factory with a connection, a dialect and a schema mapping
      * configured
      *
      * @param connection The connection to use with objects created from this
@@ -213,8 +225,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * Create a factory with connection, a dialect and a schema mapping
-     * configured
+     * Create a factory with a connection, a dialect and settings configured
      *
      * @param connection The connection to use with objects created from this
      *            factory
@@ -225,6 +236,21 @@ public class Factory implements FactoryOperations {
     @SuppressWarnings("deprecation")
     public Factory(Connection connection, SQLDialect dialect, Settings settings) {
         this(connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+    }
+
+    /**
+     * Create a factory with a dialect and settings configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param dialect The dialect to use with objects created from this factory
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    @SuppressWarnings("deprecation")
+    public Factory(SQLDialect dialect, Settings settings) {
+        this(null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
     }
 
     /**

@@ -499,8 +499,10 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
-        if (Util.getMappedSchema(context, getSchema()) != null) {
-            context.sql(Util.getMappedSchema(context, getSchema()));
+        Schema mappedSchema = Util.getMappedSchema(context, getSchema());
+
+        if (mappedSchema != null) {
+            context.sql(mappedSchema);
             context.sql(".");
         }
 

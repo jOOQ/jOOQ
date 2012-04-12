@@ -99,6 +99,7 @@ public class SchemaMapping implements Serializable {
 
     private final RenderMapping             mapping;
     private final boolean                   ignoreMapping;
+    private final boolean                   renderSchema;
     private transient Map<String, Schema>   schemata;
     private transient Map<String, Table<?>> tables;
 
@@ -120,10 +121,18 @@ public class SchemaMapping implements Serializable {
      * Auxiliary constructor used for backwards-compatibility.
      */
     private SchemaMapping(Settings settings, boolean ignore) {
+        boolean isRenderSchema = true;
+
         if (settings == null) {
             logDeprecation();
         }
+        else {
+            if (settings.isRenderSchema() != null) {
+                isRenderSchema = settings.isRenderSchema();
+            }
+        }
 
+        this.renderSchema = isRenderSchema;
         this.mapping = SettingsTools.getRenderMapping(settings);
         this.ignoreMapping = ignore;
     }
@@ -292,8 +301,9 @@ public class SchemaMapping implements Serializable {
      */
     public Schema map(Schema schema) {
         if (ignoreMapping) return schema;
-        Schema result = null;
+        if (!renderSchema) return null;
 
+        Schema result = null;
         if (schema != null) {
             String schemaName = schema.getName();
 

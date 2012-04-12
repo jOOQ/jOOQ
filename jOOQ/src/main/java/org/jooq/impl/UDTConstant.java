@@ -44,6 +44,7 @@ import org.jooq.Attachable;
 import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
+import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -143,9 +144,10 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             // Assume default behaviour if dialect is not available
             default: {
                 UDT<?> udt = record.getUDT();
+                Schema mappedSchema = Util.getMappedSchema(context, udt.getSchema());
 
-                if (Util.getMappedSchema(context, udt.getSchema()) != null) {
-                    return Util.getMappedSchema(context, udt.getSchema()) + "." + udt.getName();
+                if (mappedSchema != null) {
+                    return mappedSchema + "." + udt.getName();
                 }
                 else {
                     return udt.getName();

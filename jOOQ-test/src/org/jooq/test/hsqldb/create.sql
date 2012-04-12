@@ -85,6 +85,8 @@ CREATE TABLE t_dates (
   ts timestamp,
   d_int int,
   ts_bigint bigint,
+  i_y interval year to month,
+  i_d interval day to second,
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )

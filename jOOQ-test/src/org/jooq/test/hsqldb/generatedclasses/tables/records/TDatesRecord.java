@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
  */
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 637300834;
+	private static final long serialVersionUID = -344451154;
 
 	/**
 	 * An uncommented item
@@ -96,6 +96,34 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.TS_BIGINT);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setIY(org.jooq.types.YearToMonth value) {
+		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_Y, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public org.jooq.types.YearToMonth getIY() {
+		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_Y);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public void setID(org.jooq.types.DayToSecond value) {
+		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_D, value);
+	}
+
+	/**
+	 * An uncommented item
+	 */
+	public org.jooq.types.DayToSecond getID() {
+		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_D);
 	}
 
 	/**

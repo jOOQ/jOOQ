@@ -108,8 +108,10 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
             alias.toSQL(context);
         }
         else {
-            if (Util.getMappedSchema(context, getSchema()) != null) {
-                context.sql(Util.getMappedSchema(context, getSchema()));
+            Schema mappedSchema = Util.getMappedSchema(context, getSchema());
+
+            if (mappedSchema != null) {
+                context.sql(mappedSchema);
                 context.sql(".");
             }
 

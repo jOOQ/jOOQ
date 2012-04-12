@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
  */
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1640812032;
+	private static final long serialVersionUID = -833983098;
 
 	/**
 	 * The singleton instance of PUBLIC.T_DATES
@@ -59,6 +59,16 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqld
 	 * An uncommented item
 	 */
 	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
+
+	/**
+	 * An uncommented item
+	 */
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord, org.jooq.types.YearToMonth> I_Y = createField("I_Y", org.jooq.impl.SQLDataType.INTERVALYEARTOMONTH, this);
+
+	/**
+	 * An uncommented item
+	 */
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND, this);
 
 	public TDates() {
 		super("T_DATES", org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC);

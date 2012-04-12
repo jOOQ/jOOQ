@@ -698,8 +698,10 @@ public abstract class jOOQAbstractTest<
 
     protected final Factory create() {
         String defaultSchema = System.getProperty("org.jooq.settings.defaultSchema", "");
+        Boolean renderSchema = Boolean.valueOf(System.getProperty("org.jooq.settings.renderSchema", "true"));
 
         Settings settings = SettingsTools.defaultSettings()
+            .withRenderSchema(renderSchema)
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema))
             .withExecuteListeners(

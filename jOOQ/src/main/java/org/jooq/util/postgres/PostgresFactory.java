@@ -91,4 +91,30 @@ public class PostgresFactory extends Factory {
     public PostgresFactory(Connection connection) {
         super(connection, SQLDialect.POSTGRES);
     }
+
+    /**
+     * Create a factory with settings configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public PostgresFactory(Settings settings) {
+        super(SQLDialect.POSTGRES, settings);
+    }
+
+    /**
+     * Create a connection-less factory
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     */
+    public PostgresFactory() {
+        super(SQLDialect.POSTGRES);
+    }
 }

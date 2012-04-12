@@ -91,4 +91,30 @@ public class H2Factory extends Factory {
     public H2Factory(Connection connection) {
         super(connection, SQLDialect.H2);
     }
+
+    /**
+     * Create a factory with settings configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public H2Factory(Settings settings) {
+        super(SQLDialect.H2, settings);
+    }
+
+    /**
+     * Create a connection-less factory
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     */
+    public H2Factory() {
+        super(SQLDialect.H2);
+    }
 }

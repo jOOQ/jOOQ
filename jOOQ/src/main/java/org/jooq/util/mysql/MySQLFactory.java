@@ -94,6 +94,32 @@ public class MySQLFactory extends Factory {
         super(connection, SQLDialect.MYSQL);
     }
 
+    /**
+     * Create a factory with settings configured
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param settings The runtime settings to apply to objects created from
+     *            this factory
+     */
+    public MySQLFactory(Settings settings) {
+        super(SQLDialect.MYSQL, settings);
+    }
+
+    /**
+     * Create a connection-less factory
+     * <p>
+     * Without a connection, this factory cannot execute queries. Use it to
+     * render SQL only.
+     *
+     * @param connection The connection to use with objects created from this
+     *            factory
+     */
+    public MySQLFactory() {
+        super(SQLDialect.MYSQL);
+    }
+
     // -------------------------------------------------------------------------
     // MySQL-specific compression and encryption functions
     // -------------------------------------------------------------------------

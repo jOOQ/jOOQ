@@ -66,6 +66,7 @@ class Nvl2<T> extends AbstractFunction<T> {
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case H2:
+            case HSQLDB:
             case INGRES:
             case ORACLE:
                 return function("nvl2", getDataType(), getArguments());

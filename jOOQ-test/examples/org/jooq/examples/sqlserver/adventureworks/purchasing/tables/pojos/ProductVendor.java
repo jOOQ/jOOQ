@@ -12,18 +12,35 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 })
 public class ProductVendor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 661921819;
+	private static final long serialVersionUID = 239163359;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    VendorID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    AverageLeadTime;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal StandardPrice;
 	private java.math.BigDecimal LastReceiptCost;
 	private java.sql.Timestamp   LastReceiptDate;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    MinOrderQty;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    MaxOrderQty;
 	private java.lang.Integer    OnOrderQty;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String     UnitMeasureCode;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)

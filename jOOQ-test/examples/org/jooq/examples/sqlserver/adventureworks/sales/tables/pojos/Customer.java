@@ -10,13 +10,25 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "Customer", schema = "Sales")
 public class Customer implements java.io.Serializable {
 
-	private static final long serialVersionUID = 372374611;
+	private static final long serialVersionUID = -1257221465;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  CustomerID;
 	private java.lang.Integer  TerritoryID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String   AccountNumber;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 1)
 	private java.lang.String   CustomerType;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

@@ -125,6 +125,7 @@
             <generatedAnnotation>false</generatedAnnotation>
             <pojos>true</pojos>
             <jpaAnnotations>true</jpaAnnotations>
+            <validationAnnotations>true</validationAnnotations>
         </generate>
         <target>
             <packageName>org.jooq.test.oracle.generatedclasses</packageName>

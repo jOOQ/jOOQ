@@ -12,10 +12,18 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class CountryRegionCurrency implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1163629495;
+	private static final long serialVersionUID = -975293463;
 
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String   CountryRegionCode;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String   CurrencyCode;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "CountryRegionCode", nullable = false, length = 3)

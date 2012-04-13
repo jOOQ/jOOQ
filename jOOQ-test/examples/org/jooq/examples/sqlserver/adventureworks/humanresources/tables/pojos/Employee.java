@@ -10,23 +10,58 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "Employee", schema = "HumanResources")
 public class Employee implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1424024593;
+	private static final long serialVersionUID = -248178844;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  EmployeeID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String   NationalIDNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   LoginID;
 	private java.lang.Integer  ManagerID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Title;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp BirthDate;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 1)
 	private java.lang.String   MaritalStatus;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 1)
 	private java.lang.String   Gender;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp HireDate;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean  SalariedFlag;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short    VacationHours;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short    SickLeaveHours;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean  CurrentFlag;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

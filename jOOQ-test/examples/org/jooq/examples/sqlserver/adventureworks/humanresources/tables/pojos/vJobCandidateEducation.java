@@ -10,20 +10,40 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vJobCandidateEducation", schema = "HumanResources")
 public class vJobCandidateEducation implements java.io.Serializable {
 
-	private static final long serialVersionUID = 54483795;
+	private static final long serialVersionUID = -1509666969;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  JobCandidateID;
 	private java.lang.String   Edu_Level;
 	private java.sql.Timestamp Edu_StartDate;
 	private java.sql.Timestamp Edu_EndDate;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Edu_Degree;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Edu_Major;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Edu_Minor;
+
+	@javax.validation.constraints.Size(max = 5)
 	private java.lang.String   Edu_GPA;
+
+	@javax.validation.constraints.Size(max = 5)
 	private java.lang.String   Edu_GPAScale;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Edu_School;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Edu_Loc_CountryRegion;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Edu_Loc_State;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Edu_Loc_City;
 
 	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)

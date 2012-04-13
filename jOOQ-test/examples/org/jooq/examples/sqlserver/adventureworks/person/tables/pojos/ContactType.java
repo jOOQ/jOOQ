@@ -10,10 +10,17 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "ContactType", schema = "Person")
 public class ContactType implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1778831552;
+	private static final long serialVersionUID = -1918311400;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactTypeID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

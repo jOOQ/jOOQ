@@ -10,34 +10,90 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "vStoreWithDemographics", schema = "Sales")
 public class vStoreWithDemographics implements java.io.Serializable {
 
-	private static final long serialVersionUID = 249264575;
+	private static final long serialVersionUID = 1745643013;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    CustomerID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Name;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     ContactType;
+
+	@javax.validation.constraints.Size(max = 8)
 	private java.lang.String     Title;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     FirstName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     MiddleName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     LastName;
+
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String     Suffix;
+
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String     Phone;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     EmailAddress;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    EmailPromotion;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     AddressType;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 60)
 	private java.lang.String     AddressLine1;
+
+	@javax.validation.constraints.Size(max = 60)
 	private java.lang.String     AddressLine2;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String     City;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     StateProvinceName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String     PostalCode;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     CountryRegionName;
 	private java.math.BigDecimal AnnualSales;
 	private java.math.BigDecimal AnnualRevenue;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     BankName;
+
+	@javax.validation.constraints.Size(max = 5)
 	private java.lang.String     BusinessType;
 	private java.lang.Integer    YearOpened;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Specialty;
 	private java.lang.Integer    SquareFeet;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String     Brands;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String     Internet;
 	private java.lang.Integer    NumberEmployees;
 

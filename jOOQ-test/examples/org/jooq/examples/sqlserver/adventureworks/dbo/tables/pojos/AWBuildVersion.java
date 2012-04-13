@@ -10,11 +10,20 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.pojos;
 @javax.persistence.Table(name = "AWBuildVersion", schema = "dbo")
 public class AWBuildVersion implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1171551211;
+	private static final long serialVersionUID = -1115064087;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte     SystemInformationID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String   Database_Version;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp VersionDate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

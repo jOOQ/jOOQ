@@ -10,20 +10,44 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 @javax.persistence.Table(name = "PurchaseOrderHeader", schema = "Purchasing")
 public class PurchaseOrderHeader implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2088262516;
+	private static final long serialVersionUID = 273356572;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    PurchaseOrderID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte       RevisionNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte       Status;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    EmployeeID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    VendorID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ShipMethodID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   OrderDate;
 	private java.sql.Timestamp   ShipDate;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal SubTotal;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal TaxAmt;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal Freight;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal TotalDue;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

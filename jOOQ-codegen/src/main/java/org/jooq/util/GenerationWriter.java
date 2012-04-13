@@ -73,20 +73,38 @@ public class GenerationWriter {
         initialisationStatements.add(statement);
     }
 
+    public void print(int value) {
+        sb.append(value);
+    }
+
     public void print(CharSequence string) {
         sb.append(string);
     }
 
+    public void println(int value) {
+        print(value);
+        println();
+    }
+
     public void println(CharSequence string) {
-        sb.append(string + "\n");
+        print(string);
+        println();
     }
 
     public void println() {
         sb.append("\n");
     }
 
+    public boolean println(boolean doPrint) {
+        if (doPrint) {
+            println();
+        }
+
+        return false;
+    }
+
     public void print(Class<?> clazz) {
-        sb.append(clazz.getCanonicalName());
+        print(clazz.getCanonicalName());
     }
 
     public boolean printOnlyOnce(Object object) {

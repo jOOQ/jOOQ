@@ -10,8 +10,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTable implements java.io.Serializable {
 
-	private static final long serialVersionUID = 897742490;
+	private static final long serialVersionUID = -131380610;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
 	private java.lang.Short      short_;

@@ -12,12 +12,22 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class SalesPersonQuotaHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1504379402;
+	private static final long serialVersionUID = -1983278354;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    SalesPersonID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   QuotaDate;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal SalesQuota;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String     rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)

@@ -12,10 +12,16 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class ContactCreditCard implements java.io.Serializable {
 
-	private static final long serialVersionUID = 532311005;
+	private static final long serialVersionUID = -778601407;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  CreditCardID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)

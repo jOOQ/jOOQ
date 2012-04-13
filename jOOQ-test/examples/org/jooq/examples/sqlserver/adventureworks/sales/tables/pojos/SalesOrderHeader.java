@@ -10,34 +10,79 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SalesOrderHeader", schema = "Sales")
 public class SalesOrderHeader implements java.io.Serializable {
 
-	private static final long serialVersionUID = -78270942;
+	private static final long serialVersionUID = 506206376;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    SalesOrderID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte       RevisionNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   OrderDate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   DueDate;
 	private java.sql.Timestamp   ShipDate;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte       Status;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean    OnlineOrderFlag;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String     SalesOrderNumber;
+
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String     PurchaseOrderNumber;
+
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String     AccountNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    CustomerID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ContactID;
 	private java.lang.Integer    SalesPersonID;
 	private java.lang.Integer    TerritoryID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    BillToAddressID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ShipToAddressID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ShipMethodID;
 	private java.lang.Integer    CreditCardID;
+
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String     CreditCardApprovalCode;
 	private java.lang.Integer    CurrencyRateID;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal SubTotal;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal TaxAmt;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal Freight;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal TotalDue;
+
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String     Comment;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String     rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

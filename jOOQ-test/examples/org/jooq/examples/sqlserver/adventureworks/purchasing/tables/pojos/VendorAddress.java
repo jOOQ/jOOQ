@@ -12,11 +12,19 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 })
 public class VendorAddress implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1899358278;
+	private static final long serialVersionUID = -696634738;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  VendorID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  AddressID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  AddressTypeID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "VendorID", nullable = false, precision = 10)

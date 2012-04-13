@@ -44,7 +44,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.TypeVariable;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -107,16 +106,17 @@ import org.jooq.util.GeneratorStrategy.Mode;
  */
 public class DefaultGenerator implements Generator {
 
-    private static final JooqLogger  log                         = JooqLogger.getLogger(DefaultGenerator.class);
+    private static final JooqLogger  log                           = JooqLogger.getLogger(DefaultGenerator.class);
 
-    private boolean                  generateDeprecated          = true;
-    private boolean                  generateRelations           = false;
-    private boolean                  generateNavigationMethods   = true;
-    private boolean                  generateInstanceFields      = true;
-    private boolean                  generateGeneratedAnnotation = true;
-    private boolean                  generatePojos               = false;
-    private boolean                  generateRecords             = true;
-    private boolean                  generateJPAAnnotations      = false;
+    private boolean                  generateDeprecated            = true;
+    private boolean                  generateRelations             = false;
+    private boolean                  generateNavigationMethods     = true;
+    private boolean                  generateInstanceFields        = true;
+    private boolean                  generateGeneratedAnnotation   = true;
+    private boolean                  generatePojos                 = false;
+    private boolean                  generateRecords               = true;
+    private boolean                  generateJPAAnnotations        = false;
+    private boolean                  generateValidationAnnotations = false;
 
     private GeneratorStrategyWrapper strategy;
 
@@ -210,6 +210,16 @@ public class DefaultGenerator implements Generator {
         this.generateJPAAnnotations = generateJPAAnnotations;
     }
 
+    @Override
+    public boolean generateValidationAnnotations() {
+        return generateValidationAnnotations;
+    }
+
+    @Override
+    public void setGenerateValidationAnnotations(boolean generateValidationAnnotations) {
+        this.generateValidationAnnotations = generateValidationAnnotations;
+    }
+
     // ----
 
     @Override
@@ -235,7 +245,7 @@ public class DefaultGenerator implements Generator {
     // ----
 
     @Override
-	public void generate(Database database) throws SQLException, IOException {
+	public void generate(Database database) throws IOException {
         StopWatch watch = new StopWatch();
 
         log.info("Database parameters");
@@ -252,6 +262,7 @@ public class DefaultGenerator implements Generator {
 	    log.info("  generated annotation", generateGeneratedAnnotation());
 	    log.info("  instance fields", generateInstanceFields());
 	    log.info("  JPA annotations", generateJPAAnnotations());
+	    log.info("  validation annotations", generateValidationAnnotations());
 	    log.info("  navigation methods", generateNavigationMethods());
 	    log.info("  records", generateRecords());
 	    log.info("  pojos", generatePojos());
@@ -279,7 +290,7 @@ public class DefaultGenerator implements Generator {
     private void generate(
             Database database,
             SchemaDefinition schema,
-            StopWatch watch) throws SQLException, IOException {
+            StopWatch watch) throws IOException {
 
         File targetSchemaDir = strategy.getFile(schema).getParentFile();
 
@@ -838,6 +849,8 @@ public class DefaultGenerator implements Generator {
                     }
 
                     for (ColumnDefinition column : table.getColumns()) {
+                        printColumnValidationAnnotation(out, column);
+
                         out.print("\tprivate ");
                         out.print(StringUtils.rightPad(getJavaType(column.getType()), maxLength));
                         out.print(" ");
@@ -1741,6 +1754,29 @@ public class DefaultGenerator implements Generator {
         }
     }
 
+    private void printColumnValidationAnnotation(GenerationWriter out, ColumnDefinition column) {
+        if (generateJPAAnnotations()) {
+            DataTypeDefinition type = column.getType();
+
+            boolean newline = true;
+            if (!column.isNullable()) {
+                newline = out.println(newline);
+                out.println("\t@javax.validation.constraints.NotNull");
+            }
+
+            if ("java.lang.String".equals(getJavaType(type))) {
+                int length = type.getLength();
+
+                if (length > 0) {
+                    newline = out.println(newline);
+                    out.print("\t@javax.validation.constraints.Size(max = ");
+                    out.print(length);
+                    out.println(")");
+                }
+            }
+        }
+    }
+
     private void registerInSchema(GenerationWriter outS, List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
         if (outS != null) {
             outS.println();
@@ -1789,7 +1825,7 @@ public class DefaultGenerator implements Generator {
     }
 
     private void printRoutine(Database database, SchemaDefinition schema, RoutineDefinition routine)
-        throws FileNotFoundException, SQLException {
+        throws FileNotFoundException {
         log.info("Generating routine", strategy.getFileName(routine));
 
         GenerationWriter out = new GenerationWriter(strategy.getFile(routine));
@@ -1948,7 +1984,7 @@ public class DefaultGenerator implements Generator {
         out.close();
     }
 
-    private void printConvenienceMethodFunctionAsField(GenerationWriter out, RoutineDefinition function, boolean parametersAsField) throws SQLException {
+    private void printConvenienceMethodFunctionAsField(GenerationWriter out, RoutineDefinition function, boolean parametersAsField) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -2019,7 +2055,7 @@ public class DefaultGenerator implements Generator {
         out.println("\t}");
     }
 
-    private void printConvenienceMethodFunction(GenerationWriter out, RoutineDefinition function, boolean instance) throws SQLException {
+    private void printConvenienceMethodFunction(GenerationWriter out, RoutineDefinition function, boolean instance) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Function " + function + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -2125,7 +2161,7 @@ public class DefaultGenerator implements Generator {
         out.println("\tprivate " + javaClassName + "() {}");
     }
 
-    private void printConvenienceMethodProcedure(GenerationWriter out, RoutineDefinition procedure, boolean instance) throws SQLException {
+    private void printConvenienceMethodProcedure(GenerationWriter out, RoutineDefinition procedure, boolean instance) {
         // [#281] - Java can't handle more than 255 method parameters
         if (procedure.getInParameters().size() > 254) {
             log.warn("Too many parameters", "Procedure " + procedure + " has more than 254 in parameters. Skipping generation of convenience method.");
@@ -2328,7 +2364,7 @@ public class DefaultGenerator implements Generator {
 		}
 	}
 
-	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) throws SQLException {
+	private void printGetterAndSetter(GenerationWriter out, TypedElementDefinition<?> element) {
 		printFieldJavaDoc(out, element);
 		out.println("\tpublic void " + strategy.getJavaSetterName(element, Mode.DEFAULT) + "(" + getJavaType(element.getType()) + " value) {");
 		out.println("\t\tsetValue(" + strategy.getFullJavaIdentifier(element) + ", value);");
@@ -2512,21 +2548,21 @@ public class DefaultGenerator implements Generator {
 		}
 	}
 
-    private void printUDTColumn(GenerationWriter out, AttributeDefinition attribute, Definition table) throws SQLException {
+    private void printUDTColumn(GenerationWriter out, AttributeDefinition attribute, Definition table) {
         Class<?> declaredMemberClass = UDTField.class;
         printColumnDefinition(out, attribute, table, declaredMemberClass);
     }
 
-    private void printTableColumn(GenerationWriter out, ColumnDefinition column, Definition table) throws SQLException {
+    private void printTableColumn(GenerationWriter out, ColumnDefinition column, Definition table) {
         Class<?> declaredMemberClass = TableField.class;
         printColumnDefinition(out, column, table, declaredMemberClass);
     }
 
-	private void printParameter(GenerationWriter out, ParameterDefinition parameter, Definition proc) throws SQLException {
+	private void printParameter(GenerationWriter out, ParameterDefinition parameter, Definition proc) {
 		printColumnDefinition(out, parameter, proc, Parameter.class);
 	}
 
-	private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass) throws SQLException {
+	private void printColumnDefinition(GenerationWriter out, TypedElementDefinition<?> column, Definition type, Class<?> declaredMemberClass) {
 		printFieldJavaDoc(out, column);
 
 		boolean hasType =
@@ -2596,11 +2632,11 @@ public class DefaultGenerator implements Generator {
 		out.println(");");
 	}
 
-	private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element) throws SQLException {
+	private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element) {
 	    printFieldJavaDoc(out, element, null);
 	}
 
-    private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element, String deprecation) throws SQLException {
+    private void printFieldJavaDoc(GenerationWriter out, TypedElementDefinition<?> element, String deprecation) {
 		out.println();
 		out.println("\t/**");
 
@@ -2754,15 +2790,15 @@ public class DefaultGenerator implements Generator {
 		out.println();
 	}
 
-    private void printExtendsNumberType(GenerationWriter out, DataTypeDefinition type) throws SQLException {
+    private void printExtendsNumberType(GenerationWriter out, DataTypeDefinition type) {
         printNumberType(out, type, "? extends ");
     }
 
-    private void printNumberType(GenerationWriter out, DataTypeDefinition type) throws SQLException {
+    private void printNumberType(GenerationWriter out, DataTypeDefinition type) {
         printNumberType(out, type, "");
     }
 
-    private void printNumberType(GenerationWriter out, DataTypeDefinition type, String prefix) throws SQLException {
+    private void printNumberType(GenerationWriter out, DataTypeDefinition type, String prefix) {
         if (type.isGenericNumberType()) {
             out.print(prefix);
             out.print(Number.class);
@@ -2772,11 +2808,11 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-	private String getSimpleJavaType(DataTypeDefinition type) throws SQLException {
+	private String getSimpleJavaType(DataTypeDefinition type) {
         return GenerationUtil.getSimpleJavaType(getJavaType(type));
     }
 
-    private String getJavaTypeReference(Database db, DataTypeDefinition type) throws SQLException {
+    private String getJavaTypeReference(Database db, DataTypeDefinition type) {
         if (type instanceof MasterDataTypeDefinition) {
             StringBuilder sb = new StringBuilder();
 
@@ -2799,7 +2835,7 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-    private String getJavaType(DataTypeDefinition type) throws SQLException {
+    private String getJavaType(DataTypeDefinition type) {
         if (type instanceof MasterDataTypeDefinition) {
             return strategy.getFullJavaClassName(((MasterDataTypeDefinition) type).table);
         }
@@ -2815,7 +2851,7 @@ public class DefaultGenerator implements Generator {
         }
     }
 
-    private String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType) throws SQLException {
+    private String getType(Database db, SchemaDefinition schema, String t, int p, int s, String u, String defaultType) {
         String type = defaultType;
 
         // Array types
@@ -2874,7 +2910,7 @@ public class DefaultGenerator implements Generator {
         return type;
     }
 
-    private String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, String u) throws SQLException {
+    private String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, String u) {
         StringBuilder sb = new StringBuilder();
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = db.getArray(schema, u);
@@ -2977,7 +3013,7 @@ public class DefaultGenerator implements Generator {
         return sb.toString();
     }
 
-    private boolean match(DataTypeDefinition type1, DataTypeDefinition type2) throws SQLException {
+    private boolean match(DataTypeDefinition type1, DataTypeDefinition type2) {
         return getJavaType(type1).equals(getJavaType(type2));
     }
 }

@@ -10,8 +10,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class TBooleans implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2135497983;
+	private static final long serialVersionUID = -484588059;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer                            id;
 	private org.jooq.test._.converters.Boolean_10        oneZero;
 	private org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc;

@@ -10,16 +10,35 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "TransactionHistory", schema = "Production")
 public class TransactionHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = 148292007;
+	private static final long serialVersionUID = 650647639;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    TransactionID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ReferenceOrderID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ReferenceOrderLineID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   TransactionDate;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 1)
 	private java.lang.String     TransactionType;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    Quantity;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal ActualCost;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

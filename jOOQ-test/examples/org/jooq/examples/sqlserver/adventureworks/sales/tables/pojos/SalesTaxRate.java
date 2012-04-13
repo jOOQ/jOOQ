@@ -10,14 +10,29 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SalesTaxRate", schema = "Sales")
 public class SalesTaxRate implements java.io.Serializable {
 
-	private static final long serialVersionUID = 14238155;
+	private static final long serialVersionUID = -1338896213;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    SalesTaxRateID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    StateProvinceID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte       TaxType;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal TaxRate;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Name;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String     rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

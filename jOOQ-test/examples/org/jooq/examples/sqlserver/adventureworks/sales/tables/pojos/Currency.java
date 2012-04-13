@@ -10,10 +10,18 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "Currency", schema = "Sales")
 public class Currency implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1428602621;
+	private static final long serialVersionUID = 207164409;
 
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String   CurrencyCode;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

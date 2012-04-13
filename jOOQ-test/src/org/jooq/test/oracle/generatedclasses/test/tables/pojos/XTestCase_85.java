@@ -10,10 +10,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -587394071;
+	private static final long serialVersionUID = 214257967;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer id;
 	private java.lang.Integer xUnusedId;
+
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String  xUnusedName;
 
 	@javax.persistence.Id

@@ -12,11 +12,20 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class ProductModelProductDescriptionCulture implements java.io.Serializable {
 
-	private static final long serialVersionUID = 847230316;
+	private static final long serialVersionUID = -1674497077;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductModelID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductDescriptionID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 6)
 	private java.lang.String   CultureID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)

@@ -10,14 +10,30 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "CurrencyRate", schema = "Sales")
 public class CurrencyRate implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2043091641;
+	private static final long serialVersionUID = 992562925;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    CurrencyRateID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   CurrencyRateDate;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String     FromCurrencyCode;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String     ToCurrencyCode;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal AverageRate;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal EndOfDayRate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

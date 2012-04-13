@@ -10,10 +10,16 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class TTriggers implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1859609492;
+	private static final long serialVersionUID = 1138335184;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer idGenerated;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer id;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer counter;
 
 	@javax.persistence.Id

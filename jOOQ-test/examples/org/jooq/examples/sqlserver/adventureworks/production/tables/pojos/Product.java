@@ -10,32 +10,74 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Product", schema = "Production")
 public class Product implements java.io.Serializable {
 
-	private static final long serialVersionUID = -313725846;
+	private static final long serialVersionUID = -1226806630;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ProductID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Name;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String     ProductNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean    MakeFlag;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean    FinishedGoodsFlag;
+
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String     Color;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short      SafetyStockLevel;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short      ReorderPoint;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal StandardCost;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal ListPrice;
+
+	@javax.validation.constraints.Size(max = 5)
 	private java.lang.String     Size;
+
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String     SizeUnitMeasureCode;
+
+	@javax.validation.constraints.Size(max = 3)
 	private java.lang.String     WeightUnitMeasureCode;
 	private java.math.BigDecimal Weight;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    DaysToManufacture;
+
+	@javax.validation.constraints.Size(max = 2)
 	private java.lang.String     ProductLine;
+
+	@javax.validation.constraints.Size(max = 2)
 	private java.lang.String     Class;
+
+	@javax.validation.constraints.Size(max = 2)
 	private java.lang.String     Style;
 	private java.lang.Integer    ProductSubcategoryID;
 	private java.lang.Integer    ProductModelID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   SellStartDate;
 	private java.sql.Timestamp   SellEndDate;
 	private java.sql.Timestamp   DiscontinuedDate;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String     rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

@@ -12,13 +12,23 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class SalesTerritoryHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -932464019;
+	private static final long serialVersionUID = -591093167;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  SalesPersonID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  TerritoryID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp StartDate;
 	private java.sql.Timestamp EndDate;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "SalesPersonID", nullable = false, precision = 10)

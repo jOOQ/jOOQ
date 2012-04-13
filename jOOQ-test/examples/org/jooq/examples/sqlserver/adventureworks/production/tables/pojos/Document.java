@@ -10,17 +10,37 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Document", schema = "Production")
 public class Document implements java.io.Serializable {
 
-	private static final long serialVersionUID = 24435218;
+	private static final long serialVersionUID = -618458402;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  DocumentID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Title;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 400)
 	private java.lang.String   FileName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 8)
 	private java.lang.String   FileExtension;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 5)
 	private java.lang.String   Revision;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ChangeNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte     Status;
 	private java.lang.String   DocumentSummary;
 	private byte[]             Document;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

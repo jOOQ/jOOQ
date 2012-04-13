@@ -4639,7 +4639,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Object, Class)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
      * @see #val(Object, Class)
@@ -4650,7 +4650,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Object, Field)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
      * @see #val(Object, Field)
@@ -4661,7 +4661,7 @@ public class Factory implements FactoryOperations {
     }
 
     /**
-     * A synonym for {@link #val(Object)} to be used in Scala and Groovy, where
+     * A synonym for {@link #val(Object, DataType)} to be used in Scala and Groovy, where
      * <code>val</code> is a reserved keyword.
      *
      * @see #val(Object, DataType)
@@ -4669,6 +4669,82 @@ public class Factory implements FactoryOperations {
     @Support
     public static <T> Field<T> value(Object value, DataType<T> type) {
         return val(value, type);
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #literal(Object)}, you can expect <code>value</code>
+     * to be properly escaped for SQL syntax correctness and SQL injection
+     * prevention.
+     *
+     * @see #val(Object)
+     */
+    @Support
+    public static <T> Param<T> inline(T value) {
+        // [#1309] TODO, make this type-safe
+        Param<T> val = (Param<T>) val(value);
+        val.setInline(true);
+        return val;
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #literal(Object, Class)}, you can expect <code>value</code>
+     * to be properly escaped for SQL syntax correctness and SQL injection
+     * prevention.
+     *
+     * @see #val(Object, Class)
+     */
+    @Support
+    public static <T> Param<T> inline(Object value, Class<? extends T> type) {
+        // [#1309] TODO, make this type-safe
+        Param<T> val = (Param<T>) val(value, type);
+        val.setInline(true);
+        return val;
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #literal(Object, DataType)}, you can expect <code>value</code>
+     * to be properly escaped for SQL syntax correctness and SQL injection
+     * prevention.
+     *
+     * @see #val(Object, Field)
+     */
+    @Support
+    public static <T> Param<T> inline(Object value, Field<T> field) {
+        // [#1309] TODO, make this type-safe
+        Param<T> val = (Param<T>) val(value, field);
+        val.setInline(true);
+        return val;
+    }
+
+    /**
+     * Create a bind value, that is always inlined.
+     * <p>
+     * The resulting bind value is always inlined, regardless of the
+     * {@link Settings#getStatementType()} property of the rendering factory.
+     * Unlike with {@link #literal(Object, DataType)}, you can expect <code>value</code>
+     * to be properly escaped for SQL syntax correctness and SQL injection
+     * prevention.
+     *
+     * @see #val(Object, DataType)
+     */
+    @Support
+    public static <T> Param<T> inline(Object value, DataType<T> type) {
+        // [#1309] TODO, make this type-safe
+        Param<T> val = (Param<T>) val(value, type);
+        val.setInline(true);
+        return val;
     }
 
     /**

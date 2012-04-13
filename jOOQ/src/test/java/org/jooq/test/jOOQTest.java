@@ -47,6 +47,7 @@ import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.param;
@@ -2210,6 +2211,34 @@ public class jOOQTest {
         assertEquals("select 3 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 4", r_refI().render(q4));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :p2", r_refP().render(q4));
         assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref().render(q4));
+    }
+
+    @Test
+    public void testInlinedBindValues() {
+        Param<String> i1 = inline("abc'def");
+        Param<Integer> i2 = inline(123);
+        Param<Double> i3 = inline(123.0);
+        Param<Date> i4 = inline(Date.valueOf("1981-07-10"));
+
+        RenderContext r_refI = r_refI();
+        RenderContext r_refP = r_refP();
+        RenderContext r_ref = r_ref();
+
+        assertEquals("'abc''def'", r_refI.render(i1));
+        assertEquals("'abc''def'", r_refP.render(i1));
+        assertEquals("'abc''def'", r_ref.render(i1));
+
+        assertEquals("123", r_refI.render(i2));
+        assertEquals("123", r_refP.render(i2));
+        assertEquals("123", r_ref.render(i2));
+
+        assertEquals("123.0", r_refI.render(i3));
+        assertEquals("123.0", r_refP.render(i3));
+        assertEquals("123.0", r_ref.render(i3));
+
+        assertEquals("{d '1981-07-10'}", r_refI.render(i4));
+        assertEquals("{d '1981-07-10'}", r_refP.render(i4));
+        assertEquals("{d '1981-07-10'}", r_ref.render(i4));
     }
 
     @Test

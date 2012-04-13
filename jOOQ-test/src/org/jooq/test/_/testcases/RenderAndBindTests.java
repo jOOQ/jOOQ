@@ -44,6 +44,7 @@ import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.vals;
 
@@ -283,6 +284,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
 
     @Test
     public void testInlinedBindValues() throws Exception {
+
         // [#1158] TODO get this working for derby as well
         boolean derby = (getDialect() == DERBY);
 
@@ -325,27 +327,56 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
         Boolean bool2 = false;
         Boolean bool3 = (derby ? bool1 : null);
 
-        Factory create = create(new Settings()
-            .withStatementType(StatementType.STATIC_STATEMENT));
+        // Inlining bind values globally, through the factory settings
+        // -----------------------------------------------------------
+        {
+            Factory create = create(new Settings()
+                .withStatementType(StatementType.STATIC_STATEMENT));
 
-        Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
-        Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
-        Object[] array3 = create.select(vals(d1, d2, t1, t2, ts1, ts2)).fetchOneArray();
-        Object[] array4 = create.select(vals(by1, by2, bool1, bool2, bool3)).fetchOneArray();
+            Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
+            Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
+            Object[] array3 = create.select(vals(d1, d2, t1, t2, ts1, ts2)).fetchOneArray();
+            Object[] array4 = create.select(vals(by1, by2, bool1, bool2, bool3)).fetchOneArray();
 
-        assertEquals(4, array1.length);
-        assertEquals(16, array2.length);
-        assertEquals(6, array3.length);
-        assertEquals(5, array4.length);
+            assertEquals(4, array1.length);
+            assertEquals(16, array2.length);
+            assertEquals(6, array3.length);
+            assertEquals(5, array4.length);
 
-        assertEquals(asList(s1, s2, s3, s4), asList(array1));
-        assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
-        assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
+            assertEquals(asList(s1, s2, s3, s4), asList(array1));
+            assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
+            assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
 
-        array4[0] = new String((byte[]) array4[0]);
-        array4[1] = (derby ? new String((byte[]) array4[1]) : array4[1]);
+            array4[0] = new String((byte[]) array4[0]);
+            array4[1] = (derby ? new String((byte[]) array4[1]) : array4[1]);
 
-        assertEquals(asList(new String(by1), (derby ? new String(by2) : by2), bool1, bool2, bool3), asList(array4));
+            assertEquals(asList(new String(by1), (derby ? new String(by2) : by2), bool1, bool2, bool3), asList(array4));
+        }
+
+        // Inlining bind values locally, through bind value parameters
+        // -----------------------------------------------------------
+        {
+            Factory create = create();
+
+            Object[] array1 = create.select(inline(s1), inline(s2), inline(s3), inline(s4)).fetchOneArray();
+            Object[] array2 = create.select(inline(b1), inline(b2), inline(sh1), inline(sh2), inline(i1), inline(i2), inline(l1), inline(l2), inline(bi1), inline(bi2), inline(bd1), inline(bd2), inline(db1), inline(db2), inline(f1), inline(f2)).fetchOneArray();
+            Object[] array3 = create.select(inline(d1), inline(d2), inline(t1), inline(t2), inline(ts1), inline(ts2)).fetchOneArray();
+            Object[] array4 = create.select(inline(by1), inline(by2), inline(bool1), inline(bool2), inline(bool3)).fetchOneArray();
+
+            assertEquals(4, array1.length);
+            assertEquals(16, array2.length);
+            assertEquals(6, array3.length);
+            assertEquals(5, array4.length);
+
+            assertEquals(asList(s1, s2, s3, s4), asList(array1));
+            assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
+            assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
+
+            array4[0] = new String((byte[]) array4[0]);
+            array4[1] = (derby ? new String((byte[]) array4[1]) : array4[1]);
+
+            assertEquals(asList(new String(by1), (derby ? new String(by2) : by2), bool1, bool2, bool3), asList(array4));
+        }
     }
 
     @Test

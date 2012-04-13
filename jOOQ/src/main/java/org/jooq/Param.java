@@ -40,7 +40,7 @@ import org.jooq.impl.Factory;
 import org.jooq.tools.Convert;
 
 /**
- * A named parameter
+ * A named parameter and/or bind value.
  *
  * @author Lukas Eder
  * @see Factory#param(String, Object)
@@ -91,4 +91,14 @@ public interface Param<T> extends Field<T> {
      *             this parameter's data type.
      */
     void setConverted(Object value) throws DataTypeException;
+
+    /**
+     * A flag on the bind value to force it to be inlined in rendered SQL
+     */
+    void setInline(boolean inline);
+
+    /**
+     * A flag on the bind value to force it to be inlined in rendered SQL
+     */
+    boolean isInline();
 }

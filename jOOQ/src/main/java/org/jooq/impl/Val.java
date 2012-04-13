@@ -79,8 +79,10 @@ import org.jooq.types.Interval;
 class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
     private static final long serialVersionUID = 6807729087019209084L;
+
     private final String      paramName;
     private T                 value;
+    private boolean           inline;
 
     Val(T value, DataType<T> type) {
         this(value, type, null);
@@ -98,7 +100,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
     }
 
     // ------------------------------------------------------------------------
-    // Field API
+    // XXX: Field API
     // ------------------------------------------------------------------------
 
     @Override
@@ -151,7 +153,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
     private boolean shouldCast(RenderContext context) {
 
         // In default mode, casting is only done when parameters are NOT inlined
-        if (!context.inline()) {
+        if (!isInline(context)) {
 
             // Generated enums should not be cast...
             if (!(getValue() instanceof EnumType) && !(getValue() instanceof MasterDataType)) {
@@ -301,7 +303,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
             type = converter.fromType();
         }
 
-        if (context.inline()) {
+        if (isInline(context)) {
             if (val == null) {
                 context.keyword("null");
             }
@@ -501,7 +503,11 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
 
     @Override
     public final void bind(BindContext context) {
-        context.bindValue(getValue(), getType());
+
+        // [#1302] Bind value only if it was not explicitly forced to be inlined
+        if (!isInline()) {
+            context.bindValue(getValue(), getType());
+        }
     }
 
     @Override
@@ -510,7 +516,7 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
     }
 
     // ------------------------------------------------------------------------
-    // Param API
+    // XXX: Param API
     // ------------------------------------------------------------------------
 
     @Override
@@ -533,8 +539,22 @@ class Val<T> extends AbstractField<T> implements Param<T>, BindingProvider {
         return paramName;
     }
 
+    @Override
+    public final void setInline(boolean inline) {
+        this.inline = inline;
+    }
+
+    @Override
+    public final boolean isInline() {
+        return inline;
+    }
+
+    private final boolean isInline(RenderContext context) {
+        return isInline() || context.inline();
+    }
+
     // ------------------------------------------------------------------------
-    // BindingProvider API
+    // XXX: BindingProvider API
     // ------------------------------------------------------------------------
 
     @Override

@@ -12,10 +12,16 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class ProductDocument implements java.io.Serializable {
 
-	private static final long serialVersionUID = -920710150;
+	private static final long serialVersionUID = -510662050;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  DocumentID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)

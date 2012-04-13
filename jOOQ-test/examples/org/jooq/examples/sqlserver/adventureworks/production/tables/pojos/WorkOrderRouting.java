@@ -12,19 +12,35 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class WorkOrderRouting implements java.io.Serializable {
 
-	private static final long serialVersionUID = 374057530;
+	private static final long serialVersionUID = 1007133682;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    WorkOrderID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short      OperationSequence;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short      LocationID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ScheduledStartDate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ScheduledEndDate;
 	private java.sql.Timestamp   ActualStartDate;
 	private java.sql.Timestamp   ActualEndDate;
 	private java.math.BigDecimal ActualResourceHrs;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal PlannedCost;
 	private java.math.BigDecimal ActualCost;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Column(name = "WorkOrderID", nullable = false, precision = 10)

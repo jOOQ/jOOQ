@@ -10,17 +10,33 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "WorkOrder", schema = "Production")
 public class WorkOrder implements java.io.Serializable {
 
-	private static final long serialVersionUID = -881616029;
+	private static final long serialVersionUID = -2064628893;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  WorkOrderID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  OrderQty;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  StockedQty;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short    ScrappedQty;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp StartDate;
 	private java.sql.Timestamp EndDate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp DueDate;
 	private java.lang.Short    ScrapReasonID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

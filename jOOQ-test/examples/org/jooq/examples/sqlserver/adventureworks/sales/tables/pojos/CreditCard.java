@@ -10,13 +10,27 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "CreditCard", schema = "Sales")
 public class CreditCard implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1337536643;
+	private static final long serialVersionUID = -1718095677;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  CreditCardID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   CardType;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String   CardNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte     ExpMonth;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short    ExpYear;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

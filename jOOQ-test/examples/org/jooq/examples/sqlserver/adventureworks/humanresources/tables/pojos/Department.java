@@ -10,11 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "Department", schema = "HumanResources")
 public class Department implements java.io.Serializable {
 
-	private static final long serialVersionUID = 874413959;
+	private static final long serialVersionUID = 1092392183;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short    DepartmentID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   GroupName;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

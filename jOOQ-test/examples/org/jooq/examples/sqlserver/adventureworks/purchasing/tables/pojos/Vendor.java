@@ -10,15 +10,33 @@ package org.jooq.examples.sqlserver.adventureworks.purchasing.tables.pojos;
 @javax.persistence.Table(name = "Vendor", schema = "Purchasing")
 public class Vendor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2008437684;
+	private static final long serialVersionUID = 1216883967;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  VendorID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String   AccountNumber;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte     CreditRating;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean  PreferredVendorStatus;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean  ActiveFlag;
+
+	@javax.validation.constraints.Size(max = 1024)
 	private java.lang.String   PurchasingWebServiceURL;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

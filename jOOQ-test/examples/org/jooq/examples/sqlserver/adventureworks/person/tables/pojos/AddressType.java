@@ -10,11 +10,20 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "AddressType", schema = "Person")
 public class AddressType implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1445238841;
+	private static final long serialVersionUID = -1662377973;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  AddressTypeID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

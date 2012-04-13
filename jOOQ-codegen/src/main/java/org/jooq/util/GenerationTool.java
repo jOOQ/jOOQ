@@ -118,11 +118,11 @@ public class GenerationTool {
     		    // TODO [#1201] Add better error handling here
     		    xml = xml.replaceAll(
     		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd\">");
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.3.0.xsd\">");
 
     		    xml = xml.replace(
     		        "<configuration>",
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd\">");
+    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.3.0.xsd\">");
 
     		    main(JAXB.unmarshal(new StringReader(xml), Configuration.class));
     		}

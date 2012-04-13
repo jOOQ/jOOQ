@@ -10,10 +10,18 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Culture", schema = "Production")
 public class Culture implements java.io.Serializable {
 
-	private static final long serialVersionUID = -265854520;
+	private static final long serialVersionUID = -2037209663;
 
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 6)
 	private java.lang.String   CultureID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

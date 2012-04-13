@@ -10,10 +10,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785 implements java.io.Serializable {
 
-	private static final long serialVersionUID = 2082517974;
+	private static final long serialVersionUID = 443984484;
 
 	private java.lang.Integer id;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  name;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  value;
 
 	@javax.persistence.Column(name = "ID", precision = 7)

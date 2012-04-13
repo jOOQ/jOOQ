@@ -12,13 +12,23 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 })
 public class EmployeeDepartmentHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -577466492;
+	private static final long serialVersionUID = -1705895832;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  EmployeeID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short    DepartmentID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Byte     ShiftID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp StartDate;
 	private java.sql.Timestamp EndDate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)

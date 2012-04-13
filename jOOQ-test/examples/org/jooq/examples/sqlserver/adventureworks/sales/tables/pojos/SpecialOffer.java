@@ -10,18 +10,41 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "SpecialOffer", schema = "Sales")
 public class SpecialOffer implements java.io.Serializable {
 
-	private static final long serialVersionUID = 542108653;
+	private static final long serialVersionUID = -1153889176;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    SpecialOfferID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 255)
 	private java.lang.String     Description;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal DiscountPct;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Type;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Category;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   StartDate;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   EndDate;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    MinQty;
 	private java.lang.Integer    MaxQty;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String     rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

@@ -10,10 +10,17 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1528833410;
+	private static final long serialVersionUID = 1146418578;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer id;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  firstName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  lastName;
 	private java.sql.Date     dateOfBirth;
 	private java.lang.Integer yearOfBirth;

@@ -10,12 +10,23 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "Location", schema = "Production")
 public class Location implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1439113007;
+	private static final long serialVersionUID = 1732773159;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Short      LocationID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String     Name;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal CostRate;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal Availability;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Id

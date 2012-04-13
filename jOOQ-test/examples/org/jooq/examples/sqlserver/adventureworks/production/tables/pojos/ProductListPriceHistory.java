@@ -12,12 +12,20 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class ProductListPriceHistory implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1785389324;
+	private static final long serialVersionUID = 405262580;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer    ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   StartDate;
 	private java.sql.Timestamp   EndDate;
+
+	@javax.validation.constraints.NotNull
 	private java.math.BigDecimal ListPrice;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp   ModifiedDate;
 
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)

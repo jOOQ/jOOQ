@@ -10,23 +10,47 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vJobCandidate", schema = "HumanResources")
 public class vJobCandidate implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1307250023;
+	private static final long serialVersionUID = -317266702;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  JobCandidateID;
 	private java.lang.Integer  EmployeeID;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Name_Prefix;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Name_First;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Name_Middle;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Name_Last;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Name_Suffix;
 	private java.lang.String   Skills;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Addr_Type;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Addr_Loc_CountryRegion;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Addr_Loc_State;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Addr_Loc_City;
+
+	@javax.validation.constraints.Size(max = 20)
 	private java.lang.String   Addr_PostalCode;
 	private java.lang.String   EMail;
 	private java.lang.String   WebSite;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "JobCandidateID", nullable = false, precision = 10)

@@ -10,15 +10,33 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.pojos;
 @javax.persistence.Table(name = "DatabaseLog", schema = "dbo")
 public class DatabaseLog implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1010482335;
+	private static final long serialVersionUID = 491667655;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  DatabaseLogID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp PostTime;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   DatabaseUser;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   Event;
+
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   Schema;
+
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   Object;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   TSQL;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Object   XmlEvent;
 
 	@javax.persistence.Id

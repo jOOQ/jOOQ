@@ -10,13 +10,21 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "ProductPhoto", schema = "Production")
 public class ProductPhoto implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1387322169;
+	private static final long serialVersionUID = -438305887;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductPhotoID;
 	private byte[]             ThumbNailPhoto;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   ThumbnailPhotoFileName;
 	private byte[]             LargePhoto;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   LargePhotoFileName;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

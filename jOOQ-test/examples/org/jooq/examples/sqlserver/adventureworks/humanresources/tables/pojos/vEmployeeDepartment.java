@@ -10,17 +10,42 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vEmployeeDepartment", schema = "HumanResources")
 public class vEmployeeDepartment implements java.io.Serializable {
 
-	private static final long serialVersionUID = 659488298;
+	private static final long serialVersionUID = -1921083959;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  EmployeeID;
+
+	@javax.validation.constraints.Size(max = 8)
 	private java.lang.String   Title;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   FirstName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   MiddleName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   LastName;
+
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String   Suffix;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   JobTitle;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Department;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   GroupName;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp StartDate;
 
 	@javax.persistence.Column(name = "EmployeeID", nullable = false, precision = 10)

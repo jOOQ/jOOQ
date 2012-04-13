@@ -37,7 +37,6 @@
 package org.jooq.util;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.annotation.Generated;
 
@@ -51,7 +50,7 @@ public interface Generator {
 	/**
 	 * Do the code generation
 	 */
-	void generate(Database database) throws SQLException, IOException;
+	void generate(Database database) throws IOException;
 
 	/**
 	 * Set a naming strategy to this generator
@@ -142,6 +141,18 @@ public interface Generator {
      * Whether POJO's and records should be annotated with JPA annotations
      */
     void setGenerateJPAAnnotations(boolean generateJPAAnnotations);
+
+    /**
+     * Whether POJO's and records should be annotated with JSR-303 validation
+     * annotations
+     */
+    boolean generateValidationAnnotations();
+
+    /**
+     * Whether POJO's and records should be annotated with JSR-303 validation
+     * annotations
+     */
+    void setGenerateValidationAnnotations(boolean generateValidationAnnotations);
 
     /**
      * The target directory

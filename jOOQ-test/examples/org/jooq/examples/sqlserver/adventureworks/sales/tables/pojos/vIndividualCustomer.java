@@ -10,23 +10,63 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 @javax.persistence.Table(name = "vIndividualCustomer", schema = "Sales")
 public class vIndividualCustomer implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1389191150;
+	private static final long serialVersionUID = -840043570;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer CustomerID;
+
+	@javax.validation.constraints.Size(max = 8)
 	private java.lang.String  Title;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  FirstName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  MiddleName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  LastName;
+
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String  Suffix;
+
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String  Phone;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  EmailAddress;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer EmailPromotion;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  AddressType;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 60)
 	private java.lang.String  AddressLine1;
+
+	@javax.validation.constraints.Size(max = 60)
 	private java.lang.String  AddressLine2;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String  City;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  StateProvinceName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String  PostalCode;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  CountryRegionName;
 	private java.lang.Object  Demographics;
 

@@ -10,8 +10,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class TArrays implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1739262558;
+	private static final long serialVersionUID = -1858509506;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer                                                             id;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord     stringArray;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberArrayRecord     numberArray;

@@ -12,11 +12,19 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 })
 public class ProductProductPhoto implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1334733080;
+	private static final long serialVersionUID = 222277608;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductPhotoID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean  Primary;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "ProductID", nullable = false, precision = 10)

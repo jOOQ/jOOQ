@@ -12,10 +12,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "TEST")
 public class TAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = 893041788;
+	private static final long serialVersionUID = -173901300;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer                                                         id;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String                                                          firstName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String                                                          lastName;
 	private java.sql.Date                                                             dateOfBirth;
 	private java.lang.Integer                                                         yearOfBirth;

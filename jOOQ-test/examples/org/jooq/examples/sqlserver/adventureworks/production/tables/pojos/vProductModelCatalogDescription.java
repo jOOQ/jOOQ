@@ -10,32 +10,77 @@ package org.jooq.examples.sqlserver.adventureworks.production.tables.pojos;
 @javax.persistence.Table(name = "vProductModelCatalogDescription", schema = "Production")
 public class vProductModelCatalogDescription implements java.io.Serializable {
 
-	private static final long serialVersionUID = -143861014;
+	private static final long serialVersionUID = -1326099174;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ProductModelID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Name;
 	private java.lang.String   Summary;
 	private java.lang.String   Manufacturer;
+
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String   Copyright;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   ProductURL;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   WarrantyPeriod;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   WarrantyDescription;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   NoOfYears;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   MaintenanceDescription;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Wheel;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Saddle;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Pedal;
 	private java.lang.String   BikeFrame;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Crankset;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   PictureAngle;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   PictureSize;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   ProductPhotoID;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Material;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Color;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   ProductLine;
+
+	@javax.validation.constraints.Size(max = 256)
 	private java.lang.String   Style;
+
+	@javax.validation.constraints.Size(max = 1024)
 	private java.lang.String   RiderExperience;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "ProductModelID", nullable = false, precision = 10)

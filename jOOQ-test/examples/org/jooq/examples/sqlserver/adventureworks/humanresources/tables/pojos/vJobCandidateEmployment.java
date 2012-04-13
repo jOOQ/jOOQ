@@ -10,12 +10,18 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vJobCandidateEmployment", schema = "HumanResources")
 public class vJobCandidateEmployment implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1612702651;
+	private static final long serialVersionUID = -616425385;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  JobCandidateID;
 	private java.sql.Timestamp Emp_StartDate;
 	private java.sql.Timestamp Emp_EndDate;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Emp_OrgName;
+
+	@javax.validation.constraints.Size(max = 100)
 	private java.lang.String   Emp_JobTitle;
 	private java.lang.String   Emp_Responsibility;
 	private java.lang.String   Emp_FunctionCategory;

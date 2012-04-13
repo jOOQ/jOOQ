@@ -10,23 +10,63 @@ package org.jooq.examples.sqlserver.adventureworks.humanresources.tables.pojos;
 @javax.persistence.Table(name = "vEmployee", schema = "HumanResources")
 public class vEmployee implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1048994626;
+	private static final long serialVersionUID = -1187822110;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer EmployeeID;
+
+	@javax.validation.constraints.Size(max = 8)
 	private java.lang.String  Title;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  FirstName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  MiddleName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  LastName;
+
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String  Suffix;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  JobTitle;
+
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String  Phone;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  EmailAddress;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer EmailPromotion;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 60)
 	private java.lang.String  AddressLine1;
+
+	@javax.validation.constraints.Size(max = 60)
 	private java.lang.String  AddressLine2;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 30)
 	private java.lang.String  City;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  StateProvinceName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 15)
 	private java.lang.String  PostalCode;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  CountryRegionName;
 	private java.lang.Object  AdditionalContactInfo;
 

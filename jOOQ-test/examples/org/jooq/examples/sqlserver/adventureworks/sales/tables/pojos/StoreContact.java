@@ -12,12 +12,22 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class StoreContact implements java.io.Serializable {
 
-	private static final long serialVersionUID = 922184445;
+	private static final long serialVersionUID = 505331097;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  CustomerID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactTypeID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "CustomerID", nullable = false, precision = 10)

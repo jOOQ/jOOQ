@@ -10,22 +10,54 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "Contact", schema = "Person")
 public class Contact implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1592993605;
+	private static final long serialVersionUID = -1460173084;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Boolean  NameStyle;
+
+	@javax.validation.constraints.Size(max = 8)
 	private java.lang.String   Title;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   FirstName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   MiddleName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   LastName;
+
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String   Suffix;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   EmailAddress;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  EmailPromotion;
+
+	@javax.validation.constraints.Size(max = 25)
 	private java.lang.String   Phone;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   PasswordHash;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String   PasswordSalt;
 	private java.lang.Object   AdditionalContactInfo;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Id

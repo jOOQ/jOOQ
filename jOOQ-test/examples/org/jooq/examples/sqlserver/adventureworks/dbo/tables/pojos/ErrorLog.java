@@ -10,16 +10,30 @@ package org.jooq.examples.sqlserver.adventureworks.dbo.tables.pojos;
 @javax.persistence.Table(name = "ErrorLog", schema = "dbo")
 public class ErrorLog implements java.io.Serializable {
 
-	private static final long serialVersionUID = 968553243;
+	private static final long serialVersionUID = -1759188406;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ErrorLogID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ErrorTime;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   UserName;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ErrorNumber;
 	private java.lang.Integer  ErrorSeverity;
 	private java.lang.Integer  ErrorState;
+
+	@javax.validation.constraints.Size(max = 126)
 	private java.lang.String   ErrorProcedure;
 	private java.lang.Integer  ErrorLine;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 4000)
 	private java.lang.String   ErrorMessage;
 
 	@javax.persistence.Id

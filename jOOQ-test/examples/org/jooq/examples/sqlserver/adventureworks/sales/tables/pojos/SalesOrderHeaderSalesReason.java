@@ -12,10 +12,16 @@ package org.jooq.examples.sqlserver.adventureworks.sales.tables.pojos;
 })
 public class SalesOrderHeaderSalesReason implements java.io.Serializable {
 
-	private static final long serialVersionUID = 335162224;
+	private static final long serialVersionUID = 1847006348;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  SalesOrderID;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  SalesReasonID;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "SalesOrderID", nullable = false, precision = 10)

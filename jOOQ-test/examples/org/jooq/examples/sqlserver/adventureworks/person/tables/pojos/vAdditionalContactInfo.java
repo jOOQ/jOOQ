@@ -10,24 +10,54 @@ package org.jooq.examples.sqlserver.adventureworks.person.tables.pojos;
 @javax.persistence.Table(name = "vAdditionalContactInfo", schema = "Person")
 public class vAdditionalContactInfo implements java.io.Serializable {
 
-	private static final long serialVersionUID = -501133403;
+	private static final long serialVersionUID = 192387103;
 
+
+	@javax.validation.constraints.NotNull
 	private java.lang.Integer  ContactID;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   FirstName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   MiddleName;
+
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   LastName;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   TelephoneNumber;
 	private java.lang.String   TelephoneSpecialInstructions;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   Street;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   City;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   StateProvince;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   PostalCode;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   CountryRegion;
 	private java.lang.String   HomeAddressSpecialInstructions;
+
+	@javax.validation.constraints.Size(max = 128)
 	private java.lang.String   EMailAddress;
 	private java.lang.String   EMailSpecialInstructions;
+
+	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String   EMailTelephoneNumber;
+
+	@javax.validation.constraints.NotNull
 	private java.lang.String   rowguid;
+
+	@javax.validation.constraints.NotNull
 	private java.sql.Timestamp ModifiedDate;
 
 	@javax.persistence.Column(name = "ContactID", nullable = false, precision = 10)

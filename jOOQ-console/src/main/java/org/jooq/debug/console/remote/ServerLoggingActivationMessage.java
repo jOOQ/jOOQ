@@ -39,6 +39,7 @@ package org.jooq.debug.console.remote;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class ServerLoggingActivationMessage implements Message {
 
 	private boolean isLogging;

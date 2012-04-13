@@ -41,6 +41,7 @@ import org.jooq.debug.DebuggerData;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class ClientDebugQueriesMessage implements Message {
 
 	private DebuggerData sqlQueryDebuggerData;

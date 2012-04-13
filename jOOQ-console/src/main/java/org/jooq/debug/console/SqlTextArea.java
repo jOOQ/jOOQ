@@ -64,6 +64,7 @@ import org.fife.ui.rsyntaxtextarea.Token;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class SqlTextArea extends RSyntaxTextArea {
 
     public SqlTextArea() {

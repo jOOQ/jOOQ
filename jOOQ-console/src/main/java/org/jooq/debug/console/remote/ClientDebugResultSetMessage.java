@@ -41,6 +41,7 @@ import org.jooq.debug.DebuggerResultSetData;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class ClientDebugResultSetMessage implements Message {
 
 	private int sqlQueryDebuggerDataID;

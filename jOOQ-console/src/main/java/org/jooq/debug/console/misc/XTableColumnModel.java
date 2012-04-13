@@ -23,7 +23,7 @@ import javax.swing.table.TableColumn;
  * @author Stephen Kelvin, mail@StephenKelvin.de
  * @see DefaultTableColumnModel
  */
-
+@SuppressWarnings("serial")
 public class XTableColumnModel extends DefaultTableColumnModel {
 	/** Array of TableColumn objects in this model.
 	 *  Holds all column objects, regardless of their visibility

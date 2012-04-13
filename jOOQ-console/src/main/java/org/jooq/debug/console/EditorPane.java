@@ -133,6 +133,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class EditorPane extends JPanel {
 
     private static final int MAX_ROW_COUNT = 10000;

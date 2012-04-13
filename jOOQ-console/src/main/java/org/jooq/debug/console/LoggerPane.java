@@ -110,6 +110,7 @@ import org.jooq.debug.console.misc.XTableColumnModel;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class LoggerPane extends JPanel {
 
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("HH:mm:ss.SSS");

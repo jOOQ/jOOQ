@@ -58,6 +58,7 @@ import javax.swing.table.TableModel;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class JTableX extends JTable {
 
 	private static final Color GRID_COLOR = new Color(0xd9d9d9);

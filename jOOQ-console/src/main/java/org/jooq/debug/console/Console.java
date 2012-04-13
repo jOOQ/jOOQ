@@ -96,6 +96,7 @@ import org.jooq.debug.console.remote.RemoteDebuggerClient;
 /**
  * @author Christopher Deckers
  */
+@SuppressWarnings("serial")
 public class Console extends JFrame {
 
     private JTabbedPane mainTabbedPane;

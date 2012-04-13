@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.two;
 
@@ -67,7 +67,7 @@ class Pi extends AbstractFunction<BigDecimal> {
                 return Factory.asin(one()).mul(two());
 
             case SQLITE:
-                return literal(Math.PI, BigDecimal.class);
+                return inline(Math.PI, BigDecimal.class);
 
             default:
                 return function("pi", getDataType());

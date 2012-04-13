@@ -4676,9 +4676,13 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #literal(Object)}, you can expect <code>value</code>
-     * to be properly escaped for SQL syntax correctness and SQL injection
-     * prevention.
+     * Unlike with {@link #field(Object)}, you can expect <code>value</code> to
+     * be properly escaped for SQL syntax correctness and SQL injection
+     * prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
      *
      * @see #val(Object)
      */
@@ -4695,9 +4699,13 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #literal(Object, Class)}, you can expect <code>value</code>
-     * to be properly escaped for SQL syntax correctness and SQL injection
-     * prevention.
+     * Unlike with {@link #field(Object, Class)}, you can expect
+     * <code>value</code> to be properly escaped for SQL syntax correctness and
+     * SQL injection prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
      *
      * @see #val(Object, Class)
      */
@@ -4714,9 +4722,13 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #literal(Object, DataType)}, you can expect <code>value</code>
-     * to be properly escaped for SQL syntax correctness and SQL injection
-     * prevention.
+     * Unlike with {@link #field(Object, DataType)}, you can expect
+     * <code>value</code> to be properly escaped for SQL syntax correctness and
+     * SQL injection prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
      *
      * @see #val(Object, Field)
      */
@@ -4733,9 +4745,13 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #literal(Object, DataType)}, you can expect <code>value</code>
-     * to be properly escaped for SQL syntax correctness and SQL injection
-     * prevention.
+     * Unlike with {@link #field(Object, DataType)}, you can expect
+     * <code>value</code> to be properly escaped for SQL syntax correctness and
+     * SQL injection prevention. For example:
+     * <ul>
+     * <li><code>inline("abc'def")</code> renders <code>'abc''def'</code></li>
+     * <li><code>field("abc'def")</code> renders <code>abc'def</code></li>
+     * </ul>
      *
      * @see #val(Object, DataType)
      */
@@ -4881,8 +4897,8 @@ public class Factory implements FactoryOperations {
     /**
      * Get a typed <code>Field</code> for a literal.
      * <p>
-     * This is similar as calling {@link #field(String)}. A field
-     * without bind variables will be generated.
+     * This is similar as calling {@link #field(String)}. A field without bind
+     * variables will be generated.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -4892,7 +4908,10 @@ public class Factory implements FactoryOperations {
      * @param <T> The generic field type
      * @param literal The literal
      * @return The literal as a field
+     * @deprecated - 2.3.0 - Use {@link #field(String)}, or
+     *             {@link #inline(Object)} instead.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     @Support
     public static <T> Field<T> literal(T literal) {
@@ -4907,8 +4926,8 @@ public class Factory implements FactoryOperations {
     /**
      * Get a typed <code>Field</code> for a literal.
      * <p>
-     * This is similar as calling {@link #field(String)}. A field
-     * without bind variables will be generated.
+     * This is similar as calling {@link #field(String)}. A field without bind
+     * variables will be generated.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -4919,7 +4938,10 @@ public class Factory implements FactoryOperations {
      * @param literal The literal
      * @param type The literal's data type
      * @return The literal as a field
+     * @deprecated - 2.3.0 - Use {@link #field(String, Class)}, or
+     *             {@link #inline(Object, Class)} instead.
      */
+    @Deprecated
     @Support
     public static <T> Field<T> literal(Object literal, Class<T> type) {
         return literal(literal, getDataType(type));
@@ -4928,8 +4950,8 @@ public class Factory implements FactoryOperations {
     /**
      * Get a typed <code>Field</code> for a literal.
      * <p>
-     * This is similar as calling {@link #field(String)}. A field
-     * without bind variables will be generated.
+     * This is similar as calling {@link #field(String)}. A field without bind
+     * variables will be generated.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -4940,7 +4962,10 @@ public class Factory implements FactoryOperations {
      * @param literal The literal
      * @param type The literal's data type
      * @return The literal as a field
+     * @deprecated - 2.3.0 - Use {@link #field(String, DataType)}, or
+     *             {@link #inline(Object, DataType)} instead.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     @Support
     public static <T> Field<T> literal(Object literal, DataType<T> type) {
@@ -4999,7 +5024,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<Integer> zero() {
-        return literal(0);
+        return inline(0);
     }
 
     /**
@@ -5014,7 +5039,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<Integer> one() {
-        return literal(1);
+        return inline(1);
     }
 
     /**
@@ -5027,7 +5052,7 @@ public class Factory implements FactoryOperations {
      */
     @Support
     public static Field<Integer> two() {
-        return literal(2);
+        return inline(2);
     }
 
     /**

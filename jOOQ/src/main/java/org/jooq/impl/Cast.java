@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
@@ -151,9 +151,9 @@ class Cast<T> extends AbstractField<T> {
 
         // [#859] 0 => false, null => null, all else is true
         return Factory.decode().value((Field<Integer>) field)
-                               .when(literal(0), literal(false))
-                               .when(literal((Integer) null), literal((Boolean) null))
-                               .otherwise(literal(true));
+                               .when(inline(0), inline(false))
+                               .when(inline((Integer) null), inline((Boolean) null))
+                               .otherwise(inline(true));
     }
 
     @SuppressWarnings("unchecked")
@@ -161,11 +161,11 @@ class Cast<T> extends AbstractField<T> {
         Field<String> s = (Field<String>) field;
 
         // [#859] '0', 'f', 'false' => false, null => null, all else is true
-        return Factory.decode().when(s.equal(literal("'0'")), literal(false))
-                               .when(Factory.lower(s).equal(literal("'false'")), literal(false))
-                               .when(Factory.lower(s).equal(literal("'f'")), literal(false))
-                               .when(s.isNull(), literal((Boolean) null))
-                               .otherwise(literal(true));
+        return Factory.decode().when(s.equal(inline("0")), inline(false))
+                               .when(Factory.lower(s).equal(inline("false")), inline(false))
+                               .when(Factory.lower(s).equal(inline("f")), inline(false))
+                               .when(s.isNull(), inline((Boolean) null))
+                               .otherwise(inline(true));
     }
 
     @Override

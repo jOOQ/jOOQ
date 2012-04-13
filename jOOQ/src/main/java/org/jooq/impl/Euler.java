@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.one;
 
 import java.math.BigDecimal;
@@ -76,7 +76,7 @@ class Euler extends AbstractFunction<BigDecimal> {
                 return Factory.exp(one());
 
             case SQLITE:
-                return literal(Math.E, BigDecimal.class);
+                return inline(Math.E, BigDecimal.class);
 
             // The Euler number doesn't seem to exist in any dialect...
             default:

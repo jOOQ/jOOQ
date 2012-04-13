@@ -39,22 +39,23 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.avg;
+import static org.jooq.impl.Factory.connectByIsCycle;
+import static org.jooq.impl.Factory.connectByIsLeaf;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.level;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.max;
+import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.Factory.prior;
 import static org.jooq.impl.Factory.substring;
 import static org.jooq.impl.Factory.sum;
+import static org.jooq.impl.Factory.sysConnectByPath;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.util.oracle.OracleFactory.connectByIsCycle;
-import static org.jooq.util.oracle.OracleFactory.connectByIsLeaf;
-import static org.jooq.util.oracle.OracleFactory.level;
-import static org.jooq.util.oracle.OracleFactory.prior;
 import static org.jooq.util.oracle.OracleFactory.rownum;
-import static org.jooq.util.oracle.OracleFactory.sysConnectByPath;
 
 import java.util.Arrays;
 import java.util.List;
@@ -126,8 +127,8 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
                     "Ex Libris",
                     "Buchhandlung im Volkshaus"))
                 .orderBy(
-                    literal(1).asc(),
-                    literal(2).asc())
+                    one().asc(),
+                    two().asc())
                 .fetch();
 
         assertEquals(6, result1.size());

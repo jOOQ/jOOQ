@@ -36,7 +36,7 @@
 
 package org.jooq.util.derby;
 
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.util.derby.sys.tables.Syscolumns.SYSCOLUMNS;
 
 import java.sql.SQLException;
@@ -76,7 +76,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 Syscolumns.AUTOINCREMENTINC)
             .from(SYSCOLUMNS)
             // [#1241] Suddenly, bind values didn't work any longer, here...
-            .where(Syscolumns.REFERENCEID.equal(literal("'" + tableid + "'")))
+            .where(Syscolumns.REFERENCEID.equal(inline(tableid)))
             .orderBy(Syscolumns.COLUMNNUMBER)
             .fetch()) {
 

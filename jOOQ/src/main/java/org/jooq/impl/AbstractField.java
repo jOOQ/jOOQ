@@ -40,7 +40,7 @@ import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
@@ -71,7 +71,6 @@ import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
-import org.jooq.types.Interval;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
@@ -374,25 +373,25 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition startsWith(T value) {
-        Field<String> concat = Factory.concat(Util.escapeForLike(value), literal("'%'"));
+        Field<String> concat = Factory.concat(Util.escapeForLike(value), inline("%"));
         return like(concat, Util.ESCAPE);
     }
 
     @Override
     public final Condition startsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(Util.escapeForLike(value), literal("'%'"));
+        Field<String> concat = Factory.concat(Util.escapeForLike(value), inline("%"));
         return like(concat, Util.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(T value) {
-        Field<String> concat = Factory.concat(literal("'%'"), Util.escapeForLike(value));
+        Field<String> concat = Factory.concat(inline("%"), Util.escapeForLike(value));
         return like(concat, Util.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(literal("'%'"), Util.escapeForLike(value));
+        Field<String> concat = Factory.concat(inline("%"), Util.escapeForLike(value));
         return like(concat, Util.ESCAPE);
     }
 

@@ -53,7 +53,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.dateDiff;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.timestampDiff;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.unsigned.Unsigned.ubyte;
@@ -1328,7 +1328,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             val(new Timestamp(0)).sub(new DayToSecond(2, 6)).as("ts8b"),
 
             // Dummy field for simpler testing
-            literal("'dummy'")
+            inline("dummy")
         ).fetchOne();
 
         Calendar cal;
@@ -1393,7 +1393,7 @@ extends BaseTest<A, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725
             timestampDiff(new Timestamp(30 * 60 * 60 * 1000L), new Timestamp(0)).as("ts2"),
 
             // Dummy field for simpler testing
-            literal("'dummy'")
+            inline("dummy")
         ).fetchOne();
 
         assertEquals(-1, record.getValue("d1"));

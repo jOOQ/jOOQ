@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.literal;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.pi;
 
 import java.math.BigDecimal;
@@ -68,7 +68,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
             case INGRES:
             case ORACLE:
             case SQLITE:
-                return argument.cast(BigDecimal.class).mul(literal(180)).div(pi());
+                return argument.cast(BigDecimal.class).mul(inline(180)).div(pi());
 
             default:
                 return function("degrees", SQLDataType.NUMERIC, argument);

@@ -10,10 +10,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1417640119;
+	private static final long serialVersionUID = 1633955657;
 
 	/**
-	 * The singleton instance of dba.t_book
+	 * The singleton instance of DBA.t_book
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.sybase.generatedclasses.tables.TBook();
 
@@ -43,7 +43,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * <code><pre>
 	 * CONSTRAINT t_book__fk_t_book_author_id
 	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES dba.t_author (ID)
+	 * REFERENCES DBA.t_author (ID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -54,7 +54,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * <code><pre>
 	 * CONSTRAINT t_book__fk_t_book_co_author_id
 	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES dba.t_author (ID)
+	 * REFERENCES DBA.t_author (ID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -80,7 +80,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	 * <code><pre>
 	 * CONSTRAINT t_book__fk_t_book_language_id
 	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES dba.t_language (id)
+	 * REFERENCES DBA.t_language (id)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.enums.TLanguage> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.asMasterDataType(org.jooq.test.sybase.generatedclasses.enums.TLanguage.class), this);

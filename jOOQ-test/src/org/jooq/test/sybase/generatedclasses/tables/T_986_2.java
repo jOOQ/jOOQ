@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -399479787;
+	private static final long serialVersionUID = 200852565;
 
 	/**
-	 * The singleton instance of dba.t_986_2
+	 * The singleton instance of DBA.t_986_2
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.T_986_2 T_986_2 = new org.jooq.test.sybase.generatedclasses.tables.T_986_2();
 
@@ -36,7 +36,7 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 * <code><pre>
 	 * CONSTRAINT t_986_2__fk_986
 	 * FOREIGN KEY (REF)
-	 * REFERENCES dba.x_unused (ID)
+	 * REFERENCES DBA.x_unused (ID)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, this);

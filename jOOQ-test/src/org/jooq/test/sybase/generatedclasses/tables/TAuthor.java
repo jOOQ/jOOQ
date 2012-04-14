@@ -10,10 +10,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1629946604;
+	private static final long serialVersionUID = -742426380;
 
 	/**
-	 * The singleton instance of dba.t_author
+	 * The singleton instance of DBA.t_author
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.sybase.generatedclasses.tables.TAuthor();
 

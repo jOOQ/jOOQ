@@ -52,6 +52,7 @@ import org.jooq.util.DefaultRelations;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
+import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
@@ -162,6 +163,13 @@ public class SQLiteDatabase extends AbstractDatabase {
                 }
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+        result.add(new SchemaDefinition(this, "", ""));
+        return result;
     }
 
     @Override

@@ -282,6 +282,7 @@ public class DefaultGenerator implements Generator {
         // ----------------------------------------------------------------------
         // XXX Generating schemas
         // ----------------------------------------------------------------------
+		log.info("Generating schemata", "Total: " + database.getSchemata().size());
 		for (SchemaDefinition schema : database.getSchemata()) {
 		    generate(database, schema, watch);
 		}
@@ -1755,7 +1756,7 @@ public class DefaultGenerator implements Generator {
     }
 
     private void printColumnValidationAnnotation(GenerationWriter out, ColumnDefinition column) {
-        if (generateJPAAnnotations()) {
+        if (generateValidationAnnotations()) {
             DataTypeDefinition type = column.getType();
 
             boolean newline = true;

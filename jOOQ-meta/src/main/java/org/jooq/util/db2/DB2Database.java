@@ -38,18 +38,19 @@ package org.jooq.util.db2;
 import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.util.db2.syscat.tables.Datatypes.DATATYPES;
+import static org.jooq.util.db2.syscat.Tables.DATATYPES;
+import static org.jooq.util.db2.syscat.Tables.FUNCTIONS;
+import static org.jooq.util.db2.syscat.Tables.KEYCOLUSE;
+import static org.jooq.util.db2.syscat.Tables.REFERENCES;
+import static org.jooq.util.db2.syscat.Tables.SCHEMATA;
+import static org.jooq.util.db2.syscat.Tables.SEQUENCES;
+import static org.jooq.util.db2.syscat.Tables.TABCONST;
+import static org.jooq.util.db2.syscat.Tables.TABLES;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCNAME;
 import static org.jooq.util.db2.syscat.tables.Functions.FUNCSCHEMA;
-import static org.jooq.util.db2.syscat.tables.Functions.FUNCTIONS;
-import static org.jooq.util.db2.syscat.tables.Keycoluse.KEYCOLUSE;
 import static org.jooq.util.db2.syscat.tables.Procedures.PROCEDURES;
 import static org.jooq.util.db2.syscat.tables.Procedures.PROCNAME;
 import static org.jooq.util.db2.syscat.tables.Procedures.PROCSCHEMA;
-import static org.jooq.util.db2.syscat.tables.References.REFERENCES;
-import static org.jooq.util.db2.syscat.tables.Sequences.SEQUENCES;
-import static org.jooq.util.db2.syscat.tables.Tabconst.TABCONST;
-import static org.jooq.util.db2.syscat.tables.Tables.TABLES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ import org.jooq.util.db2.syscat.SyscatFactory;
 import org.jooq.util.db2.syscat.tables.Datatypes;
 import org.jooq.util.db2.syscat.tables.Keycoluse;
 import org.jooq.util.db2.syscat.tables.References;
+import org.jooq.util.db2.syscat.tables.Schemata;
 import org.jooq.util.db2.syscat.tables.Sequences;
 import org.jooq.util.db2.syscat.tables.Tabconst;
 import org.jooq.util.db2.syscat.tables.Tables;
@@ -185,6 +187,21 @@ public class DB2Database extends AbstractDatabase {
                 }
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(Schemata.SCHEMANAME.trim())
+                .from(SCHEMATA)
+                .fetch(Schemata.SCHEMANAME.trim())) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
     }
 
     @Override

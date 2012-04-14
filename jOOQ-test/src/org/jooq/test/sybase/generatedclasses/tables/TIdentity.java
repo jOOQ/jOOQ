@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -659009862;
+	private static final long serialVersionUID = -14435686;
 
 	/**
-	 * The singleton instance of dba.t_identity
+	 * The singleton instance of DBA.t_identity
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.sybase.generatedclasses.tables.TIdentity();
 

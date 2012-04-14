@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -646681484;
+	private static final long serialVersionUID = 1004375188;
 
 	/**
 	 * An uncommented item
@@ -34,7 +34,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
@@ -47,7 +47,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getXUnusedId() {
@@ -60,7 +60,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
@@ -77,7 +77,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedName(java.lang.String value) {
@@ -90,7 +90,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getXUnusedName() {

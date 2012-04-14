@@ -41,6 +41,7 @@ import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.util.hsqldb.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.hsqldb.information_schema.Tables.ROUTINES;
+import static org.jooq.util.hsqldb.information_schema.Tables.SCHEMATA;
 import static org.jooq.util.hsqldb.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.hsqldb.information_schema.Tables.TABLES;
 import static org.jooq.util.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
@@ -79,9 +80,6 @@ public class HSQLDBDatabase extends AbstractDatabase {
         return new HSQLDBFactory(getConnection());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("PRIMARY KEY")) {
@@ -97,9 +95,6 @@ public class HSQLDBDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys("UNIQUE")) {
@@ -136,9 +131,6 @@ public class HSQLDBDatabase extends AbstractDatabase {
             .fetch();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Result<Record> result = create()
@@ -179,9 +171,21 @@ public class HSQLDBDatabase extends AbstractDatabase {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(SCHEMATA.SCHEMA_NAME)
+                .from(SCHEMATA)
+                .fetch(SCHEMATA.SCHEMA_NAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
+    }
+
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
@@ -212,9 +216,6 @@ public class HSQLDBDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
@@ -240,36 +241,24 @@ public class HSQLDBDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<UDTDefinition> getUDTs0() throws SQLException {
         List<UDTDefinition> result = new ArrayList<UDTDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<ArrayDefinition> getArrays0() throws SQLException {
         List<ArrayDefinition> result = new ArrayList<ArrayDefinition>();
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
         List<RoutineDefinition> result = new ArrayList<RoutineDefinition>();
@@ -305,9 +294,6 @@ public class HSQLDBDatabase extends AbstractDatabase {
         return result;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected List<PackageDefinition> getPackages0() throws SQLException {
         List<PackageDefinition> result = new ArrayList<PackageDefinition>();

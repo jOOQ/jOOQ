@@ -3,7 +3,7 @@
     <jdbc>
         <driver>com.sybase.jdbc3.jdbc.SybDriver</driver>
         <url>jdbc:sybase:Tds:localhost:2638</url>
-        <schema>dba</schema>
+        <schema>DBA</schema>
         <user>dba</user>
         <password>sql</password>
     </jdbc>

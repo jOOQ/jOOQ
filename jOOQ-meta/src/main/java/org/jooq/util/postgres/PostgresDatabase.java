@@ -46,6 +46,7 @@ import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.ROUTINES;
+import static org.jooq.util.postgres.information_schema.Tables.SCHEMATA;
 import static org.jooq.util.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLES;
 import static org.jooq.util.postgres.information_schema.Tables.TABLE_CONSTRAINTS;
@@ -202,6 +203,21 @@ public class PostgresDatabase extends AbstractDatabase {
             String comment = "";
 
             result.add(new PostgresTableDefinition(schema, name, comment));
+        }
+
+        return result;
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(SCHEMATA.SCHEMA_NAME)
+                .from(SCHEMATA)
+                .fetch(SCHEMATA.SCHEMA_NAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
         }
 
         return result;

@@ -40,6 +40,7 @@ import static org.jooq.impl.Factory.concat;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.ase.sys.tables.Sysindexes.SYSINDEXES;
+import static org.jooq.util.ase.sys.tables.Sysusers.SYSUSERS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ import org.jooq.util.UDTDefinition;
 import org.jooq.util.ase.sys.DboFactory;
 import org.jooq.util.ase.sys.tables.Sysindexes;
 import org.jooq.util.ase.sys.tables.Sysreferences;
+import org.jooq.util.ase.sys.tables.Sysusers;
 
 /**
  * Sybase Adaptive Server implementation of {@link AbstractDatabase}
@@ -209,6 +211,21 @@ public class ASEDatabase extends AbstractDatabase {
                 }
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(Sysusers.NAME)
+                .from(SYSUSERS)
+                .fetch(Sysusers.NAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
     }
 
     @Override

@@ -117,8 +117,8 @@ public class GenerationTool {
 
     		    // TODO [#1201] Add better error handling here
     		    xml = xml.replaceAll(
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-    		        "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-2.3.0.xsd\">");
+    		        "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
+    		        "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-2.3.0.xsd\">");
 
     		    xml = xml.replace(
     		        "<configuration>",
@@ -323,12 +323,21 @@ public class GenerationTool {
 
             for (Schema schema : schemata) {
                 if (StringUtils.isBlank(schema.getInputSchema())) {
-                    log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
+                    if (!StringUtils.isBlank(j.getSchema())) {
+                        log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
+                    }
+
                     schema.setInputSchema(trim(j.getSchema()));
                 }
 
                 if (StringUtils.isBlank(schema.getOutputSchema())) {
                     schema.setOutputSchema(trim(schema.getInputSchema()));
+                }
+            }
+
+            if (schemata.size() == 1) {
+                if (StringUtils.isBlank(schemata.get(0).getInputSchema())) {
+                    log.info("No <inputSchema/> was provided. Generating ALL available schemata instead!");
                 }
             }
 
@@ -374,6 +383,8 @@ public class GenerationTool {
                 generator.setGenerateRecords(g.getGenerate().isRecords());
             if (g.getGenerate().isJpaAnnotations() != null)
                 generator.setGenerateJPAAnnotations(g.getGenerate().isJpaAnnotations());
+            if (g.getGenerate().isValidationAnnotations() != null)
+                generator.setGenerateValidationAnnotations(g.getGenerate().isValidationAnnotations());
 
             // Generator properties that should in fact be strategy properties
             strategy.setInstanceFields(generator.generateInstanceFields());

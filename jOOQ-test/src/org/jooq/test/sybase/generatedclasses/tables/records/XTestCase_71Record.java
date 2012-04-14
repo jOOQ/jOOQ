@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1117462061;
+	private static final long serialVersionUID = 851369331;
 
 	/**
 	 * An uncommented item
@@ -34,7 +34,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES dba.x_test_case_64_69 (ID)
+	 * REFERENCES DBA.x_test_case_64_69 (ID)
 	 * </pre></code>
 	 */
 	public void setTestCase_64_69Id(java.lang.Integer value) {
@@ -47,7 +47,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES dba.x_test_case_64_69 (ID)
+	 * REFERENCES DBA.x_test_case_64_69 (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getTestCase_64_69Id() {
@@ -60,7 +60,7 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_71__fk_x_test_case_71
 	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES dba.x_test_case_64_69 (ID)
+	 * REFERENCES DBA.x_test_case_64_69 (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {

@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses;
  */
 public class Dba extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1082280310;
+	private static final long serialVersionUID = -507798902;
 
 	/**
-	 * The singleton instance of dba
+	 * The singleton instance of DBA
 	 */
 	public static final Dba DBA = new Dba();
 
@@ -19,7 +19,7 @@ public class Dba extends org.jooq.impl.SchemaImpl {
 	 * No further instances allowed
 	 */
 	private Dba() {
-		super("dba");
+		super("DBA");
 	}
 
 	@Override

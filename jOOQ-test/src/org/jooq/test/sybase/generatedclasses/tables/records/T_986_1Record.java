@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 2117636347;
+	private static final long serialVersionUID = -413519653;
 
 	/**
 	 * An uncommented item
@@ -18,7 +18,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
-	 * REFERENCES dba.x_unused (ID)
+	 * REFERENCES DBA.x_unused (ID)
 	 * </pre></code>
 	 */
 	public void setRef(java.lang.Integer value) {
@@ -33,7 +33,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
-	 * REFERENCES dba.x_unused (ID)
+	 * REFERENCES DBA.x_unused (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getRef() {
@@ -48,7 +48,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <code><pre>
 	 * CONSTRAINT t_986_1__fk_986
 	 * FOREIGN KEY (REF)
-	 * REFERENCES dba.x_unused (ID)
+	 * REFERENCES DBA.x_unused (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {

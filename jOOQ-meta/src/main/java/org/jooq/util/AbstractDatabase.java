@@ -42,11 +42,13 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
@@ -82,6 +84,7 @@ public abstract class AbstractDatabase implements Database {
     // Loaded definitions
     // -------------------------------------------------------------------------
 
+    private List<String>                    inputSchemata;
     private List<SchemaDefinition>          schemata;
     private List<SequenceDefinition>        sequences;
     private List<TableDefinition>           tables;
@@ -115,8 +118,18 @@ public abstract class AbstractDatabase implements Database {
         if (schemata == null) {
             schemata = new ArrayList<SchemaDefinition>();
 
-            for (String name : getInputSchemata()) {
-                schemata.add(new SchemaDefinition(this, name, null));
+            try {
+                schemata = getSchemata0();
+            }
+            catch (SQLException e) {
+                log.error("Could not load schemata", e);
+            }
+
+            Iterator<SchemaDefinition> it = schemata.iterator();
+            while (it.hasNext()) {
+                if (!getInputSchemata().contains(it.next().getName())) {
+                    it.remove();
+                }
             }
         }
 
@@ -136,13 +149,29 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public final List<String> getInputSchemata() {
-        List<String> result = new ArrayList<String>();
+        if (inputSchemata == null) {
+            inputSchemata = new ArrayList<String>();
 
-        for (Schema schema : configuredSchemata) {
-            result.add(schema.getInputSchema());
+            // [#1312] Allow for ommitting inputSchema configuration. Generate
+            // All schemata instead
+            if (configuredSchemata.size() == 1 && StringUtils.isBlank(configuredSchemata.get(0).getInputSchema())) {
+                try {
+                    for (SchemaDefinition schema : getSchemata0()) {
+                        inputSchemata.add(schema.getName());
+                    }
+                }
+                catch (SQLException e) {
+                    log.error("Could not load schemata", e);
+                }
+            }
+            else {
+                for (Schema schema : configuredSchemata) {
+                    inputSchemata.add(schema.getInputSchema());
+                }
+            }
         }
 
-        return result;
+        return inputSchemata;
     }
 
     @Override
@@ -625,6 +654,12 @@ public abstract class AbstractDatabase implements Database {
      * already loaded.
      */
     protected abstract void loadForeignKeys(DefaultRelations r) throws SQLException;
+
+    /**
+     * Retrieve ALL schemata from the database. This will be filtered in
+     * {@link #getSchemata()}
+     */
+    protected abstract List<SchemaDefinition> getSchemata0() throws SQLException;
 
     /**
      * Retrieve ALL sequences from the database. This will be filtered in

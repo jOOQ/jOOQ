@@ -38,6 +38,7 @@ package org.jooq.util.h2;
 import static org.jooq.util.h2.information_schema.tables.Constraints.CONSTRAINTS;
 import static org.jooq.util.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
 import static org.jooq.util.h2.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
+import static org.jooq.util.h2.information_schema.tables.Schemata.SCHEMATA;
 import static org.jooq.util.h2.information_schema.tables.Sequences.SEQUENCES;
 import static org.jooq.util.h2.information_schema.tables.Tables.TABLES;
 import static org.jooq.util.h2.information_schema.tables.TypeInfo.TYPE_INFO;
@@ -65,6 +66,7 @@ import org.jooq.util.h2.information_schema.InformationSchemaFactory;
 import org.jooq.util.h2.information_schema.tables.Constraints;
 import org.jooq.util.h2.information_schema.tables.CrossReferences;
 import org.jooq.util.h2.information_schema.tables.FunctionAliases;
+import org.jooq.util.h2.information_schema.tables.Schemata;
 import org.jooq.util.h2.information_schema.tables.Sequences;
 import org.jooq.util.h2.information_schema.tables.Tables;
 import org.jooq.util.h2.information_schema.tables.TypeInfo;
@@ -171,6 +173,24 @@ public class H2Database extends AbstractDatabase {
                 relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (Record record : create().select(
+                    Schemata.SCHEMA_NAME,
+                    Schemata.REMARKS)
+                .from(SCHEMATA)
+                .fetch()) {
+
+            result.add(new SchemaDefinition(this,
+                record.getValue(Schemata.SCHEMA_NAME),
+                record.getValue(Schemata.REMARKS)));
+        }
+
+        return result;
     }
 
     @Override

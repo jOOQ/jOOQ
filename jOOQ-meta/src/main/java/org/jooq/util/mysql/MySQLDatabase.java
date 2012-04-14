@@ -36,11 +36,12 @@
 
 package org.jooq.util.mysql;
 
-import static org.jooq.util.mysql.information_schema.tables.Columns.COLUMNS;
-import static org.jooq.util.mysql.information_schema.tables.KeyColumnUsage.KEY_COLUMN_USAGE;
-import static org.jooq.util.mysql.information_schema.tables.ReferentialConstraints.REFERENTIAL_CONSTRAINTS;
-import static org.jooq.util.mysql.information_schema.tables.TableConstraints.TABLE_CONSTRAINTS;
-import static org.jooq.util.mysql.information_schema.tables.Tables.TABLES;
+import static org.jooq.util.mysql.information_schema.Tables.COLUMNS;
+import static org.jooq.util.mysql.information_schema.Tables.KEY_COLUMN_USAGE;
+import static org.jooq.util.mysql.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
+import static org.jooq.util.mysql.information_schema.Tables.SCHEMATA;
+import static org.jooq.util.mysql.information_schema.Tables.TABLES;
+import static org.jooq.util.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.util.mysql.mysql.tables.Proc.DB;
 import static org.jooq.util.mysql.mysql.tables.Proc.PROC;
 
@@ -66,6 +67,7 @@ import org.jooq.util.UDTDefinition;
 import org.jooq.util.mysql.information_schema.tables.Columns;
 import org.jooq.util.mysql.information_schema.tables.KeyColumnUsage;
 import org.jooq.util.mysql.information_schema.tables.ReferentialConstraints;
+import org.jooq.util.mysql.information_schema.tables.Schemata;
 import org.jooq.util.mysql.information_schema.tables.TableConstraints;
 import org.jooq.util.mysql.information_schema.tables.Tables;
 import org.jooq.util.mysql.mysql.tables.Proc;
@@ -175,6 +177,21 @@ public class MySQLDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(Schemata.SCHEMA_NAME)
+                .from(SCHEMATA)
+                .fetch(Schemata.SCHEMA_NAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
+    }
+
+    @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
         return result;
@@ -243,7 +260,7 @@ public class MySQLDatabase extends AbstractDatabase {
                 ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
 
                 if (columnDefinition != null) {
-                	
+
                 	// [#1137] Avoid generating enum classes for enum types that
                 	// are explicitly forced to another type
                     if (getConfiguredForcedType(columnDefinition) == null) {

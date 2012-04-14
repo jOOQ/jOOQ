@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1256574052;
+	private static final long serialVersionUID = 1231742908;
 
 	/**
-	 * The singleton instance of dba.x_unused
+	 * The singleton instance of DBA.x_unused
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.XUnused X_UNUSED = new org.jooq.test.sybase.generatedclasses.tables.XUnused();
 
@@ -53,7 +53,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 * <code><pre>
 	 * CONSTRAINT x_unused__fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -64,7 +64,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 * <code><pre>
 	 * CONSTRAINT x_unused__fk_x_unused_self
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);

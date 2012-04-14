@@ -3,7 +3,6 @@
     <jdbc>
         <driver>org.h2.Driver</driver>
         <url>jdbc:h2:~/test</url>
-        <schema>PUBLIC</schema>
         <user>sa</user>
         <password></password>
     </jdbc>
@@ -15,6 +14,7 @@
             <excludes>T_BOOK_DETAILS,SYSTEM_SEQUENCE.*</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
+            <inputSchema>PUBLIC</inputSchema>
             <masterDataTables>
                 <masterDataTable>
                     <name>T_LANGUAGE</name>

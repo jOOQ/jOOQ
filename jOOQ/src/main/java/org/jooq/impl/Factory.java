@@ -4676,7 +4676,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #field(Object)}, you can expect <code>value</code> to
+     * Unlike with {@link #field(String)}, you can expect <code>value</code> to
      * be properly escaped for SQL syntax correctness and SQL injection
      * prevention. For example:
      * <ul>
@@ -4699,7 +4699,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #field(Object, Class)}, you can expect
+     * Unlike with {@link #field(String, Class)}, you can expect
      * <code>value</code> to be properly escaped for SQL syntax correctness and
      * SQL injection prevention. For example:
      * <ul>
@@ -4722,7 +4722,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #field(Object, DataType)}, you can expect
+     * Unlike with {@link #field(String, DataType)}, you can expect
      * <code>value</code> to be properly escaped for SQL syntax correctness and
      * SQL injection prevention. For example:
      * <ul>
@@ -4745,7 +4745,7 @@ public class Factory implements FactoryOperations {
      * <p>
      * The resulting bind value is always inlined, regardless of the
      * {@link Settings#getStatementType()} property of the rendering factory.
-     * Unlike with {@link #field(Object, DataType)}, you can expect
+     * Unlike with {@link #field(String, DataType)}, you can expect
      * <code>value</code> to be properly escaped for SQL syntax correctness and
      * SQL injection prevention. For example:
      * <ul>

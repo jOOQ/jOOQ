@@ -12,7 +12,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1535487354;
+	private static final long serialVersionUID = 1472334274;
 
 	private java.lang.Integer                                       ID;
 	private java.lang.Integer                                       AUTHOR_ID;
@@ -88,7 +88,7 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		this.LANGUAGE_ID = LANGUAGE_ID;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getCONTENT_TEXT() {
 		return this.CONTENT_TEXT;
 	}
@@ -97,7 +97,7 @@ public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 		this.CONTENT_TEXT = CONTENT_TEXT;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getCONTENT_PDF() {
 		return this.CONTENT_PDF;
 	}

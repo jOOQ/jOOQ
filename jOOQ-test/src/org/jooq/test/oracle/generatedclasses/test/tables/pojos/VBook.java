@@ -10,7 +10,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class VBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1737200263;
+	private static final long serialVersionUID = 1794034790;
 
 
 	@javax.validation.constraints.NotNull
@@ -30,8 +30,6 @@ public class VBook implements java.io.Serializable {
 
 	@javax.validation.constraints.NotNull
 	private java.lang.Integer languageId;
-
-	@javax.validation.constraints.Size(max = 4000)
 	private java.lang.String  contentText;
 	private byte[]            contentPdf;
 
@@ -98,7 +96,7 @@ public class VBook implements java.io.Serializable {
 		this.languageId = languageId;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_TEXT", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
 		return this.contentText;
 	}
@@ -107,7 +105,7 @@ public class VBook implements java.io.Serializable {
 		this.contentText = contentText;
 	}
 
-	@javax.persistence.Column(name = "CONTENT_PDF", length = 4000)
+	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
 		return this.contentPdf;
 	}

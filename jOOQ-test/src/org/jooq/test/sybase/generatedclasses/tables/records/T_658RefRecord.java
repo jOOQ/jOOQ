@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_658RefRecord> {
 
-	private static final long serialVersionUID = -1671042585;
+	private static final long serialVersionUID = 512539495;
 
 	/**
 	 * An uncommented item
@@ -16,7 +16,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_11
 	 * FOREIGN KEY (ref_11)
-	 * REFERENCES dba.t_658_11 (id)
+	 * REFERENCES DBA.t_658_11 (id)
 	 * </pre></code>
 	 */
 	public void setRef_11(org.jooq.test.sybase.generatedclasses.enums.T_658_11 value) {
@@ -29,7 +29,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_11
 	 * FOREIGN KEY (ref_11)
-	 * REFERENCES dba.t_658_11 (id)
+	 * REFERENCES DBA.t_658_11 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.T_658_11 getRef_11() {
@@ -42,7 +42,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_21
 	 * FOREIGN KEY (ref_21)
-	 * REFERENCES dba.t_658_21 (id)
+	 * REFERENCES DBA.t_658_21 (id)
 	 * </pre></code>
 	 */
 	public void setRef_21(org.jooq.test.sybase.generatedclasses.enums.T_658_21 value) {
@@ -55,7 +55,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_21
 	 * FOREIGN KEY (ref_21)
-	 * REFERENCES dba.t_658_21 (id)
+	 * REFERENCES DBA.t_658_21 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.T_658_21 getRef_21() {
@@ -68,7 +68,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_31
 	 * FOREIGN KEY (ref_31)
-	 * REFERENCES dba.t_658_31 (id)
+	 * REFERENCES DBA.t_658_31 (id)
 	 * </pre></code>
 	 */
 	public void setRef_31(org.jooq.test.sybase.generatedclasses.enums.T_658_31 value) {
@@ -81,7 +81,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_31
 	 * FOREIGN KEY (ref_31)
-	 * REFERENCES dba.t_658_31 (id)
+	 * REFERENCES DBA.t_658_31 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.T_658_31 getRef_31() {
@@ -94,7 +94,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_12
 	 * FOREIGN KEY (ref_12)
-	 * REFERENCES dba.t_658_12 (id)
+	 * REFERENCES DBA.t_658_12 (id)
 	 * </pre></code>
 	 */
 	public void setRef_12(org.jooq.test.sybase.generatedclasses.enums.T_658_12 value) {
@@ -107,7 +107,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_12
 	 * FOREIGN KEY (ref_12)
-	 * REFERENCES dba.t_658_12 (id)
+	 * REFERENCES DBA.t_658_12 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.T_658_12 getRef_12() {
@@ -120,7 +120,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_22
 	 * FOREIGN KEY (ref_22)
-	 * REFERENCES dba.t_658_22 (id)
+	 * REFERENCES DBA.t_658_22 (id)
 	 * </pre></code>
 	 */
 	public void setRef_22(org.jooq.test.sybase.generatedclasses.enums.T_658_22 value) {
@@ -133,7 +133,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_22
 	 * FOREIGN KEY (ref_22)
-	 * REFERENCES dba.t_658_22 (id)
+	 * REFERENCES DBA.t_658_22 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.T_658_22 getRef_22() {
@@ -146,7 +146,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_32
 	 * FOREIGN KEY (ref_32)
-	 * REFERENCES dba.t_658_32 (id)
+	 * REFERENCES DBA.t_658_32 (id)
 	 * </pre></code>
 	 */
 	public void setRef_32(org.jooq.test.sybase.generatedclasses.enums.T_658_32 value) {
@@ -159,7 +159,7 @@ public class T_658RefRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 * <code><pre>
 	 * CONSTRAINT t_658_ref__fk_t_658_32
 	 * FOREIGN KEY (ref_32)
-	 * REFERENCES dba.t_658_32 (id)
+	 * REFERENCES DBA.t_658_32 (id)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.enums.T_658_32 getRef_32() {

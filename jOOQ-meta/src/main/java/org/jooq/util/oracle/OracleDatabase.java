@@ -43,6 +43,7 @@ import static org.jooq.util.oracle.sys.Tables.ALL_OBJECTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_SEQUENCES;
 import static org.jooq.util.oracle.sys.Tables.ALL_TAB_COMMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_TYPES;
+import static org.jooq.util.oracle.sys.Tables.ALL_USERS;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -170,6 +171,21 @@ public class OracleDatabase extends AbstractDatabase {
                 relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .selectDistinct(ALL_USERS.USERNAME)
+                .from(ALL_USERS)
+                .fetch(ALL_USERS.USERNAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
     }
 
     /**

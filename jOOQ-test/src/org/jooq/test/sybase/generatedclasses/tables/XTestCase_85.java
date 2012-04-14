@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  */
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 973148167;
+	private static final long serialVersionUID = 496357351;
 
 	/**
-	 * The singleton instance of dba.x_test_case_85
+	 * The singleton instance of DBA.x_test_case_85
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.sybase.generatedclasses.tables.XTestCase_85();
 
@@ -41,7 +41,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -52,7 +52,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * <code><pre>
 	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES dba.x_unused (ID, NAME)
+	 * REFERENCES DBA.x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR, this);

@@ -36,14 +36,15 @@
 package org.jooq.util.ingres;
 
 import static org.jooq.impl.Factory.trim;
-import static org.jooq.util.ingres.ingres.tables.IiconstraintIndexes.IICONSTRAINT_INDEXES;
-import static org.jooq.util.ingres.ingres.tables.Iiconstraints.IICONSTRAINTS;
-import static org.jooq.util.ingres.ingres.tables.IidbComments.IIDB_COMMENTS;
-import static org.jooq.util.ingres.ingres.tables.IiindexColumns.IIINDEX_COLUMNS;
-import static org.jooq.util.ingres.ingres.tables.Iiindexes.IIINDEXES;
-import static org.jooq.util.ingres.ingres.tables.IirefConstraints.IIREF_CONSTRAINTS;
-import static org.jooq.util.ingres.ingres.tables.Iisequences.IISEQUENCES;
-import static org.jooq.util.ingres.ingres.tables.Iitables.IITABLES;
+import static org.jooq.util.ingres.ingres.Tables.IICONSTRAINTS;
+import static org.jooq.util.ingres.ingres.Tables.IICONSTRAINT_INDEXES;
+import static org.jooq.util.ingres.ingres.Tables.IIDB_COMMENTS;
+import static org.jooq.util.ingres.ingres.Tables.IIINDEXES;
+import static org.jooq.util.ingres.ingres.Tables.IIINDEX_COLUMNS;
+import static org.jooq.util.ingres.ingres.Tables.IIREF_CONSTRAINTS;
+import static org.jooq.util.ingres.ingres.Tables.IISCHEMA;
+import static org.jooq.util.ingres.ingres.Tables.IISEQUENCES;
+import static org.jooq.util.ingres.ingres.Tables.IITABLES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ import org.jooq.util.ingres.ingres.tables.IidbComments;
 import org.jooq.util.ingres.ingres.tables.IiindexColumns;
 import org.jooq.util.ingres.ingres.tables.Iiindexes;
 import org.jooq.util.ingres.ingres.tables.IirefConstraints;
+import org.jooq.util.ingres.ingres.tables.Iischema;
 import org.jooq.util.ingres.ingres.tables.Iisequences;
 import org.jooq.util.ingres.ingres.tables.Iitables;
 
@@ -190,6 +192,21 @@ public class IngresDatabase extends AbstractDatabase {
                 relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(trim(Iischema.SCHEMA_NAME))
+                .from(IISCHEMA)
+                .fetch(trim(Iischema.SCHEMA_NAME))) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
     }
 
     @Override

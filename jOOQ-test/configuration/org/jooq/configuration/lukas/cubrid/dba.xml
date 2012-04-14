@@ -10,7 +10,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.cubrid.CUBRIDDatabase</name>
-            <includes>db_class,db_attribute,db_index,db_index_key,db_serial</includes>
+            <includes>db_user,db_class,db_attribute,db_index,db_index_key,db_serial</includes>
             <excludes></excludes>
             <inputSchema>DBA</inputSchema>
         </database>

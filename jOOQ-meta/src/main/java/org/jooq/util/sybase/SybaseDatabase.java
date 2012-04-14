@@ -39,6 +39,7 @@ import static org.jooq.util.sybase.sys.Tables.SYSPROCEDURE;
 import static org.jooq.util.sybase.sys.Tables.SYSSEQUENCE;
 import static org.jooq.util.sybase.sys.Tables.SYSTABCOL;
 import static org.jooq.util.sybase.sys.Tables.SYSTABLE;
+import static org.jooq.util.sybase.sys.Tables.SYSUSER;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -207,6 +208,20 @@ public class SybaseDatabase extends AbstractDatabase {
                 relations.addForeignKey(foreignKey, referencedKey, referencingColumn, getSchema());
             }
         }
+    }
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(SYSUSER.USER_NAME)
+                .from(SYSUSER)
+                .fetch(SYSUSER.USER_NAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
     }
 
     @Override

@@ -43,6 +43,7 @@ import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX_KEY;
 import static org.jooq.util.cubrid.dba.Tables.DB_SERIAL;
+import static org.jooq.util.cubrid.dba.Tables.DB_USER;
 
 import java.math.BigInteger;
 import java.sql.DatabaseMetaData;
@@ -155,6 +156,21 @@ public class CUBRIDDatabase extends AbstractDatabase {
                 }
             }
         }
+    }
+
+    @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(DB_USER.NAME)
+                .from(DB_USER)
+                .fetch(DB_USER.NAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
     }
 
     @Override

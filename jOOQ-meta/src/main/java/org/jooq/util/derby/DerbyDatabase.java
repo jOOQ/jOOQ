@@ -212,6 +212,21 @@ public class DerbyDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected List<SchemaDefinition> getSchemata0() throws SQLException {
+        List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
+
+        for (String name : create()
+                .select(Sysschemas.SCHEMANAME)
+                .from(SYSSCHEMAS)
+                .fetch(Sysschemas.SCHEMANAME)) {
+
+            result.add(new SchemaDefinition(this, name, ""));
+        }
+
+        return result;
+    }
+
+    @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
         List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
 

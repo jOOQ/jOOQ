@@ -10,7 +10,7 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  */
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 415329347;
+	private static final long serialVersionUID = 1150173123;
 
 	/**
 	 * An uncommented item
@@ -20,7 +20,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES dba.t_book_store (name)
+	 * REFERENCES DBA.t_book_store (name)
 	 * </pre></code>
 	 */
 	public void setBookStoreName(java.lang.String value) {
@@ -35,7 +35,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES dba.t_book_store (name)
+	 * REFERENCES DBA.t_book_store (name)
 	 * </pre></code>
 	 */
 	public java.lang.String getBookStoreName() {
@@ -50,7 +50,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
 	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES dba.t_book_store (name)
+	 * REFERENCES DBA.t_book_store (name)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
@@ -68,7 +68,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
-	 * REFERENCES dba.t_book (ID)
+	 * REFERENCES DBA.t_book (ID)
 	 * </pre></code>
 	 */
 	public void setBookId(java.lang.Integer value) {
@@ -83,7 +83,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
-	 * REFERENCES dba.t_book (ID)
+	 * REFERENCES DBA.t_book (ID)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getBookId() {
@@ -98,7 +98,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * <code><pre>
 	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
 	 * FOREIGN KEY (book_id)
-	 * REFERENCES dba.t_book (ID)
+	 * REFERENCES DBA.t_book (ID)
 	 * </pre></code>
 	 */
 	public org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord fetchTBook() {

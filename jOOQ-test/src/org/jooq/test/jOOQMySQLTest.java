@@ -84,7 +84,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.mysql.generatedclasses.Routines;
-import org.jooq.test.mysql.generatedclasses.TestFactory;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
@@ -150,8 +149,8 @@ public class jOOQMySQLTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected TestFactory create(Settings settings) {
-        return new TestFactory(getConnection(), settings);
+    protected MySQLFactory create(Settings settings) {
+        return new MySQLFactory(getConnection(), settings);
     }
 
     @Override

@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses;
  */
 public class Test2Factory extends org.jooq.util.mysql.MySQLFactory {
 
-	private static final long serialVersionUID = -1427816631;
+	private static final long serialVersionUID = 1331404856;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class Test2Factory extends org.jooq.util.mysql.MySQLFactory {
 	 */
 	public Test2Factory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class Test2Factory extends org.jooq.util.mysql.MySQLFactory {
 	@Deprecated
 	public Test2Factory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class Test2Factory extends org.jooq.util.mysql.MySQLFactory {
 	 */
 	public Test2Factory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.mysql2.generatedclasses.Test2.TEST2.getName());
 	}
 }

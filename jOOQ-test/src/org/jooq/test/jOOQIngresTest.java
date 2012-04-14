@@ -67,7 +67,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.ingres.generatedclasses.Sequences;
-import org.jooq.test.ingres.generatedclasses.TestFactory;
 import org.jooq.test.ingres.generatedclasses.tables.TAuthor;
 import org.jooq.test.ingres.generatedclasses.tables.TBook;
 import org.jooq.test.ingres.generatedclasses.tables.TBookStore;
@@ -101,6 +100,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.ingres.IngresDataType;
+import org.jooq.util.ingres.IngresFactory;
 
 
 /**
@@ -128,7 +128,7 @@ public class jOOQIngresTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new TestFactory(getConnection(), settings);
+        return new IngresFactory(getConnection(), settings);
     }
 
     @Override

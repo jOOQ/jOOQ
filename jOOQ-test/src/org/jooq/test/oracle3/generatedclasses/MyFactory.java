@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses;
  */
 public class MyFactory extends org.jooq.util.oracle.OracleFactory implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 684536071;
+	private static final long serialVersionUID = -38437295;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class MyFactory extends org.jooq.util.oracle.OracleFactory implements jav
 	 */
 	public MyFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class MyFactory extends org.jooq.util.oracle.OracleFactory implements jav
 	@Deprecated
 	public MyFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class MyFactory extends org.jooq.util.oracle.OracleFactory implements jav
 	 */
 	public MyFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.oracle3.generatedclasses.TEST.TEST.getName());
 	}
 }

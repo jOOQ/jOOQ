@@ -38,7 +38,7 @@ package org.jooq.test;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.test.sqlserver.generatedclasses.DboFactory;
+import org.jooq.util.sqlserver.SQLServerFactory;
 
 
 /**
@@ -47,9 +47,9 @@ import org.jooq.test.sqlserver.generatedclasses.DboFactory;
 public class jOOQSQLServerTestInline extends jOOQSQLServerTest {
 
     @Override
-    protected DboFactory create(Settings settings) {
+    protected SQLServerFactory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
-        return new DboFactory(getConnection(), settings);
+        return new SQLServerFactory(getConnection(), settings);
     }
 }

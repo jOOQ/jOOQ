@@ -8,7 +8,7 @@ package org.jooq.test.ingres.generatedclasses;
  */
 public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 
-	private static final long serialVersionUID = 1781756079;
+	private static final long serialVersionUID = -202885524;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 	 */
 	public TestFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 	@Deprecated
 	public TestFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class TestFactory extends org.jooq.util.ingres.IngresFactory {
 	 */
 	public TestFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.ingres.generatedclasses.Test.TEST.getName());
 	}
 }

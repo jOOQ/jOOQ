@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila;
  */
 public class SakilaFactory extends org.jooq.util.mysql.MySQLFactory {
 
-	private static final long serialVersionUID = -1204007483;
+	private static final long serialVersionUID = -1333757223;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class SakilaFactory extends org.jooq.util.mysql.MySQLFactory {
 	 */
 	public SakilaFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class SakilaFactory extends org.jooq.util.mysql.MySQLFactory {
 	@Deprecated
 	public SakilaFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class SakilaFactory extends org.jooq.util.mysql.MySQLFactory {
 	 */
 	public SakilaFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.examples.mysql.sakila.Sakila.SAKILA.getName());
 	}
 }

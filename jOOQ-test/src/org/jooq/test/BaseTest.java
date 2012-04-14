@@ -678,7 +678,10 @@ public abstract class BaseTest<
 
     @SuppressWarnings("deprecation")
     protected final Schema schema() {
-        return create().getSchemaMapping().map(TAuthor().getSchema());
+        Schema schema = TAuthor().getSchema();
+        Schema mapped = create().getSchemaMapping().map(schema);
+
+        return mapped != null ? mapped : schema;
     }
 
     protected final Field<?> getField(Table<?> table, String name) {

@@ -8,7 +8,7 @@ package org.jooq.examples.cubrid.demodb;
  */
 public class PublicFactory extends org.jooq.util.cubrid.CUBRIDFactory {
 
-	private static final long serialVersionUID = 660928880;
+	private static final long serialVersionUID = -311221033;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class PublicFactory extends org.jooq.util.cubrid.CUBRIDFactory {
 	 */
 	public PublicFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,5 +29,16 @@ public class PublicFactory extends org.jooq.util.cubrid.CUBRIDFactory {
 	 */
 	public PublicFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.examples.cubrid.demodb.Public.PUBLIC.getName());
 	}
 }

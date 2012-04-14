@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  */
 public class PublicFactory extends org.jooq.util.postgres.PostgresFactory {
 
-	private static final long serialVersionUID = -341766701;
+	private static final long serialVersionUID = -101137283;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class PublicFactory extends org.jooq.util.postgres.PostgresFactory {
 	 */
 	public PublicFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,5 +29,16 @@ public class PublicFactory extends org.jooq.util.postgres.PostgresFactory {
 	 */
 	public PublicFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.postgres.generatedclasses.Public.PUBLIC.getName());
 	}
 }

@@ -76,7 +76,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.hsqldb.generatedclasses.PublicFactory;
 import org.jooq.test.hsqldb.generatedclasses.Routines;
 import org.jooq.test.hsqldb.generatedclasses.Sequences;
 import org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord;
@@ -100,6 +99,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.hsqldb.HSQLDBDataType;
+import org.jooq.util.hsqldb.HSQLDBFactory;
 
 /**
  * @author Lukas Eder
@@ -126,7 +126,7 @@ public class jOOQHSQLDBTest extends jOOQAbstractTest<
 
 	@Override
     protected Factory create(Settings settings) {
-        return new PublicFactory(getConnection(), settings);
+        return new HSQLDBFactory(getConnection(), settings);
     }
 
 	@Override

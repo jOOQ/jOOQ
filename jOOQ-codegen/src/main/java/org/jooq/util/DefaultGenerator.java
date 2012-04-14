@@ -71,6 +71,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.AbstractKeys;
@@ -358,6 +359,8 @@ public class DefaultGenerator implements Generator {
             outF.print(Connection.class);
             outF.println(" connection) {");
             outF.println("\t\tsuper(connection);");
+            outF.println();
+            outF.println("\t\tinitDefaultSchema();");
             outF.println("\t}");
 
             if (generateDeprecated()) {
@@ -380,6 +383,8 @@ public class DefaultGenerator implements Generator {
                 outF.print(Connection.class);
                 outF.println(" connection, org.jooq.SchemaMapping mapping) {");
                 outF.println("\t\tsuper(connection, mapping);");
+                outF.println();
+                outF.println("\t\tinitDefaultSchema();");
                 outF.println("\t}");
             }
 
@@ -398,6 +403,23 @@ public class DefaultGenerator implements Generator {
             outF.print(Settings.class);
             outF.println(" settings) {");
             outF.println("\t\tsuper(connection, settings);");
+            outF.println();
+            outF.println("\t\tinitDefaultSchema();");
+            outF.println("\t}");
+
+            // [#1315] schema-specific factories override the default schema
+            outF.println();
+            outF.println("\t/**");
+            outF.println("\t * Initialise the render mapping's default schema.");
+            outF.println("\t * <p>");
+            outF.println("\t * For convenience, this schema-specific factory should override any pre-existing setting");
+            outF.println("\t */");
+            outF.println("\tprivate final void initDefaultSchema() {");
+            outF.print("\t\t");
+            outF.print(SettingsTools.class);
+            outF.print(".getRenderMapping(getSettings()).setDefaultSchema(");
+            outF.print(strategy.getFullJavaIdentifier(schema));
+            outF.println(".getName());");
             outF.println("\t}");
 
             watch.splitInfo("Schema generated");

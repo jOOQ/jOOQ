@@ -8,7 +8,7 @@ package org.jooq.examples.sqlserver.adventureworks.person;
  */
 public class PersonFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 
-	private static final long serialVersionUID = -716052976;
+	private static final long serialVersionUID = 1476849425;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class PersonFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 	 */
 	public PersonFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class PersonFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 	@Deprecated
 	public PersonFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class PersonFactory extends org.jooq.util.sqlserver.SQLServerFactory {
 	 */
 	public PersonFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.examples.sqlserver.adventureworks.person.Person.Person.getName());
 	}
 }

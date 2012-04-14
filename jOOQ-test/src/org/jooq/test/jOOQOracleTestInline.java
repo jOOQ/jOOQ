@@ -38,7 +38,7 @@ package org.jooq.test;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.test.oracle.generatedclasses.test.TestFactory;
+import org.jooq.util.oracle.OracleFactory;
 
 
 /**
@@ -47,10 +47,10 @@ import org.jooq.test.oracle.generatedclasses.test.TestFactory;
 public class jOOQOracleTestInline extends jOOQOracleTest {
 
     @Override
-    protected TestFactory create(Settings settings) {
+    protected OracleFactory create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
         settings.withRenderFormatted(true);
-        return new TestFactory(getConnection(), settings);
+        return new OracleFactory(getConnection(), settings);
     }
 }

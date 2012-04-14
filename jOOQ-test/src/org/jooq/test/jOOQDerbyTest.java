@@ -67,7 +67,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.derby.generatedclasses.Sequences;
-import org.jooq.test.derby.generatedclasses.TestFactory;
 import org.jooq.test.derby.generatedclasses.tables.TAuthor;
 import org.jooq.test.derby.generatedclasses.tables.TBook;
 import org.jooq.test.derby.generatedclasses.tables.TBookStore;
@@ -101,6 +100,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.derby.DerbyDataType;
+import org.jooq.util.derby.DerbyFactory;
 
 /**
  * @author Lukas Eder
@@ -127,7 +127,7 @@ public class jOOQDerbyTest extends jOOQAbstractTest<
 
 	@Override
     protected Factory create(Settings settings) {
-        return new TestFactory(getConnection(), settings);
+        return new DerbyFactory(getConnection(), settings);
     }
 
 	@Override

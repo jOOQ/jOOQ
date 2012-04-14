@@ -1,29 +1,27 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "Updatable Records";
+    return "CRUD and Updatable Records";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							UpdatableRecords are a specific subtype of TableRecord that have
-							primary key information associated with them.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Results and Records" href="<?=$root?>/manual/JOOQ/Result/">previous</a> : <a title="Next section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/">CRUD and Updatable Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Results, Cursors and Records" href="<?=$root?>/manual/JOOQ/Result/">previous</a> : <a title="Next section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">next</a></td>
 </tr>
 </table>
-							<h2>CRUD Operations</h2>
+							<h2>CRUD Operations with UpdatableRecords</h2>
+							<p>
+								UpdatableRecords are a specific subtype of TableRecord that have
+								primary key information associated with them.
+							</p>
 							<p>As of jOOQ 1.5, the UpdatableRecord essentially contains three additional
 							 methods <a href="http://de.wikipedia.org/wiki/CRUD">CRUD</a>
 							 (Create Read Update Delete) operations: </p>
@@ -89,10 +87,10 @@ book.storeUsing(TBook.ID);
 book.deleteUsing(TBook.ID);</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Results and Records" href="<?=$root?>/manual/JOOQ/Result/">previous</a> : <a title="Next section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/">CRUD and Updatable Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Results, Cursors and Records" href="<?=$root?>/manual/JOOQ/Result/">previous</a> : <a title="Next section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

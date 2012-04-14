@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,32 +7,27 @@ function getH1() {
     return "Tables and Fields";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Tables and their Fields are probably the most important objects in
-							jOOQ. Tables represent any entity in your underlying RDBMS, that holds
-							data for selection, insertion, updates, and deletion. In other words,
-							views are also considered tables by jOOQ.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">previous</a> : <a title="Next section: Results and Records" href="<?=$root?>/manual/JOOQ/Result/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">previous</a> : <a title="Next section: Results, Cursors and Records" href="<?=$root?>/manual/JOOQ/Result/">next</a></td>
 </tr>
 </table>
 							<h2>The Table</h2>
+							<p>Tables represent any entity in your underlying RDBMS, that holds
+							  data for selection, insertion, updates, and deletion. In other
+							  words, views are also considered tables by jOOQ. </p>
 							<p>The formal definition of a <a href="http://www.jooq.org/javadoc/latest/org/jooq/Table.html" title="Internal API reference: org.jooq.Table">org.jooq.Table</a> starts with </p>
 							<pre class="prettyprint lang-java">public interface Table&lt;R extends Record&gt; // [...]</pre>
 							<p>
 								This means that every table is associated with a subtype of the
 								<a href="http://www.jooq.org/javadoc/latest/org/jooq/Record.html" title="Internal API reference: org.jooq.Record">org.jooq.Record</a>
 								class (see also
-								<a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results and Records">Results and Records</a>
+								<a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results, Cursors and Records">Results and Records</a>
 								). For anonymous or ad-hoc tables,
 								&lt;R&gt; will always bind to Record itself.
 							</p>
@@ -130,7 +125,7 @@ function printContent() {
 								know each other. The physical aspect
 								of their nature is represented in
 								jOOQ by
-								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their corresponding records">meta model code generation</a>,
+								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their records">meta model code generation</a>,
 								where every entity in your database
 								schema will be generated into a
 								corresponding Java class.
@@ -144,10 +139,10 @@ function printContent() {
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">previous</a> : <a title="Next section: Results and Records" href="<?=$root?>/manual/JOOQ/Result/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">previous</a> : <a title="Next section: Results, Cursors and Records" href="<?=$root?>/manual/JOOQ/Result/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

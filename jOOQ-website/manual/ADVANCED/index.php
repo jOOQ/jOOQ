@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../frame.php';
@@ -7,25 +7,21 @@ function getH1() {
     return "Advanced topics";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "In these sections you will learn about advanced concepts that
-					you might not use every day";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">previous</a> : <a title="Next section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">previous</a> : <a title="Next section: Master data and enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">next</a></td>
 </tr>
 </table>
 					<h2>Overview</h2>
 					<p>This section covers some advanced topics and features that don't fit into any other section. </p>
-				<h3>Table of contents</h3><ol>
+				<h2>Table of contents</h2><ol>
 <li>
-<a title="Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a>
+<a title="Master data and enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">Master data and enumeration tables</a>
 </li>
 <li>
 <a title="Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a>
@@ -59,10 +55,10 @@ function printContent() {
 </li>
 </ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">previous</a> : <a title="Next section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">previous</a> : <a title="Next section: Master data and enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

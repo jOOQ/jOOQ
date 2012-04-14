@@ -16,6 +16,8 @@
 		<meta name="author" content="Lukas Eder"/>
 		<meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI"/>
 
+		<link href='http://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>		<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet" />
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>
@@ -23,45 +25,9 @@
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 	</head>
 	<body onload="prettyPrint()">
-		<div id="wrapper">
 			<div class="block">
 			    <div id="navigation">
-			        <?php
-			        $menu = getActiveMenu();
-			        ?>
-			    	<div class="navigation-item-left <?php if ($menu == 'home') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/" title="jOOQ Home Page">Home</a>
-		    		</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'tutorial') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/tutorial.php" title="jOOQ Tutorial : The First Steps">Tutorial</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
-			    		<a href="https://sourceforge.net/projects/jooq/files/" title="jOOQ Download">Download</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'manual') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/manual" title="jOOQ User Manual">Manual</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'javadoc') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/javadoc/latest/" title="jOOQ Main Javadoc">Javadoc</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'notes') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/notes.php" title="jOOQ Release Notes">Release Notes</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'roadmap') print 'navigation-item-active'?>">
-			    		<a href="https://sourceforge.net/apps/trac/jooq/report/6" title="jOOQ Roadmap">Roadmap</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'contribute') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/contribute.php" title="Contribute to jOOQ">Contribute</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'donations') print 'navigation-item-active'?>">
-			    		<a href="https://sourceforge.net/project/project_donations.php?group_id=283484" title="Donate to jOOQ, if you like it!">Donate</a>
-			    	</div>
-			    	<div class="navigation-item-left <?php if ($menu == 'links') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/links.php" title="Interesting links for jOOQ users">Links</a>
-			    	</div>
-			    </div>
-
-				<div id="content">
+			    <div class="wrapper">
 				<div id="tweets">
 					<div class="tweet-item">
 						<a href="http://twitter.com/share"
@@ -93,6 +59,28 @@
 					</div>
 				</div>
 
+			    <div id="menu">
+			        <?php
+			        $menu = getActiveMenu();
+			        ?>
+			        <div class="navigation-item-left <?php if ($menu == 'home') print 'navigation-item-active'?>">
+			    		<a href="<?=$root?>/" title="jOOQ Home Page">Start</a>
+		    		</div>
+			        <div class="navigation-item-left <?php if ($menu == 'learn') print 'navigation-item-active'?>">
+			    		<a href="<?=$root?>/learn.php" title="jOOQ Home Page">Learn</a>
+		    		</div>
+			        <div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
+			    		<a href="<?=$root?>/download.php" title="jOOQ Home Page">Download</a>
+		    		</div>
+			        <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
+			    		<a href="<?=$root?>/community.php" title="jOOQ Home Page">Community</a>
+		    		</div>
+			   	</div>
+			   	</div>
+			    </div>
+
+				<div id="header">
+				<div class="wrapper">
 					<table width="100%" cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="700" valign="top">
@@ -100,21 +88,31 @@
 							<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
 						</tr>
 					</table>
+				</div>
+				</div>
 
+				<div id="content">
+				<div class="wrapper">
 					<?php
-					  $slogan = getSlogan();
-
-					  if ($slogan != '') {
-					  	print '<p class="slogan">' . $slogan . '</p>';
-					  }
 					  printContent();
 				    ?>
 					<br/>
 				</div>
+				</div>
 
 				<div id="footer">
-					<p class="right">jOOQ is brought to you by <a href="http://blog.jooq.org" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
-					Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2 License">Apache 2 licence</a></p>
+				<div class="wrapper">
+			 		<p class="right">
+						<div style="float: left; width: 400px">
+						    Copyright (c) 2009-<?=date('Y')?> by <a href="http://blog.jooq.org" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
+						    Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2.0 License">Apache 2.0 licence</a>
+						</div>
+						<div style="float: right; width: 400px">
+							Want to see your brand here? <a href="mailto:lukas.eder@gmail.com" title="contact me">Contact me</a> to partner up with jOOQ
+						</div>
+						<br/>
+					</p>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -124,6 +122,5 @@
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
 		<div style="display: none">
 			<img src="/img/logo.png" title="jOOQ Logo"/>
-		</div>
 	</body>
 </html>

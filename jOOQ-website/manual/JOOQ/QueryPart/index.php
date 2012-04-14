@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,19 +7,14 @@ function getH1() {
     return "QueryParts and the global architecture";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "When constructing Query objects in jOOQ, everything is
-							considered a QueryPart. The purpose of this quickly becomes clear when
-							checking out the QueryPart API essentials";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Bind values and parameters" href="<?=$root?>/manual/JOOQ/BindValues/">previous</a> : <a title="Next section: Serializability of jOOQ objects" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
 </tr>
 </table>
 							<h2>Everything is a QueryPart</h2>
@@ -100,10 +95,10 @@ public final void toSQL(RenderContext context) {
 							<p>For more complex examples, please refer to the codebase, directly</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">previous</a> : <a title="Next section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Bind values and parameters" href="<?=$root?>/manual/JOOQ/BindValues/">previous</a> : <a title="Next section: Serializability of jOOQ objects" href="<?=$root?>/manual/JOOQ/Serializability/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,20 +7,14 @@ function getH1() {
     return "Type casting";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Many RDBMS allow for implicit or explicit conversion between types.
-							Apart from true type conversion, this is most often done with casting.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">previous</a> : <a title="Next section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">previous</a> : <a title="Next section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">next</a></td>
 </tr>
 </table>
 							<h2>Enforcing a specific type when you need it</h2>
@@ -62,10 +56,10 @@ public class Factory {
 }</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">previous</a> : <a title="Next section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CAST/">Type casting</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">previous</a> : <a title="Next section: When it's just easier: Plain SQL" href="<?=$root?>/manual/DSL/SQL/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

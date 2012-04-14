@@ -1,26 +1,20 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "Sequences";
+    return "Sequences and Serials";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							jOOQ also generates convenience artefacts for sequences, where this is
-							supported: DB2, Derby, H2, HSQLDB, Oracle, Postgres, and more.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">previous</a> : <a title="Next section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences and Serials</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">previous</a> : <a title="Next section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">next</a></td>
 </tr>
 </table>
 							<h2>Sequences as a source for identity values</h2>
@@ -50,10 +44,10 @@ BigInteger nextID   = create.select(s).fetchOne(s);</pre>
 BigInteger nextval = create.nextval(Sequences.S_AUTHOR_ID);</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">previous</a> : <a title="Next section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/SEQUENCE/">Sequences and Serials</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">previous</a> : <a title="Next section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

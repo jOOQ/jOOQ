@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,22 +7,14 @@ function getH1() {
     return "The Factory class";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							jOOQ hides most implementation facts from you by letting you
-							use the jOOQ Factory as a single entry point to all of the jOOQ API.
-							This way, you can discover all of the API using syntax auto-completion, for
-							instance.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a title="Next section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a title="Next section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
 </tr>
 </table>
 							<h2>The Factory and the jOOQ API</h2>
@@ -66,7 +58,7 @@ function printContent() {
 								several distinct JDBC Connections in your software, this will mean
 								that you have to create a new Factory every time. </p>
 
-							<h3>Factory settings</h3>
+							<h2>Factory settings</h2>
 							<p>
 								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
 								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html" title="Internal API reference: org.jooq.conf.Settings">Settings</a> class is a JAXB-annotated
@@ -111,7 +103,7 @@ function printContent() {
 							
 </p>
 
-							<h3>Factory subclasses</h3>
+							<h2>Factory subclasses</h2>
 							<p>
 								There are a couple of subclasses for the general Factory. Each SQL
 								dialect has its own dialect-specific factory. For instance, if you're
@@ -145,7 +137,7 @@ MySQLFactory create = new MySQLFactory(connection);</pre>
 								schema artefacts will be unified. Currently, this has no use.
 							</p>
 
-							<h3>Static Factory methods</h3>
+							<h2>Static Factory methods</h2>
 							<p>
 								With jOOQ 2.0, static factory methods have been introduced in order to
 								make your code look more like SQL. Ideally, when working with jOOQ, you
@@ -168,7 +160,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							
 </p>
 
-							<h3>Potential problems</h3>
+							<h2>Potential problems</h2>
 							<p>
 								The jOOQ Factory expects its underlying
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a>
@@ -211,16 +203,16 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</pre>
 							<p>
 								Please keep in mind that many jOOQ objects will reference your Factory
 								for their whole lifecycle. This is especially interesting, when dealing
-								with <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>,
+								with <a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: CRUD and Updatable Records">Updatable Records</a>,
 								that can perform CRUD operations on the
 								Factory's underlying Connection.
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a title="Next section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Factory/">The Factory class</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The example database" href="<?=$root?>/manual/JOOQ/ExampleDatabase/">previous</a> : <a title="Next section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

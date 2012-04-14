@@ -1,26 +1,20 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "Bind values";
+    return "Bind values and parameters";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Variable binding has a great impact on how you design your SQL queries.
-							It will influence your SQL queries' security aspect as well as execution speed.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/BindValues/">Bind values</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/BindValues/">Bind values and parameters</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and fetch() methods" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>
 </tr>
 </table>
 							<h2>Bind values</h2>
@@ -53,7 +47,7 @@ function printContent() {
 							
 </ul>
 
-							<h3>Ways to introduce bind values with jOOQ</h3>
+							<h2>Ways to introduce bind values with jOOQ</h2>
 							<p>
 								Bind values are omni-present in jOOQ. Whenever you create a condition,
 								you're actually also adding a bind value:
@@ -145,10 +139,10 @@ WHERE LAST_NAME = :lastName
 </table>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/BindValues/">Bind values</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/BindValues/">Bind values and parameters</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: ResultQuery and fetch() methods" href="<?=$root?>/manual/JOOQ/ResultQuery/">previous</a> : <a title="Next section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

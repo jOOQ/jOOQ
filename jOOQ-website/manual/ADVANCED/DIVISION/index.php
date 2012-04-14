@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "jOOQ's relational division syntax";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-				    	    Relational division is a rather academic topic that is not used in
-				    	    every-day SQL. Nevertheless, it can be extremely powerful in some
-				    	    remote cases. jOOQ supports it intuitively
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/DIVISION/">jOOQ's relational division syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/DIVISION/">jOOQ's relational division syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
 </tr>
 </table>
 							<h2>Relational division</h2>
@@ -91,10 +84,10 @@ WHERE NOT EXISTS (
 </ul>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/DIVISION/">jOOQ's relational division syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/DIVISION/">jOOQ's relational division syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">previous</a> : <a title="Next section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

@@ -37,7 +37,7 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="h1">
-		<xsl:attribute name="font-family">Georgia</xsl:attribute>
+		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
 		<xsl:attribute name="font-size">18pt</xsl:attribute>
 		<xsl:attribute name="padding-top">12pt</xsl:attribute>
 		<xsl:attribute name="padding-bottom">12pt</xsl:attribute>
@@ -45,7 +45,7 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="h2">
-		<xsl:attribute name="font-family">Georgia</xsl:attribute>
+		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
 		<xsl:attribute name="font-size">16pt</xsl:attribute>
 		<xsl:attribute name="padding-top">10pt</xsl:attribute>
 		<xsl:attribute name="padding-bottom">10pt</xsl:attribute>
@@ -53,7 +53,7 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="h3">
-		<xsl:attribute name="font-family">Georgia</xsl:attribute>
+		<xsl:attribute name="font-family">Special Elite</xsl:attribute>
 		<xsl:attribute name="font-size">16pt</xsl:attribute>
 		<xsl:attribute name="padding-top">10pt</xsl:attribute>
 		<xsl:attribute name="padding-bottom">10pt</xsl:attribute>
@@ -124,8 +124,8 @@
    			</fo:layout-master-set>
 
    			<fo:page-sequence master-reference="simple">
-   				<fo:flow flow-name="xsl-region-body" font-family="Helvetica">
-   					<fo:block width="100%" margin-left="20mm" margin-right="20mm" font-family="Georgia">
+   				<fo:flow flow-name="xsl-region-body" font-family="Oxygen">
+   					<fo:block width="100%" margin-left="20mm" margin-right="20mm" font-family="Special Elite">
 	   					<fo:block width="100%" text-align="center" font-size="36pt" padding-top="60mm">
 	   						<xsl:text>The jOOQ User Manual</xsl:text>
 	   					</fo:block>
@@ -145,7 +145,7 @@
    			</fo:page-sequence>
 
    			<fo:page-sequence master-reference="simple">
-   				<fo:static-content flow-name="xsl-region-before" font-family="Helvetica">
+   				<fo:static-content flow-name="xsl-region-before" font-family="Oxygen">
    					<fo:block>
 	   					<fo:table table-layout="fixed" width="100%">
 							<fo:table-column column-width="proportional-column-width(1)"/>
@@ -171,7 +171,7 @@
    					</fo:block>
    				</fo:static-content>
 
-   				<fo:static-content flow-name="xsl-region-after" font-family="Helvetica">
+   				<fo:static-content flow-name="xsl-region-after" font-family="Oxygen">
    					<fo:block>
 			      		<fo:table table-layout="fixed" width="100%">
 							<fo:table-column column-width="150mm"/>
@@ -200,7 +200,7 @@
 					</fo:block>
 			    </fo:static-content>
 
-      			<fo:flow flow-name="xsl-region-body" font-family="Helvetica">
+      			<fo:flow flow-name="xsl-region-body" font-family="Oxygen">
 					<!-- Display the main section's content -->
 					<xsl:apply-templates select="/manual/section/content"/>
 
@@ -228,9 +228,6 @@
 							<xsl:apply-templates select="." mode="chapter-number"/>
 							<xsl:text> </xsl:text>
 							<xsl:value-of select="title"/>
-						</fo:block>
-						<fo:block xsl:use-attribute-sets="p">
-							<xsl:value-of select="slogan"/>
 						</fo:block>
 
 						<xsl:apply-templates select="content" />

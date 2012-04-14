@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,17 +7,14 @@ function getH1() {
     return "Configuration and setup of the generator";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "jOOQ uses a simple configuration file to configure source code generation.";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: Advanced generator configuration" href="<?=$root?>/manual/META/AdvancedConfiguration/">next</a></td>
 </tr>
 </table>
 							<h2>The deliverables</h2>
@@ -147,7 +144,7 @@ function printContent() {
 
 							<p>
 								There are also lots of advanced configuration parameters, which will be
-								treated in the <a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced configuration of the generator">manual's next section</a>
+								treated in the <a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced generator configuration">manual's next section</a>
 								Note, you can find the official XSD file at
 							   <a href="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd</a>
 							   for a formal specification</p>
@@ -166,7 +163,7 @@ function printContent() {
 							
 </ul>
 
-							<h3>A command-line example (For Windows, unix/linux/etc will be similar)</h3>
+							<h2>A command-line example (For Windows, unix/linux/etc will be similar)</h2>
 							<ul>
 								
 <li>Put the property file, jooq*.jar and the JDBC driver into
@@ -179,7 +176,7 @@ function printContent() {
 </ul>
 							<p>Note that the property file must be passed as a classpath resource</p>
 
-							<h3>Run code generation from Eclipse</h3>
+							<h2>Run code generation from Eclipse</h2>
 							<p>Of course, you can also run code generation from your IDE. In
 								Eclipse, set up a project like this. Note that this example uses
 								jOOQ's log4j support by adding log4j.xml and log4j.jar to the project
@@ -215,7 +212,7 @@ function printContent() {
 <img alt="Eclipse configuration" class="screenshot" src="<?=$root?>/img/eclipse-example-05.png">
 							</div>
 
-							<h3>Run generation with ant</h3>
+							<h2>Run generation with ant</h2>
 							<p>
 								You can also use an ant task to generate your classes. As a rule of thumb,
 								remove the dots "." and dashes "-" from the .properties file's property names to get the
@@ -258,7 +255,7 @@ function printContent() {
   &lt;/java&gt;
 &lt;/target&gt;
 </pre>
-							<h3>Integrate generation with Maven</h3>
+							<h2>Integrate generation with Maven</h2>
 							<p>Using the official jOOQ-codegen-maven plugin, you can integrate
 								source code generation in your Maven build process: </p>
 
@@ -323,7 +320,7 @@ function printContent() {
 							<a href="https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml" title="jOOQ-codegen-maven example pom.xml file">https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a>
 </p>
 
-                            <h3>Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</h3>
+                            <h2>Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</h2>
                             <p>
                                 Before jOOQ 2.0.4, the code generator was configured using properties files
                                 These files are still supported for source code generation, but their syntax
@@ -336,16 +333,16 @@ function printContent() {
 								a corresponding XML file on system out
 							</p>
 
-							<h3>Use jOOQ generated classes in your application</h3>
+							<h2>Use jOOQ generated classes in your application</h2>
 							<p>Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you
 								can execute SQL statements with your generated classes.</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Meta model code generation" href="<?=$root?>/manual/META/">previous</a> : <a title="Next section: Advanced generator configuration" href="<?=$root?>/manual/META/AdvancedConfiguration/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

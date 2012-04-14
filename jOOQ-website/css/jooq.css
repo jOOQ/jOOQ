@@ -1,5 +1,5 @@
 body {
-	font-family: 'Lucida Grande',Helvetica,Arial,sans-serif;;
+	font-family: 'Oxygen', sans-serif;
 	font-weight: normal;
     text-shadow: 0 1px 0 #FFFFFF;
     font-size: 15px;
@@ -17,7 +17,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: Georgia,"Times New Roman",Times,serif;
+    font-family: 'Special Elite', cursive;
    	font-weight: normal;
    	color: #000000;
    	margin-top: 0.5em;
@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	font-size: 4em;
 	text-shadow: 0 1px 1px #444;
-	padding: 0;
+	padding-top: 10px;
 	margin: 0;
 }
 
@@ -42,13 +42,13 @@ h3 {
 }
 
 pre {
-	background: none repeat scroll 0 0 #ffffff;
+	background: none repeat scroll 0 0 #333333;
     border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
-    border-color: #882222;
-    box-shadow: 5px 5px 20px #aa6633;
-    color: #000000;
+    border-color: #000;
+    box-shadow: 5px 5px 20px #AAAAAA;
+    color: #66747B;
     display: block;
     font-family: monospace;
     font-size: 12px;
@@ -61,25 +61,8 @@ pre {
 }
 
 p {
-}
-
-p.slogan {
-	padding-left: 2em;
-	color: #444;
-	font-family: Georgia,"Times New Roman",Times,serif;
-	height: 3em;
-	
-	background: none repeat scroll 0 0 #ffffff;
-    border-radius: 10px 10px 10px 10px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #882222;
-    box-shadow: 5px 5px 20px #aa6633;
-    color: #000000;
-    display: block;
-    line-height: 1.5em;
-    margin: 1.5em 0;
-    padding: 1em;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 
 td.left {
@@ -114,43 +97,60 @@ ol {
 }
 
 a, a:link, a:visited, a:hover, a:active {
-    color: #882222;
+    color: #000000;
     text-decoration: none;
-	text-shadow: 0 1px 2px #666666;
+	text-shadow: 0 1px 2px #333333;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-#wrapper {
-	background: url("../img/bg.jpg") repeat scroll left top #FFFFFF;
+.wrapper {
     height: auto;
     min-height: 101%;
+    width: 1050px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .block {
 	background-color: #FFFFFF;
-    margin: 0 auto;
-    position: relative;
-    width: 1050px;
-    
+    width: 100%;
+
     border-width: 0;
     border-style: solid;
-    border-color: #882222;
-    box-shadow: 0 0 30px #aa6633;
+    border-color: #000;
+    box-shadow: 0 0 30px #777777;
+}
+
+#header {
+    padding-top: 1em;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-bottom: 1em;
+
+    background: #aaaaaa;
+    background: -webkit-gradient(linear, left, right, from(#aaaaaa), to(#ffeeee));
+    background: -moz-linear-gradient(left, #aaaaaa, #ffeeee);
+    background: gradient(linear, left, right, from(#aaaaaa), to(#ffeeee));
+
+    -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    -moz-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
+    border-top: 1px solid rgba(0,0,0,.2);
 }
 
 #content {
     padding-top: 1em;
     padding-left: 3em;
     padding-right: 3em;
-    
-    background: #fadccb;
-    background: -webkit-gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
-    background: -moz-linear-gradient(left, #f6cab9, #ffeedd);
-    background: gradient(linear, left, right, from(#f6cab9), to(#ffeedd));
-    
+
+    background: #e8e8e8;
+    background: -webkit-gradient(linear, left, right, from(#e8e8e8), to(#ffffff));
+    background: -moz-linear-gradient(left, #e8e8e8, #ffffff);
+    background: gradient(linear, left, right, from(#e8e8e8), to(#ffffff));
+
     -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
     -moz-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
     box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
@@ -158,11 +158,13 @@ a:hover {
 }
 
 #navigation {
-	padding-top: 20px;
+	font-family: 'Special Elite',cursive;
+
+	padding-top: 25px;
 	padding-left: 3em;
     padding-right: 3em;
-    
-	height: 40px;
+
+	height: 50px;
     background: #444;
     background:  -webkit-gradient(linear, left top, left bottom, from(#555), to(#333));
     background:  -moz-linear-gradient(top, #555, #333);
@@ -172,10 +174,18 @@ a:hover {
 #tweets {
 	padding-top: 4px;
 	height: 25px;
+	float: left;
+}
+
+#menu {
+	float: right;
 }
 
 div.tweet-item {
 	float: left;
+	width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 #navigation a,
@@ -186,7 +196,7 @@ div.tweet-item {
     color: #aaa;
     text-shadow: #000 -1px -1px 0px;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 1.5em;
 }
 
 #navigation .navigation-item-active a,
@@ -194,7 +204,7 @@ div.tweet-item {
 #navigation .navigation-item-active a:visited,
 #navigation .navigation-item-active a:hover,
 #navigation .navigation-item-active a:active {
-    color: #fadccb;
+    color: #ffdddd;
 }
 
 #navigation a:hover {
@@ -203,8 +213,8 @@ div.tweet-item {
 
 div.navigation-item-left {
 	float: left;
-	margin-right: 2em;
-	height: 40px;
+	margin-left: 2em;
+	height: 50px;
 }
 
 div.navigation-item-active {
@@ -214,12 +224,12 @@ div.navigation-item-active {
 #footer {
 	font-size: 0.7em;
 	color: #ddd;
-	
+
 	padding-top: 1em;
 	padding-left: 3em;
     padding-right: 3em;
     padding-bottom: 1em;
-    
+
     background: #888787;
     background: -webkit-gradient(linear, left bottom, right top, from(#888787), to(#666));
     background: -moz-linear-gradient(left bottom, #888787, #666);
@@ -236,8 +246,8 @@ div.screenshot {
     border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
-    border-color: #882222;
-    box-shadow: 5px 5px 20px #aa6633;
+    border-color: #000;
+    box-shadow: 5px 5px 20px #AAAAAA;
     color: #000000;
     display: block;
     font-family: monospace;
@@ -247,6 +257,11 @@ div.screenshot {
     white-space: pre-wrap;
     word-wrap: break-word;
 	text-align: center;
+}
+
+code {
+	font-family: monospace;
+	font-size: 12px;
 }
 
 .mono {

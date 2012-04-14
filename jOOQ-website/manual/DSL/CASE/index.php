@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "The CASE clause";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							The SQL standard supports a CASE clause, which works very similar to
-							Java's if-else statement. In complex SQL, this is very useful for value
-							mapping
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CASE/">The CASE clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">previous</a> : <a title="Next section: Type casting" href="<?=$root?>/manual/DSL/CAST/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CASE/">The CASE clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">previous</a> : <a title="Next section: Type casting" href="<?=$root?>/manual/DSL/CAST/">next</a></td>
 </tr>
 </table>
 							<h2>The two flavours of CASE</h2>
@@ -95,10 +88,10 @@ ORDER BY CASE FIRST_NAME WHEN 'Paulo'  THEN 1
       .execute();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CASE/">The CASE clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">previous</a> : <a title="Next section: Type casting" href="<?=$root?>/manual/DSL/CAST/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CASE/">The CASE clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">previous</a> : <a title="Next section: Type casting" href="<?=$root?>/manual/DSL/CAST/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

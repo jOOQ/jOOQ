@@ -1,30 +1,34 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "ResultQuery and various ways of fetching data";
+    return "ResultQuery and fetch() methods";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Various jOOQ query type extend the ResultQuery which provides many means of
-							fetching data. In general, fetching means executing and returning some
-							sort of result.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">previous</a> : <a title="Next section: Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and fetch() methods</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">previous</a> : <a title="Next section: Bind values and parameters" href="<?=$root?>/manual/JOOQ/BindValues/">next</a></td>
 </tr>
 </table>
-							<h2>The ResultQuery provides many convenience methods</h2>
+							<h2>The ResultQuery and its convenience methods</h2>
+							<p>
+							    Data fetching is one of the great hassles in JDBC and JPA.
+							    With jOOQ, you will be able to specify exactly, what kind of
+							    data you want to fetch from any given query, as well as how
+							    you want to fetch that data. This doesn't just mean distinguishing
+							    between fetching one record at a time, or the whole resultset,
+							    between fetching one column at a time, or the whole resultset.
+							    This also means transforming your result (a list) into a map,
+							    into arrays, into custom types, into JPA-annotated types, into
+							    a call-back, or simply fetching it asynchronously
+							</p>
 							<p>These methods allow for fetching a jOOQ Result or parts of it.</p>
 
 <pre class="prettyprint lang-java">// Fetch the whole result
@@ -103,10 +107,10 @@ FutureResult&lt;R&gt; fetchLater();
 FutureResult&lt;R&gt; fetchLater(ExecutorService executor);</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">previous</a> : <a title="Next section: Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and fetch() methods</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">previous</a> : <a title="Next section: Bind values and parameters" href="<?=$root?>/manual/JOOQ/BindValues/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

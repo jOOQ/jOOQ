@@ -1,28 +1,20 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "Results and Records";
+    return "Results, Cursors and Records";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Results and their Records come into play, when SELECT statements are
-							executed. There are various ways to fetch data from a jOOQ SELECT
-							statement. Essentially, the query results are always provided in the
-							Result API
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results, Cursors and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: CRUD and Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>
 </tr>
 </table>
 							<h2>The Result</h2>
@@ -38,7 +30,7 @@ function printContent() {
 								to a sub-type of Record, for instance to an
 								<a href="http://www.jooq.org/javadoc/latest/org/jooq/UpdatableRecord.html" title="Internal API reference: org.jooq.UpdatableRecord">org.jooq.UpdatableRecord</a>.
 								See the section on
-								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>
+								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: CRUD and Updatable Records">Updatable Records</a>
 								for further details.
 							</p>
 
@@ -105,10 +97,10 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Result/">Results, Cursors and Records</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">previous</a> : <a title="Next section: CRUD and Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

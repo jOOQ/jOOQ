@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "Custom data types and type conversion";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							SQL data types are very limited in number. While some databases offer
-							enumeration types or user-defined types, others only ship with the SQL
-							standard. Read this chapter to see how to use custom types with jOOQ
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data and enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
 </tr>
 </table>
 							<h2>Your custom type and its associated Converter</h2>
@@ -94,7 +87,7 @@ create.select(T_AUTHOR.DATE_OF_BIRTH)
       .from(T_AUTHOR)
       .fetch(0, new CalendarConverter());</pre>
 
-      						<h3>Using Converters in generated code</h3>
+      						<h2>Using Converters in generated code</h2>
       						<p>
 								A more common use-case, however, is to let jOOQ know about custom
 								types at code generation time. Use the following configuration elements
@@ -155,10 +148,10 @@ create.selectFrom(T_AUTHOR)
 
       						<p>
       						    Read more about advanced code generation configuration in
-      						    <a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced configuration of the generator">the manual's section about advanced code generation configuration</a>.
+      						    <a href="<?=$root?>/manual/META/AdvancedConfiguration/" title="jOOQ Manual reference: Advanced generator configuration">the manual's section about advanced code generation configuration</a>.
       						</p>
 
-      						<h3>Using Converters for enum types</h3>
+      						<h2>Using Converters for enum types</h2>
       						<p>
       							Java's Enum types can be very useful in SQL too.
       							Some databases support enumeration types natively (MySQL, Postgres).
@@ -170,10 +163,10 @@ create.selectFrom(T_AUTHOR)
       						</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Master data and enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">previous</a> : <a title="Next section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

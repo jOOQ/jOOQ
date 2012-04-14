@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,19 +7,14 @@ function getH1() {
     return "Extend jOOQ with custom types";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "Maybe jOOQ is missing functionality that you would like to see,
-							or you can't wait for the next release... In this case, you can extend
-							any of the following open jOOQ implementation classes";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">previous</a> : <a title="Next section: Meta model code generation" href="<?=$root?>/manual/META/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Serializability of jOOQ objects" href="<?=$root?>/manual/JOOQ/Serializability/">previous</a> : <a title="Next section: Meta model code generation" href="<?=$root?>/manual/META/">next</a></td>
 </tr>
 </table>
 							<h2>Write your own QueryPart implementations</h2>
@@ -61,10 +56,10 @@ public void bind(BindContext context) throws DataAccessException;</pre>
 								embedded SQL. </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">previous</a> : <a title="Next section: Meta model code generation" href="<?=$root?>/manual/META/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Serializability of jOOQ objects" href="<?=$root?>/manual/JOOQ/Serializability/">previous</a> : <a title="Next section: Meta model code generation" href="<?=$root?>/manual/META/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

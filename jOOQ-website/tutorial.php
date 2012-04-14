@@ -1,13 +1,10 @@
 <?php
 require 'frame.php';
 function getH1() {
-    echo 'Tutorial: Getting started quickly with jOOQ';
-}
-function getSlogan() {
-    return "Get up and running quickly with jOOQ following these first simple steps.";
+    echo 'Tutorial: Getting started with jOOQ';
 }
 function getActiveMenu() {
-    return "tutorial";
+    return "learn";
 }
 function printContent() {
 ?>
@@ -24,7 +21,6 @@ Download and run jOOQ in 6 easy steps:
     <li><a href="#step4">Step 4: Write a query using jOOQ's DSL</a></li>
     <li><a href="#step5">Step 5: Iterate over results</a></li>
     <li><a href="#step6">Step 6: Explore!</a></li>
-    <li><a href="#FAQ">FAQ</a></li>
 </ul>
 
 <h2 id="step0">Preparation: Download jOOQ and your SQL driver</h2>
@@ -48,6 +44,11 @@ For this example, we'll be using MySQL. If you haven't already downloaded MySQL 
 <a href="http://dev.mysql.com/downloads/connector/j/" target="_blank" title="MySQL JDBC driver">http://dev.mysql.com/downloads/connector/j/</a>
 </p>
 
+<p>
+If you don't have a MySQL instance up and running yet, get
+<a href="http://www.apachefriends.org/en/xampp.html" title="XAMPP">XAMPP</a>
+now! XAMPP is a simple installation bundle for Apache, MySQL, PHP and Perl
+</p>
 
 <h2 id="step1">Step 1: Create a SQL database and a table</h2>
 <p>
@@ -366,31 +367,6 @@ jOOQ has grown to be a comprehensive SQL library. For more information, please c
 <p>
     This tutorial is the courtesy of Ikai Lan. See the original source here:<br/>
       <a href="http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/" target="_blank" title="Ikai Lan's jOOQ tutorial">http://ikaisays.com/2011/11/01/getting-started-with-jooq-a-tutorial/</a>
-</p>
-
-<h2 id="FAQ">FAQ</h2>
-<p>
-Before you go on and read the whole manual, there are a couple of interesting questions that you might want to consider:
-</p>
-
-<p>
-<b class="mono">Q:</b> When I generate source code from MySQL, can I also use it on another database?<br/>
-<b class="mono">A:</b> Yes! The generated Java code will work for all supported databases, not only for the database driver that you used when you generated the code.
-</p>
-
-<p>
-<b class="mono">Q:</b> When I generate source code from my developer database, can I also use it on production?<br/>
-<b class="mono">A:</b> Yes! You can map your schema at code generation time or at run time. <a href="http://www.jooq.org/manual/ADVANCED/SchemaMapping/" title="Schema mapping functionality in jOOQ">See the manual for details.</a>
-</p>
-
-<p>
-<b class="mono">Q:</b> Can I use jOOQ without code generation?<br/>
-<b class="mono">A:</b> Yes! You can define tables, fields, conditions using Strings. <a href="http://www.jooq.org/manual/DSL/SQL/" title="Plain SQL functionality in jOOQ">See the manual for details.</a>
-</p>
-
-<p>
-<b class="mono">Q:</b> Can I use jOOQ as a query builder and execute queries with Spring?<br/>
-<b class="mono">A:</b> Yes! This has been done by other users and will be documented soon. <a href="http://stackoverflow.com/questions/4474365/jooq-and-spring" title="Stack Overflow question about using jOOQ with Spring">See this Stack Overflow question for details.</a>
 </p>
 
 <?php

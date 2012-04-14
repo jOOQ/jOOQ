@@ -3,16 +3,22 @@ require 'frame.php';
 function getH1() {
 	return 'The history of jOOQ<br/>From 2009 to ' . date('Y');
 }
-function getSlogan() {
-	return "jOOQ has come a long way. The community is growing as features are being added
-			in the beginning, jOOQ was no more than type-safe querying for simple statements. See how
-			jOOQ is growing to support almost all SQL constructs by 12 different RDBMS";
-}
 function getActiveMenu() {
-	return "notes";
+	return "download";
 }
 function printContent() {
-	$contents = file('inc/RELEASENOTES.txt');
+    if (isset($_GET['version']) && $_GET['version'] == '2.0') {
+	  $contents = file('inc/RELEASENOTES-2.0.txt');
+    }
+    else if (isset($_GET['version']) && $_GET['version'] == '2.1') {
+	  $contents = file('inc/RELEASENOTES-2.1.txt');
+    }
+    else if (isset($_GET['version']) && $_GET['version'] == '2.2') {
+	  $contents = file('inc/RELEASENOTES-2.2.txt');
+    }
+    else {
+      $contents = file('inc/RELEASENOTES.txt');
+    }
 
 	for ($i = 0; $i < count($contents); $i++) {
 		if ($i + 1 < count($contents) && substr($contents[$i + 1], 0, 3) == '===') {

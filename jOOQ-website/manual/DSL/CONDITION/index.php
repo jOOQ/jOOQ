@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,20 +7,14 @@ function getH1() {
     return "Conditions";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							The creation of conditions is the part of any database abstraction that
-							attracts the most attention.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
 </tr>
 </table>
 							<h2>Conditions are the SELECT's core business</h2>
@@ -118,10 +112,10 @@ T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUA
 T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/CONDITION/">Conditions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">previous</a> : <a title="Next section: Aliased tables and fields" href="<?=$root?>/manual/DSL/ALIAS/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,22 +7,14 @@ function getH1() {
     return "When it's just easier: Plain SQL";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							jOOQ cannot foresee all possible vendor-specific SQL features for your
-							database. And sometimes, even jOOQ code becomes too verbose. Then, you
-							shouldn't hesitate to provide jOOQ with plain SQL, as you'd do with
-							JDBC
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Type casting" href="<?=$root?>/manual/DSL/CAST/">previous</a> : <a title="Next section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Type casting" href="<?=$root?>/manual/DSL/CAST/">previous</a> : <a title="Next section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">next</a></td>
 </tr>
 </table>
 							<h2>Plain SQL in jOOQ</h2>
@@ -161,10 +153,10 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 </ul>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Type casting" href="<?=$root?>/manual/DSL/CAST/">previous</a> : <a title="Next section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SQL/">When it's just easier: Plain SQL</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Type casting" href="<?=$root?>/manual/DSL/CAST/">previous</a> : <a title="Next section: Advanced topics" href="<?=$root?>/manual/ADVANCED/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

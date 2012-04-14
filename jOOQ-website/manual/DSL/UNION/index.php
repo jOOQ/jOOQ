@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,17 +7,14 @@ function getH1() {
     return "UNION and other set operations";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "Unions, differences and intersections are vital set operations taken from set theory.";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/UNION/">UNION and other set operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">previous</a> : <a title="Next section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/UNION/">UNION and other set operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">previous</a> : <a title="Next section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">next</a></td>
 </tr>
 </table>
 							<h2>jOOQ's set operation API</h2>
@@ -152,10 +149,10 @@ create.selectFrom(EMP).where(DEPT.equal("R&amp;D")
 							different.</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/UNION/">UNION and other set operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">previous</a> : <a title="Next section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/UNION/">UNION and other set operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">previous</a> : <a title="Next section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

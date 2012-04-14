@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,19 +7,14 @@ function getH1() {
     return "Nested SELECT using the EXISTS operator";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "The EXISTS operator is a bit different from all other SQL
-							elements, as it cannot really be applied to any object in a DSL.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">previous</a> : <a title="Next section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">previous</a> : <a title="Next section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">next</a></td>
 </tr>
 </table>
 							<h2>The EXISTS operator for use in semi-joins or anti-joins</h2>
@@ -85,10 +80,10 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</pre>
 </table>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">previous</a> : <a title="Next section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/EXISTS/">Nested SELECT using the EXISTS operator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">previous</a> : <a title="Next section: Other types of nested SELECT" href="<?=$root?>/manual/DSL/NESTED/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

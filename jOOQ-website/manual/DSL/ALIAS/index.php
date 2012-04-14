@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "Aliased tables and fields";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Aliasing is at the core of SQL and relational algebra. When you join
-							the same entity multiple times, you can rename it to distinguish the
-							various meanings of the same entity
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">previous</a> : <a title="Next section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">previous</a> : <a title="Next section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">next</a></td>
 </tr>
 </table>
 							<h2>Aliasing Tables</h2>
@@ -34,7 +27,7 @@ function printContent() {
   								In this example, we are aliasing Tables, calling them a and b.
   								The way aliasing works depends on how you generate your meta model
   								using jooq-codegen (see the manual's section about
-  								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their corresponding records">generating tables</a>). Things become
+  								<a href="<?=$root?>/manual/META/TABLE/" title="jOOQ Manual reference: Tables, views and their records">generating tables</a>). Things become
   								simpler when you choose the instance/dynamic model, instead of the
   								static one.
   								Here is how you can create Table aliases in jOOQ:
@@ -72,7 +65,7 @@ create.select(author.ID, book.ID)
       .join(book).on(author.ID.equal(book.AUTHOR_ID))</pre>
 
 
-      						<h3>Aliasing nested selects as tables</h3>
+      						<h2>Aliasing nested selects as tables</h2>
 							<p>There is an interesting, more advanced example of how you can select
 								from an aliased nested select in the manual's section about
 								<a href="<?=$root?>/manual/DSL/NESTED/" title="jOOQ Manual reference: Other types of nested SELECT">nested selects</a>
@@ -99,10 +92,10 @@ GROUP BY FIRST_NAME, LAST_NAME;</pre>
 System.out.println("Books  : " + record.getValue("books"));</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">previous</a> : <a title="Next section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ALIAS/">Aliased tables and fields</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">previous</a> : <a title="Next section: Nested SELECT using the IN operator" href="<?=$root?>/manual/DSL/IN/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

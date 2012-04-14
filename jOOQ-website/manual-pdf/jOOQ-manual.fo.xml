@@ -7,8 +7,8 @@
 </fo:simple-page-master>
 </fo:layout-master-set>
 <fo:page-sequence master-reference="simple">
-<fo:flow font-family="Helvetica" flow-name="xsl-region-body">
-<fo:block font-family="Georgia" margin-right="20mm" margin-left="20mm" width="100%">
+<fo:flow font-family="Oxygen" flow-name="xsl-region-body">
+<fo:block font-family="Special Elite" margin-right="20mm" margin-left="20mm" width="100%">
 <fo:block padding-top="60mm" font-size="36pt" text-align="center" width="100%">The jOOQ User Manual</fo:block>
 <fo:block padding-top="20mm" color="#555555" font-size="12pt" text-align="justify" width="100%">SQL was never meant to be abstracted. To be confined in the narrow
 	   						boundaries of heavy mappers, hiding the beauty and simplicity of relational data.
@@ -21,7 +21,7 @@
 </fo:flow>
 </fo:page-sequence>
 <fo:page-sequence master-reference="simple">
-<fo:static-content font-family="Helvetica" flow-name="xsl-region-before">
+<fo:static-content font-family="Oxygen" flow-name="xsl-region-before">
 <fo:block>
 <fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="proportional-column-width(1)"/>
@@ -43,7 +43,7 @@
 </fo:table>
 </fo:block>
 </fo:static-content>
-<fo:static-content font-family="Helvetica" flow-name="xsl-region-after">
+<fo:static-content font-family="Oxygen" flow-name="xsl-region-after">
 <fo:block>
 <fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="150mm"/>
@@ -64,9 +64,8 @@
 </fo:table>
 </fo:block>
 </fo:static-content>
-<fo:flow font-family="Helvetica" flow-name="xsl-region-body">
-			
-			<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
+<fo:flow font-family="Oxygen" flow-name="xsl-region-body">
+			<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
 			<fo:block font-size="11pt">This manual is divided into four main sections:</fo:block>
 			<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
 <fo:list-block>
@@ -131,7 +130,7 @@
 			</fo:list-block>
 </fo:block>
 		<fo:block break-after="page"/>
-<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Table of contents</fo:block>
+<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Table of contents</fo:block>
 <fo:block margin-bottom="6pt">
 <fo:list-block>
 <fo:list-item>
@@ -205,7 +204,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="Result">Results and Records<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="Result">Results, Cursors and Records<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="Result"/>
 </fo:basic-link>
 </fo:inline>
@@ -221,7 +220,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="UpdatableRecord">Updatable Records<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="UpdatableRecord">CRUD and Updatable Records<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="UpdatableRecord"/>
 </fo:basic-link>
 </fo:inline>
@@ -253,7 +252,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="ResultQuery">ResultQuery and various ways of fetching data<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="ResultQuery">ResultQuery and fetch() methods<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="ResultQuery"/>
 </fo:basic-link>
 </fo:inline>
@@ -269,7 +268,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="BindValues">Bind values<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="BindValues">Bind values and parameters<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="BindValues"/>
 </fo:basic-link>
 </fo:inline>
@@ -301,7 +300,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="Serializability">Serializability of QueryParts and Results<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="Serializability">Serializability of jOOQ objects<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="Serializability"/>
 </fo:basic-link>
 </fo:inline>
@@ -369,7 +368,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="AdvancedConfiguration">Advanced configuration of the generator<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="AdvancedConfiguration">Advanced generator configuration<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="AdvancedConfiguration"/>
 </fo:basic-link>
 </fo:inline>
@@ -401,7 +400,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="TABLE">Tables, views and their corresponding records<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="TABLE">Tables, views and their records<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="TABLE"/>
 </fo:basic-link>
 </fo:inline>
@@ -449,7 +448,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="SEQUENCE">Sequences<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="SEQUENCE">Sequences and Serials<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="SEQUENCE"/>
 </fo:basic-link>
 </fo:inline>
@@ -729,7 +728,7 @@
 <fo:block font-size="11pt" page-break-inside="avoid">
 <fo:block text-align-last="justify">
 <fo:inline>
-<fo:basic-link internal-destination="MasterData">Master data generation. Enumeration tables<fo:leader leader-pattern="dots"/>
+<fo:basic-link internal-destination="MasterData">Master data and enumeration tables<fo:leader leader-pattern="dots"/>
 <fo:page-number-citation ref-id="MasterData"/>
 </fo:basic-link>
 </fo:inline>
@@ -905,16 +904,11 @@
 </fo:list-block>
 </fo:block>
 <fo:block break-after="page"/>
-<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="JOOQ">
+<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="JOOQ">
 <fo:marker marker-class-name="section">
 <fo:block>1. jOOQ classes and their usage</fo:block>
 </fo:marker>1. jOOQ classes and their usage</fo:block>
-<fo:block font-size="11pt">
-					In these sections, you will learn about how to use jOOQ object
-					factories and the jOOQ query model, to express
-					your SQL in jOOQ
-				</fo:block>
-					<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
+					<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
 					<fo:block font-size="11pt">jOOQ essentially has two packages:</fo:block>
 					<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
 <fo:list-block>
@@ -948,16 +942,16 @@
 						in order to create queries
 						the way you're used to in SQL
 					</fo:block>
-				<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExampleDatabase">
+				<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExampleDatabase">
 <fo:marker marker-class-name="section">
 <fo:block>1.1. The example database</fo:block>
 </fo:marker>1.1. The example database</fo:block>
-<fo:block font-size="11pt">
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example CREATE TABLE statements</fo:block>
+							<fo:block font-size="11pt">
 							For the examples in this manual, the same database will always be
 							referred to. It essentially consists of these entities created using
 							the Oracle dialect
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example CREATE TABLE statements</fo:block>
+							</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">CREATE TABLE t_language (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   cd CHAR(2) NOT NULL,
@@ -1004,17 +998,11 @@ CREATE TABLE t_book_to_book_store (
 								More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc),
 								stored procedures and packages are introduced for specific examples
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Factory">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Factory">
 <fo:marker marker-class-name="section">
 <fo:block>1.2. The Factory class</fo:block>
 </fo:marker>1.2. The Factory class</fo:block>
-<fo:block font-size="11pt">
-							jOOQ hides most implementation facts from you by letting you
-							use the jOOQ Factory as a single entry point to all of the jOOQ API.
-							This way, you can discover all of the API using syntax auto-completion, for
-							instance.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Factory and the jOOQ API</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Factory and the jOOQ API</fo:block>
 							<fo:block font-size="11pt">
 								jOOQ exposes a lot of interfaces and hides most implementation facts
 								from client code. The reasons for this are:
@@ -1093,7 +1081,7 @@ CREATE TABLE t_book_to_book_store (
 								several distinct JDBC Connections in your software, this will mean
 								that you have to create a new Factory every time. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory settings</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory settings</fo:block>
 							<fo:block font-size="11pt">
 								The jOOQ Factory allows for some optional configuration elements to be used by advanced users.
 								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/conf/Settings.html')">Settings</fo:basic-link> class is a JAXB-annotated
@@ -1169,7 +1157,7 @@ CREATE TABLE t_book_to_book_store (
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-runtime-2.1.0.xsd</fo:basic-link>
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory subclasses</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Factory subclasses</fo:block>
 							<fo:block font-size="11pt">
 								There are a couple of subclasses for the general Factory. Each SQL
 								dialect has its own dialect-specific factory. For instance, if you're
@@ -1222,7 +1210,7 @@ MySQLFactory create = new MySQLFactory(connection);</fo:block>
 								schema artefacts will be unified. Currently, this has no use.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Static Factory methods</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Static Factory methods</fo:block>
 							<fo:block font-size="11pt">
 								With jOOQ 2.0, static factory methods have been introduced in order to
 								make your code look more like SQL. Ideally, when working with jOOQ, you
@@ -1244,7 +1232,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="QueryPart">more details on the QueryParts' internals</fo:basic-link>
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Potential problems</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Potential problems</fo:block>
 							<fo:block font-size="11pt">
 								The jOOQ Factory expects its underlying
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html')">java.sql.Connection</fo:basic-link>
@@ -1327,17 +1315,14 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 								that can perform CRUD operations on the
 								Factory's underlying Connection.
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Table">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Table">
 <fo:marker marker-class-name="section">
 <fo:block>1.3. Tables and Fields</fo:block>
 </fo:marker>1.3. Tables and Fields</fo:block>
-<fo:block font-size="11pt">
-							Tables and their Fields are probably the most important objects in
-							jOOQ. Tables represent any entity in your underlying RDBMS, that holds
-							data for selection, insertion, updates, and deletion. In other words,
-							views are also considered tables by jOOQ.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table</fo:block>
+							<fo:block font-size="11pt">Tables represent any entity in your underlying RDBMS, that holds
+							  data for selection, insertion, updates, and deletion. In other
+							  words, views are also considered tables by jOOQ. </fo:block>
 							<fo:block font-size="11pt">The formal definition of a <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Table.html')">org.jooq.Table</fo:basic-link> starts with </fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public interface Table&lt;R extends Record&gt; // [...]</fo:block>
 							<fo:block font-size="11pt">
@@ -1368,7 +1353,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 								that JPA CriteriaQueries may have.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Field</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Field</fo:block>
 							<fo:block font-size="11pt">The formal definition of a Field starts with </fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public interface Field&lt;T&gt; // [...]</fo:block>
 							<fo:block font-size="11pt">
@@ -1420,7 +1405,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Fields and tables put into action</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Fields and tables put into action</fo:block>
 							<fo:block font-size="11pt">The Field itself is a very broad concept. Other tools, or databases
 								refer to it as expression or column. When you just want to </fo:block>
 
@@ -1445,7 +1430,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Query">Query section</fo:basic-link> of the manual
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">TableFields</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">TableFields</fo:block>
 							<fo:block font-size="11pt">
 								A specific type of field is the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/TableField.html')">org.jooq.TableField</fo:basic-link>,
@@ -1467,17 +1452,11 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 							<fo:block font-size="11pt">
 								This can be used for additional type safety in the future, or by client code.
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Result">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Result">
 <fo:marker marker-class-name="section">
-<fo:block>1.4. Results and Records</fo:block>
-</fo:marker>1.4. Results and Records</fo:block>
-<fo:block font-size="11pt">
-							Results and their Records come into play, when SELECT statements are
-							executed. There are various ways to fetch data from a jOOQ SELECT
-							statement. Essentially, the query results are always provided in the
-							Result API
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Result</fo:block>
+<fo:block>1.4. Results, Cursors and Records</fo:block>
+</fo:marker>1.4. Results, Cursors and Records</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Result</fo:block>
 							<fo:block font-size="11pt">
 								The
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Result.html')">Result</fo:basic-link>&lt;R extends <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Record.html')">Record</fo:basic-link>&gt;
@@ -1494,7 +1473,7 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</fo:block>
 								for further details.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Cursor</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Cursor</fo:block>
 							<fo:block font-size="11pt">
 								A similar object is the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Cursor.html')">Cursor</fo:basic-link>&lt;R extends Record&gt;.
@@ -1513,7 +1492,7 @@ R fetchOne() throws SQLException;
 // Close the underlying JDBC ResultSet. Don't forget to call this, before disposing the Cursor.
 void close() throws SQLException;</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Record</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Record</fo:block>
 							<fo:block font-size="11pt">
 								The Record itself holds all the data from your selected tuple. If it is
 								a <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/TableRecord.html')">org.jooq.TableRecord</fo:basic-link>, then it corresponds exactly to the type of one of your
@@ -1554,15 +1533,15 @@ BigDecimal getValueAsBigDecimal(int fieldIndex);
 								jOOQ, read the Javadoc on
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/tools/Convert.html')">org.jooq.tools.Convert</fo:basic-link>
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UpdatableRecord">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UpdatableRecord">
 <fo:marker marker-class-name="section">
-<fo:block>1.5. Updatable Records</fo:block>
-</fo:marker>1.5. Updatable Records</fo:block>
-<fo:block font-size="11pt">
-							UpdatableRecords are a specific subtype of TableRecord that have
-							primary key information associated with them.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CRUD Operations</fo:block>
+<fo:block>1.5. CRUD and Updatable Records</fo:block>
+</fo:marker>1.5. CRUD and Updatable Records</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CRUD Operations with UpdatableRecords</fo:block>
+							<fo:block font-size="11pt">
+								UpdatableRecords are a specific subtype of TableRecord that have
+								primary key information associated with them.
+							</fo:block>
 							<fo:block font-size="11pt">As of jOOQ 1.5, the UpdatableRecord essentially contains three additional
 							 methods <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://de.wikipedia.org/wiki/CRUD')">CRUD</fo:basic-link>
 							 (Create Read Update Delete) operations: </fo:block>
@@ -1591,7 +1570,7 @@ book.delete();</fo:block>
 							reflect the functionality offered by <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.hibernate.org/')">Hibernate</fo:basic-link>
 							or other persistence managers. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Performing CRUD on non-updatable records</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Performing CRUD on non-updatable records</fo:block>
 							<fo:block font-size="11pt">
 								If the jOOQ code-generator cannot detect any PRIMARY KEY, or UNIQUE KEY
 								on your tables, then the generated artefacts implement TableRecord,
@@ -1626,15 +1605,11 @@ book.storeUsing(TBook.ID);
 
 // Delete it
 book.deleteUsing(TBook.ID);</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Query">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Query">
 <fo:marker marker-class-name="section">
 <fo:block>1.6. The Query and its various subtypes</fo:block>
 </fo:marker>1.6. The Query and its various subtypes</fo:block>
-<fo:block font-size="11pt">
-							The Query type hierarchy is what you use to execute queries. It has the
-							following subtypes for each kind of operation
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">SELECT statements</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">SELECT statements</fo:block>
 							<fo:block font-size="11pt">
 								There are essentially two ways of creating SELECT statements in jOOQ.
 								For historical reasons, you can create
@@ -1742,7 +1717,7 @@ book.deleteUsing(TBook.ID);</fo:block>
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
 							<fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="88mm"/>
 <fo:table-column column-width="88mm"/>
@@ -1823,7 +1798,7 @@ Result&lt;Record&gt; result = create.select()
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL query</fo:block>
 							<fo:block font-size="11pt">
 								If you choose not to use the DSL API (for instance, because you don't
 								want to add Query parts in the order SQL expects them), you can use
@@ -1842,7 +1817,7 @@ q.addConditions(T_AUTHOR.YEAR_OF_BIRTH.greaterThan(1920));
 q.addConditions(T_AUTHOR.FIRST_NAME.equal("Paulo"));
 q.addOrderBy(T_BOOK.TITLE);</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Fetching data</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Fetching data</fo:block>
 							<fo:block font-size="11pt">
 								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link> interface extends
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/ResultQuery.html')">org.jooq.ResultQuery</fo:basic-link>,
@@ -1858,11 +1833,11 @@ q.addOrderBy(T_BOOK.TITLE);</fo:block>
 							</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">INSERT Statements</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">INSERT Statements</fo:block>
 							<fo:block font-size="11pt">jOOQ supports two modes for INSERT statements.
 							The INSERT VALUES and the INSERT SELECT syntax</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
 							<fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="88mm"/>
 <fo:table-column column-width="88mm"/>
@@ -1903,7 +1878,7 @@ VALUES
 								don't have matching numbers of fields/values. Also, you can run into
 								runtime problems, if your field/value types don't match. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: DSL Query, alternative syntax</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: DSL Query, alternative syntax</fo:block>
 							<fo:block font-size="11pt">MySQL (and some other RDBMS) allow for using an UPDATE-like syntax
 								for INSERT statements. This is also supported in jOOQ, should you
 								prefer that syntax. The above INSERT statement can also be expressed
@@ -1920,7 +1895,7 @@ VALUES
 							<fo:block font-size="11pt">As you can see, this syntax is a bit more verbose, but also more
 								type-safe, as every field can be matched with its value.</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: ON DUPLICATE KEY UPDATE clause</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: ON DUPLICATE KEY UPDATE clause</fo:block>
 							<fo:block font-size="11pt">The MySQL database supports a very convenient way to INSERT or
 								UPDATE a record. This is a non-standard extension to the SQL syntax,
 								which is supported by jOOQ and simulated in other RDBMS, where this is
@@ -1934,7 +1909,7 @@ create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
       .set(T_AUTHOR.LAST_NAME, "Koontz")
       .execute();</fo:block>
 
-      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT .. RETURNING clause</fo:block>
+      						<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT .. RETURNING clause</fo:block>
 							<fo:block font-size="11pt">The Postgres database has native support for an INSERT .. RETURNING
 								clause. This is a very powerful concept that is simulated for all
 								other dialects using JDBC's
@@ -1966,7 +1941,7 @@ create.insertInto(T_AUTHOR, T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       							ID values.
       						</fo:block>
 
-      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
+      						<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
       						<fo:block font-size="11pt">You can always use the more verbose regular syntax of the InsertQuery, if you need more control: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
@@ -1980,7 +1955,7 @@ i.addValue(T_AUTHOR.FIRST_NAME, "Alfred");
 i.addValue(T_AUTHOR.LAST_NAME, "Döblin");
 i.execute();</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT Query combined with SELECT statements</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT Query combined with SELECT statements</fo:block>
 							<fo:block font-size="11pt">The InsertQuery.addValue() method is overloaded, such that you can
 								also provide a Field, potentially containing an expression: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Insert a new author into the T_AUTHOR table
@@ -1993,7 +1968,7 @@ i.execute();</fo:block>
 								limitations regarding that syntax. You may not be able to
 								select from the same table you're inserting into</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT SELECT syntax support</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: INSERT SELECT syntax support</fo:block>
 							<fo:block font-size="11pt">In some occasions, you may prefer the INSERT SELECT syntax, for instance, when
 								you copy records from one table to another: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Insert i = create.insertInto(T_AUTHOR_ARCHIVE)
@@ -2001,11 +1976,11 @@ i.execute();</fo:block>
 i.execute();</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">UPDATE Statements</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">UPDATE Statements</fo:block>
 							<fo:block font-size="11pt">UPDATE statements are only possible on single tables. Support for
 							multi-table updates will be implemented in the near future. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
 							<fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="88mm"/>
 <fo:table-column column-width="88mm"/>
@@ -2033,7 +2008,7 @@ i.execute();</fo:block>
 </fo:table-body>
 </fo:table>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
 							<fo:block font-size="11pt">Using the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/UpdateQuery.html')">org.jooq.UpdateQuery</fo:basic-link> class,
 							this is how you could express an UPDATE statement:</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
@@ -2043,11 +2018,11 @@ u.addConditions(T_AUTHOR.ID.equal(3));
 u.execute();</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">DELETE Statements</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">DELETE Statements</fo:block>
 							<fo:block font-size="11pt">DELETE statements are only possible on single tables. Support for
 							multi-table deletes will be implemented in the near future. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: SQL query and DSL query</fo:block>
 							<fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="88mm"/>
 <fo:table-column column-width="88mm"/>
@@ -2071,7 +2046,7 @@ u.execute();</fo:block>
 </fo:table-body>
 </fo:table>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Non-DSL Query</fo:block>
 							<fo:block font-size="11pt">Using the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/DeleteQuery.html')">org.jooq.DeleteQuery</fo:basic-link> class,
 							this is how you could express a DELETE statement: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
@@ -2079,7 +2054,7 @@ d.addConditions(T_AUTHOR.ID.equal(100));
 d.execute();</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">MERGE Statement</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">MERGE Statement</fo:block>
 							<fo:block font-size="11pt">
 								The MERGE statement is one of the most advanced standardised SQL
 								constructs, which is supported by DB2, HSQLDB, Oracle, SQL Server and
@@ -2131,7 +2106,7 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 </fo:table>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">TRUNCATE Statement</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">TRUNCATE Statement</fo:block>
 							<fo:block font-size="11pt">
 								The syntax is trivial:
 							</fo:block>
@@ -2156,16 +2131,22 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 </fo:table>
 							<fo:block font-size="11pt">This is not supported by Ingres and SQLite. jOOQ will execute a DELETE FROM
 								T_AUTHOR statement instead. </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ResultQuery">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ResultQuery">
 <fo:marker marker-class-name="section">
-<fo:block>1.7. ResultQuery and various ways of fetching data</fo:block>
-</fo:marker>1.7. ResultQuery and various ways of fetching data</fo:block>
-<fo:block font-size="11pt">
-							Various jOOQ query type extend the ResultQuery which provides many means of
-							fetching data. In general, fetching means executing and returning some
-							sort of result.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The ResultQuery provides many convenience methods</fo:block>
+<fo:block>1.7. ResultQuery and fetch() methods</fo:block>
+</fo:marker>1.7. ResultQuery and fetch() methods</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The ResultQuery and its convenience methods</fo:block>
+							<fo:block font-size="11pt">
+							    Data fetching is one of the great hassles in JDBC and JPA.
+							    With jOOQ, you will be able to specify exactly, what kind of
+							    data you want to fetch from any given query, as well as how
+							    you want to fetch that data. This doesn't just mean distinguishing
+							    between fetching one record at a time, or the whole resultset,
+							    between fetching one column at a time, or the whole resultset.
+							    This also means transforming your result (a list) into a map,
+							    into arrays, into custom types, into JPA-annotated types, into
+							    a call-back, or simply fetching it asynchronously
+							</fo:block>
 							<fo:block font-size="11pt">These methods allow for fetching a jOOQ Result or parts of it.</fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// Fetch the whole result
@@ -2242,15 +2223,11 @@ ResultSet fetchResultSet();
 // Similar to how Avajé Ebean works.
 FutureResult<R> fetchLater();
 FutureResult<R> fetchLater(ExecutorService executor);]]></fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="BindValues">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="BindValues">
 <fo:marker marker-class-name="section">
-<fo:block>1.8. Bind values</fo:block>
-</fo:marker>1.8. Bind values</fo:block>
-<fo:block font-size="11pt">
-							Variable binding has a great impact on how you design your SQL queries.
-							It will influence your SQL queries' security aspect as well as execution speed.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Bind values</fo:block>
+<fo:block>1.8. Bind values and parameters</fo:block>
+</fo:marker>1.8. Bind values and parameters</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Bind values</fo:block>
 							<fo:block font-size="11pt">
 								Bind values are used in SQL / JDBC for various reasons. Among the most
 								obvious ones are:
@@ -2299,7 +2276,7 @@ FutureResult<R> fetchLater(ExecutorService executor);]]></fo:block>
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Ways to introduce bind values with jOOQ</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Ways to introduce bind values with jOOQ</fo:block>
 							<fo:block font-size="11pt">
 								Bind values are omni-present in jOOQ. Whenever you create a condition,
 								you're actually also adding a bind value:
@@ -2398,14 +2375,11 @@ WHERE LAST_NAME = :lastName
 </fo:table-row>
 </fo:table-body>
 </fo:table>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="QueryPart">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="QueryPart">
 <fo:marker marker-class-name="section">
 <fo:block>1.9. QueryParts and the global architecture</fo:block>
 </fo:marker>1.9. QueryParts and the global architecture</fo:block>
-<fo:block font-size="11pt">When constructing Query objects in jOOQ, everything is
-							considered a QueryPart. The purpose of this quickly becomes clear when
-							checking out the QueryPart API essentials</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Everything is a QueryPart</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Everything is a QueryPart</fo:block>
 							<fo:block font-size="11pt">
 								A
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Query.html')">org.jooq.Query</fo:basic-link>
@@ -2439,7 +2413,7 @@ WHERE LAST_NAME = :lastName
 							   internally implemented by every QueryPart. QueryPart internals are best
 							   illustrated with an example.</fo:block>
 
-						   <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: CompareCondition</fo:block>
+						   <fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: CompareCondition</fo:block>
 						   <fo:block font-size="11pt">A simple example can be provided by checking out jOOQ's internal
 								representation of a
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/CompareCondition.html')">org.jooq.impl.CompareCondition</fo:basic-link>.
@@ -2494,14 +2468,11 @@ public final void toSQL(RenderContext context) {
 }
 ]]></fo:block>
 							<fo:block font-size="11pt">For more complex examples, please refer to the codebase, directly</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Serializability">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Serializability">
 <fo:marker marker-class-name="section">
-<fo:block>1.10. Serializability of QueryParts and Results</fo:block>
-</fo:marker>1.10. Serializability of QueryParts and Results</fo:block>
-<fo:block font-size="11pt">Most of the jOOQ API implements the Serializable interface.
-							This helps storing queries and partial queries in files, transferring
-							queries or result data over TCP/IP, etc. </fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Attaching QueryParts</fo:block>
+<fo:block>1.10. Serializability of jOOQ objects</fo:block>
+</fo:marker>1.10. Serializability of jOOQ objects</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Attaching QueryParts</fo:block>
 							<fo:block font-size="11pt">
 								The only transient element in any jOOQ object is the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Factory">The Factory class</fo:basic-link>'s
@@ -2523,7 +2494,7 @@ Factory create = new Factory(connection, SQLDialect.ORACLE);
 create.attach(select);</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Automatically attaching QueryParts</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Automatically attaching QueryParts</fo:block>
 							<fo:block font-size="11pt">
 								Note, this functionality is deprecated with jOOQ 2.1.0.
 								Please use the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="ExecuteListener">ExecuteListener</fo:basic-link> API
@@ -2567,14 +2538,11 @@ ConfigurationRegistry.setProvider(provider);</fo:block>
 </fo:list-item>
 							</fo:list-block>
 </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Extend">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Extend">
 <fo:marker marker-class-name="section">
 <fo:block>1.11. Extend jOOQ with custom types</fo:block>
 </fo:marker>1.11. Extend jOOQ with custom types</fo:block>
-<fo:block font-size="11pt">Maybe jOOQ is missing functionality that you would like to see,
-							or you can't wait for the next release... In this case, you can extend
-							any of the following open jOOQ implementation classes</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Write your own QueryPart implementations</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Write your own QueryPart implementations</fo:block>
 							<fo:block font-size="11pt">If a SQL clause is too complex to express with jOOQ, you can extend
 								either one of the following types for use directly in a jOOQ query:</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public abstract class CustomField&lt;T&gt; extends AbstractField&lt;T&gt; {
@@ -2605,20 +2573,18 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							<fo:block font-size="11pt">The above contract may be a bit tricky to understand at first. The
 								best thing is to check out jOOQ source code and have a look at a
 								couple of QueryParts, to see how it's done.</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Plain SQL as an alternative</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Plain SQL as an alternative</fo:block>
 							<fo:block font-size="11pt">If you don't need integration of rather complex QueryParts into
 								jOOQ, then you might be safer using simple
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SQL">Plain SQL</fo:basic-link> functionality,
 								where you can provide jOOQ with a simple String representation of your
 								embedded SQL. </fo:block>
 						<fo:block break-after="page"/>
-<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="META">
+<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="META">
 <fo:marker marker-class-name="section">
 <fo:block>2. Meta model code generation</fo:block>
 </fo:marker>2. Meta model code generation</fo:block>
-<fo:block font-size="11pt">In these sections you will learn about how to configure and use
-					jOOQ's source code generator</fo:block>
-					<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
+					<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
 					<fo:block font-size="11pt">
 						In the previous chapter, we have seen how to use the
 						<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Factory">Factory</fo:basic-link> in order to create
@@ -2639,12 +2605,11 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 						Artefacts, such as tables, views, user defined types, sequences, stored
 						procedures, packages have a corresponding artefact in Java.
 					</fo:block>
-				<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Configuration">
+				<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Configuration">
 <fo:marker marker-class-name="section">
 <fo:block>2.1. Configuration and setup of the generator</fo:block>
 </fo:marker>2.1. Configuration and setup of the generator</fo:block>
-<fo:block font-size="11pt">jOOQ uses a simple configuration file to configure source code generation.</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The deliverables</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The deliverables</fo:block>
 							<fo:block font-size="11pt">
 								There are three binaries available with jOOQ, to be downloaded from
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://sourceforge.net/projects/jooq/')">SourceForge</fo:basic-link>
@@ -2694,7 +2659,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Dependencies</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Dependencies</fo:block>
 							<fo:block font-size="11pt">All of jOOQ's dependencies are "optional", i.e. you can run
 								jOOQ without any of those libraries.
 								For instance, jOOQ maintains an "optional" dependency on log4j and slf4j.
@@ -2708,7 +2673,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Configure jOOQ's code generator</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Configure jOOQ's code generator</fo:block>
 							<fo:block font-size="11pt">You need to tell jOOQ some things about your database connection.
 								Here's an example of how to do it for an Oracle database </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -2789,7 +2754,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							   <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd')">http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd</fo:basic-link>
 							   for a formal specification</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run jOOQ code generation</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run jOOQ code generation</fo:block>
 							<fo:block font-size="11pt">Code generation works by calling this class with the above property file as argument.</fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">org.jooq.util.GenerationTool /jooq-config.xml</fo:block>
 							<fo:block font-size="11pt">Be sure that these elements are located on the classpath: </fo:block>
@@ -2822,7 +2787,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">A command-line example (For Windows, unix/linux/etc will be similar)</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">A command-line example (For Windows, unix/linux/etc will be similar)</fo:block>
 							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
 <fo:list-block>
 								<fo:list-item>
@@ -2854,7 +2819,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 </fo:block>
 							<fo:block font-size="11pt">Note that the property file must be passed as a classpath resource</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run code generation from Eclipse</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run code generation from Eclipse</fo:block>
 							<fo:block font-size="11pt">Of course, you can also run code generation from your IDE. In
 								Eclipse, set up a project like this. Note that this example uses
 								jOOQ's log4j support by adding log4j.xml and log4j.jar to the project
@@ -2895,7 +2860,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 </fo:block>
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run generation with ant</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Run generation with ant</fo:block>
 							<fo:block font-size="11pt">
 								You can also use an ant task to generate your classes. As a rule of thumb,
 								remove the dots "." and dashes "-" from the .properties file's property names to get the
@@ -2938,7 +2903,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
   </java>
 </target>
 ]]></fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Integrate generation with Maven</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Integrate generation with Maven</fo:block>
 							<fo:block font-size="11pt">Using the official jOOQ-codegen-maven plugin, you can integrate
 								source code generation in your Maven build process: </fo:block>
 
@@ -3003,7 +2968,7 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml')">https://github.com/lukaseder/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</fo:basic-link>
 </fo:block>
 
-                            <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</fo:block>
+                            <fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</fo:block>
                             <fo:block font-size="11pt">
                                 Before jOOQ 2.0.4, the code generator was configured using properties files
                                 These files are still supported for source code generation, but their syntax
@@ -3016,16 +2981,15 @@ public void bind(BindContext context) throws DataAccessException;</fo:block>
 								a corresponding XML file on system out
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Use jOOQ generated classes in your application</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Use jOOQ generated classes in your application</fo:block>
 							<fo:block font-size="11pt">Be sure, both jOOQ.jar and your generated package (see
 								configuration) are located on your classpath. Once this is done, you
 								can execute SQL statements with your generated classes.</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="AdvancedConfiguration">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="AdvancedConfiguration">
 <fo:marker marker-class-name="section">
-<fo:block>2.2. Advanced configuration of the generator</fo:block>
-</fo:marker>2.2. Advanced configuration of the generator</fo:block>
-<fo:block font-size="11pt">jOOQ power users may want to fine-tune their source code generation settings. Here's how to do this</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Code generation</fo:block>
+<fo:block>2.2. Advanced generator configuration</fo:block>
+</fo:marker>2.2. Advanced generator configuration</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Code generation</fo:block>
 							<fo:block font-size="11pt">
 								In the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Configuration">previous section</fo:basic-link>
 								we have seen how jOOQ's source code generator is configured and
@@ -3132,7 +3096,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }</fo:block>
 
-                            <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jooq-meta configuration</fo:block>
+                            <fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jooq-meta configuration</fo:block>
 							<fo:block font-size="11pt">
 								Within the &lt;generator/&gt; element, there are other configuration elements:
 							</fo:block>
@@ -3217,7 +3181,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jooq-codegen configuration</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jooq-codegen configuration</fo:block>
                             <fo:block font-size="11pt">Also, you can add some optional advanced configuration parameters for the generator: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[<!-- These properties can be added to the generate element: -->
@@ -3262,14 +3226,11 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to false -->
   <jpaAnnotations>false</jpaAnnotations>
 </generate>]]></fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SCHEMA">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SCHEMA">
 <fo:marker marker-class-name="section">
 <fo:block>2.3. The schema, top-level generated artefact</fo:block>
 </fo:marker>2.3. The schema, top-level generated artefact</fo:block>
-<fo:block font-size="11pt">The schema is the top-level generated object in jOOQ. In many
-							RDBMS, the schema coincides with the owner of tables and other objects
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Schema</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Schema</fo:block>
 							<fo:block font-size="11pt">
 								As of jOOQ 1.5, the top-level generated object is the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Schema.html')">org.jooq.Schema</fo:basic-link>.
@@ -3293,22 +3254,17 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="SchemaMapping">multiple equivalent schemata</fo:basic-link>
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Schema contents</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Schema contents</fo:block>
 							<fo:block font-size="11pt">The schema can be used to dynamically discover generate database
 								artefacts. Tables, sequences, and other items are accessible from the
 								schema. For example:</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public final java.util.List&lt;org.jooq.Sequence&lt;?&gt;&gt; getSequences();
 public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="TABLE">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="TABLE">
 <fo:marker marker-class-name="section">
-<fo:block>2.4. Tables, views and their corresponding records</fo:block>
-</fo:marker>2.4. Tables, views and their corresponding records</fo:block>
-<fo:block font-size="11pt">
-							The most important generated artefacts are Tables and TableRecords.
-							Every Table has a Record type associated with it that models a single tuple
-							of that entity: Table&lt;R extends Record&gt;.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Tables and TableRecords</fo:block>
+<fo:block>2.4. Tables, views and their records</fo:block>
+</fo:marker>2.4. Tables, views and their records</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Tables and TableRecords</fo:block>
 							<fo:block font-size="11pt">
 								The most important generated artefacts are
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Table.html')">Tables</fo:basic-link> and
@@ -3329,7 +3285,7 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:bloc
 								be generated:
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table as an entity meta model</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table as an entity meta model</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">public class TAuthor extends UpdatableTableImpl&lt;TAuthorRecord&gt; {
 
     // The singleton instance of the Table
@@ -3350,7 +3306,7 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:bloc
     }
 }</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table's associated TableRecord</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The Table's associated TableRecord</fo:block>
 							<fo:block font-size="11pt">If you use the
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Query">SimpleSelectQuery</fo:basic-link>
 								 syntax (both in standard and DSL
@@ -3375,7 +3331,7 @@ public final java.util.List&lt;org.jooq.Table&lt;?&gt;&gt; getTables();</fo:bloc
 }</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Generated or custom POJO's instead of jOOQ's Records</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Generated or custom POJO's instead of jOOQ's Records</fo:block>
 							<fo:block font-size="11pt">
 								If you're using jOOQ along with Hibernate / JPA, or if you
 								want to use your own, custom domain-model instead of jOOQ's
@@ -3434,16 +3390,11 @@ public class MyAuthor {
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Record.html#into%28java.lang.Class%29')">Record.into()</fo:basic-link>
 								for more details.
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURE">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURE">
 <fo:marker marker-class-name="section">
 <fo:block>2.5. Procedures and packages</fo:block>
 </fo:marker>2.5. Procedures and packages</fo:block>
-<fo:block font-size="11pt">
-							Procedure support is one of the most important reasons why you should consider
-							jOOQ. jOOQ heavily facilitates the use of stored procedures and
-							functions via its source code generation.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Stored procedures in modern RDBMS</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Stored procedures in modern RDBMS</fo:block>
 							<fo:block font-size="11pt">This is one of the most important reasons why you should consider
 								jOOQ. Read also my
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://java.dzone.com/articles/2011-great-year-stored')">article on dzone</fo:basic-link>
@@ -3459,7 +3410,7 @@ public class MyAuthor {
 								via its source code generation. Essentially, it comes down to this:
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">"Standalone" stored procedures and functions</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">"Standalone" stored procedures and functions</fo:block>
 							<fo:block font-size="11pt">Let's say you have these stored procedures and functions in your Oracle database </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">-- Check whether there is an author in T_AUTHOR by that name
 CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2) RETURN NUMBER;
@@ -3569,7 +3520,7 @@ public final class Routines {
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's understanding of procedures vs functions</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's understanding of procedures vs functions</fo:block>
 							<fo:block font-size="11pt">
 								jOOQ does not formally distinguish procedures from functions.
 								jOOQ only knows about routines, which can have return values
@@ -3579,10 +3530,10 @@ public final class Routines {
 								topic, here:
 							</fo:block>
 							<fo:block font-size="11pt">
-								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/')">lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/</fo:basic-link>
+								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/')">blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/</fo:basic-link>
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Packages in Oracle</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Packages in Oracle</fo:block>
 							<fo:block font-size="11pt">
 								Oracle uses the concept of a PACKAGE to group several
 								procedures/functions into a sort of namespace. The
@@ -3622,7 +3573,7 @@ public final class Routines {
 								standalone procedures/functions.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Member functions and procedures in Oracle</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Member functions and procedures in Oracle</fo:block>
 							<fo:block font-size="11pt">
 								Oracle UDT's can have object-oriented structures including member functions
 								and procedures. With Oracle, you can do things like this:
@@ -3660,16 +3611,11 @@ assertNotNull(author.getLastName());</fo:block>
 							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="UDT">User Defined Types</fo:basic-link>
 </fo:block>
 
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UDT">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UDT">
 <fo:marker marker-class-name="section">
 <fo:block>2.6. UDT's including ARRAY and ENUM types</fo:block>
 </fo:marker>2.6. UDT's including ARRAY and ENUM types</fo:block>
-<fo:block font-size="11pt">
-							Databases become more powerful when you can structure your data in user
-							defined types. It's time for Java developers to give some credit to
-							that.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Increased RDBMS support for UDT's</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Increased RDBMS support for UDT's</fo:block>
 							<fo:block font-size="11pt">
 								In recent years, most RDBMS have started to implement some support for
 								advanced data types. This support has not been adopted very well by
@@ -3711,7 +3657,7 @@ assertNotNull(author.getLastName());</fo:block>
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="PROCEDURE">stored procedures</fo:basic-link>, of course) across all
 								RDBMS, where these types are supported. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">UDT types</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">UDT types</fo:block>
 							<fo:block font-size="11pt">User Defined Types (UDT) are helpful in major RDMBS with lots
 							of proprietary functionality. The biggest player is clearly Oracle.
 							Currently, jOOQ provides UDT support for only two databases: </fo:block>
@@ -3828,7 +3774,7 @@ address.setCountry("Switzerland");
 address = Procedures.pCheckAddress(connection, address);</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ARRAY types</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ARRAY types</fo:block>
 							<fo:block font-size="11pt">
 								The notion of ARRAY types in RDBMS is not standardised at all. Very
 								modern databases (especially the Java-based ones) have implemented
@@ -3900,7 +3846,7 @@ address = Procedures.pCheckAddress(connection, address);</fo:block>
 									and stored procedures.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: General ARRAY types</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: General ARRAY types</fo:block>
 							<fo:block font-size="11pt">An example usage of ARRAYs is given here for the Postgres dialect </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">CREATE TABLE t_arrays (
@@ -3926,7 +3872,7 @@ public final class Functions {
     public static Field&lt;String[]&gt; fArrays(Field&lt;String[]&gt; inArray) {                              // [...]
 }</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Oracle VARRAY types</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Example: Oracle VARRAY types</fo:block>
 							<fo:block font-size="11pt">In Oracle, a VARRAY type is something slightly different than in
 								other RDMBS. It is a type that encapsules the actual ARRAY and creates
 								a new type from it. While all text[] types are equal and thus
@@ -3968,7 +3914,7 @@ public final class Functions {
 }</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ENUM types</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ENUM types</fo:block>
 							<fo:block font-size="11pt">True ENUM types are a rare species in the RDBMS world. Currently,
 								MySQL and Postgres are the only RDMBS supported by jOOQ, that provide
 								ENUM types. </fo:block>
@@ -4045,15 +3991,11 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 								sense in your data model. See the section on
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="MasterData">master data</fo:basic-link> for more
 								details. </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SEQUENCE">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SEQUENCE">
 <fo:marker marker-class-name="section">
-<fo:block>2.7. Sequences</fo:block>
-</fo:marker>2.7. Sequences</fo:block>
-<fo:block font-size="11pt">
-							jOOQ also generates convenience artefacts for sequences, where this is
-							supported: DB2, Derby, H2, HSQLDB, Oracle, Postgres, and more.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Sequences as a source for identity values</fo:block>
+<fo:block>2.7. Sequences and Serials</fo:block>
+</fo:marker>2.7. Sequences and Serials</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Sequences as a source for identity values</fo:block>
 							<fo:block font-size="11pt"> Sequences implement the
 							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Sequence.html')">org.jooq.Sequence</fo:basic-link> interface, providing essentially this functionality:</fo:block>
 
@@ -4079,15 +4021,11 @@ BigInteger nextID   = create.select(s).fetchOne(s);</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">BigInteger currval = create.currval(Sequences.S_AUTHOR_ID);
 BigInteger nextval = create.nextval(Sequences.S_AUTHOR_ID);</fo:block>
 						<fo:block break-after="page"/>
-<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="DSL">
+<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="DSL">
 <fo:marker marker-class-name="section">
 <fo:block>3. DSL or fluent API. Where SQL meets Java</fo:block>
 </fo:marker>3. DSL or fluent API. Where SQL meets Java</fo:block>
-<fo:block font-size="11pt">
-					In these sections you will learn about how jOOQ makes SQL available to
-					Java as if Java natively supported SQL
-				</fo:block>
-					<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
+					<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
 					<fo:block font-size="11pt">jOOQ ships with its own DSL (or
 						<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://en.wikipedia.org/wiki/Domain-specific_language')">Domain Specific Language</fo:basic-link>) that
 						simulates SQL as good as possible in Java. This means, that you can
@@ -4134,17 +4072,11 @@ create.select()
 						We'll see how the aliasing works later in the section about
 						<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="ALIAS">aliasing</fo:basic-link>
 					</fo:block>
-				<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SELECT">
+				<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SELECT">
 <fo:marker marker-class-name="section">
 <fo:block>3.1. Complete SELECT syntax</fo:block>
 </fo:marker>3.1. Complete SELECT syntax</fo:block>
-<fo:block font-size="11pt">
-							A SELECT statement is more than just the R in CRUD. It allows for
-							transforming your relational data into any other form using concepts
-							such as equi-join, semi-join, anti-join, outer-join and much more. jOOQ
-							helps you think in precisely those relational concepts.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">SELECT from anonymous or ad-hoc types</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">SELECT from anonymous or ad-hoc types</fo:block>
 							<fo:block font-size="11pt">When you don't just perform CRUD (i.e. SELECT * FROM your_table WHERE ID = ?),
 							you're usually generating new types using custom projections. With jOOQ, this is
 							as intuitive, as if using SQL directly. A more or less complete example of the "standard" SQL syntax, plus
@@ -4386,7 +4318,7 @@ Record fetchOne();
 // [...]</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">SELECT from single physical tables</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">SELECT from single physical tables</fo:block>
 							<fo:block font-size="11pt">A very similar, but limited API is available, if you want to select from single
 								physical tables in order to retrieve TableRecords or even
 								UpdatableRecords (see also the manual's section on
@@ -4404,15 +4336,11 @@ Record fetchOne();
                    .where(TBook.LANGUAGE.equal("DE"))
                    .orderBy(TBook.TITLE)
                    .fetchAny();</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="TABLESOURCE">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="TABLESOURCE">
 <fo:marker marker-class-name="section">
 <fo:block>3.2. Table sources</fo:block>
 </fo:marker>3.2. Table sources</fo:block>
-<fo:block font-size="11pt">
-							When OLTP selects/updates/inserts/deletes records in single tables, OLAP is all about
-							creating custom table sources or ad-hoc row types
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Create complex and nested table sources with jOOQ</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Create complex and nested table sources</fo:block>
 							<fo:block font-size="11pt">
 								In the <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://en.wikipedia.org/wiki/Relational_model')">relational data model</fo:basic-link>,
 								there are many operations performed on entities, i.e. tables in order to join them together
@@ -4495,15 +4423,11 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
 </fo:list-item>
 							</fo:list-block>
 </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONDITION">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONDITION">
 <fo:marker marker-class-name="section">
 <fo:block>3.3. Conditions</fo:block>
 </fo:marker>3.3. Conditions</fo:block>
-<fo:block font-size="11pt">
-							The creation of conditions is the part of any database abstraction that
-							attracts the most attention.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Conditions are the SELECT's core business</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Conditions are the SELECT's core business</fo:block>
 							<fo:block font-size="11pt">In your average application, you will typically have 3-4 SQL queries
 								that have quite a long list of predicates (and possibly JOINs), such
 								that you start to lose track over the overall boolean expression that
@@ -4596,16 +4520,11 @@ TableOnConditionStep onKey(ForeignKey<?, ?> key);]]></fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">T_BOOK.TYPE_CODE.in(1, 2, 5, 8, 13, 21)                       .and(T_BOOK.LANGUAGE.equal("DE")).or(
 T_BOOK.TYPE_CODE.in(2, 3, 5, 7, 11, 13)                       .and(T_BOOK.LANGUAGE.equal("FR")).or(
 T_BOOK.TYPE_CODE.in(create.select(T_TYPES.CODE).from(T_TYPES)).and(T_BOOK.LANGUAGE.equal("EN"))));</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ALIAS">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ALIAS">
 <fo:marker marker-class-name="section">
 <fo:block>3.4. Aliased tables and fields</fo:block>
 </fo:marker>3.4. Aliased tables and fields</fo:block>
-<fo:block font-size="11pt">
-							Aliasing is at the core of SQL and relational algebra. When you join
-							the same entity multiple times, you can rename it to distinguish the
-							various meanings of the same entity
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aliasing Tables</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aliasing Tables</fo:block>
 							<fo:block font-size="11pt">A typical example of what you might want to do in SQL is this: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT a.ID, b.ID
   FROM T_AUTHOR a
@@ -4653,14 +4572,14 @@ create.select(author.ID, book.ID)
       .join(book).on(author.ID.equal(book.AUTHOR_ID))</fo:block>
 
 
-      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aliasing nested selects as tables</fo:block>
+      						<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aliasing nested selects as tables</fo:block>
 							<fo:block font-size="11pt">There is an interesting, more advanced example of how you can select
 								from an aliased nested select in the manual's section about
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="NESTED">nested selects</fo:basic-link>
 </fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aliasing fields</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aliasing fields</fo:block>
 							<fo:block font-size="11pt">Fields can also be aliased independently from Tables. Most often,
 								this is done when using functions or aggregate operators. Here is an
 								example: </fo:block>
@@ -4678,15 +4597,11 @@ GROUP BY FIRST_NAME, LAST_NAME;</fo:block>
       						<fo:block font-size="11pt">When you alias Fields like above, you can access those Fields' values using the alias name: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">System.out.println("Author : " + record.getValue("author"));
 System.out.println("Books  : " + record.getValue("books"));</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="IN">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="IN">
 <fo:marker marker-class-name="section">
 <fo:block>3.5. Nested SELECT using the IN operator</fo:block>
 </fo:marker>3.5. Nested SELECT using the IN operator</fo:block>
-<fo:block font-size="11pt">
-							Set equal operations are very common when you want to select multiple
-							records. The IN operator can also be used for semi-joins, though
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The IN operator for use in semi-joins or anti-joins</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The IN operator for use in semi-joins or anti-joins</fo:block>
 							<fo:block font-size="11pt">
 								In addition to a list of constant values, the IN operator in
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Field.html')">org.jooq.Field</fo:basic-link>
@@ -4743,14 +4658,11 @@ create.select(T_BOOK.getFields())
 </fo:table-row>
 </fo:table-body>
 </fo:table>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="EXISTS">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="EXISTS">
 <fo:marker marker-class-name="section">
 <fo:block>3.6. Nested SELECT using the EXISTS operator</fo:block>
 </fo:marker>3.6. Nested SELECT using the EXISTS operator</fo:block>
-<fo:block font-size="11pt">The EXISTS operator is a bit different from all other SQL
-							elements, as it cannot really be applied to any object in a DSL.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The EXISTS operator for use in semi-joins or anti-joins</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The EXISTS operator for use in semi-joins or anti-joins</fo:block>
 							<fo:block font-size="11pt">The EXISTS operator is rather independent and can stand any place
 								where there may be a new condition: </fo:block>
 							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
@@ -4839,14 +4751,11 @@ SelectConditionStep orNotExists(Select&lt;?&gt; select);</fo:block>
 </fo:table-row>
 </fo:table-body>
 </fo:table>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="NESTED">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="NESTED">
 <fo:marker marker-class-name="section">
 <fo:block>3.7. Other types of nested SELECT</fo:block>
 </fo:marker>3.7. Other types of nested SELECT</fo:block>
-<fo:block font-size="11pt">Apart from the most common IN and EXISTS clauses that encourage
-							the use of nested selects, SQL knows a few more syntaxes to make use
-							of such constructs. </fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Comparison with single-field SELECT clause</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Comparison with single-field SELECT clause</fo:block>
 							<fo:block font-size="11pt">If you can ensure that a nested SELECT will only return one Record
 								with one Field, then you can test for equality. This is how it is done
 								in SQL: </fo:block>
@@ -4889,7 +4798,7 @@ Condition equalAny(Select&lt;?&gt; query);
 Condition equalAll(Select&lt;?&gt; query);</fo:block>
 
 
-                            <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Selecting from a SELECT - SELECT acts as a Table</fo:block>
+                            <fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Selecting from a SELECT - SELECT acts as a Table</fo:block>
 							<fo:block font-size="11pt">Often, you need to nest a SELECT statement simply because SQL is
 								limited in power. For instance, if you want to find out which author
 								has written the most books, then you cannot do this: </fo:block>
@@ -4939,13 +4848,13 @@ create.select(nested.getFields())
 
 							<fo:block font-size="11pt">You'll notice how some verbosity seems inevitable when you combine nested SELECT statements with aliasing. </fo:block>
 
-	                    	<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Selecting a SELECT - SELECT acts as a Field</fo:block>
+	                    	<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Selecting a SELECT - SELECT acts as a Field</fo:block>
 							<fo:block font-size="11pt">Now SQL is even more powerful than that. You can also have SELECT
 								statements, wherever you can have Fields. It get's harder and harder
 								to find good examples, because there is always an easier way to
 								express the same thing. But why not just count the number of books the
 								really hard way? :-) But then again, maybe you want to take advantage
-								of <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://lukaseder.wordpress.com/2011/09/02/oracle-scalar-subquery-caching/')">Oracle Scalar Subquery Caching</fo:basic-link>
+								of <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://blog.jooq.org/2011/09/02/oracle-scalar-subquery-caching/')">Oracle Scalar Subquery Caching</fo:basic-link>
 </fo:block>
 
 							<fo:table width="100%" table-layout="fixed">
@@ -4983,12 +4892,11 @@ create.select(T_AUTHOR.ID, books)
 </fo:table-row>
 </fo:table-body>
 </fo:table>
-                    	<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UNION">
+                    	<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="UNION">
 <fo:marker marker-class-name="section">
 <fo:block>3.8. UNION and other set operations</fo:block>
 </fo:marker>3.8. UNION and other set operations</fo:block>
-<fo:block font-size="11pt">Unions, differences and intersections are vital set operations taken from set theory.</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's set operation API</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's set operation API</fo:block>
 							<fo:block font-size="11pt">The
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Select.html')">org.jooq.Select</fo:basic-link> API directly supports the UNION
 								syntax for all types of Select as discussed in the manual's section about
@@ -5034,7 +4942,7 @@ create.select(T_BOOK.TITLE)
 </fo:table-body>
 </fo:table>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Nested UNIONs</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Nested UNIONs</fo:block>
 							<fo:block font-size="11pt">In some SQL dialects, you can arbitrarily nest UNIONs to several
 								levels. Be aware, though, that SQLite, Derby and MySQL have serious
 								syntax limitations. jOOQ tries to render correct UNION SQL statements,
@@ -5072,7 +4980,7 @@ ORDER BY alias_38173.AUTHOR_ID DESC</fo:block>
 								above automatic aliasing was added in order to be compliant with
 								MySQL's requirements about aliasing nested selects. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Several UNIONs</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Several UNIONs</fo:block>
 							<fo:block font-size="11pt">It is no problem either for you to create SQL statements with several unions. Just write: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">Select&lt;?&gt; part1;
 Select&lt;?&gt; part2;
@@ -5083,7 +4991,7 @@ Select&lt;?&gt; part4;
 
 part1.union(part2).union(part3).union(part4);</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">UNION and the ORDER BY clause</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">UNION and the ORDER BY clause</fo:block>
 							<fo:block font-size="11pt">
 								Strictly speaking, in SQL, you cannot order a subselect that is part
 								of a UNION operation. You can only order the whole set. In set theory,
@@ -5136,16 +5044,11 @@ create.selectFrom(EMP).where(DEPT.equal("R&amp;D")
 							<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="NESTED">nested SELECT</fo:basic-link>, wrapped in parentheses.
 							In this example, the notion of "nested SELECT" and "subselect" are slightly
 							different.</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="FUNCTIONS">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="FUNCTIONS">
 <fo:marker marker-class-name="section">
 <fo:block>3.9. Functions and aggregate operators</fo:block>
 </fo:marker>3.9. Functions and aggregate operators</fo:block>
-<fo:block font-size="11pt">
-							Highly effective SQL cannot do without functions. Operations on
-							VARCHAR, DATE, and NUMERIC types in GROUP BY or ORDER BY clauses allow
-							for very elegant queries.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ's strategy for supporting vendor-specific functions</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Supporting for vendor-specific functions</fo:block>
 							<fo:block font-size="11pt">jOOQ allows you to access native functions from your RDBMS. jOOQ
 								follows two strategies: </fo:block>
 							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
@@ -5176,7 +5079,7 @@ create.selectFrom(EMP).where(DEPT.equal("R&amp;D")
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Functions </fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Functions </fo:block>
 							<fo:block font-size="11pt">These are just a few functions in the Factory, so you get the idea: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[Field<String> rpad(Field<String> field, Field<? extends Number> length);
@@ -5194,8 +5097,8 @@ Field<String> replace(Field<String> field, String search, String replace);
 Field<Integer> position(Field<String> field, String search);
 Field<Integer> position(Field<String> field, Field<String> search);]]></fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aggregate operators</fo:block>
-							<fo:block font-size="11pt">Aggregate operators work just like functions, even if they have a
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Aggregate functions</fo:block>
+							<fo:block font-size="11pt">Aggregate functions work just like functions, even if they have a
 								slightly different semantics. Here are some examples from
 								Factory: </fo:block>
 
@@ -5257,7 +5160,41 @@ AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field);
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="ARITHMETIC">Arithmetic operations</fo:basic-link>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Window functions</fo:block>
+                            <fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Ordered aggregate functions</fo:block>
+                            <fo:block font-size="11pt">Oracle and some other databases support ordered
+                               aggregate functions. This means you can provide
+                               an ORDER BY clause to an aggregate function, which will
+                               be taken into consideration when aggregating. The best example
+                               for this is LISTAGG() (also known as GROUP_CONCAT in other dialects).
+                               The following query groups by authors and concatenates
+                               their books' titles</fo:block>
+							<fo:table width="100%" table-layout="fixed">
+<fo:table-column column-width="88mm"/>
+<fo:table-column column-width="88mm"/>
+<fo:table-body>
+<fo:table-row>
+<fo:table-cell>
+<fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT   LISTAGG(TITLE, ', ')
+         WITHIN GROUP (ORDER BY TITLE)
+FROM     BOOK
+GROUP BY AUTHOR_ID</fo:block>
+</fo:block>
+</fo:table-cell>
+<fo:table-cell>
+<fo:block>
+<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">create.select(listAgg(BOOK.TITLE, ", ")
+      .withinGroupOrderBy(BOOK.TITLE))
+      .from(BOOK)
+      .groupBy(BOOK.AUTHOR_ID)</fo:block>
+</fo:block>
+</fo:table-cell>
+</fo:table-row>
+</fo:table-body>
+</fo:table>
+
+
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Window functions</fo:block>
 							<fo:block font-size="11pt">Most major RDBMS support the concept of window functions. jOOQ knows
 								of implementations in DB2, Oracle, Postgres, SQL Server, and Sybase
 								SQL Anywhere,
@@ -5298,18 +5235,19 @@ AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field);
 </fo:table-row>
 </fo:table-body>
 </fo:table>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURES">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PROCEDURES">
 <fo:marker marker-class-name="section">
 <fo:block>3.10. Stored procedures and functions</fo:block>
 </fo:marker>3.10. Stored procedures and functions</fo:block>
-<fo:block font-size="11pt">
-							The full power of your database's vendor-specific extensions can hardly
-							be obtained outside of the
-							database itself. Most modern RDBMS support
-							their own procedural language. With jOOQ, stored procedures are
-							integrated easily
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Interaction with stored procedures</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Interaction with stored procedures</fo:block>
+							<fo:block font-size="11pt">
+								The full power of your database's vendor-specific extensions can hardly
+								be obtained outside of the
+								database itself. Most modern RDBMS support
+								their own procedural language. With jOOQ, stored procedures are
+								integrated easily
+							</fo:block>
+
 							<fo:block font-size="11pt">The main way to interact with your RDBMS's stored procedures and
 								functions is by using the generated artefacts. See the manual's
 								section about
@@ -5318,7 +5256,7 @@ AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field);
 								about the source code generation for stored procedures and functions.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Stored functions</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Stored functions</fo:block>
 							<fo:block font-size="11pt">When it comes to DSL, stored functions can be very handy in SQL
 								statements as well. Every stored function (this also applies to
 								FUNCTIONS in Oracle PACKAGES) can generate a Field representing a call
@@ -5371,22 +5309,22 @@ create.select(T_PERSON.NAME)
 </fo:table-body>
 </fo:table>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Stored procedures</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Stored procedures</fo:block>
 							<fo:block font-size="11pt">The notion of a stored procedure is implemented in most RDBMS by the
 								fact, that the procedure has no RETURN VALUE (like void in Java), but
 								it may well have OUT parameters. Since there is not a standard way how
 								to embed stored procedures in SQL, they cannot be integrated in jOOQ's
 								DSL either. </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ARITHMETIC">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ARITHMETIC">
 <fo:marker marker-class-name="section">
 <fo:block>3.11. Arithmetic operations and concatenation</fo:block>
 </fo:marker>3.11. Arithmetic operations and concatenation</fo:block>
-<fo:block font-size="11pt">
-							Your database can do the math for you. Most arithmetic operations are
-							supported, but also string concatenation can be very efficient if done
-							already in the database.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mathematical operations</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mathematical operations</fo:block>
+							<fo:block font-size="11pt">
+								Your database can do the math for you. Most arithmetic operations are
+								supported, but also string concatenation can be very efficient if done
+								already in the database.
+							</fo:block>
 							<fo:block font-size="11pt">Arithmetic operations are implemented just like
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="FUNCTIONS">functions</fo:basic-link>, with
 								similar limitations as far as type restrictions are concerned. You can
@@ -5399,7 +5337,7 @@ create.select(T_PERSON.NAME)
 							<fo:block font-size="11pt">You can write something like this in jOOQ: </fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">create.select(create.val(1).add(2).mul(create.val(5).sub(3)).div(2).mod(10));	</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Datetime arithmetic</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Datetime arithmetic</fo:block>
 							<fo:block font-size="11pt">jOOQ also supports the Oracle-style syntax for adding days to a Field&lt;? extends java.util.Date&gt; </fo:block>
 							<fo:table width="100%" table-layout="fixed">
 <fo:table-column column-width="88mm"/>
@@ -5420,7 +5358,34 @@ create.select(T_PERSON.NAME)
 </fo:table-body>
 </fo:table>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">String concatenation</fo:block>
+							<fo:block font-size="11pt">
+								For more advanced datetime arithmetic, use the Factory's timestampDiff() and dateDiff() functions,
+								as well as jOOQ's built-in SQL standard INTERVAL data type support:
+							</fo:block>
+							<fo:block padding-top="16pt" padding-bottom="16pt" page-break-inside="avoid">
+<fo:list-block>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">INTERVAL YEAR TO MONTH: <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/types/YearToMonth.html')">org.jooq.types.YearToMonth</fo:basic-link>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+								<fo:list-item>
+<fo:list-item-label>
+<fo:block font-size="11pt" page-break-inside="avoid">-</fo:block>
+</fo:list-item-label>
+<fo:list-item-body start-indent="body-start()">
+<fo:block font-size="11pt" page-break-inside="avoid">INTERVAL DAY TO SECOND: <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/types/DayToSecond.html')">org.jooq.types.DayToSecond</fo:basic-link>
+</fo:block>
+</fo:list-item-body>
+</fo:list-item>
+							</fo:list-block>
+</fo:block>
+
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">String concatenation</fo:block>
 							<fo:block font-size="11pt">This is not really an arithmetic expression, but it's still an
 								expression with operators: The string concatenation. jOOQ
 								provides you with the Field's concat() method:</fo:block>
@@ -5449,16 +5414,11 @@ create.select(concat("A", "B", "C"));
 </fo:table-row>
 </fo:table-body>
 </fo:table>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CASE">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CASE">
 <fo:marker marker-class-name="section">
 <fo:block>3.12. The CASE clause</fo:block>
 </fo:marker>3.12. The CASE clause</fo:block>
-<fo:block font-size="11pt">
-							The SQL standard supports a CASE clause, which works very similar to
-							Java's if-else statement. In complex SQL, this is very useful for value
-							mapping
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The two flavours of CASE</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">The two flavours of CASE</fo:block>
 							<fo:block font-size="11pt">The CASE clause is part of the standard SQL syntax. While some RDBMS
 								also offer an IF clause, or a DECODE function, you can always rely on
 								the two types of CASE syntax: </fo:block>
@@ -5517,7 +5477,7 @@ create.decode().value(T_AUTHOR.FIRST_NAME)
   FROM T_AUTHOR</fo:block>
 
 
-  							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CASE clauses in an ORDER BY clause</fo:block>
+  							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CASE clauses in an ORDER BY clause</fo:block>
 							<fo:block font-size="11pt">Sort indirection is often implemented with a CASE clause of a
 								SELECT's ORDER BY clause. In SQL, this reads: </fo:block>
 
@@ -5536,15 +5496,11 @@ ORDER BY CASE FIRST_NAME WHEN 'Paulo'  THEN 1
       .from(T_AUTHOR)
       .orderBy(T_AUTHOR.FIRST_NAME.sortAsc("Paulo", "George"))
       .execute();</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CAST">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CAST">
 <fo:marker marker-class-name="section">
 <fo:block>3.13. Type casting</fo:block>
 </fo:marker>3.13. Type casting</fo:block>
-<fo:block font-size="11pt">
-							Many RDBMS allow for implicit or explicit conversion between types.
-							Apart from true type conversion, this is most often done with casting.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Enforcing a specific type when you need it</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Enforcing a specific type when you need it</fo:block>
 							<fo:block font-size="11pt">jOOQ's source code generator tries to find the most accurate type
 								mapping between your vendor-specific data types and a matching Java
 								type. For instance, most VARCHAR, CHAR, CLOB types will map to String.
@@ -5581,17 +5537,11 @@ public class Factory {
     &lt;T&gt; Field&lt;T&gt; castNull(DataType&lt;T&gt; type);
     &lt;T&gt; Field&lt;T&gt; castNull(Class&lt;? extends T&gt; type);
 }</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SQL">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SQL">
 <fo:marker marker-class-name="section">
 <fo:block>3.14. When it's just easier: Plain SQL</fo:block>
 </fo:marker>3.14. When it's just easier: Plain SQL</fo:block>
-<fo:block font-size="11pt">
-							jOOQ cannot foresee all possible vendor-specific SQL features for your
-							database. And sometimes, even jOOQ code becomes too verbose. Then, you
-							shouldn't hesitate to provide jOOQ with plain SQL, as you'd do with
-							JDBC
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Plain SQL in jOOQ</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Plain SQL in jOOQ</fo:block>
 							<fo:block font-size="11pt">A DSL is a nice thing to have, it feels "fluent" and "natural",
 								especially if it models a well-known language, such as SQL. But a DSL
 								is always expressed in another language (Java in this case), which was
@@ -5807,22 +5757,17 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							</fo:list-block>
 </fo:block>
 						<fo:block break-after="page"/>
-<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ADVANCED">
+<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ADVANCED">
 <fo:marker marker-class-name="section">
 <fo:block>4. Advanced topics</fo:block>
 </fo:marker>4. Advanced topics</fo:block>
-<fo:block font-size="11pt">In these sections you will learn about advanced concepts that
-					you might not use every day</fo:block>
-					<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
+					<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Overview</fo:block>
 					<fo:block font-size="11pt">This section covers some advanced topics and features that don't fit into any other section. </fo:block>
-				<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="MasterData">
+				<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="MasterData">
 <fo:marker marker-class-name="section">
-<fo:block>4.1. Master data generation. Enumeration tables</fo:block>
-</fo:marker>4.1. Master data generation. Enumeration tables</fo:block>
-<fo:block font-size="11pt">Enumerations are a powerful concept. Unfortunately, almost no
-							RDBMS supports them, leaving you to create numerous tables for your
-							enumerated values. But these values are still enumerations!</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Enumeration tables</fo:block>
+<fo:block>4.1. Master data and enumeration tables</fo:block>
+</fo:marker>4.1. Master data and enumeration tables</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Enumeration tables</fo:block>
 							<fo:block font-size="11pt">Only MySQL and Postgres databases support true ENUM types natively.
 								Some other RDBMS allow you to map the concept of an ENUM data type to
 								a CHECK constraint, but those constraints can contain arbitrary SQL.
@@ -5832,7 +5777,7 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 								be treated specially, and a Java enum type is generated from its data.
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Configure master data tables</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Configure master data tables</fo:block>
 							<fo:block font-size="11pt">As previously discussed in the
 							  <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Configuration">configuration and setup</fo:basic-link>
 							   section, you can configure master data tables as follows: </fo:block>
@@ -5922,7 +5867,7 @@ create.select(LAST_NAME, COUNT1, COUNT2)
 							</fo:list-block>
 </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using MasterDataTypes</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using MasterDataTypes</fo:block>
 							<fo:block font-size="11pt">The point of MasterDataTypes in jOOQ is that they behave exactly
 								like true ENUM types. When the above T_LANGUAGE table is referenced by
 								T_BOOK, instead of generating foreign key navigation methods and a
@@ -5944,23 +5889,18 @@ create.select(LAST_NAME, COUNT1, COUNT2)
   public void setLanguageId(TLanguage value) { // [...]
 }]]></fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">When to use MasterDataTypes</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">When to use MasterDataTypes</fo:block>
 							<fo:block font-size="11pt">You can use master data types when you're actually mapping master
 								data to a Java enum. When the underlying table changes frequently,
 								those updates will not be reflected by the statically generated code.
 								Also, be aware that it will be difficult to perform actual JOIN
 								operations on the underlying table with jOOQ, once the master data
 								type is generated. </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CustomTypes">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CustomTypes">
 <fo:marker marker-class-name="section">
 <fo:block>4.2. Custom data types and type conversion</fo:block>
 </fo:marker>4.2. Custom data types and type conversion</fo:block>
-<fo:block font-size="11pt">
-							SQL data types are very limited in number. While some databases offer
-							enumeration types or user-defined types, others only ship with the SQL
-							standard. Read this chapter to see how to use custom types with jOOQ
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Your custom type and its associated Converter</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Your custom type and its associated Converter</fo:block>
 							<fo:block font-size="11pt">
 								When using a custom type in jOOQ, you need to let jOOQ know about
 								its associated <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/Converter.html')">org.jooq.Converter</fo:basic-link>.
@@ -6043,7 +5983,7 @@ create.select(T_AUTHOR.DATE_OF_BIRTH)
       .from(T_AUTHOR)
       .fetch(0, new CalendarConverter());]]></fo:block>
 
-      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using Converters in generated code</fo:block>
+      						<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using Converters in generated code</fo:block>
       						<fo:block font-size="11pt">
 								A more common use-case, however, is to let jOOQ know about custom
 								types at code generation time. Use the following configuration elements
@@ -6107,7 +6047,7 @@ create.selectFrom(T_AUTHOR)
       						    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="AdvancedConfiguration">the manual's section about advanced code generation configuration</fo:basic-link>.
       						</fo:block>
 
-      						<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using Converters for enum types</fo:block>
+      						<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using Converters for enum types</fo:block>
       						<fo:block font-size="11pt">
       							Java's Enum types can be very useful in SQL too.
       							Some databases support enumeration types natively (MySQL, Postgres).
@@ -6117,16 +6057,11 @@ create.selectFrom(T_AUTHOR)
       							you may choose to extend <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/impl/EnumConverter.html')">org.jooq.impl.EnumConverter</fo:basic-link>
       							instead, which provides some enum-specific default behaviour.
       						</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SchemaMapping">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="SchemaMapping">
 <fo:marker marker-class-name="section">
 <fo:block>4.3. Mapping generated schemata and tables</fo:block>
 </fo:marker>4.3. Mapping generated schemata and tables</fo:block>
-<fo:block font-size="11pt">
-							Sometimes, you cannot control productive schema names, because your
-							application is deployed on a shared host, and you only get one schema
-							to work with.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping your DEV schema to a productive environment</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping your DEV schema to a productive environment</fo:block>
 							<fo:block font-size="11pt">You may wish to design your database in a way that you have several
 								instances of your schema. This is useful when you want to cleanly
 								separate data belonging to several customers / organisation units /
@@ -6167,7 +6102,7 @@ create.selectFrom(T_AUTHOR)
 </fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping DEV to MY_BOOK_WORLD with jOOQ</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping DEV to MY_BOOK_WORLD with jOOQ</fo:block>
 							<fo:block font-size="11pt">When a user from My Book World logs in, you want them to access the
 								MY_BOOK_WORLD schema using classes generated from DEV. This can be
 								achieved with the
@@ -6192,7 +6127,7 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 							<fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT * FROM MY_BOOK_WORLD.T_AUTHOR</fo:block>
 							<fo:block font-size="11pt">Even if T_AUTHOR was generated from DEV. </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping several schemata</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping several schemata</fo:block>
 							<fo:block font-size="11pt">Your development database may not be restricted to hold only one DEV
 								schema. You may also have a LOG schema and a MASTER schema. Let's say
 								the MASTER schema is shared among all customers, but each customer has
@@ -6224,7 +6159,7 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								new Factory</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using a default schema</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Using a default schema</fo:block>
 							<fo:block font-size="11pt">Another option to switch schema names is to use a default schema for
 								the Factory's underlying Connection. Many RDBMS support a USE or SET
 								SCHEMA command, which you can call like this: </fo:block>
@@ -6241,7 +6176,7 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 SELECT * FROM T_AUTHOR</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping of tables</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping of tables</fo:block>
 							<fo:block font-size="11pt">Not only schemata can be mapped, but also tables. If you are not the
 								owner of the database your application connects to, you might need to
 								install your schema with some sort of prefix to every table. In our
@@ -6268,7 +6203,7 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 							<fo:block font-size="11pt">The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT * FROM MY_BOOK_WORLD.MY_APP__T_AUTHOR</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping at code generation time</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Mapping at code generation time</fo:block>
 							<fo:block font-size="11pt">
 								Note that you can also hard-wire schema mapping in generated artefacts
 								at code generation time, e.g. when you have 5 developers with their own
@@ -6289,14 +6224,11 @@ create.selectFrom(T_AUTHOR).fetch();</fo:block>
 								<fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="META">jooq-codegen configuration</fo:basic-link>
 								for more details
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExecuteListener">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="ExecuteListener">
 <fo:marker marker-class-name="section">
 <fo:block>4.4. Execute listeners and the jOOQ Console</fo:block>
 </fo:marker>4.4. Execute listeners and the jOOQ Console</fo:block>
-<fo:block font-size="11pt">
-							Feel the heart beat of your SQL statements at a very low level using listeners
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ExecuteListener</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">ExecuteListener</fo:block>
 							<fo:block font-size="11pt">
 								The <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" internal-destination="Factory">jOOQ Factory Settings</fo:basic-link>
 								let you specify a list of <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://www.jooq.org/javadoc/latest/org/jooq/ExecuteListener.html')">org.jooq.ExecuteListener</fo:basic-link> classes.
@@ -6369,7 +6301,7 @@ for (ExecuteType type : ExecuteType.values()) {
 								for more details
 							</fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ Console</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ Console</fo:block>
 							<fo:block font-size="11pt">
 							    The ExecuteListener API was driven by a feature request by Christopher Deckers, who has
 							    had the courtesy to contribute the jOOQ Console, a sample application interfacing
@@ -6466,7 +6398,7 @@ for (ExecuteType type : ExecuteType.values()) {
 							    Any feedback is very welcome on
 							    <fo:basic-link font-size="11pt" color="#882222" font-weight="bold" text-shadow="0 1px 2px #666666" external-destination="url('http://groups.google.com/group/jooq-user')">the jooq-user group</fo:basic-link>
 							</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ Console operation modes</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">jOOQ Console operation modes</fo:block>
 							<fo:block font-size="11pt">
 								The jOOQ Console can be run in two different modes:
 							</fo:block>
@@ -6510,7 +6442,7 @@ for (ExecuteType type : ExecuteType.values()) {
     .getExecuteListeners().add("org.jooq.debug.DebugListener");
 Factory factory = new Factory(connection, dialect, settings);]]></fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">In-process mode</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">In-process mode</fo:block>
 							<fo:block font-size="11pt">
 								The in-process mode is useful for Swing applications or other,
 								locally run Java programs accessing the database via jOOQ.
@@ -6622,7 +6554,7 @@ catch (Exception ignore) {}
 </fo:block>
 							</fo:block>
 
-                            <fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">"Headless" mode</fo:block>
+                            <fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">"Headless" mode</fo:block>
 							<fo:block font-size="11pt">
 								In J2EE or other server/client environments, you may not be able
 								to run the console in the same process as your application. You
@@ -6647,15 +6579,12 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
 								Depending on your distribution, you may have to manually add
 								rsyntaxtextarea-1.5.0.jar and jOOQ artefacts on your classpath.
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="OracleHints">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="OracleHints">
 <fo:marker marker-class-name="section">
 <fo:block>4.5. Adding Oracle hints to queries</fo:block>
 </fo:marker>4.5. Adding Oracle hints to queries</fo:block>
-<fo:block font-size="11pt">
-							Oracle has a powerful syntax to add hints as comments directly in your SQL
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">How to embed Oracle hints in SELECT</fo:block>
-							<fo:block font-size="11pt">If you are closely coupling your application to an Oracle database,
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">How to embed Oracle hints in SELECT</fo:block>
+							<fo:block font-size="11pt">If you are closely coupling your application to an Oracle (or CUBRID) database,
 								you might need to be able to pass hints of the form /*+HINT*/ with
 								your SQL statements to the Oracle database. For example: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">SELECT /*+ALL_ROWS*/ FIRST_NAME, LAST_NAME
@@ -6669,17 +6598,12 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</fo:block>
 							<fo:block font-size="11pt">Note that you can pass any string in the .hint() clause. If you use
 								that clause, the passed string will always be put in between the
 								SELECT [DISTINCT] keywords and the actual projection list </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONNECTBY">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="CONNECTBY">
 <fo:marker marker-class-name="section">
 <fo:block>4.6. The Oracle CONNECT BY clause</fo:block>
 </fo:marker>4.6. The Oracle CONNECT BY clause</fo:block>
-<fo:block font-size="11pt">
-							Hierarchical queries are supported by many RDBMS using the WITH clause.
-							Oracle has a very neat and much less verbose syntax for hierarchical
-							queries: CONNECT BY .. STARTS WITH
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CONNECT BY .. STARTS WITH</fo:block>
-							<fo:block font-size="11pt">If you are closely coupling your application to an Oracle database,
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CONNECT BY .. STARTS WITH</fo:block>
+							<fo:block font-size="11pt">If you are closely coupling your application to an Oracle (or CUBRID) database,
 								you can take advantage of some Oracle-specific features, such as the
 								CONNECT BY clause, used for hierarchical queries. The formal syntax
 								definition is as follows: </fo:block>
@@ -6723,16 +6647,11 @@ create.select(create.rownum())
 +------------------------------------------------+
 |...21 record(s) truncated...
 </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PIVOT">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="PIVOT">
 <fo:marker marker-class-name="section">
 <fo:block>4.7. The Oracle 11g PIVOT clause</fo:block>
 </fo:marker>4.7. The Oracle 11g PIVOT clause</fo:block>
-<fo:block font-size="11pt">
-				    	    Oracle 11g has formally introduced the very powerful PIVOT clause, which
-				    	    allows to specify a pivot column, expected grouping values for pivoting,
-				    	    as well as a set of aggregate functions
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">PIVOT (aggregate FOR column IN (columns))</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">PIVOT (aggregate FOR column IN (columns))</fo:block>
 							<fo:block font-size="11pt">If you are closely coupling your application to an Oracle database,
 								you can take advantage of some Oracle-specific features, such as the
 								PIVOT clause, used for statistical analyses. The formal syntax
@@ -6749,16 +6668,11 @@ create.select(create.rownum())
 								PIVOT clause will be added later. Also, jOOQ may simulate PIVOT for other
 								dialects in the future.
 							</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="DIVISION">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="DIVISION">
 <fo:marker marker-class-name="section">
 <fo:block>4.8. jOOQ's relational division syntax</fo:block>
 </fo:marker>4.8. jOOQ's relational division syntax</fo:block>
-<fo:block font-size="11pt">
-				    	    Relational division is a rather academic topic that is not used in
-				    	    every-day SQL. Nevertheless, it can be extremely powerful in some
-				    	    remote cases. jOOQ supports it intuitively
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Relational division</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Relational division</fo:block>
 							<fo:block font-size="11pt">
 							    There is one operation in relational algebra that is not given
 							    a lot of attention, because it is rarely used in real-world
@@ -6832,20 +6746,17 @@ WHERE NOT EXISTS (
 </fo:list-item>
 							</fo:list-block>
 </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Export">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Export">
 <fo:marker marker-class-name="section">
 <fo:block>4.9. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
 </fo:marker>4.9. Exporting to XML, CSV, JSON, HTML, Text</fo:block>
-<fo:block font-size="11pt">
-							Get your data out of the Java world. Stream your data using any of the supported, wide-spread formats
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Exporting with jOOQ</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Exporting with jOOQ</fo:block>
 							<fo:block font-size="11pt">If you are using jOOQ for scripting purposes or in a slim, unlayered
 								application server, you might be interested in using jOOQ's exporting
 								functionality (see also importing functionality). You can export any
 								Result&lt;Record&gt; into any of these formats: </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">XML</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">XML</fo:block>
 							<fo:block font-size="11pt">Export your results as XML: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Fetch books and format them as XML
 String xml = create.selectFrom(T_BOOK).fetch().formatXML();</fo:block>
@@ -6872,7 +6783,7 @@ String xml = create.selectFrom(T_BOOK).fetch().formatXML();</fo:block>
   </records>
 </jooq-export:result>]]></fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CSV</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CSV</fo:block>
 							<fo:block font-size="11pt">Export your results as CSV: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Fetch books and format them as CSV
 String csv = create.selectFrom(T_BOOK).fetch().formatCSV();</fo:block>
@@ -6883,7 +6794,7 @@ String csv = create.selectFrom(T_BOOK).fetch().formatCSV();</fo:block>
 2;1;Animal Farm</fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">JSON</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">JSON</fo:block>
 							<fo:block font-size="11pt">Export your results as JSON: </fo:block>
 
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Fetch books and format them as JSON
@@ -6892,7 +6803,7 @@ String json = create.selectFrom(T_BOOK).fetch().formatJSON();</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">{fields:["ID","AUTHOR_ID","TITLE"],
  records:[[1,1,"1984"],[2,1,"Animal Farm"]]}</fo:block>
 
- 							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">HTML </fo:block>
+ 							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">HTML </fo:block>
  							<fo:block font-size="11pt">Export your results as HTML: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Fetch books and format them as HTML
 String html = create.selectFrom(T_BOOK).fetch().formatHTML();</fo:block>
@@ -6919,7 +6830,7 @@ String html = create.selectFrom(T_BOOK).fetch().formatHTML();</fo:block>
   </tbody>
 </table>]]></fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Text</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Text</fo:block>
 							<fo:block font-size="11pt">Export your results as text: </fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid">// Fetch books and format them as text
 String text = create.selectFrom(T_BOOK).fetch().format();</fo:block>
@@ -6931,20 +6842,17 @@ String text = create.selectFrom(T_BOOK).fetch().format();</fo:block>
 |  1|        1|1984       |
 |  2|        1|Animal Farm|
 +---+---------+-----------+</fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Import">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Import">
 <fo:marker marker-class-name="section">
 <fo:block>4.10. Importing data from XML, CSV</fo:block>
 </fo:marker>4.10. Importing data from XML, CSV</fo:block>
-<fo:block font-size="11pt">
-							Use jOOQ to easily merge imported data into your database.
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Importing with jOOQ</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">Importing with jOOQ</fo:block>
 							<fo:block font-size="11pt">If you are using jOOQ for scripting purposes or in a slim, unlayered
 								application server, you might be interested in using jOOQ's importing
 								functionality (see also exporting functionality). You can import data
 								directly into a table from any of these formats: </fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CSV</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">CSV</fo:block>
 							<fo:block font-size="11pt">The below CSV data represents two author records that may have been
 								exported previously, by jOOQ's exporting functionality, and then
 								modified in Microsoft Excel or any other spreadsheet tool: </fo:block>
@@ -7039,18 +6947,13 @@ String[] row = error.row();
 // The query that caused the error
 Query query = error.query();]]></fo:block>
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">XML </fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">XML </fo:block>
 							<fo:block font-size="11pt">This will be implemented soon... </fo:block>
-						<fo:block font-family="Georgia" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Batch">
+						<fo:block font-family="Special Elite" font-size="18pt" padding-top="12pt" padding-bottom="12pt" page-break-after="avoid" id="Batch">
 <fo:marker marker-class-name="section">
 <fo:block>4.11. Using JDBC batch operations</fo:block>
 </fo:marker>4.11. Using JDBC batch operations</fo:block>
-<fo:block font-size="11pt">
-							Some JDBC drivers have highly optimised means of executing batch
-							operations. The JDBC interface for those operations is a bit verbose.
-							jOOQ abstracts that by re-using the existing query API's
-						</fo:block>
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">JDBC batch operations</fo:block>
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">JDBC batch operations</fo:block>
 							<fo:block font-size="11pt">With JDBC, you can easily execute several statements at once using
 								the addBatch() method. Essentially, there are two modes in JDBC</fo:block>
 
@@ -7107,8 +7010,8 @@ stmt.addBatch();
 int[] result = stmt.executeBatch();]]></fo:block>
 
 
-							<fo:block font-family="Georgia" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">This will also be supported by jOOQ</fo:block>
-							<fo:block font-size="11pt">Version 1.6.9 of jOOQ now supports executing queries in batch
+							<fo:block font-family="Special Elite" font-size="16pt" padding-top="10pt" padding-bottom="10pt" page-break-after="avoid">This will also be supported by jOOQ</fo:block>
+							<fo:block font-size="11pt">jOOQ supports executing queries in batch
 								mode as follows:</fo:block>
 <fo:block font-family="Courier" linefeed-treatment="preserve" white-space-collapse="false" white-space-treatment="preserve" font-size="6pt" margin="12pt" padding="4pt" border="2px solid #882222" background-color="#FFEEDD" page-break-inside="avoid"><![CDATA[// 1. several queries
 // ------------------

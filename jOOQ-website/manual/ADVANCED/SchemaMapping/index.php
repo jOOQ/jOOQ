@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "Mapping generated schemata and tables";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Sometimes, you cannot control productive schema names, because your
-							application is deployed on a shared host, and you only get one schema
-							to work with.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
 							<h2>Mapping your DEV schema to a productive environment</h2>
@@ -170,10 +163,10 @@ create.selectFrom(T_AUTHOR).fetch();</pre>
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/SchemaMapping/">Mapping generated schemata and tables</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">previous</a> : <a title="Next section: Execute listeners and the jOOQ Console" href="<?=$root?>/manual/ADVANCED/ExecuteListener/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

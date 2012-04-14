@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,20 +7,14 @@ function getH1() {
     return "The Query and its various subtypes";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							The Query type hierarchy is what you use to execute queries. It has the
-							following subtypes for each kind of operation
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">previous</a> : <a title="Next section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: CRUD and Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">previous</a> : <a title="Next section: ResultQuery and fetch() methods" href="<?=$root?>/manual/JOOQ/ResultQuery/">next</a></td>
 </tr>
 </table>
 							<h2>SELECT statements</h2>
@@ -64,7 +58,7 @@ function printContent() {
 								    This Query subtype stands for a general type of SELECT statement.
 								    It is also the main Select type for the
 								    <a href="<?=$root?>/manual/DSL/" title="jOOQ Manual reference: DSL or fluent API. Where SQL meets Java">DSL API</a>. When executed, this object
-								    will hold a <a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results and Records">Result containing the resulting Records</a>.
+								    will hold a <a href="<?=$root?>/manual/JOOQ/Result/" title="jOOQ Manual reference: Results, Cursors and Records">Result containing the resulting Records</a>.
 								    This type is further subtyped for the various uses of a SELECT statement as such:</li>
 								
 <li>
@@ -73,7 +67,7 @@ function printContent() {
 									It therefore has access to the Table's generic type parameter
 									&lt;R extends Record&gt; and will provide a matching Result&lt;R&gt;.
 									This is especially useful if &lt;R&gt; is a subtype of
-									<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">UpdatableRecord</a>.
+									<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: CRUD and Updatable Records">UpdatableRecord</a>.
 									Then you will be able to perform updates on your result set immediately.</li>
 								
 <li>
@@ -86,7 +80,7 @@ function printContent() {
 							
 </ul>
 
-							<h3>Example: SQL query and DSL query</h3>
+							<h2>Example: SQL query and DSL query</h2>
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
@@ -146,7 +140,7 @@ Result&lt;Record&gt; result = create.select()
 							
 </ul>
 
-							<h3>Example: Non-DSL query</h3>
+							<h2>Example: Non-DSL query</h2>
 							<p>
 								If you choose not to use the DSL API (for instance, because you don't
 								want to add Query parts in the order SQL expects them), you can use
@@ -165,7 +159,7 @@ q.addConditions(T_AUTHOR.YEAR_OF_BIRTH.greaterThan(1920));
 q.addConditions(T_AUTHOR.FIRST_NAME.equal("Paulo"));
 q.addOrderBy(T_BOOK.TITLE);</pre>
 
-							<h3>Fetching data</h3>
+							<h2>Fetching data</h2>
 							<p>
 								The <a href="http://www.jooq.org/javadoc/latest/org/jooq/Select.html" title="Internal API reference: org.jooq.Select">org.jooq.Select</a> interface extends
 								<a href="http://www.jooq.org/javadoc/latest/org/jooq/ResultQuery.html" title="Internal API reference: org.jooq.ResultQuery">org.jooq.ResultQuery</a>,
@@ -176,7 +170,7 @@ q.addOrderBy(T_BOOK.TITLE);</pre>
 							</p>
 							<p>
 								See the manual's
-								<a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="jOOQ Manual reference: ResultQuery and various ways of fetching data">section on the ResultQuery</a>
+								<a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="jOOQ Manual reference: ResultQuery and fetch() methods">section on the ResultQuery</a>
 								for more details.
 							</p>
 
@@ -185,7 +179,7 @@ q.addOrderBy(T_BOOK.TITLE);</pre>
 							<p>jOOQ supports two modes for INSERT statements.
 							The INSERT VALUES and the INSERT SELECT syntax</p>
 
-							<h3>Example: SQL query and DSL query</h3>
+							<h2>Example: SQL query and DSL query</h2>
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
@@ -218,7 +212,7 @@ VALUES
 								don't have matching numbers of fields/values. Also, you can run into
 								runtime problems, if your field/value types don't match. </p>
 
-							<h3>Example: DSL Query, alternative syntax</h3>
+							<h2>Example: DSL Query, alternative syntax</h2>
 							<p>MySQL (and some other RDBMS) allow for using an UPDATE-like syntax
 								for INSERT statements. This is also supported in jOOQ, should you
 								prefer that syntax. The above INSERT statement can also be expressed
@@ -235,7 +229,7 @@ VALUES
 							<p>As you can see, this syntax is a bit more verbose, but also more
 								type-safe, as every field can be matched with its value.</p>
 
-							<h3>Example: ON DUPLICATE KEY UPDATE clause</h3>
+							<h2>Example: ON DUPLICATE KEY UPDATE clause</h2>
 							<p>The MySQL database supports a very convenient way to INSERT or
 								UPDATE a record. This is a non-standard extension to the SQL syntax,
 								which is supported by jOOQ and simulated in other RDBMS, where this is
@@ -249,7 +243,7 @@ create.insertInto(T_AUTHOR, T_AUTHOR.ID, T_AUTHOR.LAST_NAME)
       .set(T_AUTHOR.LAST_NAME, "Koontz")
       .execute();</pre>
 
-      						<h3>Example: INSERT .. RETURNING clause</h3>
+      						<h2>Example: INSERT .. RETURNING clause</h2>
 							<p>The Postgres database has native support for an INSERT .. RETURNING
 								clause. This is a very powerful concept that is simulated for all
 								other dialects using JDBC's
@@ -281,7 +275,7 @@ create.insertInto(T_AUTHOR, T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME)
       							ID values.
       						</p>
 
-      						<h3>Example: Non-DSL Query</h3>
+      						<h2>Example: Non-DSL Query</h2>
       						<p>You can always use the more verbose regular syntax of the InsertQuery, if you need more control: </p>
 <pre class="prettyprint lang-java">// Insert a new author into the T_AUTHOR table
 InsertQuery&lt;TAuthorRecord&gt; i = create.insertQuery(T_AUTHOR);
@@ -295,7 +289,7 @@ i.addValue(T_AUTHOR.FIRST_NAME, "Alfred");
 i.addValue(T_AUTHOR.LAST_NAME, "D&ouml;blin");
 i.execute();</pre>
 
-							<h3>Example: INSERT Query combined with SELECT statements</h3>
+							<h2>Example: INSERT Query combined with SELECT statements</h2>
 							<p>The InsertQuery.addValue() method is overloaded, such that you can
 								also provide a Field, potentially containing an expression: </p>
 <pre class="prettyprint lang-java">// Insert a new author into the T_AUTHOR table
@@ -308,7 +302,7 @@ i.execute();</pre>
 								limitations regarding that syntax. You may not be able to
 								select from the same table you're inserting into</p>
 
-							<h3>Example: INSERT SELECT syntax support</h3>
+							<h2>Example: INSERT SELECT syntax support</h2>
 							<p>In some occasions, you may prefer the INSERT SELECT syntax, for instance, when
 								you copy records from one table to another: </p>
 <pre class="prettyprint lang-java">Insert i = create.insertInto(T_AUTHOR_ARCHIVE)
@@ -320,7 +314,7 @@ i.execute();</pre>
 							<p>UPDATE statements are only possible on single tables. Support for
 							multi-table updates will be implemented in the near future. </p>
 
-							<h3>Example: SQL query and DSL query</h3>
+							<h2>Example: SQL query and DSL query</h2>
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
@@ -339,7 +333,7 @@ i.execute();</pre>
 </tr>
 </table>
 
-							<h3>Example: Non-DSL Query</h3>
+							<h2>Example: Non-DSL Query</h2>
 							<p>Using the <a href="http://www.jooq.org/javadoc/latest/org/jooq/UpdateQuery.html" title="Internal API reference: org.jooq.UpdateQuery">org.jooq.UpdateQuery</a> class,
 							this is how you could express an UPDATE statement:</p>
 <pre class="prettyprint lang-java">UpdateQuery&lt;TAuthorRecord&gt; u = create.updateQuery(T_AUTHOR);
@@ -353,7 +347,7 @@ u.execute();</pre>
 							<p>DELETE statements are only possible on single tables. Support for
 							multi-table deletes will be implemented in the near future. </p>
 
-							<h3>Example: SQL query and DSL query</h3>
+							<h2>Example: SQL query and DSL query</h2>
 							<table cellspacing="0" cellpadding="0" width="100%">
 <tr>
 <td class="left" width="50%">
@@ -368,7 +362,7 @@ u.execute();</pre>
 </tr>
 </table>
 
-							<h3>Example: Non-DSL Query</h3>
+							<h2>Example: Non-DSL Query</h2>
 							<p>Using the <a href="http://www.jooq.org/javadoc/latest/org/jooq/DeleteQuery.html" title="Internal API reference: org.jooq.DeleteQuery">org.jooq.DeleteQuery</a> class,
 							this is how you could express a DELETE statement: </p>
 <pre class="prettyprint lang-java">DeleteQuery&lt;TAuthorRecord&gt; d = create.deleteQuery(T_AUTHOR);
@@ -437,10 +431,10 @@ WHEN NOT MATCHED THEN INSERT (LAST_NAME)
 								T_AUTHOR statement instead. </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">previous</a> : <a title="Next section: ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: CRUD and Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">previous</a> : <a title="Next section: ResultQuery and fetch() methods" href="<?=$root?>/manual/JOOQ/ResultQuery/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

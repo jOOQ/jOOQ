@@ -1,25 +1,20 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "Serializability of QueryParts and Results";
+    return "Serializability of jOOQ objects";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "Most of the jOOQ API implements the Serializable interface.
-							This helps storing queries and partial queries in files, transferring
-							queries or result data over TCP/IP, etc. ";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">previous</a> : <a title="Next section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of jOOQ objects</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">previous</a> : <a title="Next section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">next</a></td>
 </tr>
 </table>
 							<h2>Attaching QueryParts</h2>
@@ -29,7 +24,7 @@ function printContent() {
 								underlying
 								<a href="http://download.oracle.com/javase/6/docs/api/java/sql/Connection.html" title="External API reference: java.sql.Connection">java.sql.Connection</a>. When you want to execute queries after
 								de-serialisation, or when you want to store/refresh/delete
-								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: Updatable Records">Updatable Records</a>,
+								<a href="<?=$root?>/manual/JOOQ/UpdatableRecord/" title="jOOQ Manual reference: CRUD and Updatable Records">Updatable Records</a>,
 								you will have to "import" or "re-attach" them to a Factory
 							</p>
 <pre class="prettyprint lang-java">// Deserialise a SELECT statement
@@ -78,10 +73,10 @@ ConfigurationRegistry.setProvider(provider);</pre>
 </ul>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">previous</a> : <a title="Next section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of jOOQ objects</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">previous</a> : <a title="Next section: Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

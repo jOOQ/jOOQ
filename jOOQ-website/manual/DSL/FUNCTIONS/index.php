@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,24 +7,17 @@ function getH1() {
     return "Functions and aggregate operators";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Highly effective SQL cannot do without functions. Operations on
-							VARCHAR, DATE, and NUMERIC types in GROUP BY or ORDER BY clauses allow
-							for very elegant queries.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">previous</a> : <a title="Next section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">previous</a> : <a title="Next section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">next</a></td>
 </tr>
 </table>
-							<h2>jOOQ's strategy for supporting vendor-specific functions</h2>
+							<h2>Supporting for vendor-specific functions</h2>
 							<p>jOOQ allows you to access native functions from your RDBMS. jOOQ
 								follows two strategies: </p>
 							<ul>
@@ -60,8 +53,8 @@ Field&lt;String&gt; replace(Field&lt;String&gt; field, String search, String rep
 Field&lt;Integer&gt; position(Field&lt;String&gt; field, String search);
 Field&lt;Integer&gt; position(Field&lt;String&gt; field, Field&lt;String&gt; search);</pre>
 
-							<h2>Aggregate operators</h2>
-							<p>Aggregate operators work just like functions, even if they have a
+							<h2>Aggregate functions</h2>
+							<p>Aggregate functions work just like functions, even if they have a
 								slightly different semantics. Here are some examples from
 								Factory: </p>
 
@@ -114,6 +107,31 @@ AggregateFunction&lt;BigDecimal&gt; varSamp(Field&lt;? extends Number&gt; field)
 								<a href="<?=$root?>/manual/DSL/ARITHMETIC/" title="jOOQ Manual reference: Arithmetic operations and concatenation">Arithmetic operations</a>
 </p>
 
+                            <h2>Ordered aggregate functions</h2>
+                            <p>Oracle and some other databases support ordered
+                               aggregate functions. This means you can provide
+                               an ORDER BY clause to an aggregate function, which will
+                               be taken into consideration when aggregating. The best example
+                               for this is LISTAGG() (also known as GROUP_CONCAT in other dialects).
+                               The following query groups by authors and concatenates
+                               their books' titles</p>
+							<table cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td class="left" width="50%">
+<pre class="prettyprint lang-sql">SELECT   LISTAGG(TITLE, ', ')
+         WITHIN GROUP (ORDER BY TITLE)
+FROM     BOOK
+GROUP BY AUTHOR_ID</pre>
+</td><td class="right" width="50%">
+<pre class="prettyprint lang-java">create.select(listAgg(BOOK.TITLE, ", ")
+      .withinGroupOrderBy(BOOK.TITLE))
+      .from(BOOK)
+      .groupBy(BOOK.AUTHOR_ID)</pre>
+</td>
+</tr>
+</table>
+
+
 							<h2>Window functions</h2>
 							<p>Most major RDBMS support the concept of window functions. jOOQ knows
 								of implementations in DB2, Oracle, Postgres, SQL Server, and Sybase
@@ -148,10 +166,10 @@ AggregateFunction&lt;BigDecimal&gt; varSamp(Field&lt;? extends Number&gt; field)
 </table>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">previous</a> : <a title="Next section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/FUNCTIONS/">Functions and aggregate operators</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">previous</a> : <a title="Next section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

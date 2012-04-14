@@ -113,7 +113,7 @@
 				</div>
 
 				<div id="footer">
-					<p class="right">jOOQ is brought to you by <a href="http://lukaseder.wordpress.com" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
+					<p class="right">jOOQ is brought to you by <a href="http://blog.jooq.org" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
 					Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2 License">Apache 2 licence</a></p>
 				</div>
 			</div>

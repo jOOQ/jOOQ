@@ -2231,7 +2231,7 @@ public final class Routines {
 								topic, here:
 							</p>
 							<p>
-								<a href="http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/" title="Blog post about the difference between procedures and functions in various RDBMS">lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/</a>
+								<a href="http://blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/" title="Blog post about the difference between procedures and functions in various RDBMS">blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/</a>
 							</p>
 
 							<h3>Packages in Oracle</h3>
@@ -3394,7 +3394,7 @@ create.select(nested.getFields())
 								to find good examples, because there is always an easier way to
 								express the same thing. But why not just count the number of books the
 								really hard way? :-) But then again, maybe you want to take advantage
-								of <a href="http://lukaseder.wordpress.com/2011/09/02/oracle-scalar-subquery-caching/" title="Oracle Scalar Subquery Caching with jOOQ">Oracle Scalar Subquery Caching</a></p>
+								of <a href="http://blog.jooq.org/2011/09/02/oracle-scalar-subquery-caching/" title="Oracle Scalar Subquery Caching with jOOQ">Oracle Scalar Subquery Caching</a></p>
 
 							<code-pair>
 <sql>  SELECT LAST_NAME, (

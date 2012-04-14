@@ -441,7 +441,7 @@ concerned:
   JOIN expressions to create more complex table sources. See a
   recent blog post on the subject here:
 
-http://lukaseder.wordpress.com/2012/01/15/lets-revise-the-sql-from-clause/
+http://blog.jooq.org/2012/01/15/lets-revise-the-sql-from-clause/
 
 Features and improvements
 -------------------------
@@ -615,7 +615,7 @@ include
 
 For more information about using jOOQ with Scala, see this blog
 post:
-http://lukaseder.wordpress.com/2011/12/11/the-ultimate-sql-dsl-jooq-in-scala/
+http://blog.jooq.org/2011/12/11/the-ultimate-sql-dsl-jooq-in-scala/
 
 There is now also experimental support for a custom type mapping.
 This mapping allows to rewrite data types at code generation time
@@ -947,7 +947,7 @@ added support for JDBC batch operations. You can now batch
 execute several queries.
 
 See the official blog for more information:
-http://lukaseder.wordpress.com/2011/10/25/jdbc-batch-operations-with-jooq/
+http://blog.jooq.org/2011/10/25/jdbc-batch-operations-with-jooq/
 
 Features and improvements
 -------------------------
@@ -994,13 +994,13 @@ improvements, using stored procedures and functions becomes even
 more reliable, especially when cursor types are involved. Read
 more about the rationale behind this change:
 
-http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/
+http://blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/
 
 Apart from that, important improvements have been made in the
 area of plain SQL tables. Also, consider a demo integration of
 jOOQ with Google Cloud SQL:
 
-http://lukaseder.wordpress.com/2011/10/22/jooq-and-google-cloud-sql-example/
+http://blog.jooq.org/2011/10/22/jooq-and-google-cloud-sql-example/
 
 Features and improvements
 -------------------------
@@ -1293,7 +1293,7 @@ Apart from that, project CURSOR is advancing and it is now
 possible to unnest arrays into tables. See this article for
 details about where jOOQ is heading with project CURSOR:
 
-http://lukaseder.wordpress.com/2011/07/24/the-power-of-ref-cursor-types/
+http://blog.jooq.org/2011/07/24/the-power-of-ref-cursor-types/
 
 Features and improvements
 -------------------------

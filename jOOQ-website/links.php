@@ -1,10 +1,10 @@
-<?php 
+<?php
 require 'frame.php';
 function getH1() {
 	return 'Useful links for jOOQ users and developers';
 }
 function getSlogan() {
-	return "You've come far in your search of more intuitive integration of SQL and Java. 
+	return "You've come far in your search of more intuitive integration of SQL and Java.
 			Here you will find further resources related to jOOQ, to similar products and
 			other inspiration related to jOOQ";
 }
@@ -23,7 +23,7 @@ function printContent() {
 <h2>jOOQ in the WWW</h2>
 <ul>
 	<li>On Twitter: <a href="https://twitter.com/#!/JavaOOQ" title="jOOQ on Twitter">https://twitter.com/#!/JavaOOQ</a>
-	<li>On Wordpress: <a href="http://lukaseder.wordpress.com/" title="Lukas Eder's blog about Java, SQL and jOOQ">http://lukaseder.wordpress.com/</a></li>
+	<li>On Wordpress: <a href="http://blog.jooq.org" title="Lukas Eder's blog about Java, SQL and jOOQ">http://blog.jooq.org</a></li>
     <li>On SourceForge: <a href="https://sourceforge.net/projects/jooq/" title="jOOQ download and hosting on source forge">https://sourceforge.net/projects/jooq/</a></li>
     <li>On GitHub: <a href="https://github.com/lukaseder/jOOQ" title="fork jOOQ on GitHub">https://github.com/lukaseder/jOOQ</a></li>
     <li>On ohloh: <a href="https://www.ohloh.net/p/jooq" title="see some statistics about jOOQ on ohloh">https://www.ohloh.net/p/jooq</a></li>
@@ -63,6 +63,6 @@ function printContent() {
 	required but too verbose. jOOX only wraps the underlying document and
 	can be used to enhance DOM, not as an alternative.</p>
 </div>
-<?php 
+<?php
 }
 ?>

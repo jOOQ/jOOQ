@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "The Oracle 11g PIVOT clause";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-				    	    Oracle 11g has formally introduced the very powerful PIVOT clause, which
-				    	    allows to specify a pivot column, expected grouping values for pivoting,
-				    	    as well as a set of aggregate functions
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">next</a></td>
 </tr>
 </table>
 							<h2>PIVOT (aggregate FOR column IN (columns))</h2>
@@ -43,10 +36,10 @@ function printContent() {
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/PIVOT/">The Oracle 11g PIVOT clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: The Oracle CONNECT BY clause" href="<?=$root?>/manual/ADVANCED/CONNECTBY/">previous</a> : <a title="Next section: jOOQ's relational division syntax" href="<?=$root?>/manual/ADVANCED/DIVISION/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

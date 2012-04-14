@@ -3,17 +3,16 @@ require 'frame.php';
 function getH1() {
 	return 'jOOQ : A peace treaty between SQL and Java';
 }
-function getSlogan() {
-	return "SQL was never meant to be abstracted. To be confined in the narrow boundaries
-			of heavy mappers, hiding the beauty and simplicity of relational data.
-			SQL was never meant to be object-oriented. SQL was never meant to be
-			anything other than... SQL!";
-}
 function getActiveMenu() {
 	return "home";
 }
 function printContent() {
 ?>
+<h2>Philosophy</h2>
+<p>SQL was never meant to be abstracted. To be confined in the narrow boundaries
+			of heavy mappers, hiding the beauty and simplicity of relational data.
+			SQL was never meant to be object-oriented. SQL was never meant to be
+			anything other than... SQL!</p>
 <h2>What does jOOQ code look like?</h2>
 <p>It's simple. With the jOOQ DSL, SQL looks almost as if it were
 natively supported by Java. For instance, get all books published in 2011, ordered by title</p>

@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,24 +7,22 @@ function getH1() {
     return "Arithmetic operations and concatenation";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Your database can do the math for you. Most arithmetic operations are
-							supported, but also string concatenation can be very efficient if done
-							already in the database.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">previous</a> : <a title="Next section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">previous</a> : <a title="Next section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">next</a></td>
 </tr>
 </table>
 							<h2>Mathematical operations</h2>
+							<p>
+								Your database can do the math for you. Most arithmetic operations are
+								supported, but also string concatenation can be very efficient if done
+								already in the database.
+							</p>
 							<p>Arithmetic operations are implemented just like
 								<a href="<?=$root?>/manual/DSL/FUNCTIONS/" title="jOOQ Manual reference: Functions and aggregate operators">functions</a>, with
 								similar limitations as far as type restrictions are concerned. You can
@@ -49,6 +47,20 @@ function printContent() {
 </tr>
 </table>
 
+							<p>
+								For more advanced datetime arithmetic, use the Factory's timestampDiff() and dateDiff() functions,
+								as well as jOOQ's built-in SQL standard INTERVAL data type support:
+							</p>
+							<ul>
+								
+<li>INTERVAL YEAR TO MONTH: <a href="http://www.jooq.org/javadoc/latest/org/jooq/types/YearToMonth.html" title="Internal API reference: org.jooq.types.YearToMonth">org.jooq.types.YearToMonth</a>
+</li>
+								
+<li>INTERVAL DAY TO SECOND: <a href="http://www.jooq.org/javadoc/latest/org/jooq/types/DayToSecond.html" title="Internal API reference: org.jooq.types.DayToSecond">org.jooq.types.DayToSecond</a>
+</li>
+							
+</ul>
+
 							<h2>String concatenation</h2>
 							<p>This is not really an arithmetic expression, but it's still an
 								expression with operators: The string concatenation. jOOQ
@@ -71,10 +83,10 @@ create.select(concat("A", "B", "C"));
 </table>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">previous</a> : <a title="Next section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/ARITHMETIC/">Arithmetic operations and concatenation</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Stored procedures and functions" href="<?=$root?>/manual/DSL/PROCEDURES/">previous</a> : <a title="Next section: The CASE clause" href="<?=$root?>/manual/DSL/CASE/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

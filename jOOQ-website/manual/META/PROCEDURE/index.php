@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "Procedures and packages";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Procedure support is one of the most important reasons why you should consider
-							jOOQ. jOOQ heavily facilitates the use of stored procedures and
-							functions via its source code generation.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>
 </tr>
 </table>
 							<h2>Stored procedures in modern RDBMS</h2>
@@ -40,7 +33,7 @@ function printContent() {
 								via its source code generation. Essentially, it comes down to this:
 							</p>
 
-							<h3>"Standalone" stored procedures and functions</h3>
+							<h2>"Standalone" stored procedures and functions</h2>
 							<p>Let's say you have these stored procedures and functions in your Oracle database </p>
 <pre class="prettyprint lang-sql">-- Check whether there is an author in T_AUTHOR by that name
 CREATE OR REPLACE FUNCTION f_author_exists (author_name VARCHAR2) RETURN NUMBER;
@@ -137,7 +130,7 @@ public final class Routines {
 <pre class="prettyprint lang-java">assertEquals(BigDecimal.ONE, Procedures.pAuthorExists(configuration, "Paulo"));</pre>
 
 
-							<h3>jOOQ's understanding of procedures vs functions</h3>
+							<h2>jOOQ's understanding of procedures vs functions</h2>
 							<p>
 								jOOQ does not formally distinguish procedures from functions.
 								jOOQ only knows about routines, which can have return values
@@ -148,11 +141,11 @@ public final class Routines {
 							</p>
 							<p>
 								
-<a href="http://lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/" title="Blog post about the difference between procedures and functions in various RDBMS">lukaseder.wordpress.com/2011/10/17/what-are-procedures-and-functions-after-all/</a>
+<a href="http://blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/" title="Blog post about the difference between procedures and functions in various RDBMS">blog.jooq.org/2011/10/17/what-are-procedures-and-functions-after-all/</a>
 							
 </p>
 
-							<h3>Packages in Oracle</h3>
+							<h2>Packages in Oracle</h2>
 							<p>
 								Oracle uses the concept of a PACKAGE to group several
 								procedures/functions into a sort of namespace. The
@@ -179,7 +172,7 @@ public final class Routines {
 								standalone procedures/functions.
 							</p>
 
-							<h3>Member functions and procedures in Oracle</h3>
+							<h2>Member functions and procedures in Oracle</h2>
 							<p>
 								Oracle UDT's can have object-oriented structures including member functions
 								and procedures. With Oracle, you can do things like this:
@@ -219,10 +212,10 @@ assertNotNull(author.getLastName());</pre>
 
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Tables, views and their records" href="<?=$root?>/manual/META/TABLE/">previous</a> : <a title="Next section: UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

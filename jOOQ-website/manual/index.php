@@ -1,46 +1,23 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../frame.php';
 function getH1() {
-    return "The jOOQ User Manual";
+    return "The jOOQ User Manual. Multiple Pages";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-			The manual is the central reference for most of jOOQ's functionality.
-		";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Next section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Next section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">next</a></td>
 </tr>
 </table>
-			
-				<h3>All manuals</h3>
-				<ul>
-					
-<li>
-<a href="<?=$root?>/manual-single-page" title="The jOOQ Manual on one single page">A single-paged HTML manual</a>
-</li>
-					
-<li>
-<a href="<?=$root?>/manual" title="The jOOQ Manual on multiple pages">A multi-paged HTML manual</a>
-</li>
-					
-<li>
-<a href="<?=$root?>/manual-pdf/jOOQ-manual.pdf" title="The jOOQ Manual as a PDF">A downloadable PDF manual</a>
-</li>
-				
-</ul>
-			
-			<h3>Overview</h3>
+			<h2>Overview</h2>
 			<p>This manual is divided into four main sections:</p>
 			<ul>
 				
@@ -91,7 +68,7 @@ function printContent() {
 </li>
 			
 </ul>
-		<h3>Table of contents</h3><ol>
+		<h2>Table of contents</h2><ol>
 <li>
 <a title="jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a>
 <ol>
@@ -105,25 +82,25 @@ function printContent() {
 <a title="Tables and Fields" href="<?=$root?>/manual/JOOQ/Table/">Tables and Fields</a>
 </li>
 <li>
-<a title="Results and Records" href="<?=$root?>/manual/JOOQ/Result/">Results and Records</a>
+<a title="Results, Cursors and Records" href="<?=$root?>/manual/JOOQ/Result/">Results, Cursors and Records</a>
 </li>
 <li>
-<a title="Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">Updatable Records</a>
+<a title="CRUD and Updatable Records" href="<?=$root?>/manual/JOOQ/UpdatableRecord/">CRUD and Updatable Records</a>
 </li>
 <li>
 <a title="The Query and its various subtypes" href="<?=$root?>/manual/JOOQ/Query/">The Query and its various subtypes</a>
 </li>
 <li>
-<a title="ResultQuery and various ways of fetching data" href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and various ways of fetching data</a>
+<a title="ResultQuery and fetch() methods" href="<?=$root?>/manual/JOOQ/ResultQuery/">ResultQuery and fetch() methods</a>
 </li>
 <li>
-<a title="Bind values" href="<?=$root?>/manual/JOOQ/BindValues/">Bind values</a>
+<a title="Bind values and parameters" href="<?=$root?>/manual/JOOQ/BindValues/">Bind values and parameters</a>
 </li>
 <li>
 <a title="QueryParts and the global architecture" href="<?=$root?>/manual/JOOQ/QueryPart/">QueryParts and the global architecture</a>
 </li>
 <li>
-<a title="Serializability of QueryParts and Results" href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of QueryParts and Results</a>
+<a title="Serializability of jOOQ objects" href="<?=$root?>/manual/JOOQ/Serializability/">Serializability of jOOQ objects</a>
 </li>
 <li>
 <a title="Extend jOOQ with custom types" href="<?=$root?>/manual/JOOQ/Extend/">Extend jOOQ with custom types</a>
@@ -137,13 +114,13 @@ function printContent() {
 <a title="Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">Configuration and setup of the generator</a>
 </li>
 <li>
-<a title="Advanced configuration of the generator" href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced configuration of the generator</a>
+<a title="Advanced generator configuration" href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced generator configuration</a>
 </li>
 <li>
 <a title="The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">The schema, top-level generated artefact</a>
 </li>
 <li>
-<a title="Tables, views and their corresponding records" href="<?=$root?>/manual/META/TABLE/">Tables, views and their corresponding records</a>
+<a title="Tables, views and their records" href="<?=$root?>/manual/META/TABLE/">Tables, views and their records</a>
 </li>
 <li>
 <a title="Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">Procedures and packages</a>
@@ -152,7 +129,7 @@ function printContent() {
 <a title="UDT's including ARRAY and ENUM types" href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a>
 </li>
 <li>
-<a title="Sequences" href="<?=$root?>/manual/META/SEQUENCE/">Sequences</a>
+<a title="Sequences and Serials" href="<?=$root?>/manual/META/SEQUENCE/">Sequences and Serials</a>
 </li>
 </ol>
 </li>
@@ -207,7 +184,7 @@ function printContent() {
 <a title="Advanced topics" href="<?=$root?>/manual/ADVANCED/">Advanced topics</a>
 <ol>
 <li>
-<a title="Master data generation. Enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">Master data generation. Enumeration tables</a>
+<a title="Master data and enumeration tables" href="<?=$root?>/manual/ADVANCED/MasterData/">Master data and enumeration tables</a>
 </li>
 <li>
 <a title="Custom data types and type conversion" href="<?=$root?>/manual/ADVANCED/CustomTypes/">Custom data types and type conversion</a>
@@ -243,10 +220,10 @@ function printContent() {
 </li>
 </ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Next section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Next section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

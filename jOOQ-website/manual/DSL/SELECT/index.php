@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,22 +7,14 @@ function getH1() {
     return "Complete SELECT syntax";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							A SELECT statement is more than just the R in CRUD. It allows for
-							transforming your relational data into any other form using concepts
-							such as equi-join, semi-join, anti-join, outer-join and much more. jOOQ
-							helps you think in precisely those relational concepts.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">next</a></td>
 </tr>
 </table>
 							<h2>SELECT from anonymous or ad-hoc types</h2>
@@ -248,7 +240,7 @@ create.select(T_AUTHOR.FIRST_NAME, T_AUTHOR.LAST_NAME, count())
 								<a href="<?=$root?>/manual/DSL/EXISTS/" title="jOOQ Manual reference: Nested SELECT using the EXISTS operator">Nested select statements using the EXISTS operator</a>,
 								etc. If you just want to execute this select
 								statement, you can choose any of these methods as discussed in the
-								section about the <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="jOOQ Manual reference: ResultQuery and various ways of fetching data">ResultQuery</a>:
+								section about the <a href="<?=$root?>/manual/JOOQ/ResultQuery/" title="jOOQ Manual reference: ResultQuery and fetch() methods">ResultQuery</a>:
 							</p>
 
 <pre class="prettyprint lang-java">// Just execute the query.
@@ -287,10 +279,10 @@ Record fetchOne();
                    .fetchAny();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: DSL or fluent API. Where SQL meets Java" href="<?=$root?>/manual/DSL/">previous</a> : <a title="Next section: Table sources" href="<?=$root?>/manual/DSL/TABLESOURCE/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

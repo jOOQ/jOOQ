@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,26 +7,25 @@ function getH1() {
     return "Stored procedures and functions";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							The full power of your database's vendor-specific extensions can hardly
-							be obtained outside of the
-							database itself. Most modern RDBMS support
-							their own procedural language. With jOOQ, stored procedures are
-							integrated easily
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">previous</a> : <a title="Next section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">previous</a> : <a title="Next section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">next</a></td>
 </tr>
 </table>
 							<h2>Interaction with stored procedures</h2>
+							<p>
+								The full power of your database's vendor-specific extensions can hardly
+								be obtained outside of the
+								database itself. Most modern RDBMS support
+								their own procedural language. With jOOQ, stored procedures are
+								integrated easily
+							</p>
+
 							<p>The main way to interact with your RDBMS's stored procedures and
 								functions is by using the generated artefacts. See the manual's
 								section about
@@ -87,10 +86,10 @@ create.select(T_PERSON.NAME)
 								DSL either. </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">previous</a> : <a title="Next section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/PROCEDURES/">Stored procedures and functions</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Functions and aggregate operators" href="<?=$root?>/manual/DSL/FUNCTIONS/">previous</a> : <a title="Next section: Arithmetic operations and concatenation" href="<?=$root?>/manual/DSL/ARITHMETIC/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

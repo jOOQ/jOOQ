@@ -1,23 +1,20 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
 function getH1() {
-    return "Advanced configuration of the generator";
+    return "Advanced generator configuration";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "jOOQ power users may want to fine-tune their source code generation settings. Here's how to do this";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced configuration of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced generator configuration</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
 </tr>
 </table>
 							<h2>Code generation</h2>
@@ -127,7 +124,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }</pre>
 
-                            <h3>jooq-meta configuration</h3>
+                            <h2>jooq-meta configuration</h2>
 							<p>
 								Within the &lt;generator/&gt; element, there are other configuration elements:
 							</p>
@@ -184,7 +181,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 </li>
 								
 <li>
-<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">Master data types</a>
+<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data and enumeration tables">Master data types</a>
 </li>
 								
 <li>
@@ -193,7 +190,7 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 							
 </ul>
 
-							<h3>jooq-codegen configuration</h3>
+							<h2>jooq-codegen configuration</h2>
                             <p>Also, you can add some optional advanced configuration parameters for the generator: </p>
 
 <pre class="prettyprint lang-xml">&lt;!-- These properties can be added to the generate element: --&gt;
@@ -240,10 +237,10 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 &lt;/generate&gt;</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced configuration of the generator</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/AdvancedConfiguration/">Advanced generator configuration</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Configuration and setup of the generator" href="<?=$root?>/manual/META/Configuration/">previous</a> : <a title="Next section: The schema, top-level generated artefact" href="<?=$root?>/manual/META/SCHEMA/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

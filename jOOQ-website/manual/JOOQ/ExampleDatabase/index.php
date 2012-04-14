@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,24 +7,22 @@ function getH1() {
     return "The example database";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							For the examples in this manual, the same database will always be
-							referred to. It essentially consists of these entities created using
-							the Oracle dialect
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">previous</a> : <a title="Next section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">previous</a> : <a title="Next section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
 </tr>
 </table>
 							<h2>Example CREATE TABLE statements</h2>
+							<p>
+							For the examples in this manual, the same database will always be
+							referred to. It essentially consists of these entities created using
+							the Oracle dialect
+							</p>
 <pre class="prettyprint lang-sql">CREATE TABLE t_language (
   id NUMBER(7) NOT NULL PRIMARY KEY,
   cd CHAR(2) NOT NULL,
@@ -73,10 +71,10 @@ CREATE TABLE t_book_to_book_store (
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">previous</a> : <a title="Next section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/JOOQ/">jOOQ classes and their usage</a> : <a href="<?=$root?>/manual/JOOQ/ExampleDatabase/">The example database</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: jOOQ classes and their usage" href="<?=$root?>/manual/JOOQ/">previous</a> : <a title="Next section: The Factory class" href="<?=$root?>/manual/JOOQ/Factory/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

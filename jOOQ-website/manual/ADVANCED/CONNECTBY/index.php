@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,25 +7,18 @@ function getH1() {
     return "The Oracle CONNECT BY clause";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Hierarchical queries are supported by many RDBMS using the WITH clause.
-							Oracle has a very neat and much less verbose syntax for hierarchical
-							queries: CONNECT BY .. STARTS WITH
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">next</a></td>
 </tr>
 </table>
 							<h2>CONNECT BY .. STARTS WITH</h2>
-							<p>If you are closely coupling your application to an Oracle database,
+							<p>If you are closely coupling your application to an Oracle (or CUBRID) database,
 								you can take advantage of some Oracle-specific features, such as the
 								CONNECT BY clause, used for hierarchical queries. The formal syntax
 								definition is as follows: </p>
@@ -71,10 +64,10 @@ create.select(create.rownum())
 </pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/CONNECTBY/">The Oracle CONNECT BY clause</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">previous</a> : <a title="Next section: The Oracle 11g PIVOT clause" href="<?=$root?>/manual/ADVANCED/PIVOT/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

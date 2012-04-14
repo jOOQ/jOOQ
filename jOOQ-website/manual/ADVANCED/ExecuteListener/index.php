@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,19 +7,14 @@ function getH1() {
     return "Execute listeners and the jOOQ Console";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Feel the heart beat of your SQL statements at a very low level using listeners
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/ExecuteListener/">Execute listeners and the jOOQ Console</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/ExecuteListener/">Execute listeners and the jOOQ Console</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
 </tr>
 </table>
 							<h2>ExecuteListener</h2>
@@ -168,7 +163,7 @@ for (ExecuteType type : ExecuteType.values()) {
     .getExecuteListeners().add("org.jooq.debug.DebugListener");
 Factory factory = new Factory(connection, dialect, settings);</pre>
 
-							<h3>In-process mode</h3>
+							<h2>In-process mode</h2>
 							<p>
 								The in-process mode is useful for Swing applications or other,
 								locally run Java programs accessing the database via jOOQ.
@@ -242,7 +237,7 @@ catch (Exception ignore) {}
 <img alt="jOOQ Console example" class="screenshot" src="<?=$root?>/img/jooq-console-02.png">
 							</div>
 
-                            <h3>"Headless" mode</h3>
+                            <h2>"Headless" mode</h2>
 							<p>
 								In J2EE or other server/client environments, you may not be able
 								to run the console in the same process as your application. You
@@ -269,10 +264,10 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</pre>
 							</p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/ExecuteListener/">Execute listeners and the jOOQ Console</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/ExecuteListener/">Execute listeners and the jOOQ Console</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Mapping generated schemata and tables" href="<?=$root?>/manual/ADVANCED/SchemaMapping/">previous</a> : <a title="Next section: Adding Oracle hints to queries" href="<?=$root?>/manual/ADVANCED/OracleHints/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

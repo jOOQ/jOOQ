@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,19 +7,14 @@ function getH1() {
     return "Importing data from XML, CSV";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Use jOOQ to easily merge imported data into your database.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">previous</a> : <a title="Next section: Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">previous</a> : <a title="Next section: Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">next</a></td>
 </tr>
 </table>
 							<h2>Importing with jOOQ</h2>
@@ -28,7 +23,7 @@ function printContent() {
 								functionality (see also exporting functionality). You can import data
 								directly into a table from any of these formats: </p>
 
-							<h3>CSV</h3>
+							<h2>CSV</h2>
 							<p>The below CSV data represents two author records that may have been
 								exported previously, by jOOQ's exporting functionality, and then
 								modified in Microsoft Excel or any other spreadsheet tool: </p>
@@ -123,14 +118,14 @@ String[] row = error.row();
 // The query that caused the error
 Query query = error.query();</pre>
 
-							<h3>XML </h3>
+							<h2>XML </h2>
 							<p>This will be implemented soon... </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">previous</a> : <a title="Next section: Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Import/">Importing data from XML, CSV</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Exporting to XML, CSV, JSON, HTML, Text" href="<?=$root?>/manual/ADVANCED/Export/">previous</a> : <a title="Next section: Using JDBC batch operations" href="<?=$root?>/manual/ADVANCED/Batch/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

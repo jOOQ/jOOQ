@@ -1,5 +1,6 @@
 jOOQ Release notes
 ==================
+
 For an interactive overview, see also
 https://sourceforge.net/apps/trac/jooq/report/6
 

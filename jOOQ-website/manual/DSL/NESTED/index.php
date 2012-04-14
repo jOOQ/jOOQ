@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,19 +7,14 @@ function getH1() {
     return "Other types of nested SELECT";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "Apart from the most common IN and EXISTS clauses that encourage
-							the use of nested selects, SQL knows a few more syntaxes to make use
-							of such constructs. ";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/NESTED/">Other types of nested SELECT</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the EXISTS operator" href="<?=$root?>/manual/DSL/EXISTS/">previous</a> : <a title="Next section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/NESTED/">Other types of nested SELECT</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the EXISTS operator" href="<?=$root?>/manual/DSL/EXISTS/">previous</a> : <a title="Next section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">next</a></td>
 </tr>
 </table>
 							<h2>Comparison with single-field SELECT clause</h2>
@@ -103,7 +98,7 @@ create.select(nested.getFields())
 								to find good examples, because there is always an easier way to
 								express the same thing. But why not just count the number of books the
 								really hard way? :-) But then again, maybe you want to take advantage
-								of <a href="http://lukaseder.wordpress.com/2011/09/02/oracle-scalar-subquery-caching/" title="Oracle Scalar Subquery Caching with jOOQ">Oracle Scalar Subquery Caching</a>
+								of <a href="http://blog.jooq.org/2011/09/02/oracle-scalar-subquery-caching/" title="Oracle Scalar Subquery Caching with jOOQ">Oracle Scalar Subquery Caching</a>
 </p>
 
 							<table cellspacing="0" cellpadding="0" width="100%">
@@ -134,10 +129,10 @@ create.select(T_AUTHOR.ID, books)
 </table>
                     	<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/NESTED/">Other types of nested SELECT</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the EXISTS operator" href="<?=$root?>/manual/DSL/EXISTS/">previous</a> : <a title="Next section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/NESTED/">Other types of nested SELECT</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Nested SELECT using the EXISTS operator" href="<?=$root?>/manual/DSL/EXISTS/">previous</a> : <a title="Next section: UNION and other set operations" href="<?=$root?>/manual/DSL/UNION/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

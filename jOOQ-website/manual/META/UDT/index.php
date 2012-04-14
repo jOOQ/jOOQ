@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "UDT's including ARRAY and ENUM types";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Databases become more powerful when you can structure your data in user
-							defined types. It's time for Java developers to give some credit to
-							that.
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">previous</a> : <a title="Next section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">previous</a> : <a title="Next section: Sequences and Serials" href="<?=$root?>/manual/META/SEQUENCE/">next</a></td>
 </tr>
 </table>
 							<h2>Increased RDBMS support for UDT's</h2>
@@ -190,7 +183,7 @@ address = Procedures.pCheckAddress(connection, address);</pre>
 									and stored procedures.
 							</p>
 
-							<h3>Example: General ARRAY types</h3>
+							<h2>Example: General ARRAY types</h2>
 							<p>An example usage of ARRAYs is given here for the Postgres dialect </p>
 
 <pre class="prettyprint lang-sql">CREATE TABLE t_arrays (
@@ -216,7 +209,7 @@ public final class Functions {
     public static Field&lt;String[]&gt; fArrays(Field&lt;String[]&gt; inArray) {                              // [...]
 }</pre>
 
-							<h3>Example: Oracle VARRAY types</h3>
+							<h2>Example: Oracle VARRAY types</h2>
 							<p>In Oracle, a VARRAY type is something slightly different than in
 								other RDMBS. It is a type that encapsules the actual ARRAY and creates
 								a new type from it. While all text[] types are equal and thus
@@ -316,14 +309,14 @@ public class TBookRecord extends UpdatableRecordImpl&lt;TBookRecord&gt; {
 
 							<p>Note that jOOQ allows you to simulate ENUM types where this makes
 								sense in your data model. See the section on
-								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data generation. Enumeration tables">master data</a> for more
+								<a href="<?=$root?>/manual/ADVANCED/MasterData/" title="jOOQ Manual reference: Master data and enumeration tables">master data</a> for more
 								details. </p>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">previous</a> : <a title="Next section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/META/">Meta model code generation</a> : <a href="<?=$root?>/manual/META/UDT/">UDT's including ARRAY and ENUM types</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Procedures and packages" href="<?=$root?>/manual/META/PROCEDURE/">previous</a> : <a title="Next section: Sequences and Serials" href="<?=$root?>/manual/META/SEQUENCE/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

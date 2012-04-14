@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,21 +7,14 @@ function getH1() {
     return "Using JDBC batch operations";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							Some JDBC drivers have highly optimised means of executing batch
-							operations. The JDBC interface for those operations is a bit verbose.
-							jOOQ abstracts that by re-using the existing query API's
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">previous</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">previous</a></td>
 </tr>
 </table>
 							<h2>JDBC batch operations</h2>
@@ -69,7 +62,7 @@ int[] result = stmt.executeBatch();</pre>
 
 
 							<h2>This will also be supported by jOOQ</h2>
-							<p>Version 1.6.9 of jOOQ now supports executing queries in batch
+							<p>jOOQ supports executing queries in batch
 								mode as follows:</p>
 <pre class="prettyprint lang-java">// 1. several queries
 // ------------------
@@ -90,10 +83,10 @@ create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
 	  .execute();</pre>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">previous</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/ADVANCED/">Advanced topics</a> : <a href="<?=$root?>/manual/ADVANCED/Batch/">Using JDBC batch operations</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Importing data from XML, CSV" href="<?=$root?>/manual/ADVANCED/Import/">previous</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

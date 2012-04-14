@@ -15,7 +15,7 @@
 
 	<xsl:template match="/">
 		<xsl:text disable-output-escaping="yes">
-&lt;?php 
+&lt;?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '</xsl:text>
@@ -27,12 +27,7 @@ function getH1() {
 <xsl:text disable-output-escaping="yes">";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "</xsl:text>
-	<xsl:value-of select="//section[@id = $sectionID]/slogan"/>
-<xsl:text disable-output-escaping="yes">";
+	return "learn";
 }
 function printContent() {
     global $root;
@@ -40,27 +35,33 @@ function printContent() {
 </xsl:text>
 		<xsl:apply-templates select="//section[@id = $sectionID]" mode="content"/>
 		<xsl:text disable-output-escaping="yes">
-&lt;?php 
+&lt;?php
 }
 ?&gt;
 </xsl:text>
 	</xsl:template>
 
 	<!-- matching templates -->
-	
+
+    <xsl:template match="h3" mode="content">
+        <h2>
+        	<xsl:apply-templates mode="content"/>
+        </h2>
+    </xsl:template>
+
 	<xsl:template match="//section[@id = $sectionID]" mode="content">
 		<xsl:apply-templates select="." mode="navigation"/>
 		<xsl:apply-templates select="content"/>
-		
+
 		<xsl:if test="count(sections/section) &gt; 0">
-			<h3>Table of contents</h3>
+			<h2>Table of contents</h2>
 		</xsl:if>
 		<xsl:apply-templates select="." mode="toc"/>
-		
+
 		<br/>
 		<xsl:apply-templates select="." mode="navigation"/>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="navigation">
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
 			<tr>
@@ -73,22 +74,22 @@ function printContent() {
 			</tr>
 		</table>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="breadcrumb">
 		<xsl:if test="name(../..) = 'section'">
 			<xsl:apply-templates select="../.." mode="breadcrumb"/>
 			<xsl:text> : </xsl:text>
 		</xsl:if>
-		
+
 		<xsl:variable name="href">
 			<xsl:apply-templates select="." mode="href"/>
 		</xsl:variable>
-		
+
 		<a href="{$href}">
 			<xsl:value-of select="title"/>
 		</a>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="href">
 		<xsl:choose>
 			<xsl:when test="name(../..) = 'section'">
@@ -102,34 +103,34 @@ function printContent() {
 		<xsl:value-of select="@id"/>
 		<xsl:text>/</xsl:text>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="prev-next">
 		<xsl:variable name="prev" select="(preceding::section | ancestor::section)[last()]"/>
 		<xsl:variable name="prevhref">
 			<xsl:apply-templates select="$prev" mode="href"/>
 		</xsl:variable>
-		
+
 		<xsl:variable name="next" select="(following::section | descendant::section)[1]"/>
 		<xsl:variable name="nexthref">
 			<xsl:apply-templates select="$next" mode="href"/>
 		</xsl:variable>
-		
+
 		<xsl:if test="$prev">
 			<a href="{$prevhref}" title="Previous section: {$prev/title}">previous</a>
 		</xsl:if>
-		
+
 		<xsl:if test="$prev and $next">
 			<xsl:text> : </xsl:text>
 		</xsl:if>
-		
+
 		<xsl:if test="$next">
 			<a href="{$nexthref}" title="Next section: {$next/title}">next</a>
 		</xsl:if>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="prev-id">
 		<xsl:variable name="id" select="@id"/>
-		
+
 		<xsl:variable name="position">
 			<xsl:for-each select="//section">
 				<xsl:if test="@id = $id">
@@ -137,17 +138,17 @@ function printContent() {
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
-		
+
 		<xsl:for-each select="//section">
 			<xsl:if test="position() = $position - 1">
 				<xsl:value-of select="@id"/>
 			</xsl:if>
 		</xsl:for-each>
 	</xsl:template>
-	
+
 	<xsl:template match="section" mode="next-id">
 		<xsl:variable name="id" select="@id"/>
-		
+
 		<xsl:variable name="position">
 			<xsl:for-each select="//section">
 				<xsl:if test="@id = $id">
@@ -155,7 +156,7 @@ function printContent() {
 				</xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
-		
+
 		<xsl:for-each select="//section">
 			<xsl:if test="position() = $position + 1">
 				<xsl:value-of select="@id"/>

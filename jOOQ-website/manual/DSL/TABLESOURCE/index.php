@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../../frame.php';
@@ -7,23 +7,17 @@ function getH1() {
     return "Table sources";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-							When OLTP selects/updates/inserts/deletes records in single tables, OLAP is all about
-							creating custom table sources or ad-hoc row types
-						";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/TABLESOURCE/">Table sources</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/TABLESOURCE/">Table sources</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
 </tr>
 </table>
-							<h2>Create complex and nested table sources with jOOQ</h2>
+							<h2>Create complex and nested table sources</h2>
 							<p>
 								In the <a href="http://en.wikipedia.org/wiki/Relational_model" title="The Relational Data Model">relational data model</a>,
 								there are many operations performed on entities, i.e. tables in order to join them together
@@ -97,10 +91,10 @@ TableOnConditionStep onKey(ForeignKey&lt;?, ?&gt; key);</pre>
 </ul>
 						<br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/TABLESOURCE/">Table sources</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a> : <a href="<?=$root?>/manual/DSL/TABLESOURCE/">Table sources</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">previous</a> : <a title="Next section: Conditions" href="<?=$root?>/manual/DSL/CONDITION/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

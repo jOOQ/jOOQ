@@ -1,5 +1,5 @@
 
-<?php 
+<?php
 // The following content has been XSL transformed from manual.xml using html-pages.xsl
 // Please do not edit this content manually
 require '../../frame.php';
@@ -7,20 +7,14 @@ function getH1() {
     return "DSL or fluent API. Where SQL meets Java";
 }
 function getActiveMenu() {
-	return "manual";
-}
-function getSlogan() {
-	return "
-					In these sections you will learn about how jOOQ makes SQL available to
-					Java as if Java natively supported SQL
-				";
+	return "learn";
 }
 function printContent() {
     global $root;
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">previous</a> : <a title="Next section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Sequences and Serials" href="<?=$root?>/manual/META/SEQUENCE/">previous</a> : <a title="Next section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">next</a></td>
 </tr>
 </table>
 					<h2>Overview</h2>
@@ -62,7 +56,7 @@ create.select()
 						<a href="<?=$root?>/manual/DSL/ALIAS/" title="jOOQ Manual reference: Aliased tables and fields">aliasing</a>
 					
 </p>
-				<h3>Table of contents</h3><ol>
+				<h2>Table of contents</h2><ol>
 <li>
 <a title="Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">Complete SELECT syntax</a>
 </li>
@@ -107,10 +101,10 @@ create.select()
 </li>
 </ol><br><table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Sequences" href="<?=$root?>/manual/META/SEQUENCE/">previous</a> : <a title="Next section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">next</a></td>
+<td valign="top" align="left"><a href="<?=$root?>/manual/">The jOOQ User Manual. Multiple Pages</a> : <a href="<?=$root?>/manual/DSL/">DSL or fluent API. Where SQL meets Java</a></td><td style="white-space: nowrap" valign="top" align="right"><a title="Previous section: Sequences and Serials" href="<?=$root?>/manual/META/SEQUENCE/">previous</a> : <a title="Next section: Complete SELECT syntax" href="<?=$root?>/manual/DSL/SELECT/">next</a></td>
 </tr>
 </table>
-<?php 
+<?php
 }
 ?>
 

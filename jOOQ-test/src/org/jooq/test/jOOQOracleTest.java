@@ -102,7 +102,6 @@ import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord;
 import org.jooq.test.oracle.generatedclasses.test.Routines;
 import org.jooq.test.oracle.generatedclasses.test.Sequences;
-import org.jooq.test.oracle.generatedclasses.test.TestFactory;
 import org.jooq.test.oracle.generatedclasses.test.packages.Library;
 import org.jooq.test.oracle.generatedclasses.test.routines.F377;
 import org.jooq.test.oracle.generatedclasses.test.routines.FArrays1;
@@ -201,8 +200,8 @@ public class jOOQOracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TestFactory create(Settings settings) {
-        return new TestFactory(getConnection(), settings);
+    protected OracleFactory create(Settings settings) {
+        return new OracleFactory(getConnection(), settings);
     }
 
     @Override

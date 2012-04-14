@@ -8,7 +8,7 @@ package org.jooq.examples.oracle.sys;
  */
 public class SysFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = 891220555;
+	private static final long serialVersionUID = 288254089;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class SysFactory extends org.jooq.util.oracle.OracleFactory {
 	 */
 	public SysFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,5 +29,16 @@ public class SysFactory extends org.jooq.util.oracle.OracleFactory {
 	 */
 	public SysFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.examples.oracle.sys.Sys.SYS.getName());
 	}
 }

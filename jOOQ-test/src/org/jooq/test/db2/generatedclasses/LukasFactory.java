@@ -8,7 +8,7 @@ package org.jooq.test.db2.generatedclasses;
  */
 public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 
-	private static final long serialVersionUID = -2036387971;
+	private static final long serialVersionUID = 1762664296;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 	 */
 	public LukasFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 	@Deprecated
 	public LukasFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class LukasFactory extends org.jooq.util.db2.DB2Factory {
 	 */
 	public LukasFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.db2.generatedclasses.Lukas.LUKAS.getName());
 	}
 }

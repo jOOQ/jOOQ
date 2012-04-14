@@ -79,7 +79,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.postgres.generatedclasses.PublicFactory;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
 import org.jooq.test.postgres.generatedclasses.enums.U_959;
@@ -106,6 +105,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.postgres.PostgresDataType;
+import org.jooq.util.postgres.PostgresFactory;
 
 import org.junit.Test;
 
@@ -135,7 +135,7 @@ public class jOOQPostgresTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new PublicFactory(getConnection(), settings);
+        return new PostgresFactory(getConnection(), settings);
     }
 
     @Override

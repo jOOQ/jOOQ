@@ -8,7 +8,7 @@ package org.jooq.test.oracle2.generatedclasses;
  */
 public class DateAsTimestampTestFactory extends org.jooq.util.oracle.OracleFactory {
 
-	private static final long serialVersionUID = 31507997;
+	private static final long serialVersionUID = 760310093;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class DateAsTimestampTestFactory extends org.jooq.util.oracle.OracleFacto
 	 */
 	public DateAsTimestampTestFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class DateAsTimestampTestFactory extends org.jooq.util.oracle.OracleFacto
 	@Deprecated
 	public DateAsTimestampTestFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class DateAsTimestampTestFactory extends org.jooq.util.oracle.OracleFacto
 	 */
 	public DateAsTimestampTestFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.oracle2.generatedclasses.DateAsTimestampTest.DATE_AS_TIMESTAMP_TEST.getName());
 	}
 }

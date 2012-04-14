@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses;
  */
 public class PublicFactory extends org.jooq.util.hsqldb.HSQLDBFactory {
 
-	private static final long serialVersionUID = -446167808;
+	private static final long serialVersionUID = 1225007735;
 
 	/**
 	 * Create a factory with a connection
@@ -17,6 +17,8 @@ public class PublicFactory extends org.jooq.util.hsqldb.HSQLDBFactory {
 	 */
 	public PublicFactory(java.sql.Connection connection) {
 		super(connection);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -27,6 +29,8 @@ public class PublicFactory extends org.jooq.util.hsqldb.HSQLDBFactory {
 	@Deprecated
 	public PublicFactory(java.sql.Connection connection, org.jooq.SchemaMapping mapping) {
 		super(connection, mapping);
+
+		initDefaultSchema();
 	}
 
 	/**
@@ -37,5 +41,16 @@ public class PublicFactory extends org.jooq.util.hsqldb.HSQLDBFactory {
 	 */
 	public PublicFactory(java.sql.Connection connection, org.jooq.conf.Settings settings) {
 		super(connection, settings);
+
+		initDefaultSchema();
+	}
+
+	/**
+	 * Initialise the render mapping's default schema.
+	 * <p>
+	 * For convenience, this schema-specific factory should override any pre-existing setting
+	 */
+	private final void initDefaultSchema() {
+		org.jooq.conf.SettingsTools.getRenderMapping(getSettings()).setDefaultSchema(org.jooq.test.hsqldb.generatedclasses.Public.PUBLIC.getName());
 	}
 }

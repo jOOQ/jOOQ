@@ -75,7 +75,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.mysql2.generatedclasses.Routines;
-import org.jooq.test.mysql2.generatedclasses.Test2Factory;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord;
@@ -96,6 +95,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.mysql.MySQLDataType;
+import org.jooq.util.mysql.MySQLFactory;
 
 
 /**
@@ -127,8 +127,8 @@ public class jOOQMySQLTestSchemaRewrite extends jOOQAbstractTest<
     }
 
     @Override
-    protected Test2Factory create(Settings settings) {
-        return new Test2Factory(getConnection(), settings);
+    protected MySQLFactory create(Settings settings) {
+        return new MySQLFactory(getConnection(), settings);
     }
 
     @Override

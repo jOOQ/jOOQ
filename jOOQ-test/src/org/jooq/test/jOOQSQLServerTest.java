@@ -74,7 +74,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.sqlserver.generatedclasses.DboFactory;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
 import org.jooq.test.sqlserver.generatedclasses.tables.T_658Ref;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord;
@@ -97,6 +96,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
+import org.jooq.util.sqlserver.SQLServerFactory;
 
 /**
  * @author Lukas Eder
@@ -123,7 +123,7 @@ public class jOOQSQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new DboFactory(getConnection(), settings);
+        return new SQLServerFactory(getConnection(), settings);
     }
 
     @Override

@@ -61,7 +61,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.ase.generatedclasses.DboFactory;
 import org.jooq.test.ase.generatedclasses.tables.TAuthor;
 import org.jooq.test.ase.generatedclasses.tables.TBook;
 import org.jooq.test.ase.generatedclasses.tables.TBookStore;
@@ -95,6 +94,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.ase.ASEDataType;
+import org.jooq.util.ase.ASEFactory;
 
 
 /**
@@ -124,7 +124,7 @@ public class jOOQASETest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new DboFactory(getConnection(), settings);
+        return new ASEFactory(getConnection(), settings);
     }
 
     @Override

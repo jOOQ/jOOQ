@@ -66,7 +66,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.h2.generatedclasses.PublicFactory;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.test.h2.generatedclasses.tables.TArrays;
@@ -104,6 +103,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.h2.H2DataType;
+import org.jooq.util.h2.H2Factory;
 
 /**
  * Integration test for the H2 database
@@ -132,7 +132,7 @@ public class jOOQH2Test extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new PublicFactory(getConnection(), settings);
+        return new H2Factory(getConnection(), settings);
     }
 
     @Override

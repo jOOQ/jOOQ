@@ -70,7 +70,6 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.sybase.generatedclasses.DbaFactory;
 import org.jooq.test.sybase.generatedclasses.Routines;
 import org.jooq.test.sybase.generatedclasses.Sequences;
 import org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord;
@@ -93,6 +92,7 @@ import org.jooq.tools.unsigned.UInteger;
 import org.jooq.tools.unsigned.ULong;
 import org.jooq.tools.unsigned.UShort;
 import org.jooq.util.sybase.SybaseDataType;
+import org.jooq.util.sybase.SybaseFactory;
 
 
 /**
@@ -122,7 +122,7 @@ public class jOOQSybaseTest extends jOOQAbstractTest<
 
     @Override
     protected Factory create(Settings settings) {
-        return new DbaFactory(getConnection(), settings);
+        return new SybaseFactory(getConnection(), settings);
     }
 
 

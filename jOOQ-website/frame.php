@@ -27,96 +27,93 @@
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 	</head>
 	<body onload="prettyPrint()">
-			<div class="block">
-			    <div id="navigation">
-			    <div class="wrapper">
-				<div id="tweets">
-					<div class="tweet-item">
-						<a href="http://twitter.com/share"
-							class="twitter-share-button"
-							data-url="http://www.jooq.org"
-							data-text="#jOOQ - A nice database abstraction library for Java"
-							data-count="horizontal" data-via="JavaOOQ">Tweet</a>
-						<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-					</div>
-					<div class="tweet-item">
-						<g:plusone size="medium" href="http://www.jooq.org"></g:plusone>
-					</div>
-					<div class="tweet-item">
-						<div id="fb-root"></div>
-						<script>(function(d, s, id) {
-						  var js, fjs = d.getElementsByTagName(s)[0];
-						  if (d.getElementById(id)) {return;}
-						  js = d.createElement(s); js.id = id;
-						  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
-						  fjs.parentNode.insertBefore(js, fjs);
-						}(document, 'script', 'facebook-jssdk'));</script>
-						<div class="fb-like"
-							data-send="false"
-							data-href="http://www.jooq.org"
-							data-layout="button_count"
-							data-width="450"
-							data-show-faces="true"
-							data-font="verdana"></div>
-					</div>
-				</div>
-
-			    <div id="menu">
-			        <?php
-			        $menu = getActiveMenu();
-			        ?>
-			        <div class="navigation-item-left <?php if ($menu == 'home') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/" title="jOOQ Home Page">Start</a>
-		    		</div>
-			        <div class="navigation-item-left <?php if ($menu == 'learn') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/learn.php" title="jOOQ Home Page">Learn</a>
-		    		</div>
-			        <div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/download.php" title="jOOQ Home Page">Download</a>
-		    		</div>
-			        <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
-			    		<a href="<?=$root?>/community.php" title="jOOQ Home Page">Community</a>
-		    		</div>
-			   	</div>
-			   	</div>
-			    </div>
-
-				<div id="header">
-				<div class="wrapper">
-					<table width="100%" cellpadding="0" cellspacing="0">
-						<tr>
-							<td width="700" valign="top">
-								<h1><?php print getH1(); ?></h1></td>
-							<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
-						</tr>
-					</table>
-				</div>
-				</div>
-
-				<div id="content">
-				<div class="wrapper">
-					<?php
-					  printContent();
-				    ?>
-					<br/>
-				</div>
-				</div>
-
-				<div id="footer">
-				<div class="wrapper">
-			 		<p class="right">
-						<div style="float: left; width: 400px">
-						    Copyright (c) 2009-<?=date('Y')?> by <a href="http://blog.jooq.org" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
-						    Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2.0 License">Apache 2.0 licence</a>
-						</div>
-						<div style="float: right; width: 400px">
-							Want to see your brand here? <a href="mailto:lukas.eder@gmail.com" title="contact me">Contact me</a> to partner up with jOOQ
-						</div>
-						<br/>
-					</p>
-				</div>
-				</div>
+	    <div id="navigation">
+	    <div class="wrapper">
+		<div id="tweets">
+			<div class="tweet-item">
+				<a href="http://twitter.com/share"
+					class="twitter-share-button"
+					data-url="http://www.jooq.org"
+					data-text="#jOOQ - A nice database abstraction library for Java"
+					data-count="horizontal" data-via="JavaOOQ">Tweet</a>
+				<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
 			</div>
+			<div class="tweet-item">
+				<g:plusone size="medium" href="http://www.jooq.org"></g:plusone>
+			</div>
+			<div class="tweet-item">
+				<div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) {return;}
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));</script>
+				<div class="fb-like"
+					data-send="false"
+					data-href="http://www.jooq.org"
+					data-layout="button_count"
+					data-width="450"
+					data-show-faces="true"
+					data-font="verdana"></div>
+			</div>
+		</div>
+
+	    <div id="menu">
+	        <?php
+	        $menu = getActiveMenu();
+	        ?>
+	        <div class="navigation-item-left <?php if ($menu == 'home') print 'navigation-item-active'?>">
+	    		<a href="<?=$root?>/" title="jOOQ Home Page">Start</a>
+    		</div>
+	        <div class="navigation-item-left <?php if ($menu == 'learn') print 'navigation-item-active'?>">
+	    		<a href="<?=$root?>/learn.php" title="jOOQ Home Page">Learn</a>
+    		</div>
+	        <div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
+	    		<a href="<?=$root?>/download.php" title="jOOQ Home Page">Download</a>
+    		</div>
+	        <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
+	    		<a href="<?=$root?>/community.php" title="jOOQ Home Page">Community</a>
+    		</div>
+	   	</div>
+	   	</div>
+	    </div>
+
+		<div id="header">
+		<div class="wrapper">
+			<table width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td width="700" valign="top">
+						<h1><?php print getH1(); ?></h1></td>
+					<td align="right" valign="top"><img src="<?=$root?>/img/logo.png" alt="jOOQ Logo"/></td>
+				</tr>
+			</table>
+		</div>
+		</div>
+
+		<div id="content">
+		<div class="wrapper">
+			<?php
+			  printContent();
+		    ?>
+			<br/>
+		</div>
+		</div>
+
+		<div id="footer">
+		<div class="wrapper">
+	 		<p class="right">
+				<div style="float: left; width: 400px">
+				    Copyright (c) 2009-<?=date('Y')?> by <a href="http://blog.jooq.org" title="Lukas's Blog about Java, SQL, and jOOQ">Lukas Eder</a>.
+				    Distributed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache 2.0 License">Apache 2.0 licence</a>
+				</div>
+				<div style="float: right; width: 400px">
+					Want to see your brand here? <a href="mailto:lukas.eder@gmail.com" title="contact me">Contact me</a> to partner up with jOOQ
+				</div>
+				<br/>
+			</p>
+		</div>
 		</div>
 
 		<a href="https://github.com/lukaseder/jOOQ"> <img

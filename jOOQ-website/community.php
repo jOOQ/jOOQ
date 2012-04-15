@@ -103,7 +103,7 @@ feature request, please contact me directly at
 <a href="mailto:lukas.eder@gmail.com">lukas.eder@gmail.com</a>.
 </p>
 
-<h3>Advertise on jOOQ</h3>
+<h3>Advertise on www.jooq.org</h3>
 <p>
 jOOQ has a growing community in dire need for good database products. Make
 yourself heard to many database users!
@@ -219,7 +219,7 @@ choose "Save As..." to store the image on your computer.
 </tr>
 </table>
 
-<h3>Logo (colour, 1024x768):</h3>
+<h3>Logo (colour and b/w, 1024x768):</h3>
 <table width="100%">
 <tr>
 <td valign="top" width="50%">
@@ -235,7 +235,7 @@ choose "Save As..." to store the image on your computer.
 </tr>
 </table>
 
-<h3>Banner (colour, 1024x186):</h3>
+<h3>Banner (colour and b/w, 1024x186):</h3>
   <a href="<?=$root?>/img/banner-medium.png">
 	<img style="width: 100%; border: 0; box-shadow: 5px 5px 20px #AAAAAA;" src="<?=$root?>/img/banner-medium.png" title="The jOOQ Logo 1024x186" alt="The jOOQ Logo 1024x186"/>
   </a>

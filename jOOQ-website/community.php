@@ -117,7 +117,8 @@ yourself heard to many database users!
     // https://google-developers.appspot.com/chart/interactive/docs/quick_start
     // https://google-developers.appspot.com/chart/interactive/docs/gallery/linechart#Configuration_Options
     google.load("visualization", "1", {packages:["corechart"]});
-	$.getJSON('<?=$root?>/json/stats.php', function(data) {
+    google.setOnLoadCallback(function() {
+	  $.getJSON('<?=$root?>/json/stats.php', function(data) {
 	    var rows = new Array();
 	    var total = 0;
 
@@ -174,7 +175,8 @@ yourself heard to many database users!
             textStyle: { color: '#ffffff' }
           }
         });
-	});
+	  });
+    });
 </script>
 
 <h3>Donations</h3>

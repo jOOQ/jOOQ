@@ -57,6 +57,7 @@ import org.jooq.util.sybase.SybaseFactory;
  * @author Lukas Eder
  */
 public enum SQLDialect {
+
     /**
      * The standard SQL dialect.
      *
@@ -139,10 +140,31 @@ public enum SQLDialect {
         this.factory = factory;
     }
 
+    /**
+     * The name of this dialect as it appears in related class names.
+     */
     public final String getName() {
         return name;
     }
 
+    /**
+     * The name of this dialect as it appears in related package names.
+     */
+    public final String getNameLC() {
+        return name.toLowerCase();
+    }
+
+    /**
+     * The name of this dialect as it appears in related enum values
+     */
+    public final String getNameUC() {
+        return name.toUpperCase();
+    }
+
+    /**
+     * A {@link Factory} class whose instances are pre-configured with this
+     * dialect.
+     */
     public final Class<? extends Factory> getFactory() {
         return factory;
     }

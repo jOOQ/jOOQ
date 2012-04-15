@@ -3669,13 +3669,13 @@ create.select(T_PERSON.NAME)
 							<p>In order to express a SQL query like this one: </p>
 							<sql>SELECT ((1 + 2) * (5 - 3) / 2) % 10 FROM DUAL</sql>
 							<p>You can write something like this in jOOQ: </p>
-							<java>create.select(create.val(1).add(2).mul(create.val(5).sub(3)).div(2).mod(10));	</java>
+							<java>create.select(val(1).add(2).mul(val(5).sub(3)).div(2).mod(10));	</java>
 
 							<h3>Datetime arithmetic</h3>
 							<p>jOOQ also supports the Oracle-style syntax for adding days to a Field&lt;? extends java.util.Date&gt; </p>
 							<code-pair>
 								<sql>SELECT SYSDATE + 3 FROM DUAL;</sql>
-								<java>create.select(create.currentTimestamp().add(3));</java>
+								<java>create.select(currentTimestamp().add(3));</java>
 							</code-pair>
 
 							<p>

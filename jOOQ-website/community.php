@@ -103,6 +103,64 @@ feature request, please contact me directly at
 <a href="mailto:lukas.eder@gmail.com">lukas.eder@gmail.com</a>.
 </p>
 
+<h2>Advertise on jOOQ</h2>
+<p>
+jOOQ has a growing community in dire need for good database products. Make
+yourself heard and contact me directly at
+<a href="mailto:lukas.eder@gmail.com">lukas.eder@gmail.com</a>.
+</p>
+<p>
+jOOQ's sourceforge download statistics over the past month:
+</p>
+<pre>
+<div id="downloads" style="width: 100%; height: 300px;"></div>
+</pre>
+
+<script>
+    google.load("visualization", "1", {packages:["corechart"]});
+	$.getJSON('<?=$root?>/json/stats.php', function(data) {
+	    var total = 0;
+	    $.each(data.downloads, function() {
+	      this[0] = this[0].split(" ")[0];
+	      total += this[1];
+	    });
+
+        var table = new google.visualization.DataTable();
+        table.addColumn('string', 'Date');
+        table.addColumn('number', 'Downloads');
+        table.addRows(data.downloads);
+
+        var chart = new google.visualization.LineChart(document.getElementById('downloads'));
+        chart.draw(table, {
+          title: 'Total downloads last year: ' + total,
+          titleTextStyle: {
+            color: '#ffffff',
+            fontSize: 15
+          },
+
+          fontSize: 12,
+          fontName: 'Georgia',
+
+          backgroundColor: '#333333',
+          lineWidth: 4,
+          pointSize: 6,
+          chartArea: {
+            width: '85%',
+            height: '80%'
+          },
+          legend: {
+            position: 'none'
+          },
+          hAxis: {
+            textPosition: 'none'
+          },
+          vAxis: {
+            textStyle: { color: '#ffffff' }
+          }
+        });
+	});
+</script>
+
 <h2>Donations</h2>
 <p>
 If you simply wish to

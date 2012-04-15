@@ -106,33 +106,47 @@ feature request, please contact me directly at
 <h2>Advertise on jOOQ</h2>
 <p>
 jOOQ has a growing community in dire need for good database products. Make
-yourself heard and contact me directly at
-<a href="mailto:lukas.eder@gmail.com">lukas.eder@gmail.com</a>.
-</p>
-<p>
-jOOQ's sourceforge download statistics over the past month:
+yourself heard to many database users!
 </p>
 <pre>
 <div id="downloads" style="width: 100%; height: 300px;"></div>
 </pre>
 
 <script>
+    // See the Google chart API documentation for details:
+    // https://google-developers.appspot.com/chart/interactive/docs/quick_start
+    // https://google-developers.appspot.com/chart/interactive/docs/gallery/linechart#Configuration_Options
     google.load("visualization", "1", {packages:["corechart"]});
 	$.getJSON('<?=$root?>/json/stats.php', function(data) {
+	    var rows = new Array();
 	    var total = 0;
-	    $.each(data.downloads, function() {
-	      this[0] = this[0].split(" ")[0];
-	      total += this[1];
+
+	    $.each(data.sourceforge.downloads, function() {
+	      var date = this[0].substring(0, 7);
+	      var maven = Number(data.maven[date]);
+
+	      rows.push([
+	        date,
+	        this[1],
+	        maven
+	      ]);
+
+	      if (isNaN(maven)) {
+            maven = 0;
+          }
+
+	      total += (this[1] + maven);
 	    });
 
         var table = new google.visualization.DataTable();
         table.addColumn('string', 'Date');
-        table.addColumn('number', 'Downloads');
-        table.addRows(data.downloads);
+        table.addColumn('number', 'SourceForge');
+        table.addColumn('number', 'Maven');
+        table.addRows(rows);
 
         var chart = new google.visualization.LineChart(document.getElementById('downloads'));
         chart.draw(table, {
-          title: 'Total downloads last year: ' + total,
+          title: 'SourceForge downloads last year: ' + total,
           titleTextStyle: {
             color: '#ffffff',
             fontSize: 15
@@ -143,14 +157,16 @@ jOOQ's sourceforge download statistics over the past month:
 
           backgroundColor: '#333333',
           lineWidth: 4,
-          pointSize: 6,
+          pointSize: 8,
           chartArea: {
             width: '85%',
             height: '80%'
           },
           legend: {
-            position: 'none'
+            position: 'bottom',
+            textStyle: { color: '#ffffff' }
           },
+          colors: ['#678CB1', '#93C763'],
           hAxis: {
             textPosition: 'none'
           },

@@ -564,13 +564,19 @@ public abstract class AbstractDatabase implements Database {
 
         definitionsLoop: for (T definition : definitions) {
             for (String exclude : excludes) {
-                if (exclude != null && definition.getName().matches(exclude.trim())) {
+                if (exclude != null &&
+                        (definition.getName().matches(exclude.trim()) ||
+                         definition.getQualifiedName().matches(exclude.trim()))) {
+
                     continue definitionsLoop;
                 }
             }
 
             for (String include : includes) {
-                if (include != null && definition.getName().matches(include.trim())) {
+                if (include != null &&
+                        (definition.getName().matches(include.trim()) ||
+                         definition.getQualifiedName().matches(include.trim()))) {
+
                     result.add(definition);
                     continue definitionsLoop;
                 }

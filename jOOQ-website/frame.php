@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
-		<title>jOOQ - <?php print preg_replace('%<br/>%', ' - ', getH1()); ?></title>
+		<title><?php print preg_replace('%<br/>%', ' - ', getH1()); ?> - jOOQ is a fluent API for typesafe SQL query construction and execution</title>
 		<meta property="og:title" content="jOOQ" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://www.jooq.org" />
@@ -12,12 +12,12 @@
 		<meta property="og:site_name" content="jOOQ" />
 		<meta property="fb:admins" content="649865547" />
 
-		<meta name="description" content="jOOQ effectively combines complex SQL, typesafety, source code generation, active records, stored procedures, UDTs, and Java in a fluent API. Supported DBs are DB2, Derby, Ingres, H2, HSQLDB, MySQL, Oracle, Postgres, SQLite, SQL Server, Sybase"/>
+		<meta name="description" content="jOOQ, a fluent API for typesafe SQL query construction and execution. Supported DBs are DB2, Derby, Ingres, H2, HSQLDB, MySQL, Oracle, Postgres, SQLite, SQL Server, Sybase"/>
 		<meta name="author" content="Lukas Eder"/>
 		<meta name="keywords" content="jOOQ, JDBC, database abstraction, source code generation, SQL, stored procedures, stored functions, UDT, UDF, typesafe, fluentAPI"/>
 
-		<link href='http://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>		<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet" />
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>

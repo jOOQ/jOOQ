@@ -20,6 +20,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet" />
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="<?=$root?>/js/jquery.js"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>
 		<script type="text/javascript" src="<?=$root?>/js/prettify/lang-sql.js"></script>
 		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>

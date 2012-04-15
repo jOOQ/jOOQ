@@ -1,7 +1,7 @@
 <?php
 require 'frame.php';
 function getH1() {
-	return 'Give back to the jOOQ community';
+	return 'Contribute to the jOOQ community';
 }
 function getActiveMenu() {
 	return "community";
@@ -13,13 +13,14 @@ function printContent() {
 <h2>jOOQ lives from your feedback and support</h2>
 <p>
 jOOQ is a very interactive project. It lives from your feedback and support.
-There are many ways how you can return the favour to the jOOQ community.
+There are many ways how you can contribute to the jOOQ community.
 </p>
 
 <table width="100%">
 <tr>
-<td valign="top" width="50%">
-<h2>The hall of fame</h2>
+<td valign="top" width="50%" style="padding-right: 10px">
+<h2>The technical community</h2>
+<h3>Hall of Fame</h3>
 <p>
 Passionate contributors have made jOOQ what it is. Here's a list of contributors
 worth mentioning (in alphabetical order)
@@ -36,7 +37,7 @@ worth mentioning (in alphabetical order)
     <li>Vladislav "FractalizeR" Rastrusny: MySQL integration feedback</li>
 </ul>
 
-<h2>Contribute</h2>
+<h3>You can contribute too!</h3>
 <p>
 The easiest way to contribute is by providing feedback. Tell me, tell us, tell the world!
 How to do it? Telling us:<br/>
@@ -47,7 +48,7 @@ Telling the world:<br/>
 </p>
 
 
-<h2>Contribute code</h2>
+<h3>Contributing code</h3>
 <p>... or contribute code! If you want to share code, please follow these instructions</p>
 <ul>
 	<li>Check out the codebase from sourceforge: <a href="https://sourceforge.net/scm/?type=svn&group_id=283484" title="jOOQ SVN repository">SVN</a>. <a href="https://github.com/lukaseder/jOOQ" title="jOOQ GitHub repository">GitHub</a> is also available but may be incomplete and not up to date!</li>
@@ -91,10 +92,9 @@ Telling the world:<br/>
 <p>Cheers, Lukas</p>
 </td>
 
-
-
-<td valign="top" width="50%">
-<h2>Invest in jOOQ</h2>
+<td valign="top" width="50%" style="padding-left: 10px">
+<h2>The business community</h2>
+<h3>Invest in jOOQ</h3>
 <p>
 jOOQ is currently looking for partnerships. If you are a database vendor
 or a software vendor and you wish to get basic or advanced support for your
@@ -103,7 +103,7 @@ feature request, please contact me directly at
 <a href="mailto:lukas.eder@gmail.com">lukas.eder@gmail.com</a>.
 </p>
 
-<h2>Advertise on jOOQ</h2>
+<h3>Advertise on jOOQ</h3>
 <p>
 jOOQ has a growing community in dire need for good database products. Make
 yourself heard to many database users!
@@ -146,7 +146,7 @@ yourself heard to many database users!
 
         var chart = new google.visualization.LineChart(document.getElementById('downloads'));
         chart.draw(table, {
-          title: 'SourceForge downloads last year: ' + total,
+          title: 'Total downloads last year: ' + total,
           titleTextStyle: {
             color: '#ffffff',
             fontSize: 15
@@ -177,14 +177,14 @@ yourself heard to many database users!
 	});
 </script>
 
-<h2>Donations</h2>
+<h3>Donations</h3>
 <p>
 If you simply wish to
 <a href="https://sourceforge.net/project/project_donations.php?group_id=283484" title="Donate to jOOQ, if you like it!">donate</a>,
 that is fine too.
 </p>
 
-<h2>The latest news, links</h2>
+<h3>The latest news, links</h3>
 <p>
 Follow jOOQ on any of these channels to get the latest news:
 </p>
@@ -197,7 +197,7 @@ Follow jOOQ on any of these channels to get the latest news:
     <li>On freecode: <a href="http://freecode.com/projects/jooq" title="subscribe to some jOOQ announcements on freshmeat">http://freecode.com/projects/jooq</a></li>
 </ul>
 
-<h2>The jOOQ Brand</h2>
+<h3>The jOOQ Brand</h3>
 <p>
 Want to publish something about jOOQ? Use the official brand! Right-click on any image and
 choose "Save As..." to store the image on your computer.

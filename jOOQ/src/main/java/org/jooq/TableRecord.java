@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import java.sql.Statement;
+
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -87,6 +89,13 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * SET [modified fields = modified values, excluding keys]
      * WHERE [key fields = key values]</pre></code></li>
      * </ul>
+     * <p>
+     * If there is an <code>IDENTITY</code> column defined on the record's
+     * underlying table (see {@link Table#getIdentity()}), then the
+     * auto-generated <code>IDENTITY</code> value is refreshed automatically on
+     * <code>INSERT</code>'s. Refreshing is done using
+     * {@link Statement#getGeneratedKeys()}, where this is supported by the JDBC
+     * driver.
      *
      * @param keys The key fields used for deciding whether to execute an
      *            <code>INSERT</code> or <code>UPDATE</code> statement. If an

@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import java.sql.Statement;
+
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -111,6 +113,16 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * SET [modified fields = modified values, excluding main key]
      * WHERE [main key fields = main key values]</pre></code></li>
      * </ul>
+     * <p>
+     * If there is an <code>IDENTITY</code> column defined on the record's
+     * underlying table (see {@link Table#getIdentity()}), then the
+     * auto-generated <code>IDENTITY</code> value is refreshed automatically on
+     * <code>INSERT</code>'s. Similarly, all members of the primary key are
+     * refreshed, to ensure that trigger-generated values will be available
+     * after <code>INSERT</code>. Normally, primary key and
+     * <code>IDENTITY</code> columns coincide, but this doesn't have to be.
+     * Refreshing is done using {@link Statement#getGeneratedKeys()}, where this
+     * is supported by the JDBC driver.
      * <p>
      * This is in fact the same as calling
      * <code>store(getTable().getMainKey().getFieldsArray())</code>
